@@ -72,49 +72,49 @@ export function HeroSection() {
           </motion.div> 
  
           {/* Right: Branding High Performance */}
-          <div className="flex flex-col gap-20">
+          <div className="flex flex-col gap-16 lg:pl-12">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-12"
+              className="space-y-10 text-center lg:text-left"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex justify-center lg:justify-start">
                 <Badge variant="outline" className="brand-gradient text-white border-none px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
                   ⚡ TEMPORADA ALTA: +45% BÚSQUEDAS
                 </Badge>
               </div>
               
-              <h1 className="text-[clamp(2.5rem,10vw,7rem)] font-black tracking-[-0.07em] leading-[0.9] text-foreground mix-blend-multiply dark:mix-blend-lighten text-center lg:text-left">
+              <h1 className="text-[clamp(2.5rem,8vw,6.5rem)] font-black tracking-[-0.07em] leading-[0.85] text-foreground mix-blend-multiply dark:mix-blend-lighten">
                 PROYECTA TU <br />
-                <span className="gradient-text block lg:-ml-6 translate-y-3">FUTURO HOGAR</span>
+                <span className="gradient-text block lg:-ml-4 translate-y-2">FUTURO HOGAR</span>
               </h1>
               
-              <p className="text-2xl text-muted-foreground font-medium leading-[1.4] max-w-xl opacity-80">
-                 Conecta con el catálogo más mayor de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo el territorio nacional.
+              <p className="text-2xl text-muted-foreground font-medium leading-[1.5] max-w-xl mx-auto lg:mx-0 opacity-80">
+                 Conecta con el catálogo <span className="text-foreground font-bold italic">más grande</span> de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo el territorio nacional.
               </p>
             </motion.div>
 
             {/* Micro Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-3 gap-8 justify-items-center lg:justify-items-start border-t border-border/40 pt-12">
                {[
-                 { icon: <Building2 className="w-6 h-6" />, val: "+5.000", label: "SKUs Modelos" },
-                 { icon: <ShieldCheck className="w-6 h-6" />, val: "Auditoría", label: "Calidad Técnica" },
-                 { icon: <Globe className="w-6 h-6" />, val: "16 Regiones", label: "Cobertura Real" },
+                 { icon: <Building2 className="w-5 h-5" />, val: "+5.000", label: "Modelos" },
+                 { icon: <ShieldCheck className="w-5 h-5" />, val: "Auditoría", label: "Calidad" },
+                 { icon: <Globe className="w-5 h-5" />, val: "16 Regiones", label: "Cobertura" },
                ].map((stat, i) => (
                  <motion.div 
                    key={i}
                    initial={{ opacity: 0, scale: 0.9 }}
                    animate={{ opacity: 1, scale: 1 }}
                    transition={{ delay: 0.5 + (i * 0.1) }}
-                   className="flex flex-col gap-4 group"
+                   className="flex flex-col items-center lg:items-start gap-4 group"
                  >
-                   <div className="w-14 h-14 bg-brand-indigo/5 dark:bg-brand-indigo/10 rounded-2xl flex items-center justify-center text-brand-indigo group-hover:brand-gradient group-hover:text-white transition-all duration-500 shadow-sm">
+                   <div className="w-12 h-12 bg-muted/40 rounded-2xl flex items-center justify-center text-primary group-hover:brand-gradient group-hover:text-white transition-all duration-500">
                       {stat.icon}
                    </div>
                    <div className="space-y-1">
-                      <div className="text-2xl font-black text-foreground tracking-tight">{stat.val}</div>
-                      <div className="text-[10px] text-muted-foreground font-black uppercase tracking-widest opacity-60 leading-none">{stat.label}</div>
+                      <div className="text-xl font-black text-foreground tracking-tight">{stat.val}</div>
+                      <div className="text-[9px] text-muted-foreground font-black uppercase tracking-widest opacity-60 leading-none">{stat.label}</div>
                    </div>
                  </motion.div>
                ))}
