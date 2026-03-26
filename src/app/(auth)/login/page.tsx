@@ -31,7 +31,7 @@ export default function LoginPage() {
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left: Branding & Info */}
       <div className="hidden lg:flex flex-col justify-between p-12 bg-primary relative overflow-hidden text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-coral opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-teal opacity-90" />
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070')] bg-cover bg-center mix-blend-overlay opacity-30" />
         
         <Link href="/" className="relative z-10 flex items-center space-x-2">
@@ -44,7 +44,7 @@ export default function LoginPage() {
           </div>
           <h1 className="text-5xl font-heading font-black leading-tight tracking-tighter">
             Potencia tu alcance <br /> 
-            <span className="text-brand-coral">llega a más clientes</span>
+            <span className="text-brand-teal">llega a más clientes</span>
           </h1>
           <p className="text-lg text-white/70 font-medium">
             Únete a la plataforma líder de casas prefabricadas en Chile. Gestiona tus modelos, recibe prospectos y haz crecer tu empresa.

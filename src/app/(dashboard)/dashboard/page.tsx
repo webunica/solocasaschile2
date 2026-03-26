@@ -38,7 +38,7 @@ export default async function DashboardPage() {
       change: "+18.2%", 
       trend: "up", 
       icon: Users, 
-      color: "text-brand-coral bg-brand-coral/5" 
+      color: "text-brand-teal bg-brand-teal/5" 
     },
     { 
       title: "Modelos Activos", 
@@ -142,7 +142,7 @@ export default async function DashboardPage() {
                          <div className="flex flex-col items-end gap-3">
                             <Badge className={cn(
                               "rounded-full px-5 py-1 text-[10px] font-black tracking-widest uppercase border-none",
-                              lead.estado === "nuevo" ? "bg-brand-coral/90 text-white shadow-lg shadow-brand-coral/20" : "bg-muted text-muted-foreground"
+                              lead.estado === "nuevo" ? "bg-brand-teal/90 text-white shadow-lg shadow-brand-teal/20" : "bg-muted text-muted-foreground"
                             )}>
                                {lead.estado}
                             </Badge>

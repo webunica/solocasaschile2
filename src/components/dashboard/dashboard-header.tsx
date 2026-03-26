@@ -21,7 +21,7 @@ export function DashboardHeader() {
         <ThemeToggle />
         <Button variant="ghost" size="icon-sm" className="relative group">
            <Bell className="w-5 h-5 group-hover:text-primary transition-colors" />
-           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-coral rounded-full border-2 border-background" />
+           <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-teal rounded-full border-2 border-background" />
         </Button>
         <div className="h-8 w-px bg-border mx-2" />
         <Button variant="ghost" className="gap-3 px-2 hover:bg-muted/50 rounded-xl group">

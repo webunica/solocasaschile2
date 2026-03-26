@@ -76,7 +76,7 @@ export default async function ModeloPage({ params }: PageProps) {
                  </div>
                  <Link
                     href={`/constructora/${constructora.slug}`}
-                    className="text-lg font-black text-brand-indigo hover:text-brand-coral transition-colors tracking-tight underline-offset-4 hover:underline"
+                    className="text-lg font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight underline-offset-4 hover:underline"
                  >
                     {constructora.nombre}
                  </Link>
@@ -90,7 +90,7 @@ export default async function ModeloPage({ params }: PageProps) {
             {/* Technical Specs Grid */}
             <div className="space-y-6">
                <h2 className="text-2xl font-heading font-black tracking-tight flex items-center gap-3">
-                 <Square className="w-6 h-6 text-brand-coral" /> 
+                 <Square className="w-6 h-6 text-brand-teal" /> 
                  Especificaciones Técnicas
                </h2>
                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -117,7 +117,7 @@ export default async function ModeloPage({ params }: PageProps) {
 
             {/* Constructora Reputation Card */}
             <div className="bg-background border-2 border-brand-indigo/10 rounded-[3rem] p-10 relative overflow-hidden group">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-indigo/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-coral/5 transition-colors duration-700" />
+               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-indigo/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-teal/5 transition-colors duration-700" />
                <div className="flex flex-col md:flex-row gap-8 items-center relative z-10">
                   <div className="shrink-0">
                      <div className="relative w-32 h-32 flex items-center justify-center">

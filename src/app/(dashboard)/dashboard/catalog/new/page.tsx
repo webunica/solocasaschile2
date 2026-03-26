@@ -132,7 +132,7 @@ export default function NewModelPage() {
         {/* Section: Images */}
         <div className="glass rounded-[2.5rem] p-8 border border-border/40 space-y-5">
           <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3">
-            <ImagePlus className="w-6 h-6 text-brand-coral" /> Imágenes del Modelo
+            <ImagePlus className="w-6 h-6 text-brand-teal" /> Imágenes del Modelo
           </h2>
           <div
             onClick={() => fileInputRef.current?.click()}

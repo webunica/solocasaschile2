@@ -53,7 +53,7 @@ export default async function ConstructorasPage() {
         <section className="space-y-8">
           <div className="space-y-2">
             <h2 className="text-3xl font-heading font-black tracking-tight flex items-center gap-3">
-              <MapPin className="w-7 h-7 text-brand-coral" /> Cobertura por Región
+              <MapPin className="w-7 h-7 text-brand-teal" /> Cobertura por Región
             </h2>
             <p className="text-muted-foreground font-medium">Haz clic en cualquier punto del mapa para ver las constructoras activas en esa región.</p>
           </div>

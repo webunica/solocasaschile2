@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  /* LATAM Brand Colors (Indigo & Coral) */
+  /* LATAM Brand Colors (Indigo & Teal) */
   --brand-indigo: #1b0088;
-  --brand-coral: #eb004a;
+  --brand-teal: #4fd3c5;
 
   /* Light Mode (LATAM-inspired) */
   --background: #ffffff;
@@ -16,7 +16,7 @@
   --primary: #1b0088; /* LATAM Indigo */
   --primary-foreground: #ffffff;
   
-  --secondary: #eb004a; /* LATAM Coral */
+  --secondary: #4fd3c5; /* LATAM Coral */
   --secondary-foreground: #ffffff;
   
   --muted: #f3f3f7;
@@ -39,7 +39,7 @@
   --popover: #0a0a24;
   --popover-foreground: #ffffff;
   
-  --primary: #eb004a; /* Swap to Coral for better visibility on dark */
+  --primary: #4fd3c5; /* Swap to Coral for better visibility on dark */
   --primary-foreground: #ffffff;
   
   --secondary: #1b0088;
@@ -50,7 +50,7 @@
   --accent-foreground: #ffffff;
   --border: #1e1e3f;
   --input: #1e1e3f;
-  --ring: #eb004a;
+  --ring: #4fd3c5;
 }
 
 @theme {
@@ -78,7 +78,7 @@
   --color-ring: var(--ring);
 
   --color-brand-indigo: var(--brand-indigo);
-  --color-brand-coral: var(--brand-coral);
+  --color-brand-teal: var(--brand-teal);
   
   --radius-lg: 1rem;
   --radius-md: calc(1rem - 2px);
@@ -99,7 +99,7 @@
     line-height: 1.6;
     background-image: 
       radial-gradient(at 0% 0%, rgba(27, 0, 136, 0.03) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(235, 0, 74, 0.03) 0px, transparent 50%);
+      radial-gradient(at 100% 0%, rgba(79, 211, 197, 0.03) 0px, transparent 50%);
     min-height: 100vh;
   }
 
@@ -114,14 +114,14 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #1b0088 0%, #eb004a 100%);
+  background: linear-gradient(135deg, #1b0088 0%, #4fd3c5 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, #1b0088 0%, #eb004a 100%);
+  background: linear-gradient(135deg, #1b0088 0%, #4fd3c5 100%);
 }
 
 .brand-glow {

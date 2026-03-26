@@ -26,7 +26,7 @@ type Lead = {
 
 const STATUS_ORDER = ["nuevo", "contactado", "convertido"];
 const STATUS_CONFIG: Record<string, { label: string; className: string; next: string; nextLabel: string }> = {
-  nuevo: { label: "Nuevo", className: "bg-brand-coral/10 text-brand-coral border-brand-coral/20", next: "contactado", nextLabel: "Marcar Contactado" },
+  nuevo: { label: "Nuevo", className: "bg-brand-teal/10 text-brand-teal border-brand-teal/20", next: "contactado", nextLabel: "Marcar Contactado" },
   contactado: { label: "Contactado", className: "bg-blue-500/10 text-blue-600 border-blue-500/20", next: "convertido", nextLabel: "Marcar Convertido" },
   convertido: { label: "Convertido ✓", className: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20", next: "nuevo", nextLabel: "Restablecer" },
 };
@@ -137,7 +137,7 @@ export function LeadsCRM({ initialLeads }: Props) {
                   >
                     {/* Lead info */}
                     <div className="flex items-start gap-5 flex-1 min-w-0">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-indigo/20 to-brand-coral/10 flex items-center justify-center shrink-0">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-indigo/20 to-brand-teal/10 flex items-center justify-center shrink-0">
                         <Users className="w-5 h-5 text-brand-indigo" />
                       </div>
                       <div className="space-y-1 min-w-0">

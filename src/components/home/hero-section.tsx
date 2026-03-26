@@ -12,7 +12,7 @@ export function HeroSection() {
     <section className="relative min-h-[95vh] flex items-center pt-24 pb-20 overflow-hidden bg-background">
       {/* Background Decor with Latam Tones */}
       <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-brand-indigo/5 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50" />
-      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-brand-coral/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none opacity-30" />
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-brand-teal/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none opacity-30" />
 
       <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-2 gap-20 lg:gap-24 items-center">
@@ -31,7 +31,7 @@ export function HeroSection() {
             <div className="space-y-10 relative z-10">
               <div className="space-y-4">
                  <h3 className="text-3xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
-                   Obtener <span className="text-brand-coral">Datos</span>
+                   Obtener <span className="text-brand-teal">Datos</span>
                  </h3>
                  <p className="text-muted-foreground font-medium leading-relaxed max-w-sm">
                    Acceso directo a información estratégica para constructoras y especialistas de la industria.
@@ -60,7 +60,7 @@ export function HeroSection() {
               </h1>
               
               <p className="text-2xl text-muted-foreground font-medium leading-snug max-w-xl">
-                 Optimizamos la visibilidad de tu catálogo con la red de <span className="text-foreground border-b-4 border-brand-coral/40 pb-1 font-black">226 constructoras</span> certificadas en Chile.
+                 Optimizamos la visibilidad de tu catálogo con la red de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en Chile.
               </p>
             </motion.div>
 
@@ -97,9 +97,9 @@ export function HeroSection() {
                   </div>
                   ventas@solocasaschile.cl
                </div>
-               <div className="flex items-center gap-4 hover:text-brand-coral transition-all cursor-pointer group">
-                  <div className="w-10 h-10 rounded-full bg-muted/40 flex items-center justify-center group-hover:bg-brand-coral/10 transition-colors">
-                    <Phone className="w-4 h-4 text-brand-coral" />
+               <div className="flex items-center gap-4 hover:text-brand-teal transition-all cursor-pointer group">
+                  <div className="w-10 h-10 rounded-full bg-muted/40 flex items-center justify-center group-hover:bg-brand-teal/10 transition-colors">
+                    <Phone className="w-4 h-4 text-brand-teal" />
                   </div>
                   +56 9 6619 8752
                </div>

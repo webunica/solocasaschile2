@@ -47,7 +47,7 @@ serve(async (req) => {
         subject: `📩 Nuevo Prospecto — ${modelo?.nombre || "tu modelo"}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px;">
-            <div style="background: linear-gradient(135deg, #1b0088, #eb004a); padding: 32px; border-radius: 16px; text-align: center; margin-bottom: 32px;">
+            <div style="background: linear-gradient(135deg, #1b0088, #4fd3c5); padding: 32px; border-radius: 16px; text-align: center; margin-bottom: 32px;">
               <h1 style="color: white; font-size: 28px; margin: 0; font-weight: 900;">¡Nuevo Prospecto!</h1>
               <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0; font-size: 14px;">SolocasasChile — Panel de Constructoras</p>
             </div>
@@ -85,7 +85,7 @@ serve(async (req) => {
 
             <div style="text-align: center; margin: 32px 0;">
               <a href="https://app.solocasaschile.cl/leads" 
-                 style="display: inline-block; background: linear-gradient(135deg, #1b0088, #eb004a); color: white; font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+                 style="display: inline-block; background: linear-gradient(135deg, #1b0088, #4fd3c5); color: white; font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
                 Ver en el Panel CRM →
               </a>
             </div>

@@ -42,7 +42,7 @@ export default function RegisterPage() {
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Side Info */}
       <div className="hidden lg:flex flex-col justify-between p-12 bg-primary relative overflow-hidden text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-coral opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-teal opacity-90" />
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center mix-blend-overlay opacity-20" />
         
         <Link href="/" className="relative z-10 flex items-center space-x-2">
@@ -52,7 +52,7 @@ export default function RegisterPage() {
         <div className="relative z-10 space-y-12">
           <div className="space-y-4">
              <h1 className="text-5xl font-heading font-black leading-tight tracking-tighter">
-               Registra tu <br /> <span className="text-brand-coral">Constructora</span>
+               Registra tu <br /> <span className="text-brand-teal">Constructora</span>
              </h1>
              <p className="text-lg text-white/70 max-w-sm">Únete a la mayor vitrina de construcción modular de Chile en minutos.</p>
           </div>
@@ -65,7 +65,7 @@ export default function RegisterPage() {
                "Verificación de constructora certificada",
              ].map((text, i) => (
                <div key={i} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-brand-coral transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-brand-teal transition-colors">
                      <CheckCircle2 className="w-5 h-5 text-white" />
                   </div>
                   <span className="font-bold">{text}</span>

@@ -27,49 +27,43 @@ export type ModelWithConstructora = {
     regiones: string[];
   };
 };
+
+/** Stats del dashboard filtradas por la constructora autenticada */
 export async function getDashboardStats() {
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const userId = user?.id ?? ''
 
-  // 1. Get total models
   const { count: modelsCount } = await supabase
     .from('modelos')
     .select('*', { count: 'exact', head: true })
+    .eq('constructora_id', userId)
 
-  // 2. Get total leads
   const { count: leadsCount } = await supabase
     .from('leads')
     .select('*', { count: 'exact', head: true })
+    .eq('constructora_id', userId)
 
-  // 3. Get recent leads with their models
   const { data: recentLeads } = await supabase
     .from('leads')
-    .select(`
-      *,
-      modelo:modelos (nombre)
-    `)
+    .select(`*, modelo:modelos (nombre)`)
+    .eq('constructora_id', userId)
     .order('created_at', { ascending: false })
-    .limit(5)
-
-  // 4. Get views (mocking this as we don't have a views table yet, or using metadata if available)
-  // Let's assume we have a simple views counter or just mock it for Phase 3 visual progress.
-  const totalViews = 12842 // Placeholder for real analytics integration
+    .limit(10)
 
   return {
     modelsCount: modelsCount || 0,
     leadsCount: leadsCount || 0,
     recentLeads: recentLeads || [],
-    totalViews
+    totalViews: null, // Pendiente integración con Vercel Analytics
   }
 }
 
 export async function getModelBySlug(slug: string) {
   const supabase = await createClient()
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('modelos')
-    .select(`
-      *,
-      constructora:constructoras (*)
-    `)
+    .select(`*, constructora:constructoras (*)`)
     .eq('slug', slug)
     .single()
   return data
@@ -87,7 +81,7 @@ export async function getModelosFiltered(filters: {
   if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
   if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
   if (filters.region) query = query.contains('constructoras.regiones', [filters.region])
-  const { data, error } = await query.order('created_at', { ascending: false })
+  const { data } = await query.order('created_at', { ascending: false })
   const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 }
   return ((data as any[]) || []).sort((a, b) => {
     const planA = a.constructora?.plan || 'gratis'
@@ -98,17 +92,43 @@ export async function getModelosFiltered(filters: {
   })
 }
 
+/** Modelos pertenecientes a la constructora autenticada (dashboard privado) */
+export async function getModelosByConstructora() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return []
+  const { data } = await supabase
+    .from('modelos')
+    .select(`*, constructora:constructoras (*)`)
+    .eq('constructora_id', user.id)
+    .order('created_at', { ascending: false })
+  return (data as ModelWithConstructora[]) || []
+}
+
 export async function createLead(leadData: any) {
   const supabase = await createClient()
   return await supabase.from('leads').insert([leadData]).select()
 }
 
 export async function getModelsByIds(ids: string[]) {
-  if (!ids.length) return [];
+  if (!ids.length) return []
   const supabase = await createClient()
   const { data } = await supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
     .in('id', ids)
   return data || []
+}
+
+/** Elimina un modelo asegurando que pertenece al usuario autenticado */
+export async function deleteModelo(id: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+  const { error } = await supabase
+    .from('modelos')
+    .delete()
+    .eq('id', id)
+    .eq('constructora_id', user.id)
+  if (error) throw error
 }

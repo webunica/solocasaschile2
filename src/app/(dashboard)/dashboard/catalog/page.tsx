@@ -1,4 +1,5 @@
-import { getModelosFiltered } from "@/lib/supabase/services";
+import { getModelosByConstructora } from "@/lib/supabase/services";
+import { deleteModelo } from "@/lib/supabase/services";
 import { 
   Plus, Search, Edit2, Trash2, 
   Eye, LayoutGrid, List, Filter, Home
@@ -12,9 +13,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export default async function CatalogManagementPage() {
-  // Fetch only the firm's models (In Phase 4 we'd filter by logged-in firm ID)
-  // For Phase 3, we show all models for visual validation.
-  const modelos = await getModelosFiltered({});
+  const modelos = await getModelosByConstructora();
 
   return (
     <div className="space-y-10 py-12">
@@ -100,18 +99,21 @@ export default async function CatalogManagementPage() {
                    >
                      <Eye className="w-5 h-5 text-muted-foreground" />
                    </Link>
-                   <Link 
+                   <Link
                      href="#edit"
                      className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 p-0 hover:border-blue-500/40 hover:text-blue-600 transition-all")}
                    >
                       <Edit2 className="w-5 h-5" />
                    </Link>
-                   <Link 
-                     href="#delete"
-                     className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 p-0 hover:border-red-500/40 hover:text-red-600 transition-all")}
-                   >
-                      <Trash2 className="w-5 h-5" />
-                   </Link>
+                   <form action={async () => { "use server"; await deleteModelo(modelo.id); }}>
+                      <button
+                        type="submit"
+                        className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 p-0 hover:border-red-500/40 hover:text-red-600 transition-all")}
+                        title="Eliminar modelo"
+                      >
+                        <Trash2 className="w-5 h-5" />
+                      </button>
+                   </form>
                 </div>
               </div>
             )) : (

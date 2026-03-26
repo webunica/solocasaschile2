@@ -114,7 +114,7 @@ export function CatalogoGrid({ modelos }: Props) {
                 {/* Specs Grid */}
                 <div className="grid grid-cols-3 gap-4 mb-8">
                   <div className="flex flex-col gap-1">
-                     <Square className="w-4 h-4 text-brand-coral opacity-60" />
+                     <Square className="w-4 h-4 text-brand-teal opacity-60" />
                      <span className="text-sm font-black tracking-tight">{modelo.superficie_m2}</span>
                      <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-40">m² Totales</span>
                   </div>
@@ -147,7 +147,7 @@ export function CatalogoGrid({ modelos }: Props) {
                     className={cn(
                       "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border-2",
                       comparar.includes(modelo.id)
-                        ? "bg-brand-coral/10 border-brand-coral text-brand-coral"
+                        ? "bg-brand-teal/10 border-brand-teal text-brand-teal"
                         : "border-border hover:bg-muted text-muted-foreground"
                     )}
                   >
@@ -171,7 +171,7 @@ export function CatalogoGrid({ modelos }: Props) {
           >
             <div className="bg-foreground text-background rounded-3xl p-4 flex items-center justify-between shadow-2xl shadow-black/20 ring-1 ring-white/10">
                <div className="flex items-center gap-3 ml-2">
-                  <div className="w-8 h-8 rounded-full bg-brand-coral flex items-center justify-center text-white">
+                  <div className="w-8 h-8 rounded-full bg-brand-teal flex items-center justify-center text-white">
                      <BarChart2 className="w-4 h-4" />
                   </div>
                   <div className="flex flex-col">
@@ -188,7 +188,7 @@ export function CatalogoGrid({ modelos }: Props) {
                   </button>
                   <Link 
                     href={`/comparar?ids=${comparar.join(',')}`}
-                    className="h-10 px-6 rounded-xl bg-brand-coral text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-brand-coral/90 transition-colors"
+                    className="h-10 px-6 rounded-xl bg-brand-teal text-white text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-brand-teal/90 transition-colors"
                   >
                     Comparar <ArrowRight className="w-3 h-3" />
                   </Link>

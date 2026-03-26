@@ -100,7 +100,7 @@ export function MapaConstructoras({ constructoras }: Props) {
                     cx={region.x}
                     cy={region.y}
                     r={count > 0 ? 14 : 8}
-                    className="fill-brand-coral/20 animate-pulse"
+                    className="fill-brand-teal/20 animate-pulse"
                   />
                 )}
                 {/* Main dot */}
@@ -112,8 +112,8 @@ export function MapaConstructoras({ constructoras }: Props) {
                     cursor-pointer transition-all duration-200
                     ${count > 0
                       ? isActive
-                        ? "fill-brand-coral stroke-white"
-                        : "fill-brand-indigo stroke-white hover:fill-brand-coral"
+                        ? "fill-brand-teal stroke-white"
+                        : "fill-brand-indigo stroke-white hover:fill-brand-teal"
                       : "fill-muted-foreground/20 stroke-muted-foreground/30 cursor-default"
                     }
                   `}
@@ -148,7 +148,7 @@ export function MapaConstructoras({ constructoras }: Props) {
             Con constructoras
           </div>
           <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-            <div className="w-3 h-3 rounded-full bg-brand-coral" />
+            <div className="w-3 h-3 rounded-full bg-brand-teal" />
             Premium activas
           </div>
         </div>
@@ -182,7 +182,7 @@ export function MapaConstructoras({ constructoras }: Props) {
                   className="flex items-center justify-between p-4 rounded-2xl border border-border/60 bg-card/40 hover:bg-card hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-indigo/10 to-brand-coral/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-indigo/10 to-brand-teal/10 flex items-center justify-center">
                       <MapPin className="w-4 h-4 text-brand-indigo" />
                     </div>
                     <div>
