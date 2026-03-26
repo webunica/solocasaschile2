@@ -136,7 +136,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
           <Textarea 
             name="message" 
             placeholder="Dudas sobre terreno, terminaciones o plazos..." 
-            className="bg-muted/30 border-none rounded-2xl min-h-[100px] pl-11 focus:bg-background transition-colors p-4" 
+            className="bg-muted/30 border-none rounded-2xl min-h-[120px] pr-4 pt-4 pb-4 pl-12 focus:bg-background transition-colors" 
           />
         </div>
       </div>
