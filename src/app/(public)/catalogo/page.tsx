@@ -16,10 +16,11 @@ export const metadata: Metadata = {
 interface PageProps {
   searchParams: Promise<{ tipo?: string; min?: string; max?: string; region?: string }>;
 }
+import type { TipoModelo } from "@/lib/mock-data";
 
 export default async function CatalogoPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const tipoFilter = params.tipo;
+  const tipoFilter = params.tipo as TipoModelo | undefined;
   const regionFilter = params.region;
   const minUF = params.min ? parseInt(params.min) : undefined;
   const maxUF = params.max ? parseInt(params.max) : undefined;

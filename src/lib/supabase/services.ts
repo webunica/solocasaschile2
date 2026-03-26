@@ -1,5 +1,32 @@
 import { createClient } from './server'
 
+export type ModelWithConstructora = {
+  id: string;
+  constructora_id: string;
+  nombre: string;
+  slug: string;
+  tipo: string;
+  superficie_m2: number;
+  dormitorios: number;
+  banos: number;
+  precio_desde_uf: number;
+  imagenes_urls: string[];
+  tiempo_entrega: string;
+  descripcion: string;
+  disponible: boolean;
+  score?: number;
+  constructora: {
+    id: string;
+    nombre: string;
+    slug: string;
+    logo_url: string;
+    descripcion: string;
+    plan: string;
+    verificada: boolean;
+    score_confianza: number;
+    regiones: string[];
+  };
+};
 export async function getDashboardStats() {
   const supabase = await createClient()
 
