@@ -19,8 +19,12 @@ export async function FeaturedConstructorsSection() {
     .limit(3);
 
   return (
-    <section className="py-24 bg-slate-50/50 dark:bg-slate-900/50 border-y border-border/50">
-      <div className="container px-4 md:px-8 max-w-7xl mx-auto">
+    <section className="py-40 bg-background relative overflow-hidden border-y border-border/40">
+      {/* Impeccable Background Layer */}
+      <div className="absolute inset-0 bg-muted/20 mix-blend-multiply opacity-50" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-indigo/5 rounded-full blur-[100px] translate-x-1/4 translate-y-1/4 pointer-events-none" />
+      
+      <div className="container px-6 md:px-12 max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-xl">
             <h2 className="text-3xl md:text-5xl font-heading font-black tracking-tighter mb-4">

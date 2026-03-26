@@ -17,16 +17,16 @@ export function StatsSection() {
           ].map((stat, i) => (
             <div 
               key={stat.label} 
-              className={`p-10 lg:p-16 flex flex-col gap-6 group transition-all duration-700 bg-background hover:bg-muted/30 ${stat.border} border-border/40`}
+              className={`p-10 lg:p-20 flex flex-col gap-10 group transition-all duration-700 bg-background hover:bg-muted/30 ${stat.border} border-border/40`}
             >
-              <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:brand-gradient group-hover:text-white transition-all transform group-hover:scale-110">
-                 <stat.icon className="w-5 h-5" />
+              <div className="w-14 h-14 rounded-3xl bg-primary/5 flex items-center justify-center text-primary group-hover:brand-gradient group-hover:text-white transition-all transform group-hover:scale-110 border border-border/20">
+                 <stat.icon className="w-7 h-7" />
               </div>
-              <div className="space-y-2">
-                <div className="text-[clamp(2.5rem,5vw,4.5rem)] font-black tracking-[-0.08em] leading-none text-foreground mix-blend-multiply group-hover:text-primary transition-colors">
+              <div className="space-y-3">
+                <div className="text-[clamp(2.5rem,5vw,5.5rem)] font-black tracking-[-0.08em] leading-[0.85] text-foreground mix-blend-multiply group-hover:text-primary transition-colors">
                   {stat.val}
                 </div>
-                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40 leading-relaxed">
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40 leading-relaxed max-w-[120px]">
                   {stat.label}
                 </div>
               </div>

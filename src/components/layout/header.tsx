@@ -11,9 +11,9 @@ export function Header() {
   
   // Adaptive height and style based on scroll
   const headerY = useTransform(scrollY, [0, 50], [20, 10]);
-  const headerWidth = useTransform(scrollY, [0, 50], ["95%", "90%"]);
-  const headerRadius = useTransform(scrollY, [0, 50], ["1.5rem", "3rem"]);
-  const headerOpacity = useTransform(scrollY, [0, 50], [0.8, 0.95]);
+  const headerWidth = useTransform(scrollY, [0, 50], ["98%", "94%"]);
+  const headerRadius = useTransform(scrollY, [0, 50], ["1.5rem", "4rem"]);
+  const headerOpacity = useTransform(scrollY, [0, 50], [0.8, 0.98]);
 
   return (
     <motion.header 
