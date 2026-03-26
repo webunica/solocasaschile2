@@ -1,13 +1,43 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { register } from "@/lib/supabase/actions";
 
 export default function RegisterPage() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    const formData = new FormData(e.currentTarget);
+
+    // Validate passwords match
+    const password = formData.get('password') as string;
+    const confirm = formData.get('confirmPassword') as string;
+    if (password !== confirm) {
+      setError("Las contraseñas no coinciden.");
+      setLoading(false);
+      return;
+    }
+
+    const result = await register(formData);
+    if (result?.error) {
+      const msg = result.error.includes('already registered')
+        ? 'Este email ya está registrado. Inicia sesión en su lugar.'
+        : result.error;
+      setError(msg);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Side Info */}
@@ -61,39 +91,54 @@ export default function RegisterPage() {
             <p className="text-muted-foreground font-medium">Completa los datos de tu empresa para comenzar.</p>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3 bg-destructive/10 border border-destructive/20 text-destructive rounded-2xl px-4 py-3 text-sm font-bold"
+            >
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              {error}
+            </motion.div>
+          )}
+
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                <div className="space-y-2">
                   <Label htmlFor="companyName">Razón Social</Label>
-                  <Input id="companyName" placeholder="Constructora SpA" required />
+                  <Input id="companyName" name="companyName" placeholder="Constructora SpA" required />
                </div>
                <div className="space-y-2">
                   <Label htmlFor="rut">RUT Empresa</Label>
-                  <Input id="rut" placeholder="76.xxx.xxx-k" required />
+                  <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required />
                </div>
             </div>
 
             <div className="space-y-4">
                <div className="space-y-2">
                   <Label htmlFor="repName">Representante Legal</Label>
-                  <Input id="repName" placeholder="Nombre completo" required />
+                  <Input id="repName" name="repName" placeholder="Nombre completo" required />
                </div>
                <div className="space-y-2">
                   <Label htmlFor="email">Email Corporativo</Label>
-                  <Input id="email" type="email" placeholder="contacto@empresa.cl" required />
+                  <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required />
                </div>
                <div className="space-y-2">
                   <Label htmlFor="phone">Teléfono de Contacto</Label>
-                  <Input id="phone" type="tel" placeholder="+56 9 ..." required />
+                  <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required />
                </div>
                <div className="space-y-2">
                   <Label htmlFor="password">Establecer Contraseña</Label>
-                  <Input id="password" type="password" required />
+                  <Input id="password" name="password" type="password" minLength={6} required />
+               </div>
+               <div className="space-y-2">
+                  <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
+                  <Input id="confirmPassword" name="confirmPassword" type="password" minLength={6} required />
                </div>
             </div>
 
-            <Button type="submit" size="lg" className="w-full h-12 bg-primary hover:bg-primary/95 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all">
-               Registrar Constructora <ArrowRight className="ml-2 w-4 h-4" />
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-12 bg-primary hover:bg-primary/95 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all">
+               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Registrar Constructora <ArrowRight className="ml-2 w-4 h-4" /></>}
             </Button>
           </form>
 
@@ -103,7 +148,7 @@ export default function RegisterPage() {
 
           <div className="pt-8 border-t border-border">
             <p className="text-sm text-center text-muted-foreground font-medium">
-              ¿Ya tienes una cuenta? {" "}
+              ¿Ya tienes una cuenta?{" "}
               <Link href="/login" className="text-primary font-bold hover:underline">
                 Inicia sesión aquí
               </Link>

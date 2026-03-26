@@ -1,18 +1,24 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Dashboard | SolocasasChile",
   description: "Administra tu constructora, modelos y prospectos desde el panel central de SolocasasChile.",
 };
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">

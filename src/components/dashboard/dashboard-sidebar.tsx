@@ -12,6 +12,7 @@ import {
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, 
   SidebarGroup, SidebarGroupLabel, SidebarGroupContent 
 } from "@/components/ui/sidebar";
+import { logout } from "@/lib/supabase/actions";
 
 const DASHBOARD_MENU = [
   { title: "Inicio", icon: LayoutDashboard, href: "/dashboard" },
@@ -86,12 +87,17 @@ export function DashboardSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="p-6 border-t">
-         <Link href="/" className="flex items-center gap-3 w-full text-sm font-bold text-red-500 hover:text-red-600 transition-colors group">
+        <form action={logout}>
+          <button 
+            type="submit"
+            className="flex items-center gap-3 w-full text-sm font-bold text-red-500 hover:text-red-600 transition-colors group"
+          >
             <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center group-hover:bg-red-100">
                <LogOut className="w-4 h-4" />
             </div>
             <span className="group-data-[collapsible=icon]:hidden">Cerrar Sesión</span>
-         </Link>
+          </button>
+        </form>
       </SidebarFooter>
     </Sidebar>
   );

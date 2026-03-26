@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { CotizarForm } from "@/components/constructora/cotizar-form";
+import { ImageGallery } from "@/components/ui/image-gallery";
 import { cn } from "@/lib/utils";
 import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
@@ -56,49 +57,11 @@ export default async function ModeloPage({ params }: PageProps) {
           
           {/* Main Content (Left) */}
           <div className="space-y-12">
-            {/* Gallery Design */}
-            <div className="grid grid-cols-4 gap-4 h-[450px]">
-              <div className="col-span-3 relative rounded-[3rem] overflow-hidden group shadow-2xl">
-                 <Image
-                   src={modelo.imagenes_urls?.[0] || 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1400'}
-                   alt={modelo.nombre}
-                   fill
-                   className="object-cover group-hover:scale-105 transition-transform duration-[2s]"
-                   priority
-                 />
-                 <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/80 to-transparent" />
-                 
-                 {/* Floating Badges */}
-                 <div className="absolute top-6 left-6 flex gap-3">
-                   <Badge className="bg-black/40 backdrop-blur-md px-4 py-1.5 border-white/20 text-[10px] font-black uppercase tracking-widest">
-                     {TIPO_LABELS[modelo.tipo] || modelo.tipo}
-                   </Badge>
-                   {constructora.plan === "premium" && (
-                     <Badge className="bg-brand-coral text-white border-none px-4 py-1.5 text-[10px] font-black uppercase tracking-widest shadow-lg shadow-brand-coral/20">
-                       <Star className="w-3 h-3 mr-1.5 fill-current" /> Premium
-                     </Badge>
-                   )}
-                 </div>
-
-                 <div className="absolute bottom-8 left-10">
-                    <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter text-white leading-none">
-                       {modelo.nombre}
-                    </h1>
-                 </div>
-              </div>
-              <div className="col-span-1 grid grid-rows-2 gap-4">
-                 {[1, 2].map((i) => (
-                    <div key={i} className="relative rounded-[2rem] overflow-hidden shadow-lg border border-border/10">
-                       <Image 
-                         src={modelo.imagenes_urls?.[i] || 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=600'} 
-                         fill 
-                         alt="Vista" 
-                         className="object-cover hover:scale-110 transition-transform duration-700"
-                       />
-                    </div>
-                 ))}
-              </div>
-            </div>
+            {/* Gallery with Lightbox */}
+            <ImageGallery
+              images={modelo.imagenes_urls || []}
+              altBase={modelo.nombre}
+            />
 
             {/* Description & Branding */}
             <div className="flex flex-col gap-6">
@@ -179,11 +142,16 @@ export default async function ModeloPage({ params }: PageProps) {
                      <h3 className="text-2xl font-heading font-black tracking-tight">Constructora Certificada</h3>
                      <p className="text-muted-foreground font-medium max-w-md">{constructora.descripcion || `Especialistas en viviendas de alta calidad, certificados por SolocasasChile con un score de confianza de ${constructora.score_confianza}/100.`}</p>
                      <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
-                        {constructora.badges.map((b) => (
-                           <div key={b} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-brand-indigo bg-brand-indigo/5 px-4 py-2 rounded-full border border-brand-indigo/10">
-                              <ShieldCheck className="w-3 h-3" /> {b}
-                           </div>
-                        ))}
+                        {constructora.verificada && (
+                          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-brand-indigo bg-brand-indigo/5 px-4 py-2 rounded-full border border-brand-indigo/10">
+                            <ShieldCheck className="w-3 h-3" /> Verificada
+                          </div>
+                        )}
+                        {(constructora.plan === 'pro' || constructora.plan === 'premium') && (
+                          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-500/5 px-4 py-2 rounded-full border border-amber-500/10">
+                            <Star className="w-3 h-3 fill-current" /> {constructora.plan === 'premium' ? 'Premium' : 'Pro'}
+                          </div>
+                        )}
                      </div>
                   </div>
                </div>

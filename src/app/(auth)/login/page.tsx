@@ -1,13 +1,32 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Building2, ArrowRight } from "lucide-react";
+import { Building2, ArrowRight, Loader2, AlertCircle } from "lucide-react";
+import { login } from "@/lib/supabase/actions";
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    const formData = new FormData(e.currentTarget);
+    const result = await login(formData);
+    if (result?.error) {
+      setError(result.error === "Invalid login credentials"
+        ? "Email o contraseña incorrectos. Verifica tus datos."
+        : result.error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
       {/* Left: Branding & Info */}
@@ -20,7 +39,9 @@ export default function LoginPage() {
         </Link>
 
         <div className="relative z-10 space-y-6 max-w-md">
-          <Badge className="bg-white/20 text-white border-white/20 px-4 py-1">CONSTRUCTORAS</Badge>
+          <div className="text-[10px] tracking-widest font-black uppercase rounded-full px-3 py-1 border border-white/20 bg-white/10 text-white inline-block">
+            CONSTRUCTORAS
+          </div>
           <h1 className="text-5xl font-heading font-black leading-tight tracking-tighter">
             Potencia tu alcance <br /> 
             <span className="text-brand-coral">llega a más clientes</span>
@@ -49,31 +70,42 @@ export default function LoginPage() {
             <p className="text-muted-foreground font-medium">Ingresa tus credenciales para gestionar tu catálogo.</p>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3 bg-destructive/10 border border-destructive/20 text-destructive rounded-2xl px-4 py-3 text-sm font-bold"
+            >
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              {error}
+            </motion.div>
+          )}
+
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email Corporativo</Label>
-                <Input id="email" type="email" placeholder="nombre@empresa.cl" className="h-12" required />
+                <Input id="email" name="email" type="email" placeholder="nombre@empresa.cl" className="h-12" required />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Contraseña</Label>
-                  <Link href="/auth/forgot-password" className="text-xs font-bold text-primary hover:underline">
+                  <Link href="/auth/forgot-password" className="text-xs font-bold text-primary hover:underline underline-offset-4">
                     ¿Olvidaste tu contraseña?
                   </Link>
                 </div>
-                <Input id="password" type="password" className="h-12" required />
+                <Input id="password" name="password" type="password" className="h-12" required />
               </div>
             </div>
 
-            <Button type="submit" size="lg" className="w-full h-12 bg-primary hover:bg-primary/95 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all">
-               Iniciar Sesión <ArrowRight className="ml-2 w-4 h-4" />
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-12 bg-primary hover:bg-primary/95 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Iniciar Sesión <ArrowRight className="ml-2 w-4 h-4" /></>}
             </Button>
           </form>
 
           <div className="pt-8 border-t border-border">
             <p className="text-sm text-center text-muted-foreground font-medium">
-              ¿Aún no eres parte? {" "}
+              ¿Aún no eres parte?{" "}
               <Link href="/register" className="text-primary font-bold hover:underline">
                 Registra tu constructora
               </Link>
@@ -83,12 +115,4 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
-
-function Badge({ children, className }: { children: React.ReactNode, className?: string }) {
-  return (
-    <div className={`text-[10px] tracking-widest font-black uppercase rounded-full px-3 py-1 border border-primary/20 bg-primary/5 text-primary inline-block ${className}`}>
-      {children}
-    </div>
-  )
 }
