@@ -85,9 +85,9 @@ export function HeroSection() {
                 </Badge>
               </div>
               
-              <h1 className="text-[clamp(2.5rem,8vw,6.5rem)] font-black tracking-[-0.07em] leading-[0.85] text-foreground mix-blend-multiply dark:mix-blend-lighten">
+              <h1 className="text-[clamp(2rem,6vw,5.5rem)] font-black tracking-[-0.07em] leading-[0.85] text-foreground mix-blend-multiply dark:mix-blend-lighten text-left">
                 PROYECTA TU <br />
-                <span className="gradient-text block lg:-ml-4 translate-y-2">FUTURO HOGAR</span>
+                <span className="gradient-text block translate-y-2">FUTURO HOGAR</span>
               </h1>
               
               <p className="text-2xl text-muted-foreground font-medium leading-[1.5] max-w-xl mx-auto lg:mx-0 opacity-80">
