@@ -40,6 +40,8 @@ export interface Modelo {
   tiempoEntrega: string;
   descripcion: string;
   especificaciones: Record<string, string>;
+  garantiaAnos: number;
+  postventa: boolean;
   disponible: boolean;
 }
 
@@ -182,6 +184,8 @@ export const MODELOS: Modelo[] = [
       "Eficiencia": "Certificación energética Clase A",
       "Garantía": "10 años estructural",
     },
+    garantiaAnos: 10,
+    postventa: true,
     disponible: true,
   },
   {
@@ -207,6 +211,8 @@ export const MODELOS: Modelo[] = [
       "Calefacción": "Losa radiante + VRF",
       "Garantía": "5 años estructura",
     },
+    garantiaAnos: 5,
+    postventa: true,
     disponible: true,
   },
   {
@@ -232,6 +238,8 @@ export const MODELOS: Modelo[] = [
       "Calefacción": "Termopanel + estufa pellet",
       "Garantía": "3 años estructura",
     },
+    garantiaAnos: 3,
+    postventa: true,
     disponible: true,
   },
   {
@@ -257,6 +265,8 @@ export const MODELOS: Modelo[] = [
       "Calefacción": "Piso radiante + bomba calor",
       "Garantía": "7 años estructura",
     },
+    garantiaAnos: 7,
+    postventa: true,
     disponible: true,
   },
   {
@@ -282,6 +292,8 @@ export const MODELOS: Modelo[] = [
       "Calefacción": "Split inverter",
       "Garantía": "2 años estructura",
     },
+    garantiaAnos: 2,
+    postventa: false,
     disponible: true,
   },
   {
@@ -307,6 +319,8 @@ export const MODELOS: Modelo[] = [
       "Calefacción": "Split + losa radiante baño",
       "Garantía": "3 años estructura",
     },
+    garantiaAnos: 3,
+    postventa: true,
     disponible: true,
   },
   {
@@ -332,6 +346,8 @@ export const MODELOS: Modelo[] = [
       "Calefacción": "Estufa leña + termopanel",
       "Garantía": "5 años estructura",
     },
+    garantiaAnos: 5,
+    postventa: true,
     disponible: true,
   },
 ];

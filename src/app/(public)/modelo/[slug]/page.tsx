@@ -145,6 +145,8 @@ export default async function ModeloPage({ params }: PageProps) {
                     { icon: <Bed className="w-6 h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios || 0} Dorms` },
                     { icon: <Bath className="w-6 h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos || 0} Baños` },
                     { icon: <Clock className="w-6 h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || 'Consultar' },
+                    { icon: <ShieldCheck className="w-6 h-6 text-brand-indigo" />, label: "Garantía", value: `${modelo.garantia_anos || 1} Años` },
+                    { icon: <Zap className="w-6 h-6 text-brand-indigo" />, label: "Postventa", value: modelo.postventa ? "Disponible" : "Consultar" },
                  ].map((spec) => (
                     <div key={spec.label} className="bg-muted/10 border border-border/40 p-8 rounded-[3rem] space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
                        <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">

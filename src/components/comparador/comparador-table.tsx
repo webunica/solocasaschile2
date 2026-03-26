@@ -111,6 +111,35 @@ const ROWS: Row[] = [
     },
     highlight: "high",
   },
+  {
+    label: "Garantía Estructural",
+    key: "garantia_anos",
+    render: (m) => (
+      <div className="flex flex-col items-center">
+        <span className="font-black text-xl text-foreground">
+          {m.garantia_anos || 1} <span className="text-sm font-bold opacity-60 uppercase">Años</span>
+        </span>
+      </div>
+    ),
+    highlight: "high",
+  },
+  {
+    label: "Servicio Postventa",
+    key: "postventa",
+    render: (m) => (
+      <div className="flex justify-center">
+        {m.postventa ? (
+           <Badge className="bg-emerald-500/10 text-emerald-600 border-none px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
+              <CheckCircle2 className="w-3 h-3 mr-2" /> Incluido
+           </Badge>
+        ) : (
+           <Badge variant="outline" className="text-muted-foreground opacity-40 px-4 py-1.5 rounded-full font-black text-[10px] uppercase tracking-widest">
+              No Disponible
+           </Badge>
+        )}
+      </div>
+    ),
+  },
 ];
 
 export function ComparadorTable({ modelos }: Props) {

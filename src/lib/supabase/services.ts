@@ -15,6 +15,8 @@ export type ModelWithConstructora = {
   tiempo_entrega: string;
   descripcion: string;
   disponible: boolean;
+  garantia_anos?: number;
+  postventa?: boolean;
   especificaciones?: Record<string, string>;
   score?: number;
   constructora: {
@@ -112,6 +114,8 @@ export async function getModelBySlug(slug: string) {
       tiempo_entrega: mock.tiempoEntrega,
       descripcion: mock.descripcion,
       disponible: mock.disponible,
+      garantia_anos: mock.garantiaAnos,
+      postventa: mock.postventa,
       especificaciones: mock.especificaciones,
       constructora: {
         id: mock.constructoraId,
@@ -177,6 +181,8 @@ export async function getModelosFiltered(filters: {
     tiempo_entrega: m.tiempoEntrega,
     descripcion: m.descripcion,
     disponible: m.disponible,
+    garantia_anos: m.garantiaAnos,
+    postventa: m.postventa,
     constructora: {
       id: m.constructoraId,
       nombre: m.constructoraNombre,
@@ -262,6 +268,8 @@ export async function getModelsByIds(ids: string[]) {
       tiempo_entrega: mock.tiempoEntrega,
       descripcion: mock.descripcion,
       disponible: mock.disponible,
+      garantia_anos: mock.garantiaAnos,
+      postventa: mock.postventa,
       especificaciones: mock.especificaciones,
       constructora: {
         id: mock.constructoraId,
