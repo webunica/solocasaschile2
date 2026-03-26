@@ -26,9 +26,9 @@ export default async function DashboardPage() {
   const STATS = [
     { 
       title: "Vistas Totales", 
-      value: totalViews.toLocaleString(), 
-      change: "+12.5%", 
-      trend: "up", 
+      value: "—", 
+      change: "Próximamente", 
+      trend: "neutral", 
       icon: LayoutGrid, 
       color: "text-blue-600 bg-blue-50" 
     },
@@ -50,7 +50,7 @@ export default async function DashboardPage() {
     },
     { 
       title: "Tasa de Conversión", 
-      value: ((leadsCount / totalViews) * 100).toFixed(1) + "%", 
+      value: modelsCount > 0 ? ((leadsCount / modelsCount)).toFixed(1) + " lead/mod" : "—",
       change: "+0.8%", 
       trend: "up", 
       icon: BarChart2, 
