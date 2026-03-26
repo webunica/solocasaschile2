@@ -223,6 +223,22 @@ export default async function ModeloPage({ params }: PageProps) {
                          </span>
                          <span className="text-2xl font-black text-brand-indigo">UF</span>
                       </div>
+                      
+                      <div className="flex items-center justify-between px-2">
+                         <div className="flex flex-col">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">Valor M²</span>
+                            <div className="flex items-baseline gap-1.5">
+                               <span className="text-2xl font-black tracking-tight">{(precio / (modelo.superficie_m2 || 1)).toFixed(2)}</span>
+                               <span className="text-[10px] font-bold text-brand-indigo uppercase">UF/M²</span>
+                            </div>
+                         </div>
+                         <div className="h-8 w-px bg-border/40" />
+                         <div className="flex flex-col text-right">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">Área</span>
+                            <span className="text-lg font-bold">{modelo.superficie_m2 || 0} m²</span>
+                         </div>
+                      </div>
+
                       <div className="h-px bg-border/40 w-full" />
                       
                       {/* Social Proof Capsule */}

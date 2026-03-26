@@ -40,8 +40,20 @@ const ROWS: Row[] = [
   {
     label: "Superficie Total",
     key: "superficie_m2",
-    render: (m) => <span className="font-bold text-lg">{m.superficie_m2} m²</span>,
     highlight: "high",
+  },
+  {
+    label: "Valor Metro Cuadrado",
+    key: "uf_m2",
+    render: (m) => (
+      <div className="flex flex-col items-center">
+        <span className="font-black text-xl text-primary">
+          {(m.precio_desde_uf / (m.superficie_m2 || 1)).toFixed(2)}
+        </span>
+        <span className="text-[10px] font-bold uppercase tracking-widest opacity-40">UF/m²</span>
+      </div>
+    ),
+    highlight: "low",
   },
   { label: "Dormitorios", key: "dormitorios", render: (m) => <span className="font-bold">{m.dormitorios}</span>, highlight: "high" },
   { label: "Baños Completos", key: "banos", render: (m) => <span className="font-bold">{m.banos}</span>, highlight: "high" },
@@ -105,6 +117,10 @@ export function ComparadorTable({ modelos }: Props) {
   // Find best value per numeric row
   const getBestIndex = (row: Row, highlight: "low" | "high") => {
     const vals = modelos.map((m) => {
+      // Valor UF/m2 (Special Case)
+      if (row.key === "uf_m2") {
+        return m.precio_desde_uf / (m.superficie_m2 || 1);
+      }
       // Support nested keys like "constructora.score_confianza"
       if (typeof row.key === 'string' && row.key.includes('.')) {
          const keys = row.key.split('.');
