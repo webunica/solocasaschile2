@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { 
   Building2, ShieldCheck, Globe, Mail, Phone
@@ -9,32 +10,48 @@ import { HeroLeadForm } from "./hero-lead-form";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[95vh] flex items-center pt-24 pb-20 overflow-hidden bg-background">
-      {/* Background Decor with Latam Tones */}
-      <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-brand-indigo/5 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50" />
+    <section className="relative min-h-[90vh] flex items-center pt-32 pb-24 overflow-hidden bg-background">
+      {/* Impeccable Background Decoration */}
+      <div className="absolute inset-0 bg-dot-pattern opacity-[0.15] pointer-events-none" />
+      
+      {/* Architectural Lines */}
+      <div className="absolute top-0 right-1/3 w-px h-full bg-border/20 hidden lg:block" />
+      <div className="absolute bottom-1/4 left-0 w-full h-px bg-border/20 hidden lg:block" />
+      
+      <div className="absolute top-0 right-0 w-[1200px] h-[1200px] bg-brand-indigo/5 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50" />
       <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-brand-teal/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none opacity-30" />
 
+      {/* Abstract Floating Image Element */}
+      <div className="absolute top-1/2 right-12 -translate-y-1/2 w-[500px] h-[700px] opacity-20 blur-sm pointer-events-none hidden xl:block">
+        <Image 
+          src="/images/decorations/hero-abstract.png" 
+          alt="Abstract Decoration" 
+          fill 
+          className="object-contain"
+        />
+      </div>
+
       <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-20 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-24 lg:gap-32 items-center">
           
           {/* Left: Interactive Lead Form */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.98, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="glass p-10 md:p-14 rounded-[3rem] shadow-[0_32px_64px_-16px_rgba(27,0,136,0.1)] relative overflow-hidden group border-white/40 dark:border-white/5"
+            className="glass p-12 md:p-16 rounded-[4rem] shadow-[0_32px_128px_-32px_rgba(27,0,136,0.15)] relative overflow-hidden group border-white/40 dark:border-white/5"
           >
             {/* Design accents */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 brand-gradient shadow-lg" />
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
+            <div className="absolute top-0 left-0 right-0 h-2 brand-gradient shadow-lg" />
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl opacity-50" />
             
-            <div className="space-y-10 relative z-10">
-              <div className="space-y-4">
-                 <h3 className="text-3xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
+            <div className="space-y-12 relative z-10">
+              <div className="space-y-5">
+                 <h3 className="text-4xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
                    Obtener <span className="text-brand-teal">Datos</span>
                  </h3>
-                 <p className="text-muted-foreground font-medium leading-relaxed max-w-sm">
-                   Acceso directo a información estratégica para constructoras y especialistas de la industria.
+                 <p className="text-muted-foreground font-medium leading-relaxed max-w-sm opacity-80">
+                   Acceso directo a información estratégica y presupuestos técnicos para constructoras.
                  </p>
               </div>
 
@@ -43,23 +60,25 @@ export function HeroSection() {
           </motion.div> 
  
           {/* Right: Branding High Performance */}
-          <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-20">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-10"
+              className="space-y-12"
             >
-              <Badge variant="outline" className="brand-gradient text-white border-none px-5 py-2 rounded-full text-[10px] tracking-[0.25em] font-black uppercase shadow-xl shadow-primary/20">
-                ⚡ TEMPORADA ALTA: +45% BÚSQUEDAS
-              </Badge>
+              <div className="flex items-center gap-4">
+                <Badge variant="outline" className="brand-gradient text-white border-none px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
+                  ⚡ TEMPORADA ALTA: +45% BÚSQUEDAS
+                </Badge>
+              </div>
               
-              <h1 className="text-[clamp(3.5rem,15vw,10rem)] font-black tracking-[-0.06em] leading-[0.8] text-foreground mix-blend-multiply dark:mix-blend-lighten text-center lg:text-left">
+              <h1 className="text-[clamp(2.5rem,10vw,7rem)] font-black tracking-[-0.07em] leading-[0.9] text-foreground mix-blend-multiply dark:mix-blend-lighten text-center lg:text-left">
                 PROYECTA TU <br />
-                <span className="gradient-text block lg:-ml-6 translate-y-2">FUTURO HOGAR</span>
+                <span className="gradient-text block lg:-ml-6 translate-y-3">FUTURO HOGAR</span>
               </h1>
               
-              <p className="text-2xl text-muted-foreground font-medium leading-snug max-w-xl">
+              <p className="text-2xl text-muted-foreground font-medium leading-[1.4] max-w-xl opacity-80">
                  Conecta con el catálogo más grande de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas.
               </p>
             </motion.div>
