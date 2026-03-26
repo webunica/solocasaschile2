@@ -54,9 +54,9 @@ export function HeroSection() {
                 ⚡ TEMPORADA ALTA: +45% BÚSQUEDAS
               </Badge>
               
-              <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.82] text-foreground">
+              <h1 className="text-[clamp(3.5rem,15vw,10rem)] font-black tracking-[-0.06em] leading-[0.8] text-foreground mix-blend-multiply dark:mix-blend-lighten text-center lg:text-left">
                 PROYECTA TU <br />
-                <span className="gradient-text">FUTURO HOGAR</span>
+                <span className="gradient-text block lg:-ml-6 translate-y-2">FUTURO HOGAR</span>
               </h1>
               
               <p className="text-2xl text-muted-foreground font-medium leading-snug max-w-xl">
