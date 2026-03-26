@@ -37,7 +37,7 @@ export function Header() {
             alt="SolocasasChile" 
             width={180} 
             height={40} 
-            className="h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-105 duration-500 dark:invert-[0.1]"
+            className="h-8 md:h-10 w-auto object-contain"
             priority
           />
         </Link>

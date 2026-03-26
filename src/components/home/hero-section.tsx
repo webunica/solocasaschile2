@@ -84,13 +84,9 @@ export function HeroSection() {
             
             <div className="space-y-12 relative z-10">
               <div className="space-y-5">
-                 <div className="flex items-center gap-4 mb-2">
-                    <Image src="/images/logo.png" alt="Logo" width={140} height={32} className="h-8 w-auto dark:invert-[0.1]" />
-                    <span className="h-4 w-px bg-border/40" />
-                    <h3 className="text-xl font-heading font-black tracking-tighter text-foreground uppercase leading-none translate-y-0.5">
-                      Obtener <span className="text-brand-teal">Datos</span>
-                    </h3>
-                 </div>
+                 <h3 className="text-4xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
+                   Obtener <span className="text-brand-teal">Datos</span>
+                 </h3>
                  <p className="text-muted-foreground font-medium leading-relaxed max-w-sm opacity-80">
                    Acceso directo a información estratégica y presupuestos técnicos para constructoras.
                  </p>
