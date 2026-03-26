@@ -14,22 +14,30 @@ export function HeroSection() {
       {/* Impeccable Background Decoration */}
       <div className="absolute inset-0 bg-dot-pattern opacity-[0.15] pointer-events-none" />
       
+      {/* Andes Mountains Silhouette (SVG Decor) */}
+      <div className="absolute bottom-0 left-0 w-full h-[300px] opacity-[0.05] pointer-events-none select-none z-0">
+        <svg viewBox="0 0 1440 320" className="w-full h-full preserve-3d" preserveAspectRatio="none">
+          <path 
+            fill="currentColor" 
+            className="text-primary"
+            d="M0,224L48,202.7C96,181,192,139,288,138.7C384,139,480,181,576,192C672,203,768,181,864,149.3C960,117,1056,75,1152,74.7C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          />
+          {/* Layer 2: Higher Peaks */}
+          <path 
+            fill="currentColor" 
+            className="text-brand-indigo opaticy-50"
+            d="M0,288L60,256C120,224,240,160,360,160C480,160,600,224,720,224C840,224,960,160,1080,128C1200,96,1320,96,1380,96L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+            style={{ opacity: 0.3 }}
+          />
+        </svg>
+      </div>
+
       {/* Architectural Lines */}
       <div className="absolute top-0 right-1/3 w-px h-full bg-border/20 hidden lg:block" />
       <div className="absolute bottom-1/4 left-0 w-full h-px bg-border/20 hidden lg:block" />
       
       <div className="absolute top-0 right-0 w-[1200px] h-[1200px] bg-brand-indigo/5 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2 pointer-events-none opacity-50" />
       <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-brand-teal/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none opacity-30" />
-
-      {/* Abstract Floating Image Element */}
-      <div className="absolute top-1/2 right-12 -translate-y-1/2 w-[500px] h-[700px] opacity-20 blur-sm pointer-events-none hidden xl:block">
-        <Image 
-          src="/images/decorations/hero-abstract.png" 
-          alt="Abstract Decoration" 
-          fill 
-          className="object-contain"
-        />
-      </div>
 
       <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-2 gap-24 lg:gap-32 items-center">
@@ -47,9 +55,13 @@ export function HeroSection() {
             
             <div className="space-y-12 relative z-10">
               <div className="space-y-5">
-                 <h3 className="text-4xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
-                   Obtener <span className="text-brand-teal">Datos</span>
-                 </h3>
+                 <div className="flex items-center gap-4 mb-2">
+                    <Image src="/images/logo.png" alt="Logo" width={140} height={32} className="h-8 w-auto dark:invert-[0.1]" />
+                    <span className="h-4 w-px bg-border/40" />
+                    <h3 className="text-xl font-heading font-black tracking-tighter text-foreground uppercase leading-none translate-y-0.5">
+                      Obtener <span className="text-brand-teal">Datos</span>
+                    </h3>
+                 </div>
                  <p className="text-muted-foreground font-medium leading-relaxed max-w-sm opacity-80">
                    Acceso directo a información estratégica y presupuestos técnicos para constructoras.
                  </p>
@@ -79,7 +91,7 @@ export function HeroSection() {
               </h1>
               
               <p className="text-2xl text-muted-foreground font-medium leading-[1.4] max-w-xl opacity-80">
-                 Conecta con el catálogo más grande de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas.
+                 Conecta con el catálogo más mayor de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo el territorio nacional.
               </p>
             </motion.div>
 

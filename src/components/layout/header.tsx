@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -30,10 +31,15 @@ export function Header() {
       )}
     >
       <div className="container flex h-16 items-center px-8 md:px-12 max-w-7xl mx-auto">
-        <Link href="/" className="mr-10 flex items-center space-x-2 group">
-          <span className="font-heading font-black text-2xl tracking-[-0.06em] gradient-text transition-transform group-hover:scale-105 duration-500">
-            Solocasas<span className="text-foreground">Chile</span>
-          </span>
+        <Link href="/" className="mr-10 flex items-center group">
+          <Image 
+            src="/images/logo.png" 
+            alt="SolocasasChile" 
+            width={180} 
+            height={40} 
+            className="h-8 md:h-10 w-auto object-contain transition-transform group-hover:scale-105 duration-500 dark:invert-[0.1]"
+            priority
+          />
         </Link>
         
         <div className="flex flex-1 items-center justify-between">
