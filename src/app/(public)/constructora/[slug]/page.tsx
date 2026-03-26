@@ -176,7 +176,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
                   {constructora.regiones.map(region => (
-                    <Badge key={region} variant="secondary" className="bg-white/10 text-xs">{region}</Badge>
+                    <Badge key={region} variant="outline" className="bg-primary/5 text-primary border-primary/20 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">{region}</Badge>
                   ))}
                 </div>
              </div>
