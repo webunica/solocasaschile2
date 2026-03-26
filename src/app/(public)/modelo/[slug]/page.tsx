@@ -36,6 +36,8 @@ const TIPO_LABELS: Record<string, string> = {
   "llave-en-mano": "Llave en Mano",
 };
 
+import { ShareActions } from "@/components/ui/share-actions";
+
 export default async function ModeloPage({ params }: PageProps) {
   const { slug } = await params;
   const modelo = await getModelBySlug(slug);
@@ -62,7 +64,7 @@ export default async function ModeloPage({ params }: PageProps) {
       
       {/* Breadcrumb / Back button */}
       <div className="border-b bg-card/40 backdrop-blur-3xl sticky top-32 z-30">
-        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-5">
+        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
           <Link
             href="/catalogo"
             className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-all w-fit group"
@@ -70,6 +72,11 @@ export default async function ModeloPage({ params }: PageProps) {
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
             Explorar Catálogo
           </Link>
+
+          <ShareActions 
+            title={modelo.nombre || 'Modelo de Casa'} 
+            url={`/modelo/${modelo.slug}`} 
+          />
         </div>
       </div>
 

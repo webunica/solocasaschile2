@@ -25,6 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
+import { ShareActions } from "@/components/ui/share-actions";
+
 export default async function ConstructoraPage({ params }: PageProps) {
   const { slug } = await params;
   const constructora = CONSTRUCTORAS.find((c) => c.slug === slug);
@@ -35,42 +37,48 @@ export default async function ConstructoraPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Header / Banner area */}
-      <div className="relative h-64 md:h-80 w-full overflow-hidden">
+      <div className="relative h-72 md:h-96 w-full overflow-hidden">
         <Image 
           src={constructora.image} 
           alt={constructora.nombre}
           fill
           className="object-cover opacity-60 blur-[2px]"
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         
-        <div className="container relative z-10 h-full max-w-7xl mx-auto px-4 md:px-8 flex items-end pb-8">
-          <div className="flex flex-col md:flex-row items-center md:items-end gap-6 w-full text-center md:text-left">
-            <div className="relative w-32 h-32 rounded-2xl overflow-hidden border-4 border-background bg-card shadow-xl shrink-0">
-               <Image src={constructora.logo} alt={constructora.nombre} fill className="object-cover" />
+        <div className="container relative z-10 h-full max-w-7xl mx-auto px-4 md:px-8 flex items-end pb-12">
+          <div className="flex flex-col md:flex-row items-center md:items-end gap-8 w-full text-center md:text-left">
+            <div className="relative w-36 h-36 rounded-[2.5rem] overflow-hidden border-4 border-background bg-card shadow-2xl shrink-0 group hover:scale-105 transition-transform duration-500">
+               <Image src={constructora.logo} alt={constructora.nombre} fill className="object-cover p-4" />
             </div>
-            <div className="flex-1 space-y-2">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                <h1 className="text-3xl md:text-4xl font-heading font-bold">{constructora.nombre}</h1>
-                {constructora.verificada && (
-                   <Badge className="bg-primary/20 text-primary border-primary/30 hover:bg-primary/20">
-                     <ShieldCheck className="w-3 h-3 mr-1" /> Verificada
-                   </Badge>
-                )}
-                {constructora.plan === "premium" && (
-                  <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
-                    <Star className="w-3 h-3 mr-1 fill-current" /> Premium
-                  </Badge>
-                )}
+            <div className="flex-1 space-y-3">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-none">{constructora.nombre}</h1>
+                <div className="flex gap-2">
+                  {constructora.verificada && (
+                    <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 px-3 py-1 font-black text-[10px] tracking-widest uppercase rounded-full">
+                      <ShieldCheck className="w-3.5 h-3.5 mr-1.5" /> Verificada
+                    </Badge>
+                  )}
+                  {constructora.plan === "premium" && (
+                    <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 px-3 py-1 font-black text-[10px] tracking-widest uppercase rounded-full">
+                      <Star className="w-3.5 h-3.5 mr-1.5 fill-current" /> Premium
+                    </Badge>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-muted-foreground text-sm font-medium">
-                <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> Fundada en {constructora.anioFundacion}</span>
-                <span className="flex items-center gap-1.5"><Briefcase className="w-4 h-4" /> {constructora.proyectosCompletados}+ Proyectos</span>
-                <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {constructora.regiones.length} Regiones</span>
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 text-muted-foreground text-xs font-black uppercase tracking-widest opacity-60">
+                <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-primary" /> Desde {constructora.anioFundacion}</span>
+                <span className="flex items-center gap-2"><Briefcase className="w-4 h-4 text-primary" /> {constructora.proyectosCompletados}+ Terminadas</span>
+                <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" /> {constructora.regiones.length} Cobertura</span>
               </div>
             </div>
-            <div className="flex gap-2">
-               <Button size="lg" className="font-semibold px-8 shadow-lg shadow-primary/25">Contactar</Button>
+            <div className="flex items-center gap-3">
+               <ShareActions title={constructora.nombre} url={`/constructora/${constructora.slug}`} />
+               <Button size="lg" className="rounded-2xl h-14 px-10 font-black text-[11px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 brand-gradient border-none active:scale-95 transition-all">
+                  Contactar
+               </Button>
             </div>
           </div>
         </div>
