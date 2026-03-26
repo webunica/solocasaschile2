@@ -15,15 +15,33 @@ export const metadata: Metadata = {
   description: "Encuentra las mejores empresas constructoras de casas prefabricadas, SIP y modulares en Chile. Revisa su score de confianza.",
 };
 
+import { CONSTRUCTORAS } from "@/lib/mock-data";
+
 export default async function ConstructorasPage() {
   const supabase = await createClient();
-  const { data: constructoras = [] } = await supabase
+  const { data: dbConstructoras = [] } = await supabase
     .from("constructoras")
     .select("id, nombre, slug, logo_url, descripcion, plan, verificada, score_confianza, regiones, proyectos_completados")
     .order("score_confianza", { ascending: false });
 
+  // Map Mocks to match DB structure (snake_case)
+  const mockMapped = CONSTRUCTORAS.map(c => ({
+    id: c.id,
+    nombre: c.nombre,
+    slug: c.slug,
+    logo_url: c.logo,
+    descripcion: c.descripcion,
+    plan: c.plan,
+    verificada: c.verificada,
+    score_confianza: c.scoreConfianza,
+    regiones: c.regiones,
+    proyectos_completados: c.proyectosCompletados
+  }));
+
+  const combined = [...mockMapped, ...(dbConstructoras || [])];
+
   const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 };
-  const sorted = [...(constructoras || [])].sort((a, b) => {
+  const sorted = combined.sort((a, b) => {
     const diff = (planOrder[a.plan] ?? 2) - (planOrder[b.plan] ?? 2);
     if (diff !== 0) return diff;
     return (b.score_confianza ?? 0) - (a.score_confianza ?? 0);
