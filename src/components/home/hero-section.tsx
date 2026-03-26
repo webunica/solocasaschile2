@@ -72,19 +72,13 @@ export function HeroSection() {
           </motion.div> 
  
           {/* Right: Branding High Performance */}
-          <div className="flex flex-col gap-16 lg:pl-12">
+          <div className="flex flex-col gap-8 lg:pl-12">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-10 text-center lg:text-left"
+              className="space-y-6 text-center lg:text-left"
             >
-              <div className="flex justify-center lg:justify-start">
-                <Badge variant="outline" className="brand-gradient text-white border-none px-6 py-2 rounded-full text-[10px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
-                  ⚡ TEMPORADA ALTA: +45% BÚSQUEDAS
-                </Badge>
-              </div>
-              
               <h1 className="text-[clamp(2rem,6vw,5.5rem)] font-black tracking-[-0.07em] leading-[0.85] text-foreground mix-blend-multiply dark:mix-blend-lighten text-left">
                 PROYECTA TU <br />
                 <span className="gradient-text block translate-y-2">FUTURO HOGAR</span>
@@ -96,7 +90,7 @@ export function HeroSection() {
             </motion.div>
 
             {/* Micro Stats Grid */}
-            <div className="grid grid-cols-3 gap-8 justify-items-center lg:justify-items-start border-t border-border/40 pt-12">
+            <div className="grid grid-cols-3 gap-8 justify-items-center lg:justify-items-start border-t border-border/40 pt-6">
                {[
                  { icon: <Building2 className="w-5 h-5" />, val: "+5.000", label: "Modelos" },
                  { icon: <ShieldCheck className="w-5 h-5" />, val: "Auditoría", label: "Calidad" },
