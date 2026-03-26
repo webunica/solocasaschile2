@@ -4,14 +4,19 @@ export const mockSupabaseChain: any = {
   order: () => mockSupabaseChain,
   limit: () => mockSupabaseChain,
   single: () => mockSupabaseChain,
+  maybeSingle: () => mockSupabaseChain,
   contains: () => mockSupabaseChain,
   gte: () => mockSupabaseChain,
   lte: () => mockSupabaseChain,
   insert: () => mockSupabaseChain,
+  delete: () => mockSupabaseChain,
   in: () => mockSupabaseChain,
-  then: (resolve: any) => resolve({ data: [], error: null, count: 0 })
+  then: (resolve: any) => resolve({ data: null, error: null, count: 0 })
 };
 
 export const mockSupabaseClient = {
-  from: () => mockSupabaseChain
+  from: () => mockSupabaseChain,
+  auth: {
+    getUser: async () => ({ data: { user: null }, error: null })
+  }
 };
