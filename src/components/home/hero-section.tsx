@@ -51,16 +51,16 @@ export function HeroSection() {
               className="space-y-10"
             >
               <Badge variant="outline" className="brand-gradient text-white border-none px-5 py-2 rounded-full text-[10px] tracking-[0.25em] font-black uppercase shadow-xl shadow-primary/20">
-                🚀 Fase 3: Integración Total
+                ⚡ TEMPORADA ALTA: +45% BÚSQUEDAS
               </Badge>
               
               <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.82] text-foreground">
-                PROXIMIDAD <br />
-                <span className="gradient-text">ESTRATÉGICA</span>
+                PROYECTA TU <br />
+                <span className="gradient-text">FUTURO HOGAR</span>
               </h1>
               
               <p className="text-2xl text-muted-foreground font-medium leading-snug max-w-xl">
-                 Optimizamos la visibilidad de tu catálogo con la red de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en Chile.
+                 Conecta con el catálogo más grande de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas.
               </p>
             </motion.div>
 
