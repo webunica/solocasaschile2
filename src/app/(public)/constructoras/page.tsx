@@ -30,23 +30,52 @@ export default async function ConstructorasPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      {/* Header */}
-      <div className="border-b bg-card/50 backdrop-blur-sm">
-        <div className="container max-w-7xl mx-auto px-4 md:px-8 py-12 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter">
-            Directorio de <span className="gradient-text">Constructoras</span>
-          </h1>
-          <p className="text-muted-foreground font-medium text-lg max-w-2xl">
-            Empresas verificadas y rankeadas por score de confianza. Encuentra la constructora ideal para tu proyecto.
-          </p>
-          <div className="flex items-center gap-4 text-sm font-bold text-muted-foreground">
-            <span>{sorted.length} constructoras registradas</span>
-            <span>·</span>
-            <span>{sorted.filter((c) => c.verificada).length} verificadas</span>
+    <div className="min-h-screen bg-background pb-24 pt-32">
+      {/* Header / Hero Section */}
+      <section className="relative overflow-hidden border-b border-border/40 bg-card/10 pb-20 pt-12">
+        {/* Background Decor */}
+        <div className="absolute inset-0 bg-dot-pattern opacity-[0.1] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-px h-full bg-border/20 hidden lg:block" />
+        
+        {/* Subtle Andes Silhouette */}
+        <div className="absolute bottom-0 left-0 w-full h-[200px] opacity-[0.04] pointer-events-none select-none z-0">
+          <svg viewBox="0 0 1440 320" className="w-full h-full preserve-3d" preserveAspectRatio="none">
+            <path fill="currentColor" className="text-primary" d="M0,224L48,202.7C96,181,192,139,288,138.7C384,139,480,181,576,192C672,203,768,181,864,149.3C960,117,1056,75,1152,74.7C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" />
+          </svg>
+        </div>
+
+        <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12 space-y-10">
+          <div className="space-y-6">
+            <Badge variant="outline" className="brand-gradient text-white border-none px-6 py-1.5 rounded-full text-[9px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
+              Directorio Verificado
+            </Badge>
+            <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
+              Directorio de <br />
+              <span className="gradient-text">Constructoras</span>
+            </h1>
+            <p className="text-xl text-muted-foreground font-medium max-w-2xl leading-relaxed">
+              Empresas verificadas y rankeadas por el sistema de <span className="text-foreground font-bold">score de confianza</span> de SolocasasChile.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-12 bg-background/40 backdrop-blur-xl border border-border/40 p-8 rounded-[2.5rem] w-fit shadow-2xl shadow-primary/5">
+            <div className="space-y-1">
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Registradas</p>
+               <div className="text-3xl font-black text-brand-indigo">{sorted.length}</div>
+            </div>
+            <div className="w-px h-10 bg-border/40 hidden sm:block" />
+            <div className="space-y-1">
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Verificadas</p>
+               <div className="text-3xl font-black text-brand-teal">{sorted.filter((c) => c.verificada).length}</div>
+            </div>
+            <div className="w-px h-10 bg-border/40 hidden sm:block" />
+            <div className="space-y-1">
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Regiones</p>
+               <div className="text-3xl font-black text-foreground">16</div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <div className="container max-w-7xl mx-auto px-4 md:px-8 py-12 space-y-20">
         {/* Mapa de Chile */}
