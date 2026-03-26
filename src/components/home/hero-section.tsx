@@ -10,7 +10,7 @@ import { HeroLeadForm } from "./hero-lead-form";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-32 pb-24 overflow-hidden bg-background">
+    <section className="relative min-h-[90vh] flex items-center pt-[180px] pb-24 overflow-hidden bg-background">
       {/* Impeccable Background Decoration */}
       <div className="absolute inset-0 bg-dot-pattern opacity-[0.12] pointer-events-none" />
       
@@ -84,7 +84,7 @@ export function HeroSection() {
             
             <div className="space-y-12 relative z-10">
               <div className="space-y-5">
-                 <h3 className="text-4xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
+                 <h3 className="text-3xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
                    Obtener <span className="text-brand-teal">Datos</span>
                  </h3>
                  <p className="text-muted-foreground font-medium leading-relaxed max-w-sm opacity-80">
@@ -104,7 +104,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="space-y-6 text-center lg:text-left"
             >
-              <h1 className="text-[clamp(2rem,6vw,5.5rem)] font-black tracking-[-0.07em] leading-[0.85] text-foreground mix-blend-multiply dark:mix-blend-lighten text-left">
+              <h1 className="text-[clamp(1.6rem,4.8vw,4.4rem)] font-black tracking-[-0.07em] leading-[0.85] text-foreground mix-blend-multiply dark:mix-blend-lighten text-left">
                 PROYECTA TU <br />
                 <span className="gradient-text block translate-y-2">FUTURO HOGAR</span>
               </h1>
