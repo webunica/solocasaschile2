@@ -17,6 +17,15 @@ export const mockSupabaseChain: any = {
 export const mockSupabaseClient = {
   from: () => mockSupabaseChain,
   auth: {
-    getUser: async () => ({ data: { user: null }, error: null })
+    getUser: async () => ({ data: { user: null }, error: null }),
+    signInWithPassword: async () => ({ 
+      data: { user: null, session: null }, 
+      error: { message: "Configuración de Supabase incompleta (Credenciales faltantes)." } 
+    }),
+    signUp: async () => ({ 
+      data: { user: null, session: null }, 
+      error: { message: "Configuración de Supabase incompleta (Credenciales faltantes)." } 
+    }),
+    signOut: async () => ({ error: null })
   }
 };
