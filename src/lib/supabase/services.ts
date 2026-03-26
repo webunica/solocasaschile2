@@ -1,4 +1,5 @@
 import { createClient } from './server'
+import { MODELOS } from '@/lib/mock-data'
 
 export type ModelWithConstructora = {
   id: string;
@@ -14,6 +15,7 @@ export type ModelWithConstructora = {
   tiempo_entrega: string;
   descripcion: string;
   disponible: boolean;
+  especificaciones?: Record<string, string>;
   score?: number;
   constructora: {
     id: string;
@@ -77,15 +79,20 @@ export async function getModelBySlug(slug: string) {
       precio_desde_uf: data.precio_desde_uf || 0,
       constructora: data.constructora ? {
         ...data.constructora,
+        id: data.constructora.id || data.constructora_id,
         score_confianza: data.constructora.score_confianza || 0,
         logo_url: data.constructora.logo_url || '/placeholder.png'
       } : {
+        id: 'external',
         nombre: 'Constructora No Asignada',
         plan: 'gratis',
         score_confianza: 0,
-        verificada: false
+        verificada: false,
+        slug: 'unknown',
+        logo_url: '/placeholder.png',
+        regiones: []
       }
-    };
+    } as ModelWithConstructora;
   }
 
   // 2. Fallback to Mocks
@@ -117,13 +124,11 @@ export async function getModelBySlug(slug: string) {
         regiones: ["Metropolitana"],
         descripcion: "Constructora referente de alta eficiencia."
       }
-    }
+    } as ModelWithConstructora;
   }
 
   return null;
 }
-
-import { MODELOS } from '@/lib/mock-data'
 
 export async function getModelosFiltered(filters: {
   tipo?: string
