@@ -61,15 +61,34 @@ export async function getDashboardStats() {
 
 export async function getModelBySlug(slug: string) {
   const supabase = await createClient()
-  const { data } = await supabase
+  
+  // 1. Intentar obtener de Supabase
+  const { data, error } = await supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
     .eq('slug', slug)
-    .single()
+    .maybeSingle()
   
-  if (data) return data;
+  if (data && !error) {
+    // Asegurar compatibilidad (algunos campos podrían venir null de DB)
+    return {
+      ...data,
+      imagenes_urls: data.imagenes_urls || [],
+      precio_desde_uf: data.precio_desde_uf || 0,
+      constructora: data.constructora ? {
+        ...data.constructora,
+        score_confianza: data.constructora.score_confianza || 0,
+        logo_url: data.constructora.logo_url || '/placeholder.png'
+      } : {
+        nombre: 'Constructora No Asignada',
+        plan: 'gratis',
+        score_confianza: 0,
+        verificada: false
+      }
+    };
+  }
 
-  // Fallback to Mocks
+  // 2. Fallback to Mocks
   const mock = MODELOS.find(m => m.slug === slug);
   if (mock) {
     return {
@@ -95,6 +114,8 @@ export async function getModelBySlug(slug: string) {
         verificada: true,
         score_confianza: 100,
         logo_url: mock.imagenes[0], 
+        regiones: ["Metropolitana"],
+        descripcion: "Constructora referente de alta eficiencia."
       }
     }
   }
@@ -124,11 +145,14 @@ export async function getModelosFiltered(filters: {
   const { data: dbData } = await query
 
   // 2. Map DB data to ensure it matches ModelWithConstructora perfectly
-  // The DB already returns snake_case, but we ensure the structure is clean
   const mappedDbData = (dbData as any[] || []).map(m => ({
     ...m,
+    imagenes_urls: m.imagenes_urls || [],
+    precio_desde_uf: m.precio_desde_uf || 0,
     constructora: m.constructora ? {
-      ...m.constructora
+      ...m.constructora,
+      logo_url: m.constructora.logo_url || '/placeholder.png', // Corregido: antes puse logo
+      score_confianza: m.constructora.score_confianza || 0
     } : null
   })) as ModelWithConstructora[]
 
