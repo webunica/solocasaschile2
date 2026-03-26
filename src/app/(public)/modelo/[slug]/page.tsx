@@ -57,7 +57,7 @@ export default async function ModeloPage({ params }: PageProps) {
   const imagenes = Array.isArray(modelo.imagenes_urls) ? modelo.imagenes_urls : [];
 
   return (
-    <div className="min-h-screen bg-background relative pt-10">
+    <div className="min-h-screen bg-background relative pt-24">
       <StickyCTAMobile targetId="form-cotizar" />
       
       {/* Breadcrumb / Back button */}
