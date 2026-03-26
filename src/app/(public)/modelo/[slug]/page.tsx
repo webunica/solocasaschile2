@@ -16,12 +16,17 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const modelo = await getModelBySlug(slug);
-  return {
-    title: modelo ? `${modelo.nombre} | SolocasasChile` : "Modelo no encontrado",
-    description: modelo?.descripcion,
-  };
+  try {
+    const { slug } = await params;
+    const modelo = await getModelBySlug(slug);
+    if (!modelo) return { title: "Modelo no encontrado | SolocasasChile" };
+    return {
+      title: `${modelo.nombre} | SolocasasChile`,
+      description: modelo.descripcion?.substring(0, 160),
+    };
+  } catch (error) {
+    return { title: "Modelo | SolocasasChile" };
+  }
 }
 
 const TIPO_LABELS: Record<string, string> = {
@@ -36,7 +41,20 @@ export default async function ModeloPage({ params }: PageProps) {
   const modelo = await getModelBySlug(slug);
   if (!modelo) notFound();
 
-  const { constructora } = modelo;
+  // Robust data extraction
+  const constructora = modelo.constructora || {
+    id: 'unknown',
+    nombre: 'Constructora no disponible',
+    slug: 'unknown',
+    logo_url: '/placeholder.png',
+    score_confianza: 0,
+    verificada: false,
+    plan: 'gratis'
+  };
+
+  const precio = typeof modelo.precio_desde_uf === 'number' ? modelo.precio_desde_uf : 0;
+  const score = typeof constructora.score_confianza === 'number' ? constructora.score_confianza : 0;
+  const imagenes = Array.isArray(modelo.imagenes_urls) ? modelo.imagenes_urls : [];
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -62,17 +80,17 @@ export default async function ModeloPage({ params }: PageProps) {
           <div className="space-y-16">
             {/* Gallery with Lightbox */}
             <ImageGallery
-              images={modelo.imagenes_urls || []}
-              altBase={modelo.nombre}
+              images={imagenes.length > 0 ? imagenes : ['/placeholder.png']}
+              altBase={modelo.nombre || 'Modelo'}
             />
 
             {/* Header Content */}
             <div className="space-y-6">
                <div className="flex flex-wrap items-center gap-3">
                   <Badge className="brand-gradient text-white border-none rounded-full px-4 py-1.5 font-black text-[10px] tracking-widest uppercase shadow-lg shadow-primary/20">
-                    {TIPO_LABELS[modelo.tipo] || modelo.tipo}
+                    {TIPO_LABELS[modelo.tipo] || modelo.tipo || 'Casa'}
                   </Badge>
-                  {modelo.constructora?.plan === "premium" && (
+                  {constructora.plan === "premium" && (
                     <Badge variant="outline" className="border-amber-500/20 text-amber-600 font-black text-[10px] tracking-widest uppercase bg-amber-500/5 px-4 py-1.5 rounded-full">
                        <Star className="w-3 h-3 mr-2 fill-current" /> Destacado
                     </Badge>
@@ -87,7 +105,7 @@ export default async function ModeloPage({ params }: PageProps) {
                   <div className="w-16 h-16 rounded-[1.5rem] border-2 border-primary/20 bg-primary/5 flex items-center justify-center p-3">
                      <Image 
                         src={constructora.logo_url || '/placeholder.png'} 
-                        alt={constructora.nombre} 
+                        alt={constructora.nombre || 'Logo'} 
                         width={48} height={48} 
                         className="object-contain"
                      />
@@ -95,7 +113,7 @@ export default async function ModeloPage({ params }: PageProps) {
                   <div className="space-y-1">
                      <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Constructora Certificada</p>
                      <Link
-                        href={`/constructora/${constructora.slug}`}
+                        href={`/constructora/${constructora.slug || 'unknown'}`}
                         className="text-2xl font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight underline-offset-4 hover:underline"
                      >
                         {constructora.nombre}
@@ -105,7 +123,7 @@ export default async function ModeloPage({ params }: PageProps) {
             </div>
 
             <p className="text-2xl text-muted-foreground font-medium leading-[1.4] max-w-4xl border-l-4 border-primary/10 pl-8">
-              {modelo.descripcion}
+              {modelo.descripcion || 'Sin descripción disponible.'}
             </p>
 
             {/* Technical Specs Grid */}
@@ -116,22 +134,22 @@ export default async function ModeloPage({ params }: PageProps) {
                </h2>
                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                  {[
-                   { icon: <Square className="w-6 h-6 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2} m²` },
-                   { icon: <Bed className="w-6 h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios} Dorms` },
-                   { icon: <Bath className="w-6 h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos} Baños` },
-                   { icon: <Clock className="w-6 h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || '45-60 días' },
+                    { icon: <Square className="w-6 h-6 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2 || 0} m²` },
+                    { icon: <Bed className="w-6 h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios || 0} Dorms` },
+                    { icon: <Bath className="w-6 h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos || 0} Baños` },
+                    { icon: <Clock className="w-6 h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || 'Consultar' },
                  ].map((spec) => (
-                   <div key={spec.label} className="bg-muted/10 border border-border/40 p-8 rounded-[3rem] space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
-                      <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">
-                         {spec.icon}
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40 leading-none mb-2">
-                           {spec.label}
-                        </p>
-                        <p className="text-xl font-black tracking-tight">{spec.value}</p>
-                      </div>
-                   </div>
+                    <div key={spec.label} className="bg-muted/10 border border-border/40 p-8 rounded-[3rem] space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
+                       <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">
+                          {spec.icon}
+                       </div>
+                       <div>
+                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40 leading-none mb-2">
+                            {spec.label}
+                         </p>
+                         <p className="text-xl font-black tracking-tight">{spec.value}</p>
+                       </div>
+                    </div>
                  ))}
                </div>
             </div>
@@ -149,12 +167,12 @@ export default async function ModeloPage({ params }: PageProps) {
                              className="stroke-brand-indigo fill-none transition-all duration-1000" 
                              strokeWidth="10" 
                              strokeDasharray={364.4}
-                             strokeDashoffset={364.4 - (364.4 * constructora.score_confianza) / 100}
+                             strokeDashoffset={364.4 - (364.4 * score) / 100}
                              strokeLinecap="round"
                            />
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                           <span className="text-3xl font-black text-brand-indigo">{constructora.score_confianza}</span>
+                           <span className="text-3xl font-black text-brand-indigo">{score}</span>
                            <span className="text-[8px] font-bold uppercase tracking-widest opacity-40">Score</span>
                         </div>
                      </div>
@@ -170,7 +188,7 @@ export default async function ModeloPage({ params }: PageProps) {
                             <ShieldCheck className="w-4 h-4" /> Verificada
                           </div>
                         )}
-                        <Link href={`/constructora/${constructora.slug}`} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo bg-brand-indigo/5 px-6 py-3 rounded-full border border-brand-indigo/10 hover:bg-brand-indigo/10 transition-colors">
+                        <Link href={`/constructora/${constructora.slug || 'unknown'}`} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo bg-brand-indigo/5 px-6 py-3 rounded-full border border-brand-indigo/10 hover:bg-brand-indigo/10 transition-colors">
                            Ver Perfil Industrial <ArrowLeft className="w-3 h-3 rotate-180" />
                         </Link>
                      </div>
@@ -189,12 +207,12 @@ export default async function ModeloPage({ params }: PageProps) {
                       <div className="flex items-center justify-between">
                          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Presupuesto Referencial</p>
                          <Badge variant="outline" className="border-emerald-500/20 text-emerald-600 font-bold text-[8px] tracking-widest uppercase bg-emerald-500/5 px-3 py-1 rounded-full animate-pulse">
-                           Disponibilidad Real
+                            Disponibilidad Real
                          </Badge>
                       </div>
                       <div className="flex items-baseline gap-2">
                          <span className="text-7xl font-black tracking-tighter text-foreground leading-none">
-                            {modelo.precio_desde_uf.toLocaleString("es-CL")}
+                            {precio.toLocaleString("es-CL")}
                          </span>
                          <span className="text-2xl font-black text-brand-indigo">UF</span>
                       </div>
@@ -215,8 +233,8 @@ export default async function ModeloPage({ params }: PageProps) {
                    <CotizarForm
                       modeloId={modelo.id}
                       modeloNombre={modelo.nombre}
-                      constructoraId={constructora.id}
-                      constructoraNombre={constructora.nombre}
+                      constructoraId={constructora.id || 'external'}
+                      constructoraNombre={constructora.nombre || 'Constructora'}
                    />
                 </div>
              </div>
