@@ -12,23 +12,52 @@ export function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-32 pb-24 overflow-hidden bg-background">
       {/* Impeccable Background Decoration */}
-      <div className="absolute inset-0 bg-dot-pattern opacity-[0.15] pointer-events-none" />
+      <div className="absolute inset-0 bg-dot-pattern opacity-[0.12] pointer-events-none" />
       
-      {/* Andes Mountains Silhouette (SVG Decor) */}
-      <div className="absolute bottom-0 left-0 w-full h-[300px] opacity-[0.05] pointer-events-none select-none z-0">
+      {/* Sun Decoration (Line art) */}
+      <div className="absolute top-24 left-[10%] opacity-[0.08] pointer-events-none z-0">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" className="text-primary animate-pulse-slow">
+           <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="1" />
+           {[...Array(12)].map((_, i) => (
+             <line 
+               key={i} 
+               x1="100" y1="45" x2="100" y2="20" 
+               stroke="currentColor" 
+               strokeWidth="1" 
+               transform={`rotate(${i * 30} 100 100)`}
+             />
+           ))}
+        </svg>
+      </div>
+
+      {/* Andes Mountains Multi-layered Silhouette (SVG Decor) */}
+      <div className="absolute bottom-0 left-0 w-full h-[400px] opacity-[0.06] pointer-events-none select-none z-0">
         <svg viewBox="0 0 1440 320" className="w-full h-full preserve-3d" preserveAspectRatio="none">
+          {/* Layer 0: Far Peaks */}
           <path 
             fill="currentColor" 
-            className="text-primary"
+            className="text-brand-indigo/30"
+            d="M0,160L40,144C80,128,160,96,240,106.7C320,117,400,171,480,181.3C560,192,640,160,720,138.7C800,117,880,107,960,112C1040,117,1120,139,1200,160C1280,181,1360,203,1400,213.3L1440,224L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"
+          />
+          {/* Layer 1: Intermediate Peaks */}
+          <path 
+            fill="currentColor" 
+            className="text-primary/40"
             d="M0,224L48,202.7C96,181,192,139,288,138.7C384,139,480,181,576,192C672,203,768,181,864,149.3C960,117,1056,75,1152,74.7C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           />
-          {/* Layer 2: Higher Peaks */}
+          {/* Layer 2: Closer Peaks */}
           <path 
             fill="currentColor" 
-            className="text-brand-indigo opaticy-50"
+            className="text-brand-teal/20"
             d="M0,288L60,256C120,224,240,160,360,160C480,160,600,224,720,224C840,224,960,160,1080,128C1200,96,1320,96,1380,96L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
-            style={{ opacity: 0.3 }}
           />
+          {/* Layer 3: House Silhouettes (Technical Outlines) */}
+          <g className="text-foreground/40" style={{ opacity: 0.5 }}>
+             <path d="M100,320 L100,280 L130,260 L160,280 L160,320 Z" fill="none" stroke="currentColor" strokeWidth="1" />
+             <path d="M400,320 L400,290 L440,270 L480,290 L480,320 Z" fill="none" stroke="currentColor" strokeWidth="1" />
+             <path d="M900,320 L900,270 L950,240 L1000,270 L1000,320 Z" fill="none" stroke="currentColor" strokeWidth="1" />
+             <path d="M1200,320 L1200,300 L1220,290 L1240,300 L1240,320 Z" fill="none" stroke="currentColor" strokeWidth="1" />
+          </g>
         </svg>
       </div>
 
