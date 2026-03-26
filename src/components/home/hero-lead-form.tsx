@@ -71,70 +71,70 @@ export function HeroLeadForm() {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Constructora</label>
-          <div className="relative">
-             <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-60" />
+      <div className="grid sm:grid-cols-2 gap-8">
+        <div className="space-y-3">
+          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Organización</label>
+          <div className="relative group/input">
+             <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="company" 
                 placeholder="Nombre de empresa" 
-                className="bg-background/40 border-border/40 pl-11 h-12 rounded-xl focus:bg-background transition-all" 
+                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
                 required 
              />
           </div>
         </div>
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Contacto</label>
-          <div className="relative">
-             <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-60" />
+        <div className="space-y-3">
+          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Contacto Directo</label>
+          <div className="relative group/input">
+             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="name" 
                 placeholder="Tu nombre completo" 
-                className="bg-background/40 border-border/40 pl-11 h-12 rounded-xl focus:bg-background transition-all" 
+                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
                 required 
              />
           </div>
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-5">
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Email Corporativo</label>
-          <div className="relative">
-             <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-60" />
+      <div className="grid sm:grid-cols-2 gap-8">
+        <div className="space-y-3">
+          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Email Corporativo</label>
+          <div className="relative group/input">
+             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="email" 
                 type="email" 
                 placeholder="correo@empresa.cl" 
-                className="bg-background/40 border-border/40 pl-11 h-12 rounded-xl focus:bg-background transition-all" 
+                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
                 required 
              />
           </div>
         </div>
-        <div className="space-y-2">
-          <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Teléfono</label>
-          <div className="relative">
-             <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-60" />
+        <div className="space-y-3">
+          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">WhatsApp / Móvil</label>
+          <div className="relative group/input">
+             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="phone" 
                 type="tel" 
                 placeholder="+56 9 ..." 
-                className="bg-background/40 border-border/40 pl-11 h-12 rounded-xl focus:bg-background transition-all" 
+                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
                 required 
              />
           </div>
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Mensaje o Interés</label>
-        <div className="relative">
-           <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-primary opacity-60" />
+      <div className="space-y-3">
+        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Especificaciones Técnicas</label>
+        <div className="relative group/input">
+           <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
            <Textarea 
               name="message" 
-              placeholder="Cuéntanos sobre tus requerimientos..." 
-              className="bg-background/40 border-border/40 pl-11 min-h-[120px] rounded-2xl focus:bg-background transition-all resize-none p-4" 
+              placeholder="Descríbenos tus requerimientos industriales o dudas sobre el catálogo..." 
+              className="bg-background/40 border-border/40 pl-12 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all resize-none p-5 font-bold placeholder:font-medium leading-relaxed" 
               required 
            />
         </div>

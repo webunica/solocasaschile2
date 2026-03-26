@@ -12,17 +12,24 @@ export async function FeaturedConstructorsSection() {
   const supabase = await createClient();
   
   // Fetch top 3 constructoras by score
-  const { data: featured = [] } = await supabase
+  const { data = [] } = await supabase
     .from("constructoras")
-    .select("id, nombre, slug, plan, score_confianza, verfied_reviews:leads(count), logo_url")
+    .select("id, nombre, slug, plan, score_confianza, logo_url")
     .order("score_confianza", { ascending: false })
     .limit(3);
 
+  // Fallback for visual demo if empty
+  const featured = data?.length > 0 ? data : [
+    { id: "1", nombre: "ModuLar Pro", slug: "modular-pro", plan: "premium", score_confianza: 98, logo_url: null },
+    { id: "2", nombre: "EcoSIP Chile", slug: "ecosip-chile", plan: "pro", score_confianza: 94, logo_url: null },
+    { id: "3", nombre: "SteelFrame S.A.", slug: "steelframe-sa", plan: "premium", score_confianza: 96, logo_url: null },
+  ];
+
   return (
-    <section className="py-40 bg-background relative overflow-hidden border-y border-border/40">
+    <section className="py-40 bg-background relative overflow-hidden border-y border-border/10">
       {/* Impeccable Background Layer */}
-      <div className="absolute inset-0 bg-muted/20 mix-blend-multiply opacity-50" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-indigo/5 rounded-full blur-[100px] translate-x-1/4 translate-y-1/4 pointer-events-none" />
+      <div className="absolute inset-0 bg-muted/10 opacity-50" />
+      <div className="absolute top-0 right-1/2 w-[300px] h-[300px] bg-brand-indigo/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       
       <div className="container px-6 md:px-12 max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">

@@ -15,7 +15,7 @@ const TYPES = [
     color: "from-brand-indigo/20 to-brand-indigo/5",
     textColor: "text-brand-indigo",
     link: "/tipos/prefabricada",
-    className: "lg:col-span-2 lg:row-span-2"
+    className: "lg:col-span-1"
   },
   {
     id: "sip",
@@ -40,12 +40,12 @@ const TYPES = [
   {
     id: "llave-en-mano",
     title: "Llave en Mano",
-    description: "Gestión integral: desde el diseño y permisos hasta la entrega de la llave definitiva.",
+    description: "Gestión integral: desde el diseño y permisos hasta la entrega definitiva.",
     icon: <Key className="w-6 h-6" />,
     color: "from-brand-teal/20 to-brand-teal/10",
     textColor: "text-brand-teal",
     link: "/tipos/llave-en-mano",
-    className: "lg:col-span-2"
+    className: "lg:col-span-1"
   }
 ];
 
