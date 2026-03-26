@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { CotizarForm } from "@/components/constructora/cotizar-form";
 import { ImageGallery } from "@/components/ui/image-gallery";
+import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn } from "@/lib/utils";
-import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft } from "lucide-react";
+import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap } from "lucide-react";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -38,95 +39,115 @@ export default async function ModeloPage({ params }: PageProps) {
   const { constructora } = modelo;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <StickyCTAMobile targetId="form-cotizar" />
+      
       {/* Breadcrumb / Back button */}
-      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 md:top-16 z-30">
-        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-4">
+      <div className="border-b bg-card/40 backdrop-blur-3xl sticky top-24 z-30">
+        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-5">
           <Link
             href="/catalogo"
-            className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-all w-fit group"
+            className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-all w-fit group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
-            Volver al catálogo
+            Explorar Catálogo
           </Link>
         </div>
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-12">
-        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-16 items-start">
+      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-start">
           
           {/* Main Content (Left) */}
-          <div className="space-y-12">
+          <div className="space-y-16">
             {/* Gallery with Lightbox */}
             <ImageGallery
               images={modelo.imagenes_urls || []}
               altBase={modelo.nombre}
             />
 
-            {/* Description & Branding */}
-            <div className="flex flex-col gap-6">
-              <div className="flex items-center gap-4">
-                 <div className="w-12 h-12 rounded-2xl border-2 border-primary/20 bg-primary/5 flex items-center justify-center p-2">
-                    <Image 
-                       src={constructora.logo_url || '/placeholder.png'} 
-                       alt={constructora.nombre} 
-                       width={32} height={32} 
-                       className="object-contain"
-                    />
-                 </div>
-                 <Link
-                    href={`/constructora/${constructora.slug}`}
-                    className="text-lg font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight underline-offset-4 hover:underline"
-                 >
-                    {constructora.nombre}
-                 </Link>
-                 {constructora.verificada && <ShieldCheck className="w-6 h-6 text-emerald-500" />}
-              </div>
-              <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-3xl">
-                {modelo.descripcion}
-              </p>
+            {/* Header Content */}
+            <div className="space-y-6">
+               <div className="flex flex-wrap items-center gap-3">
+                  <Badge className="brand-gradient text-white border-none rounded-full px-4 py-1.5 font-black text-[10px] tracking-widest uppercase shadow-lg shadow-primary/20">
+                    {TIPO_LABELS[modelo.tipo] || modelo.tipo}
+                  </Badge>
+                  {modelo.constructora?.plan === "premium" && (
+                    <Badge variant="outline" className="border-amber-500/20 text-amber-600 font-black text-[10px] tracking-widest uppercase bg-amber-500/5 px-4 py-1.5 rounded-full">
+                       <Star className="w-3 h-3 mr-2 fill-current" /> Destacado
+                    </Badge>
+                  )}
+               </div>
+               
+               <h1 className="text-6xl md:text-8xl font-heading font-black tracking-tighter text-foreground leading-[0.9]">
+                 {modelo.nombre}
+               </h1>
+
+               <div className="flex items-center gap-4 pt-4 border-t border-border/40">
+                  <div className="w-16 h-16 rounded-[1.5rem] border-2 border-primary/20 bg-primary/5 flex items-center justify-center p-3">
+                     <Image 
+                        src={constructora.logo_url || '/placeholder.png'} 
+                        alt={constructora.nombre} 
+                        width={48} height={48} 
+                        className="object-contain"
+                     />
+                  </div>
+                  <div className="space-y-1">
+                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Constructora Certificada</p>
+                     <Link
+                        href={`/constructora/${constructora.slug}`}
+                        className="text-2xl font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight underline-offset-4 hover:underline"
+                     >
+                        {constructora.nombre}
+                     </Link>
+                  </div>
+               </div>
             </div>
 
+            <p className="text-2xl text-muted-foreground font-medium leading-[1.4] max-w-4xl border-l-4 border-primary/10 pl-8">
+              {modelo.descripcion}
+            </p>
+
             {/* Technical Specs Grid */}
-            <div className="space-y-6">
-               <h2 className="text-2xl font-heading font-black tracking-tight flex items-center gap-3">
-                 <Square className="w-6 h-6 text-brand-teal" /> 
-                 Especificaciones Técnicas
+            <div className="space-y-10">
+               <h2 className="text-3xl font-heading font-black tracking-tight flex items-center gap-4">
+                 <Square className="w-8 h-8 text-brand-teal opacity-40 shrink-0" /> 
+                 Ficha Técnica Industrial
                </h2>
-               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+               <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
                  {[
-                   { icon: <Square className="w-5 h-5 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2} m²` },
-                   { icon: <Bed className="w-5 h-5 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios} Dorms` },
-                   { icon: <Bath className="w-5 h-5 text-brand-indigo" />, label: "Baños Completos", value: `${modelo.banos} Baños` },
-                   { icon: <Clock className="w-5 h-5 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || '45-60 días' },
+                   { icon: <Square className="w-6 h-6 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2} m²` },
+                   { icon: <Bed className="w-6 h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios} Dorms` },
+                   { icon: <Bath className="w-6 h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos} Baños` },
+                   { icon: <Clock className="w-6 h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || '45-60 días' },
                  ].map((spec) => (
-                   <div key={spec.label} className="bg-muted/30 border border-border/40 p-6 rounded-[2rem] space-y-3 transition-colors hover:bg-muted/50">
-                      <div className="w-10 h-10 rounded-xl bg-background flex items-center justify-center shadow-sm">
+                   <div key={spec.label} className="bg-muted/10 border border-border/40 p-8 rounded-[3rem] space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
+                      <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">
                          {spec.icon}
                       </div>
                       <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60 leading-none mb-1">
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40 leading-none mb-2">
                            {spec.label}
                         </p>
-                        <p className="text-lg font-black tracking-tight">{spec.value}</p>
+                        <p className="text-xl font-black tracking-tight">{spec.value}</p>
                       </div>
                    </div>
                  ))}
                </div>
             </div>
 
-            {/* Constructora Reputation Card */}
-            <div className="bg-background border-2 border-brand-indigo/10 rounded-[3rem] p-10 relative overflow-hidden group">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-brand-indigo/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-teal/5 transition-colors duration-700" />
-               <div className="flex flex-col md:flex-row gap-8 items-center relative z-10">
-                  <div className="shrink-0">
+            {/* Reputation Card (Trust) */}
+            <div className="bg-background border-2 border-brand-indigo/10 rounded-[4rem] p-12 relative overflow-hidden group shadow-2xl shadow-primary/5">
+               <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-indigo/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+               <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
+                  <div className="shrink-0 scale-125">
                      <div className="relative w-32 h-32 flex items-center justify-center">
                         <svg className="w-full h-full -rotate-90">
-                           <circle cx="64" cy="64" r="58" className="stroke-muted-foreground/10 fill-none" strokeWidth="12" />
+                           <circle cx="64" cy="64" r="58" className="stroke-muted-foreground/10 fill-none" strokeWidth="10" />
                            <circle 
                              cx="64" cy="64" r="58" 
                              className="stroke-brand-indigo fill-none transition-all duration-1000" 
-                             strokeWidth="12" 
+                             strokeWidth="10" 
                              strokeDasharray={364.4}
                              strokeDashoffset={364.4 - (364.4 * constructora.score_confianza) / 100}
                              strokeLinecap="round"
@@ -138,20 +159,20 @@ export default async function ModeloPage({ params }: PageProps) {
                         </div>
                      </div>
                   </div>
-                  <div className="flex-1 space-y-4 text-center md:text-left">
-                     <h3 className="text-2xl font-heading font-black tracking-tight">Constructora Certificada</h3>
-                     <p className="text-muted-foreground font-medium max-w-md">{constructora.descripcion || `Especialistas en viviendas de alta calidad, certificados por SolocasasChile con un score de confianza de ${constructora.score_confianza}/100.`}</p>
-                     <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-2">
+                  <div className="flex-1 space-y-6 text-center md:text-left">
+                     <div className="space-y-2">
+                        <h3 className="text-4xl font-heading font-black tracking-tighter">Constructora Certificada</h3>
+                        <p className="text-xl text-muted-foreground font-medium max-w-lg leading-relaxed">Auditoría aprobada por el sistema de verificación técnica SolocasasChile.</p>
+                     </div>
+                     <div className="flex flex-wrap justify-center md:justify-start gap-4">
                         {constructora.verificada && (
-                          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-brand-indigo bg-brand-indigo/5 px-4 py-2 rounded-full border border-brand-indigo/10">
-                            <ShieldCheck className="w-3 h-3" /> Verificada
+                          <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-brand-teal bg-brand-teal/5 px-6 py-3 rounded-full border border-brand-teal/10">
+                            <ShieldCheck className="w-4 h-4" /> Verificada
                           </div>
                         )}
-                        {(constructora.plan === 'pro' || constructora.plan === 'premium') && (
-                          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-500/5 px-4 py-2 rounded-full border border-amber-500/10">
-                            <Star className="w-3 h-3 fill-current" /> {constructora.plan === 'premium' ? 'Premium' : 'Pro'}
-                          </div>
-                        )}
+                        <Link href={`/constructora/${constructora.slug}`} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo bg-brand-indigo/5 px-6 py-3 rounded-full border border-brand-indigo/10 hover:bg-brand-indigo/10 transition-colors">
+                           Ver Perfil Industrial <ArrowLeft className="w-3 h-3 rotate-180" />
+                        </Link>
                      </div>
                   </div>
                </div>
@@ -159,26 +180,38 @@ export default async function ModeloPage({ params }: PageProps) {
           </div>
 
           {/* Pricing & Checkout (Right Sticky) */}
-          <div className="sticky top-24 space-y-6">
-             <div className="bg-card/50 backdrop-blur-xl border border-border/50 rounded-[3rem] p-10 shadow-2xl shadow-primary/5 relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-1.5 brand-gradient" />
+          <div className="sticky top-40 space-y-8 h-fit pb-12">
+             <div id="form-cotizar" className="bg-card/40 backdrop-blur-3xl border border-border/40 rounded-[3.5rem] p-10 lg:p-12 shadow-2xl shadow-primary/10 relative overflow-hidden group/form">
+                <div className="absolute top-0 left-0 right-0 h-2 animate-gradient shadow-xl brand-gradient" />
                 
-                <div className="space-y-8">
-                   <div className="space-y-4">
-                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Valor base del modelo</p>
+                <div className="space-y-10">
+                   <div className="space-y-5">
+                      <div className="flex items-center justify-between">
+                         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Presupuesto Referencial</p>
+                         <Badge variant="outline" className="border-emerald-500/20 text-emerald-600 font-bold text-[8px] tracking-widest uppercase bg-emerald-500/5 px-3 py-1 rounded-full animate-pulse">
+                           Disponibilidad Real
+                         </Badge>
+                      </div>
                       <div className="flex items-baseline gap-2">
-                         <span className="text-5xl font-black tracking-tighter text-foreground">
+                         <span className="text-7xl font-black tracking-tighter text-foreground leading-none">
                             {modelo.precio_desde_uf.toLocaleString("es-CL")}
                          </span>
-                         <span className="text-xl font-bold text-brand-indigo">UF</span>
+                         <span className="text-2xl font-black text-brand-indigo">UF</span>
                       </div>
-                      <div className="h-px bg-border/60 w-full" />
-                      <p className="text-sm font-medium text-muted-foreground leading-relaxed">
-                        Precio base sujeto a factibilidad técnica y modificaciones de diseño premium.
-                      </p>
+                      <div className="h-px bg-border/40 w-full" />
+                      
+                      {/* Social Proof Capsule */}
+                      <div className="bg-muted/20 rounded-2xl p-4 flex items-center gap-4 border border-border/20">
+                         <div className="w-10 h-10 rounded-xl brand-gradient flex items-center justify-center text-white shrink-0">
+                            <Zap className="w-5 h-5 fill-current" />
+                         </div>
+                         <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Alta Demanda</p>
+                            <p className="text-xs font-bold text-muted-foreground">12 personas cotizaron hoy</p>
+                         </div>
+                      </div>
                    </div>
 
-                   {/* Local Server Action handled form */}
                    <CotizarForm
                       modeloId={modelo.id}
                       modeloNombre={modelo.nombre}
@@ -188,10 +221,10 @@ export default async function ModeloPage({ params }: PageProps) {
                 </div>
              </div>
 
-             <div className="bg-muted/20 border border-border/40 rounded-3xl p-6 text-center shadow-inner group">
-                <ShieldCheck className="w-8 h-8 mx-auto mb-3 text-emerald-500 group-hover:scale-110 transition-transform" />
-                <p className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground max-w-[200px] mx-auto leading-relaxed opacity-60">
-                   Protegido por el sistema de auditoría técnica de SolocasasChile
+             <div className="bg-muted/10 border border-border/40 rounded-[2.5rem] p-8 text-center relative overflow-hidden group">
+                <ShieldCheck className="w-10 h-10 mx-auto mb-4 text-emerald-500/60 group-hover:scale-110 transition-transform duration-700" />
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60 leading-relaxed group-hover:opacity-100 transition-opacity">
+                   Soporte Técnico de por vida certificado por la Asociación de Constructoras
                 </p>
              </div>
           </div>

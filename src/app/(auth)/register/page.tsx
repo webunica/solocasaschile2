@@ -2,19 +2,27 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Loader2, AlertCircle, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { register } from "@/lib/supabase/actions";
+import { cn } from "@/lib/utils";
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [step, setStep] = useState(1);
+  const [showPass, setShowPass] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (step < 2) {
+       setStep(2);
+       return;
+    }
+
     setLoading(true);
     setError(null);
     const formData = new FormData(e.currentTarget);
@@ -39,122 +47,153 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
+    <div className="min-h-screen grid lg:grid-cols-[1fr_550px]">
       {/* Side Info */}
-      <div className="hidden lg:flex flex-col justify-between p-12 bg-primary relative overflow-hidden text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-teal opacity-90" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center mix-blend-overlay opacity-20" />
+      <div className="hidden lg:flex flex-col justify-between p-16 bg-primary relative overflow-hidden text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-teal opacity-100" />
+        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center mix-blend-overlay" />
         
-        <Link href="/" className="relative z-10 flex items-center space-x-2">
-          <span className="font-heading font-black text-3xl tracking-tighter">SolocasasChile</span>
+        <Link href="/" className="relative z-10 flex items-center space-x-2 group">
+          <span className="font-heading font-black text-4xl tracking-tighter group-hover:scale-105 transition-transform">SolocasasChile</span>
         </Link>
 
-        <div className="relative z-10 space-y-12">
-          <div className="space-y-4">
-             <h1 className="text-5xl font-heading font-black leading-tight tracking-tighter">
-               Registra tu <br /> <span className="text-brand-teal">Constructora</span>
+        <div className="relative z-10 space-y-16">
+          <div className="space-y-6">
+             <div className="w-16 h-16 rounded-[2rem] bg-white text-primary flex items-center justify-center shadow-2xl">
+                <ShieldCheck className="w-8 h-8" />
+             </div>
+             <h1 className="text-6xl font-heading font-black leading-[0.9] tracking-tighter">
+               Únete a la <br /> <span className="text-brand-teal">Élite Industrial</span>
              </h1>
-             <p className="text-lg text-white/70 max-w-sm">Únete a la mayor vitrina de construcción modular de Chile en minutos.</p>
+             <p className="text-xl text-white/70 max-w-sm font-medium">Conecta tu constructora con la mayor audiencia calificada en Chile.</p>
           </div>
 
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-8">
              {[
-               "Exposición a +50.000 visitas mensuales",
-               "Gestión directa de prospectos (leads)",
-               "CRUD completo de modelos y catálogos",
-               "Verificación de constructora certificada",
-             ].map((text, i) => (
-               <div key={i} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-brand-teal transition-colors">
-                     <CheckCircle2 className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="font-bold">{text}</span>
-               </div>
+               { t: "Exposición Masiva", d: "+50.000 visitas mensuales buscando casas." },
+               { t: "CRM Integrado", d: "Gestiona leads calificados en tiempo real." },
+               { t: "Catálogo Pro", d: "Digitaliza tus modelos con nuestra tecnología." },
+             ].map((item, i) => (
+                <div key={i} className="flex gap-5 group">
+                   <div className="w-10 h-10 shrink-0 rounded-2xl bg-white/10 flex items-center justify-center group-hover:bg-brand-teal transition-all duration-500">
+                      <CheckCircle2 className="w-5 h-5 text-white" />
+                   </div>
+                   <div className="space-y-1">
+                      <p className="font-black text-lg tracking-tight leading-none uppercase text-[12px]">{item.t}</p>
+                      <p className="text-sm font-medium text-white/50">{item.d}</p>
+                   </div>
+                </div>
              ))}
           </div>
         </div>
 
-        <div className="relative z-10 text-xs font-bold opacity-60">
-          © 2026 SolocasasChile v2 — Constructoras
+        <div className="relative z-10 text-[10px] font-black uppercase tracking-[0.4em] opacity-40">
+          SolocasasChile · V2 Performance Platform
         </div>
       </div>
 
       {/* Form Card */}
-      <div className="flex items-center justify-center p-8 lg:p-12 overflow-y-auto">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md space-y-8 py-10"
-        >
-          <div className="space-y-2">
-            <h2 className="text-3xl font-heading font-black tracking-tight">Crea tu Cuenta</h2>
-            <p className="text-muted-foreground font-medium">Completa los datos de tu empresa para comenzar.</p>
+      <div className="flex flex-col bg-background p-10 lg:p-20 overflow-y-auto">
+        <div className="w-full max-w-sm mx-auto flex-1 flex flex-col justify-center space-y-12">
+          
+          <div className="space-y-4">
+            <div className="flex gap-2">
+               <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "brand-gradient" : "bg-muted")} />
+               <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "brand-gradient" : "bg-muted")} />
+            </div>
+            <div className="flex justify-between items-center group">
+               <h2 className="text-4xl font-heading font-black tracking-tighter flex items-baseline gap-3">
+                 {step === 1 ? "Empresa" : "Cuenta"} <span className="text-xs font-bold text-muted-foreground opacity-30 tracking-widest uppercase">Paso {step}/2</span>
+               </h2>
+               {step === 2 && (
+                  <button onClick={() => setStep(1)} className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                    <ArrowLeft className="w-3 h-3" /> Atrás
+                  </button>
+               )}
+            </div>
           </div>
 
           {error && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-3 bg-destructive/10 border border-destructive/20 text-destructive rounded-2xl px-4 py-3 text-sm font-bold"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-4 bg-destructive/5 border border-destructive/20 text-destructive rounded-3xl p-5 text-xs font-black uppercase tracking-widest leading-relaxed"
             >
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <AlertCircle className="w-5 h-5 shrink-0" />
               {error}
             </motion.div>
           )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-               <div className="space-y-2">
-                  <Label htmlFor="companyName">Razón Social</Label>
-                  <Input id="companyName" name="companyName" placeholder="Constructora SpA" required />
-               </div>
-               <div className="space-y-2">
-                  <Label htmlFor="rut">RUT Empresa</Label>
-                  <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required />
-               </div>
-            </div>
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            <AnimatePresence mode="wait">
+              {step === 1 ? (
+                <motion.div
+                  key="step1"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-black tracking-widest opacity-40">Razón Social</Label>
+                    <Input id="companyName" name="companyName" placeholder="Constructora SpA" required className="h-14 rounded-2xl border-border/40 px-6 font-bold" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-black tracking-widest opacity-40">RUT Empresa</Label>
+                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-border/40 px-6 font-bold" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-black tracking-widest opacity-40">Teléfono Corporativo</Label>
+                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-border/40 px-6 font-bold" />
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="step2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-black tracking-widest opacity-40">Email Corporativo</Label>
+                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-border/40 px-6 font-bold" />
+                  </div>
+                  <div className="space-y-2 relative">
+                    <Label className="text-[10px] uppercase font-black tracking-widest opacity-40">Contraseña</Label>
+                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-border/40 px-6 font-bold pr-12" />
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-muted-foreground opacity-40 hover:opacity-100 transition-opacity">
+                       {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-[10px] uppercase font-black tracking-widest opacity-40">Confirmar</Label>
+                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-border/40 px-6 font-bold" />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <div className="space-y-4">
-               <div className="space-y-2">
-                  <Label htmlFor="repName">Representante Legal</Label>
-                  <Input id="repName" name="repName" placeholder="Nombre completo" required />
-               </div>
-               <div className="space-y-2">
-                  <Label htmlFor="email">Email Corporativo</Label>
-                  <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required />
-               </div>
-               <div className="space-y-2">
-                  <Label htmlFor="phone">Teléfono de Contacto</Label>
-                  <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required />
-               </div>
-               <div className="space-y-2">
-                  <Label htmlFor="password">Establecer Contraseña</Label>
-                  <Input id="password" name="password" type="password" minLength={6} required />
-               </div>
-               <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
-                  <Input id="confirmPassword" name="confirmPassword" type="password" minLength={6} required />
-               </div>
-            </div>
-
-            <Button type="submit" size="lg" disabled={loading} className="w-full h-12 bg-primary hover:bg-primary/95 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all">
-               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Registrar Constructora <ArrowRight className="ml-2 w-4 h-4" /></>}
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-14 brand-gradient text-white font-black tracking-[0.2em] text-[10px] uppercase rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 border-none">
+               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+                  <span className="flex items-center gap-3">
+                    {step === 1 ? "Siguiente Paso" : "Finalizar Registro"} <ArrowRight className="w-4 h-4" />
+                  </span>
+               )}
             </Button>
           </form>
 
-          <p className="text-[10px] text-muted-foreground text-center px-4 leading-relaxed">
-            Al registrarte, declaras conocer y aceptar los <Link href="/terminos" className="underline hover:text-primary">Términos y Condiciones</Link> así como la <Link href="/privacidad" className="underline hover:text-primary">Política de Privacidad</Link> de SolocasasChile.
+          <p className="text-[9px] text-muted-foreground text-center font-bold px-4 leading-relaxed opacity-40 uppercase tracking-widest">
+            Al registrarte, declaras conocer los <Link href="/terminos" className="underline hover:text-primary transition-colors">Términos</Link> y la <Link href="/privacidad" className="underline hover:text-primary transition-colors">Privacidad</Link>.
           </p>
 
-          <div className="pt-8 border-t border-border">
-            <p className="text-sm text-center text-muted-foreground font-medium">
-              ¿Ya tienes una cuenta?{" "}
-              <Link href="/login" className="text-primary font-bold hover:underline">
-                Inicia sesión aquí
-              </Link>
-            </p>
+          <div className="pt-10 border-t border-border/40">
+             <Link href="/login" className="flex items-center justify-center gap-4 group">
+               <span className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-40 group-hover:opacity-100 transition-opacity">¿Ya tienes cuenta?</span>
+               <span className="h-10 px-6 rounded-full border border-border/40 flex items-center justify-center text-[10px] font-black uppercase tracking-widest hover:border-primary hover:text-primary transition-all">Iniciar Sesión</span>
+             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

@@ -74,22 +74,42 @@ export async function getModelosFiltered(filters: {
   minUF?: number
   maxUF?: number
   region?: string
+  sortBy?: string
 }) {
   const supabase = await createClient()
   let query = supabase.from('modelos').select(`*, constructora:constructoras (*)`).eq('disponible', true)
+  
   if (filters.tipo) query = query.eq('tipo', filters.tipo)
   if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
   if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
   if (filters.region) query = query.contains('constructoras.regiones', [filters.region])
-  const { data } = await query.order('created_at', { ascending: false })
+
+  const { data } = await query
+
   const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 }
-  return ((data as any[]) || []).sort((a, b) => {
+  
+  const sorted = ((data as any[]) || []).sort((a, b) => {
+    // 1. Business logic: Plan priority is the first criteria UNLESS a specific sort is active (optional choice)
+    // Actually, in UX, if I sort by "Price Asc", I expect the cheapest first, regardless of plan.
+    // But usually, Premium houses pay to be seen first. I'll maintain plan priority as a primary sort.
     const planA = a.constructora?.plan || 'gratis'
     const planB = b.constructora?.plan || 'gratis'
     const planDiff = (planOrder[planA] ?? 2) - (planOrder[planB] ?? 2)
+    
+    // If we have a custom sort, we can decide if it overrides plan priority. 
+    // Usually, the best UX is for sorting to override priority, but we can keep priority as a tie-breaker.
+    
+    if (filters.sortBy === 'price_asc') return a.precio_desde_uf - b.precio_desde_uf
+    if (filters.sortBy === 'price_desc') return b.precio_desde_uf - a.precio_desde_uf
+    if (filters.sortBy === 'm2_desc') return b.superficie_m2 - a.superficie_m2
+    if (filters.sortBy === 'recent') return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+
+    // Default: Plan Priority > Price Asc
     if (planDiff !== 0) return planDiff
     return a.precio_desde_uf - b.precio_desde_uf
   })
+
+  return sorted
 }
 
 /** Modelos pertenecientes a la constructora autenticada (dashboard privado) */
