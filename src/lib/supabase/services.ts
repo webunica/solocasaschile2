@@ -66,7 +66,40 @@ export async function getModelBySlug(slug: string) {
     .select(`*, constructora:constructoras (*)`)
     .eq('slug', slug)
     .single()
-  return data
+  
+  if (data) return data;
+
+  // Fallback to Mocks
+  const mock = MODELOS.find(m => m.slug === slug);
+  if (mock) {
+    return {
+      id: mock.id,
+      constructora_id: mock.constructoraId,
+      nombre: mock.nombre,
+      slug: mock.slug,
+      tipo: mock.tipo,
+      superficie_m2: mock.superficieM2,
+      dormitorios: mock.dormitorios,
+      banos: mock.banos,
+      precio_desde_uf: mock.precioDesdeUF,
+      imagenes_urls: mock.imagenes || [],
+      tiempo_entrega: mock.tiempoEntrega,
+      descripcion: mock.descripcion,
+      disponible: mock.disponible,
+      especificaciones: mock.especificaciones,
+      constructora: {
+        id: mock.constructoraId,
+        nombre: mock.constructoraNombre,
+        slug: mock.constructoraSlug,
+        plan: mock.constructoraPlan,
+        verificada: true,
+        score_confianza: 100,
+        logo_url: mock.imagenes[0], 
+      }
+    }
+  }
+
+  return null;
 }
 
 import { MODELOS } from '@/lib/mock-data'
@@ -181,11 +214,38 @@ export async function createLead(leadData: any) {
 export async function getModelsByIds(ids: string[]) {
   if (!ids.length) return []
   const supabase = await createClient()
-  const { data } = await supabase
+  const { data: dbData } = await supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
     .in('id', ids)
-  return data || []
+  
+  const mocks = MODELOS.filter(m => ids.includes(m.id)).map(mock => ({
+      id: mock.id,
+      constructora_id: mock.constructoraId,
+      nombre: mock.nombre,
+      slug: mock.slug,
+      tipo: mock.tipo,
+      superficie_m2: mock.superficieM2,
+      dormitorios: mock.dormitorios,
+      banos: mock.banos,
+      precio_desde_uf: mock.precioDesdeUF,
+      imagenes_urls: mock.imagenes || [],
+      tiempo_entrega: mock.tiempoEntrega,
+      descripcion: mock.descripcion,
+      disponible: mock.disponible,
+      especificaciones: mock.especificaciones,
+      constructora: {
+        id: mock.constructoraId,
+        nombre: mock.constructoraNombre,
+        slug: mock.constructoraSlug,
+        plan: mock.constructoraPlan,
+        verificada: true,
+        score_confianza: 100,
+        logo_url: mock.imagenes[0], 
+      }
+  }));
+
+  return [...mocks, ...(dbData || [])]
 }
 
 /** Elimina un modelo asegurando que pertenece al usuario autenticado */
