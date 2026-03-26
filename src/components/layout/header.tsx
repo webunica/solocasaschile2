@@ -1,44 +1,77 @@
-import Link from "next/link"
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { ThemeToggle } from "./theme-toggle"
+"use client";
+
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ThemeToggle } from "./theme-toggle";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export function Header() {
+  const { scrollY } = useScroll();
+  
+  // Adaptive height and style based on scroll
+  const headerY = useTransform(scrollY, [0, 50], [20, 10]);
+  const headerWidth = useTransform(scrollY, [0, 50], ["95%", "90%"]);
+  const headerRadius = useTransform(scrollY, [0, 50], ["1.5rem", "3rem"]);
+  const headerOpacity = useTransform(scrollY, [0, 50], [0.8, 0.95]);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center overflow-x-auto px-4 md:px-8 max-w-7xl mx-auto">
-        <Link href="/" className="mr-6 flex items-center space-x-2" aria-label="Volver al inicio de SolocasasChile">
-          <span className="font-heading font-extrabold text-2xl tracking-tighter gradient-text">SolocasasChile</span>
+    <motion.header 
+      style={{ 
+        top: headerY,
+        width: headerWidth,
+        borderRadius: headerRadius,
+        opacity: headerOpacity
+      }}
+      className={cn(
+        "fixed left-1/2 -translate-x-1/2 z-[100] border border-border/40",
+        "bg-background/60 backdrop-blur-2xl shadow-2xl shadow-primary/5",
+        "transition-colors duration-500"
+      )}
+    >
+      <div className="container flex h-16 items-center px-8 md:px-12 max-w-7xl mx-auto">
+        <Link href="/" className="mr-10 flex items-center space-x-2 group">
+          <span className="font-heading font-black text-2xl tracking-[-0.06em] gradient-text transition-transform group-hover:scale-105 duration-500">
+            Solocasas<span className="text-foreground">Chile</span>
+          </span>
         </Link>
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <nav className="flex items-center space-x-6 text-sm font-medium" aria-label="Navegación principal">
-            <Link href="/catalogo" className="transition-colors hover:text-primary text-foreground/60 focus-visible:text-primary">
+        
+        <div className="flex flex-1 items-center justify-between">
+          <nav className="hidden lg:flex items-center space-x-10 text-[10px] font-black uppercase tracking-[0.2em]">
+            <Link href="/catalogo" className="text-muted-foreground hover:text-primary transition-all hover:tracking-[0.3em]">
               Catálogo
             </Link>
-            <Link href="/comparar" className="transition-colors hover:text-primary text-foreground/60 focus-visible:text-primary">
+            <Link href="/comparar" className="text-muted-foreground hover:text-primary transition-all hover:tracking-[0.3em]">
               Comparador
             </Link>
-            <Link href="/constructoras" className="transition-colors hover:text-primary text-foreground/60 hidden sm:inline-block focus-visible:text-primary">
+            <Link href="/constructoras" className="text-muted-foreground hover:text-primary transition-all hover:tracking-[0.3em]">
               Constructoras
             </Link>
           </nav>
-          <div className="flex items-center space-x-2 ml-4 border-l pl-4">
-            <ThemeToggle />
-            <Link 
-              href="/login" 
-              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "hidden sm:inline-flex")}
-            >
-              Acceder
-            </Link>
-            <Link 
-              href="/cotizar" 
-              className={buttonVariants({ size: "sm" })}
-            >
-              Cotizar
-            </Link>
+          
+          <div className="flex items-center gap-4">
+             <div className="flex items-center gap-2 border-r border-border/40 pr-4 mr-2">
+                <ThemeToggle />
+                <Link 
+                  href="/login" 
+                  className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-[10px] font-black uppercase tracking-widest hidden sm:inline-flex opacity-60 hover:opacity-100 hover:bg-transparent")}
+                >
+                  Acceder
+                </Link>
+             </div>
+             
+             <Link 
+               href="/planes" 
+               className={cn(
+                 buttonVariants({ size: "sm" }),
+                 "brand-gradient text-white border-none rounded-full px-8 font-black text-[9px] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all h-10"
+               )}
+             >
+               Publicar Casa
+             </Link>
           </div>
         </div>
       </div>
-    </header>
-  )
+    </motion.header>
+  );
 }
