@@ -90,48 +90,29 @@ export async function getModelosFiltered(filters: {
 
   const { data: dbData } = await query
 
-  // 2. Map DB data (snake_case) to standard UI format (camelCase) if needed
-  // Note: Most of our UI components are actually using camelCase from mock-data
-  // but the DB returns snake_case. Let's ensure consistency.
+  // 2. Map DB data to ensure it matches ModelWithConstructora perfectly
+  // The DB already returns snake_case, but we ensure the structure is clean
   const mappedDbData = (dbData as any[] || []).map(m => ({
-    id: m.id,
-    nombre: m.nombre,
-    slug: m.slug,
-    tipo: m.tipo,
-    superficieM2: m.superficie_m2,
-    dormitorios: m.dormitorios,
-    banos: m.banos,
-    precioDesdeUF: m.precio_desde_uf,
-    imagenes: m.imagenes_urls || [],
-    tiempoEntrega: m.tiempo_entrega,
-    descripcion: m.descripcion,
-    disponible: m.disponible,
+    ...m,
     constructora: m.constructora ? {
-      id: m.constructora.id,
-      nombre: m.constructora.nombre,
-      slug: m.constructora.slug,
-      logo: m.constructora.logo_url,
-      descripcion: m.constructora.descripcion,
-      plan: m.constructora.plan,
-      verificada: m.constructora.verificada,
-      scoreConfianza: m.constructora.score_confianza,
-      regiones: m.constructora.regiones,
+      ...m.constructora
     } : null
-  }))
+  })) as ModelWithConstructora[]
 
   // 3. Merge with Showcase Mock Data (Austral SIP example)
-  // We map mock data to match the merged structure
+  // We map mock data to match the ModelWithConstructora (snake_case)
   const showcaseData = MODELOS.map(m => ({
     id: m.id,
+    constructora_id: m.constructoraId,
     nombre: m.nombre,
     slug: m.slug,
     tipo: m.tipo,
-    superficieM2: m.superficieM2,
+    superficie_m2: m.superficieM2,
     dormitorios: m.dormitorios,
     banos: m.banos,
-    precioDesdeUF: m.precioDesdeUF,
-    imagenes: m.imagenes || [],
-    tiempoEntrega: m.tiempoEntrega,
+    precio_desde_uf: m.precioDesdeUF,
+    imagenes_urls: m.imagenes || [],
+    tiempo_entrega: m.tiempoEntrega,
     descripcion: m.descripcion,
     disponible: m.disponible,
     constructora: {
@@ -140,15 +121,17 @@ export async function getModelosFiltered(filters: {
       slug: m.constructoraSlug,
       plan: m.constructoraPlan,
       verificada: true,
-      scoreConfianza: 100,
-      logo: m.imagenes[0], // Fallback if no logo
+      score_confianza: 100,
+      logo_url: m.imagenes[0], 
+      regiones: ["Metropolitana", "Valparaíso", "Biobío", "Los Lagos"],
+      descripcion: "Expertos en construcción modular SIP de alta eficiencia."
     }
-  }))
+  })) as ModelWithConstructora[]
 
   const filteredMocks = showcaseData.filter(m => {
     if (filters.tipo && m.tipo !== filters.tipo) return false
-    if (filters.minUF && m.precioDesdeUF < filters.minUF) return false
-    if (filters.maxUF && m.precioDesdeUF > filters.maxUF) return false
+    if (filters.minUF && m.precio_desde_uf < filters.minUF) return false
+    if (filters.maxUF && m.precio_desde_uf > filters.maxUF) return false
     return true
   })
 
@@ -161,17 +144,17 @@ export async function getModelosFiltered(filters: {
     if (a.id === 'm0') return -1
     if (b.id === 'm0') return 1
 
-    const planA = (a.constructora as any)?.plan || 'gratis'
-    const planB = (b.constructora as any)?.plan || 'gratis'
+    const planA = a.constructora?.plan || 'gratis'
+    const planB = b.constructora?.plan || 'gratis'
     const planDiff = (planOrder[planA] ?? 2) - (planOrder[planB] ?? 2)
     
-    if (filters.sortBy === 'price_asc') return a.precioDesdeUF - b.precioDesdeUF
-    if (filters.sortBy === 'price_desc') return b.precioDesdeUF - a.precioDesdeUF
-    if (filters.sortBy === 'm2_desc') return b.superficieM2 - a.superficieM2
+    if (filters.sortBy === 'price_asc') return a.precio_desde_uf - b.precio_desde_uf
+    if (filters.sortBy === 'price_desc') return b.precio_desde_uf - a.precio_desde_uf
+    if (filters.sortBy === 'm2_desc') return b.superficie_m2 - a.superficie_m2
 
     // Default: Plan Priority > Price Asc
     if (planDiff !== 0) return planDiff
-    return a.precioDesdeUF - b.precioDesdeUF
+    return a.precio_desde_uf - b.precio_desde_uf
   })
 
   return sorted
