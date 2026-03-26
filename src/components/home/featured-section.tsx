@@ -1,10 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
-import Image from "next/image";
+import { CONSTRUCTORAS } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Star, ShieldCheck, CheckCircle2, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FeaturedClientWrapper } from "./featured-client-wrapper";
 
@@ -12,54 +11,51 @@ export async function FeaturedConstructorsSection() {
   const supabase = await createClient();
   
   // Fetch top 3 constructoras by score
-  const { data = [] } = await supabase
+  const { data } = await supabase
     .from("constructoras")
-    .select("id, nombre, slug, plan, score_confianza, logo_url")
+    .select("id, nombre, slug, plan, score_confianza, logo_url, verificada")
     .order("score_confianza", { ascending: false })
     .limit(3);
 
-  // Fallback for visual demo if empty
-  const featured = data?.length > 0 ? data : [
-    { id: "1", nombre: "ModuLar Pro", slug: "modular-pro", plan: "premium", score_confianza: 98, logo_url: null },
-    { id: "2", nombre: "EcoSIP Chile", slug: "ecosip-chile", plan: "pro", score_confianza: 94, logo_url: null },
-    { id: "3", nombre: "SteelFrame S.A.", slug: "steelframe-sa", plan: "premium", score_confianza: 96, logo_url: null },
-  ];
+  // Hybrid Fallback: Use real data + top mocks if DB is empty
+  const featured = data && data.length > 0 ? data : CONSTRUCTORAS.slice(0, 3).map(c => ({
+    id: c.id,
+    nombre: c.nombre,
+    slug: c.slug,
+    plan: c.plan,
+    score_confianza: c.scoreConfianza,
+    logo_url: c.logo,
+    verificada: c.verificada
+  }));
 
   return (
-    <section className="py-40 bg-background relative overflow-hidden border-y border-border/10">
+    <section className="py-40 bg-muted/10 relative overflow-hidden border-y border-border/10">
       {/* Impeccable Background Layer */}
-      <div className="absolute inset-0 bg-muted/10 opacity-50" />
       <div className="absolute top-0 right-1/2 w-[300px] h-[300px] bg-brand-indigo/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       
       <div className="container px-6 md:px-12 max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div className="max-w-xl">
-            <h2 className="text-3xl md:text-5xl font-heading font-black tracking-tighter mb-4">
-              Constructoras Destacadas
-            </h2>
-            <p className="text-muted-foreground text-lg font-medium">
-              Las empresas con mayor <strong className="text-foreground">Score de Confianza</strong>. 
-              Evaluadas por sus clientes, certificaciones y calidad de servicio.
-            </p>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
+          <div className="max-w-2xl space-y-4">
+             <Badge variant="outline" className="border-primary/20 text-primary uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-full">
+                Socios Industriales
+             </Badge>
+             <h2 className="text-4xl md:text-6xl font-heading font-black tracking-tighter leading-none">
+               Constructoras de <span className="text-brand-teal">Alto Desempeño</span>
+             </h2>
+             <p className="text-muted-foreground text-xl font-medium max-w-xl">
+               Entidades auditadas por nuestro sistema de verificación técnica para garantizar proyectos seguros y eficientes.
+             </p>
           </div>
           <Link 
             href="/constructoras" 
-            className={cn(buttonVariants({ variant: "outline" }), "hidden md:inline-flex border-primary/20 hover:bg-primary/10 rounded-xl font-bold")}
+            className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl font-black text-xs uppercase tracking-widest border-primary/20 hover:bg-primary/10 transition-all px-8 py-6")}
           >
-            Ver todas las constructoras
+            Ver Directorio de Empresas
+            <ArrowRight className="w-4 h-4 ml-3" />
           </Link>
         </div>
 
         <FeaturedClientWrapper items={featured || []} />
-
-        <div className="mt-8 md:hidden flex justify-center">
-          <Link 
-            href="/constructoras" 
-            className={cn(buttonVariants({ variant: "outline" }), "w-full rounded-xl h-12")}
-          >
-            Ver todas las constructoras
-          </Link>
-        </div>
       </div>
     </section>
   );

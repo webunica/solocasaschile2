@@ -1,6 +1,7 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { TypesSection } from "@/components/home/types-section";
 import { FeaturedConstructorsSection } from "@/components/home/featured-section";
+import { FeaturedModelsSection } from "@/components/home/featured-models";
 import { TrustSection } from "@/components/home/trust-section";
 import { FinalCTA } from "@/components/home/final-cta";
 import { StatsSection } from "@/components/home/stats-section";
@@ -30,9 +31,13 @@ export default function Home() {
 
       {/* I: Interest (Stats & Systems) */}
       <StatsSection />
+      
+      {/* Model Selection (Desire) */}
+      <FeaturedModelsSection />
+      
       <TypesSection />
 
-      {/* D: Desire (Social Proof & Options) */}
+      {/* Builder Directory (Social Proof & Options) */}
       <FeaturedConstructorsSection />
 
       {/* A: Action (Final CTA) */}
