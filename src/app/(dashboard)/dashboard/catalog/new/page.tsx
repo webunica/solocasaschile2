@@ -58,21 +58,31 @@ export default function NewModelPage() {
         return;
       }
 
-      // 2. Subir imágenes (cliente → Supabase Storage)
+      // 2. Subir imágenes (opcional — si falla storage, continuamos sin imágenes)
       const imageUrls: string[] = [];
-      for (const file of files) {
-        const ext = file.name.split('.').pop();
-        const filePath = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-        const { error: uploadError } = await supabase.storage
-          .from('model_images')
-          .upload(filePath, file, { cacheControl: '3600', upsert: false });
+      if (files.length > 0) {
+        try {
+          for (const file of files) {
+            const ext = file.name.split('.').pop();
+            const filePath = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+            const { error: uploadError } = await supabase.storage
+              .from('model_images')
+              .upload(filePath, file, { cacheControl: '3600', upsert: false });
 
-        if (uploadError) throw new Error("Error al subir imagen: " + uploadError.message);
+            if (uploadError) {
+              console.warn("Storage upload warning:", uploadError.message);
+              continue; // Saltar esta imagen y continuar
+            }
 
-        const { data: { publicUrl } } = supabase.storage
-          .from('model_images')
-          .getPublicUrl(filePath);
-        imageUrls.push(publicUrl);
+            const { data: { publicUrl } } = supabase.storage
+              .from('model_images')
+              .getPublicUrl(filePath);
+            imageUrls.push(publicUrl);
+          }
+        } catch (storageErr: any) {
+          console.warn("Storage no disponible:", storageErr.message);
+          // Continuamos sin imágenes
+        }
       }
 
       // 3. Generar slug único
