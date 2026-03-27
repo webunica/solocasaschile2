@@ -31,12 +31,12 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
     const formData = new FormData(e.currentTarget);
     const leadData = {
       constructora_id: constructoraId,
-      modelo_id: modeloId,
-      nombre_cliente: formData.get("name") as string,
-      email_cliente: formData.get("email") as string,
-      telefono_cliente: formData.get("phone") as string,
-      region_cliente: formData.get("region") as string,
-      mensaje: formData.get("message") as string,
+      modelo_id: modeloId || null,
+      nombre_cliente: (formData.get("name") as string) || "Cliente Anónimo",
+      email_cliente: (formData.get("email") as string) || "",
+      telefono_cliente: (formData.get("phone") as string) || "No especificado",
+      region_cliente: (formData.get("region") as string) || "No especificada",
+      mensaje: (formData.get("message") as string) || "",
     };
 
     try {
@@ -115,6 +115,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
             <Input 
               name="phone" 
               placeholder="Teléfono" 
+              required
               className="h-12 bg-muted/30 border-none rounded-xl pl-11 focus:bg-background transition-colors" 
             />
           </div>
@@ -123,6 +124,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
             <Input 
               name="region" 
               placeholder="Región" 
+              required
               className="h-12 bg-muted/30 border-none rounded-xl pl-11 focus:bg-background transition-colors" 
             />
           </div>
