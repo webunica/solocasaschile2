@@ -115,7 +115,7 @@ export default async function CatalogManagementPage() {
                    >
                       <Edit2 className="w-5 h-5" />
                    </Link>
-                   <form action={async () => { "use server"; await deleteModelo(modelo.id); }}>
+                   <form action={deleteModelo.bind(null, modelo.id)}>
                       <button
                         type="submit"
                         className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border border-border/60 p-0 hover:border-red-500/40 hover:text-red-600 transition-all")}
