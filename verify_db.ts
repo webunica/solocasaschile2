@@ -35,11 +35,14 @@ async function verify() {
   for (const c of cons) {
     const { data: mods } = await supabase
       .from("modelos")
-      .select("id, nombre, tipo, precio_desde_uf, disponible")
+      .select("id, nombre, tipo, precio_desde_uf, disponible, imagenes_urls")
       .eq("constructora_id", c.id);
     
     console.log(`\n🏠 ${c.nombre} → ${mods?.length || 0} modelos`);
-    mods?.forEach((m: any) => console.log(`   - ${m.nombre} (${m.tipo}) ${m.precio_desde_uf} UF [disponible: ${m.disponible}]`));
+    mods?.forEach((m: any) => {
+      console.log(`   - ${m.nombre} (${m.tipo}) ${m.precio_desde_uf} UF [disponible: ${m.disponible}]`);
+      console.log(`     Imágenes: ${JSON.stringify(m.imagenes_urls)}`);
+    });
   }
 }
 
