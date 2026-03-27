@@ -12,7 +12,7 @@ async function verify() {
   console.log("\n=== CONSTRUCTORAS EN LA BD ===");
   const { data: cons, error: e1 } = await supabase
     .from("constructoras")
-    .select("id, nombre, email, plan, verificada, score_confianza, created_at");
+    .select("id, nombre, slug, email, plan, verificada, score_confianza, created_at, regiones");
   
   if (e1) { console.error("Error:", e1.message); return; }
 
@@ -24,8 +24,10 @@ async function verify() {
   cons.forEach((c: any) => {
     console.log(`\n📋 ${c.nombre}`);
     console.log(`   ID:          ${c.id}`);
+    console.log(`   Slug:        ${c.slug}`);
     console.log(`   Email:       ${c.email || "⚠️ NO TIENE (campo vacío)"}`);
     console.log(`   Plan:        ${c.plan}`);
+    console.log(`   Regiones:    ${c.regiones?.join(", ") || "N/A"}`);
     console.log(`   Verificada:  ${c.verificada}`);
     console.log(`   Score:       ${c.score_confianza}`);
     console.log(`   Creada:      ${c.created_at}`);

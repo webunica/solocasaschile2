@@ -322,3 +322,58 @@ export async function deleteModelo(id: string) {
     .eq('constructora_id', user.id)
   if (error) throw error
 }
+
+export async function getConstructoraBySlug(slug: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('constructoras')
+    .select('*')
+    .eq('slug', slug)
+    .maybeSingle()
+  
+  if (data && !error) return data;
+  
+  // Fallback to mocks
+  const { CONSTRUCTORAS } = await import('@/lib/mock-data');
+  const mock = CONSTRUCTORAS.find(c => c.slug === slug);
+  if (mock) {
+    return {
+      ...mock,
+      logo_url: mock.logo,
+      score_confianza: mock.scoreConfianza,
+      verificada: mock.verificada,
+      regiones: mock.regiones,
+    };
+  }
+  
+  return null;
+}
+
+export async function getModelsByConstructoraId(id: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('modelos')
+    .select('*')
+    .eq('constructora_id', id)
+    .eq('disponible', true);
+  
+  if (error) return [];
+  
+  // Also check mocks if it's a mock ID
+  const { MODELOS } = await import('@/lib/mock-data');
+  const mocks = MODELOS.filter(m => m.constructoraId === id);
+  
+  const mappedMocks = mocks.map(m => ({
+    ...m,
+    id: m.id,
+    nombre: m.nombre,
+    precio_desde_uf: m.precioDesdeUF,
+    superficie_m2: m.superficieM2,
+    dormitorios: m.dormitorios,
+    banos: m.banos,
+    imagenes_urls: m.imagenes,
+    slug: m.slug,
+  }));
+
+  return [...(data || []), ...mappedMocks];
+}
