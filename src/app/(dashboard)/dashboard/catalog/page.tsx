@@ -60,17 +60,16 @@ export default async function CatalogManagementPage() {
 
         <CardContent className="p-0">
           <div className="divide-y divide-border/40">
-            {modelos.length > 0 ? modelos.map((modelo) => (
+            {modelos.length > 0 ? modelos.map((modelo: any) => (
               <div key={modelo.id} className="p-8 hover:bg-muted/30 transition-all flex flex-col md:grid md:grid-cols-[100px_1fr_200px] items-center gap-8 group">
                 {/* Image */}
                 <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-border/40 shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500 bg-muted/30">
                   {modelo.imagenes_urls?.[0] ? (
                     <Image 
                       src={modelo.imagenes_urls[0]} 
-                      alt={modelo.nombre} 
+                      alt={modelo.nombre || "Vivienda"} 
                       fill 
                       className="object-cover" 
-                      onError={(e: any) => { e.currentTarget.style.display = 'none'; }}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -82,27 +81,27 @@ export default async function CatalogManagementPage() {
                 {/* Details */}
                 <div className="flex-1 space-y-2 text-center md:text-left">
                   <div className="flex flex-col md:flex-row md:items-center gap-3">
-                     <h3 className="text-xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">{modelo.nombre}</h3>
+                     <h3 className="text-xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">{modelo.nombre || "Modelo sin nombre"}</h3>
                      <Badge className={cn(
                        "w-fit mx-auto md:mx-0 px-3 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border-none",
                        modelo.tipo === "sip" ? "bg-emerald-500/10 text-emerald-600" : "bg-blue-500/10 text-blue-600"
                      )}>
-                       {modelo.tipo}
+                       {modelo.tipo || "estándar"}
                      </Badge>
                   </div>
                   <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 text-xs font-bold text-muted-foreground opacity-60">
-                     <span>{modelo.superficie_m2} m²</span>
+                     <span>{modelo.superficie_m2 || 0} m²</span>
                      <span className="w-1 h-1 rounded-full bg-border" />
-                     <span>{modelo.dormitorios} Dormitorios</span>
+                     <span>{modelo.dormitorios || 0} Dormitorios</span>
                      <span className="w-1 h-1 rounded-full bg-border" />
-                     <span className="text-foreground font-black tracking-tight">{modelo.precio_desde_uf.toLocaleString('es-CL')} UF</span>
+                     <span className="text-foreground font-black tracking-tight">{(modelo.precio_desde_uf || 0).toLocaleString('es-CL')} UF</span>
                   </div>
                 </div>
 
                 {/* Actions */}
                 <div className="flex items-center gap-3">
                    <Link 
-                     href={`/modelo/${modelo.slug}`} 
+                     href={`/modelo/${modelo.slug || '#'}`} 
                      target="_blank"
                      className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 flex items-center justify-center p-0 hover:bg-muted transition-colors")}
                    >
