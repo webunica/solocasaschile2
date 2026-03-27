@@ -50,7 +50,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
       setSuccess(true);
     } catch (err: any) {
       console.error("Lead submission error:", err);
-      setError("No se pudo enviar la cotización. Revisa tu conexión e intenta de nuevo.");
+      setError(err.message || "No se pudo enviar la cotización. Revisa tu conexión e intenta de nuevo.");
     } finally {
       setLoading(false);
     }
