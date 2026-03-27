@@ -19,13 +19,16 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
+  const isSuperAdmin = user?.app_metadata?.is_superadmin === true;
+  const userName = user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">
-        <DashboardSidebar />
+        <DashboardSidebar isSuperAdmin={isSuperAdmin} />
         <SidebarInset>
           <div className="flex flex-col h-full w-full">
-            <DashboardHeader />
+            <DashboardHeader userName={userName} isSuperAdmin={isSuperAdmin} />
             <main className="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
               {children}
             </main>

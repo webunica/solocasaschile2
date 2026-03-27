@@ -6,12 +6,13 @@ import {
   Building2, Home, Users, BarChart3, Settings, 
   HelpCircle, LogOut, LayoutDashboard 
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { 
-  Sidebar, SidebarHeader, SidebarContent, SidebarFooter, 
-  SidebarMenu, SidebarMenuItem, SidebarMenuButton, 
-  SidebarGroup, SidebarGroupLabel, SidebarGroupContent 
+import {
+  Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
+  SidebarMenu, SidebarMenuItem, SidebarMenuButton,
+  SidebarGroup, SidebarGroupLabel, SidebarGroupContent
 } from "@/components/ui/sidebar";
+import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 import { logout } from "@/lib/supabase/actions";
 
 const DASHBOARD_MENU = [
@@ -26,7 +27,7 @@ const SUPPORT_MENU = [
   { title: "Ayuda", icon: HelpCircle, href: "/dashboard/ayuda" },
 ];
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ isSuperAdmin }: { isSuperAdmin?: boolean }) {
   const pathname = usePathname();
 
   return (
@@ -61,6 +62,29 @@ export function DashboardSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {isSuperAdmin && (
+          <SidebarGroup className="mt-2">
+            <SidebarGroupLabel className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Plataforma Global</SidebarGroupLabel>
+            <SidebarGroupContent className="pt-2">
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={pathname === "/dashboard/admin/constructoras"}
+                    tooltip="Constructoras"
+                    className="h-11 px-3 transition-all font-medium rounded-xl hover:bg-primary/5"
+                  >
+                    <Link href="/dashboard/admin/constructoras">
+                      <Building2 className="w-5 h-5 text-primary" />
+                      <span className="ml-3 font-bold text-primary">Constructoras</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
 
         <SidebarGroup className="mt-6">
           <SidebarGroupLabel className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground opacity-60">SOPORTE</SidebarGroupLabel>

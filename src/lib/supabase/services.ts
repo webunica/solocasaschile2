@@ -37,23 +37,21 @@ export async function getDashboardStats() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   const userId = user?.id ?? ''
+  const isSuperAdmin = user?.app_metadata?.is_superadmin === true;
 
-  const { count: modelsCount } = await supabase
-    .from('modelos')
-    .select('*', { count: 'exact', head: true })
-    .eq('constructora_id', userId)
+  let modelsQuery = supabase.from('modelos').select('*', { count: 'exact', head: true })
+  let leadsQuery = supabase.from('leads').select('*', { count: 'exact', head: true })
+  let recentLeadsQuery = supabase.from('leads').select(`*, modelo:modelos (nombre)`).order('created_at', { ascending: false }).limit(10)
 
-  const { count: leadsCount } = await supabase
-    .from('leads')
-    .select('*', { count: 'exact', head: true })
-    .eq('constructora_id', userId)
+  if (!isSuperAdmin) {
+    modelsQuery = modelsQuery.eq('constructora_id', userId)
+    leadsQuery = leadsQuery.eq('constructora_id', userId)
+    recentLeadsQuery = recentLeadsQuery.eq('constructora_id', userId)
+  }
 
-  const { data: recentLeads } = await supabase
-    .from('leads')
-    .select(`*, modelo:modelos (nombre)`)
-    .eq('constructora_id', userId)
-    .order('created_at', { ascending: false })
-    .limit(10)
+  const { count: modelsCount } = await modelsQuery
+  const { count: leadsCount } = await leadsQuery
+  const { data: recentLeads } = await recentLeadsQuery
 
   return {
     modelsCount: modelsCount || 0,
@@ -252,11 +250,18 @@ export async function getModelosByConstructora() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return []
-  const { data, error } = await supabase
+  const isSuperAdmin = user.app_metadata?.is_superadmin === true;
+
+  let query = supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
-    .eq('constructora_id', user.id)
     .order('created_at', { ascending: false })
+  
+  if (!isSuperAdmin) {
+    query = query.eq('constructora_id', user.id)
+  }
+
+  const { data, error } = await query
   
   if (error) {
     console.error("DEBUG: Error al obtener modelos:", error);

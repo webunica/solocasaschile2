@@ -7,8 +7,14 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
-export function DashboardHeader() {
+interface Props {
+  userName?: string;
+  isSuperAdmin?: boolean;
+}
+
+export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Props) {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -22,7 +28,7 @@ export function DashboardHeader() {
     loadUser();
   }, []);
 
-  const userName = user?.user_metadata?.nombre || user?.email?.split('@')[0] || "Administrador";
+  const userName = initialUserName || user?.user_metadata?.nombre || user?.email?.split('@')[0] || "Administrador";
   const initials = userName.slice(0, 2).toUpperCase();
 
   return (
@@ -46,10 +52,15 @@ export function DashboardHeader() {
            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black uppercase text-[10px] group-hover:scale-110 transition-transform"> 
             {initials} 
            </div>
-           <div className="hidden sm:flex flex-col items-start gap-0.5">
-             <span className="text-xs font-black tracking-tight leading-none truncate max-w-[120px]">{userName}</span>
-             <span className="text-[9px] text-muted-foreground leading-none font-bold uppercase tracking-widest italic opacity-60">Admin Constructora</span>
-           </div>
+            <div className="hidden sm:flex flex-col items-start gap-0.5">
+              <span className="text-xs font-black tracking-tight leading-none truncate max-w-[120px]">{userName}</span>
+              <span className={cn(
+                "text-[9px] leading-none font-bold uppercase tracking-widest italic opacity-60",
+                isSuperAdmin ? "text-primary opacity-100" : "text-muted-foreground"
+              )}>
+                {isSuperAdmin ? "Master Admin" : "Admin Constructora"}
+              </span>
+            </div>
            <ChevronDown className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
         </Button>
       </div>
