@@ -50,34 +50,43 @@ export default function NewModelPage() {
     const formData = new FormData(e.currentTarget);
 
     try {
-      // 1. Fetch current user to ensure session
+      // 1. Validar sesión activa en el cliente
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-         setError("No se detectó sesión activa. Por favor, re-inicia sesión.");
-         setLoading(false);
-         return;
+        setError("No se detectó sesión activa. Por favor, re-inicia sesión.");
+        setLoading(false);
+        return;
       }
 
-      // 2. Upload images (Client-side)
+      // 2. Subir imágenes (cliente → Supabase Storage)
       const imageUrls: string[] = [];
       for (const file of files) {
         const ext = file.name.split('.').pop();
-        const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const filePath = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         const { error: uploadError } = await supabase.storage
           .from('model_images')
-          .upload(path, file, { cacheControl: '3600', upsert: false });
+          .upload(filePath, file, { cacheControl: '3600', upsert: false });
 
         if (uploadError) throw new Error("Error al subir imagen: " + uploadError.message);
 
         const { data: { publicUrl } } = supabase.storage
           .from('model_images')
-          .getPublicUrl(path);
+          .getPublicUrl(filePath);
         imageUrls.push(publicUrl);
       }
 
-      // 3. Prepare data for Server Action
-      const data = {
-        nombre: formData.get('nombre') as string,
+      // 3. Generar slug único
+      const nombre = formData.get('nombre') as string;
+      const slug = `${nombre.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')}-${Date.now()}`;
+
+      // 4. Insert directo en Supabase desde el cliente (tiene sesión activa)
+      const { error: insertError } = await supabase.from('modelos').insert([{
+        constructora_id: user.id,
+        nombre,
+        slug,
         tipo: formData.get('tipo') as string,
         superficie_m2: Number(formData.get('superficie_m2')),
         dormitorios: Number(formData.get('dormitorios')),
@@ -88,19 +97,15 @@ export default function NewModelPage() {
         postventa: formData.get('postventa') === 'true',
         descripcion: formData.get('descripcion') as string,
         imagenes_urls: imageUrls,
-      };
+        disponible: true,
+      }]);
 
-      // 4. Submit via Server Action
-      const result = await createModel(data);
-
-      if (result.error) {
-        throw new Error(result.error);
-      }
+      if (insertError) throw new Error(insertError.message);
 
       setSuccess(true);
       setTimeout(() => router.push('/dashboard/catalog'), 1500);
     } catch (err: any) {
-      console.error("DEBUG:", err);
+      console.error("ERROR al crear modelo:", err);
       setError(err.message || "Ocurrió un error inesperado. Intenta de nuevo.");
       setLoading(false);
     }
