@@ -12,10 +12,38 @@ export async function login(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signInWithPassword(credentials)
+  const { data, error } = await supabase.auth.signInWithPassword(credentials)
 
   if (error) {
     return { error: error.message }
+  }
+
+  // Auto-crear perfil de constructora si no existe aún (para usuarios creados manualmente)
+  if (data.user) {
+    const { data: existing } = await supabase
+      .from('constructoras')
+      .select('id')
+      .eq('id', data.user.id)
+      .maybeSingle()
+
+    if (!existing) {
+      const email = data.user.email || ''
+      const nombre = data.user.user_metadata?.nombre || email.split('@')[0] || 'Mi Constructora'
+      const slug = `${nombre.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')}-${data.user.id.slice(0, 8)}`
+
+      await supabase.from('constructoras').insert([{
+        id: data.user.id,
+        nombre,
+        slug,
+        email,
+        plan: 'gratis',
+        verificada: false,
+        score_confianza: 50,
+      }])
+    }
   }
 
   revalidatePath('/', 'layout')
