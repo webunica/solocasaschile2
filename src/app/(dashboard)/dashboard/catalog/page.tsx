@@ -12,6 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
+export const dynamic = 'force-dynamic';
+
 export default async function CatalogManagementPage() {
   const modelos = await getModelosByConstructora();
 

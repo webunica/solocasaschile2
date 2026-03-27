@@ -233,11 +233,17 @@ export async function getModelosByConstructora() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return []
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
     .eq('constructora_id', user.id)
     .order('created_at', { ascending: false })
+  
+  if (error) {
+    console.error("DEBUG: Error al obtener modelos:", error);
+    return [];
+  }
+
   return (data as ModelWithConstructora[]) || []
 }
 
