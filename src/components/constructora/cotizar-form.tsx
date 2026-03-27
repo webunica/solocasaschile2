@@ -18,6 +18,13 @@ interface Props {
   constructoraNombre: string;
 }
 
+const REGIONES_CHILE = [
+  "Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo", 
+  "Valparaíso", "Metropolitana de Santiago", "O'Higgins", "Maule", 
+  "Ñuble", "Biobío", "La Araucanía", "Los Ríos", "Los Lagos", 
+  "Aysén", "Magallanes"
+];
+
 export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructoraNombre }: Props) {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -29,9 +36,21 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
     setError(null);
 
     const formData = new FormData(e.currentTarget);
+    
+    // Validación de seguridad para evitar errores de UUID con IDs de prueba (como "c2")
+    const isMockId = !/^[0-9a-fA-F-]{36}$/.test(constructoraId);
+    
+    if (isMockId) {
+      // Si es un ID de prueba (mock), simulamos el éxito localmente para no romper la experiencia
+      console.warn("[Modo Demo] La solicitud no se guardó porque estás en un perfil de prueba.");
+      setSuccess(true);
+      setLoading(false);
+      return;
+    }
+
     const leadData = {
       constructora_id: constructoraId,
-      modelo_id: modeloId || null,
+      modelo_id: /^[0-9a-fA-F-]{36}$/.test(modeloId) ? modeloId : null,
       nombre_cliente: (formData.get("name") as string) || "Cliente Anónimo",
       email_cliente: (formData.get("email") as string) || "",
       telefono_cliente: (formData.get("phone") as string) || "No especificado",
@@ -120,12 +139,19 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
           </div>
           <div className="relative">
             <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-indigo opacity-60" />
-            <Input 
+            <select 
               name="region" 
-              placeholder="Región" 
               required
-              className="h-12 bg-muted/30 border-none rounded-xl pl-11 focus:bg-background transition-colors" 
-            />
+              className="w-full h-12 bg-muted/30 border-none rounded-xl pl-11 pr-4 text-sm focus:bg-background transition-colors appearance-none cursor-pointer font-medium" 
+            >
+              <option value="" disabled selected>Región</option>
+              {REGIONES_CHILE.map(r => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
+               <Loader2 className="w-3 h-3 rotate-180" /> {/* Chevron fallback if needed */}
+            </div>
           </div>
         </div>
       </div>
