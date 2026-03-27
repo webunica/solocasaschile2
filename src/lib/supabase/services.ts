@@ -310,18 +310,6 @@ export async function getModelsByIds(ids: string[]) {
   return [...mocks, ...(dbData || [])]
 }
 
-/** Elimina un modelo asegurando que pertenece al usuario autenticado */
-export async function deleteModelo(id: string) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('No autenticado')
-  const { error } = await supabase
-    .from('modelos')
-    .delete()
-    .eq('id', id)
-    .eq('constructora_id', user.id)
-  if (error) throw error
-}
 
 export async function getConstructoraBySlug(slug: string) {
   const supabase = await createClient()

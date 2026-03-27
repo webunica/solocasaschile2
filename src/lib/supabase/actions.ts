@@ -192,3 +192,18 @@ export async function createModel(data: any) {
   revalidatePath('/')
   return { success: true }
 }
+
+export async function deleteModelo(id: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+  const { error } = await supabase
+    .from('modelos')
+    .delete()
+    .eq('id', id)
+    .eq('constructora_id', user.id)
+  
+  if (error) throw error
+  revalidatePath('/dashboard/catalog')
+  revalidatePath('/catalogo')
+}

@@ -1,5 +1,5 @@
 import { getModelosByConstructora } from "@/lib/supabase/services";
-import { deleteModelo } from "@/lib/supabase/services";
+import { deleteModelo } from "@/lib/supabase/actions";
 import { 
   Plus, Search, Edit2, Trash2, 
   Eye, LayoutGrid, List, Filter, Home
@@ -104,7 +104,7 @@ export default async function CatalogManagementPage() {
                    <Link 
                      href={`/modelo/${modelo.slug}`} 
                      target="_blank"
-                     className={cn(Button, "h-12 w-12 rounded-xl border border-border/60 flex items-center justify-center p-0 hover:bg-muted transition-colors")}
+                     className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 flex items-center justify-center p-0 hover:bg-muted transition-colors")}
                    >
                      <Eye className="w-5 h-5 text-muted-foreground" />
                    </Link>
@@ -118,7 +118,7 @@ export default async function CatalogManagementPage() {
                    <form action={async () => { "use server"; await deleteModelo(modelo.id); }}>
                       <button
                         type="submit"
-                        className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 p-0 hover:border-red-500/40 hover:text-red-600 transition-all")}
+                        className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border border-border/60 p-0 hover:border-red-500/40 hover:text-red-600 transition-all")}
                         title="Eliminar modelo"
                       >
                         <Trash2 className="w-5 h-5" />
