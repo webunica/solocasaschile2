@@ -86,3 +86,30 @@ export async function updateLeadStatus(leadId: string, status: string) {
     .eq('id', leadId)
   revalidatePath('/dashboard/leads')
 }
+
+export async function updateSettings(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado' }
+
+  const data = {
+    nombre: formData.get('nombre') as string,
+    descripcion: formData.get('descripcion') as string,
+    telefono: formData.get('telefono') as string,
+    sitio_web: formData.get('sitio_web') as string,
+    direccion: formData.get('direccion') as string,
+    regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean),
+    logo_url: formData.get('logo_url') as string,
+  }
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update(data)
+    .eq('id', user.id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/settings')
+  revalidatePath(`/constructora/${formData.get('slug')}`)
+  return { success: true }
+}
