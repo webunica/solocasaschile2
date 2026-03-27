@@ -63,13 +63,20 @@ export default async function CatalogManagementPage() {
             {modelos.length > 0 ? modelos.map((modelo) => (
               <div key={modelo.id} className="p-8 hover:bg-muted/30 transition-all flex flex-col md:grid md:grid-cols-[100px_1fr_200px] items-center gap-8 group">
                 {/* Image */}
-                <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-border/40 shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500">
-                  <Image 
-                    src={modelo.imagenes_urls?.[0] || 'https://via.placeholder.com/100'} 
-                    alt={modelo.nombre} 
-                    fill 
-                    className="object-cover" 
-                  />
+                <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-border/40 shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500 bg-muted/30">
+                  {modelo.imagenes_urls?.[0] ? (
+                    <Image 
+                      src={modelo.imagenes_urls[0]} 
+                      alt={modelo.nombre} 
+                      fill 
+                      className="object-cover" 
+                      onError={(e: any) => { e.currentTarget.style.display = 'none'; }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <Home className="w-8 h-8 text-muted-foreground/30" />
+                    </div>
+                  )}
                 </div>
 
                 {/* Details */}
@@ -102,8 +109,9 @@ export default async function CatalogManagementPage() {
                      <Eye className="w-5 h-5 text-muted-foreground" />
                    </Link>
                    <Link
-                     href="#edit"
+                     href={`/dashboard/catalog/${modelo.id}`}
                      className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 p-0 hover:border-blue-500/40 hover:text-blue-600 transition-all")}
+                     title="Editar modelo"
                    >
                       <Edit2 className="w-5 h-5" />
                    </Link>

@@ -63,6 +63,25 @@ export async function getDashboardStats() {
   }
 }
 
+export async function getModelById(id: string) {
+  const supabase = await createClient()
+  const { data, error } = await supabase
+    .from('modelos')
+    .select(`*, constructora:constructoras (*)`)
+    .eq('id', id)
+    .maybeSingle()
+  
+  if (data && !error) {
+    return {
+      ...data,
+      imagenes_urls: data.imagenes_urls || [],
+      precio_desde_uf: data.precio_desde_uf || 0,
+      constructora: data.constructora || null
+    } as ModelWithConstructora;
+  }
+  return null;
+}
+
 export async function getModelBySlug(slug: string) {
   const supabase = await createClient()
   
