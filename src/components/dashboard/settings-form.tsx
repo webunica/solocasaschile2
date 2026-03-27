@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { updateSettings } from "@/lib/supabase/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
@@ -190,7 +191,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
 
                <div className="space-y-4">
                   <div 
-                    onClick={() => document.getElementById('logo_input')?.click()}
+                    onClick={() => logoInputRef.current?.click()}
                     className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
                   >
                     {logoPreview || initialData?.logo_url ? (
@@ -204,7 +205,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                   </div>
                   
                   <input 
-                    id="logo_input"
+                    ref={logoInputRef}
                     type="file" 
                     accept="image/*" 
                     className="hidden" 
