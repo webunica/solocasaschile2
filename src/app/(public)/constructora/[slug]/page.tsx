@@ -36,7 +36,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
   // Fallbacks for data from DB
   const logo = constructora.logo_url || '/placeholder.png';
   const score = constructora.score_confianza || 50;
-  const coverImage = constructora.banner_url || '/recursos/hero-bg.jpg';
+  const coverImage = constructora.image_url || '/recursos/hero-bg.jpg';
   const fundacion = constructora.anio_fundacion || '2020';
   const proyectos = constructora.proyectos_completados || 10;
   const reviews = constructora.total_reviews || 0;
