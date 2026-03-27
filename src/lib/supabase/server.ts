@@ -5,10 +5,10 @@ import { mockSupabaseClient } from './mock-client'
 export async function createClient() {
   const cookieStore = await cookies()
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
 
   if (!url || !key) {
-    console.warn("Supabase credentials missing on Server. Using Mock Client.");
+    console.warn("Supabase credentials missing on Server. Check .env or Vercel Settings.");
     return mockSupabaseClient as any;
   }
 
