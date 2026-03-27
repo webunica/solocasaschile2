@@ -21,10 +21,41 @@ interface Props {
 export function SettingsForm({ initialData, userEmail }: Props) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setMessage(null);
+    
+    // 1. Upload logo if changed
+    let finalLogoUrl = initialData?.logo_url || "";
+    if (logoFile) {
+      try {
+        const { createClient: createBrowserClient } = await import("@/lib/supabase/client");
+        const supabase = createBrowserClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const ext = logoFile.name.split('.').pop();
+          const path = `logos/${user.id}-${Date.now()}.${ext}`;
+          const { error: uploadError } = await supabase.storage
+            .from('model_images') // Usamos el mismo bucket por ahora en una carpeta distinta
+            .upload(path, logoFile, { upsert: true });
+
+          if (!uploadError) {
+            const { data: { publicUrl } } = supabase.storage
+              .from('model_images')
+              .getPublicUrl(path);
+            finalLogoUrl = publicUrl;
+          }
+        }
+      } catch (err) {
+        console.error("Logo upload failed", err);
+      }
+    }
+
+    // Add final logo URL to formData
+    formData.set("logo_url", finalLogoUrl);
     
     // Add slug for revalidation
     formData.append("slug", initialData?.slug || "");
@@ -157,26 +188,42 @@ export function SettingsForm({ initialData, userEmail }: Props) {
               
               <Separator />
 
-              <div className="space-y-4">
-                 <div className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors">
-                    {initialData?.logo_url ? (
-                       <img src={initialData.logo_url} className="w-full h-full object-contain p-2" alt="Logo preview" />
+               <div className="space-y-4">
+                  <div 
+                    onClick={() => document.getElementById('logo_input')?.click()}
+                    className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
+                  >
+                    {logoPreview || initialData?.logo_url ? (
+                       <img src={logoPreview || initialData.logo_url} className="w-full h-full object-contain p-2" alt="Logo preview" />
                     ) : (
-                       <span className="text-muted-foreground text-[10px] font-bold text-center p-4">Subir Logo (URL)</span>
+                       <span className="text-muted-foreground text-[10px] font-bold text-center p-4 text-balance">Hacer clic para subir logo</span>
                     )}
-                 </div>
-                 
-                 <div className="space-y-2">
-                    <Label htmlFor="logo_url" className="text-xs font-black uppercase tracking-widest opacity-60">URL del Logo</Label>
-                    <Input 
-                      id="logo_url" 
-                      name="logo_url" 
-                      defaultValue={initialData?.logo_url || ""} 
-                      className="h-10 rounded-lg text-xs"
-                      placeholder="https://imgur.com/logo.png"
-                    />
-                 </div>
-              </div>
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                       <ImageIcon className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  
+                  <input 
+                    id="logo_input"
+                    type="file" 
+                    accept="image/*" 
+                    className="hidden" 
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setLogoFile(file);
+                        setLogoPreview(URL.createObjectURL(file));
+                      }
+                    }}
+                  />
+                  
+                  <div className="space-y-2">
+                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-40">Imagen Corporativa</Label>
+                    <p className="text-[10px] text-muted-foreground leading-tight">
+                       Se recomienda un archivo cuadrado (PNG/JPG) con fondo transparente o blanco.
+                    </p>
+                  </div>
+               </div>
            </CardContent>
         </Card>
 
