@@ -25,6 +25,10 @@ export function SettingsForm({ initialData, userEmail }: Props) {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setMessage(null);
@@ -40,7 +44,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
           const ext = logoFile.name.split('.').pop();
           const path = `logos/${user.id}-${Date.now()}.${ext}`;
           const { error: uploadError } = await supabase.storage
-            .from('model_images') // Usamos el mismo bucket por ahora en una carpeta distinta
+            .from('model_images') 
             .upload(path, logoFile, { upsert: true });
 
           if (!uploadError) {
@@ -55,8 +59,35 @@ export function SettingsForm({ initialData, userEmail }: Props) {
       }
     }
 
-    // Add final logo URL to formData
+    // 2. Upload cover image if changed
+    let finalImageUrl = initialData?.image_url || "";
+    if (imageFile) {
+      try {
+        const { createClient: createBrowserClient } = await import("@/lib/supabase/client");
+        const supabase = createBrowserClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const ext = imageFile.name.split('.').pop();
+          const path = `banners/${user.id}-${Date.now()}.${ext}`;
+          const { error: uploadError } = await supabase.storage
+            .from('model_images') 
+            .upload(path, imageFile, { upsert: true });
+
+          if (!uploadError) {
+            const { data: { publicUrl } } = supabase.storage
+              .from('model_images')
+              .getPublicUrl(path);
+            finalImageUrl = publicUrl;
+          }
+        }
+      } catch (err) {
+        console.error("Cover image upload failed", err);
+      }
+    }
+
+    // Add final URLs to formData
     formData.set("logo_url", finalLogoUrl);
+    formData.set("image_url", finalImageUrl);
     
     // Add slug for revalidation
     formData.append("slug", initialData?.slug || "");
@@ -189,42 +220,73 @@ export function SettingsForm({ initialData, userEmail }: Props) {
               
               <Separator />
 
-               <div className="space-y-4">
-                  <div 
-                    onClick={() => logoInputRef.current?.click()}
-                    className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
-                  >
-                    {logoPreview || initialData?.logo_url ? (
-                       <img src={logoPreview || initialData.logo_url} className="w-full h-full object-contain p-2" alt="Logo preview" />
-                    ) : (
-                       <span className="text-muted-foreground text-[10px] font-bold text-center p-4 text-balance">Hacer clic para subir logo</span>
-                    )}
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                       <ImageIcon className="w-6 h-6 text-white" />
+              <div className="space-y-8">
+                 <div className="space-y-4">
+                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-40">Logo de la Empresa</Label>
+                    <div 
+                      onClick={() => logoInputRef.current?.click()}
+                      className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
+                    >
+                      {logoPreview || initialData?.logo_url ? (
+                         <img src={logoPreview || initialData.logo_url} className="w-full h-full object-contain p-2" alt="Logo preview" />
+                      ) : (
+                         <span className="text-muted-foreground text-[10px] font-bold text-center p-4 text-balance">Subir Logo</span>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                         <ImageIcon className="w-6 h-6 text-white" />
+                      </div>
                     </div>
-                  </div>
-                  
-                  <input 
-                    ref={logoInputRef}
-                    type="file" 
-                    accept="image/*" 
-                    className="hidden" 
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        setLogoFile(file);
-                        setLogoPreview(URL.createObjectURL(file));
-                      }
-                    }}
-                  />
-                  
-                  <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-40">Imagen Corporativa</Label>
-                    <p className="text-[10px] text-muted-foreground leading-tight">
-                       Se recomienda un archivo cuadrado (PNG/JPG) con fondo transparente o blanco.
+                    <input 
+                      ref={logoInputRef}
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setLogoFile(file);
+                          setLogoPreview(URL.createObjectURL(file));
+                        }
+                      }}
+                    />
+                 </div>
+
+                 <div className="space-y-4">
+                    <Label className="text-[10px] font-black uppercase tracking-widest opacity-40">Imagen de Portada (Banner)</Label>
+                    <div 
+                      onClick={() => imageInputRef.current?.click()}
+                      className="w-full h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
+                    >
+                      {imagePreview || initialData?.image_url ? (
+                         <img src={imagePreview || initialData.image_url} className="w-full h-full object-cover" alt="Cover preview" />
+                      ) : (
+                         <div className="flex flex-col items-center gap-2">
+                            <ImageIcon className="w-6 h-6 text-muted-foreground opacity-40" />
+                            <span className="text-muted-foreground text-[10px] font-bold">Subir Banner de Portada</span>
+                         </div>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                         <ImageIcon className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                    <input 
+                      ref={imageInputRef}
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setImageFile(file);
+                          setImagePreview(URL.createObjectURL(file));
+                        }
+                      }}
+                    />
+                    <p className="text-[10px] text-muted-foreground leading-tight italic">
+                       Se recomienda una imagen panorámica de tus proyectos terminados.
                     </p>
-                  </div>
-               </div>
+                 </div>
+              </div>
            </CardContent>
         </Card>
 

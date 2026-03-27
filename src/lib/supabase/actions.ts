@@ -154,6 +154,7 @@ export async function updateSettings(formData: FormData) {
     direccion: formData.get('direccion') as string,
     regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean),
     logo_url: formData.get('logo_url') as string,
+    image_url: formData.get('image_url') as string,
   }
 
   const { error } = await supabase
