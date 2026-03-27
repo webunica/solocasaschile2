@@ -96,7 +96,7 @@ export default async function ReportesPage() {
           </CardHeader>
           <CardContent className="p-12">
              <div className="h-[300px] w-full flex items-end justify-between gap-4">
-                {chartData.map((d, i) => {
+                {chartData.map((d, i: number) => {
                   const height = (d.leads / maxLeads) * 100;
                   return (
                     <div key={i} className="flex-1 flex flex-col items-center gap-4 group">
@@ -142,7 +142,7 @@ export default async function ReportesPage() {
            </CardHeader>
            <CardContent className="p-0 flex-1 overflow-y-auto">
               <div className="divide-y divide-border/40">
-                 {stats.recentLeads.length > 0 ? stats.recentLeads.map((lead: any, i) => (
+                 {stats.recentLeads.length > 0 ? stats.recentLeads.map((lead: any, i: number) => (
                    <div key={i} className="p-8 hover:bg-muted/30 transition-all flex items-start gap-4">
                       <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                          <Users className="w-5 h-5 text-primary" />
