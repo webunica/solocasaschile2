@@ -15,7 +15,25 @@ import { cn } from "@/lib/utils";
 export const dynamic = 'force-dynamic';
 
 export default async function CatalogManagementPage() {
-  const modelos = await getModelosByConstructora();
+  let modelos: any[] = [];
+  let errorMsg = null;
+
+  try {
+    modelos = await getModelosByConstructora();
+  } catch (err: any) {
+    console.error("CRITICAL DASHBOARD ERROR:", err);
+    errorMsg = err.message || "Error al conectar con la base de datos";
+  }
+
+  if (errorMsg) {
+    return (
+      <div className="p-12 text-center bg-destructive/10 rounded-[3rem] border border-destructive/20">
+        <h2 className="text-2xl font-black text-destructive uppercase">Error de Sistema</h2>
+        <p className="text-muted-foreground mt-4 font-medium">{errorMsg}</p>
+        <Button className="mt-8" onClick={() => window.location.reload()}>Reintentar</Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-10 py-12">
