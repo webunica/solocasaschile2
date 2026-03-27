@@ -84,6 +84,8 @@ export default function NewModelPage() {
         banos: Number(formData.get('banos')),
         precio_desde_uf: Number(formData.get('precio_desde_uf')),
         tiempo_entrega: formData.get('tiempo_entrega'),
+        garantia_anos: Number(formData.get('garantia_anos')),
+        postventa: formData.get('postventa') === 'true',
         descripcion: formData.get('descripcion'),
         imagenes_urls: imageUrls,
         disponible: true,
@@ -205,9 +207,21 @@ export default function NewModelPage() {
               <Label htmlFor="banos">Baños *</Label>
               <Input id="banos" name="banos" type="number" min="1" max="8" placeholder="2" required className="h-12" />
             </div>
-            <div className="space-y-2 sm:col-span-2">
+            <div className="space-y-2">
               <Label htmlFor="tiempo_entrega">Tiempo de Entrega</Label>
               <Input id="tiempo_entrega" name="tiempo_entrega" placeholder="Ej: 45-60 días" className="h-12" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="garantia_anos">Años de Garantía *</Label>
+              <Input id="garantia_anos" name="garantia_anos" type="number" min="1" max="50" defaultValue="1" required className="h-12" />
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="postventa">Servicio Postventa *</Label>
+              <select id="postventa" name="postventa" required
+                className="w-full h-12 rounded-xl border border-input bg-background px-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary">
+                <option value="true">Disponible</option>
+                <option value="false">No Incluido / Consultar</option>
+              </select>
             </div>
           </div>
         </div>
