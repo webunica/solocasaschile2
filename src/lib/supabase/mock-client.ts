@@ -12,7 +12,11 @@ export const mockSupabaseChain: any = {
   update: () => mockSupabaseChain,
   delete: () => mockSupabaseChain,
   in: () => mockSupabaseChain,
-  then: (resolve: any) => resolve({ data: null, error: null, count: 0 })
+  then: (resolve: any) => resolve({ 
+    data: null, 
+    error: { message: "[Modo Demo] Los datos no se persistirán hasta que conectes Supabase correctamente.", code: "demo" }, 
+    count: 0 
+  })
 };
 
 export const mockStorageChain: any = {
