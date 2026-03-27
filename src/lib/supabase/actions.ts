@@ -113,3 +113,28 @@ export async function updateSettings(formData: FormData) {
   revalidatePath(`/constructora/${formData.get('slug')}`)
   return { success: true }
 }
+
+export async function createModel(data: any) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado' }
+
+  // Generate slug
+  const slug = `${data.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}-${Date.now()}`
+
+  const { error } = await supabase
+    .from('modelos')
+    .insert([{
+      ...data,
+      constructora_id: user.id,
+      slug,
+      disponible: true
+    }])
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/catalog')
+  revalidatePath('/catalogo')
+  revalidatePath('/')
+  return { success: true }
+}

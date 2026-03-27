@@ -11,6 +11,7 @@ import {
   Upload, ImagePlus, Loader2, CheckCircle2, 
   AlertCircle, X, Home 
 } from "lucide-react";
+import { createModel } from "@/lib/supabase/actions";
 import { createClient } from "@/lib/supabase/client";
 
 const TIPOS = [
@@ -46,13 +47,18 @@ export default function NewModelPage() {
     setError(null);
 
     const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { setError("Sesión expirada. Vuelve a iniciar sesión."); setLoading(false); return; }
-
     const formData = new FormData(e.currentTarget);
 
     try {
-      // 1. Upload images to Supabase Storage
+      // 1. Fetch current user to ensure session
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+         setError("No se detectó sesión activa. Por favor, re-inicia sesión.");
+         setLoading(false);
+         return;
+      }
+
+      // 2. Upload images (Client-side)
       const imageUrls: string[] = [];
       for (const file of files) {
         const ext = file.name.split('.').pop();
@@ -61,7 +67,7 @@ export default function NewModelPage() {
           .from('model_images')
           .upload(path, file, { cacheControl: '3600', upsert: false });
 
-        if (uploadError) throw uploadError;
+        if (uploadError) throw new Error("Error al subir imagen: " + uploadError.message);
 
         const { data: { publicUrl } } = supabase.storage
           .from('model_images')
@@ -69,36 +75,33 @@ export default function NewModelPage() {
         imageUrls.push(publicUrl);
       }
 
-      // 2. Generate slug from model name
-      const nombre = formData.get('nombre') as string;
-      const slug = `${nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}-${Date.now()}`;
-
-      // 3. Insert modelo into Supabase
-      const { error: insertError } = await supabase.from('modelos').insert([{
-        constructora_id: user.id,
-        nombre,
-        slug,
-        tipo: formData.get('tipo'),
+      // 3. Prepare data for Server Action
+      const data = {
+        nombre: formData.get('nombre') as string,
+        tipo: formData.get('tipo') as string,
         superficie_m2: Number(formData.get('superficie_m2')),
         dormitorios: Number(formData.get('dormitorios')),
         banos: Number(formData.get('banos')),
         precio_desde_uf: Number(formData.get('precio_desde_uf')),
-        tiempo_entrega: formData.get('tiempo_entrega'),
+        tiempo_entrega: formData.get('tiempo_entrega') as string,
         garantia_anos: Number(formData.get('garantia_anos')),
         postventa: formData.get('postventa') === 'true',
-        descripcion: formData.get('descripcion'),
+        descripcion: formData.get('descripcion') as string,
         imagenes_urls: imageUrls,
-        disponible: true,
-      }]);
+      };
 
-      if (insertError) throw insertError;
+      // 4. Submit via Server Action
+      const result = await createModel(data);
+
+      if (result.error) {
+        throw new Error(result.error);
+      }
 
       setSuccess(true);
-      setTimeout(() => router.push('/dashboard/catalog'), 2000);
+      setTimeout(() => router.push('/dashboard/catalog'), 1500);
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || "Error al crear el modelo. Intenta de nuevo.");
-    } finally {
+      console.error("DEBUG:", err);
+      setError(err.message || "Ocurrió un error inesperado. Intenta de nuevo.");
       setLoading(false);
     }
   };
