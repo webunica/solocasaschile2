@@ -84,15 +84,21 @@ ALTER TABLE public.modelos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
 
 -- Constructoras
+DROP POLICY IF EXISTS "public_read_constructoras" ON public.constructoras;
 CREATE POLICY "public_read_constructoras" ON public.constructoras FOR SELECT USING (true);
+DROP POLICY IF EXISTS "owner_modify_constructoras" ON public.constructoras;
 CREATE POLICY "owner_modify_constructoras" ON public.constructoras FOR ALL USING (auth.uid() = id);
 
 -- Modelos
+DROP POLICY IF EXISTS "public_read_modelos" ON public.modelos;
 CREATE POLICY "public_read_modelos" ON public.modelos FOR SELECT USING (disponible = true);
+DROP POLICY IF EXISTS "owner_full_access_modelos" ON public.modelos;
 CREATE POLICY "owner_full_access_modelos" ON public.modelos FOR ALL USING (auth.uid() = constructora_id);
 
 -- Leads
+DROP POLICY IF EXISTS "public_create_leads" ON public.leads;
 CREATE POLICY "public_create_leads" ON public.leads FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "owner_access_leads" ON public.leads;
 CREATE POLICY "owner_access_leads" ON public.leads FOR ALL USING (auth.uid() = constructora_id);
 
 -- ============================================================
