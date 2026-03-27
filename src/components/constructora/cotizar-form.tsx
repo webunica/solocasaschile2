@@ -35,8 +35,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
       nombre_cliente: (formData.get("name") as string) || "Cliente Anónimo",
       email_cliente: (formData.get("email") as string) || "",
       telefono_cliente: (formData.get("phone") as string) || "No especificado",
-      region_cliente: (formData.get("region") as string) || "No especificada",
-      mensaje: (formData.get("message") as string) || "",
+      mensaje: `[Región: ${formData.get("region") || "No especificada"}] \n${(formData.get("message") as string) || ""}`,
     };
 
     try {
