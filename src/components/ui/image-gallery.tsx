@@ -24,10 +24,19 @@ export function ImageGallery({ images, altBase }: Props) {
     <>
       {/* Gallery Grid */}
       <div className="grid grid-cols-4 gap-4 h-[450px]">
-        <div className="col-span-3 relative rounded-[3rem] overflow-hidden group shadow-2xl cursor-zoom-in"
+        <div className="col-span-3 relative rounded-[3rem] overflow-hidden group shadow-2xl cursor-zoom-in bg-muted/20 flex items-center justify-center"
           onClick={() => openLightbox(0)}>
-          <Image src={images[0]} alt={`${altBase} - vista 1`} fill
-            className="object-cover group-hover:scale-105 transition-transform duration-[2s]" priority />
+          <Image 
+            src={images[0]} 
+            alt={`${altBase} - vista 1`} 
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-[2s]" 
+            priority
+            onError={(e: any) => {
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement.innerHTML = '<div class="flex flex-col items-center gap-4 opacity-20"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="font-black uppercase tracking-widest text-[10px]">Sin Imagen Disponible</span></div>';
+            }}
+          />
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/80 to-transparent" />
           <div className="absolute top-4 right-4 w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <ZoomIn className="w-5 h-5 text-white" />
@@ -36,13 +45,17 @@ export function ImageGallery({ images, altBase }: Props) {
         <div className="col-span-1 grid grid-rows-2 gap-4">
           {[1, 2].map((i) => (
             <div key={i}
-              className="relative rounded-[2rem] overflow-hidden shadow-lg border border-border/10 cursor-zoom-in group"
+              className="relative rounded-[2rem] overflow-hidden shadow-lg border border-border/10 cursor-zoom-in group bg-muted/20 flex items-center justify-center"
               onClick={() => openLightbox(Math.min(i, images.length - 1))}
             >
               <Image
                 src={images[i] || images[0]}
                 fill alt={`${altBase} - vista ${i + 1}`}
                 className="object-cover hover:scale-110 transition-transform duration-700"
+                onError={(e: any) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentElement.innerHTML = '<div class="opacity-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>';
+                }}
               />
               {i === 2 && images.length > 3 && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
