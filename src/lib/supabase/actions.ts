@@ -60,10 +60,13 @@ export async function register(formData: FormData) {
   const repName = formData.get('repName') as string
   const phone = formData.get('phone') as string
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
+
   const { data: authData, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
     options: {
+      emailRedirectTo: `${siteUrl}/auth/callback`,
       data: {
         nombre: companyName,
         representante: repName,
@@ -75,7 +78,30 @@ export async function register(formData: FormData) {
     return { error: signUpError.message }
   }
 
-  // Crear registro inicial en constructoras
+  // Si el usuario necesita confirmar email (sesión es null), informar al frontend
+  if (authData.user && !authData.session) {
+    // Crear registro en constructoras de todas formas (se activa cuando confirmen)
+    const slug = companyName
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+
+    await supabase.from('constructoras').insert([{
+      id: authData.user.id,
+      nombre: companyName,
+      slug,
+      email,
+      telefono: phone,
+      plan: 'gratis',
+      verificada: false,
+      score_confianza: 50,
+    }])
+
+    return { needsConfirmation: true }
+  }
+
+  // Auto-confirmado (email disabled) — redirigir directo al dashboard
   if (authData.user) {
     const slug = companyName
       .toLowerCase()

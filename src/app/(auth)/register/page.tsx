@@ -15,6 +15,8 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
   const [showPass, setShowPass] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [sentTo, setSentTo] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,8 +45,40 @@ export default function RegisterPage() {
         : result.error;
       setError(msg);
       setLoading(false);
+    } else if (result?.needsConfirmation) {
+      setSentTo(formData.get('email') as string);
+      setEmailSent(true);
+      setLoading(false);
     }
   };
+
+  // Pantalla de confirmación de email
+  if (emailSent) return (
+    <div className="min-h-screen flex items-center justify-center p-8 bg-background">
+      <div className="max-w-md w-full text-center space-y-8">
+        <div className="w-24 h-24 rounded-full bg-emerald-500/10 border-2 border-emerald-500/20 flex items-center justify-center mx-auto">
+          <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+        </div>
+        <div className="space-y-3">
+          <h2 className="text-3xl font-heading font-black tracking-tight">¡Revisa tu correo!</h2>
+          <p className="text-muted-foreground font-medium leading-relaxed">
+            Hemos enviado un enlace de confirmación a <br />
+            <span className="font-black text-foreground">{sentTo}</span>
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Haz clic en el enlace del email para activar tu cuenta y acceder al dashboard.
+          </p>
+        </div>
+        <div className="p-4 rounded-2xl bg-muted/40 border border-border/40 text-sm text-left space-y-2">
+          <p className="font-bold text-xs uppercase tracking-widest opacity-50">¿No llegó el correo?</p>
+          <p className="text-muted-foreground text-xs">Revisa tu carpeta de spam. Si el problema persiste, intenta registrarte nuevamente.</p>
+        </div>
+        <Link href="/login" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary hover:opacity-80 transition-opacity">
+          <ArrowLeft className="w-3 h-3" /> Volver al inicio de sesión
+        </Link>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen grid lg:grid-cols-[1fr_550px]">
