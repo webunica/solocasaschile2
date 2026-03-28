@@ -37,7 +37,7 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="pt-12 pb-32 bg-muted/20 relative overflow-hidden">
+    <section className="pt-20 pb-32 bg-muted/20 relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="text-center space-y-4 mb-24 uppercase">
           <motion.p 
@@ -59,17 +59,33 @@ export function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative">
           
           {/* Animated Connecting Path (Desktop) */}
-          <div className="absolute top-[48px] left-[10%] right-[10%] h-[120px] hidden lg:block overflow-visible pointer-events-none">
+          <div className="absolute top-[180px] left-[10%] right-[10%] h-[120px] hidden lg:block overflow-visible pointer-events-none">
              <svg className="w-full h-full" fill="none" viewBox="0 0 1000 120" preserveAspectRatio="none">
-                <motion.path 
+                {/* Static Dotted Path */}
+                <path 
                    d="M 0 0 C 125 0, 125 100, 250 100 C 375 100, 375 0, 500 0 C 625 0, 625 100, 750 100 C 875 100, 875 0, 1000 0" 
                    stroke="currentColor" 
                    strokeWidth="2" 
-                   strokeDasharray="8 8" 
-                   className="text-primary/30"
-                   initial={{ pathLength: 0 }}
-                   whileInView={{ pathLength: 1 }}
-                   transition={{ duration: 2, ease: "easeInOut" }}
+                   strokeDasharray="8 12" 
+                   className="text-primary/20"
+                />
+                
+                {/* Travelling Dot Animation */}
+                <motion.circle
+                  r="6"
+                  fill="currentColor"
+                  className="text-primary"
+                  style={{ offsetPath: "path('M 0 0 C 125 0, 125 100, 250 100 C 375 100, 375 0, 500 0 C 625 0, 625 100, 750 100 C 875 100, 875 0, 1000 0')", offsetRotate: "auto" }}
+                  animate={{ offsetDistance: ["0%", "100%"] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                />
+
+                <motion.circle
+                  r="3"
+                  fill="white"
+                  style={{ offsetPath: "path('M 0 0 C 125 0, 125 100, 250 100 C 375 100, 375 0, 500 0 C 625 0, 625 100, 750 100 C 875 100, 875 0, 1000 0')", offsetRotate: "auto" }}
+                  animate={{ offsetDistance: ["0%", "100%"] }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 />
              </svg>
           </div>
@@ -83,10 +99,20 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: step.delay }}
                 viewport={{ once: true }}
-                className="relative space-y-10 group"
+                className="relative flex flex-col items-center gap-12 group"
               >
-                {/* Icon Container */}
-                <div className="relative flex justify-center">
+                {/* 1. Content (Now Above) */}
+                <div className="text-center space-y-4 px-2 min-h-[100px] flex flex-col justify-end">
+                  <h3 className="text-2xl font-black font-heading tracking-tighter group-hover:text-primary transition-colors leading-none">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-80 max-w-[240px] mx-auto">
+                    {step.description}
+                  </p>
+                </div>
+
+                {/* 2. Icon Container (Now Below) */}
+                <div className="relative flex justify-center z-10">
                    <div className={cn(
                      "w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-white relative z-10",
                      "transition-all duration-500 group-hover:scale-110 shadow-[0_20px_50px_rgba(0,0,0,0.2)]",
@@ -95,21 +121,11 @@ export function HowItWorks() {
                    )}>
                       <Icon className="w-10 h-10 drop-shadow-xl" />
                       
-                      {/* Step Number Badge */}
-                      <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-slate-950 border-4 border-muted/20 flex items-center justify-center font-black text-[10px] text-primary shadow-xl">
+                      {/* Step Number Badge - High Contrast Fix */}
+                      <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-slate-900 border-4 border-muted/20 flex items-center justify-center font-black text-[10px] text-white shadow-xl z-20">
                         0{i + 1}
                       </div>
                    </div>
-                </div>
-
-                {/* Content */}
-                <div className="text-center space-y-4 px-2">
-                  <h3 className="text-2xl font-black font-heading tracking-tighter group-hover:text-primary transition-colors leading-none">
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-80 max-w-[240px] mx-auto">
-                    {step.description}
-                  </p>
                 </div>
 
                 {/* Mobile indicators */}
