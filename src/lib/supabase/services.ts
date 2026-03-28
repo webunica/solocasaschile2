@@ -15,6 +15,7 @@ export type ModelWithConstructora = {
   tiempo_entrega: string;
   descripcion: string;
   disponible: boolean;
+  video_url?: string;
   garantia_anos?: number;
   postventa?: boolean;
   especificaciones?: Record<string, string>;

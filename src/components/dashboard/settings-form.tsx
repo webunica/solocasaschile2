@@ -10,8 +10,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { 
   Building2, Phone, Globe, MapPin, 
-  Image as ImageIcon, Save, CheckCircle2, AlertCircle 
+  Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video 
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
   initialData: any;
@@ -140,6 +141,26 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                     placeholder="https://www.tuweb.cl"
                   />
                </div>
+            
+            {(initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
+              <div className="space-y-4 pt-4 border-t border-border/40">
+                <div className="flex items-center gap-2">
+                   <Video className="w-5 h-5 text-red-500" />
+                   <h3 className="font-bold text-sm uppercase tracking-widest leading-none">Video Corporativo (YouTube/Vimeo)</h3>
+                   <Badge variant="outline" className="text-[9px] font-black uppercase text-red-500 border-red-500/20">Pro/Premium</Badge>
+                </div>
+                <div className="space-y-2">
+                  <Input 
+                    id="video_url" 
+                    name="video_url" 
+                    defaultValue={initialData?.video_url || ""} 
+                    placeholder="https://www.youtube.com/watch?v=..." 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                  />
+                  <p className="text-[10px] text-muted-foreground font-medium italic">Pega el link de un video institucional para que los clientes conozcan tu constructora en acción.</p>
+                </div>
+              </div>
+            )}
             </div>
 
             <div className="space-y-2">

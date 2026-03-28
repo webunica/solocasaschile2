@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, ImagePlus, Loader2, CheckCircle2, 
-  AlertCircle, X, Home 
+  AlertCircle, X, Home, Video
 } from "lucide-react";
 import { createModel } from "@/lib/supabase/actions";
 import { createClient } from "@/lib/supabase/client";
@@ -257,6 +257,21 @@ export default function NewModelPage() {
             </div>
           </div>
         </div>
+        {/* Section: Video Tour */}
+        {planLimits?.maxModels > 3 && (
+          <div className="glass rounded-[2.5rem] p-8 border border-border/40 space-y-6">
+            <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3">
+              <Video className="w-6 h-6 text-red-500" /> Video Tour (Opcional)
+            </h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="video_url">URL del Video (YouTube o Vimeo)</Label>
+                <Input id="video_url" name="video_url" placeholder="https://www.youtube.com/watch?v=..." className="h-12" />
+                <p className="text-[10px] text-muted-foreground font-medium italic">Incluye un video para que los clientes puedan ver el interior de la casa.</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Actions */}
         <div className="flex gap-4">

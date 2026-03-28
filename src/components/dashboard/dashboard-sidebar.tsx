@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
-  HelpCircle, LogOut, LayoutDashboard 
+  HelpCircle, LogOut, LayoutDashboard, 
+  MessageSquare, Award, Video
 } from "lucide-react";
 import {
   Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
@@ -19,6 +20,8 @@ const DASHBOARD_MENU = [
   { title: "Inicio", icon: LayoutDashboard, href: "/dashboard" },
   { title: "Gestionar Modelos", icon: Home, href: "/dashboard/catalog" },
   { title: "Ver Prospectos", icon: Users, href: "/dashboard/leads" },
+  { title: "Testimonios", icon: MessageSquare, href: "/dashboard/testimonios" },
+  { title: "Certificaciones", icon: Award, href: "/dashboard/certificaciones" },
   { title: "Analíticas", icon: BarChart3, href: "/dashboard/reportes" },
 ];
 

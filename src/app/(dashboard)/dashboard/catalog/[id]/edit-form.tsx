@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, ImagePlus, Loader2, CheckCircle2, 
-  AlertCircle, X, Home 
+  AlertCircle, X, Home, Video
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { ModelWithConstructora } from "@/lib/supabase/services";
@@ -106,6 +106,7 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
           descripcion: formData.get('descripcion') as string,
           imagenes_urls: finalImages,
           disponible: formData.get('disponible') === 'true',
+          video_url: formData.get('video_url') as string || null,
         })
         .eq('id', modelo.id);
 
@@ -203,6 +204,25 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
            <Label htmlFor="descripcion">Descripción</Label>
            <Textarea id="descripcion" name="descripcion" defaultValue={modelo.descripcion} className="min-h-32" />
         </div>
+
+        {modelo.constructora.plan !== 'gratis' && (
+          <div className="space-y-4 pt-6 border-t border-border/40">
+            <div className="flex items-center gap-2">
+               <Video className="w-5 h-5 text-red-500" />
+               <h3 className="font-bold text-sm uppercase tracking-widest leading-none">Video Tour (YouTube/Vimeo)</h3>
+            </div>
+            <div className="space-y-2">
+              <Input 
+                id="video_url" 
+                name="video_url" 
+                defaultValue={modelo.video_url || ""} 
+                placeholder="https://www.youtube.com/watch?v=..." 
+                className="h-12 rounded-xl bg-muted/20 border-border/40"
+              />
+              <p className="text-[10px] text-muted-foreground font-medium italic">Pega el link del video para mostrar un recorrido virtual en este modelo.</p>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid sm:grid-cols-2 gap-5 glass rounded-[2.5rem] p-8 border border-border/40">
