@@ -56,8 +56,56 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
         </Select>
       </div>
 
-      {/* Tabla "Estilo PDF" */}
-      <div className="w-full overflow-hidden border border-border/40 rounded-[2.5rem] bg-card/20 shadow-2xl backdrop-blur-xl">
+      {/* Vista de Tarjetas (Mobile) */}
+      <div className="grid grid-cols-1 gap-4 md:hidden">
+        {filtered.map((c, index) => (
+          <div key={c.id} className="bg-card/40 backdrop-blur-xl border border-border/40 p-6 rounded-[2rem] space-y-4 shadow-lg">
+            <div className="flex items-center gap-4">
+               <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Building2 className="w-6 h-6 text-primary" />
+               </div>
+               <div>
+                  <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1 opacity-60">Constructora #{index + 1}</div>
+                  <h3 className="font-heading font-black text-lg text-foreground leading-tight tracking-tight">{c.nombre}</h3>
+               </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 py-2 border-y border-border/20">
+               <div className="space-y-1">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-50">Región</p>
+                  <p className="text-xs font-bold text-foreground truncate">{c.regiones?.[0] || "-"}</p>
+               </div>
+               <div className="space-y-1">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-50">Teléfono</p>
+                  <p className="text-xs font-bold text-foreground font-mono">{c.telefono || "-"}</p>
+               </div>
+            </div>
+
+            <div className="space-y-4">
+               <div className="space-y-1">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-50">Correo Electrónico</p>
+                  <p className="text-xs font-bold text-primary truncate">
+                    {c.email ? <a href={`mailto:${c.email}`}>{c.email}</a> : "-"}
+                  </p>
+               </div>
+
+               {c.sitio_web && (
+                 <a 
+                   href={c.sitio_web.startsWith('http') ? c.sitio_web : `https://${c.sitio_web}`} 
+                   target="_blank" 
+                   rel="noreferrer"
+                   className="flex items-center justify-center gap-2 w-full h-12 rounded-2xl brand-gradient text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20"
+                 >
+                   <Globe className="w-4 h-4" /> Visitar Sitio Web
+                 </a>
+               )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabla "Estilo PDF" (Desktop) */}
+      <div className="hidden md:block w-full overflow-hidden border border-border/40 rounded-[2.5rem] bg-card/20 shadow-2xl backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[1000px]">
             <thead>
@@ -135,6 +183,7 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
               ))}
             </tbody>
           </table>
+
           
           {filtered.length === 0 && (
             <div className="text-center py-32 space-y-4">
