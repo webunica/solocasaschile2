@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CatalogoGrid } from "@/components/catalogo/catalogo-grid";
 import { 
-  Box, Layers, Hammer, Key, 
+  Box, Layers, Hammer, Key, Users,
   CheckCircle2, Info, ArrowRight,
   ShieldCheck, Thermometer, Clock
 } from "lucide-react";
@@ -63,14 +63,26 @@ const TIPO_INFO: Record<string, {
   "llave-en-mano": {
     title: "Casas Llave en Mano",
     description: "Olvídate de las preocupaciones. Proyectos integrales que incluyen diseño, permisos, construcción y terminaciones finales.",
-    icon: <Key className="w-10 h-10 text-primary" />,
+    icon: <Key className="w-10 h-10 text-brand-teal" />,
     benefits: ["Un solo interlocutor", "Precio cerrado sin sorpresas", "Garantía total"],
     specs: [
         { label: "Esfuerzo Cliente", value: "Nulo" },
         { label: "Precio base", value: "22-35 UF/m2" },
         { label: "Personalización", value: "Total" }
     ],
-    image: "/hero2.png"
+    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000"
+  },
+  sociales: {
+    title: "Casas Sociales",
+    description: "Viviendas con subsidio estatal (DS19/DS49). Soluciones habitacionales dignas, modernas y eficientes para la integración familiar.",
+    icon: <Users className="w-10 h-10 text-brand-indigo" />,
+    benefits: ["Compatible con subsidio DS19/DS49", "Diseño optimizado", "Entrega garantizada"],
+    specs: [
+        { label: "Financiamiento", value: "Subsidios" },
+        { label: "Tiempo montaje", value: "20-40 días" },
+        { label: "Integración", value: "Comunitaria" }
+    ],
+    image: "https://images.unsplash.com/photo-1448630360428-65ff2c0257ef?q=80&w=2070"
   }
 };
 
@@ -93,21 +105,26 @@ export default async function TipoPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Hero Section per Type */}
-      <section className="relative py-20 bg-slate-50 dark:bg-slate-900 overflow-hidden border-b border-border/50">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <section className="relative py-24 md:py-32 bg-slate-950 overflow-hidden border-b border-white/5">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-indigo/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-teal/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
         
-        <div className="container relative z-10 max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold tracking-widest uppercase">
+        <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 text-white/80 border border-white/10 text-[10px] font-black tracking-[0.3em] uppercase">
                 Sistema Constructivo
               </div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 text-primary">
-                   {info.icon}
-                   <h1 className="text-4xl md:text-6xl font-heading font-extrabold tracking-tight">{info.title}</h1>
+              <div className="space-y-6">
+                <div className="flex flex-col gap-6">
+                   <div className="w-20 h-20 rounded-3xl bg-white/5 flex items-center justify-center border border-white/10">
+                      {info.icon}
+                   </div>
+                   <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-white leading-none">
+                     {info.title}
+                   </h1>
                 </div>
-                <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
+                <p className="text-xl text-white/60 leading-relaxed max-w-xl font-medium">
                   {info.description}
                 </p>
               </div>
@@ -131,14 +148,14 @@ export default async function TipoPage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className="relative h-[450px] rounded-3xl overflow-hidden shadow-2xl group">
-               <Image src={info.image} alt={info.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
-               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-               <div className="absolute bottom-8 left-8 right-8">
-                  <div className="p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex flex-col gap-4">
-                     <h3 className="text-white font-bold flex items-center gap-2">
-                       <CheckCircle2 className="w-5 h-5 text-primary" /> Ventajas Clave
-                     </h3>
+             <div className="relative h-[550px] rounded-[3rem] overflow-hidden shadow-2xl group border border-white/10">
+                <Image src={info.image} alt={info.title} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-10 left-10 right-10">
+                   <div className="p-8 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] flex flex-col gap-6">
+                      <h3 className="text-white font-black text-xl uppercase tracking-tighter flex items-center gap-3">
+                        <CheckCircle2 className="w-6 h-6 text-brand-teal" /> Ventajas Clave
+                      </h3>
                      <div className="space-y-2">
                         {info.benefits.map(benefit => (
                           <div key={benefit} className="flex items-center gap-2 text-white/90 text-sm">
