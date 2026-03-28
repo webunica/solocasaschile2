@@ -108,8 +108,10 @@ export function TypesSection() {
                   
                   <div className="space-y-8 relative z-10">
                     <div className={cn(
-                      "w-16 h-16 rounded-[1.5rem] bg-white dark:bg-slate-950 flex items-center justify-center shadow-xl shadow-primary/5 border border-primary/10 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 group-hover:bg-primary group-hover:text-white group-hover:shadow-primary/20",
-                      type.textColor
+                      "w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 text-white shadow-2xl group-hover:scale-110 group-hover:rotate-6 group-hover:brightness-110",
+                      (type.id === "prefabricada" || type.id === "container") 
+                        ? "bg-brand-indigo shadow-brand-indigo/30" 
+                        : "bg-brand-teal shadow-brand-teal/30"
                     )}>
                       {type.icon}
                     </div>
