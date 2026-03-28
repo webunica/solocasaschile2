@@ -1,0 +1,202 @@
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageCircle, X, Send, User, Mail, Phone, Home, Building2, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+
+const WHATSAPP_NUMBER = "569XXXXXXXX"; // Replace with real number or env variable
+
+export function WhatsAppWidget() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    type: "" as "casa" | "constructora" | "",
+  });
+
+  const handleStart = (type: "casa" | "constructora") => {
+    setFormData({ ...formData, type });
+    setStep(2);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const message = `¡Hola! 👋 Me gustaría recibir información.\n\n` +
+      `👤 *Nombre:* ${formData.name}\n` +
+      `📧 *Email:* ${formData.email}\n` +
+      `📱 *Teléfono:* ${formData.phone || "No proporcionado"}\n` +
+      `🎯 *Interés:* ${formData.type === "casa" ? "Busco una casa" : "Soy una Constructora"}\n\n` +
+      `Vengo desde la web de SolocasasChile. ✨`;
+
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+    setIsOpen(false);
+    // Reset after some time
+    setTimeout(() => {
+      setStep(1);
+      setFormData({ name: "", email: "", phone: "", type: "" });
+    }, 1000);
+  };
+
+  return (
+    <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: "bottom right" }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="mb-4 w-[350px] overflow-hidden rounded-[2.5rem] bg-background/80 backdrop-blur-2xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)]"
+          >
+            {/* Header */}
+            <div className="brand-gradient p-8 text-white relative">
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-md">
+                   <MessageCircle className="w-6 h-6 fill-white" />
+                </div>
+                <div>
+                   <h3 className="font-heading font-black text-xl tracking-tighter">¡Hola! 👋</h3>
+                   <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Soporte SolocasasChile</p>
+                </div>
+              </div>
+              <p className="text-sm font-medium leading-relaxed">
+                {step === 1 
+                  ? "¿Cómo podemos ayudarte hoy? Queremos brindarte la mejor atención. 😊" 
+                  : "¡Genial! Solo necesitamos unos datos rápidos para conectar contigo."}
+              </p>
+            </div>
+
+            {/* Content */}
+            <div className="p-8">
+              {step === 1 ? (
+                <div className="grid grid-cols-1 gap-4">
+                   <button 
+                     onClick={() => handleStart("casa")}
+                     className="group flex items-center gap-4 p-5 rounded-2xl border-2 border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
+                   >
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                         <Home className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                         <p className="font-black text-xs uppercase tracking-widest text-foreground">Busco una casa</p>
+                         <p className="text-[10px] font-bold text-muted-foreground opacity-60 italic">Ver modelos y precios</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 transition-opacity" />
+                   </button>
+
+                   <button 
+                     onClick={() => handleStart("constructora")}
+                     className="group flex items-center gap-4 p-5 rounded-2xl border-2 border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
+                   >
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                         <Building2 className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                         <p className="font-black text-xs uppercase tracking-widest text-foreground">Soy Constructora</p>
+                         <p className="text-[10px] font-bold text-muted-foreground opacity-60 italic">Publicar o gestionar catálogo</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 transition-opacity" />
+                   </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                   <div className="space-y-4">
+                      <div className="relative group">
+                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Input 
+                           placeholder="Tu nombre completo" 
+                           value={formData.name}
+                           onChange={(e) => setFormData({...formData, name: e.target.value})}
+                           className="h-12 pl-12 rounded-xl bg-muted/40 border-none font-bold" 
+                           required 
+                         />
+                      </div>
+                      <div className="relative group">
+                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Input 
+                           type="email"
+                           placeholder="Email corporativo o personal" 
+                           value={formData.email}
+                           onChange={(e) => setFormData({...formData, email: e.target.value})}
+                           className="h-12 pl-12 rounded-xl bg-muted/40 border-none font-bold" 
+                           required 
+                         />
+                      </div>
+                      <div className="relative group">
+                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Input 
+                           type="tel"
+                           placeholder="Teléfono (Opcional)" 
+                           value={formData.phone}
+                           onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                           className="h-12 pl-12 rounded-xl bg-muted/40 border-none font-bold" 
+                         />
+                      </div>
+                   </div>
+
+                   <Button 
+                     type="submit" 
+                     className="w-full h-12 brand-gradient rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                   >
+                     Iniciar Chat en WhatsApp <Send className="ml-2 w-4 h-4" />
+                   </Button>
+
+                   <button 
+                     type="button" 
+                     onClick={() => setStep(1)}
+                     className="w-full text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest text-center"
+                   >
+                      AtMenu de opciones
+                   </button>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsOpen(!isOpen)}
+        className={cn(
+          "relative w-16 h-16 rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-2xl",
+          isOpen ? "bg-background text-foreground rotate-90" : "brand-gradient text-white shadow-primary/20"
+        )}
+      >
+        <AnimatePresence mode="wait">
+           {isOpen ? (
+             <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <X className="w-7 h-7" />
+             </motion.div>
+           ) : (
+             <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <MessageCircle className="w-8 h-8 fill-white" />
+             </motion.div>
+           )}
+        </AnimatePresence>
+        
+        {!isOpen && (
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute inset-0 rounded-[2rem] bg-current opacity-20 pointer-events-none"
+          />
+        )}
+      </motion.button>
+    </div>
+  );
+}
