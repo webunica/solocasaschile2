@@ -43,6 +43,7 @@ export interface Modelo {
   garantiaAnos: number;
   postventa: boolean;
   disponible: boolean;
+  videoUrl?: string;
 }
 
 export const CONSTRUCTORAS: Constructora[] = [

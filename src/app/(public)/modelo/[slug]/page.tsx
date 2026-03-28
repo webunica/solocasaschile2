@@ -8,7 +8,7 @@ import { CotizarForm } from "@/components/constructora/cotizar-form";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn } from "@/lib/utils";
-import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap } from "lucide-react";
+import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video } from "lucide-react";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -37,6 +37,7 @@ const TIPO_LABELS: Record<string, string> = {
 };
 
 import { ShareActions } from "@/components/ui/share-actions";
+import { getYoutubeEmbedUrl } from "@/lib/utils";
 
 export default async function ModeloPage({ params }: PageProps) {
   const { slug } = await params;
@@ -133,35 +134,55 @@ export default async function ModeloPage({ params }: PageProps) {
               {modelo.descripcion || 'Sin descripción disponible.'}
             </p>
 
-            {/* Technical Specs Grid */}
-            <div className="space-y-10">
-               <h2 className="text-3xl font-heading font-black tracking-tight flex items-center gap-4">
-                 <Square className="w-8 h-8 text-brand-teal opacity-40 shrink-0" /> 
-                 Ficha Técnica Industrial
-               </h2>
-               <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                 {[
-                    { icon: <Square className="w-6 h-6 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2 || 0} m²` },
-                    { icon: <Bed className="w-6 h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios || 0} Dorms` },
-                    { icon: <Bath className="w-6 h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos || 0} Baños` },
-                    { icon: <Clock className="w-6 h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || 'Consultar' },
-                    { icon: <ShieldCheck className="w-6 h-6 text-brand-indigo" />, label: "Garantía", value: `${modelo.garantia_anos || 1} Años` },
-                    { icon: <Zap className="w-6 h-6 text-brand-indigo" />, label: "Postventa", value: modelo.postventa ? "Disponible" : "Consultar" },
-                 ].map((spec) => (
-                    <div key={spec.label} className="bg-muted/10 border border-border/40 p-8 rounded-[3rem] space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
-                       <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">
-                          {spec.icon}
+               {/* Technical Specs Grid */}
+               <div className="space-y-10">
+                  <h2 className="text-3xl font-heading font-black tracking-tight flex items-center gap-4">
+                    <Square className="w-8 h-8 text-brand-teal opacity-40 shrink-0" /> 
+                    Ficha Técnica Industrial
+                  </h2>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                    {[
+                       { icon: <Square className="w-6 h-6 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2 || 0} m²` },
+                       { icon: <Bed className="w-6 h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios || 0} Dorms` },
+                       { icon: <Bath className="w-6 h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos || 0} Baños` },
+                       { icon: <Clock className="w-6 h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || 'Consultar' },
+                       { icon: <ShieldCheck className="w-6 h-6 text-brand-indigo" />, label: "Garantía", value: `${modelo.garantia_anos || 1} Años` },
+                       { icon: <Zap className="w-6 h-6 text-brand-indigo" />, label: "Postventa", value: modelo.postventa ? "Disponible" : "Consultar" },
+                    ].map((spec) => (
+                       <div key={spec.label} className="bg-muted/10 border border-border/40 p-8 rounded-[3rem] space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
+                          <div className="w-12 h-12 rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">
+                             {spec.icon}
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40 leading-none mb-2">
+                               {spec.label}
+                            </p>
+                            <p className="text-xl font-black tracking-tight">{spec.value}</p>
+                          </div>
                        </div>
-                       <div>
-                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40 leading-none mb-2">
-                            {spec.label}
-                         </p>
-                         <p className="text-xl font-black tracking-tight">{spec.value}</p>
-                       </div>
-                    </div>
-                 ))}
+                    ))}
+                  </div>
                </div>
-            </div>
+
+               {/* Video Section */}
+               {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
+                  <div className="space-y-10">
+                     <h2 className="text-3xl font-heading font-black tracking-tight flex items-center gap-4">
+                        <Video className="w-8 h-8 text-brand-indigo opacity-40 shrink-0" /> 
+                        Tour Virtual en Video
+                     </h2>
+                     <div className="relative aspect-video w-full rounded-[3.5rem] overflow-hidden border-4 border-border/40 shadow-2xl shadow-primary/10 group">
+                        <iframe
+                           src={getYoutubeEmbedUrl(modelo.video_url)!}
+                           title={`Video tour de ${modelo.nombre}`}
+                           className="absolute inset-0 w-full h-full"
+                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                           allowFullScreen
+                        />
+                        <div className="absolute inset-0 pointer-events-none border-[1rem] border-black/5 group-hover:border-black/0 transition-all duration-700" />
+                     </div>
+                  </div>
+               )}
 
             {/* Reputation Card (Trust) */}
             <div className="bg-background border-2 border-brand-indigo/10 rounded-[4rem] p-12 relative overflow-hidden group shadow-2xl shadow-primary/5">
