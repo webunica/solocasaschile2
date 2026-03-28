@@ -105,7 +105,7 @@ export default async function ModeloPage({ params }: PageProps) {
                   )}
                </div>
                
-               <h1 className="text-6xl md:text-8xl font-heading font-black tracking-tighter text-foreground leading-[0.9]">
+               <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter text-foreground leading-[0.9]">
                  {modelo.nombre}
                </h1>
 
