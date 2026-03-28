@@ -17,7 +17,7 @@ const PLANES = [
   {
     id: "premium",
     nombre: "Premium",
-    precio: "4.9",
+    precio: "2.9",
     periodo: "UF / mes",
     icon: Crown,
     color: "text-amber-500",
