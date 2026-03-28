@@ -73,25 +73,25 @@ export function HeroLeadForm() {
     <form className="space-y-6" onSubmit={handleSubmit}>
       <div className="grid sm:grid-cols-2 gap-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Organización</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa / Organización</label>
           <div className="relative group/input">
-             <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Building2 className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="company" 
-                placeholder="Nombre de empresa" 
-                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
+                placeholder="Ej: Constructora Los Andes" 
+                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Contacto Directo</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Contacto Personal</label>
           <div className="relative group/input">
-             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="name" 
-                placeholder="Tu nombre completo" 
-                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
+                placeholder="Tu nombre y apellido" 
+                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -100,27 +100,27 @@ export function HeroLeadForm() {
 
       <div className="grid sm:grid-cols-2 gap-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Email Corporativo</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Correo Corporativo</label>
           <div className="relative group/input">
-             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="email" 
                 type="email" 
-                placeholder="correo@empresa.cl" 
-                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
+                placeholder="ejemplo@empresa.cl" 
+                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">WhatsApp / Móvil</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">WhatsApp de Contacto</label>
           <div className="relative group/input">
-             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="phone" 
                 type="tel" 
-                placeholder="+56 9 ..." 
-                className="bg-background/40 border-border/40 pl-12 h-14 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-bold placeholder:font-medium" 
+                placeholder="+56 9 1234 5678" 
+                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -128,37 +128,41 @@ export function HeroLeadForm() {
       </div>
 
       <div className="space-y-3">
-        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50 ml-1">Especificaciones Técnicas</label>
+        <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Detalles del Requerimiento</label>
         <div className="relative group/input">
-           <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+           <MessageSquare className="absolute left-5 top-6 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
            <Textarea 
               name="message" 
-              placeholder="Descríbenos tus requerimientos industriales o dudas sobre el catálogo..." 
-              className="bg-background/40 border-border/40 pl-12 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all resize-none p-5 font-bold placeholder:font-medium leading-relaxed" 
+              placeholder="Cuéntanos brevemente sobre el modelo que te interesa o los detalles del proyecto que quieres cotizar..." 
+              className="bg-background/40 border-border/40 pl-14 min-h-[160px] rounded-[2.5rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-6 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
               required 
            />
         </div>
       </div>
 
       {error && (
-        <p className="text-xs font-bold text-destructive flex items-center gap-2">
+        <motion.p 
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="text-xs font-bold text-destructive/80 flex items-center gap-2 bg-destructive/5 p-4 rounded-xl border border-destructive/10"
+        >
            <span className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" />
            {error}
-        </p>
+        </motion.p>
       )}
 
       <Button 
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full brand-gradient hover:opacity-95 font-black h-14 rounded-2xl shadow-xl shadow-primary/10 tracking-widest group transition-all"
+        className="w-full brand-gradient hover:opacity-95 font-black h-16 rounded-2xl shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] tracking-[0.2em] group transition-all"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
           <>
-            ENVIAR SOLICITUD DE DATOS
-            <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            SOLICITAR ASESORÍA EXPERTA
+            <Send className="w-5 h-5 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </>
         )}
       </Button>
