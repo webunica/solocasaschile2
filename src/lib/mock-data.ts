@@ -2,7 +2,7 @@
 // Mock data — replaces Supabase until DB is wired up
 // -------------------------------------------------------
 
-export type TipoModelo = "prefabricada" | "sip" | "container" | "llave-en-mano";
+export type TipoModelo = "sip" | "prefabricada" | "modular" | "container" | "steel-framing" | "madera" | "hormigon" | "llave-en-mano" | "sociales";
 export type PlanConstructora = "gratis" | "pro" | "premium";
 
 export interface Constructora {
@@ -46,6 +46,7 @@ export interface Modelo {
   videoUrl?: string;
 }
 
+
 export const CONSTRUCTORAS: Constructora[] = [
   {
     id: "c0",
@@ -54,7 +55,7 @@ export const CONSTRUCTORAS: Constructora[] = [
     logo: "/images/modelos/austral/frente.jpg",
     descripcion: "Especialistas en arquitectura modular SIP de alta gama. Diseño bioclimático y eficiencia extrema.",
     regiones: ["Metropolitana", "Valparaíso", "Biobío", "Los Lagos"],
-    tiposConstruccion: ["sip", "llave-en-mano"],
+    tiposConstruccion: ["sip"],
     plan: "premium",
     scoreConfianza: 100,
     reviews: 245,
@@ -71,7 +72,7 @@ export const CONSTRUCTORAS: Constructora[] = [
     logo: "/hero.png",
     descripcion: "Líderes en construcción prefabricada de alto estándar en Chile desde 2005.",
     regiones: ["Metropolitana", "Valparaíso", "Biobío"],
-    tiposConstruccion: ["prefabricada", "llave-en-mano"],
+    tiposConstruccion: ["prefabricada"],
     plan: "premium",
     scoreConfianza: 98,
     reviews: 124,
@@ -139,7 +140,7 @@ export const CONSTRUCTORAS: Constructora[] = [
     logo: "/hero.png",
     descripcion: "Transformamos contenedores en hogares modernos y sustentables.",
     regiones: ["Metropolitana", "Valparaíso"],
-    tiposConstruccion: ["container", "llave-en-mano"],
+    tiposConstruccion: ["container"],
     plan: "gratis",
     scoreConfianza: 78,
     reviews: 12,

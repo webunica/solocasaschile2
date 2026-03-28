@@ -19,12 +19,7 @@ import { getPlanLimits } from "@/lib/constants/plans";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const TIPOS = [
-  { value: "prefabricada", label: "Prefabricada" },
-  { value: "sip", label: "Panel SIP" },
-  { value: "container", label: "Container" },
-  { value: "llave-en-mano", label: "Llave en Mano" },
-];
+import { FORM_SYSTEM_OPTIONS as TIPOS } from "@/config/construction-systems";
 
 export default function NewModelPage() {
   const router = useRouter();

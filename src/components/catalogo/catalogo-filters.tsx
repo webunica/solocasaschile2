@@ -4,15 +4,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Box, Layers, Hammer, Key, X } from "lucide-react";
+import { X } from "lucide-react";
+import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
 import type { TipoModelo } from "@/lib/mock-data";
 
-const TIPOS: { value: TipoModelo; label: string; icon: React.ReactNode }[] = [
-  { value: "prefabricada", label: "Prefabricada", icon: <Box className="w-4 h-4" /> },
-  { value: "sip", label: "Panel SIP", icon: <Layers className="w-4 h-4" /> },
-  { value: "container", label: "Container", icon: <Hammer className="w-4 h-4" /> },
-  { value: "llave-en-mano", label: "Llave en Mano", icon: <Key className="w-4 h-4" /> },
-];
+const TIPOS = CONSTRUCTION_SYSTEMS.map(s => ({
+  value: s.id as TipoModelo,
+  label: s.title,
+  icon: s.icon
+}));
 
 const REGIONES = [
   "Metropolitana", "Valparaíso", "Biobío", "La Araucanía",

@@ -6,85 +6,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CatalogoGrid } from "@/components/catalogo/catalogo-grid";
 import { 
-  Box, Layers, Hammer, Key, Users,
-  CheckCircle2, Info, ArrowRight,
+  CheckCircle2, ArrowRight,
   ShieldCheck, Thermometer, Clock
 } from "lucide-react";
 import type { Metadata } from "next";
+import { SYSTEM_DETAILS as TIPO_INFO } from "@/config/construction-systems";
 
 interface PageProps {
   params: Promise<{ tipo: string }>;
 }
-
-const TIPO_INFO: Record<string, { 
-  title: string; 
-  description: string; 
-  icon: React.ReactNode; 
-  benefits: string[];
-  specs: { label: string; value: string }[];
-  image: string;
-}> = {
-  prefabricada: {
-    title: "Casas Prefabricadas",
-    description: "La opción más rápida y económica para construir tu hogar. Paneles modulares de madera o metalcom ensamblados en sitio.",
-    icon: <Box className="w-10 h-10 text-primary" />,
-    benefits: ["Bajo costo por m2", "Montaje en tiempo récord", "Fácil de ampliar"],
-    specs: [
-        { label: "Tiempo montaje", value: "7-15 días" },
-        { label: "Precio base", value: "8-18 UF/m2" },
-        { label: "Escalabilidad", value: "Alta" }
-    ],
-    image: "/hero.png"
-  },
-  sip: {
-    title: "Casas Panel SIP",
-    description: "Paneles aislados estructurales que ofrecen una eficiencia térmica inigualable y una resistencia mecánica superior.",
-    icon: <Layers className="w-10 h-10 text-primary" />,
-    benefits: ["Ahorro 50% en calefacción", "Estructuralmente antisísmica", "Menos residuos en obra"],
-    specs: [
-        { label: "Eficiencia Térmica", value: "A+" },
-        { label: "Precio base", value: "15-25 UF/m2" },
-        { label: "Aislación Acústica", value: "Excelente" }
-    ],
-    image: "/hero2.png"
-  },
-  container: {
-    title: "Casas Container",
-    description: "Viviendas modulares a partir de contenedores marítimos reciclados. Diseño moderno, industrial y altamente resistente.",
-    icon: <Hammer className="w-10 h-10 text-primary" />,
-    benefits: ["Estructura indestructible", "Movilidad geográfica", "Diseño vanguardista"],
-    specs: [
-        { label: "Resistencia", value: "Ultra alta" },
-        { label: "Precio base", value: "12-22 UF/m2" },
-        { label: "Sustentabilidad", value: "Reciclado" }
-    ],
-    image: "/hero.png"
-  },
-  "llave-en-mano": {
-    title: "Casas Llave en Mano",
-    description: "Olvídate de las preocupaciones. Proyectos integrales que incluyen diseño, permisos, construcción y terminaciones finales.",
-    icon: <Key className="w-10 h-10 text-brand-teal" />,
-    benefits: ["Un solo interlocutor", "Precio cerrado sin sorpresas", "Garantía total"],
-    specs: [
-        { label: "Esfuerzo Cliente", value: "Nulo" },
-        { label: "Precio base", value: "22-35 UF/m2" },
-        { label: "Personalización", value: "Total" }
-    ],
-    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000"
-  },
-  sociales: {
-    title: "Casas Sociales",
-    description: "Viviendas con subsidio estatal (DS19/DS49). Soluciones habitacionales dignas, modernas y eficientes para la integración familiar.",
-    icon: <Users className="w-10 h-10 text-brand-indigo" />,
-    benefits: ["Compatible con subsidio DS19/DS49", "Diseño optimizado", "Entrega garantizada"],
-    specs: [
-        { label: "Financiamiento", value: "Subsidios" },
-        { label: "Tiempo montaje", value: "20-40 días" },
-        { label: "Integración", value: "Comunitaria" }
-    ],
-    image: "https://images.unsplash.com/photo-1448630360428-65ff2c0257ef?q=80&w=2070"
-  }
-};
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { tipo } = await params;

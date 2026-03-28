@@ -18,12 +18,7 @@ import { ModelWithConstructora } from "@/lib/supabase/services";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const TIPOS = [
-  { value: "prefabricada", label: "Prefabricada" },
-  { value: "sip", label: "Panel SIP" },
-  { value: "container", label: "Container" },
-  { value: "llave-en-mano", label: "Llave en Mano" },
-];
+import { FORM_SYSTEM_OPTIONS as TIPOS } from "@/config/construction-systems";
 
 export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
   const router = useRouter();

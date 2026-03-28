@@ -3,62 +3,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { ArrowRight, Box, Layers, Hammer, Key, Users, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-
-const TYPES = [
-  {
-    id: "prefabricada",
-    title: "Prefabricada",
-    description: "Construidas en fábrica y ensambladas en sitio. La eficiencia llevada al máximo estándar.",
-    icon: <Box className="w-8 h-8" />,
-    color: "from-brand-indigo/20 to-brand-indigo/5",
-    accent: "bg-brand-indigo",
-    link: "/tipos/prefabricada"
-  },
-  {
-    id: "sip",
-    title: "Panel SIP",
-    description: "Alto rendimiento térmico y acústico mediante paneles aislados estructurales.",
-    icon: <Layers className="w-6 h-6" />,
-    color: "from-brand-teal/20 to-brand-teal/5",
-    accent: "bg-brand-teal",
-    link: "/tipos/sip"
-  },
-  {
-    id: "container",
-    title: "Container",
-    description: "Diseño industrial y vanguardista a partir de arquitectura modular reciclada.",
-    icon: <Hammer className="w-6 h-6" />,
-    color: "from-brand-indigo/20 to-brand-indigo/5",
-    accent: "bg-brand-indigo",
-    link: "/tipos/container"
-  },
-  {
-    id: "sociales",
-    title: "Casas Sociales",
-    description: "Viviendas con subsidio estatal (DS19/DS49) diseñadas para la integración familiar.",
-    icon: <Users className="w-6 h-6" />,
-    color: "from-brand-indigo/20 to-brand-indigo/10",
-    accent: "bg-brand-indigo",
-    link: "/tipos/sociales"
-  },
-  {
-    id: "llave-en-mano",
-    title: "Llave en Mano",
-    description: "Gestión integral: desde el diseño y permisos hasta la entrega definitiva.",
-    icon: <Key className="w-6 h-6" />,
-    color: "from-brand-teal/20 to-brand-teal/10",
-    accent: "bg-brand-teal",
-    link: "/tipos/llave-en-mano"
-  }
-];
+import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
 
 export function TypesSection() {
   const [index, setIndex] = useState(0);
-  const maxIndex = TYPES.length - 4; // Show 4 items on large screens
+  const maxIndex = CONSTRUCTION_SYSTEMS.length - 4; // Show 4 items on large screens
   
   const next = () => setIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
   const prev = () => setIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
@@ -67,10 +20,10 @@ export function TypesSection() {
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, [maxIndex]);
+  }, [maxIndex, index]); // Added index to dependency to reset timer on manual click if needed
 
   return (
-    <section className="pt-32 pb-14 bg-background relative overflow-hidden">
+    <section className="pt-32 pb-[100px] bg-background relative overflow-hidden">
       {/* Organic Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-teal/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-indigo/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
@@ -113,7 +66,7 @@ export function TypesSection() {
 
         <div className="relative overflow-visible">
           <div className="flex transition-all duration-700 ease-out" style={{ transform: `translateX(-${index * (100 / 4)}%)` }}>
-            {TYPES.map((type, i) => (
+            {CONSTRUCTION_SYSTEMS.map((type: any, i: number) => (
               <motion.div 
                 key={type.id} 
                 initial={{ opacity: 0, y: 30 }}

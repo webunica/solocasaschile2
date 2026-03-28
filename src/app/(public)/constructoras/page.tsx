@@ -49,7 +49,6 @@ export default async function ConstructorasPage() {
   });
 
   const asociadas = sorted.filter(c => c.plan !== "informativo");
-  const informativas = sorted.filter(c => c.plan === "informativo");
 
   return (
     <div className="min-h-screen bg-background pb-24 pt-32">
@@ -82,13 +81,8 @@ export default async function ConstructorasPage() {
 
           <div className="flex flex-wrap items-center gap-12 bg-background/40 backdrop-blur-xl border border-border/40 p-8 rounded-[2.5rem] w-fit shadow-2xl shadow-primary/5">
             <div className="space-y-1">
-               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Asociadas</p>
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Empresas Chile</p>
                <div className="text-3xl font-black text-brand-indigo">{asociadas.length}</div>
-            </div>
-            <div className="w-px h-10 bg-border/40 hidden sm:block" />
-            <div className="space-y-1">
-               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Informativas</p>
-               <div className="text-3xl font-black text-brand-teal">{informativas.length}</div>
             </div>
             <div className="w-px h-10 bg-border/40 hidden sm:block" />
             <div className="space-y-1">
@@ -116,26 +110,16 @@ export default async function ConstructorasPage() {
 
         {/* Carrusel Constructoras Asociadas */}
         {asociadas.length > 0 && (
-          <section className="space-y-4">
-            <h2 className="text-3xl font-heading font-black tracking-tight">
-              Empresas Asociadas
-            </h2>
-            <PremiumCarousel constructoras={asociadas} />
-          </section>
-        )}
-
-        {/* Lista Informativa con Filtro */}
-        {informativas.length > 0 && (
           <section className="space-y-12">
             <div className="space-y-4">
-              <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
-                Directorio Nacional de Constructoras
-              </h2>
-              <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
-                Explora el listado general de constructoras a nivel nacional. Busca por nombre o filtra por región para encontrar rápidamente soluciones en tu área preferida.
-              </p>
+               <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
+                 Empresas Destacadas
+               </h2>
+               <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
+                 Explora el catálogo de constructoras líderes. Empresas verificadas con historial real de proyectos y atención premium.
+               </p>
             </div>
-            <InformativeListClient constructoras={informativas} />
+            <PremiumCarousel constructoras={asociadas} />
           </section>
         )}
 
