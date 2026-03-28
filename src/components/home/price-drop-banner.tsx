@@ -22,11 +22,10 @@ export function PriceDropBanner() {
       const { error } = await createLead({
         modelo_id: null,
         constructora_id: null,
-        nombre: "Suscripción General Precios",
-        email: email,
-        telefono: "",
-        mensaje: "Suscripción general para alertas de baja de precio en el home.",
-        tipo: "general_price_alert",
+        nombre_cliente: "Suscripción General Precios",
+        email_cliente: email,
+        telefono_cliente: "",
+        mensaje: "[ALERTA PRECIO HOME] Suscripción general para alertas de baja de precio desde el home.",
       });
 
       if (error) throw error;

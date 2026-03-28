@@ -27,13 +27,12 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
 
     try {
       const { error } = await createLead({
-        modelo_id: modeloId,
-        constructora_id: constructoraId,
-        nombre: "Suscripción Precio",
-        email: email,
-        telefono: "",
-        mensaje: `Suscripción para alerta de baja de precio. Precio actual: ${currentPrice} UF`,
-        tipo: "notify_price", // We can use this to filter later
+        modelo_id: /^[0-9a-fA-F-]{36}$/.test(modeloId) ? modeloId : null,
+        constructora_id: /^[0-9a-fA-F-]{36}$/.test(constructoraId) ? constructoraId : null,
+        nombre_cliente: "Interesado en Descuento",
+        email_cliente: email,
+        telefono_cliente: "",
+        mensaje: `[ALERTA PRECIO] Suscripción para alerta de baja de precio de ${modeloNombre}. Precio actual: ${currentPrice} UF`,
       });
 
       if (error) throw error;
