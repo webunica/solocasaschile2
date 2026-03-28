@@ -34,39 +34,51 @@ export function Header() {
         borderRadius: headerRadius,
         opacity: headerOpacity
       }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "fixed left-1/2 -translate-x-1/2 z-[100] border border-border/40",
-        "bg-background/60 backdrop-blur-2xl shadow-2xl shadow-primary/5",
-        "transition-colors duration-500"
+        "fixed left-1/2 -translate-x-1/2 z-[100] border border-white/20",
+        "bg-background/40 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)]",
+        "transition-all duration-500"
       )}
     >
-      <div className="container flex h-16 items-center px-4 sm:px-8 md:px-12 max-w-7xl mx-auto">
-        <Link href="/" className="mr-6 lg:mr-10 flex items-center group shrink-0">
+      <div className="container flex h-20 items-center px-6 sm:px-10 md:px-16 max-w-7xl mx-auto">
+        <Link href="/" className="mr-8 lg:mr-16 flex items-center group shrink-0 relative transition-transform hover:scale-[1.02]">
+          <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <Image 
             src="/images/logo.png" 
             alt="SolocasasChile" 
-            width={180} 
-            height={40} 
-            className="h-7 md:h-10 w-auto object-contain"
+            width={240} 
+            height={60} 
+            className="h-10 md:h-14 w-auto object-contain relative z-10"
             priority
           />
         </Link>
         
-        <div className="flex flex-1 items-center justify-end lg:justify-between gap-4">
-          <nav className="hidden lg:flex items-center space-x-10 text-[10px] font-black uppercase tracking-[0.2em]">
+        <div className="flex flex-1 items-center justify-end lg:justify-between gap-6">
+          <nav className="hidden lg:flex items-center space-x-12 text-[11px] font-black uppercase tracking-[0.25em]">
             {NAV_LINKS.map((link) => (
-              <Link key={link.href} href={link.href} className="text-muted-foreground hover:text-primary transition-all hover:tracking-[0.3em]">
+              <Link 
+                key={link.href} 
+                href={link.href} 
+                className="text-muted-foreground/70 hover:text-primary transition-all relative group py-2"
+              >
                 {link.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
           
-          <div className="flex items-center gap-2 sm:gap-4">
-             <div className="flex items-center gap-2 border-r border-border/40 pr-2 sm:pr-4 mr-1 sm:mr-2">
+          <div className="flex items-center gap-4 sm:gap-6">
+             <div className="flex items-center gap-3 border-r border-border/40 pr-4 sm:pr-8">
                 <ThemeToggle />
                 <Link 
                   href="/login" 
-                  className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "text-[10px] font-black uppercase tracking-widest hidden sm:inline-flex opacity-60 hover:opacity-100 hover:bg-transparent")}
+                  className={cn(
+                    buttonVariants({ variant: "ghost", size: "sm" }), 
+                    "text-[10px] font-black uppercase tracking-widest hidden sm:inline-flex opacity-60 hover:opacity-100 hover:text-primary hover:bg-transparent transition-all"
+                  )}
                 >
                   Acceder
                 </Link>
@@ -75,11 +87,11 @@ export function Header() {
              <Link 
                href="/planes" 
                className={cn(
-                 buttonVariants({ size: "sm" }),
-                 "brand-gradient text-white border-none rounded-full px-4 sm:px-8 font-black text-[9px] uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all h-9 sm:h-10"
+                 buttonVariants({ size: "default" }),
+                 "brand-gradient text-white border-none rounded-2xl px-6 sm:px-10 font-black text-[10px] uppercase tracking-[0.2em] shadow-[0_20px_40px_-10px_rgba(var(--primary-rgb),0.3)] hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all h-11 sm:h-12"
                )}
              >
-               <span className="hidden xs:inline">Publicar Casa</span>
+               <span className="hidden xs:inline">Publicar Propiedad</span>
                <LayoutGrid className="w-4 h-4 xs:hidden" />
              </Link>
 
