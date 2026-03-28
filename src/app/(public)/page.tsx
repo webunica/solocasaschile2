@@ -3,6 +3,7 @@ import { TypesSection } from "@/components/home/types-section";
 import { FeaturedConstructorsSection } from "@/components/home/featured-section";
 import { FeaturedModelsSection } from "@/components/home/featured-models";
 import { TrustSection } from "@/components/home/trust-section";
+import { HowItWorks } from "@/components/home/how-it-works";
 import { FinalCTA } from "@/components/home/final-cta";
 import { StatsSection } from "@/components/home/stats-section";
 import { SeoContent } from "@/components/home/seo-content";
@@ -29,7 +30,11 @@ export default function Home() {
       {/* Model Selection (Desire) */}
       <FeaturedModelsSection />
 
+      {/* Concept Identification */}
       <TypesSection />
+
+      {/* Flow & Education (How It Works) */}
+      <HowItWorks />
 
       {/* Builder Directory (Social Proof & Options) */}
       <FeaturedConstructorsSection />
