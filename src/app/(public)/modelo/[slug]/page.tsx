@@ -9,6 +9,7 @@ import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn } from "@/lib/utils";
 import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video } from "lucide-react";
+import { PriceNotify } from "@/components/modelo/price-notify";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -263,6 +264,13 @@ export default async function ModeloPage({ params }: PageProps) {
                       </div>
 
                       <div className="h-px bg-border/40 w-full" />
+
+                      <PriceNotify 
+                         modeloId={modelo.id}
+                         modeloNombre={modelo.nombre}
+                         constructoraId={constructora.id}
+                         currentPrice={precio}
+                      />
                       
                       {/* Social Proof Capsule */}
                       <div className="bg-muted/20 rounded-2xl p-4 flex items-center gap-4 border border-border/20">
