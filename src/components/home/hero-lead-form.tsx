@@ -71,56 +71,56 @@ export function HeroLeadForm() {
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <div className="grid sm:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa / Organización</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa</label>
           <div className="relative group/input">
-             <Building2 className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="company" 
-                placeholder="Ej: Constructora Los Andes" 
-                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                placeholder="Ej: Constructora Andes" 
+                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Contacto Personal</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Tu Nombre</label>
           <div className="relative group/input">
-             <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="name" 
-                placeholder="Tu nombre y apellido" 
-                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                placeholder="Nombre y Apellido" 
+                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Correo Corporativo</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Email</label>
           <div className="relative group/input">
-             <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="email" 
                 type="email" 
-                placeholder="ejemplo@empresa.cl" 
-                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                placeholder="ejemplo@correo.cl" 
+                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
         <div className="space-y-3">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">WhatsApp de Contacto</label>
+          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">WhatsApp</label>
           <div className="relative group/input">
-             <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="phone" 
                 type="tel" 
                 placeholder="+56 9 1234 5678" 
-                className="bg-background/40 border-border/40 pl-14 h-16 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -128,13 +128,13 @@ export function HeroLeadForm() {
       </div>
 
       <div className="space-y-3">
-        <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Detalles del Requerimiento</label>
+        <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Comentarios</label>
         <div className="relative group/input">
-           <MessageSquare className="absolute left-5 top-6 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+           <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
            <Textarea 
               name="message" 
-              placeholder="Cuéntanos brevemente sobre el modelo que te interesa o los detalles del proyecto que quieres cotizar..." 
-              className="bg-background/40 border-border/40 pl-14 min-h-[160px] rounded-[2.5rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-6 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
+              placeholder="¿Cómo podemos ayudarte con tu proyecto?" 
+              className="bg-background/40 border-border/40 pl-11 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
               required 
            />
         </div>

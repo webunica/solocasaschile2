@@ -85,7 +85,7 @@ export function HeroSection() {
             <div className="space-y-12 relative z-10">
               <div className="space-y-5">
                  <h3 className="text-3xl font-heading font-black tracking-tighter text-foreground uppercase leading-none">
-                   Obtener <span className="text-brand-teal">Datos</span>
+                   Asesoría <span className="text-brand-teal">Profesional</span>
                  </h3>
                  <p className="text-muted-foreground font-medium leading-relaxed max-w-sm opacity-80">
                    Acceso directo a información estratégica y presupuestos técnicos para constructoras.
