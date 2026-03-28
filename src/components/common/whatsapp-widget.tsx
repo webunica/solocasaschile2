@@ -28,14 +28,14 @@ export function WhatsAppWidget() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const message = `¡Hola! 👋 Me gustaría recibir información.\n\n` +
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      `¡Hola SolocasasChile! 👋 Me gustaría recibir información.\n\n` +
       `👤 *Nombre:* ${formData.name}\n` +
       `📧 *Email:* ${formData.email}\n` +
       `📱 *Teléfono:* ${formData.phone || "No proporcionado"}\n` +
       `🎯 *Interés:* ${formData.type === "casa" ? "Busco una casa" : "Soy una Constructora"}\n\n` +
-      `Vengo desde la web de SolocasasChile. ✨`;
-
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      `Vengo desde la web oficial. ✨`
+    )}`;
     window.open(whatsappUrl, "_blank");
     setIsOpen(false);
     // Reset after some time
