@@ -92,11 +92,12 @@ export default async function AdminConstructorasPage() {
             </div>
 
             <div className="flex items-center gap-2 border-t md:border-t-0 md:border-l border-border/10 pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-center">
-               <Button asChild variant="ghost" size="icon" className="h-10 w-10 rounded-xl">
-                 <Link href={`/dashboard/admin/constructoras/${cons.id}/edit`}>
-                    <MoreVertical className="w-4 h-4 opacity-40" />
-                 </Link>
-               </Button>
+               <Link 
+                 href={`/dashboard/admin/constructoras/${cons.id}/edit`}
+                 className="flex items-center justify-center h-10 w-10 rounded-xl hover:bg-muted transition-colors"
+               >
+                  <MoreVertical className="w-4 h-4 opacity-40" />
+               </Link>
             </div>
           </div>
         ))}
