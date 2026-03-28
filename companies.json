@@ -539,8 +539,8 @@
     "id": "69",
     "nombre": "CASAS PREFABRICADAS Y TRANSPORTES",
     "region": "TORRES",
-    "telefono": null,
-    "email": "+56 47581463",
+    "telefono": "+56 47581463",
+    "email": "tucomercio@coyhaique.cl",
     "sitio_web": "tucomercio@coyhaique.cl"
   },
   {
@@ -698,9 +698,9 @@
   {
     "id": "89",
     "nombre": "Construcción De Casas Prefabricadas En",
-    "region": "Cabrero",
-    "telefono": "Biobío",
-    "email": "+56 3901 7538",
+    "region": "Biobío",
+    "telefono": "+56 3901",
+    "email": "santamartaltda@gmail.com",
     "sitio_web": "santamartaltda@gmail.com"
   },
   {
@@ -742,22 +742,6 @@
     "telefono": "+56 2718 7511",
     "email": null,
     "sitio_web": "construccionindustrializada.cl"
-  },
-  {
-    "id": "96",
-    "nombre": "-",
-    "region": "+56 5584 9001",
-    "telefono": null,
-    "email": "constructorabdm.cl",
-    "sitio_web": "97"
-  },
-  {
-    "id": "98",
-    "nombre": "-",
-    "region": "+56 2583 2001",
-    "telefono": "contacto@casasgreenvalley.cl",
-    "email": "constructoragv.cl",
-    "sitio_web": "99"
   },
   {
     "id": "100",
@@ -1146,7 +1130,7 @@
   {
     "id": "150",
     "nombre": "Mercantil.com El Directorio De Empresas En",
-    "region": "Chile",
+    "region": "Arica y Parinacota",
     "telefono": "Arica y Parinacota",
     "email": null,
     "sitio_web": null

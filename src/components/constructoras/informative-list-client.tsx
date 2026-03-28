@@ -107,30 +107,30 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
       {/* Tabla "Estilo PDF" (Desktop) */}
       <div className="hidden md:block w-full overflow-hidden border border-border/40 rounded-[2.5rem] bg-card/20 shadow-2xl backdrop-blur-xl">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[1000px]">
+          <table className="w-full text-left border-collapse table-fixed min-w-[1100px]">
             <thead>
               <tr className="bg-primary/10 border-b border-border/40">
                 <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-center w-20">N°</th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 min-w-[250px]">Constructora</th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 w-[30%]">Constructora</th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 w-[15%]">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-3.5 h-3.5 opacity-60" /> Región
                   </div>
                 </th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 w-[18%]">
                   <div className="flex items-center gap-2">
                     <Phone className="w-3.5 h-3.5 opacity-60" /> Teléfono
                   </div>
                 </th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 w-[22%]">
                   <div className="flex items-center gap-2">
                     <Mail className="w-3.5 h-3.5 opacity-60" /> Correo
                   </div>
                 </th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-right pr-12">Acción</th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-right pr-12 w-[15%]">Acción</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/20">
+            <tbody className="divide-y divide-border/20 font-medium">
               {filtered.map((c, index) => (
                 <tr 
                   key={c.id} 
@@ -147,20 +147,20 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                          <Building2 className="w-5 h-5 text-primary" />
                       </div>
-                      <span className="font-heading font-black text-foreground text-base tracking-tight">{c.nombre}</span>
+                      <span className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate">{c.nombre}</span>
                     </div>
                   </td>
                   <td className="p-5">
-                    <span className="text-xs font-black uppercase tracking-widest text-muted-foreground bg-secondary/40 px-3 py-1.5 rounded-lg whitespace-nowrap">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground bg-secondary/40 px-3 py-1.5 rounded-lg whitespace-nowrap inline-block max-w-full truncate">
                       {c.regiones && c.regiones.length > 0 ? c.regiones[0] : "-"}
                     </span>
                   </td>
-                  <td className="p-5 text-sm font-bold text-foreground/80 font-mono tracking-tighter">
+                  <td className="p-5 text-xs xl:text-sm font-bold text-foreground/80 font-mono tracking-tighter truncate">
                     {c.telefono || "-"}
                   </td>
-                  <td className="p-5 text-sm font-medium text-muted-foreground">
+                  <td className="p-5 text-xs xl:text-sm text-muted-foreground truncate">
                     {c.email ? (
-                      <a href={`mailto:${c.email}`} className="hover:text-primary hover:underline transition-colors flex items-center gap-2">
+                      <a href={`mailto:${c.email}`} className="hover:text-primary transition-colors flex items-center gap-2 truncate">
                          {c.email}
                       </a>
                     ) : "-"}
@@ -171,18 +171,19 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                         href={c.sitio_web.startsWith('http') ? c.sitio_web : `https://${c.sitio_web}`} 
                         target="_blank" 
                         rel="noreferrer" 
-                        className="inline-flex items-center gap-2 text-primary hover:text-white hover:bg-primary font-black text-[10px] uppercase tracking-[0.15em] px-6 py-2.5 rounded-xl bg-primary/5 border border-primary/20 transition-all shadow-sm"
+                        className="inline-flex items-center gap-2 text-primary hover:text-white hover:bg-primary font-black text-[9px] uppercase tracking-[0.15em] px-4 py-2.5 rounded-xl bg-primary/5 border border-primary/20 transition-all shadow-sm whitespace-nowrap"
                       >
-                        <Globe className="w-3.5 h-3.5" /> Visitar
+                        <Globe className="w-3 h-3" /> Visitar
                       </a>
                     ) : (
-                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 pr-6">Sin sitio</span>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40 pr-6">Sin sitio</span>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
 
           
           {filtered.length === 0 && (
