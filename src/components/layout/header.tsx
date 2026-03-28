@@ -24,7 +24,7 @@ export function Header() {
   const headerY = useTransform(scrollY, [0, 50], [20, 10]);
   const headerWidth = useTransform(scrollY, [0, 50], ["98%", "94%"]);
   const headerRadius = useTransform(scrollY, [0, 50], ["1.5rem", "4rem"]);
-  const headerOpacity = useTransform(scrollY, [0, 50], [0.8, 0.98]);
+  const headerOpacity = useTransform(scrollY, [0, 50], [0.95, 1]);
 
   return (
     <motion.header 
@@ -39,7 +39,7 @@ export function Header() {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "fixed left-1/2 -translate-x-1/2 z-[100] border border-white/20",
-        "bg-background/40 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)]",
+        "bg-background/80 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)]",
         "transition-all duration-500"
       )}
     >
@@ -62,7 +62,7 @@ export function Header() {
               <Link 
                 key={link.href} 
                 href={link.href} 
-                className="text-muted-foreground/70 hover:text-primary transition-all relative group py-2"
+                className="text-muted-foreground hover:text-primary transition-all relative group py-2"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
@@ -71,18 +71,18 @@ export function Header() {
           </nav>
           
           <div className="flex items-center gap-4 sm:gap-6">
-             <div className="flex items-center gap-3 border-r border-border/40 pr-4 sm:pr-8">
+            <div className="flex items-center gap-3 border-r border-border/40 pr-4 sm:pr-8">
                 <ThemeToggle />
                 <Link 
                   href="/login" 
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "sm" }), 
-                    "text-[10px] font-black uppercase tracking-widest hidden sm:inline-flex opacity-60 hover:opacity-100 hover:text-primary hover:bg-transparent transition-all"
+                    "text-[10px] font-black uppercase tracking-widest hidden sm:inline-flex hover:text-primary hover:bg-transparent transition-all"
                   )}
                 >
                   Acceder
                 </Link>
-             </div>
+            </div>
              
              <Link 
                href="/planes" 
