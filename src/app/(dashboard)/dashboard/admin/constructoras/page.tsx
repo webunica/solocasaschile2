@@ -51,7 +51,7 @@ export default async function AdminConstructorasPage() {
       </div>
 
       <div className="grid gap-4">
-        {constructoras?.map((cons) => (
+        {constructoras?.map((cons: any) => (
           <div key={cons.id} className="bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/40 transition-all group p-5 flex flex-col md:flex-row items-center gap-6">
             <div className="w-16 h-16 rounded-2xl bg-muted/30 border border-border/10 flex items-center justify-center p-3 overflow-hidden relative group-hover:scale-105 transition-transform">
                {cons.logo_url ? (
