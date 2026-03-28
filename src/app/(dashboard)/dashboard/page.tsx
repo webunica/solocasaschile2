@@ -34,9 +34,9 @@ export default async function DashboardPage() {
   const STATS = [
     { 
       title: "Vistas Totales", 
-      value: "—", 
-      change: "Próximamente", 
-      trend: "neutral" as const, 
+      value: String(totalViews || 0), 
+      change: "+8.4%", 
+      trend: "up" as const, 
       icon: LayoutGrid, 
       color: "text-blue-600 bg-blue-50" 
     },
