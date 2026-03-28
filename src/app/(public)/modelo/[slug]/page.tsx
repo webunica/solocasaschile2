@@ -64,7 +64,7 @@ export default async function ModeloPage({ params }: PageProps) {
       <StickyCTAMobile targetId="form-cotizar" />
       
       {/* Breadcrumb / Back button */}
-      <div className="border-b bg-card/40 backdrop-blur-3xl sticky top-32 z-30">
+      <div className="border-b bg-background/95 backdrop-blur-3xl sticky top-32 z-[80]">
         <div className="container max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
           <Link
             href="/catalogo"
