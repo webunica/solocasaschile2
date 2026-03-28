@@ -49,103 +49,114 @@ export default async function CatalogManagementPage() {
 
   return (
     <div className="space-y-10 py-12">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-border/40 pb-10">
         <div className="space-y-2">
-          <h1 className="text-4xl font-heading font-black tracking-tighter text-foreground font-heading">
+          <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter text-foreground font-heading">
             Gestión de <span className="gradient-text">Modelos</span>
           </h1>
-          <p className="text-muted-foreground font-medium text-lg leading-tight">
-            Administra tu catálogo digital de viviendas en tiempo real.
+          <p className="text-muted-foreground font-medium text-lg italic opacity-80">
+            Tu catálogo digital activo en SolocasasChile.
           </p>
         </div>
-        <div className="flex flex-col items-end gap-3">
-          <div className="text-right space-y-1">
-             <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Uso de Catálogo</p>
-             <div className="flex items-center gap-3">
-                <div className="h-2 w-32 bg-muted rounded-full overflow-hidden">
-                   <div 
-                     className={cn("h-full transition-all", isLimitReached ? "bg-red-500" : "bg-primary")} 
-                     style={{ width: `${Math.min(100, (usedCount / limits.maxModels) * 100)}%` }} 
-                   />
-                </div>
-                <span className="text-xs font-black">{usedCount} / {limits.maxModels < 1000 ? limits.maxModels : '∞'}</span>
+        <div className="flex flex-col md:flex-row items-stretch md:items-center gap-6 w-full md:w-auto">
+          <div className="bg-muted/30 p-4 rounded-2xl border border-border/40 min-w-[200px]">
+             <div className="flex items-center justify-between mb-2">
+                <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Uso de Catálogo</p>
+                <span className="text-[10px] font-black">{usedCount} / {limits.maxModels < 1000 ? limits.maxModels : '∞'}</span>
+             </div>
+             <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                <div 
+                  className={cn("h-full transition-all duration-1000", isLimitReached ? "bg-red-500" : "brand-gradient")} 
+                  style={{ width: `${Math.min(100, (usedCount / limits.maxModels) * 100)}%` }} 
+                />
              </div>
           </div>
           <Link 
             href={isLimitReached ? "#" : "/dashboard/catalog/new"} 
             className={cn(
               buttonVariants({ variant: "default" }), 
-              "rounded-2xl h-14 px-10 font-black text-xs uppercase tracking-widest shadow-2xl transition-all text-white hover:text-white",
-              isLimitReached ? "bg-muted text-muted-foreground cursor-not-allowed opacity-50" : "brand-gradient shadow-primary/20 hover:scale-105 active:scale-95"
+              "rounded-2xl h-14 px-10 font-black text-[10px] uppercase tracking-widest shadow-2xl transition-all text-white hover:text-white",
+              isLimitReached ? "bg-muted text-muted-foreground cursor-not-allowed opacity-50" : "brand-gradient shadow-primary/20 hover:scale-[1.03] active:scale-95"
             )}
           >
-            <Plus className="w-5 h-5 mr-2" /> Nuevo Modelo
+            <Plus className="w-5 h-5 mr-3" /> Nuevo Modelo
           </Link>
-          {isLimitReached && (
-            <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest italic">Límite alcanzado. Mejora tu plan.</p>
-          )}
         </div>
       </div>
 
-      <Card className="rounded-[3rem] border-border/40 shadow-2xl shadow-primary/5 bg-card/40 backdrop-blur-xl overflow-hidden">
-        <CardHeader className="p-10 border-b border-border/60 bg-muted/20">
+      <Card className="rounded-[3.5rem] border-border/40 shadow-2xl shadow-primary/5 bg-card/10 backdrop-blur-xl overflow-hidden">
+        <CardHeader className="p-10 border-b border-border/40 bg-muted/5">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground opacity-40" />
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground opacity-30" />
                 <Input 
-                  placeholder="Buscar modelos..." 
-                  className="pl-12 h-14 bg-background/50 border-border/60 rounded-2xl focus:bg-background transition-all"
+                  placeholder="Filtrar por nombre o tipo..." 
+                  className="pl-14 h-14 bg-background/40 border-border/40 rounded-2xl focus:bg-background focus:ring-2 focus:ring-primary/20 transition-all font-medium"
                 />
              </div>
-             <div className="flex items-center gap-3">
-                <div className="flex bg-muted/50 p-1 rounded-xl border border-border/60">
-                   <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg bg-background shadow-sm"><LayoutGrid className="w-4 h-4" /></Button>
-                   <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-muted-foreground"><List className="w-4 h-4" /></Button>
+             <div className="flex items-center gap-4">
+                <div className="flex bg-muted/30 p-1.5 rounded-2xl border border-border/40">
+                   <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl bg-background shadow-lg shadow-black/5"><LayoutGrid className="w-4 h-4" /></Button>
+                   <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl text-muted-foreground/40 hover:text-foreground"><List className="w-4 h-4" /></Button>
                 </div>
-                <Button variant="outline" className="h-12 px-5 rounded-xl border-border/60 gap-2 font-bold text-[10px] uppercase tracking-widest leading-none">
-                   <Filter className="w-4 h-4" /> Filtros
+                <Button variant="outline" className="h-12 px-6 rounded-2xl border-border/40 gap-3 font-black text-[10px] uppercase tracking-widest hover:bg-muted/50 transition-all">
+                   <Filter className="w-4 h-4 opacity-40" /> Filtros Avanzados
                 </Button>
              </div>
           </div>
         </CardHeader>
 
         <CardContent className="p-0">
-          <div className="divide-y divide-border/40">
+          <div className="divide-y divide-border/20">
             {modelos.length > 0 ? modelos.map((modelo: any) => (
-              <div key={modelo.id} className="p-8 hover:bg-muted/30 transition-all flex flex-col md:grid md:grid-cols-[100px_1fr_200px] items-center gap-8 group">
+              <div key={modelo.id} className="p-8 hover:bg-primary/[0.01] transition-all flex flex-col md:grid md:grid-cols-[120px_1fr_220px] items-center gap-8 group border-l-4 border-l-transparent hover:border-l-primary/40">
                 {/* Image */}
-                <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-border/40 shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500 bg-muted/30">
+                <div className="relative w-28 h-28 rounded-3xl overflow-hidden border border-border/40 shrink-0 shadow-xl group-hover:scale-105 transition-transform duration-700 bg-muted/20">
                   {modelo.imagenes_urls?.[0] ? (
                     <Image 
                       src={modelo.imagenes_urls[0]} 
                       alt={modelo.nombre || "Vivienda"} 
                       fill 
-                      className="object-cover" 
+                      className="object-cover group-hover:scale-110 transition-transform duration-1000" 
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <Home className="w-8 h-8 text-muted-foreground/30" />
+                      <Home className="w-10 h-10 text-muted-foreground/10" />
                     </div>
                   )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
 
                 {/* Details */}
-                <div className="flex-1 space-y-2 text-center md:text-left">
-                  <div className="flex flex-col md:flex-row md:items-center gap-3">
-                     <h3 className="text-xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">{modelo.nombre || "Modelo sin nombre"}</h3>
-                     <Badge className={cn(
-                       "w-fit mx-auto md:mx-0 px-3 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border-none",
-                       modelo.tipo === "sip" ? "bg-emerald-500/10 text-emerald-600" : "bg-blue-500/10 text-blue-600"
-                     )}>
-                       {modelo.tipo || "estándar"}
-                     </Badge>
+                <div className="flex-1 space-y-3 text-center md:text-left">
+                  <div className="flex flex-col md:flex-row md:items-center gap-4">
+                     <h3 className="text-2xl font-black text-foreground tracking-tighter group-hover:text-primary transition-all duration-300">{modelo.nombre || "Modelo sin nombre"}</h3>
+                     <div className="flex items-center gap-2 mx-auto md:mx-0">
+                        <Badge className={cn(
+                          "px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest border-none shadow-sm",
+                          modelo.tipo === "sip" ? "bg-emerald-500 text-white" : "bg-blue-600 text-white"
+                        )}>
+                          {modelo.tipo || "estándar"}
+                        </Badge>
+                        {!modelo.disponible && (
+                          <Badge variant="outline" className="text-[8px] font-black uppercase tracking-widest border-red-200 text-red-500">Privado</Badge>
+                        )}
+                     </div>
                   </div>
-                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 text-xs font-bold text-muted-foreground opacity-60">
-                     <span>{modelo.superficie_m2 || 0} m²</span>
-                     <span className="w-1 h-1 rounded-full bg-border" />
-                     <span>{modelo.dormitorios || 0} Dormitorios</span>
-                     <span className="w-1 h-1 rounded-full bg-border" />
-                     <span className="text-foreground font-black tracking-tight">{(modelo.precio_desde_uf || 0).toLocaleString('es-CL')} UF</span>
+                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">
+                     <div className="flex items-center gap-2">
+                        <span className="text-foreground/60">{modelo.superficie_m2 || 0}</span>
+                        <span>M² Proyectados</span>
+                     </div>
+                     <span className="w-1.5 h-1.5 rounded-full bg-border" />
+                     <div className="flex items-center gap-2">
+                        <span className="text-foreground/60">{modelo.dormitorios || 0}</span>
+                        <span>Dormitorios</span>
+                     </div>
+                     <span className="w-1.5 h-1.5 rounded-full bg-border" />
+                     <div className="text-primary font-black tracking-tighter text-lg normal-case">
+                        {(modelo.precio_desde_uf || 0).toLocaleString('es-CL')} <span className="text-[10px] uppercase tracking-widest opacity-60">UF</span>
+                     </div>
                   </div>
                 </div>
 
@@ -154,13 +165,14 @@ export default async function CatalogManagementPage() {
                    <Link 
                      href={`/modelo/${modelo.slug || '#'}`} 
                      target="_blank"
-                     className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 flex items-center justify-center p-0 hover:bg-muted transition-colors")}
+                     className={cn(buttonVariants({ variant: "outline" }), "h-14 w-14 rounded-2xl border-border/40 flex items-center justify-center p-0 hover:bg-muted hover:scale-105 transition-all shadow-sm")}
+                     title="Ver en catálogo"
                    >
-                     <Eye className="w-5 h-5 text-muted-foreground" />
+                     <Eye className="w-5 h-5 text-muted-foreground/60 group-hover:text-primary transition-colors" />
                    </Link>
                    <Link
                      href={`/dashboard/catalog/${modelo.id}`}
-                     className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border-border/60 p-0 hover:border-blue-500/40 hover:text-blue-600 transition-all")}
+                     className={cn(buttonVariants({ variant: "outline" }), "h-14 w-14 rounded-2xl border-border/40 p-0 hover:border-blue-500/40 hover:text-blue-600 hover:scale-105 transition-all shadow-sm")}
                      title="Editar modelo"
                    >
                       <Edit2 className="w-5 h-5" />
@@ -168,7 +180,7 @@ export default async function CatalogManagementPage() {
                    <form action={deleteModelo.bind(null, modelo.id)}>
                       <button
                         type="submit"
-                        className={cn(buttonVariants({ variant: "outline" }), "h-12 w-12 rounded-xl border border-border/60 p-0 hover:border-red-500/40 hover:text-red-600 transition-all")}
+                        className={cn(buttonVariants({ variant: "outline" }), "h-14 w-14 rounded-2xl border border-border/40 p-0 hover:border-red-500/40 hover:text-red-600 hover:scale-105 transition-all shadow-sm")}
                         title="Eliminar modelo"
                       >
                         <Trash2 className="w-5 h-5" />
@@ -177,19 +189,19 @@ export default async function CatalogManagementPage() {
                 </div>
               </div>
             )) : (
-              <div className="p-24 text-center space-y-6 bg-muted/5">
-                <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto opacity-20">
-                   <Home className="w-10 h-10" />
+              <div className="p-32 text-center space-y-8 bg-muted/5">
+                <div className="w-24 h-24 bg-muted/20 rounded-[2rem] flex items-center justify-center mx-auto shadow-inner group-hover:scale-110 transition-transform duration-700">
+                   <Home className="w-12 h-12 text-muted-foreground/20" />
                 </div>
-                <div className="space-y-2">
-                   <p className="text-xl font-black tracking-tighter uppercase opacity-40">Catálogo Vacío</p>
-                   <p className="text-muted-foreground text-sm font-medium">Aún no has registrado modelos para tu constructora.</p>
+                <div className="space-y-3">
+                   <p className="text-3xl font-black tracking-tighter uppercase text-foreground/20">Catálogo Desierto</p>
+                   <p className="text-muted-foreground font-medium text-lg max-w-sm mx-auto leading-tight italic opacity-60">Tu vitrina digital está esperando tu primer gran proyecto.</p>
                 </div>
                 <Link 
                    href="/dashboard/catalog/new" 
-                   className={cn(buttonVariants({ variant: "default" }), "rounded-xl h-12 px-8 font-black text-[10px] uppercase tracking-widest brand-gradient shadow-xl shadow-primary/20 text-white hover:text-white")}
+                   className={cn(buttonVariants({ variant: "default" }), "rounded-2xl h-16 px-12 font-black text-xs uppercase tracking-widest brand-gradient shadow-2xl shadow-primary/20 text-white hover:text-white hover:scale-[1.03] transition-all")}
                 >
-                   Agregar Primer Modelo
+                   Lanzar Primer Modelo
                 </Link>
               </div>
             )}
@@ -197,12 +209,15 @@ export default async function CatalogManagementPage() {
         </CardContent>
       </Card>
       
-      <div className="p-10 rounded-[3rem] bg-brand-indigo/5 border-2 border-dashed border-brand-indigo/10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left transition-all hover:bg-brand-indigo/[0.08]">
-         <div className="space-y-1">
-            <h4 className="text-xl font-black tracking-tighter text-brand-indigo">Optimización de SEO Proactiva</h4>
-            <p className="text-sm font-medium text-muted-foreground">Tus modelos se indexan automáticamente en Google con fragmentos enriquecidos.</p>
+      <div className="p-12 rounded-[3.5rem] bg-foreground text-background overflow-hidden relative group transition-all hover:shadow-2xl hover:shadow-black/10">
+         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+         <div className="flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
+            <div className="space-y-2 text-center md:text-left">
+               <h4 className="text-3xl font-black tracking-tighter text-white">Indexación SEO de Élite</h4>
+               <p className="text-lg font-medium text-white/60 italic">Cada modelo que publicas se optimiza para buscadores automáticamente.</p>
+            </div>
+            <Button variant="outline" className="h-14 px-10 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-foreground transition-all">Ver Guide de Growth</Button>
          </div>
-         <Button variant="link" className="text-brand-indigo font-black text-[10px] uppercase tracking-[0.2em] p-0 h-auto">Ver guía de optimización →</Button>
       </div>
     </div>
   );

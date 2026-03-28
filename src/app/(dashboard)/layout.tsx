@@ -25,7 +25,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">
-        <DashboardSidebar isSuperAdmin={isSuperAdmin} />
+        <DashboardSidebar isSuperAdmin={isSuperAdmin} userName={userName} userEmail={user.email} />
         <SidebarInset>
           <div className="flex flex-col h-full w-full">
             <DashboardHeader userName={userName} isSuperAdmin={isSuperAdmin} />

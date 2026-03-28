@@ -30,34 +30,44 @@ const SUPPORT_MENU = [
   { title: "Ayuda", icon: HelpCircle, href: "/dashboard/ayuda" },
 ];
 
-export function DashboardSidebar({ isSuperAdmin }: { isSuperAdmin?: boolean }) {
+export function DashboardSidebar({ 
+  isSuperAdmin, 
+  userName = "Constructor", 
+  userEmail = "soporte@solocasaschile.cl" 
+}: { 
+  isSuperAdmin?: boolean;
+  userName?: string;
+  userEmail?: string;
+}) {
   const pathname = usePathname();
 
   return (
-    <Sidebar variant="sidebar" collapsible="icon">
-      <SidebarHeader className="h-16 flex items-center px-6 border-b">
-         <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg brand-gradient flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform">S</div>
-            <span className="font-heading font-black text-lg tracking-tighter opacity-100 group-data-[collapsible=icon]:opacity-0 transition-opacity">SolocasasChile</span>
+    <Sidebar variant="sidebar" collapsible="icon" className="border-r border-border/40 bg-card/40 backdrop-blur-xl">
+      <SidebarHeader className="h-20 flex items-center px-6 border-b border-border/40">
+         <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">S</div>
+            <span className="font-heading font-black text-xl tracking-tighter opacity-100 group-data-[collapsible=icon]:hidden transition-opacity bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/60">SolocasasChile</span>
          </Link>
       </SidebarHeader>
 
-      <SidebarContent className="px-3 pt-6">
+      <SidebarContent className="px-4 pt-8">
+        {/* Profile Card Early Preview (Optional placeholder if needed in future) */}
+        
         <SidebarGroup>
-          <SidebarGroupLabel className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground opacity-60">ADMINISTRACIÓN</SidebarGroupLabel>
-          <SidebarGroupContent className="pt-2">
-            <SidebarMenu>
+          <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-40 mb-3">CONSTRUCTORA</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-1.5">
               {DASHBOARD_MENU.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild 
                     isActive={pathname === item.href}
                     tooltip={item.title}
-                    className="h-11 px-3 data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20 transition-all font-medium rounded-xl"
+                    className="h-10 px-3 md:px-4 data-[active=true]:brand-gradient data-[active=true]:text-white data-[active=true]:font-black data-[active=true]:shadow-primary/10 transition-all font-semibold rounded-xl group"
                   >
                     <Link href={item.href}>
-                      <item.icon className="w-5 h-5" />
-                      <span className="ml-3">{item.title}</span>
+                      <item.icon className={cn("w-4.5 h-4.5 transition-transform group-hover:scale-110", pathname === item.href ? "text-white" : "text-muted-foreground opacity-60")} />
+                      <span className="ml-3 text-sm">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -67,20 +77,20 @@ export function DashboardSidebar({ isSuperAdmin }: { isSuperAdmin?: boolean }) {
         </SidebarGroup>
 
         {isSuperAdmin && (
-          <SidebarGroup className="mt-2">
-            <SidebarGroupLabel className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Plataforma Global</SidebarGroupLabel>
-            <SidebarGroupContent className="pt-2">
+          <SidebarGroup className="mt-8">
+            <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-primary/60 mb-3">SYSTEM ADMIN</SidebarGroupLabel>
+            <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton 
                     asChild 
                     isActive={pathname === "/dashboard/admin/constructoras"}
-                    tooltip="Constructoras"
-                    className="h-11 px-3 transition-all font-medium rounded-xl hover:bg-primary/5"
+                    tooltip="Gestionar Constructoras"
+                    className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
                   >
                     <Link href="/dashboard/admin/constructoras">
-                      <Building2 className="w-5 h-5 text-primary" />
-                      <span className="ml-3 font-bold text-primary">Constructoras</span>
+                      <Building2 className="w-4.5 h-4.5" />
+                      <span className="ml-3 text-sm">Constructoras</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -89,21 +99,21 @@ export function DashboardSidebar({ isSuperAdmin }: { isSuperAdmin?: boolean }) {
           </SidebarGroup>
         )}
 
-        <SidebarGroup className="mt-6">
-          <SidebarGroupLabel className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground opacity-60">SOPORTE</SidebarGroupLabel>
-          <SidebarGroupContent className="pt-2">
-            <SidebarMenu>
+        <SidebarGroup className="mt-auto pt-8">
+          <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-40 mb-3">SISTEMA</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-1.5">
               {SUPPORT_MENU.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild 
                     isActive={pathname === item.href}
                     tooltip={item.title}
-                    className="h-11 px-3 transition-all font-medium rounded-xl hover:bg-muted"
+                    className="h-10 px-3 md:px-4 transition-all font-semibold rounded-xl hover:bg-muted/50 text-muted-foreground"
                   >
                     <Link href={item.href}>
-                      <item.icon className="w-5 h-5" />
-                      <span className="ml-3">{item.title}</span>
+                      <item.icon className="w-4.5 h-4.5 opacity-60" />
+                      <span className="ml-3 text-sm">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -113,18 +123,29 @@ export function DashboardSidebar({ isSuperAdmin }: { isSuperAdmin?: boolean }) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-6 border-t">
-        <form action={logout}>
-          <button 
-            type="submit"
-            className="flex items-center gap-3 w-full text-sm font-bold text-red-500 hover:text-red-600 transition-colors group"
-          >
-            <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center group-hover:bg-red-100">
-               <LogOut className="w-4 h-4" />
-            </div>
-            <span className="group-data-[collapsible=icon]:hidden">Cerrar Sesión</span>
-          </button>
-        </form>
+      <SidebarFooter className="p-4 border-t border-border/40">
+        <div className="flex flex-col gap-4">
+           {/* User Profile MiniSection */}
+           <div className="flex items-center gap-3 p-2 rounded-2xl bg-muted/20 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:bg-transparent">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                 <span className="text-primary font-black text-xs">{userName.charAt(0).toUpperCase()}</span>
+              </div>
+              <div className="flex flex-col min-w-0 group-data-[collapsible=icon]:hidden">
+                 <span className="text-xs font-black truncate text-foreground leading-tight">{userName}</span>
+                 <span className="text-[10px] text-muted-foreground font-medium truncate opacity-60">{userEmail}</span>
+              </div>
+           </div>
+
+           <form action={logout}>
+            <button 
+              type="submit"
+              className="flex items-center gap-3 w-full px-2 py-1.5 text-[10px] font-black uppercase tracking-widest text-red-500/60 hover:text-red-500 transition-all group"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="group-data-[collapsible=icon]:hidden">Cerrar Sesión</span>
+            </button>
+          </form>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
