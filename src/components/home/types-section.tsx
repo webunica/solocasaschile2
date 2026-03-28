@@ -64,7 +64,7 @@ const itemVariants: Variants = {
 
 export function TypesSection() {
   return (
-    <section className="py-32 bg-background relative overflow-hidden">
+    <section className="pt-32 pb-14 bg-background relative overflow-hidden">
       {/* Organic Background Decor */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-teal/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-indigo/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />

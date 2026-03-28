@@ -37,9 +37,9 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="py-24 bg-muted/20 relative overflow-hidden">
+    <section className="pt-12 pb-32 bg-muted/20 relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center space-y-4 mb-20 uppercase">
+        <div className="text-center space-y-4 mb-24 uppercase">
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -50,15 +50,29 @@ export function HowItWorks() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-heading font-black tracking-tighter"
+            className="text-[clamp(2.3rem,6vw,4.5rem)] font-heading font-black tracking-tighter leading-none"
           >
             ¿Cómo funciona <span className="gradient-text">SolocasasChile?</span>
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
-          {/* Connecting Line (Desktop) */}
-          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-brand-indigo/20 via-brand-teal/20 to-brand-indigo/20 hidden lg:block -translate-y-12" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 relative">
+          
+          {/* Animated Connecting Path (Desktop) */}
+          <div className="absolute top-[48px] left-[10%] right-[10%] h-[120px] hidden lg:block overflow-visible pointer-events-none">
+             <svg className="w-full h-full" fill="none" viewBox="0 0 1000 120" preserveAspectRatio="none">
+                <motion.path 
+                   d="M 0 0 C 125 0, 125 100, 250 100 C 375 100, 375 0, 500 0 C 625 0, 625 100, 750 100 C 875 100, 875 0, 1000 0" 
+                   stroke="currentColor" 
+                   strokeWidth="2" 
+                   strokeDasharray="8 8" 
+                   className="text-primary/30"
+                   initial={{ pathLength: 0 }}
+                   whileInView={{ pathLength: 1 }}
+                   transition={{ duration: 2, ease: "easeInOut" }}
+                />
+             </svg>
+          </div>
           
           {STEPS.map((step, i) => {
             const Icon = step.icon;
@@ -69,38 +83,38 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: step.delay }}
                 viewport={{ once: true }}
-                className="relative space-y-8 group"
+                className="relative space-y-10 group"
               >
                 {/* Icon Container */}
                 <div className="relative flex justify-center">
                    <div className={cn(
                      "w-24 h-24 rounded-[2.5rem] flex items-center justify-center text-white relative z-10",
-                     "transition-all duration-500 group-hover:scale-110 shadow-2xl",
+                     "transition-all duration-500 group-hover:scale-110 shadow-[0_20px_50px_rgba(0,0,0,0.2)]",
                      step.color,
-                     i % 2 === 0 ? "shadow-brand-indigo/30" : "shadow-brand-teal/30"
+                     i % 2 === 0 ? "shadow-brand-indigo/40" : "shadow-brand-teal/40"
                    )}>
-                      <Icon className="w-10 h-10" />
+                      <Icon className="w-10 h-10 drop-shadow-xl" />
                       
                       {/* Step Number Badge */}
-                      <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-4 border-muted/5 flex items-center justify-center font-black text-xs text-primary shadow-lg">
-                        {i + 1}
+                      <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-slate-950 border-4 border-muted/20 flex items-center justify-center font-black text-[10px] text-primary shadow-xl">
+                        0{i + 1}
                       </div>
                    </div>
                 </div>
 
                 {/* Content */}
-                <div className="text-center space-y-4 px-4">
-                  <h3 className="text-2xl font-black font-heading tracking-tighter group-hover:text-primary transition-colors">
+                <div className="text-center space-y-4 px-2">
+                  <h3 className="text-2xl font-black font-heading tracking-tighter group-hover:text-primary transition-colors leading-none">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-80">
+                  <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-80 max-w-[240px] mx-auto">
                     {step.description}
                   </p>
                 </div>
 
-                {/* Arrow indicator (Mobile) */}
+                {/* Mobile indicators */}
                 {i < STEPS.length - 1 && (
-                   <div className="flex justify-center md:hidden pt-4 opacity-20">
+                   <div className="flex justify-center lg:hidden pt-4 opacity-10">
                       <ArrowRight className="w-6 h-6 rotate-90" />
                    </div>
                 )}
