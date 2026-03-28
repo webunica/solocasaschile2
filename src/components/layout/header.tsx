@@ -7,12 +7,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Menu, X, Home, Library, Compass, Building2, LayoutGrid, CreditCard } from "lucide-react";
+import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo", icon: Library },
-  { href: "/comparar", label: "Comparador", icon: Compass },
+  { href: "/comparar", label: "Comparador", icon: ArrowLeftRight },
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
 ];
 

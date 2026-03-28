@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
-  Star, BarChart2, Bed, Bath, Square, ArrowRight, Plus, SearchX
+  Star, Bed, Bath, Square, ArrowRight, Plus, SearchX, ArrowLeftRight
 } from "lucide-react";
 import type { ModelWithConstructora } from "@/lib/supabase/services";
 
@@ -144,14 +144,15 @@ export function CatalogoGrid({ modelos }: Props) {
                       e.preventDefault();
                       toggleComparar(modelo.id);
                     }}
+                    title={comparar.includes(modelo.id) ? "Quitar del comparador" : "Comparar este modelo"}
                     className={cn(
-                      "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border-2",
+                      "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border-2 group/btn",
                       comparar.includes(modelo.id)
-                        ? "bg-brand-teal/10 border-brand-teal text-brand-teal"
-                        : "border-border hover:bg-muted text-muted-foreground"
+                        ? "bg-brand-teal/20 border-brand-teal text-brand-teal shadow-lg shadow-brand-teal/10"
+                        : "border-border hover:border-brand-teal/40 hover:bg-brand-teal/5 text-muted-foreground hover:text-brand-teal"
                     )}
                   >
-                    <BarChart2 className="w-5 h-5" />
+                    <ArrowLeftRight className={cn("w-5 h-5 transition-transform group-hover/btn:scale-110", comparar.includes(modelo.id) && "animate-pulse")} />
                   </button>
                 </div>
               </CardContent>
@@ -172,7 +173,7 @@ export function CatalogoGrid({ modelos }: Props) {
             <div className="bg-foreground text-background rounded-3xl p-4 flex items-center justify-between shadow-2xl shadow-black/20 ring-1 ring-white/10">
                <div className="flex items-center gap-3 ml-2">
                   <div className="w-8 h-8 rounded-full bg-brand-teal flex items-center justify-center text-white">
-                     <BarChart2 className="w-4 h-4" />
+                     <ArrowLeftRight className="w-4 h-4" />
                   </div>
                   <div className="flex flex-col">
                      <span className="text-xs font-black tracking-tight leading-none">{comparar.length} Modelos</span>
