@@ -28,14 +28,15 @@ export function WhatsAppWidget() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-      `¡Hola SolocasasChile! 👋 Me gustaría recibir información.\n\n` +
-      `👤 *Nombre:* ${formData.name}\n` +
-      `📧 *Email:* ${formData.email}\n` +
-      `📱 *Teléfono:* ${formData.phone || "No proporcionado"}\n` +
-      `🎯 *Interés:* ${formData.type === "casa" ? "Busco una casa" : "Soy una Constructora"}\n\n` +
-      `Vengo desde la web oficial. ✨`
-    )}`;
+    const msg = 
+      `¡Hola SolocasasChile! \u{1F44B} Me gustaría recibir información.\n\n` +
+      `\u{1F464} *Nombre:* ${formData.name}\n` +
+      `\u{1F4E7} *Email:* ${formData.email}\n` +
+      `\u{1F4F1} *Teléfono:* ${formData.phone || "No proporcionado"}\n` +
+      `\u{1F3AF} *Interés:* ${formData.type === "casa" ? "Busco una casa" : "Soy una Constructora"}\n\n` +
+      `Vengo desde la web oficial. \u{2728}`;
+
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     window.open(whatsappUrl, "_blank");
     setIsOpen(false);
     // Reset after some time
