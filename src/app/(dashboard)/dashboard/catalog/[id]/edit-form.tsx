@@ -1,18 +1,21 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, ImagePlus, Loader2, CheckCircle2, 
-  AlertCircle, X, Home, Video
+  AlertCircle, X, Home, Video, ArrowLeft,
+  ShieldCheck, Zap, Eye, Save, Trash2
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { ModelWithConstructora } from "@/lib/supabase/services";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const TIPOS = [
   { value: "prefabricada", label: "Prefabricada" },
@@ -40,10 +43,8 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
   const removeImage = (idx: number) => {
     const totalExisting = existingImages.length;
     if (idx < totalExisting) {
-       // Is an existing image
        setExistingImages(prev => prev.filter((_, i) => i !== idx));
     } else {
-       // Is a new file
        setFiles(prev => prev.filter((_, i) => i !== (idx - totalExisting)));
     }
     setPreviews(prev => prev.filter((_, i) => i !== idx));
@@ -65,32 +66,21 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
         return;
       }
 
-      // 1. Upload new images if any
       const newUrls: string[] = [];
       if (files.length > 0) {
         for (const file of files) {
           const ext = file.name.split('.').pop();
           const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-          
-          const { error: uploadError } = await supabase.storage
-            .from('model_images')
-            .upload(path, file);
+          const { error: uploadError } = await supabase.storage.from('model_images').upload(path, file);
+          if (uploadError) continue;
 
-          if (uploadError) {
-             console.warn("Upload skip:", uploadError.message);
-             continue;
-          }
-
-          const { data: { publicUrl } } = supabase.storage
-            .from('model_images')
-            .getPublicUrl(path);
+          const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(path);
           newUrls.push(publicUrl);
         }
       }
 
       const finalImages = [...existingImages, ...newUrls];
 
-      // 2. Update model
       const { error: updateError } = await supabase
         .from('modelos')
         .update({
@@ -113,144 +103,228 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
       if (updateError) throw new Error(updateError.message);
 
       setSuccess(true);
-      setTimeout(() => router.push('/dashboard/catalog'), 1500);
+      setTimeout(() => router.push('/dashboard/catalog'), 2000);
     } catch (err: any) {
-      console.error(err);
       setError(err.message || "Error al actualizar");
       setLoading(false);
     }
   };
 
   if (success) return (
-    <div className="py-16 flex flex-col items-center justify-center gap-8">
-      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-24 h-24 rounded-full bg-emerald-500/10 border-2 border-emerald-500/20 flex items-center justify-center">
-        <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+    <div className="min-h-[60vh] flex flex-col items-center justify-center gap-10">
+      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-32 h-32 rounded-[2.5rem] brand-gradient flex items-center justify-center shadow-2xl">
+        <CheckCircle2 className="w-16 h-16 text-white" />
       </motion.div>
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-heading font-black tracking-tight">¡Modelo Actualizado!</h2>
-        <p className="text-muted-foreground font-medium">Los cambios han sido guardados exitosamente.</p>
+      <div className="text-center space-y-3">
+        <h2 className="text-5xl font-heading font-black tracking-tighter text-foreground">Actualización Exitosa</h2>
+        <p className="text-xl text-muted-foreground font-medium italic opacity-80">Tu modelo ha sido actualizado en tiempo real.</p>
       </div>
     </div>
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-10">
-      {error && (
-        <div className="bg-destructive/10 border border-destructive/20 text-destructive rounded-2xl p-5 text-sm font-bold flex items-center gap-3">
-          <AlertCircle className="w-5 h-5" /> {error}
-        </div>
-      )}
-
-      {/* Images */}
-      <div className="glass rounded-[2.5rem] p-8 border border-border/40 space-y-5">
-        <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3">
-          <ImagePlus className="w-6 h-6 text-brand-teal" /> Imágenes
-        </h2>
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-border/60 rounded-2xl p-10 text-center cursor-pointer hover:border-primary/40 hover:bg-muted/20 transition-all opacity-60"
-        >
-          <Upload className="w-8 h-8 mx-auto mb-3" />
-          <p className="font-bold text-sm">Añadir más imágenes</p>
-        </div>
-        <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
-        
-        {previews.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-4">
-            {previews.map((src, i) => (
-              <div key={i} className="relative aspect-square rounded-xl overflow-hidden group border border-border/40">
-                <img src={src} alt="" className="w-full h-full object-cover" />
-                <button type="button" onClick={() => removeImage(i)}
-                  className="absolute top-1 right-1 w-6 h-6 bg-black/60 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                  <X className="w-3 h-3" />
-                </button>
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 xl:grid-cols-3 gap-10 pb-20">
+      
+      <div className="xl:col-span-2 space-y-10">
+        {/* Error Alert */}
+        <AnimatePresence>
+          {error && (
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+              <div className="bg-destructive/10 border border-destructive/20 text-destructive rounded-[2rem] p-6 text-sm font-bold flex items-center gap-4">
+                <AlertCircle className="w-6 h-6" /> {error}
               </div>
-            ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Section: Basic Identity */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="group relative overflow-hidden bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3.5rem] p-10 md:p-14 space-y-10 shadow-2xl shadow-black/[0.02]"
+        >
+          <div className="flex items-center gap-4">
+             <div className="w-12 h-12 rounded-2xl bg-brand-indigo/10 flex items-center justify-center text-brand-indigo">
+                <Home className="w-6 h-6" />
+             </div>
+             <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">Gestión de Identidad</h2>
           </div>
-        )}
+
+          <div className="grid md:grid-cols-2 gap-8">
+             <div className="space-y-3">
+                <Label htmlFor="nombre" className="text-xs font-black uppercase tracking-widest opacity-60">Nombre del Modelo</Label>
+                <Input id="nombre" name="nombre" defaultValue={modelo.nombre} required className="h-16 rounded-2xl bg-background/50 border-border/40 focus:border-primary/40 text-lg font-medium shadow-inner" />
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="tipo" className="text-xs font-black uppercase tracking-widest opacity-60">Tipo de Vivienda</Label>
+                <select id="tipo" name="tipo" defaultValue={modelo.tipo} required
+                  className="w-full h-16 rounded-2xl border border-border/40 bg-background/50 px-5 text-sm font-black uppercase tracking-widest focus:ring-0 focus:border-primary appearance-none cursor-pointer">
+                  {TIPOS.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                </select>
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="disponible" className="text-xs font-black uppercase tracking-widest opacity-60">Visibilidad en Catálogo</Label>
+                <select id="disponible" name="disponible" defaultValue={modelo.disponible ? 'true' : 'false'} required
+                  className="w-full h-16 rounded-2xl border border-border/40 bg-background/50 px-5 text-sm font-black uppercase tracking-widest focus:ring-0 focus:border-primary appearance-none cursor-pointer">
+                  <option value="true">Público (Activo)</option>
+                  <option value="false">Privado (Borrador)</option>
+                </select>
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="precio_desde_uf" className="text-xs font-black uppercase tracking-widest opacity-60">Inversión Base (UF)</Label>
+                <Input id="precio_desde_uf" name="precio_desde_uf" type="number" defaultValue={modelo.precio_desde_uf} required className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xl text-center shadow-inner" />
+             </div>
+             <div className="md:col-span-2 space-y-3">
+                <Label htmlFor="descripcion" className="text-xs font-black uppercase tracking-widest opacity-60">Relato del Modelo</Label>
+                <Textarea id="descripcion" name="descripcion" defaultValue={modelo.descripcion} className="min-h-[160px] rounded-3xl bg-background/50 border-border/40 text-base font-medium p-6 resize-none leading-relaxed" />
+             </div>
+          </div>
+        </motion.div>
+
+        {/* Section: Technical Specs */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="group relative overflow-hidden bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3.5rem] p-10 md:p-14 space-y-10 shadow-2xl shadow-black/[0.02]"
+        >
+          <div className="flex items-center gap-4">
+             <div className="w-12 h-12 rounded-2xl bg-brand-teal/10 flex items-center justify-center text-brand-teal">
+                <Zap className="w-6 h-6" />
+             </div>
+             <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">Ficha Técnica</h2>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
+             <div className="space-y-3">
+                <Label htmlFor="superficie_m2" className="text-[10px] font-black uppercase tracking-widest opacity-60">Superficie <span className="text-primary/40 block mt-1">M² Proyectados</span></Label>
+                <Input id="superficie_m2" name="superficie_m2" type="number" defaultValue={modelo.superficie_m2} required className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xl text-center shadow-inner" />
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="dormitorios" className="text-[10px] font-black uppercase tracking-widest opacity-60 text-foreground/60 text-balance">Dormitorios <span className="text-primary/40 block mt-1">Total Hab.</span></Label>
+                <Input id="dormitorios" name="dormitorios" type="number" defaultValue={modelo.dormitorios} required className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xl text-center shadow-inner" />
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="banos" className="text-[10px] font-black uppercase tracking-widest opacity-60">Servicios <span className="text-primary/40 block mt-1">Baños</span></Label>
+                <Input id="banos" name="banos" type="number" defaultValue={modelo.banos} required className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xl text-center shadow-inner" />
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="tiempo_entrega" className="text-[10px] font-black uppercase tracking-widest opacity-60">Velocidad <span className="text-primary/40 block mt-1">Entrega</span></Label>
+                <Input id="tiempo_entrega" name="tiempo_entrega" defaultValue={modelo.tiempo_entrega} className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xs text-center uppercase tracking-widest shadow-inner" />
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="garantia_anos" className="text-[10px] font-black uppercase tracking-widest opacity-60">Confianza <span className="text-primary/40 block mt-1">Años Garantía</span></Label>
+                <Input id="garantia_anos" name="garantia_anos" type="number" defaultValue={modelo.garantia_anos} required className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xl text-center shadow-inner" />
+             </div>
+             <div className="space-y-3">
+                <Label htmlFor="postventa" className="text-[10px] font-black uppercase tracking-widest opacity-60">Postventa <span className="text-primary/40 block mt-1">Soporte</span></Label>
+                <select id="postventa" name="postventa" defaultValue={modelo.postventa ? 'true' : 'false'} required
+                  className="w-full h-16 rounded-2xl border border-border/40 bg-background/50 px-5 text-sm font-black uppercase tracking-widest focus:ring-0 focus:border-primary appearance-none cursor-pointer">
+                  <option value="true">Incluido</option>
+                  <option value="false">No Inc.</option>
+                </select>
+             </div>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Data */}
-      <div className="glass rounded-[2.5rem] p-8 border border-border/40 space-y-6">
-        <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3">
-          <Home className="w-6 h-6 text-brand-indigo" /> General
-        </h2>
-        <div className="grid sm:grid-cols-2 gap-5">
-          <div className="space-y-2">
-            <Label htmlFor="nombre">Nombre</Label>
-            <Input id="nombre" name="nombre" defaultValue={modelo.nombre} required />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="tipo">Tipo</Label>
-            <select id="tipo" name="tipo" defaultValue={modelo.tipo} required
-              className="w-full h-12 rounded-xl border border-input bg-background px-3 text-sm font-medium">
-              {TIPOS.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
-            </select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="disponible">Estado</Label>
-            <select id="disponible" name="disponible" defaultValue={modelo.disponible ? 'true' : 'false'} required
-              className="w-full h-12 rounded-xl border border-input bg-background px-3 text-sm font-medium">
-              <option value="true">Público (Activo)</option>
-              <option value="false">Oculto (Borrador)</option>
-            </select>
-          </div>
-          <div className="space-y-2">
-             <Label htmlFor="precio_desde_uf">Precio Desde (UF)</Label>
-             <Input id="precio_desde_uf" name="precio_desde_uf" type="number" defaultValue={modelo.precio_desde_uf} required />
-          </div>
-        </div>
-        <div className="space-y-2">
-           <Label htmlFor="descripcion">Descripción</Label>
-           <Textarea id="descripcion" name="descripcion" defaultValue={modelo.descripcion} className="min-h-32" />
-        </div>
+      {/* Sidebar Storage & Actions */}
+      <div className="space-y-10">
+        
+        {/* Images Galery */}
+        <section className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3.5rem] p-10 space-y-8 shadow-xl">
+           <div className="flex items-center justify-between">
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] opacity-40 text-foreground">Visual Asset Manager</h3>
+              <Badge variant="outline" className="rounded-full px-3 py-1 font-bold text-[10px] text-foreground/60">{previews.length}</Badge>
+           </div>
+           
+           <div
+             onClick={() => fileInputRef.current?.click()}
+             className="group relative border-2 border-dashed border-border/60 rounded-[2.5rem] flex flex-col items-center justify-center p-8 text-center cursor-pointer hover:border-primary/40 hover:bg-muted/30 transition-all duration-500 overflow-hidden"
+           >
+             <div className="w-12 h-12 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-2 opacity-60">
+                <Upload className="w-5 h-5" />
+             </div>
+             <p className="font-black text-[10px] uppercase tracking-widest text-foreground/40">Gestionar Medios</p>
+             <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
+           </div>
 
-        {modelo.constructora.plan !== 'gratis' && (
-          <div className="space-y-4 pt-6 border-t border-border/40">
-            <div className="flex items-center gap-2">
-               <Video className="w-5 h-5 text-red-500" />
-               <h3 className="font-bold text-sm uppercase tracking-widest leading-none">Video Tour (YouTube/Vimeo)</h3>
-            </div>
-            <div className="space-y-2">
+           <div className="grid grid-cols-2 gap-3">
+              <AnimatePresence>
+                {previews.map((src, i) => (
+                  <motion.div 
+                    key={i} 
+                    initial={{ scale: 0.8, opacity: 0 }} 
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg group-hover:scale-[1.03] transition-transform"
+                  >
+                     <img src={src} alt="" className="w-full h-full object-cover" />
+                     <button 
+                       type="button" 
+                       onClick={() => removeImage(i)}
+                       className="absolute top-2 right-2 w-8 h-8 bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform hover:bg-black"
+                     >
+                       <X className="w-4 h-4" />
+                     </button>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+           </div>
+        </section>
+
+        {/* Video Tour Section */}
+        <section className={cn(
+           "bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3.5rem] p-10 space-y-6 shadow-xl relative overflow-hidden group",
+           modelo.constructora.plan === 'gratis' ? "opacity-40 grayscale pointer-events-none" : ""
+        )}>
+           <div className="flex items-center gap-4">
+              <Video className="w-6 h-6 text-red-500" />
+              <h3 className="text-xs font-black uppercase tracking-[0.3em] opacity-40 text-foreground">Video Walkthrough</h3>
+           </div>
+           <div className="space-y-3">
               <Input 
                 id="video_url" 
                 name="video_url" 
                 defaultValue={modelo.video_url || ""} 
                 placeholder="https://www.youtube.com/watch?v=..." 
-                className="h-12 rounded-xl bg-muted/20 border-border/40"
+                className="h-14 rounded-2xl bg-background/50 border-border/40 font-medium" 
               />
-              <p className="text-[10px] text-muted-foreground font-medium italic">Pega el link del video para mostrar un recorrido virtual en este modelo.</p>
-            </div>
+              <p className="text-[10px] font-bold text-muted-foreground opacity-60 text-center">Compatible con 4K y 60FPS.</p>
+           </div>
+        </section>
+
+        {/* Sidebar Actions */}
+        <div className="flex flex-col gap-4">
+          <Button type="submit" disabled={loading} className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.3em] brand-gradient shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white hover:text-white">
+            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5 mr-3" /> Guardar Cambios</>}
+          </Button>
+
+          <div className="grid grid-cols-2 gap-4">
+             <Link 
+               href={`/modelo/${modelo.slug}`} 
+               target="_blank"
+               className={cn(buttonVariants({ variant: "outline" }), "h-16 rounded-3xl font-black text-[10px] uppercase tracking-widest border-border hover:bg-muted/50 transition-all gap-2")}
+             >
+                <Eye className="w-4 h-4" /> Preview
+             </Link>
+             <Button 
+               type="button" 
+               variant="outline" 
+               onClick={() => router.back()}
+               className="h-16 rounded-3xl font-black text-[10px] uppercase tracking-widest border-border hover:bg-muted/50 transition-all"
+             >
+                Cancelar
+             </Button>
           </div>
-        )}
-      </div>
+        </div>
 
-      <div className="grid sm:grid-cols-2 gap-5 glass rounded-[2.5rem] p-8 border border-border/40">
-        <div className="space-y-2">
-          <Label htmlFor="superficie_m2">Superficie m²</Label>
-          <Input id="superficie_m2" name="superficie_m2" type="number" defaultValue={modelo.superficie_m2} required />
+        <div className="p-8 rounded-[2.5rem] bg-brand-indigo/5 border border-brand-indigo/10 flex items-start gap-4 opacity-60">
+           <ShieldCheck className="w-6 h-6 text-brand-indigo shrink-0" />
+           <p className="text-[10px] font-medium text-brand-indigo leading-relaxed italic">
+              Se guardará una versión histórica de estos cambios para auditoría de calidad. Los cambios pueden tardar hasta 2 minutos en propagarse a nivel mundial.
+           </p>
         </div>
-        <div className="space-y-2">
-           <Label htmlFor="dormitorios">Dormitorios</Label>
-           <Input id="dormitorios" name="dormitorios" type="number" defaultValue={modelo.dormitorios} required />
-        </div>
-        <div className="space-y-2">
-           <Label htmlFor="banos">Baños</Label>
-           <Input id="banos" name="banos" type="number" defaultValue={modelo.banos} required />
-        </div>
-        <div className="space-y-2">
-           <Label htmlFor="tiempo_entrega">Tiempo Entrega</Label>
-           <Input id="tiempo_entrega" name="tiempo_entrega" defaultValue={modelo.tiempo_entrega} />
-        </div>
-      </div>
 
-      <div className="flex gap-4 pt-10">
-        <Button type="button" variant="outline" className="h-14 flex-1 rounded-2xl font-black uppercase tracking-widest text-[10px]" onClick={() => router.back()}>
-          Cancelar
-        </Button>
-        <Button type="submit" disabled={loading} className="h-14 flex-1 rounded-2xl brand-gradient font-black uppercase tracking-widest text-[10px] text-white">
-          {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Guardar Cambios"}
-        </Button>
       </div>
     </form>
   );

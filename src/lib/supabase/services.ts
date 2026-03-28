@@ -50,13 +50,20 @@ export async function getDashboardStats() {
     recentLeadsQuery = recentLeadsQuery.eq('constructora_id', userId)
   }
 
-  const { data: constructora } = await supabase.from('constructoras').select('nombre').eq('id', userId).maybeSingle()
+  const { data: constructora } = await supabase
+    .from('constructoras')
+    .select('nombre, score_confianza, verificada')
+    .eq('id', userId)
+    .maybeSingle()
+
   const { count: modelsCount } = await modelsQuery
   const { count: leadsCount } = await leadsQuery
   const { data: recentLeads } = await recentLeadsQuery
 
   return {
     companyName: constructora?.nombre || 'Constructora',
+    confidenceScore: constructora?.score_confianza || 0,
+    isVerified: constructora?.verificada || false,
     modelsCount: modelsCount || 0,
     leadsCount: leadsCount || 0,
     recentLeads: recentLeads || [],

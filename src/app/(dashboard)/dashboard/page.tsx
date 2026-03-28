@@ -21,22 +21,30 @@ const formatRelative = (dateStr: string) => {
 };
 
 export default async function DashboardPage() {
-  const { companyName, modelsCount, leadsCount, recentLeads, totalViews } = await getDashboardStats();
+  const { 
+    companyName, 
+    modelsCount, 
+    leadsCount, 
+    recentLeads, 
+    totalViews,
+    confidenceScore = 0,
+    isVerified = false
+  } = await getDashboardStats();
 
   const STATS = [
     { 
       title: "Vistas Totales", 
       value: "—", 
       change: "Próximamente", 
-      trend: "neutral", 
+      trend: "neutral" as const, 
       icon: LayoutGrid, 
       color: "text-blue-600 bg-blue-50" 
     },
     { 
       title: "Prospectos (Leads)", 
       value: String(leadsCount), 
-      change: "+12%", 
-      trend: "up", 
+      change: leadsCount > 0 ? "+12%" : "Inicio", 
+      trend: "up" as const, 
       icon: Users, 
       color: "text-brand-teal bg-brand-teal/5" 
     },
@@ -44,15 +52,15 @@ export default async function DashboardPage() {
       title: "Modelos Activos", 
       value: String(modelsCount), 
       change: "Sincronizado", 
-      trend: "neutral", 
+      trend: "neutral" as const, 
       icon: Home, 
       color: "text-brand-indigo bg-brand-indigo/5" 
     },
     { 
       title: "Score de Confianza", 
-      value: "92",
-      change: "Muy Alto", 
-      trend: "up", 
+      value: String(confidenceScore),
+      change: confidenceScore >= 90 ? "Excelente" : confidenceScore >= 70 ? "Bueno" : "Pendiente", 
+      trend: "up" as const, 
       icon: BarChart2, 
       color: "text-emerald-600 bg-emerald-50" 
     },
@@ -63,8 +71,13 @@ export default async function DashboardPage() {
        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-border/40 pb-10">
           <div className="space-y-2">
              <div className="flex items-center gap-3 mb-2">
-                <Badge variant="outline" className="rounded-full px-4 py-1 text-[10px] font-black uppercase tracking-widest border-primary/20 bg-primary/5 text-primary">Estado: Operativo</Badge>
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <Badge variant="outline" className={cn(
+                  "rounded-full px-4 py-1 text-[10px] font-black uppercase tracking-widest border-primary/20 bg-primary/5 text-primary",
+                  isVerified && "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                )}>
+                  {isVerified ? "Constructora Verificada" : "Estado: Operativo"}
+                </Badge>
+                <span className={cn("w-2 h-2 rounded-full animate-pulse", isVerified ? "bg-emerald-500" : "bg-primary")} />
              </div>
              <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter text-foreground">
                 Hola, <span className="gradient-text">{companyName}</span>

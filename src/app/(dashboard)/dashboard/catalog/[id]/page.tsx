@@ -2,6 +2,8 @@ import { getModelById } from "@/lib/supabase/services";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { EditModelForm } from "./edit-form";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default async function EditModelPage({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -11,7 +13,6 @@ export default async function EditModelPage({ params }: { params: { id: string }
     notFound();
   }
 
-  // Security check: ensure the model belongs to the logged-in user
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
@@ -20,10 +21,19 @@ export default async function EditModelPage({ params }: { params: { id: string }
   }
 
   return (
-    <div className="py-12 space-y-10 max-w-3xl mx-auto">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-heading font-black tracking-tighter uppercase">Editar <span className="gradient-text">Modelo</span></h1>
-        <p className="text-muted-foreground font-medium">Actualiza las especificaciones y el estado de tu modelo.</p>
+    <div className="py-12 space-y-12 max-w-5xl mx-auto px-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div className="space-y-4">
+           <Link href="/dashboard/catalog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+              <ArrowLeft className="w-4 h-4" /> Volver al Catálogo
+           </Link>
+           <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none text-foreground">
+             Edición <span className="brand-gradient bg-clip-text text-transparent italic">Maestra</span>
+           </h1>
+           <p className="text-xl text-muted-foreground font-medium max-w-xl">
+             Refina cada detalle de tu {modelo.nombre}. La precisión en la ficha técnica acelera el cierre de ventas.
+           </p>
+        </div>
       </div>
       
       <EditModelForm modelo={modelo} />
