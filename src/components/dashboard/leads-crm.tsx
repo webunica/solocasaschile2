@@ -113,7 +113,7 @@ export function LeadsCRM({ initialLeads }: Props) {
              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">CRM Industrial v2</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
-            Centro de <span className="brand-gradient bg-clip-text text-transparent italic">Negocios</span>
+            Centro de <span className="gradient-text italic">Negocios</span>
           </h1>
           <p className="text-xl text-muted-foreground font-medium max-w-2xl leading-relaxed">
             Administra tus prospectos en tiempo real. Unifica la comunicación y optimiza tu tasa de conversión.
