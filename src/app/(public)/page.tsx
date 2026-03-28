@@ -6,6 +6,7 @@ import { TrustSection } from "@/components/home/trust-section";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { FinalCTA } from "@/components/home/final-cta";
 import { StatsSection } from "@/components/home/stats-section";
+import { PriceDropBanner } from "@/components/home/price-drop-banner";
 import { SeoContent } from "@/components/home/seo-content";
 import { Metadata } from "next";
 
@@ -29,6 +30,9 @@ export default function Home() {
 
       {/* Model Selection (Desire) */}
       <FeaturedModelsSection />
+
+      {/* Retention (Price Drop Alert) */}
+      <PriceDropBanner />
 
       {/* Concept Identification */}
       <TypesSection />
