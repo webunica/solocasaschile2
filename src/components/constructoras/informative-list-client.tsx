@@ -62,16 +62,24 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
           <table className="w-full text-left border-collapse min-w-[1000px]">
             <thead>
               <tr className="bg-primary/10 border-b border-border/40">
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-center w-16">N°</th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">Constructora</th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5" /> Región
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-center w-20">N°</th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 min-w-[250px]">Constructora</th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-3.5 h-3.5 opacity-60" /> Región
+                  </div>
                 </th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 flex items-center gap-2">
-                   <Phone className="w-3.5 h-3.5" /> Teléfono
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-3.5 h-3.5 opacity-60" /> Teléfono
+                  </div>
                 </th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">Correo</th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">Sitio Web</th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70">
+                  <div className="flex items-center gap-2">
+                    <Mail className="w-3.5 h-3.5 opacity-60" /> Correo
+                  </div>
+                </th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-right pr-12">Acción</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/20">
@@ -87,39 +95,41 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                     {index + 1}
                   </td>
                   <td className="p-5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                         <Building2 className="w-4 h-4 text-primary" />
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                         <Building2 className="w-5 h-5 text-primary" />
                       </div>
                       <span className="font-heading font-black text-foreground text-base tracking-tight">{c.nombre}</span>
                     </div>
                   </td>
                   <td className="p-5">
-                    <span className="text-sm font-bold text-muted-foreground bg-secondary/30 px-3 py-1 rounded-full whitespace-nowrap">
+                    <span className="text-xs font-black uppercase tracking-widest text-muted-foreground bg-secondary/40 px-3 py-1.5 rounded-lg whitespace-nowrap">
                       {c.regiones && c.regiones.length > 0 ? c.regiones[0] : "-"}
                     </span>
                   </td>
-                  <td className="p-5 text-sm font-medium text-foreground/80 font-mono">
+                  <td className="p-5 text-sm font-bold text-foreground/80 font-mono tracking-tighter">
                     {c.telefono || "-"}
                   </td>
                   <td className="p-5 text-sm font-medium text-muted-foreground">
                     {c.email ? (
                       <a href={`mailto:${c.email}`} className="hover:text-primary hover:underline transition-colors flex items-center gap-2">
-                        <Mail className="w-3.5 h-3.5 opacity-40 shrink-0" /> {c.email}
+                         {c.email}
                       </a>
                     ) : "-"}
                   </td>
-                  <td className="p-5">
+                  <td className="p-5 text-right pr-8">
                     {c.sitio_web ? (
                       <a 
                         href={c.sitio_web.startsWith('http') ? c.sitio_web : `https://${c.sitio_web}`} 
                         target="_blank" 
                         rel="noreferrer" 
-                        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-black text-xs uppercase tracking-widest px-4 py-2 rounded-xl bg-primary/5 border border-primary/10 hover:border-primary/30 transition-all"
+                        className="inline-flex items-center gap-2 text-primary hover:text-white hover:bg-primary font-black text-[10px] uppercase tracking-[0.15em] px-6 py-2.5 rounded-xl bg-primary/5 border border-primary/20 transition-all shadow-sm"
                       >
                         <Globe className="w-3.5 h-3.5" /> Visitar
                       </a>
-                    ) : "-"}
+                    ) : (
+                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 pr-6">Sin sitio</span>
+                    )}
                   </td>
                 </tr>
               ))}
