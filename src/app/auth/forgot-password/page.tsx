@@ -45,25 +45,6 @@ export default function ForgotPasswordPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo via-brand-indigo to-brand-teal opacity-100" />
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center mix-blend-overlay" />
         
-        {/* Home-style Animation Path */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-           <svg className="w-full h-full" fill="none" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-              <path 
-                 d="M -100 200 C 200 200, 300 800, 600 500 C 800 300, 900 800, 1200 800" 
-                 stroke="white" 
-                 strokeWidth="2" 
-                 strokeDasharray="10 15" 
-              />
-              <motion.circle
-                r="6"
-                fill="white"
-                style={{ offsetPath: "path('M -100 200 C 200 200, 300 800, 600 500 C 800 300, 900 800, 1200 800')", offsetRotate: "auto" }}
-                animate={{ offsetDistance: ["0%", "100%"] }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              />
-           </svg>
-        </div>
-
         <Link href="/" className="relative z-10 flex items-center space-x-2 group">
           <span className="font-heading font-black text-4xl tracking-tighter group-hover:scale-105 transition-transform">SolocasasChile</span>
         </Link>
