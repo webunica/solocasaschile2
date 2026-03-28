@@ -13,7 +13,8 @@ export async function FeaturedConstructorsSection() {
   // Fetch top 3 constructoras by score
   const { data } = await supabase
     .from("constructoras")
-    .select("id, nombre, slug, plan, score_confianza, logo_url, verificada, descripcion")
+    .select("id, nombre, slug, plan, score_confianza, logo_url, verificada, descripcion, user_id")
+    .not("user_id", "is", null) // Solo aquellas con cuenta/afiliadas
     .order("score_confianza", { ascending: false })
     .limit(12);
 

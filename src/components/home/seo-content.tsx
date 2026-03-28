@@ -110,12 +110,12 @@ export function SeoContent() {
                </div>
             </div>
             <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl">
-               <Image 
-                 src="https://images.unsplash.com/photo-1448630360428-65ff2c0257ef?q=80&w=2070" 
-                 alt="Proceso de compra de casas prefabricadas en Chile" 
-                 fill 
-                 className="object-cover"
-               />
+                <Image 
+                  src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000" 
+                  alt="Proceso de compra de casas prefabricadas en Chile" 
+                  fill 
+                  className="object-cover transition-transform duration-1000 md:group-hover:scale-110"
+                />
                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
             </div>
           </div>
