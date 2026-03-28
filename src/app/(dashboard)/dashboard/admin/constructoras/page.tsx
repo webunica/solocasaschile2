@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import Link from "next/link";
+import { ConstructoraAdminControls } from "@/components/dashboard/admin/constructora-controls";
 
 export default async function AdminConstructorasPage() {
   const supabase = await createClient();
@@ -63,10 +65,12 @@ export default async function AdminConstructorasPage() {
 
             <div className="flex-1 space-y-1.5 min-w-0 text-center md:text-left">
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                <h3 className="text-lg font-black tracking-tight truncate max-w-[250px]">{cons.nombre}</h3>
+                <Link href={`/constructora/${cons.slug}`} target="_blank" className="hover:underline">
+                    <h3 className="text-lg font-black tracking-tight truncate max-w-[250px]">{cons.nombre}</h3>
+                </Link>
                 <div className="flex gap-2">
                   <Badge className={cons.plan === 'premium' ? 'bg-amber-500/10 text-amber-600 border-amber-500/20' : 'bg-muted/50 text-muted-foreground border-border/50'}>
-                    {cons.plan.toUpperCase()}
+                    {(cons.plan || 'gratis').toUpperCase()}
                   </Badge>
                   {cons.verificada && (
                     <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
@@ -83,25 +87,15 @@ export default async function AdminConstructorasPage() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center md:items-end gap-2 text-center md:text-right shrink-0">
-               <div className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">Score Confianza</div>
-               <div className="flex items-center gap-2">
-                  <div className="h-2 w-24 bg-muted rounded-full overflow-hidden">
-                     <div className="h-full bg-primary" style={{ width: `${cons.score_confianza}%` }} />
-                  </div>
-                  <span className="font-black text-sm text-primary">{cons.score_confianza}</span>
-               </div>
+            <div className="flex-1 space-y-4 pt-4 md:pt-0">
+               <ConstructoraAdminControls constructora={cons} />
             </div>
 
             <div className="flex items-center gap-2 border-t md:border-t-0 md:border-l border-border/10 pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-center">
-               <Button size="sm" variant="outline" className="h-10 rounded-xl px-4 font-bold text-xs">
-                 Ver Perfil
-               </Button>
-               <Button size="sm" className="h-10 rounded-xl px-4 font-bold text-xs bg-muted hover:bg-muted/80 text-foreground border-none">
-                 Ajustes
-               </Button>
-               <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl">
-                 <MoreVertical className="w-4 h-4 opacity-40" />
+               <Button asChild variant="ghost" size="icon" className="h-10 w-10 rounded-xl">
+                 <Link href={`/dashboard/admin/constructoras/${cons.id}/edit`}>
+                    <MoreVertical className="w-4 h-4 opacity-40" />
+                 </Link>
                </Button>
             </div>
           </div>

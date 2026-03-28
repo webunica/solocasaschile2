@@ -190,7 +190,56 @@ export async function createModel(data: any) {
 
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
-  revalidatePath('/')
+  revalidatePath('/dashboard/settings')
+  return { success: true }
+}
+
+// ============================================================
+// ACCIONES DE SUPERADMINISTRACIÓN
+// ============================================================
+
+export async function toggleVerification(constructoraId: string, status: boolean) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user?.app_metadata?.is_superadmin !== true) throw new Error("Acceso denegado")
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update({ verificada: status })
+    .eq('id', constructoraId)
+
+  if (error) throw error
+  revalidatePath('/dashboard/admin/constructoras')
+  return { success: true }
+}
+
+export async function updateConstructoraPlan(constructoraId: string, plan: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user?.app_metadata?.is_superadmin !== true) throw new Error("Acceso denegado")
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update({ plan })
+    .eq('id', constructoraId)
+
+  if (error) throw error
+  revalidatePath('/dashboard/admin/constructoras')
+  return { success: true }
+}
+
+export async function updateConstructoraScore(constructoraId: string, score: number) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user?.app_metadata?.is_superadmin !== true) throw new Error("Acceso denegado")
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update({ score_confianza: score })
+    .eq('id', constructoraId)
+
+  if (error) throw error
+  revalidatePath('/dashboard/admin/constructoras')
   return { success: true }
 }
 
