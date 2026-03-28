@@ -26,15 +26,9 @@ export default function Home() {
       {/* A: Attention (Hero) */}
       <HeroSection />
 
-      {/* Authority Bias (Logo Cloud) - Reinforcing trust immediately after hero */}
-      <TrustSection />
-
-      {/* I: Interest (Stats & Systems) */}
-      <StatsSection />
-      
       {/* Model Selection (Desire) */}
       <FeaturedModelsSection />
-      
+
       <TypesSection />
 
       {/* Builder Directory (Social Proof & Options) */}

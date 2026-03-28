@@ -1,103 +1,139 @@
+
 import Link from "next/link";
-import { Globe, Share2, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Hash } from "lucide-react";
+import { FaInstagram, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-background text-foreground pt-32 pb-16 border-t border-border/40 relative overflow-hidden">
-      {/* Decorative Brand Background Text */}
-      <div className="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/4 text-[20vw] font-black text-muted/20 tracking-[-0.1em] pointer-events-none select-none uppercase -z-10">
-         CASA
-      </div>
-      
-      <div className="container max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-20 mb-32">
+    <footer className="bg-[#2B09BD] text-white pt-20 pb-10 relative overflow-hidden">
+      <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
           
           {/* Brand Col */}
-          <div className="lg:col-span-2 space-y-12">
-            <Link href="/" className="inline-block group">
-              <span className="font-heading font-black text-6xl tracking-[-0.08em] block transition-transform group-hover:scale-105 duration-500">
-                Solocasas<br /><span className="text-muted-foreground opacity-40">Chile</span>
-              </span>
+          <div className="space-y-6 lg:pr-4">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="w-11 h-11 bg-[#00FFD1] rounded-[10px] flex items-center justify-center text-[#2B09BD] shadow-[0_0_20px_rgba(0,255,209,0.3)] shrink-0">
+                <Hash className="w-6 h-6 stroke-[3]" />
+              </div>
+              <div className="flex flex-col -gap-1">
+                <span className="font-heading font-black text-[22px] leading-none tracking-tight text-white mb-0.5">
+                  solocasas
+                </span>
+                <span className="font-heading font-black text-[18px] leading-none tracking-tight text-[#00FFD1]">
+                  chile.com
+                </span>
+              </div>
             </Link>
             
-            <p className="text-lg leading-relaxed text-muted-foreground font-medium max-w-sm">
-              Conectando el sueño de la vivienda con la <strong className="text-foreground">excelencia industrial</strong> chilena. Uniendo familias con constructoras certificadas.
+            <p className="text-[14px] leading-relaxed text-white/80 font-normal">
+              La plataforma líder en comparación de modelos de casas y proyectos inmobiliarios en Chile. Encuentra tu hogar ideal con transparencia y datos reales.
             </p>
             
-            <div className="flex items-center gap-6">
-              {[Globe, Share2, Mail].map((Icon, i) => (
-                <Link 
-                  key={i} 
-                  href="#" 
-                  className="w-12 h-12 rounded-2xl bg-muted/60 flex items-center justify-center hover:brand-gradient hover:text-white transition-all transform hover:scale-110 duration-500 border border-border/20 shadow-sm"
-                >
-                  <Icon className="w-5 h-5" />
-                </Link>
-              ))}
+            <div className="flex items-center gap-3 pt-2">
+              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+                <FaInstagram className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+              </Link>
+              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+                <FaFacebookF className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+              </Link>
+              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+                <FaLinkedinIn className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+              </Link>
             </div>
           </div>
 
-          {/* Navigation - Systems */}
-          <div className="space-y-10 group">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40 group-hover:opacity-100 transition-opacity">Sistemas</h4>
-            <ul className="space-y-6 text-[11px] font-black uppercase tracking-widest text-foreground/80">
-              {["Prefabricada", "SIP", "Container", "Llave en Mano"].map((item) => (
-                <li key={item} className="flex items-center gap-3 hover:gap-5 transition-all cursor-pointer hover:text-primary">
-                  {item} <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+          {/* Explorar Col */}
+          <div className="space-y-6 lg:pl-8">
+            <div className="flex items-center gap-4">
+              <h4 className="text-[16px] font-bold tracking-wide text-white">Explorar</h4>
+              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+            </div>
+            <ul className="space-y-4 text-[14px] text-white/80 font-medium">
+              {[
+                { name: "Inicio", path: "/" },
+                { name: "Catálogo", path: "/catalogo" },
+                { name: "Constructoras", path: "/constructoras" },
+                { name: "Comparador", path: "/comparar" },
+                { name: "Planes y Precios", path: "/planes" },
+                { name: "Blog", path: "/blog" }
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link href={item.path} className="hover:text-[#00FFD1] transition-colors">{item.name}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Navigation - Platform */}
-          <div className="space-y-10 group">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40 group-hover:opacity-100 transition-opacity">Consola</h4>
-            <ul className="space-y-6 text-[11px] font-black uppercase tracking-widest text-foreground/80">
-              {["Catálogo", "Constructoras", "Comparar", "Planes"].map((item) => (
-                <li key={item} className="flex items-center gap-3 hover:gap-5 transition-all cursor-pointer hover:text-primary">
-                  {item} <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </li>
-              ))}
+          {/* Contacto Col */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <h4 className="text-[16px] font-bold tracking-wide text-white">Contacto</h4>
+              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+            </div>
+            <ul className="space-y-5">
+              <li className="flex items-center gap-4">
+                <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
+                  <Mail className="w-4 h-4 text-[#00FFD1]" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Email</p>
+                  <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.cl</p>
+                </div>
+              </li>
+              <li className="flex items-center gap-4">
+                <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
+                  <Phone className="w-4 h-4 text-[#00FFD1]" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Teléfono</p>
+                  <p className="text-[13px] text-white/90 font-medium tracking-wide">+56 9 6619 8752</p>
+                </div>
+              </li>
+              <li className="flex items-center gap-4">
+                <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
+                  <MapPin className="w-4 h-4 text-[#00FFD1]" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Ubicación</p>
+                  <p className="text-[13px] text-white/90 font-medium tracking-wide">Santiago, Chile</p>
+                </div>
+              </li>
             </ul>
           </div>
 
-          {/* Contact Col */}
-          <div className="space-y-10">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-40">Contacto</h4>
-            <ul className="space-y-6 text-[11px] font-black leading-relaxed">
-              <li className="flex items-center gap-4 group cursor-pointer hover:text-primary transition-colors">
-                <div className="w-10 h-10 rounded-full bg-muted/40 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                  <Mail className="w-4 h-4 text-primary" />
-                </div>
-                contacto@solocasaschile.cl
-              </li>
-              <li className="flex items-center gap-4 group cursor-pointer hover:text-brand-teal transition-colors">
-                <div className="w-10 h-10 rounded-full bg-muted/40 flex items-center justify-center group-hover:bg-brand-teal/10 transition-colors">
-                  <Phone className="w-4 h-4 text-brand-teal" />
-                </div>
-                +56 9 6619 8752
-              </li>
-              <li className="flex items-start gap-4 text-muted-foreground font-medium text-xs leading-relaxed max-w-[150px]">
-                 Santiago, Región Metropolitana, Chile
-              </li>
-            </ul>
+          {/* Suscríbete Col */}
+          <div className="space-y-6 lg:pl-4">
+            <div className="flex items-center gap-4">
+              <h4 className="text-[16px] font-bold tracking-wide text-white">Suscríbete</h4>
+              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+            </div>
+            <p className="text-[13px] text-white/80 leading-relaxed font-medium">
+              Recibe las mejores ofertas y nuevos modelos directamente en tu correo.
+            </p>
+            <div className="relative mt-2">
+              <input 
+                type="email" 
+                placeholder="tu@email.com..." 
+                className="w-full h-11 bg-[#421FD8] border-none rounded-lg pl-4 pr-12 text-[13px] outline-none placeholder:text-white/40 focus:ring-1 focus:ring-[#00FFD1] transition-all font-medium text-white"
+              />
+              <button className="absolute right-1 top-1 bottom-1 w-9 bg-[#00FFD1] rounded-[6px] flex items-center justify-center text-[#2B09BD] hover:bg-white transition-colors">
+                <ArrowRight className="w-4 h-4 font-bold" />
+              </button>
+            </div>
           </div>
+
         </div>
 
-        <div className="pt-12 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-baseline gap-4">
-             <span className="text-4xl font-black tracking-[-0.1em] text-foreground/20 uppercase">SCCH</span>
-             <p className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.5em] opacity-40">
-               © {currentYear} SolocasasChile · V2 Performance Platform
-             </p>
-          </div>
-          <div className="flex items-center gap-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
-            <Link href="/privacidad" className="hover:text-primary transition-all">Privacidad</Link>
-            <Link href="/terminos" className="hover:text-primary transition-all">Términos</Link>
-            <Link href="/cookies" className="hover:text-primary transition-all">Cookies</Link>
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[12px] text-white/50 font-medium tracking-wide">
+            © {currentYear} solocasaschile.cl. Todos los derechos reservados.
+          </p>
+          <div className="flex items-center gap-6 text-[12px] text-white/50 font-medium tracking-wide">
+            <Link href="/terminos" className="hover:text-white transition-colors">Términos y Condiciones</Link>
+            <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
           </div>
         </div>
       </div>
