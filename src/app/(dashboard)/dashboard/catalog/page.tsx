@@ -11,19 +11,31 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-
-export const dynamic = 'force-dynamic';
+import { getPlanLimits } from "@/lib/constants/plans";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function CatalogManagementPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   let modelos: any[] = [];
+  let constructora: any = null;
   let errorMsg = null;
 
   try {
     modelos = await getModelosByConstructora();
+    if (user) {
+      const { data } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
+      constructora = data;
+    }
   } catch (err: any) {
     console.error("CRITICAL DASHBOARD ERROR:", err);
     errorMsg = err.message || "Error al conectar con la base de datos";
   }
+
+  const limits = getPlanLimits(constructora?.plan || 'gratis');
+  const usedCount = modelos.length;
+  const isLimitReached = usedCount >= limits.maxModels;
 
   if (errorMsg) {
     return (
@@ -46,12 +58,33 @@ export default async function CatalogManagementPage() {
             Administra tu catálogo digital de viviendas en tiempo real.
           </p>
         </div>
-        <Link 
-          href="/dashboard/catalog/new" 
-          className={cn(buttonVariants({ variant: "default" }), "rounded-2xl h-14 px-10 font-black text-xs uppercase tracking-widest brand-gradient shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-white hover:text-white")}
-        >
-          <Plus className="w-5 h-5 mr-2" /> Nuevo Modelo
-        </Link>
+        <div className="flex flex-col items-end gap-3">
+          <div className="text-right space-y-1">
+             <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Uso de Catálogo</p>
+             <div className="flex items-center gap-3">
+                <div className="h-2 w-32 bg-muted rounded-full overflow-hidden">
+                   <div 
+                     className={cn("h-full transition-all", isLimitReached ? "bg-red-500" : "bg-primary")} 
+                     style={{ width: `${Math.min(100, (usedCount / limits.maxModels) * 100)}%` }} 
+                   />
+                </div>
+                <span className="text-xs font-black">{usedCount} / {limits.maxModels < 1000 ? limits.maxModels : '∞'}</span>
+             </div>
+          </div>
+          <Link 
+            href={isLimitReached ? "#" : "/dashboard/catalog/new"} 
+            className={cn(
+              buttonVariants({ variant: "default" }), 
+              "rounded-2xl h-14 px-10 font-black text-xs uppercase tracking-widest shadow-2xl transition-all text-white hover:text-white",
+              isLimitReached ? "bg-muted text-muted-foreground cursor-not-allowed opacity-50" : "brand-gradient shadow-primary/20 hover:scale-105 active:scale-95"
+            )}
+          >
+            <Plus className="w-5 h-5 mr-2" /> Nuevo Modelo
+          </Link>
+          {isLimitReached && (
+            <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest italic">Límite alcanzado. Mejora tu plan.</p>
+          )}
+        </div>
       </div>
 
       <Card className="rounded-[3rem] border-border/40 shadow-2xl shadow-primary/5 bg-card/40 backdrop-blur-xl overflow-hidden">

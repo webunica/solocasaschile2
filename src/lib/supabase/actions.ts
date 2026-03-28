@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { getPlanLimits } from '../constants/plans'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -173,6 +174,30 @@ export async function createModel(data: any) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
+
+  // 1. Obtener plan y límites
+  const { data: constructora } = await supabase
+    .from('constructoras')
+    .select('plan')
+    .eq('id', user.id)
+    .single()
+  
+  const limits = getPlanLimits(constructora?.plan || 'gratis')
+
+  // 2. Verificar límite de modelos si es creación (actualmente solo tenemos createModel)
+  const { count } = await supabase
+    .from('modelos')
+    .select('*', { count: 'exact', head: true })
+    .eq('constructora_id', user.id)
+
+  if ((count || 0) >= limits.maxModels) {
+    return { error: `Has alcanzado el límite de ${limits.maxModels} modelos para tu plan ${constructora?.plan?.toUpperCase()}. Mejora tu suscripción para publicar más modelos.` }
+  }
+
+  // 3. Verificar límite de fotos
+  if (data.imagenes_urls && data.imagenes_urls.length > limits.maxPhotos) {
+    return { error: `Tu plan permite un máximo de ${limits.maxPhotos} fotos por modelo.` }
+  }
 
   // Generate slug
   const slug = `${data.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}-${Date.now()}`

@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { createModel } from "@/lib/supabase/actions";
 import { createClient } from "@/lib/supabase/client";
+import { getPlanLimits } from "@/lib/constants/plans";
+import { useEffect } from "react";
 
 const TIPOS = [
   { value: "prefabricada", label: "Prefabricada" },
@@ -30,8 +32,23 @@ export default function NewModelPage() {
   const [previews, setPreviews] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
 
+  const [planLimits, setPlanLimits] = useState<any>(null);
+
+  useEffect(() => {
+    async function loadPlan() {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
+        setPlanLimits(getPlanLimits(data?.plan || 'gratis'));
+      }
+    }
+    loadPlan();
+  }, []);
+
   const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selected = Array.from(e.target.files || []).slice(0, 5);
+    const maxPhotos = planLimits?.maxPhotos || 3;
+    const selected = Array.from(e.target.files || []).slice(0, maxPhotos);
     setFiles(selected);
     setPreviews(selected.map((f) => URL.createObjectURL(f)));
   };
@@ -92,11 +109,9 @@ export default function NewModelPage() {
         .replace(/[^a-z0-9\s-]/g, '')
         .replace(/\s+/g, '-')}-${Date.now()}`;
 
-      // 4. Insert directo en Supabase desde el cliente (tiene sesión activa)
-      const { error: insertError } = await supabase.from('modelos').insert([{
-        constructora_id: user.id,
+      // 4. Insertar usando Action (para validar límites en servidor)
+      const result = await createModel({
         nombre,
-        slug,
         tipo: formData.get('tipo') as string,
         superficie_m2: Number(formData.get('superficie_m2')),
         dormitorios: Number(formData.get('dormitorios')),
@@ -107,10 +122,9 @@ export default function NewModelPage() {
         postventa: formData.get('postventa') === 'true',
         descripcion: formData.get('descripcion') as string,
         imagenes_urls: imageUrls,
-        disponible: true,
-      }]);
+      });
 
-      if (insertError) throw new Error(insertError.message);
+      if (result?.error) throw new Error(result.error);
 
       setSuccess(true);
       setTimeout(() => router.push('/dashboard/catalog'), 1500);
@@ -160,7 +174,7 @@ export default function NewModelPage() {
           >
             <Upload className="w-8 h-8 mx-auto mb-3 text-muted-foreground group-hover:text-primary transition-colors" />
             <p className="font-bold text-sm">Haz clic para subir imágenes</p>
-            <p className="text-xs text-muted-foreground mt-1">PNG, JPG hasta 5MB · Máximo 5 imágenes</p>
+            <p className="text-xs text-muted-foreground mt-1">PNG, JPG hasta 5MB · Máximo {planLimits?.maxPhotos || 3} imágenes para tu plan</p>
           </div>
           <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
           {previews.length > 0 && (
