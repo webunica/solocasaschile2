@@ -101,13 +101,6 @@ const PLANES = [
   },
 ];
 
-const STATS = [
-  { value: "+226", label: "Constructoras activas", icon: Building2 },
-  { value: "+50K", label: "Familias al mes", icon: Users },
-  { value: "+5.000", label: "Modelos publicados", icon: TrendingUp },
-  { value: "100%", label: "Plataforma segura", icon: Shield },
-];
-
 const FAQS = [
   {
     q: "¿Puedo cambiar de plan en cualquier momento?",
@@ -151,47 +144,6 @@ export default function PlanesPage() {
             <strong className="text-foreground">50.000 familias chilenas</strong>{" "}
             que buscan su hogar ideal cada mes.
           </p>
-        </div>
-      </section>
-
-      {/* ── Stats ───────────────────────────────────────────── */}
-      <section className="border-b border-border/40 bg-muted/20">
-        <div className="container max-w-5xl mx-auto px-4 md:px-8 py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {STATS.map(({ value, label, icon: Icon }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-2">
-                <div className="w-10 h-10 rounded-2xl bg-primary/8 flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-primary" />
-                </div>
-                <span className="text-3xl font-black tracking-tighter text-foreground">{value}</span>
-                <span className="text-xs font-bold text-muted-foreground">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Authority Bias (Trust Cloud) ────────────────────── */}
-      <section className="py-12 border-b border-border/40 overflow-hidden bg-background">
-        <div className="container max-w-5xl mx-auto px-4 text-center space-y-8">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground opacity-60">
-            Plataforma utilizada por empresas asociadas a
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-             {/* Simulating Chilean construction entity logos with text and icons */}
-             <div className="flex items-center gap-2 font-bold text-lg">
-                <Building2 className="w-6 h-6" /> <span className="tracking-tighter">CChC</span>
-             </div>
-             <div className="flex items-center gap-2 font-bold text-lg">
-                <Shield className="w-6 h-6" /> <span className="tracking-tighter">MINVU</span>
-             </div>
-             <div className="flex items-center gap-2 font-bold text-lg">
-                <CheckCircle2 className="w-6 h-6" /> <span className="tracking-tighter">SERVIU</span>
-             </div>
-             <div className="flex items-center gap-2 font-bold text-lg underline underline-offset-4 decoration-primary">
-                <Users className="w-6 h-6" /> <span className="tracking-tighter">CORFO</span>
-             </div>
-          </div>
         </div>
       </section>
 
