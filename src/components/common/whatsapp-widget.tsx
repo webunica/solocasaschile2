@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-const WHATSAPP_NUMBER = "569XXXXXXXX"; // Replace with real number or env variable
+const WHATSAPP_NUMBER = "56964130601"; // Official Sales Number
 
 export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);

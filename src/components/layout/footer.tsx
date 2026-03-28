@@ -1,7 +1,7 @@
 
 import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowRight, Hash } from "lucide-react";
-import { FaInstagram, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 
 export function Footer() {
@@ -78,17 +78,28 @@ export function Footer() {
                 <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
                   <Mail className="w-4 h-4 text-[#00FFD1]" />
                 </div>
-                <div>
+                <div className="flex flex-col">
                   <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Email</p>
                   <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.cl</p>
                 </div>
               </li>
               <li className="flex items-center gap-4">
+                <a href="https://wa.me/56964130601" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+                  <div className="w-9 h-9 rounded-lg bg-[#421FD8] group-hover:bg-[#00FFD1] shrink-0 flex items-center justify-center transition-colors">
+                    <FaWhatsapp className="w-4 h-4 text-[#00FFD1] group-hover:text-[#2B09BD] transition-colors" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-[#00FFD1] uppercase tracking-[0.1em] mb-0.5">WhatsApp Ventas</p>
+                    <p className="text-[13px] text-white/90 font-medium tracking-wide group-hover:text-[#00FFD1] transition-colors">+56 9 6413 0601</p>
+                  </div>
+                </a>
+              </li>
+              <li className="flex items-center gap-4 opacity-70">
                 <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
                   <Phone className="w-4 h-4 text-[#00FFD1]" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Teléfono</p>
+                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Soporte</p>
                   <p className="text-[13px] text-white/90 font-medium tracking-wide">+56 9 6619 8752</p>
                 </div>
               </li>
