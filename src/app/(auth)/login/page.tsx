@@ -42,9 +42,9 @@ export default function LoginPage() {
           <div className="text-[10px] tracking-widest font-black uppercase rounded-full px-3 py-1 border border-white/20 bg-white/10 text-white inline-block">
             CONSTRUCTORAS
           </div>
-          <h1 className="text-5xl font-heading font-black leading-tight tracking-tighter">
+          <h1 className="text-5xl md:text-6xl font-heading font-black leading-[1.1] tracking-tighter text-white drop-shadow-2xl">
             Potencia tu alcance <br /> 
-            <span className="text-brand-teal">llega a más clientes</span>
+            <span className="text-brand-teal brightness-125">llega a más clientes</span>
           </h1>
           <p className="text-lg text-white/70 font-medium">
             Únete a la plataforma líder de casas prefabricadas en Chile. Gestiona tus modelos, recibe prospectos y haz crecer tu empresa.
