@@ -51,7 +51,7 @@ export function Header() {
             alt="SolocasasChile" 
             width={240} 
             height={60} 
-            className="h-10 md:h-14 w-auto object-contain relative z-10"
+            className="h-12 md:h-16 w-auto object-contain relative z-10"
             priority
           />
         </Link>
@@ -71,87 +71,90 @@ export function Header() {
           </nav>
           
           <div className="flex items-center gap-4 sm:gap-6">
-            <div className="flex items-center gap-3 border-r border-border/40 pr-4 sm:pr-8">
+            {/* Desktop Actions */}
+            <div className="hidden lg:flex items-center gap-3 border-r border-border/40 pr-8">
                 <ThemeToggle />
                 <Link 
                   href="/login" 
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "sm" }), 
-                    "text-[10px] font-black uppercase tracking-widest hidden sm:inline-flex hover:text-primary hover:bg-transparent transition-all"
+                    "text-[10px] font-black uppercase tracking-widest hover:text-primary hover:bg-transparent transition-all"
                   )}
                 >
                   Acceder
                 </Link>
             </div>
              
-             <Link 
-               href="/planes" 
-               className={cn(
-                 buttonVariants({ size: "default" }),
-                 "brand-gradient text-white border-none rounded-2xl px-6 sm:px-10 font-black text-[10px] uppercase tracking-[0.2em] shadow-[0_20px_40px_-10px_rgba(var(--primary-rgb),0.3)] hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all h-11 sm:h-12"
-               )}
-             >
-               <span className="hidden xs:inline">Publicar Propiedad</span>
-               <LayoutGrid className="w-4 h-4 xs:hidden" />
-             </Link>
+            <Link 
+              href="/planes" 
+              className={cn(
+                buttonVariants({ size: "default" }),
+                "brand-gradient text-white border-none rounded-2xl px-10 font-black text-[10px] uppercase tracking-[0.2em] shadow-[0_20px_40px_-10px_rgba(var(--primary-rgb),0.3)] hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
+              )}
+            >
+              Publicar Propiedad
+            </Link>
 
-             {/* Hamburger Menu (Mobile/Tablet) */}
-             <Sheet open={isOpen} onOpenChange={setIsOpen}>
-               <SheetTrigger asChild>
-                 <button className="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-primary/5 border border-primary/10 text-primary active:scale-90 transition-all">
-                    <Menu className="w-5 h-5" />
-                 </button>
-               </SheetTrigger>
-               <SheetContent side="right" className="w-[300px] border-l border-border/40 bg-background/95 backdrop-blur-xl p-0">
-                 <SheetHeader className="p-8 border-b border-border/40">
-                    <SheetTitle className="text-left font-heading font-black tracking-tighter text-2xl">Menu</SheetTitle>
-                    <SheetDescription className="text-left text-xs uppercase tracking-widest font-bold opacity-60">SolocasasChile v2</SheetDescription>
-                 </SheetHeader>
-                 
-                 <div className="flex flex-col p-6 space-y-4">
-                    <Link 
-                      href="/" 
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 text-foreground font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-white transition-all group"
-                    >
-                      <Home className="w-5 h-5 opacity-40 group-hover:opacity-100" /> Inicio
-                    </Link>
-                    
-                    <div className="h-px bg-border/40 my-2" />
+            {/* Hamburger Menu (Mobile/Tablet Only) */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-primary/5 border border-primary/10 text-primary active:scale-90 transition-all">
+                   <Menu className="w-6 h-6" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] border-r border-border/40 bg-background/95 backdrop-blur-xl p-0">
+                <SheetHeader className="p-8 border-b border-border/40">
+                   <div className="flex items-center justify-between">
+                     <SheetTitle className="text-left font-heading font-black tracking-tighter text-2xl">Menu</SheetTitle>
+                     <ThemeToggle />
+                   </div>
+                   <SheetDescription className="text-left text-xs uppercase tracking-widest font-bold opacity-60">SolocasasChile v2</SheetDescription>
+                </SheetHeader>
+                
+                <div className="flex flex-col p-6 space-y-4">
+                   <Link 
+                     href="/" 
+                     onClick={() => setIsOpen(false)}
+                     className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 text-foreground font-black text-[10px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all group"
+                   >
+                     <Home className="w-5 h-5 opacity-40 group-hover:opacity-100" /> Inicio
+                   </Link>
+                   
+                   <div className="h-px bg-border/40 my-2" />
 
-                    {NAV_LINKS.map((link) => (
-                      <Link 
-                        key={link.href}
-                        href={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-xs uppercase tracking-widest transition-all group"
-                      >
-                        <link.icon className="w-5 h-5 opacity-40 group-hover:opacity-100" /> {link.label}
-                      </Link>
-                    ))}
-
-                    <div className="h-px bg-border/40 my-2" />
-
-                    <Link 
-                      href="/login" 
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-xs uppercase tracking-widest transition-all"
-                    >
-                      <CreditCard className="w-5 h-5 opacity-40" /> Mi Cuenta
-                    </Link>
-                 </div>
-
-                 <div className="absolute bottom-8 left-0 w-full px-8">
-                    <Link 
-                       href="/planes" 
+                   {NAV_LINKS.map((link) => (
+                     <Link 
+                       key={link.href}
+                       href={link.href}
                        onClick={() => setIsOpen(false)}
-                       className="w-full flex items-center justify-center gap-3 brand-gradient text-white h-14 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-primary/20"
-                    >
-                       Publicar Propiedad
-                    </Link>
-                 </div>
-               </SheetContent>
-             </Sheet>
+                       className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-[10px] uppercase tracking-widest transition-all group"
+                     >
+                       <link.icon className="w-5 h-5 opacity-40 group-hover:opacity-100" /> {link.label}
+                     </Link>
+                   ))}
+
+                   <div className="h-px bg-border/40 my-2" />
+
+                   <Link 
+                     href="/login" 
+                     onClick={() => setIsOpen(false)}
+                     className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-[10px] uppercase tracking-widest transition-all"
+                   >
+                     <CreditCard className="w-5 h-5 opacity-40" /> Mi Cuenta
+                   </Link>
+                </div>
+
+                <div className="absolute bottom-8 left-0 w-full px-8">
+                   <Link 
+                      href="/planes" 
+                      onClick={() => setIsOpen(false)}
+                      className="w-full flex items-center justify-center gap-3 brand-gradient text-white h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/20"
+                   >
+                      Publicar Propiedad
+                   </Link>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
