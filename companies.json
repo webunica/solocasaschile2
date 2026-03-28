@@ -1,0 +1,1634 @@
+[
+  {
+    "id": "1",
+    "nombre": "Aliro Cardenas",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "alirocardenas.cl"
+  },
+  {
+    "id": "2",
+    "nombre": "Arkubic",
+    "region": null,
+    "telefono": "+56 7821 6360",
+    "email": null,
+    "sitio_web": "arkubic.cl"
+  },
+  {
+    "id": "3",
+    "nombre": "Arqydom",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "arqydom.cl"
+  },
+  {
+    "id": "4",
+    "nombre": "Autónoma Modulares",
+    "region": null,
+    "telefono": "+56 5229 8883",
+    "email": "contacto@autonomamodulares.cl",
+    "sitio_web": "autonomamodulares.cl"
+  },
+  {
+    "id": "5",
+    "nombre": "BIOBIO MADERA",
+    "region": "Biobío",
+    "telefono": null,
+    "email": "contacto@biobiomadera.cl",
+    "sitio_web": "biobiomadera.cl"
+  },
+  {
+    "id": "6",
+    "nombre": "Biourban",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "biourban.cl"
+  },
+  {
+    "id": "7",
+    "nombre": "Box Panel Chile",
+    "region": null,
+    "telefono": "+56 9328 9173",
+    "email": "ventas@boxpanelchile.cl",
+    "sitio_web": "boxpanelchile.cl"
+  },
+  {
+    "id": "8",
+    "nombre": "Casa de Madera",
+    "region": null,
+    "telefono": "+56 3946 4346",
+    "email": "contacto@casademadera.cl",
+    "sitio_web": "casademadera.cl"
+  },
+  {
+    "id": "9",
+    "nombre": "Casa Prefabricada Chile",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casaprefabricada.cl"
+  },
+  {
+    "id": "10",
+    "nombre": "Casas 7 Lagos",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casas7lagos.cl"
+  },
+  {
+    "id": "11",
+    "nombre": "Casas Alvarado",
+    "region": null,
+    "telefono": "+56 41629375",
+    "email": "contacto@casasalvarado.cl",
+    "sitio_web": "casasalvarado.cl"
+  },
+  {
+    "id": "12",
+    "nombre": "Casas Andes",
+    "region": "Metropolitana",
+    "telefono": "+56 8843 2545",
+    "email": "contacto@vpandes.cl",
+    "sitio_web": "casasandes.cl"
+  },
+  {
+    "id": "13",
+    "nombre": "Casas Arbolito",
+    "region": null,
+    "telefono": "+56 5188 8397",
+    "email": null,
+    "sitio_web": "casasarbolito.cl"
+  },
+  {
+    "id": "14",
+    "nombre": "Casas Azocar",
+    "region": null,
+    "telefono": "+56 8419 1774",
+    "email": "info@casasazocar.cl",
+    "sitio_web": "casasazocar.cl"
+  },
+  {
+    "id": "15",
+    "nombre": "Casas Baeza",
+    "region": null,
+    "telefono": "+56 6900 2863",
+    "email": "ventas@casasbaeza.cl",
+    "sitio_web": "casasbaeza.cl"
+  },
+  {
+    "id": "16",
+    "nombre": "Casas Bio Bio",
+    "region": "Biobío",
+    "telefono": "+56 77080036",
+    "email": "contacto@casasbiobio.cl",
+    "sitio_web": "casasbiobio.cl"
+  },
+  {
+    "id": "17",
+    "nombre": "Casas Chile",
+    "region": "Aysén",
+    "telefono": "+56 6765 2158",
+    "email": null,
+    "sitio_web": "casaschilespa.cl"
+  },
+  {
+    "id": "18",
+    "nombre": "Casas Chiloé",
+    "region": "Los Lagos",
+    "telefono": "+56 34094385",
+    "email": "casaschiloe@gmail.com",
+    "sitio_web": "casaschiloe.cl"
+  },
+  {
+    "id": "19",
+    "nombre": "Casas Containers",
+    "region": "Metropolitana",
+    "telefono": "+56 4918 7414",
+    "email": "contacto@casascontainers.cl",
+    "sitio_web": "casascontainers.cl"
+  },
+  {
+    "id": "20",
+    "nombre": "CASAS Copiapó",
+    "region": "Metropolitana",
+    "telefono": "+56 7426 4545",
+    "email": "contacto@casascopiapo.cl",
+    "sitio_web": "casascopiapo.cl"
+  },
+  {
+    "id": "21",
+    "nombre": "Casas De La Costa",
+    "region": null,
+    "telefono": "+56 9744 6775",
+    "email": "contacto@casasdelacosta.cl",
+    "sitio_web": "casasdelacosta.cl"
+  },
+  {
+    "id": "22",
+    "nombre": "Casas De Metalcom",
+    "region": null,
+    "telefono": "+56 2228 8402",
+    "email": "info@casasnordicas.cl",
+    "sitio_web": "casasnordicas.cl"
+  },
+  {
+    "id": "23",
+    "nombre": "Casas El Litoral",
+    "region": null,
+    "telefono": "+56 8836 9466",
+    "email": null,
+    "sitio_web": "casasprefabricadasellitoral.cl"
+  },
+  {
+    "id": "24",
+    "nombre": "Casas El Mirador",
+    "region": "Maule",
+    "telefono": "+56 81319228",
+    "email": "contacto@casaselmirador.cl",
+    "sitio_web": "casaselmirador.cl"
+  },
+  {
+    "id": "25",
+    "nombre": "Casas Fabelsa",
+    "region": null,
+    "telefono": "+56 8948 5227",
+    "email": "constructorafabelsa@gmail.com",
+    "sitio_web": "casasfabelsa.cl"
+  },
+  {
+    "id": "27",
+    "nombre": "Casas Green Valley",
+    "region": null,
+    "telefono": "+56 2583 2001",
+    "email": "contacto@casasgreenvalley.cl",
+    "sitio_web": "casasgreenvalley.cl"
+  },
+  {
+    "id": "28",
+    "nombre": "Casas Laguna",
+    "region": null,
+    "telefono": "+56 4856 5620",
+    "email": "contacto@casaslaguna.cl",
+    "sitio_web": "casaslaguna.cl"
+  },
+  {
+    "id": "29",
+    "nombre": "Casas Lanco",
+    "region": "Biobío",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casaslanco.cl"
+  },
+  {
+    "id": "30",
+    "nombre": "Casas Lihuel",
+    "region": null,
+    "telefono": "+56 64591125",
+    "email": null,
+    "sitio_web": "casaslihuel.cl"
+  },
+  {
+    "id": "31",
+    "nombre": "Casas Linares",
+    "region": "Maule",
+    "telefono": "+56 96999011",
+    "email": "maderasboada@hotmail.com",
+    "sitio_web": "casaslinares.cl"
+  },
+  {
+    "id": "32",
+    "nombre": "Casas Lo Infante",
+    "region": null,
+    "telefono": "+56 83416889",
+    "email": null,
+    "sitio_web": "casasloinfante.cl"
+  },
+  {
+    "id": "33",
+    "nombre": "Casas Longavi",
+    "region": null,
+    "telefono": "+56 20219081",
+    "email": "contacto@casaslongavi.cl",
+    "sitio_web": "casaslongavi.cl"
+  },
+  {
+    "id": "34",
+    "nombre": "Casas METALKIT",
+    "region": "Atacama",
+    "telefono": "+56 5805 6559",
+    "email": "ventas@metalkit.cl",
+    "sitio_web": "casasprefabricadascf.cl"
+  },
+  {
+    "id": "35",
+    "nombre": "Casas Modulares",
+    "region": null,
+    "telefono": "+56 2214 5935",
+    "email": "contacto@modul.cl",
+    "sitio_web": "modul.cl"
+  },
+  {
+    "id": "36",
+    "nombre": "Casas Modulares",
+    "region": null,
+    "telefono": "+56 61405906",
+    "email": "contacto@domohabitare.cl",
+    "sitio_web": "domohabitare.cl"
+  },
+  {
+    "id": "37",
+    "nombre": "Casas Modulares",
+    "region": "Metropolitana",
+    "telefono": "+56 9871 3705",
+    "email": "ventas@constructoraubel.cl",
+    "sitio_web": "constructoraubel.cl"
+  },
+  {
+    "id": "38",
+    "nombre": "Casas O'higgins",
+    "region": "O'Higgins",
+    "telefono": "+56 22753385",
+    "email": "ventas@casasohiggins.cl",
+    "sitio_web": "casasohiggins.cl"
+  },
+  {
+    "id": "39",
+    "nombre": "Casas Pancer",
+    "region": "Metropolitana",
+    "telefono": "+56 9730 5174",
+    "email": "ventas@casaspancer.cl",
+    "sitio_web": "casaspancer.cl"
+  },
+  {
+    "id": "40",
+    "nombre": "CASAS PREFABRICADAS",
+    "region": "Los Ríos",
+    "telefono": "+56 30282442",
+    "email": "56930282442contacto@casasprefabricadasval",
+    "sitio_web": "divia.cl"
+  },
+  {
+    "id": "41",
+    "nombre": "Casas Prefabricadas",
+    "region": null,
+    "telefono": null,
+    "email": "info@casasprefabricadas.cl",
+    "sitio_web": "casasprefabricadas.cl"
+  },
+  {
+    "id": "42",
+    "nombre": "Casas Prefabricadas",
+    "region": "Metropolitana",
+    "telefono": "+56 44081159",
+    "email": "contacto@casasanalberto.com",
+    "sitio_web": "casasanalberto.com"
+  },
+  {
+    "id": "43",
+    "nombre": "Casas Prefabricadas",
+    "region": "Los Lagos",
+    "telefono": null,
+    "email": "info@ecoframe.cl",
+    "sitio_web": "ecoframe.cl"
+  },
+  {
+    "id": "44",
+    "nombre": "Casas Prefabricadas",
+    "region": null,
+    "telefono": "+56 32434267",
+    "email": "ventas@trebolspa.cl",
+    "sitio_web": "trebolspa.cl"
+  },
+  {
+    "id": "45",
+    "nombre": "Casas Prefabricadas Antilhue",
+    "region": "Biobío",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasantilhue.cl"
+  },
+  {
+    "id": "46",
+    "nombre": "Casas Prefabricadas Chile",
+    "region": "Los Lagos",
+    "telefono": null,
+    "email": "contacto@casasprefabricadaschile.cl",
+    "sitio_web": "casasprefabricadaschile.cl"
+  },
+  {
+    "id": "47",
+    "nombre": "Casas Prefabricadas Chile",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasprefabricadasenchile.com"
+  },
+  {
+    "id": "48",
+    "nombre": "Casas Prefabricadas Curicó",
+    "region": "Maule",
+    "telefono": "+56 35661495",
+    "email": null,
+    "sitio_web": "construex.cl"
+  },
+  {
+    "id": "49",
+    "nombre": "Casas Prefabricadas Del Lago",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": "casasdellagochile@gmail.com",
+    "sitio_web": "casasdellago.cl"
+  },
+  {
+    "id": "50",
+    "nombre": "Casas Prefabricadas Del Maule",
+    "region": "Maule",
+    "telefono": "+56 89111078",
+    "email": null,
+    "sitio_web": "casas-prefabricadas-del-maule.ueniweb.com"
+  },
+  {
+    "id": "51",
+    "nombre": "Casas Prefabricadas El Alba",
+    "region": "Metropolitana",
+    "telefono": "+56 5699 8761",
+    "email": "8761contacto@prefabricadaselalba.cl",
+    "sitio_web": "prefabricadaselalba.cl"
+  },
+  {
+    "id": "52",
+    "nombre": "Casas Prefabricadas En Chile",
+    "region": "Antofagasta",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casaprefabricadachile.cl"
+  },
+  {
+    "id": "53",
+    "nombre": "Casas Prefabricadas En Chile",
+    "region": "Antofagasta",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasprenchil.cl"
+  },
+  {
+    "id": "54",
+    "nombre": "Casas Prefabricadas Foresco Spa",
+    "region": "Maule",
+    "telefono": "+56 39319688",
+    "email": "emailcasasforesco@gmail.com",
+    "sitio_web": "foresco.cl"
+  },
+  {
+    "id": "55",
+    "nombre": "Casas Prefabricadas Futrono",
+    "region": "Metropolitana",
+    "telefono": "+56 53219734",
+    "email": "ejecutivo.ventas@prefabricadasfutrono.cl",
+    "sitio_web": "prefabricadasfutrono.cl"
+  },
+  {
+    "id": "56",
+    "nombre": "Casas Prefabricadas Green Valley",
+    "region": null,
+    "telefono": "+56 2583 2001",
+    "email": "contacto@cprefabricadas.cl",
+    "sitio_web": "cprefabricadas.cl"
+  },
+  {
+    "id": "57",
+    "nombre": "Casas Prefabricadas Imperio",
+    "region": null,
+    "telefono": "+56 41252687",
+    "email": "info@casasprefabricadasimperio.cl",
+    "sitio_web": "casasprefabricadasimperio.cl"
+  },
+  {
+    "id": "58",
+    "nombre": "CASAS PREFABRICADAS KRATER",
+    "region": "La Araucanía",
+    "telefono": "+56 76695286",
+    "email": "976695286ana.p@casaskratercl.io",
+    "sitio_web": "casaskratercl.io"
+  },
+  {
+    "id": "59",
+    "nombre": "Casas Prefabricadas La Capilla",
+    "region": null,
+    "telefono": "+56 73301380",
+    "email": null,
+    "sitio_web": "casaslacapilla.cl"
+  },
+  {
+    "id": "60",
+    "nombre": "Casas Prefabricadas La Minga",
+    "region": null,
+    "telefono": "+56 4095 7264",
+    "email": "proyectoinfo@casasminga.com",
+    "sitio_web": "casaslaminga.cl"
+  },
+  {
+    "id": "61",
+    "nombre": "Casas Prefabricadas Limache",
+    "region": null,
+    "telefono": "+56 7551 0394",
+    "email": null,
+    "sitio_web": "casaslimache.cl"
+  },
+  {
+    "id": "62",
+    "nombre": "Casas Prefabricadas Mar Y Sol",
+    "region": null,
+    "telefono": "+56 92871653",
+    "email": null,
+    "sitio_web": "constructora-csq.webnode.cl"
+  },
+  {
+    "id": "63",
+    "nombre": "Casas Prefabricadas Premium",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasvichuquen.cl"
+  },
+  {
+    "id": "64",
+    "nombre": "Casas Prefabricadas Punta Arenas",
+    "region": "Magallanes",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "listado.mercadolibre.cl"
+  },
+  {
+    "id": "65",
+    "nombre": "Casas Prefabricadas Ramirez",
+    "region": "Metropolitana",
+    "telefono": "+56 4451 7466",
+    "email": null,
+    "sitio_web": "casasprefabricadasramirez.ueniweb.com"
+  },
+  {
+    "id": "66",
+    "nombre": "Casas Prefabricadas Río Bueno",
+    "region": null,
+    "telefono": "+56 9196 1165",
+    "email": null,
+    "sitio_web": "casasriobueno.cl"
+  },
+  {
+    "id": "67",
+    "nombre": "Casas Prefabricadas Riqueval",
+    "region": "Metropolitana",
+    "telefono": "+56 87681615",
+    "email": "ventas@riqueval.cl",
+    "sitio_web": "riqueval.cl"
+  },
+  {
+    "id": "68",
+    "nombre": "Casas Prefabricadas Vespucio",
+    "region": null,
+    "telefono": "+56 73723093",
+    "email": null,
+    "sitio_web": "casasvespucio.cl"
+  },
+  {
+    "id": "69",
+    "nombre": "CASAS PREFABRICADAS Y TRANSPORTES",
+    "region": "TORRES",
+    "telefono": null,
+    "email": "+56 47581463",
+    "sitio_web": "tucomercio@coyhaique.cl"
+  },
+  {
+    "id": "70",
+    "nombre": "Casas Pucon Constructora",
+    "region": "La Araucanía",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casaspucon.cl"
+  },
+  {
+    "id": "71",
+    "nombre": "Casas Quinchilca",
+    "region": "Biobío",
+    "telefono": null,
+    "email": "contacto@casasquinchilca.cl",
+    "sitio_web": "casasquinchilca.cl"
+  },
+  {
+    "id": "72",
+    "nombre": "Casas Resort",
+    "region": null,
+    "telefono": "+56 6630 2290",
+    "email": null,
+    "sitio_web": "casasresort.cl"
+  },
+  {
+    "id": "73",
+    "nombre": "Casas Sandoval",
+    "region": "Metropolitana",
+    "telefono": "+56 3100 8214",
+    "email": null,
+    "sitio_web": "casassandoval.cl"
+  },
+  {
+    "id": "74",
+    "nombre": "Casas Sustentables",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "construyesustentable.cl"
+  },
+  {
+    "id": "75",
+    "nombre": "CASAS VAL",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasval.cl"
+  },
+  {
+    "id": "76",
+    "nombre": "Casas Valles Del Sur",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasvallesdelsur.cl"
+  },
+  {
+    "id": "77",
+    "nombre": "Casas Viento Sur",
+    "region": null,
+    "telefono": "+56 1234 5678",
+    "email": "info@casasvientosur.cl",
+    "sitio_web": "casasvientosur.cl"
+  },
+  {
+    "id": "78",
+    "nombre": "Casasamerica",
+    "region": "Metropolitana",
+    "telefono": "+56 2310 5779",
+    "email": "info@casascaballero.cl",
+    "sitio_web": "casasamerica.cl"
+  },
+  {
+    "id": "79",
+    "nombre": "Casaschilesip",
+    "region": "Metropolitana",
+    "telefono": "+56 3929 1180",
+    "email": "info@casaschilespa.cl",
+    "sitio_web": "casaschilesip.cl"
+  },
+  {
+    "id": "80",
+    "nombre": "Casascontainers",
+    "region": null,
+    "telefono": "+56 66023323",
+    "email": "chilecontacto@constructainers.cl",
+    "sitio_web": "constructainers.cl"
+  },
+  {
+    "id": "81",
+    "nombre": "Casascubik",
+    "region": null,
+    "telefono": "+56 90988292",
+    "email": "info@casascubik.cl",
+    "sitio_web": "casascubik.cl"
+  },
+  {
+    "id": "82",
+    "nombre": "Casascubo",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": "infocasascubo@gmail.com",
+    "sitio_web": "casascubo.cl"
+  },
+  {
+    "id": "83",
+    "nombre": "Casur :",
+    "region": null,
+    "telefono": "+56 2639 2107",
+    "email": "info@casur.cl",
+    "sitio_web": "casur.cl"
+  },
+  {
+    "id": "84",
+    "nombre": "Cchc",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "cchc.cl"
+  },
+  {
+    "id": "85",
+    "nombre": "CDC SUMINISTROS",
+    "region": "Metropolitana",
+    "telefono": "+56 3280 2501",
+    "email": "contacto@cdcsuministros.cl",
+    "sitio_web": "cdcsuministros.cl"
+  },
+  {
+    "id": "86",
+    "nombre": "Chile Domos",
+    "region": "Valparaíso",
+    "telefono": "+56 9726 2200",
+    "email": "2200contacto@chiledomos.cl",
+    "sitio_web": "chiledomos.cl"
+  },
+  {
+    "id": "87",
+    "nombre": "Chile Home",
+    "region": null,
+    "telefono": "+56 2617 8767",
+    "email": "contacto@chilehome.cl",
+    "sitio_web": "chilehome.cl"
+  },
+  {
+    "id": "88",
+    "nombre": "Concón Maderas Impregnadas",
+    "region": null,
+    "telefono": "+56 82497552",
+    "email": "info@conconmaderas.cl",
+    "sitio_web": "conconmaderas.cl"
+  },
+  {
+    "id": "89",
+    "nombre": "Construcción De Casas Prefabricadas En",
+    "region": "Cabrero",
+    "telefono": "Biobío",
+    "email": "+56 3901 7538",
+    "sitio_web": "santamartaltda@gmail.com"
+  },
+  {
+    "id": "91",
+    "nombre": "Construcción En Angol",
+    "region": "La Araucanía",
+    "telefono": "+56 35172731",
+    "email": null,
+    "sitio_web": "solucionesintegralesangol.cl"
+  },
+  {
+    "id": "92",
+    "nombre": "Construcción En Vulcometal O Metalcon",
+    "region": null,
+    "telefono": "+56 24849200",
+    "email": "contacto@cintac.cl",
+    "sitio_web": "cintac.cl"
+  },
+  {
+    "id": "93",
+    "nombre": "Construcciones Jpp",
+    "region": "Metropolitana",
+    "telefono": "+56 44306323",
+    "email": null,
+    "sitio_web": "facebook.com"
+  },
+  {
+    "id": "94",
+    "nombre": "Construccionesprofesionales",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "construccionesprofesionales.cl"
+  },
+  {
+    "id": "95",
+    "nombre": "Construccionindustrializada",
+    "region": null,
+    "telefono": "+56 2718 7511",
+    "email": null,
+    "sitio_web": "construccionindustrializada.cl"
+  },
+  {
+    "id": "96",
+    "nombre": "-",
+    "region": "+56 5584 9001",
+    "telefono": null,
+    "email": "constructorabdm.cl",
+    "sitio_web": "97"
+  },
+  {
+    "id": "98",
+    "nombre": "-",
+    "region": "+56 2583 2001",
+    "telefono": "contacto@casasgreenvalley.cl",
+    "email": "constructoragv.cl",
+    "sitio_web": "99"
+  },
+  {
+    "id": "100",
+    "nombre": "Construkit",
+    "region": null,
+    "telefono": "+56 9647 6004",
+    "email": null,
+    "sitio_web": "construkit.cl"
+  },
+  {
+    "id": "101",
+    "nombre": "Construyetudomo",
+    "region": null,
+    "telefono": "+56 5129 0672",
+    "email": null,
+    "sitio_web": "construyetudomo.cl"
+  },
+  {
+    "id": "102",
+    "nombre": "Contacto – Casas KIT",
+    "region": null,
+    "telefono": "+56 7138 9841",
+    "email": "ventas@casaskit.cl",
+    "sitio_web": "casaskit.cl"
+  },
+  {
+    "id": "103",
+    "nombre": "Container World",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "containerworld.cl"
+  },
+  {
+    "id": "104",
+    "nombre": "Containerfull",
+    "region": null,
+    "telefono": "+56 30202968",
+    "email": "hola@containerfull.cl",
+    "sitio_web": "containerfull.cl"
+  },
+  {
+    "id": "105",
+    "nombre": "Containerland",
+    "region": null,
+    "telefono": "+56 9224 3796",
+    "email": "ventas@containerland.cl",
+    "sitio_web": "containerland.cl"
+  },
+  {
+    "id": "106",
+    "nombre": "Containers Patagonia",
+    "region": null,
+    "telefono": "+56 2528 6556",
+    "email": null,
+    "sitio_web": "containerspatagonia.cl"
+  },
+  {
+    "id": "107",
+    "nombre": "Contenedores Alma",
+    "region": null,
+    "telefono": "+56 65767081",
+    "email": "ariel.ventas@contenedoresalma.cl",
+    "sitio_web": "contenedoresalma.cl"
+  },
+  {
+    "id": "108",
+    "nombre": "Contenedores Habitacionales En Todo Chile",
+    "region": null,
+    "telefono": null,
+    "email": "17743cveliz@megacontainers.cl",
+    "sitio_web": "megacontainers.cl"
+  },
+  {
+    "id": "109",
+    "nombre": "CONTENEDORES MODULARES",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "vimafechile.cl"
+  },
+  {
+    "id": "110",
+    "nombre": "Diario Sustentable",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "diariosustentable.com"
+  },
+  {
+    "id": "111",
+    "nombre": "Domos Del Sur",
+    "region": "Metropolitana",
+    "telefono": "+56 2966 0775",
+    "email": "0775contacto@domosdelsur.cl",
+    "sitio_web": "domosdelsur.cl"
+  },
+  {
+    "id": "112",
+    "nombre": "Domos Prefabricados",
+    "region": "Metropolitana",
+    "telefono": "+56 51134567",
+    "email": "56951134567contacto@domosprefabricados.cl",
+    "sitio_web": "domosprefabricados.cl"
+  },
+  {
+    "id": "113",
+    "nombre": "Domos Quilpué",
+    "region": "Valparaíso",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "domosquilpue.cl"
+  },
+  {
+    "id": "114",
+    "nombre": "Domos Valdivia",
+    "region": null,
+    "telefono": "+56 71042780",
+    "email": null,
+    "sitio_web": "domosvaldivia.cl"
+  },
+  {
+    "id": "115",
+    "nombre": "Domoselk",
+    "region": "Aysén",
+    "telefono": null,
+    "email": "info@domoselk.com",
+    "sitio_web": "domoselk.com"
+  },
+  {
+    "id": "116",
+    "nombre": "Ecomodulares",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": "contacto@ecomodulares.cl",
+    "sitio_web": "ecomodulares.cl"
+  },
+  {
+    "id": "117",
+    "nombre": "Ehaus",
+    "region": null,
+    "telefono": null,
+    "email": "contacto@ehaus.cl",
+    "sitio_web": "ehaus.cl"
+  },
+  {
+    "id": "118",
+    "nombre": "El Diario Inmobiliario",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "eldiarioinmobiliario.cl"
+  },
+  {
+    "id": "119",
+    "nombre": "EL TOKE LTDA",
+    "region": null,
+    "telefono": "+56 7798 3103",
+    "email": "info@eltoke.cl",
+    "sitio_web": "eltoke.cl"
+  },
+  {
+    "id": "120",
+    "nombre": "Evox House",
+    "region": null,
+    "telefono": "+56 2371 0718",
+    "email": "arenas.contacto@evoxhouse.cl",
+    "sitio_web": "evoxhouse.cl"
+  },
+  {
+    "id": "121",
+    "nombre": "Fabrica FV",
+    "region": null,
+    "telefono": "+56 3934 0169",
+    "email": "info@fundacionvivienda.cl",
+    "sitio_web": "fabricafv.cl"
+  },
+  {
+    "id": "122",
+    "nombre": "Fábrica Paneles Sip Curicó",
+    "region": "Maule",
+    "telefono": "+56 2788 6426",
+    "email": "tecnosip@maderasvaldivia.cl",
+    "sitio_web": "tecsip.cl"
+  },
+  {
+    "id": "123",
+    "nombre": "Facoro",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": "info@facoro.cl",
+    "sitio_web": "facoro.cl"
+  },
+  {
+    "id": "124",
+    "nombre": "FEMARQ SPA",
+    "region": null,
+    "telefono": "+56 3778 3954",
+    "email": "contacto@femarq.cl",
+    "sitio_web": "femarq.cl"
+  },
+  {
+    "id": "125",
+    "nombre": "Fotocasa",
+    "region": null,
+    "telefono": "+56 7611 6990",
+    "email": "ventas@fotocasa.cl",
+    "sitio_web": "fotocasa.cl"
+  },
+  {
+    "id": "126",
+    "nombre": "Globalsip",
+    "region": null,
+    "telefono": "+56 6334 3544",
+    "email": "contacto@globalsip.cl",
+    "sitio_web": "globalsip.cl"
+  },
+  {
+    "id": "127",
+    "nombre": "Grau",
+    "region": "Metropolitana",
+    "telefono": "+56 51224403",
+    "email": "contacto@grau.cl",
+    "sitio_web": "grau.cl"
+  },
+  {
+    "id": "128",
+    "nombre": "Grupo Casas O'higgins",
+    "region": "O'Higgins",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "cl.linkedin.com"
+  },
+  {
+    "id": "129",
+    "nombre": "HCP",
+    "region": "Los Lagos",
+    "telefono": "+56 20991768",
+    "email": "contacto@hcpcasas.cl",
+    "sitio_web": "hcpcasas.cl"
+  },
+  {
+    "id": "130",
+    "nombre": "Hoteles En Chile",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "hotelplazacolonarica.cl"
+  },
+  {
+    "id": "131",
+    "nombre": "Inmobiliaria Terra Sur",
+    "region": "Metropolitana",
+    "telefono": "+56 5007 9928",
+    "email": "contacto@iterrasur.cl",
+    "sitio_web": "iterrasur.cl"
+  },
+  {
+    "id": "132",
+    "nombre": "Innova3",
+    "region": "Biobío",
+    "telefono": "+56 8305 1402",
+    "email": "contacto@innova3.cl",
+    "sitio_web": "innova3.cl"
+  },
+  {
+    "id": "133",
+    "nombre": "Instagram",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "instagram.com"
+  },
+  {
+    "id": "134",
+    "nombre": "Intercontainers",
+    "region": "Metropolitana",
+    "telefono": "+56 5879 9619",
+    "email": null,
+    "sitio_web": "intercontainers.cl"
+  },
+  {
+    "id": "135",
+    "nombre": "Jamab",
+    "region": null,
+    "telefono": "+56 42513372",
+    "email": "hola@jamab.cl",
+    "sitio_web": "jamab.cl"
+  },
+  {
+    "id": "137",
+    "nombre": "KASAKIT SPA",
+    "region": null,
+    "telefono": "+56 6688 5249",
+    "email": "kasakitspa@gmail.com",
+    "sitio_web": "kasakittemuco.com"
+  },
+  {
+    "id": "138",
+    "nombre": "L2arquitectura",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "l2arquitectura.cl"
+  },
+  {
+    "id": "139",
+    "nombre": "La Custre",
+    "region": null,
+    "telefono": "+56 9039 0773",
+    "email": "ventas@casaslacustre.cl",
+    "sitio_web": "casaslacustre.cl"
+  },
+  {
+    "id": "140",
+    "nombre": "Laqum",
+    "region": null,
+    "telefono": "+56 47452479",
+    "email": "contacto@laqum.cl",
+    "sitio_web": "laqum.cl"
+  },
+  {
+    "id": "141",
+    "nombre": "Laserena",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "prefabricadassanta.wixsite.com"
+  },
+  {
+    "id": "142",
+    "nombre": "Linkhome",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "linkhome.cl"
+  },
+  {
+    "id": "144",
+    "nombre": "Loow Chile",
+    "region": null,
+    "telefono": "+56 88185584",
+    "email": null,
+    "sitio_web": "loow.cl"
+  },
+  {
+    "id": "145",
+    "nombre": "Madecas",
+    "region": "Los Lagos",
+    "telefono": "+56 7777 0022",
+    "email": "madecascontacto@gmail.com",
+    "sitio_web": "madecas.cl"
+  },
+  {
+    "id": "146",
+    "nombre": "Madera21",
+    "region": "O'Higgins",
+    "telefono": null,
+    "email": "madera21@corma.cl",
+    "sitio_web": "madera21.cl"
+  },
+  {
+    "id": "147",
+    "nombre": "Magisur",
+    "region": null,
+    "telefono": "+56 9824 5279",
+    "email": "contacto@focosur.cl",
+    "sitio_web": "magisur.cl"
+  },
+  {
+    "id": "148",
+    "nombre": "Mediagua Chile",
+    "region": "Metropolitana",
+    "telefono": "+56 86676329",
+    "email": null,
+    "sitio_web": "mediaguachile.cl"
+  },
+  {
+    "id": "149",
+    "nombre": "Megapanel",
+    "region": null,
+    "telefono": "+56 75883000",
+    "email": "contacto@megapanel.cl",
+    "sitio_web": "megapanel.cl"
+  },
+  {
+    "id": "150",
+    "nombre": "Mercantil.com El Directorio De Empresas En",
+    "region": "Chile",
+    "telefono": "Arica y Parinacota",
+    "email": null,
+    "sitio_web": null
+  },
+  {
+    "id": "151",
+    "nombre": "Metalkit",
+    "region": null,
+    "telefono": "+56 5805 6559",
+    "email": "ventas@metalkit.cl",
+    "sitio_web": "metalkit.cl"
+  },
+  {
+    "id": "152",
+    "nombre": "Ministerio De Vivienda Y Urbanismo",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "minvu.gob.cl"
+  },
+  {
+    "id": "153",
+    "nombre": "Misitio 1",
+    "region": null,
+    "telefono": "+56 87526829",
+    "email": null,
+    "sitio_web": "casasarchipielago.cl"
+  },
+  {
+    "id": "154",
+    "nombre": "Modjourney",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "modjourney.cl"
+  },
+  {
+    "id": "155",
+    "nombre": "Modular SIP",
+    "region": "Metropolitana",
+    "telefono": "+56 94872861",
+    "email": "ventas@modularsip.cl",
+    "sitio_web": "modularsip.cl"
+  },
+  {
+    "id": "156",
+    "nombre": "Mundo Panel Sip",
+    "region": "O'Higgins",
+    "telefono": null,
+    "email": "contacto@mundopanelsip.cl",
+    "sitio_web": "mundopanelsip.cl"
+  },
+  {
+    "id": "157",
+    "nombre": "Negocio & Construcción",
+    "region": "Metropolitana",
+    "telefono": "+56 73357506",
+    "email": "contacto@negocioyconstruccion.cl",
+    "sitio_web": "negocioyconstruccion.cl"
+  },
+  {
+    "id": "158",
+    "nombre": "Nehúen Construcciones Modulares",
+    "region": null,
+    "telefono": "+56 68318477",
+    "email": "ventas@nehuenmodulares.cl",
+    "sitio_web": "nehuenmodulares.cl"
+  },
+  {
+    "id": "159",
+    "nombre": "Nordhaus",
+    "region": null,
+    "telefono": null,
+    "email": "contacto@nordhaus.cl",
+    "sitio_web": "nordhaus.cl"
+  },
+  {
+    "id": "160",
+    "nombre": "Panel SIP Metcorp",
+    "region": null,
+    "telefono": "+56 3235 2570",
+    "email": "contacto@metcorp.cl",
+    "sitio_web": "panelsipmetcorp.cl"
+  },
+  {
+    "id": "161",
+    "nombre": "Panelbox",
+    "region": "Biobío",
+    "telefono": "+56 8555 6172",
+    "email": "contacto@panelbox.cl",
+    "sitio_web": "panelbox.cl"
+  },
+  {
+    "id": "162",
+    "nombre": "Paneles Sip",
+    "region": "Metropolitana",
+    "telefono": "+56 8668 7626",
+    "email": "7626ventas@panelessip.cl",
+    "sitio_web": "panelessip.cl"
+  },
+  {
+    "id": "163",
+    "nombre": "Paneles SIP En Chile. Calidad Al Mejor Precio",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "panelsandwich.cl"
+  },
+  {
+    "id": "164",
+    "nombre": "Patagonia House Spa",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "patagoniahouse.cl"
+  },
+  {
+    "id": "165",
+    "nombre": "Patagual Home",
+    "region": null,
+    "telefono": null,
+    "email": "contacto@patagualhome.cl",
+    "sitio_web": "patagualhome.cl"
+  },
+  {
+    "id": "166",
+    "nombre": "Pinterest",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "in.pinterest.com"
+  },
+  {
+    "id": "167",
+    "nombre": "Pintores Chiloé",
+    "region": "Los Lagos",
+    "telefono": "+56 4054 7785",
+    "email": "hola@pintoreschiloe.cl",
+    "sitio_web": "pintoreschiloe.cl"
+  },
+  {
+    "id": "168",
+    "nombre": "Planos De Casas",
+    "region": "Metropolitana",
+    "telefono": "+56 50304351",
+    "email": "contacto@planosdecasas.cl",
+    "sitio_web": "planosdecasas.cl"
+  },
+  {
+    "id": "169",
+    "nombre": "Prefabricada",
+    "region": null,
+    "telefono": "+56 97127179",
+    "email": "contacto@prefabricada.cl",
+    "sitio_web": "prefabricada.cl"
+  },
+  {
+    "id": "170",
+    "nombre": "Prefabricadas Premium",
+    "region": "Coquimbo",
+    "telefono": "+56 8983 7171",
+    "email": "contacto@prefabricadaspremium.cl",
+    "sitio_web": "prefabricadaspremium.cl"
+  },
+  {
+    "id": "171",
+    "nombre": "Prefabricadas San Ignacio",
+    "region": "Biobío",
+    "telefono": null,
+    "email": "contacto@prefabricadassanignacio.cl",
+    "sitio_web": "prefabricadassanignacio.cl"
+  },
+  {
+    "id": "172",
+    "nombre": "Prefabricadosrya",
+    "region": "O'Higgins",
+    "telefono": "+56 87285303",
+    "email": "contacto@prefabricadosrya.cl",
+    "sitio_web": "prefabricadosrya.cl"
+  },
+  {
+    "id": "173",
+    "nombre": "Prefabs",
+    "region": "Metropolitana",
+    "telefono": "+56 4629 0610",
+    "email": "contacto@prefabs.cl",
+    "sitio_web": "prefabs.cl"
+  },
+  {
+    "id": "174",
+    "nombre": "Promet",
+    "region": null,
+    "telefono": "+56 22899915",
+    "email": "ventas@promet.cl",
+    "sitio_web": "promet.cl"
+  },
+  {
+    "id": "175",
+    "nombre": "Propanel",
+    "region": null,
+    "telefono": "+56 3011 3181",
+    "email": "contacto@propanel.cl",
+    "sitio_web": "propanel.cl"
+  },
+  {
+    "id": "176",
+    "nombre": "Prosip",
+    "region": null,
+    "telefono": "+56 3754 0278",
+    "email": null,
+    "sitio_web": "prosip.cl"
+  },
+  {
+    "id": "177",
+    "nombre": "Ready House",
+    "region": null,
+    "telefono": "+56 5149 6508",
+    "email": "ventas@readyhouse.cl",
+    "sitio_web": "readyhouse.cl"
+  },
+  {
+    "id": "178",
+    "nombre": "Refugios Nativos",
+    "region": null,
+    "telefono": "+56 4429 2000",
+    "email": "info@refugiosnativos.cl",
+    "sitio_web": "refugiosnativos.cl"
+  },
+  {
+    "id": "179",
+    "nombre": "Ruca Llapüd",
+    "region": "Ñuble",
+    "telefono": "+56 71799610",
+    "email": null,
+    "sitio_web": "rucallapud.cl"
+  },
+  {
+    "id": "180",
+    "nombre": "Rucantu",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": "chilecontacto@rucantu.cl",
+    "sitio_web": "rucantu.cl"
+  },
+  {
+    "id": "181",
+    "nombre": "Rukalhue",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "casasrukalhue.cl"
+  },
+  {
+    "id": "182",
+    "nombre": "Ruralhouse",
+    "region": null,
+    "telefono": "+56 4456 2666",
+    "email": "contactoruralhouse@gmail.com",
+    "sitio_web": "ruralhouse.cl"
+  },
+  {
+    "id": "183",
+    "nombre": "Ruralistic",
+    "region": null,
+    "telefono": null,
+    "email": "ruralistic24@gmail.com",
+    "sitio_web": "ruralistic.cl"
+  },
+  {
+    "id": "184",
+    "nombre": "Servipro",
+    "region": null,
+    "telefono": "+56 5702 3353",
+    "email": "contacto@servipro.cl",
+    "sitio_web": "servipro.cl"
+  },
+  {
+    "id": "185",
+    "nombre": "Siphouse",
+    "region": "Metropolitana",
+    "telefono": "+56 5406 6425",
+    "email": "ventas@siphouse.cl",
+    "sitio_web": "siphouse.cl"
+  },
+  {
+    "id": "186",
+    "nombre": "Sitio Web Nativos Chile",
+    "region": null,
+    "telefono": "+56 59126865",
+    "email": "ventas@casasnativoschile.cl",
+    "sitio_web": "casasnativoschile.cl"
+  },
+  {
+    "id": "187",
+    "nombre": "Slaico Lab",
+    "region": null,
+    "telefono": null,
+    "email": "slaicospa@gmail.com",
+    "sitio_web": "slaico.cl"
+  },
+  {
+    "id": "188",
+    "nombre": "Soloprefabricadas",
+    "region": "La Araucanía",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "soloprefabricadas.cl"
+  },
+  {
+    "id": "189",
+    "nombre": "Spacewise",
+    "region": null,
+    "telefono": null,
+    "email": "ventas@spacewise.cl",
+    "sitio_web": "spacewise.cl"
+  },
+  {
+    "id": "190",
+    "nombre": "Steelframing",
+    "region": null,
+    "telefono": "+56 2583 2001",
+    "email": "contacto@casasgreenvalley.cl",
+    "sitio_web": "steelframing.cl"
+  },
+  {
+    "id": "191",
+    "nombre": "Sweethomes Chile",
+    "region": null,
+    "telefono": "+56 5334 7939",
+    "email": "n.ventas@sweethomes.cl",
+    "sitio_web": "sweethomes.cl"
+  },
+  {
+    "id": "192",
+    "nombre": "Talca Prefabricadas",
+    "region": "Maule",
+    "telefono": "+56 7596 6631",
+    "email": "contacto@talcaprefabricadas.cl",
+    "sitio_web": "talcaprefabricadas.cl"
+  },
+  {
+    "id": "193",
+    "nombre": "Talehome",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "talehome.cl"
+  },
+  {
+    "id": "194",
+    "nombre": "TECHO Chile",
+    "region": null,
+    "telefono": "+56 2838 7300",
+    "email": "info.chile@techo.org",
+    "sitio_web": "cl.techo.org"
+  },
+  {
+    "id": "195",
+    "nombre": "Tecna Zinc",
+    "region": null,
+    "telefono": "+56 27792544",
+    "email": "contacto@tecna-zinc.cl",
+    "sitio_web": "tecna-zinc.cl"
+  },
+  {
+    "id": "196",
+    "nombre": "Tecno Fast",
+    "region": null,
+    "telefono": "+56 27905000",
+    "email": "cotizaciones@tecnofast.cl",
+    "sitio_web": "tecnofast.cl"
+  },
+  {
+    "id": "197",
+    "nombre": "Tecno Fast Home",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "tecnofasthome.cl"
+  },
+  {
+    "id": "198",
+    "nombre": "Tecnopanel",
+    "region": "Metropolitana",
+    "telefono": "+56 2745 5940",
+    "email": "contacto@iterrasur.cl",
+    "sitio_web": "tecnopanel.cl"
+  },
+  {
+    "id": "199",
+    "nombre": "Temukit",
+    "region": "La Araucanía",
+    "telefono": "+56 41789790",
+    "email": "contacto@temukit.cl",
+    "sitio_web": "temukit.cl"
+  },
+  {
+    "id": "200",
+    "nombre": "The Wall",
+    "region": null,
+    "telefono": "+56 9632 1615",
+    "email": "ventas@thewall.cl",
+    "sitio_web": "thewall.cl"
+  },
+  {
+    "id": "201",
+    "nombre": "Tiny Home",
+    "region": null,
+    "telefono": "+56 6473 8781",
+    "email": "nventas@tiny-home.cl",
+    "sitio_web": "tiny-home.cl"
+  },
+  {
+    "id": "202",
+    "nombre": "Tiny Paihuen",
+    "region": null,
+    "telefono": null,
+    "email": null,
+    "sitio_web": "tinypaihuen.cl"
+  },
+  {
+    "id": "203",
+    "nombre": "Trupanel",
+    "region": null,
+    "telefono": "+56 9430 2618",
+    "email": "trupanel@trupanel.cl",
+    "sitio_web": "trupanel.cl"
+  },
+  {
+    "id": "204",
+    "nombre": "Trupanel Casas SIP",
+    "region": null,
+    "telefono": "+56 9430 2618",
+    "email": null,
+    "sitio_web": "casassip.cl"
+  },
+  {
+    "id": "205",
+    "nombre": "Tu Casa Fácil",
+    "region": "Metropolitana",
+    "telefono": "+56 3009 4515",
+    "email": "ventas@tucasafacil.cl",
+    "sitio_web": "tucasafacil.cl"
+  },
+  {
+    "id": "206",
+    "nombre": "Vaspanel",
+    "region": null,
+    "telefono": null,
+    "email": "info@vaspanel.cl",
+    "sitio_web": "vaspanel.cl"
+  },
+  {
+    "id": "207",
+    "nombre": "VH Aceros",
+    "region": null,
+    "telefono": "+56 2462 6900",
+    "email": "ventas@vh.cl",
+    "sitio_web": "vhaceros.cl"
+  },
+  {
+    "id": "208",
+    "nombre": "Vidrierías En Quilpué Por Vidriería Chimy",
+    "region": "Valparaíso",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "vidrieriachimy.cl"
+  },
+  {
+    "id": "209",
+    "nombre": "Viviendas Aconcagua",
+    "region": "Valparaíso",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "viviendasaconcagua.com"
+  },
+  {
+    "id": "210",
+    "nombre": "Viviendas Modulares En Chile",
+    "region": "Metropolitana",
+    "telefono": null,
+    "email": null,
+    "sitio_web": "ayma.cl"
+  }
+]
