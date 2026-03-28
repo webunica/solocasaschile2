@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { FeaturedClientWrapper } from "./featured-client-wrapper";
+import { PremiumCarousel } from "@/components/constructoras/premium-carousel";
 
 export async function FeaturedConstructorsSection() {
   const supabase = await createClient();
@@ -13,9 +13,9 @@ export async function FeaturedConstructorsSection() {
   // Fetch top 3 constructoras by score
   const { data } = await supabase
     .from("constructoras")
-    .select("id, nombre, slug, plan, score_confianza, logo_url, verificada")
+    .select("id, nombre, slug, plan, score_confianza, logo_url, verificada, descripcion")
     .order("score_confianza", { ascending: false })
-    .limit(3);
+    .limit(12);
 
   // Hybrid Fallback: Use real data + top mocks if DB is empty
   const featured = data && data.length > 0 ? data : CONSTRUCTORAS.slice(0, 3).map(c => ({
@@ -55,7 +55,7 @@ export async function FeaturedConstructorsSection() {
           </Link>
         </div>
 
-        <FeaturedClientWrapper items={featured || []} />
+        <PremiumCarousel constructoras={featured || []} />
       </div>
     </section>
   );
