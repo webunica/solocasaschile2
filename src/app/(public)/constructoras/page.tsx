@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { MapaConstructoras } from "@/components/constructoras/mapa-constructoras";
-import { MapPin } from "lucide-react";
+import { MapPin, Building2, List } from "lucide-react";
 import type { Metadata } from "next";
 
 import { CONSTRUCTORAS } from "@/lib/mock-data";
@@ -112,9 +112,14 @@ export default async function ConstructorasPage() {
         {asociadas.length > 0 && (
           <section className="space-y-12">
             <div className="space-y-4">
-               <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
-                 Empresas Destacadas
-               </h2>
+               <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-2xl brand-gradient flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                     <Building2 className="w-5 h-5" />
+                  </div>
+                  <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
+                    Empresas Destacadas
+                  </h2>
+               </div>
                <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
                  Explora el catálogo de constructoras líderes. Empresas verificadas con historial real de proyectos y atención premium.
                </p>
@@ -123,6 +128,24 @@ export default async function ConstructorasPage() {
           </section>
         )}
 
+        {/* Listado de Constructoras Informativas / Directorio General */}
+        <section className="space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+           <div className="space-y-4">
+              <div className="flex items-center gap-4">
+                 <div className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground border border-border/40">
+                    <List className="w-5 h-5" />
+                 </div>
+                 <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
+                    Directorio <span className="gradient-text">General</span>
+                 </h2>
+              </div>
+              <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
+                 Otras empresas del sector en Chile. Este listado incluye empresas en proceso de verificación o con perfiles informativos básicos.
+              </p>
+           </div>
+
+           <InformativeListClient constructoras={sorted.filter(c => c.plan === "informativo")} />
+        </section>
       </div>
     </div>
   );

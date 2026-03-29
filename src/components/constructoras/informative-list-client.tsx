@@ -1,14 +1,18 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Building2, MapPin, Phone, Mail, Globe, Search } from "lucide-react";
+import { Building2, MapPin, Phone, Mail, Globe, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
+const ITEMS_PER_PAGE = 20;
+
 export function InformativeListClient({ constructoras }: { constructoras: any[] }) {
   const [regionFilter, setRegionFilter] = useState<string>("todas");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const regionesUnicas = useMemo(() => {
     const rSet = new Set<string>();
@@ -30,8 +34,17 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
       .sort((a, b) => a.nombre.localeCompare(b.nombre));
   }, [constructoras, regionFilter, searchQuery]);
 
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+  const handlePageChange = (newPage: number) => {
+     setCurrentPage(newPage);
+     // Scroll suave a la parte superior de la sección si es posible
+     document.getElementById('directorio-general')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="space-y-10">
+    <div className="space-y-10" id="directorio-general">
       {/* Filtros */}
       <div className="flex flex-col sm:flex-row gap-6 p-8 bg-card/40 backdrop-blur-xl border border-border/40 rounded-[2rem] shadow-xl shadow-primary/5">
         <div className="relative flex-1">
@@ -40,10 +53,19 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
             placeholder="Buscar por nombre de constructora..." 
             className="pl-12 h-14 bg-background/50 border-border/40 focus:border-primary/50 text-base rounded-2xl"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1); // Reset page on search
+            }}
           />
         </div>
-        <Select value={regionFilter} onValueChange={(val) => setRegionFilter(val || "todas")}>
+        <Select 
+          value={regionFilter} 
+          onValueChange={(val) => {
+            setRegionFilter(val || "todas");
+            setCurrentPage(1); // Reset page on filter
+          }}
+        >
           <SelectTrigger className="w-full sm:w-[320px] h-14 bg-background/50 border-border/40 text-base rounded-2xl">
             <SelectValue placeholder="Todas las Regiones" />
           </SelectTrigger>
@@ -58,14 +80,14 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
 
       {/* Vista de Tarjetas (Mobile) */}
       <div className="grid grid-cols-1 gap-4 md:hidden">
-        {filtered.map((c, index) => (
+        {paginated.map((c, index) => (
           <div key={c.id} className="bg-card/40 backdrop-blur-xl border border-border/40 p-6 rounded-[2rem] space-y-4 shadow-lg">
             <div className="flex items-center gap-4">
                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
                   <Building2 className="w-6 h-6 text-primary" />
                </div>
                <div>
-                  <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1 opacity-60">Constructora #{index + 1}</div>
+                  <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1 opacity-60">Constructora #{(currentPage-1)*ITEMS_PER_PAGE + index + 1}</div>
                   <h3 className="font-heading font-black text-lg text-foreground leading-tight tracking-tight">{c.nombre}</h3>
                </div>
             </div>
@@ -104,7 +126,7 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
         ))}
       </div>
 
-      {/* Tabla "Estilo PDF" (Desktop) */}
+      {/* Tabla "Estilo PDF" (Desktop) - 20 Lineas */}
       <div className="hidden md:block w-full overflow-hidden border border-border/40 rounded-[2.5rem] bg-card/20 shadow-2xl backdrop-blur-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse table-fixed min-w-[1100px]">
@@ -127,11 +149,11 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                     <Mail className="w-3.5 h-3.5 opacity-60" /> Correo
                   </div>
                 </th>
-                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-right pr-12 w-[15%]">Acción</th>
+                <th className="p-6 text-[11px] font-black uppercase tracking-widest text-primary/70 text-right pr-12 w-[15%]">Sitio Web</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/20 font-medium">
-              {filtered.map((c, index) => (
+              {paginated.map((c, index) => (
                 <tr 
                   key={c.id} 
                   className={cn(
@@ -140,7 +162,7 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                   )}
                 >
                   <td className="p-5 text-sm font-black text-muted-foreground/60 text-center">
-                    {index + 1}
+                    {(currentPage - 1) * ITEMS_PER_PAGE + index + 1}
                   </td>
                   <td className="p-5">
                     <div className="flex items-center gap-4">
@@ -173,30 +195,79 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                         rel="noreferrer" 
                         className="inline-flex items-center gap-2 text-primary hover:text-white hover:bg-primary font-black text-[9px] uppercase tracking-[0.15em] px-4 py-2.5 rounded-xl bg-primary/5 border border-primary/20 transition-all shadow-sm whitespace-nowrap"
                       >
-                        <Globe className="w-3 h-3" /> Visitar
+                        <Globe className="w-3 h-3" /> Abrir Link
                       </a>
-                    ) : (
-                      <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/40 pr-6">Sin sitio</span>
-                    )}
+                    ) : "-"}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-
-          
-          {filtered.length === 0 && (
+          {paginated.length === 0 && (
             <div className="text-center py-32 space-y-4">
                <div className="bg-primary/10 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto text-primary">
                   <Search className="w-8 h-8" />
                </div>
                <p className="text-muted-foreground font-black text-lg">No encontramos constructoras que coincidan con tu búsqueda.</p>
-               <button onClick={() => { setRegionFilter("todas"); setSearchQuery(""); }} className="text-primary font-black uppercase text-xs tracking-widest hover:underline">Limpiar Filtros</button>
+               <button onClick={() => { setRegionFilter("todas"); setSearchQuery(""); setCurrentPage(1); }} className="text-primary font-black uppercase text-xs tracking-widest hover:underline">Limpiar Filtros</button>
             </div>
           )}
         </div>
       </div>
+
+      {/* Paginación */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between p-6 bg-card/40 backdrop-blur-xl border border-border/40 rounded-3xl shadow-xl">
+           <div className="flex-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
+              Página {currentPage} de {totalPages} <span className="mx-2">•</span> {filtered.length} empresas encontradas
+           </div>
+           <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-xl border-border/40 h-10 w-10 disabled:opacity-20"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </Button>
+              <div className="flex items-center gap-1 mx-2">
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                   // Lógica simple para mostrar 5 páginas alrededor de la actual
+                   let pageNum = currentPage;
+                   if (totalPages <= 5) pageNum = i + 1;
+                   else if (currentPage <= 3) pageNum = i + 1;
+                   else if (currentPage >= totalPages - 2) pageNum = totalPages - 4 + i;
+                   else pageNum = currentPage - 2 + i;
+
+                   return (
+                     <Button
+                       key={pageNum}
+                       variant={currentPage === pageNum ? "default" : "outline"}
+                       className={cn(
+                         "h-10 w-10 rounded-xl font-black text-xs transition-all",
+                         currentPage === pageNum ? "brand-gradient text-white border-none shadow-lg shadow-primary/20 scale-110" : "border-border/40 hover:bg-primary/5"
+                       )}
+                       onClick={() => handlePageChange(pageNum)}
+                     >
+                       {pageNum}
+                     </Button>
+                   );
+                })}
+              </div>
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-xl border-border/40 h-10 w-10 disabled:opacity-20"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </Button>
+           </div>
+        </div>
+      )}
     </div>
   );
 }
