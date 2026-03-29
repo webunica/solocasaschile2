@@ -129,6 +129,29 @@ export default async function ModeloPage({ params }: PageProps) {
                      </Link>
                   </div>
                </div>
+
+               {/* Dedicated Mobile Price/Action Bar (Shows only on mobile) */}
+               <div className="lg:hidden bg-card/60 backdrop-blur-3xl border border-primary/10 rounded-[2.5rem] p-6 space-y-4 shadow-xl shadow-primary/5">
+                  <div className="flex items-center justify-between">
+                     <div className="flex flex-col">
+                        <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Precio desde</span>
+                        <div className="flex items-baseline gap-1.5">
+                           <span className="text-4xl font-black tracking-tighter text-foreground">{precio.toLocaleString("es-CL")}</span>
+                           <span className="text-sm font-black text-brand-indigo">UF</span>
+                        </div>
+                     </div>
+                     <Link 
+                        href="#form-cotizar"
+                        className={cn(buttonVariants({ size: "lg" }), "rounded-2xl h-14 px-6 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20")}
+                     >
+                        Cotizar
+                     </Link>
+                  </div>
+                  <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-medium bg-muted/20 p-3 rounded-xl border border-border/10">
+                     <Zap className="w-4 h-4 text-amber-500 fill-current" />
+                     <span>12 personas cotizaron este modelo hoy</span>
+                  </div>
+               </div>
             </div>
 
             <p className="text-lg md:text-2xl text-muted-foreground font-medium leading-[1.6] md:leading-[1.4] max-w-4xl border-l-4 border-primary/10 pl-6 md:pl-8">

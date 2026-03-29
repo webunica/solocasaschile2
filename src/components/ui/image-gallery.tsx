@@ -37,6 +37,10 @@ export function ImageGallery({ images, altBase }: Props) {
           <div className="absolute top-4 right-4 w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 md:group-hover:opacity-100 transition-opacity">
             <ZoomIn className="w-5 h-5 text-white" />
           </div>
+          {/* Mobile Image Counter */}
+          <div className="md:hidden absolute bottom-6 right-6 bg-black/60 backdrop-blur-md text-white text-[10px] font-black px-4 py-1.5 rounded-full border border-white/10 tracking-widest uppercase shadow-xl">
+             1 / {images.length}
+          </div>
         </div>
         <div className="hidden md:grid col-span-1 grid-rows-2 gap-4">
           {[1, 2].map((i) => (
