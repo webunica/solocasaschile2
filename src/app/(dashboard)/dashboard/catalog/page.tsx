@@ -25,7 +25,7 @@ export default async function CatalogManagementPage() {
   try {
     modelos = await getModelosByConstructora();
     if (user) {
-      const { data } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
+      const { data } = await supabase.from('constructoras').select('plan, role').eq('id', user.id).single();
       constructora = data;
     }
   } catch (err: any) {
@@ -33,9 +33,11 @@ export default async function CatalogManagementPage() {
     errorMsg = err.message || "Error al conectar con la base de datos";
   }
 
-  const limits = getPlanLimits(constructora?.plan || 'gratis');
+  const isSuperAdmin = constructora?.role === 'superadmin';
+  const limits = getPlanLimits(isSuperAdmin ? 'premium' : (constructora?.plan || 'gratis'));
   const usedCount = modelos.length;
-  const isLimitReached = usedCount >= limits.maxModels;
+  // Solo aplicamos límites reales si no es admin, para evitar bloqueos visuales
+  const isLimitReached = !isSuperAdmin && usedCount >= limits.maxModels;
 
   if (errorMsg) {
     return (

@@ -16,7 +16,11 @@ export default async function EditModelPage({ params }: { params: { id: string }
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
-  if (!user || modelo.constructora_id !== user.id) {
+  // Super-admin master key: check if user is admin in constructoras table
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user?.id || '').maybeSingle();
+  const isSuperAdmin = profile?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
+  
+  if (!user || (modelo.constructora_id !== user.id && !isSuperAdmin)) {
     redirect("/dashboard/catalog");
   }
 

@@ -260,7 +260,8 @@ export async function getModelosByConstructora() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return []
-  const isSuperAdmin = user.app_metadata?.is_superadmin === true;
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).maybeSingle();
+  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
 
   let query = supabase
     .from('modelos')

@@ -273,11 +273,17 @@ export async function deleteModelo(id: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('No autenticado')
-  const { error } = await supabase
-    .from('modelos')
-    .delete()
-    .eq('id', id)
-    .eq('constructora_id', user.id)
+  
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).maybeSingle();
+  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
+
+  const query = supabase.from('modelos').delete().eq('id', id)
+  
+  if (!isSuperAdmin) {
+    query.eq('constructora_id', user.id)
+  }
+
+  const { error } = await query
   
   if (error) throw error
   revalidatePath('/dashboard/catalog')
