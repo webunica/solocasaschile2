@@ -106,12 +106,12 @@ export default async function ModeloPage({ params }: PageProps) {
                   )}
                </div>
                
-               <h1 className="text-3xl md:text-5xl font-heading font-black tracking-tight md:tracking-tighter text-foreground leading-[1.1] md:leading-[0.9] break-words">
+               <h1 className="text-2xl sm:text-3xl md:text-5xl font-heading font-black tracking-tight md:tracking-tighter text-foreground leading-tight md:leading-[0.9] break-words">
                  {modelo.nombre}
                </h1>
 
                <div className="flex items-center gap-4 pt-4 border-t border-border/40">
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-[1rem] md:rounded-[1.5rem] border-2 border-primary/20 bg-primary/5 flex items-center justify-center p-2.5 md:p-3">
+                  <div className="w-10 h-10 md:w-16 md:h-16 rounded-[0.8rem] md:rounded-[1.5rem] border-2 border-primary/20 bg-primary/5 flex items-center justify-center p-2 md:p-3 shrink-0">
                      <Image 
                         src={constructora.logo_url || '/placeholder.png'} 
                         alt={constructora.nombre || 'Logo'} 
@@ -119,11 +119,11 @@ export default async function ModeloPage({ params }: PageProps) {
                         className="object-contain"
                      />
                   </div>
-                  <div className="space-y-0.5">
-                     <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Constructora Certificada</p>
+                  <div className="space-y-0.5 min-w-0">
+                     <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40 truncate">Constructora Certificada</p>
                      <Link
                         href={`/constructora/${constructora.slug || 'unknown'}`}
-                        className="text-xl md:text-2xl font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight underline-offset-4 hover:underline"
+                        className="text-lg md:text-2xl font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight truncate block"
                      >
                         {constructora.nombre}
                      </Link>
@@ -131,27 +131,27 @@ export default async function ModeloPage({ params }: PageProps) {
                </div>
 
                {/* Dedicated Mobile Price/Action Bar (Shows only on mobile) */}
-               <div className="lg:hidden bg-card/60 backdrop-blur-3xl border border-primary/10 rounded-[2.5rem] p-6 space-y-4 shadow-xl shadow-primary/5">
-                  <div className="flex items-center justify-between gap-4">
-                     <div className="flex flex-col min-w-0">
+               <div className="lg:hidden bg-card/60 backdrop-blur-3xl border border-primary/10 rounded-[2rem] p-5 space-y-4 shadow-xl shadow-primary/5 relative z-10">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 items-center">
+                     <div className="flex flex-col">
                         <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Precio desde</span>
                         <div className="flex items-baseline gap-1.5 flex-wrap">
-                           <span className="text-3xl font-black tracking-tighter text-foreground whitespace-nowrap">
+                           <span className="text-4xl font-black tracking-tighter text-foreground">
                              {precio.toLocaleString("es-CL")}
                            </span>
-                           <span className="text-xs font-black text-brand-indigo">UF</span>
+                           <span className="text-sm font-black text-brand-indigo">UF</span>
                         </div>
                      </div>
                      <Link 
                         href="#form-cotizar"
-                        className={cn(buttonVariants({ size: "lg" }), "rounded-2xl h-14 px-6 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20 shrink-0")}
+                        className={cn(buttonVariants({ size: "lg" }), "w-full rounded-xl h-14 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20")}
                      >
-                        Cotizar
+                        Cotizar Ahora
                      </Link>
                   </div>
-                  <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-medium bg-muted/20 p-3 rounded-xl border border-border/10">
-                     <Zap className="w-4 h-4 text-amber-500 fill-current" />
-                     <span>12 personas cotizaron este modelo hoy</span>
+                  <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-medium bg-muted/20 p-3 rounded-lg border border-border/10">
+                     <Zap className="w-4 h-4 text-amber-500 fill-current animate-pulse" />
+                     <span>12 personas cotizaron hoy</span>
                   </div>
                </div>
             </div>
