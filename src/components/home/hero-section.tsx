@@ -81,12 +81,12 @@ export function HeroSection() {
               {/* Mobile CTA (Form in Modal) */}
               <div className="flex flex-col sm:flex-row gap-4 lg:hidden">
                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                   <DialogTrigger asChild>
+                   <DialogTrigger render={
                      <Button size="lg" className="w-full brand-gradient text-white font-black rounded-2xl h-16 text-sm tracking-[0.1em] shadow-2xl shadow-primary/20">
                        SOLICITAR ASESORÍA EXPERTA
                        <ArrowRight className="w-5 h-5 ml-2" />
                      </Button>
-                   </DialogTrigger>
+                   } />
                    <DialogContent className="max-w-[450px] p-0 overflow-hidden rounded-[2.5rem] border-none shadow-2xl">
                      <div className="p-8 md:p-12 bg-background space-y-8 border-t-8 border-brand-indigo">
                         <DialogHeader>
