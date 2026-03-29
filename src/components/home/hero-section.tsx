@@ -104,13 +104,13 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="space-y-6 text-center lg:text-left"
             >
-              <h1 className="text-[clamp(1.6rem,4.8vw,4.4rem)] font-black tracking-[-0.07em] leading-[0.85] text-white text-left">
+              <h1 className="text-[clamp(1.6rem,4.8vw,4.4rem)] font-black tracking-[-0.07em] leading-[0.85] text-brand-indigo text-left">
                 PROYECTA TU <br />
                 <span className="gradient-text block translate-y-2">FUTURO HOGAR</span>
               </h1>
               
-              <p className="text-2xl text-white/80 font-medium leading-[1.5] max-w-xl mx-auto lg:mx-0">
-                 Conecta con el catálogo <span className="text-white font-bold italic">más grande</span> de Chile y recibe presupuestos de <span className="text-white border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo el territorio nacional.
+              <p className="text-2xl text-muted-foreground/90 font-medium leading-[1.5] max-w-xl mx-auto lg:mx-0">
+                 Conecta con el catálogo <span className="text-foreground font-bold italic">más grande</span> de Chile y recibe presupuestos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo el territorio nacional.
               </p>
             </motion.div>
 
@@ -128,28 +128,28 @@ export function HeroSection() {
                    transition={{ delay: 0.5 + (i * 0.1) }}
                    className="flex flex-col items-center lg:items-start gap-4 group"
                  >
-                   <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white group-hover:brand-gradient group-hover:text-white transition-all duration-500">
+                   <div className="w-12 h-12 bg-brand-indigo/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-brand-indigo group-hover:brand-gradient group-hover:text-white transition-all duration-500">
                       {stat.icon}
                    </div>
                    <div className="space-y-1">
-                      <div className="text-xl font-black text-white tracking-tight">{stat.val}</div>
-                      <div className="text-[9px] text-white/60 font-black uppercase tracking-widest leading-none">{stat.label}</div>
+                      <div className="text-xl font-black text-brand-indigo tracking-tight">{stat.val}</div>
+                      <div className="text-[9px] text-muted-foreground font-black uppercase tracking-widest leading-none">{stat.label}</div>
                    </div>
                  </motion.div>
                ))}
             </div>
 
             {/* Direct Contact System */}
-            <div className="flex flex-wrap items-center gap-10 text-[10px] text-white/70 font-black uppercase tracking-widest border-t border-white/20 pt-10">
-               <div className="flex items-center gap-4 hover:text-white transition-all cursor-pointer group">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                    <Mail className="w-4 h-4 text-white" />
+            <div className="flex flex-wrap items-center gap-10 text-[10px] text-muted-foreground font-black uppercase tracking-widest border-t border-brand-indigo/10 pt-10">
+               <div className="flex items-center gap-4 hover:text-brand-indigo transition-all cursor-pointer group">
+                  <div className="w-10 h-10 rounded-full bg-brand-indigo/5 flex items-center justify-center group-hover:bg-brand-indigo/10 transition-colors">
+                    <Mail className="w-4 h-4 text-brand-indigo" />
                   </div>
                   ventas@solocasaschile.cl
                </div>
-               <div className="flex items-center gap-4 hover:text-white transition-all cursor-pointer group">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                    <Phone className="w-4 h-4 text-white" />
+               <div className="flex items-center gap-4 hover:text-brand-indigo transition-all cursor-pointer group">
+                  <div className="w-10 h-10 rounded-full bg-brand-indigo/5 flex items-center justify-center group-hover:bg-brand-indigo/10 transition-colors">
+                    <Phone className="w-4 h-4 text-brand-teal" />
                   </div>
                   +56 9 6619 8752
                </div>
