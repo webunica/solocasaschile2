@@ -76,7 +76,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.98, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="glass p-8 md:p-16 rounded-[3rem] md:rounded-[4rem] shadow-[0_32px_128px_-32px_rgba(27,0,136,0.15)] relative overflow-hidden group border-white/40 dark:border-white/5"
+            className="bg-background p-8 md:p-16 rounded-[3rem] md:rounded-[4rem] shadow-[0_32px_128px_-32px_rgba(27,0,136,0.15)] relative overflow-hidden group border border-border"
           >
             {/* Design accents */}
             <div className="absolute top-0 left-0 right-0 h-2 brand-gradient shadow-lg" />

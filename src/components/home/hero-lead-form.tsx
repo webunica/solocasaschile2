@@ -79,7 +79,7 @@ export function HeroLeadForm() {
              <Input 
                 name="company" 
                 placeholder="Ej: Constructora Andes" 
-                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -91,7 +91,7 @@ export function HeroLeadForm() {
              <Input 
                 name="name" 
                 placeholder="Nombre y Apellido" 
-                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -107,7 +107,7 @@ export function HeroLeadForm() {
                 name="email" 
                 type="email" 
                 placeholder="ejemplo@correo.cl" 
-                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -120,7 +120,7 @@ export function HeroLeadForm() {
                 name="phone" 
                 type="tel" 
                 placeholder="+56 9 1234 5678" 
-                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -134,7 +134,7 @@ export function HeroLeadForm() {
            <Textarea 
               name="message" 
               placeholder="¿Cómo podemos ayudarte con tu proyecto?" 
-              className="bg-background/40 border-border/40 pl-14 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
+              className="bg-muted/50 border-border pl-14 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
               required 
            />
         </div>
