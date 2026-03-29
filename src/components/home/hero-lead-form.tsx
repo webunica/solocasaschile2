@@ -70,9 +70,9 @@ export function HeroLeadForm() {
   }
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
       <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-        <div className="space-y-3">
+        <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa</label>
           <div className="relative group/input">
              <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
@@ -84,7 +84,7 @@ export function HeroLeadForm() {
              />
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Tu Nombre</label>
           <div className="relative group/input">
              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
@@ -99,7 +99,7 @@ export function HeroLeadForm() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-        <div className="space-y-3">
+        <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Email</label>
           <div className="relative group/input">
              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
@@ -112,7 +112,7 @@ export function HeroLeadForm() {
              />
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">WhatsApp</label>
           <div className="relative group/input">
              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
@@ -127,14 +127,14 @@ export function HeroLeadForm() {
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-1.5">
         <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Comentarios</label>
         <div className="relative group/input">
-           <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+           <MessageSquare className="absolute left-4 top-7 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
            <Textarea 
               name="message" 
               placeholder="¿Cómo podemos ayudarte con tu proyecto?" 
-              className="bg-muted/50 border-border pl-14 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
+              className="bg-muted/50 border-border pl-16 pt-7 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
               required 
            />
         </div>
