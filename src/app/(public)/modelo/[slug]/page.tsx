@@ -106,7 +106,7 @@ export default async function ModeloPage({ params }: PageProps) {
                   )}
                </div>
                
-               <h1 className="text-2xl sm:text-3xl md:text-5xl font-heading font-black tracking-tight md:tracking-tighter text-foreground leading-tight md:leading-[0.9] break-words">
+               <h1 className="text-2xl sm:text-3xl md:text-5xl font-heading font-black tracking-tight text-foreground leading-tight md:leading-[0.9] overflow-visible w-full break-normal">
                  {modelo.nombre}
                </h1>
 
@@ -119,11 +119,11 @@ export default async function ModeloPage({ params }: PageProps) {
                         className="object-contain"
                      />
                   </div>
-                  <div className="space-y-0.5 min-w-0">
+                  <div className="flex-1 min-w-0">
                      <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40 truncate">Constructora Certificada</p>
                      <Link
                         href={`/constructora/${constructora.slug || 'unknown'}`}
-                        className="text-lg md:text-2xl font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight truncate block"
+                        className="text-lg md:text-2xl font-black text-brand-indigo hover:text-brand-teal transition-colors tracking-tight block truncate"
                      >
                         {constructora.nombre}
                      </Link>
@@ -131,11 +131,11 @@ export default async function ModeloPage({ params }: PageProps) {
                </div>
 
                {/* Dedicated Mobile Price/Action Bar (Shows only on mobile) */}
-               <div className="lg:hidden bg-card/60 backdrop-blur-3xl border border-primary/10 rounded-[2rem] p-5 space-y-4 shadow-xl shadow-primary/5 relative z-10">
-                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-4 items-center">
+               <div className="lg:hidden bg-card/80 backdrop-blur-3xl border border-primary/10 rounded-[2rem] p-5 space-y-5 shadow-xl shadow-primary/5 relative z-10 w-full overflow-hidden">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                      <div className="flex flex-col">
                         <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Precio desde</span>
-                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                        <div className="flex items-baseline gap-2">
                            <span className="text-4xl font-black tracking-tighter text-foreground">
                              {precio.toLocaleString("es-CL")}
                            </span>
@@ -144,14 +144,14 @@ export default async function ModeloPage({ params }: PageProps) {
                      </div>
                      <Link 
                         href="#form-cotizar"
-                        className={cn(buttonVariants({ size: "lg" }), "w-full rounded-xl h-14 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20")}
+                        className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto rounded-xl h-14 px-8 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20 flex items-center justify-center")}
                      >
                         Cotizar Ahora
                      </Link>
                   </div>
                   <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-medium bg-muted/20 p-3 rounded-lg border border-border/10">
                      <Zap className="w-4 h-4 text-amber-500 fill-current animate-pulse" />
-                     <span>12 personas cotizaron hoy</span>
+                     <span>Alta Demanda: 12 cotizaciones hoy</span>
                   </div>
                </div>
             </div>
