@@ -82,8 +82,8 @@ export default async function ModeloPage({ params }: PageProps) {
         </div>
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-8 md:py-16">
-        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-24 items-start">
+      <div className="container max-w-7xl mx-auto px-4 md:px-12 py-8 md:py-16 overflow-x-hidden">
+        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-24 items-start w-full">
           
           {/* Main Content (Left) */}
           <div className="space-y-12 md:space-y-16">
