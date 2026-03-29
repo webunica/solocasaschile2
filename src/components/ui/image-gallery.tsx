@@ -64,11 +64,11 @@ export function ImageGallery({ images, altBase }: Props) {
       </div>
 
       {/* Thumbnails strip */}
-      {images.length > 3 && (
-        <div className="flex gap-3 overflow-x-auto py-2">
+      {images.length > 1 && (
+        <div className="flex gap-4 overflow-x-auto py-4 scrollbar-hide px-2">
           {images.map((img, i) => (
             <button key={i} onClick={() => openLightbox(i)}
-              className="w-20 h-16 relative rounded-xl overflow-hidden shrink-0 border-2 border-transparent hover:border-primary transition-all"
+              className="w-24 h-20 md:w-20 md:h-16 relative rounded-2xl md:rounded-xl overflow-hidden shrink-0 border-2 border-transparent hover:border-primary transition-all shadow-md"
             >
               <Image src={img} fill alt="" className="object-cover" />
             </button>

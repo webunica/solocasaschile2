@@ -106,7 +106,7 @@ export default async function ModeloPage({ params }: PageProps) {
                   )}
                </div>
                
-               <h1 className="text-3xl md:text-5xl font-heading font-black tracking-tighter text-foreground leading-[1] md:leading-[0.9]">
+               <h1 className="text-3xl md:text-5xl font-heading font-black tracking-tight md:tracking-tighter text-foreground leading-[1.1] md:leading-[0.9] break-words">
                  {modelo.nombre}
                </h1>
 
@@ -132,17 +132,19 @@ export default async function ModeloPage({ params }: PageProps) {
 
                {/* Dedicated Mobile Price/Action Bar (Shows only on mobile) */}
                <div className="lg:hidden bg-card/60 backdrop-blur-3xl border border-primary/10 rounded-[2.5rem] p-6 space-y-4 shadow-xl shadow-primary/5">
-                  <div className="flex items-center justify-between">
-                     <div className="flex flex-col">
+                  <div className="flex items-center justify-between gap-4">
+                     <div className="flex flex-col min-w-0">
                         <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Precio desde</span>
-                        <div className="flex items-baseline gap-1.5">
-                           <span className="text-4xl font-black tracking-tighter text-foreground">{precio.toLocaleString("es-CL")}</span>
-                           <span className="text-sm font-black text-brand-indigo">UF</span>
+                        <div className="flex items-baseline gap-1.5 flex-wrap">
+                           <span className="text-3xl font-black tracking-tighter text-foreground whitespace-nowrap">
+                             {precio.toLocaleString("es-CL")}
+                           </span>
+                           <span className="text-xs font-black text-brand-indigo">UF</span>
                         </div>
                      </div>
                      <Link 
                         href="#form-cotizar"
-                        className={cn(buttonVariants({ size: "lg" }), "rounded-2xl h-14 px-6 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20")}
+                        className={cn(buttonVariants({ size: "lg" }), "rounded-2xl h-14 px-6 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20 shrink-0")}
                      >
                         Cotizar
                      </Link>
