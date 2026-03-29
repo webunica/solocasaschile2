@@ -79,7 +79,7 @@ export function HeroLeadForm() {
              <Input 
                 name="company" 
                 placeholder="Ej: Constructora Andes" 
-                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -91,7 +91,7 @@ export function HeroLeadForm() {
              <Input 
                 name="name" 
                 placeholder="Nombre y Apellido" 
-                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -107,7 +107,7 @@ export function HeroLeadForm() {
                 name="email" 
                 type="email" 
                 placeholder="ejemplo@correo.cl" 
-                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -120,7 +120,7 @@ export function HeroLeadForm() {
                 name="phone" 
                 type="tel" 
                 placeholder="+56 9 1234 5678" 
-                className="bg-background/40 border-border/40 pl-11 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="bg-background/40 border-border/40 pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -134,7 +134,7 @@ export function HeroLeadForm() {
            <Textarea 
               name="message" 
               placeholder="¿Cómo podemos ayudarte con tu proyecto?" 
-              className="bg-background/40 border-border/40 pl-11 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
+              className="bg-background/40 border-border/40 pl-14 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
               required 
            />
         </div>
@@ -155,15 +155,15 @@ export function HeroLeadForm() {
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full brand-gradient hover:opacity-95 font-black h-16 rounded-2xl shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] tracking-[0.2em] group transition-all"
+        className="w-full brand-gradient hover:opacity-95 font-black h-14 md:h-16 rounded-2xl shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] tracking-tight xs:tracking-normal md:tracking-[0.2em] text-[10px] sm:text-xs md:text-sm group transition-all px-4"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
-          <>
-            SOLICITAR ASESORÍA EXPERTA
-            <Send className="w-5 h-5 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </>
+          <div className="flex items-center justify-center gap-2 md:gap-3 whitespace-nowrap">
+            <span>SOLICITAR ASESORÍA EXPERTA</span>
+            <Send className="w-3.5 h-3.5 md:w-5 md:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </div>
         )}
       </Button>
     </form>
