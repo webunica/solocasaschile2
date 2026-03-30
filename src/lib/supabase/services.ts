@@ -230,7 +230,11 @@ export async function getModelosFiltered(filters: {
     return true
   })
 
-  const allData = [...filteredMocks, ...mappedDbData]
+  // 3. Keep DB models first and filter out Mocks that share the same slug (Priority to DB/User content)
+  const dbSlugs = new Set(mappedDbData.map(m => m.slug))
+  const uniqueMocks = filteredMocks.filter(m => !dbSlugs.has(m.slug))
+  
+  const allData = [...mappedDbData, ...uniqueMocks]
 
   const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 }
   

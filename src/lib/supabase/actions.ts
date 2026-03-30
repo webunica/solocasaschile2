@@ -283,11 +283,18 @@ export async function deleteModelo(id: string) {
     query.eq('constructora_id', user.id)
   }
 
-  const { error } = await query
+  const { error, count } = await query.select('*', { count: 'exact' });
   
   if (error) throw error
+  
+  // Revalidate all affected routes
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
+  revalidatePath('/')
+  revalidatePath('/comparar')
+  revalidatePath('/modelo/[slug]', 'page')
+  
+  return { success: true, count }
 }
 
 export async function updateSiteSettings(key: string, value: any) {
