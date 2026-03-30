@@ -1,33 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  /* LATAM Brand Colors (Indigo & Teal) */
-  --brand-indigo: #1b0088;
-  --brand-teal: #4fd3c5;
+  /* Vital Forest & Sunset - Life & Energy Brand Colors */
+  --brand-forest: #064e3b;  /* Deep Rich Forest Green */
+  --brand-orange: #f97316;  /* Sunset Orange for Life/Energy */
+  --brand-sand: #fefce8;    /* Warm Sunny Sand */
 
-  /* Light Mode (LATAM-inspired) */
-  --background: #ffffff;
-  --foreground: #1b1b1b;
-  --card: #f8fafc;
-  --card-foreground: #1b1b1b;
+  /* Light Mode (Organic & Vibrant) */
+  --background: #fdfdfb;    /* Clean Pearl Background */
+  --foreground: #064e3b;
+  --card: #ffffff;
+  --card-foreground: #064e3b;
   --popover: #ffffff;
-  --popover-foreground: #1b1b1b;
+  --popover-foreground: #064e3b;
   
-  --primary: #1b0088; /* LATAM Indigo */
+  --primary: #064e3b;       /* Forest Base */
   --primary-foreground: #ffffff;
   
-  --secondary: #4fd3c5; /* LATAM Coral */
+  --secondary: #f97316;     /* Sunset Orange for CTAs/Life */
   --secondary-foreground: #ffffff;
   
-  --muted: #f3f3f7;
-  --muted-foreground: #5a5a5a;
-  --accent: #f3f3f7;
-  --accent-foreground: #1b0088;
-  --destructive: #dc2626;
+  --muted: #f0fdf4;
+  --muted-foreground: #475569;
+  --accent: #f0fdf4;
+  --accent-foreground: #064e3b;
+  --destructive: #be123c;
   --destructive-foreground: #ffffff;
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #1b0088;
+  --ring: #f97316;
 }
 
 .dark {
@@ -77,8 +78,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --color-brand-indigo: var(--brand-indigo);
-  --color-brand-teal: var(--brand-teal);
+  --color-brand-forest: var(--brand-forest);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-sand: var(--brand-sand);
   
   --radius-lg: 1rem;
   --radius-md: calc(1rem - 2px);
@@ -114,8 +116,8 @@
     @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
     line-height: 1.6;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(27, 0, 136, 0.05) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(79, 211, 197, 0.05) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(6, 78, 59, 0.04) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.04) 0px, transparent 50%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -147,14 +149,14 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #1b0088 0%, #4fd3c5 100%);
+  background: linear-gradient(135deg, #064e3b 0%, #f97316 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, #1b0088 0%, #4fd3c5 100%);
+  background: linear-gradient(135deg, #064e3b 0%, #f97316 100%);
 }
 
 .brand-glow {
@@ -186,8 +188,17 @@
 }
 
 .hero-bg-custom {
-  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  background-image: 
+    linear-gradient(120deg, rgba(254, 252, 232, 0.8) 0%, rgba(240, 253, 244, 0.8) 100%),
+    url("https://www.transparenttextures.com/patterns/natural-paper.png");
   background-size: cover;
   background-position: center center;
-  background-repeat: no-repeat;
+}
+
+/* Organic Leaf Decoration */
+.leaf-decor {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  background-color: currentColor;
 }
