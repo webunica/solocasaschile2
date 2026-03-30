@@ -1,30 +1,31 @@
 import { HeroSection } from "@/components/home/hero-section";
-import { TypesSection } from "@/components/home/types-section";
-import { FeaturedConstructorsSection } from "@/components/home/featured-section";
 import { FeaturedModelsSection } from "@/components/home/featured-models";
-import { TrustSection } from "@/components/home/trust-section";
-import { HowItWorks } from "@/components/home/how-it-works";
-import { FinalCTA } from "@/components/home/final-cta";
-import { StatsSection } from "@/components/home/stats-section";
 import { PriceDropBanner } from "@/components/home/price-drop-banner";
 import { SeoContent } from "@/components/home/seo-content";
-import { Metadata } from "next";
+import dynamic from "next/dynamic";
+import { StructuredData } from "@/components/seo/structured-data";
 
-export const metadata: Metadata = {
-  title: "Casas Prefabricadas SIP en Chile: Innovación y Calidad",
-  description: "Descubre las mejores casas prefabricadas SIP en Chile. Calidad, diseño y eficiencia. ¡Construye tu hogar ideal hoy!",
-  openGraph: {
-    title: "Casas Prefabricadas SIP en Chile: Innovación y Calidad",
-    description: "Explora las casas prefabricadas SIP en Chile y construye el hogar de tus sueños con eficiencia y estilo.",
-    images: ["/images/og-image.jpg"]
-  }
-};
+// Lazy loading below-the-fold components
+const TypesSection = dynamic(() => import("@/components/home/types-section").then(m => m.TypesSection), { ssr: true });
+const HowItWorks = dynamic(() => import("@/components/home/how-it-works").then(m => m.HowItWorks), { ssr: true });
+const FeaturedConstructorsSection = dynamic(() => import("@/components/home/featured-section").then(m => m.FeaturedConstructorsSection), { ssr: true });
+const TrustSection = dynamic(() => import("@/components/home/trust-section").then(m => m.TrustSection), { ssr: true });
+const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(m => m.FinalCTA), { ssr: true });
 
-export const dynamic = "force-dynamic";
+// ISR with a baseline revalidation of 1 hour (3600 seconds)
+export const revalidate = 3600;
 
 export default function Home() {
   return (
     <main className="flex flex-col">
+      <StructuredData 
+        type="WebSite" 
+        data={{
+          name: "SolocasasChile",
+          url: "https://solocasaschile.com",
+          description: "El comparador inteligente de casas prefabricadas en Chile."
+        }} 
+      />
       {/* A: Attention (Hero) */}
       <HeroSection />
 

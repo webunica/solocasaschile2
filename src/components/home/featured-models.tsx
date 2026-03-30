@@ -56,6 +56,8 @@ export async function FeaturedModelsSection() {
                     src={modelo.imagenes_urls?.[0] || '/hero.png'}
                     alt={modelo.nombre}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={i < 2} // Preload the first few models for LCP
                     className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
@@ -90,6 +92,7 @@ export async function FeaturedModelsSection() {
                           src={modelo.constructora?.logo_url || '/placeholder.png'} 
                           alt={modelo.constructora?.nombre}
                           fill
+                          sizes="24px"
                           className="object-contain p-0.5"
                         />
                      </div>

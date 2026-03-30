@@ -22,8 +22,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const modelo = await getModelBySlug(slug);
     if (!modelo) return { title: "Modelo no encontrado | SolocasasChile" };
     return {
-      title: `${modelo.nombre} | SolocasasChile`,
-      description: modelo.descripcion?.substring(0, 160),
+      title: `${modelo.nombre} | Casa ${modelo.tipo} | SolocasasChile`,
+      description: modelo.descripcion?.substring(0, 160) || `Cotiza el modelo ${modelo.nombre} en SolocasasChile.`,
+      openGraph: {
+        title: `${modelo.nombre} | SolocasasChile`,
+        description: modelo.descripcion?.substring(0, 160),
+        images: modelo.imagenes_urls && modelo.imagenes_urls.length > 0 ? [modelo.imagenes_urls[0]] : [],
+        type: "article",
+      }
     };
   } catch (error) {
     return { title: "Modelo | SolocasasChile" };
@@ -37,8 +43,12 @@ const TIPO_LABELS: Record<string, string> = {
   "llave-en-mano": "Llave en Mano",
 };
 
+export const revalidate = 3600; // Recalculate at most once per hour
+
 import { ShareActions } from "@/components/ui/share-actions";
 import { getYoutubeEmbedUrl } from "@/lib/utils";
+
+import { StructuredData } from "@/components/seo/structured-data";
 
 export default async function ModeloPage({ params }: PageProps) {
   const { slug } = await params;
@@ -62,6 +72,24 @@ export default async function ModeloPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background relative pt-16 md:pt-24">
+      <StructuredData 
+        type="Product" 
+        data={{
+          name: modelo.nombre,
+          description: modelo.descripcion,
+          image: imagenes[0] || "",
+          offers: {
+            "@type": "Offer",
+            price: precio,
+            priceCurrency: "CLF", // UF code
+            availability: "https://schema.org/InStock"
+          },
+          brand: {
+            "@type": "Organization",
+            name: constructora.nombre
+          }
+        }} 
+      />
       <StickyCTAMobile targetId="form-cotizar" />
       
       {/* Breadcrumb / Back button */}
@@ -116,6 +144,7 @@ export default async function ModeloPage({ params }: PageProps) {
                         src={constructora.logo_url || '/placeholder.png'} 
                         alt={constructora.nombre || 'Logo'} 
                         width={48} height={48} 
+                        priority
                         className="object-contain"
                      />
                   </div>

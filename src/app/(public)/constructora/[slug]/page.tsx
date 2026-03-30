@@ -21,10 +21,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const constructora = await getConstructoraBySlug(slug);
   return {
-    title: constructora ? `${constructora.nombre} | Perfil Constructora` : "Constructora no encontrada",
-    description: constructora?.descripcion,
+    title: constructora ? `${constructora.nombre} | Constructora en SolocasasChile` : "Constructora no encontrada",
+    description: constructora?.descripcion || `Descubre los modelos de casas prefabricadas de ${constructora?.nombre}.`,
+    openGraph: {
+      title: constructora ? `${constructora.nombre} | Constructora en SolocasasChile` : "Constructora no encontrada",
+      description: constructora?.descripcion || "",
+      images: constructora?.logo_url ? [constructora.logo_url] : [],
+      type: "profile"
+    }
   };
 }
+
+export const revalidate = 3600; // Recalculate at most once per hour
+
+import { StructuredData } from "@/components/seo/structured-data";
 
 export default async function ConstructoraPage({ params }: PageProps) {
   const { slug } = await params;
@@ -44,12 +54,22 @@ export default async function ConstructoraPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background pt-20">
+      <StructuredData 
+        type="RealEstateAgent" 
+        data={{
+          name: constructora.nombre,
+          image: logo,
+          description: constructora.descripcion,
+          url: `https://solocasaschile.com/constructora/${constructora.slug}`
+        }} 
+      />
       {/* Header / Banner area */}
       <div className="relative h-72 md:h-[450px] w-full overflow-hidden">
         <Image 
           src={coverImage} 
           alt={constructora.nombre}
           fill
+          sizes="100vw"
           className="object-cover opacity-60 blur-[2px]"
           priority
         />
@@ -58,7 +78,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
         <div className="container relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 flex items-end pb-12">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-10 w-full text-center md:text-left">
             <div className="relative w-40 h-40 rounded-[3rem] overflow-hidden border-4 border-background bg-card shadow-2xl shrink-0 group hover:scale-105 transition-transform duration-500 flex items-center justify-center p-6 bg-white">
-               <Image src={logo} alt={constructora.nombre} fill className="object-contain p-6" />
+               <Image src={logo} alt={constructora.nombre} fill sizes="(max-width: 768px) 160px, 160px" priority className="object-contain p-6" />
             </div>
             <div className="flex-1 space-y-4">
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
