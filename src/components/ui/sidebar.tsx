@@ -231,7 +231,7 @@ const Sidebar = React.forwardRef<
         />
         <div
           className={cn(
-            "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] content-stretch transition-[left,right,width] ease-in-out md:flex",
+            "duration-200 fixed top-[var(--announcement-height,0px)] bottom-0 z-10 hidden h-[calc(100svh-var(--announcement-height,0px))] w-[--sidebar-width] content-stretch transition-[left,right,width] ease-in-out md:flex",
             side === "left"
               ? "left-0 group-data-[collapsible=icon]:left-0"
               : "right-0 group-data-[collapsible=icon]:right-0",

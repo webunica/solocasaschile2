@@ -32,7 +32,7 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
   const initials = userName.slice(0, 2).toUpperCase();
 
   return (
-    <header className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 border-b border-border/40 bg-background/60 backdrop-blur-md sticky top-0 z-50">
+    <header className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 border-b border-border/40 bg-background/60 backdrop-blur-md sticky top-0 z-[70] transition-all duration-300">
       <div className="flex items-center gap-4 sm:gap-6">
         <SidebarTrigger className="lg:hidden h-10 w-10 text-muted-foreground hover:text-foreground transition-colors shrink-0" />
         <div className="hidden lg:flex items-center gap-2 relative group max-w-sm w-full">

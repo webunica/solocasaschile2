@@ -86,6 +86,21 @@
 }
 
 @layer base {
+  :root {
+    --announcement-height: 0px;
+  }
+  
+  body.has-announcement-bar {
+    --announcement-height: 50px;
+    padding-top: var(--announcement-height) !important;
+  }
+
+  @media (max-width: 767px) {
+    body.has-announcement-bar {
+      --announcement-height: 40px;
+    }
+  }
+
   * {
     @apply border-border;
   }

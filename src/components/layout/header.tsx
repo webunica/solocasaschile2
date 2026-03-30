@@ -32,7 +32,8 @@ export function Header() {
         top: headerY,
         width: headerWidth,
         borderRadius: headerRadius,
-        opacity: headerOpacity
+        opacity: headerOpacity,
+        marginTop: 'var(--announcement-height, 0px)'
       }}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
