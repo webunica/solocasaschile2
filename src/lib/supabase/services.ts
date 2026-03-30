@@ -294,10 +294,11 @@ export async function createLead(leadData: any) {
 export async function getModelsByIds(ids: string[]) {
   if (!ids.length) return []
   const supabase = await createClient()
+  const dbIds = ids.filter(id => /^[0-9a-f-]{36}$/i.test(id));
   const { data: dbData } = await supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
-    .in('id', ids)
+    .in('id', dbIds)
 
   const mappedDbData = (dbData as any[] || []).map(m => ({
     ...m,
