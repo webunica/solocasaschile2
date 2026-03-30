@@ -298,6 +298,18 @@ export async function getModelsByIds(ids: string[]) {
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
     .in('id', ids)
+
+  const mappedDbData = (dbData as any[] || []).map(m => ({
+    ...m,
+    imagenes_urls: m.imagenes_urls || [],
+    precio_desde_uf: m.precio_desde_uf || 0,
+    constructora: m.constructora ? {
+      ...m.constructora,
+      id: m.constructora.id || m.constructora_id,
+      score_confianza: m.constructora.score_confianza || 0,
+      logo_url: m.constructora.logo_url || '/placeholder.png'
+    } : null
+  })) as ModelWithConstructora[]
   
   const mocks = MODELOS.filter(m => ids.includes(m.id)).map(mock => ({
       id: mock.id,
@@ -323,11 +335,11 @@ export async function getModelsByIds(ids: string[]) {
         plan: mock.constructoraPlan,
         verificada: true,
         score_confianza: 100,
-        logo_url: mock.imagenes[0], 
+        logo_url: mock.imagenes[0] || '/placeholder.png', 
       }
-  }));
+  })) as ModelWithConstructora[];
 
-  return [...mocks, ...(dbData || [])]
+  return [...mocks, ...mappedDbData]
 }
 
 
