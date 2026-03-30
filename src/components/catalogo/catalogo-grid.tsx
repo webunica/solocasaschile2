@@ -45,10 +45,10 @@ export function CatalogoGrid({ modelos }: Props) {
   };
 
   return (
-    <div className="space-y-12">
+    <section className="space-y-12">
       <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-8">
         {modelos.map((modelo, i) => (
-          <motion.div
+          <motion.article
             key={modelo.id}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,6 +145,7 @@ export function CatalogoGrid({ modelos }: Props) {
                       toggleComparar(modelo.id);
                     }}
                     title={comparar.includes(modelo.id) ? "Quitar del comparador" : "Comparar este modelo"}
+                    aria-label={comparar.includes(modelo.id) ? `Quitar ${modelo.nombre} del comparador` : `Añadir ${modelo.nombre} al comparador`}
                     className={cn(
                       "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border-2 group/btn",
                       comparar.includes(modelo.id)
@@ -157,7 +158,7 @@ export function CatalogoGrid({ modelos }: Props) {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </motion.article>
         ))}
       </div>
 
@@ -198,6 +199,6 @@ export function CatalogoGrid({ modelos }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   );
 }

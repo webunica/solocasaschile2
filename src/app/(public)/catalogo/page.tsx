@@ -25,6 +25,8 @@ interface PageProps {
 }
 import type { TipoModelo } from "@/lib/mock-data";
 
+import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
+
 export default async function CatalogoPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const tipoFilter = params.tipo as TipoModelo | undefined;
@@ -85,13 +87,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
 
           {/* Catalog Main */}
           <main className="flex-1 min-w-0">
-            <Suspense fallback={
-              <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-10">
-                {Array.from({ length: 9 }).map((_, i) => (
-                  <Skeleton key={i} className="h-[450px] rounded-[3.5rem]" />
-                ))}
-              </div>
-            }>
+            <Suspense fallback={<CatalogoSkeleton />}>
                {modelos.length > 0 ? (
                  <CatalogoGrid modelos={modelos} />
                ) : (
