@@ -52,7 +52,7 @@ export function AnnouncementBar() {
 
   return (
     <div id="announcement-bar" className={cn(
-      "fixed top-0 left-0 right-0 z-[60] h-[40px] md:h-[50px] w-full flex items-center justify-center px-4 overflow-hidden transition-all duration-500 animate-in slide-in-from-top shadow-md",
+      "fixed top-0 left-0 right-0 z-[150] h-[40px] md:h-[50px] w-full flex items-center justify-center px-4 overflow-hidden transition-all duration-500 animate-in slide-in-from-top shadow-md",
       themes[settings.theme || 'brand']
     )}>
       {/* Background decoration */}

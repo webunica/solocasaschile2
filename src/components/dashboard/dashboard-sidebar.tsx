@@ -44,7 +44,7 @@ export function DashboardSidebar({
   const pathname = usePathname();
 
   return (
-    <Sidebar variant="sidebar" collapsible="icon" className="border-r border-border/40 bg-card/40 backdrop-blur-xl">
+    <Sidebar variant="sidebar" collapsible="icon" className="border-r border-border/40 bg-background md:bg-card/40 backdrop-blur-xl">
       <SidebarHeader className="h-20 flex items-center px-6 border-b border-border/40">
          <Link href="/" className="flex items-center gap-3 group">
             <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">S</div>
@@ -67,10 +67,10 @@ export function DashboardSidebar({
                     tooltip={item.title}
                     className="h-10 px-3 md:px-4 data-[active=true]:brand-gradient data-[active=true]:text-white data-[active=true]:font-black data-[active=true]:shadow-primary/10 transition-all font-semibold rounded-xl group"
                   >
-                    <Link href={item.href}>
-                      <item.icon className={cn("w-4.5 h-4.5 transition-transform group-hover:scale-110", pathname === item.href ? "text-white" : "text-muted-foreground opacity-60")} />
-                      <span className="ml-3 text-sm">{item.title}</span>
-                    </Link>
+                      <Link href={item.href}>
+                        <item.icon className={cn("w-4.5 h-4.5 transition-transform group-hover:scale-110", pathname === item.href ? "text-white" : "text-muted-foreground group-hover:text-foreground")} />
+                        <span className={cn("ml-3 text-sm", pathname === item.href ? "font-black" : "font-semibold")}>{item.title}</span>
+                      </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -130,8 +130,8 @@ export function DashboardSidebar({
                     className="h-10 px-3 md:px-4 transition-all font-semibold rounded-xl hover:bg-muted/50 text-muted-foreground"
                   >
                     <Link href={item.href}>
-                      <item.icon className="w-4.5 h-4.5 opacity-60" />
-                      <span className="ml-3 text-sm">{item.title}</span>
+                      <item.icon className="w-4.5 h-4.5 opacity-80" />
+                      <span className="ml-3 text-sm font-semibold">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -47,7 +47,7 @@ export function WhatsAppWidget() {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end">
+    <div className="fixed bottom-8 right-8 z-[80] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
