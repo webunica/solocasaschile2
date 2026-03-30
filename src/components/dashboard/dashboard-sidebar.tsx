@@ -31,11 +31,13 @@ const SUPPORT_MENU = [
 ];
 
 export function DashboardSidebar({ 
-  isSuperAdmin, 
+  isSuperAdmin,
+  isAdmin, 
   userName = "Constructor", 
   userEmail = "soporte@solocasaschile.cl" 
 }: { 
   isSuperAdmin?: boolean;
+  isAdmin?: boolean;
   userName?: string;
   userEmail?: string;
 }) {
@@ -76,21 +78,37 @@ export function DashboardSidebar({
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {isSuperAdmin && (
+        {(isAdmin || isSuperAdmin) && (
           <SidebarGroup className="mt-8">
             <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-primary/60 mb-3">SYSTEM ADMIN</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
+                {isSuperAdmin && (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      asChild 
+                      isActive={pathname === "/dashboard/admin/constructoras"}
+                      tooltip="Gestionar Constructoras"
+                      className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                    >
+                      <Link href="/dashboard/admin/constructoras">
+                        <Building2 className="w-4.5 h-4.5" />
+                        <span className="ml-3 text-sm">Constructoras</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )}
+                
                 <SidebarMenuItem>
                   <SidebarMenuButton 
                     asChild 
-                    isActive={pathname === "/dashboard/admin/constructoras"}
-                    tooltip="Gestionar Constructoras"
+                    isActive={pathname === "/dashboard/admin/settings"}
+                    tooltip="Configuración del Sitio"
                     className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
                   >
-                    <Link href="/dashboard/admin/constructoras">
-                      <Building2 className="w-4.5 h-4.5" />
-                      <span className="ml-3 text-sm">Constructoras</span>
+                    <Link href="/dashboard/admin/settings">
+                      <LayoutDashboard className="w-4.5 h-4.5" />
+                      <span className="ml-3 text-sm">Configuración Sitio</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -132,7 +150,9 @@ export function DashboardSidebar({
               </div>
               <div className="flex flex-col min-w-0 group-data-[collapsible=icon]:hidden">
                  <span className="text-xs font-black truncate text-foreground leading-tight">{userName}</span>
-                 <span className="text-[10px] text-muted-foreground font-medium truncate opacity-60">{userEmail}</span>
+                 <span className="text-[10px] text-muted-foreground font-medium truncate opacity-60">
+                   {userEmail} <br/> (admin={String(isAdmin)}, super={String(isSuperAdmin)})
+                 </span>
               </div>
            </div>
 

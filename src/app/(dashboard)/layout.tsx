@@ -19,13 +19,21 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const isSuperAdmin = user?.app_metadata?.is_superadmin === true;
+  // Buscar rol en la tabla de perfiles (constructoras)
+  const { data: profile } = await supabase
+    .from('constructoras')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  const isSuperAdmin = user?.app_metadata?.is_superadmin === true || profile?.role === 'superadmin';
+  const isAdmin = isSuperAdmin || profile?.role === 'admin' || user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
   const userName = user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
 
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">
-        <DashboardSidebar isSuperAdmin={isSuperAdmin} userName={userName} userEmail={user.email} />
+        <DashboardSidebar isSuperAdmin={isSuperAdmin} isAdmin={isAdmin} userName={userName} userEmail={user.email} />
         <SidebarInset>
           <div className="flex flex-col h-full w-full">
             <DashboardHeader userName={userName} isSuperAdmin={isSuperAdmin} />

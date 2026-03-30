@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { WhatsAppWidget } from "@/components/common/whatsapp-widget";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
 
 export default function RootLayout({
   children,
@@ -36,6 +37,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          <AnnouncementBar />
           {children}
           <WhatsAppWidget />
         </ThemeProvider>

@@ -1,0 +1,207 @@
+﻿=== LISTADO DE ROLES ===
+USUARIO: javier <javier@webunica.cl> | ROL: superadmin
+USUARIO: Admin Solocasas <7d9ea419-2fa1-41f7-a8ef-78df2d2844bb> | ROL: constructora
+USUARIO: Admin Solocasaschile <ef33ab26-b4df-4ac1-a5ea-6d01606bc895> | ROL: constructora
+USUARIO: Constructora Millar <javiermillar@gmail.com> | ROL: constructora
+USUARIO: Aliro Cardenas <9597024f-ca95-4839-9f07-300515027b2e> | ROL: constructora
+USUARIO: Arkubic <615df345-d445-4fe4-a6fc-ada984f208ca> | ROL: constructora
+USUARIO: Arqydom <8235714b-4857-494f-88cc-33bb308a3c51> | ROL: constructora
+USUARIO: Aut├│noma Modulares <contacto@autonomamodulares.cl> | ROL: constructora
+USUARIO: BIOBIO MADERA <contacto@biobiomadera.cl> | ROL: constructora
+USUARIO: Biourban <3e1a2775-e03a-4764-a379-6f2bed3b9129> | ROL: constructora
+USUARIO: Box Panel Chile <ventas@boxpanelchile.cl> | ROL: constructora
+USUARIO: Casa de Madera <contacto@casademadera.cl> | ROL: constructora
+USUARIO: Casa Prefabricada Chile <ef660cc3-e9ec-4d15-a036-b95c889244df> | ROL: constructora
+USUARIO: Casas 7 Lagos <1e791335-3cd8-4ab4-9c1c-dfbfbd72aa16> | ROL: constructora
+USUARIO: Casas Alvarado <contacto@casasalvarado.cl> | ROL: constructora
+USUARIO: Casas Andes <contacto@vpandes.cl> | ROL: constructora
+USUARIO: Casas Arbolito <dee7a9c8-0097-4f61-b93a-168f0842938c> | ROL: constructora
+USUARIO: Casas Azocar <info@casasazocar.cl> | ROL: constructora
+USUARIO: Casas Baeza <ventas@casasbaeza.cl> | ROL: constructora
+USUARIO: Casas Bio Bio <contacto@casasbiobio.cl> | ROL: constructora
+USUARIO: Casas Chile <74391b6f-831e-43d1-a6d0-59d71d403b2d> | ROL: constructora
+USUARIO: Casas Chilo├® <casaschiloe@gmail.com> | ROL: constructora
+USUARIO: Casas Containers <contacto@casascontainers.cl> | ROL: constructora
+USUARIO: CASAS Copiap├│ <contacto@casascopiapo.cl> | ROL: constructora
+USUARIO: Casas De La Costa <contacto@casasdelacosta.cl> | ROL: constructora
+USUARIO: Casas De Metalcom <info@casasnordicas.cl> | ROL: constructora
+USUARIO: Casas El Litoral <95d7b68a-8d59-4e96-ac0a-b9d2b0792b4e> | ROL: constructora
+USUARIO: Casas El Mirador <contacto@casaselmirador.cl> | ROL: constructora
+USUARIO: Madera21 <madera21@corma.cl> | ROL: constructora
+USUARIO: Casas Fabelsa <constructorafabelsa@gmail.com> | ROL: constructora
+USUARIO: Casas Green Valley <contacto@casasgreenvalley.cl> | ROL: constructora
+USUARIO: Casas Laguna <contacto@casaslaguna.cl> | ROL: constructora
+USUARIO: Casas Lanco <e0c3159b-f172-41bf-b4a5-7f15c58e5571> | ROL: constructora
+USUARIO: Casas Lihuel <5414ac5b-b70d-4f1b-8ab8-1848ba1c18e0> | ROL: constructora
+USUARIO: Casas Linares <maderasboada@hotmail.com> | ROL: constructora
+USUARIO: Casas Lo Infante <b5fedd4b-e53c-4715-b520-8c25cf75eb0b> | ROL: constructora
+USUARIO: Casas Longavi <contacto@casaslongavi.cl> | ROL: constructora
+USUARIO: Casas METALKIT <ventas@metalkit.cl> | ROL: constructora
+USUARIO: Casas Modulares <contacto@modul.cl> | ROL: constructora
+USUARIO: Casas Modulares <contacto@domohabitare.cl> | ROL: constructora
+USUARIO: Casas Modulares <ventas@constructoraubel.cl> | ROL: constructora
+USUARIO: Casas O'higgins <ventas@casasohiggins.cl> | ROL: constructora
+USUARIO: Casas Pancer <ventas@casaspancer.cl> | ROL: constructora
+USUARIO: CASAS PREFABRICADAS <56930282442contacto@casasprefabricadasval> | ROL: constructora
+USUARIO: Casas Prefabricadas <info@casasprefabricadas.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas <contacto@casasanalberto.com> | ROL: constructora
+USUARIO: Casas Prefabricadas <info@ecoframe.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas <ventas@trebolspa.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas Antilhue <b2027800-1e37-4715-8c0b-0b1f0247a9b6> | ROL: constructora
+USUARIO: Casas Prefabricadas Chile <contacto@casasprefabricadaschile.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas Chile <b1840003-21c7-480e-acbd-f1fc326ef194> | ROL: constructora
+USUARIO: Casas Prefabricadas Curic├│ <b75310cc-d740-45a3-a161-f3ee9df1f015> | ROL: constructora
+USUARIO: Casas Prefabricadas Del Lago <casasdellagochile@gmail.com> | ROL: constructora
+USUARIO: Casas Prefabricadas Del Maule <0d4a34a5-f854-4637-9dc9-4a433de4b3a6> | ROL: constructora
+USUARIO: Casas Prefabricadas El Alba <8761contacto@prefabricadaselalba.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas En Chile <53f033b6-cd6a-444e-a27e-db187e7a994d> | ROL: constructora
+USUARIO: Casas Prefabricadas En Chile <8d47d9f6-1615-4269-876c-c622a939bd64> | ROL: constructora
+USUARIO: Casas Prefabricadas Foresco Spa <emailcasasforesco@gmail.com> | ROL: constructora
+USUARIO: Casas Prefabricadas Futrono <ejecutivo.ventas@prefabricadasfutrono.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas Green Valley <contacto@cprefabricadas.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas Imperio <info@casasprefabricadasimperio.cl> | ROL: constructora
+USUARIO: CASAS PREFABRICADAS KRATER <976695286ana.p@casaskratercl.io> | ROL: constructora
+USUARIO: Casas Prefabricadas La Capilla <ae189cf5-03f5-40fd-aaa0-fd3c9ac6fe58> | ROL: constructora
+USUARIO: Casas Prefabricadas La Minga <proyectoinfo@casasminga.com> | ROL: constructora
+USUARIO: Casas Prefabricadas Limache <1413bd96-62fa-4c99-9640-4e757ba79434> | ROL: constructora
+USUARIO: Casas Prefabricadas Mar Y Sol <34b1dd91-0e98-4a82-9460-f56d0699a695> | ROL: constructora
+USUARIO: Casas Prefabricadas Premium <28d53c73-a61f-43e4-9983-0b4b5bed07d3> | ROL: constructora
+USUARIO: Casas Prefabricadas Punta Arenas <26686b42-124e-46d9-8f51-20a832372f2a> | ROL: constructora
+USUARIO: Casas Prefabricadas Ramirez <87731b4f-eb55-45ea-a283-cee81f2d6999> | ROL: constructora
+USUARIO: Casas Prefabricadas R├¡o Bueno <e40c7c83-3f7e-4bbe-8561-4dd60a4318b3> | ROL: constructora
+USUARIO: Casas Prefabricadas Riqueval <ventas@riqueval.cl> | ROL: constructora
+USUARIO: Casas Prefabricadas Vespucio <46b2277f-5bba-4afa-8fdd-032cb7048f61> | ROL: constructora
+USUARIO: CASAS PREFABRICADAS Y TRANSPORTES <tucomercio@coyhaique.cl> | ROL: constructora
+USUARIO: Casas Pucon Constructora <c03158cd-806d-4def-8003-8772ca5464fa> | ROL: constructora
+USUARIO: Casas Quinchilca <contacto@casasquinchilca.cl> | ROL: constructora
+USUARIO: Casas Resort <6181d296-4286-42d4-85a0-8b073a1c5161> | ROL: constructora
+USUARIO: Casas Sandoval <4739d77f-0d95-4e3a-8088-58be41e56245> | ROL: constructora
+USUARIO: Casas Sustentables <ecae715c-fd42-41e9-87c0-70a7f5b352f1> | ROL: constructora
+USUARIO: CASAS VAL <68ca0ea1-3a77-4ecf-b644-5d0091b54907> | ROL: constructora
+USUARIO: Casas Valles Del Sur <102cc5c7-3f27-4a21-ba73-872132978710> | ROL: constructora
+USUARIO: Casas Viento Sur <info@casasvientosur.cl> | ROL: constructora
+USUARIO: Casasamerica <info@casascaballero.cl> | ROL: constructora
+USUARIO: Casaschilesip <info@casaschilespa.cl> | ROL: constructora
+USUARIO: Casascontainers <chilecontacto@constructainers.cl> | ROL: constructora
+USUARIO: Casascubik <info@casascubik.cl> | ROL: constructora
+USUARIO: Casascubo <infocasascubo@gmail.com> | ROL: constructora
+USUARIO: Casur : <info@casur.cl> | ROL: constructora
+USUARIO: Cchc <f8122d05-3909-4beb-a26f-8bf7c546ebef> | ROL: constructora
+USUARIO: CDC SUMINISTROS <contacto@cdcsuministros.cl> | ROL: constructora
+USUARIO: Chile Domos <2200contacto@chiledomos.cl> | ROL: constructora
+USUARIO: Chile Home <contacto@chilehome.cl> | ROL: constructora
+USUARIO: Conc├│n Maderas Impregnadas <info@conconmaderas.cl> | ROL: constructora
+USUARIO: Construcci├│n De Casas Prefabricadas En <santamartaltda@gmail.com> | ROL: constructora
+USUARIO: Construcci├│n En Angol <6bfded5e-1500-4f90-ac86-0b826fa17799> | ROL: constructora
+USUARIO: Construcci├│n En Vulcometal O Metalcon <contacto@cintac.cl> | ROL: constructora
+USUARIO: Construcciones Jpp <c808f457-bc27-4496-830b-b36b59a0c794> | ROL: constructora
+USUARIO: Construccionesprofesionales <329dd212-e520-4de4-ae6a-514c73fb9cb4> | ROL: constructora
+USUARIO: Construccionindustrializada <3d5fae86-8d6b-45e7-81cd-fe07e9fe54db> | ROL: constructora
+USUARIO: Construkit <33287df3-1624-4041-9847-021c095ec8fc> | ROL: constructora
+USUARIO: Construyetudomo <9e411147-227c-4142-aefc-baffea7f3480> | ROL: constructora
+USUARIO: Contacto ÔÇô Casas KIT <ventas@casaskit.cl> | ROL: constructora
+USUARIO: Container World <0e6956b9-afdd-4541-91cd-cb872278ca70> | ROL: constructora
+USUARIO: Containerfull <hola@containerfull.cl> | ROL: constructora
+USUARIO: Containerland <ventas@containerland.cl> | ROL: constructora
+USUARIO: Containers Patagonia <76cb5904-bede-4406-9003-ebf6279717fe> | ROL: constructora
+USUARIO: Contenedores Alma <ariel.ventas@contenedoresalma.cl> | ROL: constructora
+USUARIO: Contenedores Habitacionales En Todo Chile <17743cveliz@megacontainers.cl> | ROL: constructora
+USUARIO: CONTENEDORES MODULARES <764036db-912b-4124-b4f7-d9a0e1836e94> | ROL: constructora
+USUARIO: Diario Sustentable <ca850237-3615-4660-b0bb-40996be5dab6> | ROL: constructora
+USUARIO: Domos Del Sur <0775contacto@domosdelsur.cl> | ROL: constructora
+USUARIO: Domos Prefabricados <56951134567contacto@domosprefabricados.cl> | ROL: constructora
+USUARIO: Domos Quilpu├® <1039e07b-f4a1-405d-8474-ce3332b320a2> | ROL: constructora
+USUARIO: Domos Valdivia <f86a49bf-cd07-4108-99e3-cb5c299831cd> | ROL: constructora
+USUARIO: Domoselk <info@domoselk.com> | ROL: constructora
+USUARIO: Ecomodulares <contacto@ecomodulares.cl> | ROL: constructora
+USUARIO: Ehaus <contacto@ehaus.cl> | ROL: constructora
+USUARIO: El Diario Inmobiliario <62866c00-7683-48db-84c4-4af2940ed83b> | ROL: constructora
+USUARIO: EL TOKE LTDA <info@eltoke.cl> | ROL: constructora
+USUARIO: Evox House <arenas.contacto@evoxhouse.cl> | ROL: constructora
+USUARIO: Fabrica FV <info@fundacionvivienda.cl> | ROL: constructora
+USUARIO: F├íbrica Paneles Sip Curic├│ <tecnosip@maderasvaldivia.cl> | ROL: constructora
+USUARIO: Facoro <info@facoro.cl> | ROL: constructora
+USUARIO: FEMARQ SPA <contacto@femarq.cl> | ROL: constructora
+USUARIO: Fotocasa <ventas@fotocasa.cl> | ROL: constructora
+USUARIO: Globalsip <contacto@globalsip.cl> | ROL: constructora
+USUARIO: Grau <contacto@grau.cl> | ROL: constructora
+USUARIO: Grupo Casas O'higgins <dfac4a4f-02ac-4b71-9545-a64fb43c49de> | ROL: constructora
+USUARIO: HCP <contacto@hcpcasas.cl> | ROL: constructora
+USUARIO: Hoteles En Chile <a20e276a-07f6-43c1-9ed6-e78c18ff9ed2> | ROL: constructora
+USUARIO: Inmobiliaria Terra Sur <contacto@iterrasur.cl> | ROL: constructora
+USUARIO: Innova3 <contacto@innova3.cl> | ROL: constructora
+USUARIO: Instagram <876fb310-a138-4add-8447-0670edf00bef> | ROL: constructora
+USUARIO: Intercontainers <bfd2e3b8-d526-415a-80d0-48804b6cddc3> | ROL: constructora
+USUARIO: Jamab <hola@jamab.cl> | ROL: constructora
+USUARIO: KASAKIT SPA <kasakitspa@gmail.com> | ROL: constructora
+USUARIO: L2arquitectura <3c8328d6-36a9-4976-871b-4ea8e8caa005> | ROL: constructora
+USUARIO: La Custre <ventas@casaslacustre.cl> | ROL: constructora
+USUARIO: Laqum <contacto@laqum.cl> | ROL: constructora
+USUARIO: Laserena <7ba546cf-4409-4bc6-9c03-c6f8e6304403> | ROL: constructora
+USUARIO: Linkhome <ea23d9cb-1849-40f2-acc8-076bc5cfb5fb> | ROL: constructora
+USUARIO: Loow Chile <9edf31de-0066-4930-b607-6b14f820bed5> | ROL: constructora
+USUARIO: Madecas <madecascontacto@gmail.com> | ROL: constructora
+USUARIO: Magisur <contacto@focosur.cl> | ROL: constructora
+USUARIO: Mediagua Chile <d9d44dd2-4bdf-44f3-8570-5763d26e5afb> | ROL: constructora
+USUARIO: Megapanel <contacto@megapanel.cl> | ROL: constructora
+USUARIO: Mercantil.com El Directorio De Empresas En <109b65a4-fd75-4c62-a012-bc7bd9b9622e> | ROL: constructora
+USUARIO: Metalkit <ventas@metalkit.cl> | ROL: constructora
+USUARIO: Ministerio De Vivienda Y Urbanismo <4ddc7e2a-7e60-4b97-beb8-5c337cb3cde6> | ROL: constructora
+USUARIO: Misitio 1 <44a5d672-2dc2-4082-9b25-db8b0bc3dc5e> | ROL: constructora
+USUARIO: Modjourney <fe7c4df5-3bff-4189-9b14-fb649a5be9e7> | ROL: constructora
+USUARIO: Modular SIP <ventas@modularsip.cl> | ROL: constructora
+USUARIO: Mundo Panel Sip <contacto@mundopanelsip.cl> | ROL: constructora
+USUARIO: Negocio & Construcci├│n <contacto@negocioyconstruccion.cl> | ROL: constructora
+USUARIO: Neh├║en Construcciones Modulares <ventas@nehuenmodulares.cl> | ROL: constructora
+USUARIO: Nordhaus <contacto@nordhaus.cl> | ROL: constructora
+USUARIO: Panel SIP Metcorp <contacto@metcorp.cl> | ROL: constructora
+USUARIO: Panelbox <contacto@panelbox.cl> | ROL: constructora
+USUARIO: Paneles Sip <7626ventas@panelessip.cl> | ROL: constructora
+USUARIO: Paneles SIP En Chile. Calidad Al Mejor Precio <f0296e1e-d586-4528-9d4a-47c525383a28> | ROL: constructora
+USUARIO: Patagonia House Spa <50c27a69-5cd0-4fde-bd30-bd5fbb1b6498> | ROL: constructora
+USUARIO: Patagual Home <contacto@patagualhome.cl> | ROL: constructora
+USUARIO: Pinterest <a2be3d24-6b24-4bec-a45f-930cc93cbea6> | ROL: constructora
+USUARIO: Pintores Chilo├® <hola@pintoreschiloe.cl> | ROL: constructora
+USUARIO: Planos De Casas <contacto@planosdecasas.cl> | ROL: constructora
+USUARIO: Prefabricada <contacto@prefabricada.cl> | ROL: constructora
+USUARIO: Prefabricadas Premium <contacto@prefabricadaspremium.cl> | ROL: constructora
+USUARIO: Prefabricadas San Ignacio <contacto@prefabricadassanignacio.cl> | ROL: constructora
+USUARIO: Prefabricadosrya <contacto@prefabricadosrya.cl> | ROL: constructora
+USUARIO: Prefabs <contacto@prefabs.cl> | ROL: constructora
+USUARIO: Promet <ventas@promet.cl> | ROL: constructora
+USUARIO: Propanel <contacto@propanel.cl> | ROL: constructora
+USUARIO: Prosip <510a6952-c702-4219-be3c-0a368d819e31> | ROL: constructora
+USUARIO: Ready House <ventas@readyhouse.cl> | ROL: constructora
+USUARIO: Refugios Nativos <info@refugiosnativos.cl> | ROL: constructora
+USUARIO: Ruca Llap├╝d <09ec15fa-a418-4604-abb1-0649c11887ba> | ROL: constructora
+USUARIO: Rucantu <chilecontacto@rucantu.cl> | ROL: constructora
+USUARIO: Rukalhue <d4039e16-dc4f-4f5e-8998-0eab9eab7305> | ROL: constructora
+USUARIO: Ruralhouse <contactoruralhouse@gmail.com> | ROL: constructora
+USUARIO: Ruralistic <ruralistic24@gmail.com> | ROL: constructora
+USUARIO: Servipro <contacto@servipro.cl> | ROL: constructora
+USUARIO: Siphouse <ventas@siphouse.cl> | ROL: constructora
+USUARIO: Sitio Web Nativos Chile <ventas@casasnativoschile.cl> | ROL: constructora
+USUARIO: Slaico Lab <slaicospa@gmail.com> | ROL: constructora
+USUARIO: Soloprefabricadas <26aaf261-ad8c-493d-8071-006a65132923> | ROL: constructora
+USUARIO: Spacewise <ventas@spacewise.cl> | ROL: constructora
+USUARIO: Steelframing <contacto@casasgreenvalley.cl> | ROL: constructora
+USUARIO: Sweethomes Chile <n.ventas@sweethomes.cl> | ROL: constructora
+USUARIO: Talca Prefabricadas <contacto@talcaprefabricadas.cl> | ROL: constructora
+USUARIO: Talehome <9adae88b-ae2d-4b09-8e66-1c14b3a6ece1> | ROL: constructora
+USUARIO: TECHO Chile <info.chile@techo.org> | ROL: constructora
+USUARIO: Tecna Zinc <contacto@tecna-zinc.cl> | ROL: constructora
+USUARIO: Tecno Fast <cotizaciones@tecnofast.cl> | ROL: constructora
+USUARIO: Tecno Fast Home <640be0dd-d908-4318-8e7a-938bd82e95c4> | ROL: constructora
+USUARIO: Tecnopanel <contacto@iterrasur.cl> | ROL: constructora
+USUARIO: Temukit <contacto@temukit.cl> | ROL: constructora
+USUARIO: The Wall <ventas@thewall.cl> | ROL: constructora
+USUARIO: Tiny Home <nventas@tiny-home.cl> | ROL: constructora
+USUARIO: Tiny Paihuen <a9f31e4b-810f-4815-9cc4-7ed646fe070f> | ROL: constructora
+USUARIO: Trupanel <trupanel@trupanel.cl> | ROL: constructora
+USUARIO: Trupanel Casas SIP <e201abff-66b8-4e14-a8ce-f949edea4482> | ROL: constructora
+USUARIO: Tu Casa F├ícil <ventas@tucasafacil.cl> | ROL: constructora
+USUARIO: Vaspanel <info@vaspanel.cl> | ROL: constructora
+USUARIO: VH Aceros <ventas@vh.cl> | ROL: constructora
+USUARIO: Vidrier├¡as En Quilpu├® Por Vidrier├¡a Chimy <c0437940-d180-4263-90cb-0fae243a5bf9> | ROL: constructora
+USUARIO: Viviendas Aconcagua <47be6e91-1483-4f57-9f8d-48a7425761b7> | ROL: constructora
+USUARIO: Viviendas Modulares En Chile <8e8d1cd6-65fb-4cdc-a43b-7d9b3ca51316> | ROL: constructora

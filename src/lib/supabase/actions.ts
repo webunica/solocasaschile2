@@ -289,3 +289,36 @@ export async function deleteModelo(id: string) {
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
 }
+
+export async function updateSiteSettings(key: string, value: any) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (!user) throw new Error("No autenticado")
+
+  const isSuperAdmin = user.app_metadata?.is_superadmin === true || user.user_metadata?.role === 'superadmin' || user.app_metadata?.role === 'superadmin';
+  const isAdmin = isSuperAdmin || user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin';
+
+  // Opcional: chequear base de datos si es necesario, pero como ya sabemos
+  // asumimos que user_metadata o app_metadata lo tienen.
+  // Pero para seguridad total, obtenemos de la DB:
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).maybeSingle();
+  const dbIsAdmin = profile?.role === 'admin' || profile?.role === 'superadmin';
+
+  if (!isAdmin && !dbIsAdmin) {
+    throw new Error("No tienes permisos de administrador")
+  }
+
+  const { error } = await supabase
+    .from('site_settings')
+    .upsert({ 
+      key, 
+      value,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'key' })
+
+  if (error) throw error
+  
+  revalidatePath('/', 'layout')
+  return { success: true }
+}
