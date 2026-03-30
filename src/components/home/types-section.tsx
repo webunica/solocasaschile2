@@ -11,16 +11,33 @@ import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
 
 export function TypesSection() {
   const [index, setIndex] = useState(0);
-  const maxIndex = CONSTRUCTION_SYSTEMS.length - 4; // Show 4 items on large screens
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const totalItems = CONSTRUCTION_SYSTEMS.length;
+  const desktopVisible = 4;
+  const maxIndex = isMobile ? totalItems - 1 : totalItems - desktopVisible;
   
   const next = () => setIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
   const prev = () => setIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
 
-  // Auto-slide to show it's animated
+  // Auto-slide 
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, [maxIndex, index]); // Added index to dependency to reset timer on manual click if needed
+  }, [maxIndex, index]); 
+
+  // Mobile Carousel Logic: Central Card with side peeking
+  // On mobile we want card width to be ~80% and 10% on each side to peek.
+  const cardWidth = isMobile ? 80 : 25; // % of container
+  const gap = isMobile ? 4 : 0; // % gap
+  const offset = isMobile ? 10 : 0; // % initial offset to center first card
 
   return (
     <section className="pt-32 pb-[100px] bg-background relative overflow-hidden">
@@ -64,8 +81,25 @@ export function TypesSection() {
           </div>
         </div>
 
-        <div className="relative overflow-visible">
-          <div className="flex transition-all duration-700 ease-out" style={{ transform: `translateX(-${index * (100 / 4)}%)` }}>
+        <div className="relative overflow-visible md:px-0">
+          <motion.div 
+            className="flex cursor-grab active:cursor-grabbing"
+            animate={{ 
+              x: isMobile 
+                ? `calc(${offset}% - ${index * (cardWidth + gap)}%)`
+                : `-${index * cardWidth}%`
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            drag={isMobile ? "x" : false}
+            dragConstraints={{ left: -1000, right: 1000 }} // Will be refined by actual content
+            onDragEnd={(_, info) => {
+              if (isMobile) {
+                const threshold = 50;
+                if (info.offset.x < -threshold && index < maxIndex) next();
+                else if (info.offset.x > threshold && index > 0) prev();
+              }
+            }}
+          >
             {CONSTRUCTION_SYSTEMS.map((type: any, i: number) => (
               <motion.div 
                 key={type.id} 
@@ -73,35 +107,42 @@ export function TypesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="flex-none w-full md:w-1/2 lg:w-1/4 p-4 group"
+                style={{ 
+                  width: `${cardWidth}%`,
+                  marginRight: isMobile ? `${gap}%` : "0"
+                }}
+                className={cn(
+                  "flex-none p-2 md:p-4 group transition-all duration-500",
+                  isMobile && index !== i ? "opacity-40 scale-90 grayscale blur-[2px]" : "opacity-100 scale-100"
+                )}
               >
                 <Link href={type.link} className="block h-full outline-none">
                   <div className={cn(
-                    "h-full p-10 rounded-[3rem] border border-border/40 bg-gradient-to-br transition-all duration-500",
-                    "hover:shadow-[0_40px_80px_-20px_rgba(27,0,136,0.12)] hover:-translate-y-2 relative overflow-hidden flex flex-col justify-between min-h-[480px]",
+                    "h-full p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border/40 bg-gradient-to-br transition-all duration-500",
+                    "hover:shadow-[0_40px_80px_-20px_rgba(27,0,136,0.12)] hover:-translate-y-2 relative overflow-hidden flex flex-col justify-between min-h-[420px] md:min-h-[480px]",
                     type.color
                   )}>
                     {/* Internal Glow */}
                     <div className="absolute top-0 right-0 w-48 h-48 bg-white/40 dark:bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     
-                    <div className="space-y-8 relative z-10">
+                    <div className="space-y-6 md:space-y-8 relative z-10">
                       <div className={cn(
-                        "w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 text-white shadow-2xl group-hover:scale-110 group-hover:rotate-6 group-hover:brightness-110",
+                        "w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-all duration-500 text-white shadow-2xl group-hover:scale-110 group-hover:rotate-6 group-hover:brightness-110",
                         type.accent,
                         type.accent === "bg-brand-indigo" ? "shadow-brand-indigo/30" : "shadow-brand-teal/30"
                       )}>
                         {type.icon}
                       </div>
                       
-                      <div className="space-y-4">
-                         <h3 className="text-3xl font-black font-heading tracking-tighter text-foreground group-hover:text-primary transition-colors">{type.title}</h3>
-                         <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-80">
+                      <div className="space-y-3 md:space-y-4">
+                         <h3 className="text-2xl md:text-3xl font-black font-heading tracking-tighter text-foreground group-hover:text-primary transition-colors">{type.title}</h3>
+                         <p className="text-xs md:text-sm text-muted-foreground font-medium leading-relaxed opacity-80">
                            {type.description}
                          </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-12 group-hover:gap-4 transition-all">
+                    <div className="flex items-center text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-8 md:mt-12 group-hover:gap-4 transition-all">
                       Explorar Modelos 
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
                     </div>
@@ -109,7 +150,7 @@ export function TypesSection() {
                 </Link>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
