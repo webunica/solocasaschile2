@@ -154,43 +154,6 @@ export const CONSTRUCTORAS: Constructora[] = [
 
 export const MODELOS: Modelo[] = [
   {
-    id: "m0",
-    constructoraId: "c0",
-    constructoraNombre: "Austral SIP",
-    constructoraSlug: "austral-sip",
-    constructoraPlan: "premium",
-    nombre: "Austral SIP 140 - Luxury Edition",
-    slug: "austral-sip-140-luxury",
-    tipo: "sip",
-    superficieM2: 140,
-    dormitorios: 4,
-    banos: 3,
-    precioDesdeUF: 1850,
-    imagenes: [
-      "/images/modelos/austral/frente.jpg", 
-      "/images/modelos/austral/interior.jpg", 
-      "/images/modelos/austral/cocina.jpg",
-      "/images/modelos/austral/plano.jpg",
-      "/images/modelos/austral/exterior.jpg",
-      "/images/modelos/austral/patio.jpg",
-      "/images/modelos/austral/bano.jpg",
-      "/images/modelos/austral/atras.jpg",
-      "/images/modelos/austral/nocturna.jpg"
-    ],
-    tiempoEntrega: "120 días",
-    descripcion: "Modelo insignia de construcción SIP de 140m². Un hogar diseñado para resistir los climas más exigentes con un confort térmico inigualable y acabados arquitectónicos de vanguardia.",
-    especificaciones: {
-      "Estructura": "Panel SIP 162mm High-Density",
-      "Cubierta": "Sistema de techumbre con ventilación cruzada",
-      "Terminaciones": "Revestimiento térmico exterior EIFS, porcelanatos rectificados",
-      "Eficiencia": "Certificación energética Clase A",
-      "Garantía": "10 años estructural",
-    },
-    garantiaAnos: 10,
-    postventa: true,
-    disponible: true,
-  },
-  {
     id: "m1",
     constructoraId: "c1",
     constructoraNombre: "TecnoFast Home",
