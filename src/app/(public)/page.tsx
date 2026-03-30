@@ -29,23 +29,28 @@ export default function Home() {
       {/* A: Attention (Hero) */}
       <HeroSection />
 
-      {/* Model Selection (Desire) */}
-      <FeaturedModelsSection />
+      {/* Trust & Authority (Early Social Proof) */}
+      <TrustSection />
+
+      {/* Concept Identification (Categorization) */}
+      <TypesSection />
 
       {/* Retention (Price Drop Alert) */}
       <PriceDropBanner />
 
-      {/* Concept Identification */}
-      <TypesSection />
+      {/* Model Selection (The Product) */}
+      <FeaturedModelsSection />
 
       {/* Flow & Education (How It Works) */}
       <HowItWorks />
 
-      {/* Builder Directory (Social Proof & Options) */}
+      {/* Builder Directory (Options) */}
       <FeaturedConstructorsSection />
 
-      {/* A: Action (Final CTA) */}
+      {/* SEO Authority & FAQ (Semantic Weight) */}
       <SeoContent />
+
+      {/* A: Action (Final CTA) */}
       <FinalCTA />
     </main>
   );

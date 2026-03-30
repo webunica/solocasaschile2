@@ -65,17 +65,17 @@ export function HeroSection() {
               className="space-y-8 text-center lg:text-left"
             >
               <div className="space-y-4">
-                 <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-full inline-flex">
-                    Plataforma #1 en Chile
+                 <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-2xl inline-flex">
+                    Plataforma #1 de Casas en Chile
                  </Badge>
-                 <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-black tracking-[-0.07em] leading-[0.85] text-brand-indigo">
-                    PROYECTA TU <br />
-                    <span className="gradient-text block translate-y-2">FUTURO HOGAR</span>
+                 <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-[0.9] text-brand-indigo">
+                    CASAS PREFABRICADAS <br />
+                    <span className="gradient-text block translate-y-2 uppercase italic">Compara y Cotiza</span>
                  </h1>
               </div>
               
               <p className="text-xl md:text-2xl text-muted-foreground/90 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                 Accede al <span className="text-foreground font-bold italic">catálogo más completo</span> de Chile. Compara diseños, materiales y presupuestos técnicos de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas.
+                 Encuentra tu hogar ideal entre <span className="text-foreground font-bold">+5.000 modelos</span> de casas SIP, modulares y tradicionales de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo Chile.
               </p>
 
               {/* Mobile CTA (Form in Modal) */}

@@ -16,13 +16,13 @@ export function SeoContent() {
           {/* Main Content Block */}
           <div className="space-y-12">
             <div className="space-y-6 max-w-3xl">
-              <Badge variant="outline" className="border-primary/20 text-primary uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-full">
-                 Guía de Innovación
+              <Badge variant="outline" className="border-primary/20 text-primary uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-2xl">
+                 Guía Experta 2026
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tighter leading-none">
+              <h2 className="text-4xl md:text-6xl font-heading font-black tracking-tighter leading-none">
                 Casas Prefabricadas SIP: <br />
-                <span className="gradient-text">Tu Nuevo Hogar en Chile</span>
-              </h1>
+                <span className="gradient-text">Innovación y Eficiencia en Chile</span>
+              </h2>
               <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground font-medium leading-relaxed">
                 <p>
                   La búsqueda de un hogar ideal puede ser desafiante, especialmente cuando buscas innovación y calidad. 
@@ -66,20 +66,20 @@ export function SeoContent() {
             </div>
           </div>
 
-          {/* Types Grid */}
+          {/* Types Grid - SEO Optimized */}
           <div className="space-y-16">
             <div className="text-center space-y-4">
-              <h2 className="text-4xl font-heading font-black tracking-tighter uppercase">Diversidad de Construcción</h2>
+              <h2 className="text-4xl font-heading font-black tracking-tighter uppercase">Modelos de Casas Prefabricadas</h2>
               <p className="text-muted-foreground font-medium max-w-2xl mx-auto">
-                Explora las diferentes tipologías que definen el nuevo estándar de vivienda en Chile.
+                Compara precios y diseños de las tipologías líderes en el mercado habitacional chileno.
               </p>
             </div>
             
             <div className="grid sm:grid-cols-3 gap-8">
               {[
-                { t: "Casas Modulares", d: "Versatilidad y personalización total mediante ensamblaje modular preciso." },
-                { t: "Casas Contenedores", d: "Solución innovadora, ecológica y de bajo costo con diseño industrial avanzado." },
-                { t: "Casas Llave en Mano", d: "Experiencia sin complicaciones: desde el diseño básico hasta el último acabado profesional." },
+                { t: "Casas Modulares", d: "Sistemas versátiles con ensamblaje de precisión y personalización arquitectónica completa." },
+                { t: "Casas Contenedores", d: "Solución económica y sostenible con diseño industrial de vanguardia y rápido montaje." },
+                { t: "Casas Llave en Mano", d: "Proyectos terminados: desde fundaciones hasta el último acabado, listos para habitar." },
               ].map((item, i) => (
                 <div key={i} className="glass p-10 rounded-[2.5rem] space-y-6 hover:shadow-xl transition-all hover:-translate-y-1 border-border/40">
                   <h3 className="text-xl font-black tracking-tighter uppercase leading-none">{item.t}</h3>
@@ -183,21 +183,48 @@ export function SeoContent() {
              </div>
           </div>
 
+          {/* FAQ SEO Section */}
+          <div className="space-y-16 border-t border-border/40 pt-20">
+             <div className="text-center space-y-4">
+                <h2 className="text-4xl font-heading font-black tracking-tighter uppercase">Preguntas Frecuentes</h2>
+                <p className="text-muted-foreground font-medium max-w-2xl mx-auto">Todo lo que necesitas saber antes de comprar tu casa prefabricada en Chile.</p>
+             </div>
+             <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                {[
+                  { q: "¿Cuánto cuesta una casa prefabricada en Chile?", a: "Los precios varían según el metraje y materialidad. En promedio, una casa prefabricada básica parte desde los $15.000.000, mientras que modelos llave en mano de alto estándar pueden superar los $60.000.000." },
+                  { q: "¿Qué es mejor: casa SIP o panel tradicional?", a: "Las casas SIP ofrecen una eficiencia térmica superior y mayor rapidez de montaje, ideal para climas extremos en Chile. Las casas tradicionales suelen ser más económicas pero requieren mayor mantenimiento." },
+                  { q: "¿Qué incluye una casa llave en mano?", a: "Suele incluir fundaciones, estructura (SIP o madera), techumbre, instalaciones eléctricas, sanitarias y terminaciones completas (pisos, pintura, ventanas), lista para habitar." },
+                  { q: "¿Cómo elegir una constructora certificada?", a: "En SolocasasChile auditamos a las constructoras para asegurar que cumplan con los estándares técnicos y legales. Siempre recomendamos revisar nuestro catálogo de constructoras verificadas." },
+                  { q: "¿Se puede financiar con crédito hipotecario?", a: "Sí, muchas constructoras trabajan con bancos para financiamiento mediante estados de avance. Es fundamental contar con el terreno a tu nombre para calificar." },
+                  { q: "¿Son seguras ante sismos?", a: "Totalmente. Todas las constructoras en nuestra plataforma deben cumplir con la norma chilena NCh433 de diseño sísmico, garantizando seguridad estructural." },
+                  { q: "¿Cuánto demora la instalación total?", a: "Desde la firma del contrato, una casa modular o SIP suele demorar entre 60 a 90 días en promedio, dependiendo de la complejidad del terreno y el modelo elegido." },
+                  { q: "¿Puedo personalizar el diseño de mi casa?", a: "La mayoría de nuestros modelos permiten personalización interna y ampliaciones futuras. Contamos con arquitectos que pueden ajustar el diseño a tus necesidades específicas." },
+                ].map((item, i) => (
+                  <div key={i} className="space-y-3">
+                     <h3 className="text-lg font-bold text-brand-indigo">{item.q}</h3>
+                     <p className="text-sm text-muted-foreground leading-relaxed font-medium">{item.a}</p>
+                  </div>
+                ))}
+             </div>
+          </div>
+
           {/* Structured Data Script */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
                 "@context": "https://schema.org",
-                "@type": "Product",
-                "name": "Casas Prefabricadas SIP",
-                "description": "Casas prefabricadas SIP en Chile, ofreciendo eficiencia energética y diseño innovador.",
-                "brand": { "@type": "Brand", "name": "SolocasasChile" },
-                "offers": {
-                  "@type": "AggregateOffer",
-                  "url": "https://solocasaschile2.vercel.app/catalogo",
-                  "priceCurrency": "CLP"
-                }
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "¿Cuánto cuesta una casa prefabricada en Chile?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Los precios varían según el metraje y materialidad. En promedio, una casa prefabricada básica parte desde los $15.000.000, mientras que modelos llave en mano de alto estándar pueden superar los $60.000.000."
+                    }
+                  }
+                ]
               })
             }}
           />
