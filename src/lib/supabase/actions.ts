@@ -269,7 +269,7 @@ export async function updateConstructoraScore(constructoraId: string, score: num
   return { success: true }
 }
 
-export async function deleteModelo(id: string) {
+export async function deleteModelo(id: string, _formData?: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('No autenticado')
@@ -283,7 +283,7 @@ export async function deleteModelo(id: string) {
     query.eq('constructora_id', user.id)
   }
 
-  const { error, count } = await query.select('*', { count: 'exact' });
+  const { error } = await query.select('*');
   
   if (error) throw error
   
@@ -293,8 +293,6 @@ export async function deleteModelo(id: string) {
   revalidatePath('/')
   revalidatePath('/comparar')
   revalidatePath('/modelo/[slug]', 'page')
-  
-  return { success: true, count }
 }
 
 export async function updateSiteSettings(key: string, value: any) {
