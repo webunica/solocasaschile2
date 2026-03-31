@@ -9,7 +9,7 @@ export default function DemoPage() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* ── Header ────────────────────────────────────────────── */}
-      <section className="relative py-20 text-center overflow-hidden border-b border-border/40 bg-muted/20">
+      <section className="relative pt-40 pb-20 text-center overflow-hidden border-b border-border/40 bg-muted/20">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-teal/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="container max-w-4xl mx-auto px-4 relative z-10 space-y-6">
@@ -24,11 +24,11 @@ export default function DemoPage() {
 
       {/* ── Calendly Widget ────────────────────────────────────── */}
       <section className="container max-w-5xl mx-auto px-4 mt-12">
-        <div className="bg-card border border-border/40 rounded-[2rem] shadow-2xl overflow-hidden min-h-[700px]">
+        <div className="w-full min-h-[700px]">
           {/* Principio del widget integrado de Calendly */}
           <div 
             className="calendly-inline-widget w-full" 
-            data-url="https://calendly.com/agenda-solocasaschile/reunion-solocasaschile-com" 
+            data-url="https://calendly.com/agenda-solocasaschile/reunion-solocasaschile-com?hide_gdpr_banner=1&background_color=ffffff&text_color=0f172a&primary_color=0b9e86" 
             style={{ minWidth: "320px", height: "700px" }}
           ></div>
           <Script 
