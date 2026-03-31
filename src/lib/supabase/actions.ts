@@ -63,7 +63,7 @@ export async function register(formData: FormData) {
     const phone = formData.get('phone') as string
     const plan = (formData.get('plan') as string) || 'gratis'
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile.com'
 
     const { data: authData, error: signUpError } = await supabase.auth.signUp({
       email,
@@ -124,7 +124,7 @@ export async function register(formData: FormData) {
 export async function resendConfirmation(email: string) {
   try {
     const supabase = await createClient()
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile.com'
     const { error } = await supabase.auth.resend({
       type: 'signup',
       email,
