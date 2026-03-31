@@ -30,6 +30,8 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
   const [previewMode, setPreviewMode] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [sentCount, setSentCount] = useState(0);
 
   const filteredList = useMemo(() => {
     return constructoras.filter(c => 
@@ -56,24 +58,13 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submit clicked", { asunto, mensaje, selectedCount: selectedIds.size });
-
-    if (!asunto || !mensaje) {
-      toast.error("Por favor completa el Asunto y el Mensaje.");
-      return;
-    }
-    
-    if (selectedIds.size === 0) {
-      toast.error("Debes seleccionar al menos un destinatario que tenga correo electrónico.");
-      return;
-    }
+    if (!asunto || !mensaje) return toast.error("Por favor completa el Asunto y el Mensaje.");
+    if (selectedIds.size === 0) return toast.error("Selecciona al menos un destinatario con correo.");
 
     const ok = confirm(`¿Estás seguro de enviar este mensaje a las ${selectedIds.size} constructoras seleccionadas?`);
     if (!ok) return;
 
     setLoading(true);
-    const toastId = toast.loading("Enviando correos masivos...");
-    
     try {
       const formData = new FormData();
       formData.append("asunto", asunto);
@@ -82,22 +73,60 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
       formData.append("selected_ids", JSON.stringify(Array.from(selectedIds)));
 
       const result = await sendBulkEmail(formData);
-      setLoading(false);
-
       if (result.success) {
-        toast.success(`¡Mensaje enviado con éxito a ${result.count} destinatarios!`, { id: toastId });
+        setSentCount(result.count);
+        setShowSuccess(true);
+        
+        // Confeti Celebration
+        const confetti = (await import("canvas-confetti")).default;
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#0b9e86', '#1a1b26', '#ffffff']
+        });
+
         setAsunto("");
         setMensaje("");
         setSelectedIds(new Set());
       } else {
-        toast.error(result.error || "Algo salió mal en el servidor", { id: toastId });
+        toast.error(result.error || "Algo salió mal en el envío.");
       }
     } catch (error: any) {
+      console.error("Error en el envío:", error);
+      toast.error("Error inesperado.");
+    } finally {
       setLoading(false);
-      console.error("Error in handleSubmit:", error);
-      toast.error("Error inesperado al intentar enviar: " + error.message, { id: toastId });
     }
   };
+
+  if (showSuccess) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-card border border-emerald-500/20 rounded-[2.5rem] p-12 text-center space-y-6 shadow-2xl shadow-emerald-500/10 min-h-[500px] flex flex-col items-center justify-center"
+      >
+        <div className="w-24 h-24 bg-emerald-500 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/30 mb-4">
+           <CheckCircle2 className="w-12 h-12 text-white" />
+        </div>
+        <div className="space-y-2">
+           <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">¡Anuncio Enviado!</h2>
+           <p className="text-muted-foreground font-medium max-w-sm mx-auto">
+             Tu mensaje ha sido entregado correctamente a <span className="text-foreground font-black">{sentCount} empresas</span> seleccionadas.
+           </p>
+        </div>
+        <div className="pt-4">
+          <Button 
+            onClick={() => setShowSuccess(false)}
+            className="h-14 px-10 rounded-2xl brand-gradient text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform"
+          >
+             Redactar otro mensaje
+          </Button>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -112,7 +141,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
               <Mail className="w-6 h-6" />
            </div>
            <div>
-              <h2 className="text-2xl font-heading font-black tracking-tight">Segmentación Avanzada</h2>
+              <h2 className="text-2xl font-heading font-black tracking-tight">Nueva Comunicación</h2>
               <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest opacity-60">Selecciona destinatarios específicos</p>
            </div>
         </div>
@@ -124,7 +153,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
               <button
                 key={p}
                 onClick={() => selectByPlan(p)}
-                className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 bg-muted/20 hover:bg-muted/40 transition-all text-muted-foreground hover:text-foreground"
+                className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest border border-border/40 bg-muted/20 hover:bg-muted/40 transition-all text-muted-foreground hover:text-foreground italic"
               >
                 Cargar {p}
               </button>
@@ -143,7 +172,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
                 />
              </div>
              
-             <div className="border border-border/30 rounded-2xl h-[250px] overflow-y-auto bg-muted/5 p-2 space-y-1">
+             <div className="border border-border/30 rounded-2xl h-[220px] overflow-y-auto bg-muted/5 p-2 space-y-1">
                 {filteredList.map(c => {
                   const hasEmail = !!c.email;
                   const isSelected = selectedIds.has(c.id);
@@ -176,17 +205,22 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
                   );
                 })}
              </div>
-             <p className="text-[10px] font-bold text-muted-foreground opacity-60 ml-2">
-                Seleccionados: {selectedIds.size} de {constructoras.length} empresas.
-             </p>
+             <div className="flex justify-between items-center px-1">
+                <p className="text-[10px] font-bold text-muted-foreground opacity-60">
+                    Seleccionados: <span className="text-foreground">{selectedIds.size}</span> de {constructoras.length}
+                </p>
+                {selectedIds.size > 0 && (
+                  <button onClick={() => setSelectedIds(new Set())} className="text-[9px] font-black uppercase text-destructive hover:underline">Limpiar</button>
+                )}
+             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-3">
-               <Label htmlFor="asunto" className="text-[10px] font-black uppercase tracking-widest opacity-60 ml-1">Asunto</Label>
+               <Label htmlFor="asunto" className="text-[10px] font-black uppercase tracking-widest opacity-60">Asunto del correo</Label>
                <Input 
                   id="asunto"
-                  placeholder="Mensaje importante para tu constructora..."
+                  placeholder="Escribe el asunto aquí..."
                   value={asunto}
                   onChange={(e) => setAsunto(e.target.value)}
                   className="h-14 rounded-2xl bg-muted/20 border-border/40 font-bold"
@@ -194,13 +228,13 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
             </div>
 
             <div className="space-y-3">
-               <Label htmlFor="mensaje" className="text-[10px] font-black uppercase tracking-widest opacity-60 ml-1">Cuerpo del Mensaje</Label>
+               <Label htmlFor="mensaje" className="text-[10px] font-black uppercase tracking-widest opacity-60">Mensaje Central</Label>
                <Textarea 
                   id="mensaje"
-                  placeholder="Contenido del anuncio..."
+                  placeholder="Redacta el mensaje masivo..."
                   value={mensaje}
                   onChange={(e) => setMensaje(e.target.value)}
-                  className="min-h-[160px] rounded-3xl bg-muted/20 border-border/40 p-5 resize-none font-medium leading-relaxed"
+                  className="min-h-[140px] rounded-3xl bg-muted/20 border-border/40 p-5 resize-none font-medium leading-relaxed"
                />
             </div>
 
@@ -209,7 +243,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
               disabled={loading}
               className={cn(
                 "w-full h-16 rounded-2xl brand-gradient text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl transition-all flex items-center justify-center gap-2",
-                loading ? "opacity-50 cursor-not-allowed" : "hover:scale-[1.01] active:scale-95"
+                loading ? "opacity-50 cursor-not-allowed" : "hover:scale-[1.01] active:scale-95 shadow-primary/20"
               )}
             >
               {loading ? (
@@ -218,7 +252,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
                 </>
               ) : (
                 <>
-                  Enviar a {selectedIds.size} destinatarios <Send className="w-4 h-4" />
+                  Enviar a {selectedIds.size} empresas <Send className="w-4 h-4" />
                 </>
               )}
             </button>
@@ -253,11 +287,11 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
                  <h1 className="text-white text-lg font-black tracking-tight m-0">SolocasasChile</h1>
               </div>
               <div className="flex-1 p-6 overflow-y-auto whitespace-pre-line text-xs text-zinc-700 leading-relaxed">
-                 {asunto && <div className="font-black text-zinc-900 border-b border-zinc-100 pb-3 mb-4 text-sm">{asunto}</div>}
-                 {mensaje || "Escribe el mensaje para previsualizar aquí..."}
+                 {asunto && <div className="font-black text-zinc-900 border-b border-zinc-100 pb-3 mb-4 text-sm leading-tight">{asunto}</div>}
+                 {mensaje || "El contenido del correo aparecerá aquí..."}
               </div>
               <div className="bg-zinc-50 p-4 text-center border-t border-zinc-100">
-                 <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest">Enviado por SolocasasChile.com</p>
+                 <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest leading-none">Enviado por SolocasasChile.com</p>
               </div>
            </div>
         </div>
