@@ -204,16 +204,24 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
                />
             </div>
 
-            <Button 
+            <button 
+              type="submit"
               disabled={loading}
-              className="w-full h-16 rounded-2xl brand-gradient text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl hover:scale-[1.01] transition-all"
-            >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
-                <span className="flex items-center gap-2">
-                  Enviar a {selectedIds.size} destinatarios <Send className="w-4 h-4" />
-                </span>
+              className={cn(
+                "w-full h-16 rounded-2xl brand-gradient text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl transition-all flex items-center justify-center gap-2",
+                loading ? "opacity-50 cursor-not-allowed" : "hover:scale-[1.01] active:scale-95"
               )}
-            </Button>
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" /> Enviando...
+                </>
+              ) : (
+                <>
+                  Enviar a {selectedIds.size} destinatarios <Send className="w-4 h-4" />
+                </>
+              )}
+            </button>
           </form>
         </div>
       </motion.div>
