@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ export default function RegisterPage() {
   const [showPass, setShowPass] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [sentTo, setSentTo] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,16 +40,24 @@ export default function RegisterPage() {
       return;
     }
 
-    const result = await register(formData);
-    if (result?.error) {
-      const msg = result.error.includes('already registered')
-        ? 'Este email ya está registrado. Inicia sesión en su lugar.'
-        : result.error;
-      setError(msg);
-      setLoading(false);
-    } else if (result?.needsConfirmation) {
-      setSentTo(formData.get('email') as string);
-      setEmailSent(true);
+    try {
+      const result = await register(formData);
+      if (result?.error) {
+        const msg = result.error.includes('already registered')
+          ? 'Este email ya está registrado. Inicia sesión en su lugar.'
+          : result.error;
+        setError(msg);
+        setLoading(false);
+      } else if (result?.needsConfirmation) {
+        setSentTo(formData.get('email') as string);
+        setEmailSent(true);
+        setLoading(false);
+      } else if (result?.redirectTo) {
+        router.push(result.redirectTo);
+        // No reseteamos loading — queremos que el spinner siga hasta que cargue el dashboard
+      }
+    } catch (err: any) {
+      setError('Ocurrió un error inesperado. Intenta de nuevo.');
       setLoading(false);
     }
   };

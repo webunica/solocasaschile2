@@ -102,7 +102,7 @@ export async function register(formData: FormData) {
     return { needsConfirmation: true }
   }
 
-  // Auto-confirmado (email disabled) — redirigir directo al dashboard
+  // Auto-confirmado (email disabled) — retornar redirect para que el cliente navegue
   if (authData.user) {
     const slug = companyName
       .toLowerCase()
@@ -120,10 +120,12 @@ export async function register(formData: FormData) {
       verificada: false,
       score_confianza: 50,
     }])
+
+    revalidatePath('/', 'layout')
+    return { redirectTo: '/dashboard' }
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  return { error: 'Error inesperado. Intenta de nuevo.' }
 }
 
 export async function logout() {
