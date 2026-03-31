@@ -56,32 +56,46 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!asunto || !mensaje) return toast.error("Completa Asunto y Mensaje");
-    if (selectedIds.size === 0) return toast.error("Selecciona al menos un destinatario con correo");
+    console.log("Submit clicked", { asunto, mensaje, selectedCount: selectedIds.size });
+
+    if (!asunto || !mensaje) {
+      toast.error("Por favor completa el Asunto y el Mensaje.");
+      return;
+    }
+    
+    if (selectedIds.size === 0) {
+      toast.error("Debes seleccionar al menos un destinatario que tenga correo electrónico.");
+      return;
+    }
 
     const ok = confirm(`¿Estás seguro de enviar este mensaje a las ${selectedIds.size} constructoras seleccionadas?`);
     if (!ok) return;
 
     setLoading(true);
-    const formData = new FormData();
-    formData.append("asunto", asunto);
-    formData.append("mensaje", mensaje);
-    // Para simplificar la Server Action v2, le pasaremos la lista de ids si la modificamos 
-    // pero por ahora usaremos la lógica de audiencia si es masivo.
-    // OPTIMIZACIÓN: Pasamos la audiencia como un flag especial o modificamos la action.
-    formData.append("audiencia", "seleccion_manual");
-    formData.append("selected_ids", JSON.stringify(Array.from(selectedIds)));
+    const toastId = toast.loading("Enviando correos masivos...");
+    
+    try {
+      const formData = new FormData();
+      formData.append("asunto", asunto);
+      formData.append("mensaje", mensaje);
+      formData.append("audiencia", "seleccion_manual");
+      formData.append("selected_ids", JSON.stringify(Array.from(selectedIds)));
 
-    const result = await sendBulkEmail(formData);
-    setLoading(false);
+      const result = await sendBulkEmail(formData);
+      setLoading(false);
 
-    if (result.success) {
-      toast.success(`¡Mensaje enviado con éxito a ${result.count} destinatarios!`);
-      setAsunto("");
-      setMensaje("");
-      setSelectedIds(new Set());
-    } else {
-      toast.error(result.error || "Error al enviar el mensaje");
+      if (result.success) {
+        toast.success(`¡Mensaje enviado con éxito a ${result.count} destinatarios!`, { id: toastId });
+        setAsunto("");
+        setMensaje("");
+        setSelectedIds(new Set());
+      } else {
+        toast.error(result.error || "Algo salió mal en el servidor", { id: toastId });
+      }
+    } catch (error: any) {
+      setLoading(false);
+      console.error("Error in handleSubmit:", error);
+      toast.error("Error inesperado al intentar enviar: " + error.message, { id: toastId });
     }
   };
 

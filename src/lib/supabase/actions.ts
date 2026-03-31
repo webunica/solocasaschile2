@@ -358,20 +358,31 @@ export async function sendBulkEmail(formData: FormData) {
 
   try {
     // 1. Obtener destinatarios basándose en la audiencia
-    let query = supabase.from('constructoras').select('email').not('email', 'is', null)
-    
-    if (audiencia !== 'todos') {
-      query = query.eq('plan', audiencia)
-    }
+    let emails: string[] = []
 
-    const { data: dests, error: fetchError } = await query
-    
-    if (fetchError) throw fetchError
-    if (!dests || dests.length === 0) {
-      return { error: "No hay destinatarios que cumplan con el criterio de audiencia seleccionado." }
+    if (audiencia === 'seleccion_manual') {
+      const selectedIds = JSON.parse(formData.get('selected_ids') as string || '[]')
+      const { data: dests, error: fetchError } = await supabase
+        .from('constructoras')
+        .select('email')
+        .in('id', selectedIds)
+        .not('email', 'is', null)
+      
+      if (fetchError) throw fetchError
+      emails = (dests as any[] || []).map(d => d.email).filter(Boolean)
+    } else {
+      let query = supabase.from('constructoras').select('email').not('email', 'is', null)
+      if (audiencia !== 'todos') {
+        query = query.eq('plan', audiencia)
+      }
+      const { data: dests, error: fetchError } = await query
+      if (fetchError) throw fetchError
+      emails = (dests as any[] || []).map(d => d.email).filter(Boolean)
     }
-
-    const emails = dests.map((d: any) => d.email).filter(Boolean) as string[]
+    
+    if (emails.length === 0) {
+      return { error: "No hay destinatarios válidos seleccionados." }
+    }
 
     // 2. Enviar correos via Resend (BCC para privacidad)
     // Nota: Resend permite hasta 100 destinatarios por lote en BCC habitualmente.
