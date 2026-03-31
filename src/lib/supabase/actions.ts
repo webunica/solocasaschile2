@@ -52,43 +52,45 @@ export async function login(formData: FormData) {
 }
 
 export async function register(formData: FormData) {
-  const supabase = await createClient()
+  try {
+    const supabase = await createClient()
 
-  const email = formData.get('email') as string
-  const password = formData.get('password') as string
-  const companyName = formData.get('companyName') as string
-  const rut = formData.get('rut') as string
-  const repName = formData.get('repName') as string
-  const phone = formData.get('phone') as string
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    const companyName = formData.get('companyName') as string
+    const rut = formData.get('rut') as string
+    const repName = formData.get('repName') as string
+    const phone = formData.get('phone') as string
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
 
-  const { data: authData, error: signUpError } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${siteUrl}/auth/callback`,
-      data: {
-        nombre: companyName,
-        representante: repName,
+    const { data: authData, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${siteUrl}/auth/callback`,
+        data: {
+          nombre: companyName,
+          representante: repName,
+        }
       }
+    })
+
+    if (signUpError) {
+      return { error: signUpError.message }
     }
-  })
 
-  if (signUpError) {
-    return { error: signUpError.message }
-  }
+    if (!authData.user) {
+      return { error: 'No se pudo crear la cuenta. Intenta de nuevo.' }
+    }
 
-  // Si el usuario necesita confirmar email (sesión es null), informar al frontend
-  if (authData.user && !authData.session) {
-    // Crear registro en constructoras de todas formas (se activa cuando confirmen)
     const slug = companyName
       .toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
 
-    await supabase.from('constructoras').insert([{
+    const constructoraPayload = {
       id: authData.user.id,
       nombre: companyName,
       slug,
@@ -97,35 +99,24 @@ export async function register(formData: FormData) {
       plan: 'gratis',
       verificada: false,
       score_confianza: 50,
-    }])
+    }
 
-    return { needsConfirmation: true }
-  }
+    // Si necesita confirmar email (sesión es null)
+    if (!authData.session) {
+      // Intentar crear constructora (puede fallar si ya existe, lo ignoramos)
+      await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id', ignoreDuplicates: true })
+      return { needsConfirmation: true }
+    }
 
-  // Auto-confirmado (email disabled) — retornar redirect para que el cliente navegue
-  if (authData.user) {
-    const slug = companyName
-      .toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-
-    await supabase.from('constructoras').insert([{
-      id: authData.user.id,
-      nombre: companyName,
-      slug,
-      email,
-      telefono: phone,
-      plan: 'gratis',
-      verificada: false,
-      score_confianza: 50,
-    }])
-
+    // Auto-confirmado (email confirmation disabled) — insertar y navegar
+    await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id', ignoreDuplicates: true })
     revalidatePath('/', 'layout')
     return { redirectTo: '/dashboard' }
-  }
 
-  return { error: 'Error inesperado. Intenta de nuevo.' }
+  } catch (err: any) {
+    console.error('[register] Unexpected error:', err)
+    return { error: err?.message || 'Error inesperado en el servidor. Intenta de nuevo.' }
+  }
 }
 
 export async function logout() {
