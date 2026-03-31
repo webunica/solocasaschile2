@@ -137,19 +137,31 @@ function RegisterForm() {
   const [resendDone, setResendDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState(1);
+  const [step1Data, setStep1Data] = useState<Record<string, string>>({});
   const [showPass, setShowPass] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [sentTo, setSentTo] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (step < 2) { setStep(2); return; }
+    const currentFormData = new FormData(e.currentTarget);
+    
+    if (step < 2) { 
+      setStep1Data(Object.fromEntries(currentFormData.entries()) as Record<string, string>);
+      setStep(2); 
+      return; 
+    }
 
     setLoading(true);
     setError(null);
-    const formData = new FormData(e.currentTarget);
-    const password = formData.get("password") as string;
-    const confirm = formData.get("confirmPassword") as string;
+    
+    // Combine step 1 data with step 2 data
+    const finalFormData = new FormData();
+    Object.entries(step1Data).forEach(([k, v]) => finalFormData.append(k, v));
+    Array.from(currentFormData.entries()).forEach(([k, v]) => finalFormData.append(k, v as string));
+
+    const password = finalFormData.get("password") as string;
+    const confirm = finalFormData.get("confirmPassword") as string;
 
     if (password !== confirm) {
       setError("Las contraseñas no coinciden.");
@@ -158,7 +170,7 @@ function RegisterForm() {
     }
 
     try {
-      const result = await register(formData);
+      const result = await register(finalFormData);
       if (result?.error) {
         const msg = result.error.includes("already registered")
           ? "Este email ya está registrado. Inicia sesión en su lugar."
@@ -166,7 +178,7 @@ function RegisterForm() {
         setError(msg);
         setLoading(false);
       } else if (result?.needsConfirmation) {
-        setSentTo(formData.get("email") as string);
+        setSentTo(finalFormData.get("email") as string);
         setEmailSent(true);
         setLoading(false);
       } else if (result?.redirectTo) {
