@@ -144,7 +144,7 @@ export default function NewModelPage() {
               <ArrowLeft className="w-4 h-4" /> Volver al Catálogo
            </Link>
            <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none text-foreground">
-             Nuevo <span className="brand-gradient bg-clip-text text-transparent italic">Lanzamiento</span>
+             Nuevo <span className="gradient-text italic">Lanzamiento</span>
            </h1>
            <p className="text-xl text-muted-foreground font-medium max-w-xl">
              Define las especificaciones técnicas y visuales de tu vivienda para atraer a los mejores prospectos.
