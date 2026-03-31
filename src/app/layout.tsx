@@ -56,6 +56,7 @@ export const metadata: Metadata = {
 import { ThemeProvider } from "@/components/theme-provider";
 import { WhatsAppWidget } from "@/components/common/whatsapp-widget";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
+import { AuthErrorHandler } from "@/components/common/auth-error-handler";
 
 export default function RootLayout({
   children,
@@ -74,6 +75,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AnnouncementBar />
+          <AuthErrorHandler />
           {children}
           <WhatsAppWidget />
         </ThemeProvider>
