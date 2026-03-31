@@ -46,16 +46,16 @@ function BienvenidaContent() {
         <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo/5 via-brand-teal/3 to-transparent pointer-events-none" />
         <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-brand-teal/6 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="container max-w-3xl mx-auto px-4 md:px-8 pt-20 pb-16 relative z-10">
+        <div className="container max-w-4xl mx-auto px-4 md:px-8 pt-36 pb-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="space-y-8"
+            className="space-y-5"
           >
             {/* Check icon */}
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-3xl bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
+            <div className="flex flex-wrap items-center gap-3 md:gap-4">
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-[1.25rem] md:rounded-3xl bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
                 <CheckCircle2 className="w-7 h-7 text-emerald-500" />
               </div>
               {isPaid && (
@@ -67,12 +67,12 @@ function BienvenidaContent() {
             </div>
 
             {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-heading font-black tracking-tighter leading-none">
+            <div className="space-y-3">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black tracking-tighter leading-tight">
                 ¡Bienvenido a{" "}
                 <span className="gradient-text">solocasaschile.com</span>!
               </h1>
-              <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-2xl">
+              <p className="text-base md:text-lg text-muted-foreground font-medium leading-relaxed max-w-2xl">
                 {isPaid
                   ? "Tu correo fue validado correctamente y tu cuenta ya está activa. Ya puedes ingresar a la plataforma con acceso inicial y continuar el proceso para activar tu plan."
                   : "Tu correo fue validado correctamente y tu cuenta ya está activa. Ya puedes ingresar a tu panel para completar tu perfil de empresa, publicar tus modelos y comenzar a recibir solicitudes de cotización."}
@@ -104,39 +104,38 @@ function BienvenidaContent() {
       </div>
 
       {/* Steps */}
-      <div className="container max-w-3xl mx-auto px-4 md:px-8 pb-16 space-y-6">
+      <div className="container max-w-4xl mx-auto px-4 md:px-8 pb-12 space-y-6">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-6">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mb-4">
             Tus próximos pasos
           </p>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
             {steps.map((step, i) => {
               const StepIcon = step.icon;
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.4 + i * 0.1, duration: 0.4 }}
-                  className="flex items-start gap-5 bg-card/60 border border-border/40 rounded-3xl p-6 hover:border-primary/20 hover:bg-card/80 transition-all group"
+                  className="flex flex-col gap-4 bg-card/60 border border-border/40 rounded-3xl p-5 hover:border-primary/20 hover:bg-card/80 transition-all group"
                 >
-                  <div className="w-10 h-10 shrink-0 rounded-2xl bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
-                    <StepIcon className="w-5 h-5 text-primary" />
+                  <div className="flex items-center justify-between w-full">
+                     <div className="w-10 h-10 shrink-0 rounded-[1.25rem] bg-primary/8 flex items-center justify-center group-hover:bg-primary/15 group-hover:scale-105 transition-all">
+                       <StepIcon className="w-5 h-5 text-primary" />
+                     </div>
+                     <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground opacity-40">
+                       Paso {i + 1}
+                     </span>
                   </div>
-                  <div className="space-y-1 flex-1">
-                    <div className="flex items-center gap-3">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">
-                        Paso {i + 1}
-                      </span>
-                    </div>
-                    <p className="font-black text-foreground text-sm">{step.title}</p>
+                  <div className="space-y-1">
+                    <p className="font-black text-foreground text-sm leading-tight">{step.title}</p>
                     <p className="text-xs text-muted-foreground font-medium leading-relaxed">{step.desc}</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground opacity-30 group-hover:opacity-100 group-hover:text-primary shrink-0 mt-1 transition-all" />
                 </motion.div>
               );
             })}
