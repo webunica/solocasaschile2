@@ -61,6 +61,7 @@ export async function register(formData: FormData) {
     const rut = formData.get('rut') as string
     const repName = formData.get('repName') as string
     const phone = formData.get('phone') as string
+    const plan = (formData.get('plan') as string) || 'gratis'
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
 
@@ -72,6 +73,7 @@ export async function register(formData: FormData) {
         data: {
           nombre: companyName,
           representante: repName,
+          plan, // stored in user_metadata — read by the callback to redirect to /bienvenida?plan=X
         }
       }
     })
@@ -96,7 +98,7 @@ export async function register(formData: FormData) {
       slug,
       email,
       telefono: phone,
-      plan: 'gratis',
+      plan, // use the plan the user selected
       verificada: false,
       score_confianza: 50,
     }
@@ -108,14 +110,30 @@ export async function register(formData: FormData) {
       return { needsConfirmation: true }
     }
 
-    // Auto-confirmado (email confirmation disabled) — insertar y navegar
+    // Auto-confirmado (email confirmation disabled) — insertar y redirigir a bienvenida
     await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id', ignoreDuplicates: true })
     revalidatePath('/', 'layout')
-    return { redirectTo: '/dashboard' }
+    return { redirectTo: `/bienvenida?plan=${plan}` }
 
   } catch (err: any) {
     console.error('[register] Unexpected error:', err)
     return { error: err?.message || 'Error inesperado en el servidor. Intenta de nuevo.' }
+  }
+}
+
+export async function resendConfirmation(email: string) {
+  try {
+    const supabase = await createClient()
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile2.vercel.app'
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: { emailRedirectTo: `${siteUrl}/auth/callback` },
+    })
+    if (error) return { error: error.message }
+    return { success: true }
+  } catch (err: any) {
+    return { error: err?.message || 'Error al reenviar el correo.' }
   }
 }
 

@@ -5,7 +5,8 @@ import { cookies } from 'next/headers'
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  const next = searchParams.get('next') ?? '/dashboard'
+  // Allow explicit ?next= override, default to bienvenida
+  const next = searchParams.get('next') ?? null
 
   if (code) {
     const cookieStore = await cookies()
@@ -23,12 +24,20 @@ export async function GET(request: Request) {
       },
     })
 
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) {
-      return NextResponse.redirect(`${origin}${next}`)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+
+    if (!error && data.user) {
+      // If caller passed explicit ?next=, honour it (e.g. password reset)
+      if (next) {
+        return NextResponse.redirect(`${origin}${next}`)
+      }
+
+      // Otherwise redirect to plan-aware welcome page
+      const plan = data.user.user_metadata?.plan || 'gratis'
+      return NextResponse.redirect(`${origin}/bienvenida?plan=${plan}`)
     }
   }
 
-  // Si hay error, redirigir a login con mensaje
+  // On error, redirect to login with error param
   return NextResponse.redirect(`${origin}/login?error=auth_callback_error`)
 }
