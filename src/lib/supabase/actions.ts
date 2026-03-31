@@ -393,15 +393,15 @@ export async function sendBulkEmail(formData: FormData) {
       bcc: emails,
       subject: asunto,
       html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-          <div style="background: #1a1b26; padding: 30px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 24px;">SolocasasChile</h1>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
+          <div style="background: #ffffff; padding: 24px 30px; text-align: center; border-bottom: 3px solid #0b9e86;">
+            <img src="https://solocasaschile.com/images/logo.png" alt="SolocasasChile" style="height: 40px; width: auto; max-width: 100%;" />
           </div>
-          <div style="padding: 30px; line-height: 1.6; color: #333;">
+          <div style="padding: 40px 30px; line-height: 1.6; color: #334155; font-size: 15px;">
             ${mensaje.replace(/\n/g, '<br>')}
           </div>
-          <div style="background: #f9f9f9; padding: 20px; text-align: center; font-size: 12px; color: #666;">
-            Mensaje oficial enviado por la administración de SolocasasChile.com
+          <div style="background: #f8fafc; padding: 20px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0;">
+            Mensaje oficial enviado por la administración de <a href="https://solocasaschile.com" style="color: #0b9e86; text-decoration: none; font-weight: bold;">SolocasasChile.com</a>
           </div>
         </div>
       `,

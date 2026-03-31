@@ -282,16 +282,19 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
               <div className="w-10 h-1 bg-zinc-800 rounded-full" />
            </div>
 
-           <div className="w-full h-full bg-white rounded-[2.2rem] overflow-hidden flex flex-col">
-              <div className="bg-[#1a1b26] p-6 text-center">
-                 <h1 className="text-white text-lg font-black tracking-tight m-0">SolocasasChile</h1>
+           <div className="w-full h-full bg-white rounded-[2.2rem] overflow-hidden flex flex-col border border-slate-200">
+              <div className="bg-white p-5 text-center border-b-[3px] border-brand-teal flex justify-center items-center">
+                 {/* Simulate Logo */}
+                 <img src="/images/logo.png" alt="Logo" className="h-5 w-auto object-contain opacity-90" />
               </div>
-              <div className="flex-1 p-6 overflow-y-auto whitespace-pre-line text-xs text-zinc-700 leading-relaxed">
-                 {asunto && <div className="font-black text-zinc-900 border-b border-zinc-100 pb-3 mb-4 text-sm leading-tight">{asunto}</div>}
+              <div className="flex-1 p-5 overflow-y-auto whitespace-pre-line text-[11px] text-slate-700 leading-relaxed font-medium">
+                 {asunto && <div className="font-black text-slate-900 border-b border-slate-100 pb-3 mb-3 text-[13px] leading-tight">{asunto}</div>}
                  {mensaje || "El contenido del correo aparecerá aquí..."}
               </div>
-              <div className="bg-zinc-50 p-4 text-center border-t border-zinc-100">
-                 <p className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest leading-none">Enviado por SolocasasChile.com</p>
+              <div className="bg-slate-50 p-4 text-center border-t border-slate-200">
+                 <p className="text-[9px] text-slate-400 font-bold tracking-tight leading-none">
+                   Enviado por <span className="text-brand-teal">SolocasasChile.com</span>
+                 </p>
               </div>
            </div>
         </div>
