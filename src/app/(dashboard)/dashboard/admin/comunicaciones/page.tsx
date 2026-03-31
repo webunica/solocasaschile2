@@ -11,9 +11,11 @@ export default async function AdminComunicacionesPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
-  if (!user || user.app_metadata?.is_superadmin !== true) {
-    redirect("/dashboard");
-  }
+  // Get all constructoras for selection
+  const { data: constructoras } = await supabase
+    .from('constructoras')
+    .select('id, nombre, email, plan')
+    .order('nombre', { ascending: true });
 
   // Get recent communications history
   const { data: history } = await supabase
@@ -31,7 +33,7 @@ export default async function AdminComunicacionesPage() {
         </div>
       </div>
 
-      <EmailBulkForm />
+      <EmailBulkForm constructoras={constructoras || []} />
 
       <div className="space-y-6 pt-10 border-t border-border/10">
         <div className="flex items-center gap-3">
