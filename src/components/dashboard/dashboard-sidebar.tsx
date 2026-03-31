@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
   HelpCircle, LogOut, LayoutDashboard, 
-  MessageSquare, Award, Video
+  MessageSquare, Award, Video, Mail
 } from "lucide-react";
 import {
   Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
@@ -85,19 +85,35 @@ export function DashboardSidebar({
             <SidebarGroupContent>
               <SidebarMenu>
                 {isSuperAdmin && (
-                  <SidebarMenuItem>
-                    <SidebarMenuButton 
-                      asChild 
-                      isActive={pathname === "/dashboard/admin/constructoras"}
-                      tooltip="Gestionar Constructoras"
-                      className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
-                    >
-                      <Link href="/dashboard/admin/constructoras">
-                        <Building2 className="w-4.5 h-4.5" />
-                        <span className="ml-3 text-sm">Constructoras</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === "/dashboard/admin/constructoras"}
+                        tooltip="Gestionar Constructoras"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                      >
+                        <Link href="/dashboard/admin/constructoras">
+                          <Building2 className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Constructoras</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === "/dashboard/admin/comunicaciones"}
+                        tooltip="Comunicación Global"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                      >
+                        <Link href="/dashboard/admin/comunicaciones">
+                          <Mail className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Comunicaciones</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </>
                 )}
                 
                 <SidebarMenuItem>

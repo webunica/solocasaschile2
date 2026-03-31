@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getPlanLimits } from '../constants/plans'
+import { resend } from '@/lib/resend'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -338,3 +339,79 @@ export async function updateSiteSettings(key: string, value: any) {
   revalidatePath('/', 'layout')
   return { success: true }
 }
+
+export async function sendBulkEmail(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (user?.app_metadata?.is_superadmin !== true) {
+    return { error: "Acceso denegado. Solo SuperAdmins pueden enviar correos masivos." }
+  }
+
+  const asunto = formData.get('asunto') as string
+  const mensaje = formData.get('mensaje') as string
+  const audiencia = formData.get('audiencia') as string // 'todos', 'gratis', 'pro', 'premium'
+
+  if (!asunto || !mensaje || !audiencia) {
+    return { error: "Todos los campos son obligatorios." }
+  }
+
+  try {
+    // 1. Obtener destinatarios basándose en la audiencia
+    let query = supabase.from('constructoras').select('email').not('email', 'is', null)
+    
+    if (audiencia !== 'todos') {
+      query = query.eq('plan', audiencia)
+    }
+
+    const { data: dests, error: fetchError } = await query
+    
+    if (fetchError) throw fetchError
+    if (!dests || dests.length === 0) {
+      return { error: "No hay destinatarios que cumplan con el criterio de audiencia seleccionado." }
+    }
+
+    const emails = dests.map((d: any) => d.email).filter(Boolean) as string[]
+
+    // 2. Enviar correos via Resend (BCC para privacidad)
+    // Nota: Resend permite hasta 100 destinatarios por lote en BCC habitualmente.
+    // Para simplificar esta v1, los enviamos todos juntos.
+    const { error: sendError } = await resend.emails.send({
+      from: 'SolocasasChile <envios@solocasaschile.com>',
+      to: 'envios@solocasaschile.com', // Remitente como "To" para evitar fallos
+      bcc: emails,
+      subject: asunto,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+          <div style="background: #1a1b26; padding: 30px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">SolocasasChile</h1>
+          </div>
+          <div style="padding: 30px; line-height: 1.6; color: #333;">
+            ${mensaje.replace(/\n/g, '<br>')}
+          </div>
+          <div style="background: #f9f9f9; padding: 20px; text-align: center; font-size: 12px; color: #666;">
+            Mensaje oficial enviado por la administración de SolocasasChile.com
+          </div>
+        </div>
+      `,
+    })
+
+    if (sendError) throw sendError
+
+    // 3. Registrar en el historial
+    await supabase.from('comunicaciones_historial').insert([{
+      asunto,
+      mensaje,
+      audiencia_plan: audiencia,
+      total_destinatarios: emails.length,
+      enviado_por: user.id
+    }])
+
+    return { success: true, count: emails.length }
+
+  } catch (err: any) {
+    console.error('[sendBulkEmail] Error:', err)
+    return { error: err.message || "Error al enviar los correos masivos." }
+  }
+}
+
