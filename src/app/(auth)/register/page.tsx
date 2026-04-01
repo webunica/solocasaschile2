@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -213,7 +214,15 @@ function RegisterForm() {
         <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070')] bg-cover bg-center mix-blend-overlay" />
 
         <Link href="/" className="relative z-10 flex items-center space-x-2 group">
-          <span className="font-heading font-black text-4xl tracking-tighter group-hover:scale-105 transition-transform">SolocasasChile</span>
+          <Image
+            src="/images/logo-vertical.png"
+            alt="SolocasasChile"
+            width={160}
+            height={120}
+            className="h-16 w-auto object-contain group-hover:scale-105 transition-transform"
+            style={{ filter: "brightness(0) invert(1)" }}
+            priority
+          />
         </Link>
 
         <div className="relative z-10 space-y-16">
