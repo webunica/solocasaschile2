@@ -71,7 +71,7 @@ export function HeroLeadForm() {
 
   return (
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 gap-4 md:gap-6">
         <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa</label>
           <div className="relative group/input">
@@ -98,7 +98,7 @@ export function HeroLeadForm() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 gap-4 md:gap-6">
         <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Email</label>
           <div className="relative group/input">
