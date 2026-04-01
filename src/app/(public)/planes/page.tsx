@@ -148,8 +148,8 @@ export default function PlanesPage() {
       </section>
 
       {/* ── Seasonal Urgency Banner ────────────────────────── */}
-      <div className="bg-brand-teal/10 py-3 text-center border-y border-brand-teal/20">
-        <p className="text-[10px] font-black uppercase tracking-widest text-brand-teal animate-pulse">
+      <div className="bg-brand-teal py-3 text-center border-y border-brand-teal/80">
+        <p className="text-[10px] font-black uppercase tracking-widest text-white animate-pulse">
           ⚡ Temporada alta: +45% de incremento en búsquedas este mes en la Región Metropolitana y Biobío
         </p>
       </div>
