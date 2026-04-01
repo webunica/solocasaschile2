@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -17,11 +17,30 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const SLIDER_IMAGES = [
+  "/images/slider/01.png",
+  "/images/slider/02.png",
+  "/images/slider/022.png",
+  "/images/slider/03.png",
+  "/images/slider/033.png",
+  "/images/slider/044.png",
+  "/images/slider/05.png",
+  "/images/slider/055.png",
+];
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % SLIDER_IMAGES.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="relative min-h-[90vh] flex items-center pt-[140px] md:pt-[180px] pb-24 overflow-hidden hero-bg-custom">
@@ -78,8 +97,8 @@ export function HeroSection() {
                  Encuentra tu hogar ideal entre <span className="text-foreground font-bold">+5.000 modelos</span> de casas SIP, modulares y tradicionales de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo Chile.
               </p>
 
-              {/* Mobile CTA (Form in Modal) */}
-              <div className="flex flex-col sm:flex-row gap-4 lg:hidden">
+              {/* CTA (Form in Modal) */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                    <DialogTrigger render={
                      <Button size="lg" className="w-full brand-gradient text-white font-black rounded-2xl h-16 text-sm tracking-[0.1em] shadow-2xl shadow-primary/20">
@@ -156,27 +175,32 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right: Desktop Inline Form */}
+          {/* Right: Desktop Image Slider */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.98, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="hidden lg:block bg-background p-12 md:p-16 rounded-[3rem] md:rounded-[4rem] shadow-[0_48px_128px_-32px_rgba(27,0,136,0.15)] relative overflow-hidden border border-border/60"
+            className="hidden lg:block relative w-full h-[600px] rounded-[3rem] shadow-[0_48px_128px_-32px_rgba(27,0,136,0.2)] overflow-hidden border-2 border-brand-indigo/10"
           >
-            <div className="absolute top-0 left-0 right-0 h-2 brand-gradient" />
-            
-            <div className="space-y-12 relative z-10">
-              <div className="space-y-5">
-                 <h3 className="text-3xl font-heading font-black tracking-tighter text-brand-indigo uppercase leading-none">
-                   Asesoría <span className="text-brand-teal">Profesional</span>
-                 </h3>
-                 <p className="text-muted-foreground font-medium leading-relaxed max-w-sm">
-                   Recibe presupuestos técnicos y atención estratégica para tu proyecto de vivienda.
-                 </p>
-              </div>
-
-              <HeroLeadForm />
-            </div>
+             <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImageIndex}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                  className="absolute inset-0"
+                >
+                   <Image
+                     src={SLIDER_IMAGES[currentImageIndex]}
+                     alt={`Modelo destacado ${currentImageIndex + 1}`}
+                     fill
+                     className="object-cover"
+                     priority={currentImageIndex === 0}
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none mix-blend-overlay" />
+                </motion.div>
+             </AnimatePresence>
           </motion.div> 
 
         </div>
