@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
@@ -46,10 +47,20 @@ export function DashboardSidebar({
 
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="border-r border-border/40 bg-background md:bg-card/40 backdrop-blur-xl">
-      <SidebarHeader className="h-20 flex items-center px-6 border-b border-border/40">
-         <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform shadow-lg shadow-primary/20">S</div>
-            <span className="font-heading font-black text-xl tracking-tighter opacity-100 group-data-[collapsible=icon]:hidden transition-opacity bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/60">SolocasasChile</span>
+      <SidebarHeader className="h-20 flex items-center px-4 border-b border-border/40">
+         <Link href="/" className="flex items-center gap-2 group">
+            {/* Collapsed: show S icon */}
+            <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform shadow-lg shadow-primary/20 shrink-0 group-data-[collapsible=icon]:flex hidden">S</div>
+            {/* Expanded: show full vertical logo */}
+            <Image
+              src="/images/logo-vertical.png"
+              alt="SolocasasChile"
+              width={120}
+              height={90}
+              className="h-12 w-auto object-contain group-data-[collapsible=icon]:hidden"
+              style={{ filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.15))" }}
+              priority
+            />
          </Link>
       </SidebarHeader>
 
