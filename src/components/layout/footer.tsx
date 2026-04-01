@@ -1,8 +1,8 @@
 
 import Link from "next/link";
-import { Mail, Phone, MapPin, ArrowRight, Hash } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
-import { cn } from "@/lib/utils";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,18 +14,15 @@ export function Footer() {
           
           {/* Brand Col */}
           <div className="space-y-6 lg:pr-4">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="w-11 h-11 bg-[#00FFD1] rounded-[10px] flex items-center justify-center text-[#2B09BD] shadow-[0_0_20px_rgba(0,255,209,0.3)] shrink-0">
-                <Hash className="w-6 h-6 stroke-[3]" />
-              </div>
-              <div className="flex flex-col -gap-1">
-                <span className="font-heading font-black text-[22px] leading-none tracking-tight text-white mb-0.5">
-                  solocasas
-                </span>
-                <span className="font-heading font-black text-[18px] leading-none tracking-tight text-[#00FFD1]">
-                  chile.com
-                </span>
-              </div>
+            <Link href="/" className="inline-block group">
+              <Image
+                src="/images/logo-vertical.png"
+                alt="SolocasasChile"
+                width={160}
+                height={120}
+                className="h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
             </Link>
             
             <p className="text-[14px] leading-relaxed text-white/80 font-normal">

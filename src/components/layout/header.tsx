@@ -48,11 +48,12 @@ export function Header() {
         <Link href="/" className="mr-6 lg:mr-16 flex items-center group shrink-0 relative transition-transform hover:scale-[1.02]">
           <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <Image 
-            src="/images/logo.png" 
+            src="/images/logo-vertical.png" 
             alt="SolocasasChile" 
-            width={240} 
-            height={60} 
-            className="h-10 md:h-16 w-auto object-contain relative z-10"
+            width={160} 
+            height={120} 
+            className="h-14 md:h-16 w-auto object-contain relative z-10"
+            style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.12))" }}
             priority
           />
         </Link>
