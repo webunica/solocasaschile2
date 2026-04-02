@@ -64,7 +64,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-[140px] md:pt-[180px] pb-24 overflow-hidden hero-bg-custom">
+    <section className="relative min-h-[90vh] flex items-center pt-[120px] md:pt-[180px] pb-24 overflow-hidden hero-bg-custom">
       {/* Impeccable Background Decoration */}
       <div className="absolute inset-0 bg-dot-pattern opacity-[0.12] pointer-events-none" />
       
@@ -109,7 +109,7 @@ export function HeroSection() {
                     Plataforma #1 de Casas en Chile
                  </Badge>
                    <h1 className="flex flex-col gap-6 text-center lg:text-left">
-                    <div className="flex flex-col gap-1 items-center lg:items-start min-h-[3.2em] md:min-h-[2.2em]">
+                    <div className="flex flex-col gap-0 items-center lg:items-start min-h-[3em] md:min-h-[2.2em]">
                        <span className="text-[clamp(2rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">CASAS</span>
                        <AnimatePresence mode="wait">
                           <motion.span
@@ -124,11 +124,11 @@ export function HeroSection() {
                           </motion.span>
                        </AnimatePresence>
                     </div>
-                    <div className="flex flex-col gap-3 w-fit mx-auto lg:mx-0">
-                       <span className="bg-brand-teal text-brand-indigo px-4 py-1 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none">
+                    <div className="flex flex-col gap-3 w-full max-w-[280px] lg:max-w-none mx-auto lg:mx-0">
+                       <span className="bg-brand-teal text-brand-indigo px-4 py-1.5 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none text-center lg:text-left">
                           COMPARA
                        </span>
-                       <span className="bg-brand-indigo text-brand-teal px-4 py-1 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none">
+                       <span className="bg-brand-indigo text-brand-teal px-4 py-1.5 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none text-center lg:text-left">
                           Y COTIZA
                        </span>
                     </div>
