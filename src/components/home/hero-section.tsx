@@ -212,7 +212,7 @@ export function HeroSection() {
                      src={SLIDER_IMAGES[currentImageIndex]}
                      alt={`Modelo destacado ${currentImageIndex + 1}`}
                      fill
-                     className="object-contain"
+                     className="object-contain grayscale-[0.85] contrast-[1.15] brightness-[1.1] transition-all duration-1000 hover:grayscale-0 hover:contrast-100 hover:brightness-100 cursor-zoom-in drop-shadow-[0_20px_50px_rgba(61,62,154,0.15)]"
                      priority={currentImageIndex === 0}
                    />
                 </motion.div>
