@@ -107,8 +107,8 @@ export function HeroSection() {
                        <ArrowRight className="w-5 h-5 ml-2" />
                      </Button>
                    } />
-                   <DialogContent className="max-w-[450px] p-0 overflow-hidden rounded-[2.5rem] border-none shadow-2xl">
-                     <div className="p-8 md:p-12 bg-background space-y-8 border-t-8 border-brand-indigo">
+                   <DialogContent className="sm:max-w-[550px] w-full p-0 overflow-hidden rounded-[2.5rem] border-none shadow-2xl">
+                     <div className="p-8 md:p-12 bg-background w-full space-y-8 border-t-8 border-brand-indigo">
                         <DialogHeader>
                           <DialogTitle className="text-2xl font-black tracking-tighter uppercase leading-none">
                             Asesoría <span className="text-brand-teal">Profesional</span>
