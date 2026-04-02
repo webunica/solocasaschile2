@@ -38,8 +38,7 @@ const CONSTRUCTION_TYPES = [
   "CONTAINERS", 
   "STEEL FRAMING", 
   "MADERA", 
-  "HORMIGÓN", 
-  "MIXTOS"
+  "HORMIGÓN"
 ];
 
 import { Button } from "@/components/ui/button";
@@ -109,8 +108,8 @@ export function HeroSection() {
                  <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-flex">
                     Plataforma #1 de Casas en Chile
                  </Badge>
-                  <h1 className="flex flex-col gap-6 text-center lg:text-left">
-                    <div className="text-[clamp(2.1rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase flex flex-wrap justify-center lg:justify-start items-baseline gap-x-4 min-h-[0.9em]">
+                   <h1 className="flex flex-col gap-6 text-center lg:text-left">
+                    <div className="text-[clamp(2.1rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-[0.8] text-brand-indigo uppercase flex flex-col items-center lg:items-start min-h-[1.8em]">
                        <span>CASAS</span>
                        <AnimatePresence mode="wait">
                           <motion.span
