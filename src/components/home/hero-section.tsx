@@ -20,14 +20,15 @@ import {
 import { useState, useEffect } from "react";
 
 const SLIDER_IMAGES = [
-  "/images/slider/01.png",
-  "/images/slider/02.png",
-  "/images/slider/022.png",
-  "/images/slider/03.png",
-  "/images/slider/033.png",
-  "/images/slider/044.png",
-  "/images/slider/05.png",
-  "/images/slider/055.png",
+  "/images/slider/m_001.jpg",
+  "/images/slider/m_002.jpg",
+  "/images/slider/m_003.jpg",
+  "/images/slider/m_004.jpg",
+  "/images/slider/m_005.jpg",
+  "/images/slider/m_006.jpg",
+  "/images/slider/m_007.jpg",
+  "/images/slider/m_008.jpg",
+  "/images/slider/m_009.jpg",
 ];
 import { Button } from "@/components/ui/button";
 
@@ -73,10 +74,10 @@ export function HeroSection() {
       </div>
 
       <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-center">
           
           {/* Left: Branding & Benefits (Primary on Mobile) */}
-          <div className="flex flex-col gap-10 lg:col-span-8">
+          <div className="flex flex-col gap-10">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -172,7 +173,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.98, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="hidden lg:flex relative w-full h-[650px] lg:col-span-4"
+            className="hidden lg:flex relative w-full h-[650px]"
           >
              <AnimatePresence mode="wait">
                 <motion.div
