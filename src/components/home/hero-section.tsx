@@ -88,10 +88,14 @@ export function HeroSection() {
                  <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-flex">
                     Plataforma #1 de Casas en Chile
                  </Badge>
-                 <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-[0.9] text-brand-indigo">
-                    CASAS PREFABRICADAS <br />
-                    <span className="bg-brand-teal text-brand-indigo px-5 py-1.5 rounded-2xl inline-block mt-4 uppercase font-black text-[0.45em]">Compara y Cotiza</span>
-                 </h1>
+                  <h1 className="flex flex-col gap-6 text-center lg:text-left">
+                    <span className="text-[clamp(2rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">
+                       CASAS PREFABRICADAS
+                    </span>
+                    <span className="w-fit mx-auto lg:mx-0 bg-brand-teal text-brand-indigo px-8 md:px-12 py-3 md:py-6 rounded-[2rem] md:rounded-[2.5rem] uppercase font-black text-[clamp(2.5rem,8vw,72px)] leading-none shadow-xl shadow-brand-teal/20 transition-all hover:scale-105 duration-500 cursor-default">
+                       Compara y Cotiza
+                    </span>
+                  </h1>
               </div>
               
               <p className="text-xl md:text-2xl text-muted-foreground/90 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
