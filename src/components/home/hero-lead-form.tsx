@@ -23,7 +23,7 @@ export function HeroLeadForm() {
       nombre_cliente: formData.get("name") as string,
       email_cliente: formData.get("email") as string,
       telefono_cliente: formData.get("phone") as string,
-      mensaje: `[Empresa: ${formData.get("company")}] - ${formData.get("message")}`,
+      mensaje: formData.get("message") as string,
     };
 
     try {
@@ -71,70 +71,56 @@ export function HeroLeadForm() {
 
   return (
     <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-1 gap-4 md:gap-6">
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa</label>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="space-y-1">
+          <label className="form-label">Tu Nombre</label>
           <div className="relative group/input w-full">
-             <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
-             <Input 
-                name="company" 
-                placeholder="Ej: Constructora Andes" 
-                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
-                required 
-             />
-          </div>
-        </div>
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Tu Nombre</label>
-          <div className="relative group/input w-full">
-             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
              <Input 
                 name="name" 
                 placeholder="Nombre y Apellido" 
-                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="form-input-premium pl-14" 
                 required 
              />
           </div>
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 md:gap-6">
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Email</label>
+        <div className="space-y-1">
+          <label className="form-label">WhatsApp</label>
           <div className="relative group/input w-full">
-             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
-             <Input 
-                name="email" 
-                type="email" 
-                placeholder="ejemplo@correo.cl" 
-                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
-                required 
-             />
-          </div>
-        </div>
-        <div className="space-y-1.5">
-          <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">WhatsApp</label>
-          <div className="relative group/input w-full">
-             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
+             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
              <Input 
                 name="phone" 
                 type="tel" 
                 placeholder="+56 9 1234 5678" 
-                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="form-input-premium pl-14" 
                 required 
              />
           </div>
         </div>
       </div>
 
-      <div className="space-y-1.5">
-        <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Comentarios</label>
+      <div className="space-y-1">
+        <label className="form-label">Email</label>
         <div className="relative group/input w-full">
-           <MessageSquare className="absolute left-4 top-7 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
-           <Textarea 
+           <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
+           <Input 
+              name="email" 
+              type="email" 
+              placeholder="ejemplo@correo.cl" 
+              className="form-input-premium pl-14" 
+              required 
+           />
+        </div>
+      </div>
+
+      <div className="space-y-1">
+        <label className="form-label">¿Cómo podemos ayudarte?</label>
+        <div className="relative group/input w-full">
+           <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
+           <Input 
               name="message" 
-              placeholder="¿Cómo podemos ayudarte con tu proyecto?" 
-              className="w-full bg-muted/50 border-border pl-16 pt-7 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
+              placeholder="Cuéntanos sobre tu proyecto o duda" 
+              className="form-input-premium pl-14" 
               required 
            />
         </div>
@@ -144,9 +130,9 @@ export function HeroLeadForm() {
         <motion.p 
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-xs font-bold text-destructive/80 flex items-center gap-2 bg-destructive/5 p-4 rounded-xl border border-destructive/10"
+          className="text-base font-bold text-destructive flex items-center gap-2 bg-destructive/5 p-4 rounded-xl border border-destructive/10"
         >
-           <span className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" />
+           <span className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
            {error}
         </motion.p>
       )}
