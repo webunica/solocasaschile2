@@ -124,13 +124,13 @@ export function HeroSection() {
                           </motion.span>
                        </AnimatePresence>
                     </div>
-                    <div className="flex flex-col gap-3 w-full max-w-[280px] lg:max-w-none mx-auto lg:mx-0">
-                       <span className="bg-brand-teal text-brand-indigo px-4 py-1.5 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none text-center lg:text-left">
+                    <div className="flex flex-col gap-3 w-full max-w-[320px] lg:max-w-none mx-auto lg:mx-0">
+                       <div className="bg-brand-teal text-brand-indigo px-6 py-2 rounded-none uppercase font-black text-[clamp(2.1rem,8vw,72px)] leading-none text-center lg:text-left w-full">
                           COMPARA
-                       </span>
-                       <span className="bg-brand-indigo text-brand-teal px-4 py-1.5 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none text-center lg:text-left">
+                       </div>
+                       <div className="bg-brand-indigo text-brand-teal px-6 py-2 rounded-none uppercase font-black text-[clamp(2.1rem,8vw,72px)] leading-none text-center lg:text-left w-full">
                           Y COTIZA
-                       </span>
+                       </div>
                     </div>
                   </h1>
               </div>
