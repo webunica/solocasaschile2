@@ -63,10 +63,10 @@ export function HeroSection() {
 
       {/* ── Background images ── */}
       <div className="absolute inset-0 z-0">
-        {/* Mobile Background */}
+        {/* Mobile/Tablet Background */}
         <div className="block lg:hidden absolute inset-0">
           <Image
-            src="/images/slider/m_001.jpg"
+            src="/images/bg/hero-main.jpg"
             alt="Casa prefabricada en Chile"
             fill
             className="object-cover object-center"
@@ -75,11 +75,11 @@ export function HeroSection() {
           <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
         </div>
 
-        {/* Desktop/Tablet Background */}
+        {/* Desktop Background */}
         <div className="hidden lg:block absolute inset-0">
           <Image
-            src="/images/bg/hero-desktop.jpg"
-            alt="Nature landscape with rainbow"
+            src="/images/bg/hero-main.jpg"
+            alt="Casa moderna prefabricada"
             fill
             className="object-cover object-center"
             priority
@@ -103,7 +103,7 @@ export function HeroSection() {
               {/* Badge */}
               <Badge
                 variant="outline"
-                className="border-brand-indigo/30 text-brand-indigo uppercase tracking-[0.15em] px-4 py-1.5 rounded-full inline-flex text-[10px] md:text-xs bg-white/70 lg:bg-transparent backdrop-blur-sm"
+                className="border-brand-indigo/30 text-brand-indigo uppercase tracking-[0.15em] px-4 py-1.5 rounded-full inline-flex text-[10px] md:text-sm bg-white/70 lg:bg-transparent backdrop-blur-sm font-extrabold"
               >
                 Plataforma #1 de Casas en Chile
               </Badge>
@@ -156,7 +156,7 @@ export function HeroSection() {
                     render={
                       <Button
                         size="lg"
-                        className="w-full sm:w-auto bg-brand-indigo text-white font-black text-sm md:text-base rounded-2xl h-12 md:h-16 px-6 md:px-8 shadow-xl shadow-brand-indigo/25 transition-transform active:scale-95"
+                        className="w-full sm:w-auto bg-brand-teal text-brand-indigo font-black text-sm md:text-base rounded-2xl h-12 md:h-16 px-6 md:px-8 shadow-xl shadow-brand-teal/25 transition-transform active:scale-95 border-b-4 border-brand-indigo/20"
                       >
                         SOLICITAR ASESORÍA EXPERTA
                         <ArrowRight className="w-4 h-4 ml-2" />
