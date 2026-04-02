@@ -94,7 +94,7 @@ export function HeroSection() {
       </div>
 
       <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-center">
+        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-start">
           
           {/* Left: Branding & Benefits (Primary on Mobile) */}
           <div className="flex flex-col gap-10">
@@ -197,7 +197,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.98, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="hidden lg:flex relative w-full h-[650px]"
+            className="hidden lg:flex relative w-full h-[700px] lg:pt-32"
           >
              <AnimatePresence mode="wait">
                 <motion.div
