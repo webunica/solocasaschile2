@@ -129,7 +129,7 @@ export default function PlanesPage() {
     <div className="min-h-screen bg-background pb-32">
 
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="relative py-28 text-center overflow-hidden border-b border-border/40">
+      <section className="relative pt-20 pb-10 text-center overflow-hidden border-b border-border/40">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/4 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-teal/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10 space-y-6">
@@ -150,7 +150,7 @@ export default function PlanesPage() {
 
 
       {/* ── Pricing grid ────────────────────────────────────── */}
-      <section className="container max-w-6xl mx-auto px-4 md:px-8 py-24">
+      <section className="container max-w-6xl mx-auto px-4 md:px-8 py-12">
         <div className="grid md:grid-cols-3 gap-8 items-start">
           {PLANES.map((plan) => {
             const Icon = plan.icon;
