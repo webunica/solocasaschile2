@@ -199,7 +199,7 @@ export function HeroSection() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="hidden lg:flex relative w-full h-[700px] lg:pt-32"
           >
-             <AnimatePresence mode="wait">
+             <AnimatePresence>
                 <motion.div
                   key={currentImageIndex}
                   initial={{ opacity: 0 }}
