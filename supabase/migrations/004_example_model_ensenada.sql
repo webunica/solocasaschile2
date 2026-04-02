@@ -71,7 +71,7 @@ BEGIN
         10,
         true,
         'El modelo Ensenada Rio Blanco representa el pináculo de la arquitectura contemporánea integrada al paisaje. Con 250m² de construcción sólida en hormigón armado y detalles en madera nativa, esta vivienda ofrece un refugio de lujo con eficiencia térmica superior y espacios diseñados para el máximo confort familiar.',
-        ARRAY['/images/placeholders/ensenada-main.jpg'], -- El usuario subirá las fotos reales
+        ARRAY['/images/modelos/ejemplos/ensenada-facade.png', '/images/modelos/ejemplos/ensenada-interior.png'],
         'ERB-250-F',
         ARRAY['Living-Comedor Integado', 'Cocina con Isla', 'Dormitorio Principal en Suite', 'Walk-in Closet', '3 Dormitorios Adicionales', 'Sala de Estar', 'Home Office', '3 Baños Completos', 'Baño de Visitas', 'Terraza Techada con Quincho', 'Logia Independiente'],
         JSONB_BUILD_OBJECT(
