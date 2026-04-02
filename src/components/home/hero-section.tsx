@@ -108,9 +108,9 @@ export function HeroSection() {
                  <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-flex">
                     Plataforma #1 de Casas en Chile
                  </Badge>
-                   <h1 className="flex flex-col gap-6 text-center lg:text-left">
+                   <h1 className="flex flex-col gap-4 text-center lg:text-left">
                     <div className="flex flex-col gap-0 items-center lg:items-start min-h-[3em] md:min-h-[2.2em]">
-                       <span className="text-[clamp(2rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">CASAS</span>
+                       <span className="text-[clamp(1.8rem,6vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">CASAS</span>
                        <AnimatePresence mode="wait">
                           <motion.span
                             key={typeIndex}
@@ -118,24 +118,24 @@ export function HeroSection() {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 10 }}
                             transition={{ duration: 0.4 }}
-                            className="text-brand-teal text-[clamp(2.2rem,8vw,76px)] font-black tracking-[-0.05em] leading-none uppercase"
+                            className="text-brand-teal text-[clamp(1.9rem,8vw,64px)] font-black tracking-[-0.05em] leading-none uppercase"
                           >
                             {CONSTRUCTION_TYPES[typeIndex]}
                           </motion.span>
                        </AnimatePresence>
                     </div>
                     <div className="flex flex-col gap-3 w-full max-w-[320px] lg:max-w-none mx-auto lg:mx-0">
-                       <div className="bg-brand-teal text-brand-indigo px-6 py-2 rounded-none uppercase font-black text-[clamp(2.1rem,8vw,72px)] leading-none text-center lg:text-left w-full">
+                       <div className="bg-brand-teal text-brand-indigo px-6 py-2 rounded-none uppercase font-black text-[clamp(1.7rem,8vw,60px)] leading-none text-center lg:text-left w-full">
                           COMPARA
                        </div>
-                       <div className="bg-brand-indigo text-brand-teal px-6 py-2 rounded-none uppercase font-black text-[clamp(2.1rem,8vw,72px)] leading-none text-center lg:text-left w-full">
+                       <div className="bg-brand-indigo text-brand-teal px-6 py-2 rounded-none uppercase font-black text-[clamp(1.7rem,8vw,60px)] leading-none text-center lg:text-left w-full">
                           Y COTIZA
                        </div>
                     </div>
                   </h1>
               </div>
               
-              <p className="text-xl md:text-2xl text-muted-foreground/90 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-lg md:text-2xl text-muted-foreground/90 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
                  Encuentra tu hogar ideal entre <span className="text-foreground font-bold">+5.000 modelos</span> de casas SIP, modulares y tradicionales de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo Chile.
               </p>
 
@@ -143,7 +143,7 @@ export function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                    <DialogTrigger render={
-                     <Button size="lg" className="w-full bg-brand-indigo text-white font-bold rounded-2xl h-16 shadow-2xl shadow-primary/20">
+                     <Button size="lg" className="w-full bg-brand-indigo text-white font-bold rounded-2xl h-14 md:h-16 shadow-2xl shadow-primary/20">
                        SOLICITAR ASESORÍA EXPERTA
                        <ArrowRight className="w-5 h-5 ml-2" />
                      </Button>
