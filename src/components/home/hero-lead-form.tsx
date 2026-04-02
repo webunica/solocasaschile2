@@ -74,24 +74,24 @@ export function HeroLeadForm() {
       <div className="grid grid-cols-1 gap-4 md:gap-6">
         <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Empresa</label>
-          <div className="relative group/input">
+          <div className="relative group/input w-full">
              <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="company" 
                 placeholder="Ej: Constructora Andes" 
-                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
         <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Tu Nombre</label>
-          <div className="relative group/input">
+          <div className="relative group/input w-full">
              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="name" 
                 placeholder="Nombre y Apellido" 
-                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -101,26 +101,26 @@ export function HeroLeadForm() {
       <div className="grid grid-cols-1 gap-4 md:gap-6">
         <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Email</label>
-          <div className="relative group/input">
+          <div className="relative group/input w-full">
              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="email" 
                 type="email" 
                 placeholder="ejemplo@correo.cl" 
-                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
         </div>
         <div className="space-y-1.5">
           <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">WhatsApp</label>
-          <div className="relative group/input">
+          <div className="relative group/input w-full">
              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
              <Input 
                 name="phone" 
                 type="tel" 
                 placeholder="+56 9 1234 5678" 
-                className="bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
+                className="w-full bg-muted/50 border-border pl-14 h-14 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all font-bold placeholder:font-medium placeholder:opacity-50" 
                 required 
              />
           </div>
@@ -129,12 +129,12 @@ export function HeroLeadForm() {
 
       <div className="space-y-1.5">
         <label className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-60 ml-1">Comentarios</label>
-        <div className="relative group/input">
+        <div className="relative group/input w-full">
            <MessageSquare className="absolute left-4 top-7 w-4 h-4 text-primary opacity-40 group-focus-within/input:opacity-100 transition-opacity" />
            <Textarea 
               name="message" 
               placeholder="¿Cómo podemos ayudarte con tu proyecto?" 
-              className="bg-muted/50 border-border pl-16 pt-7 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
+              className="w-full bg-muted/50 border-border pl-16 pt-7 min-h-[140px] rounded-[2rem] focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all resize-none p-5 font-bold placeholder:font-medium placeholder:opacity-50 leading-relaxed" 
               required 
            />
         </div>
