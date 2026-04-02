@@ -133,7 +133,7 @@ export default function PlanesPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/4 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-teal/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10 space-y-6">
-          <Badge className="bg-primary/10 text-primary border-primary/20 font-black uppercase tracking-widest text-[10px] px-4 py-1.5">
+          <Badge className="bg-primary/10 text-primary border-primary/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
             Para Constructoras de Chile
           </Badge>
           <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
@@ -147,12 +147,7 @@ export default function PlanesPage() {
         </div>
       </section>
 
-      {/* ── Seasonal Urgency Banner ────────────────────────── */}
-      <div className="bg-brand-teal py-3 text-center border-y border-brand-teal/80">
-        <p className="text-[10px] font-black uppercase tracking-widest text-white animate-pulse">
-          ⚡ Temporada alta: +45% de incremento en búsquedas este mes en la Región Metropolitana y Biobío
-        </p>
-      </div>
+
 
       {/* ── Pricing grid ────────────────────────────────────── */}
       <section className="container max-w-6xl mx-auto px-4 md:px-8 py-24">
@@ -175,7 +170,7 @@ export default function PlanesPage() {
                 {/* Popular badge */}
                 {plan.badge && (
                   <div className="absolute -top-px left-1/2 -translate-x-1/2">
-                    <Badge className={cn("rounded-none rounded-b-xl font-black text-[10px] uppercase tracking-widest px-5 py-1.5 border-x border-b", plan.badgeClass)}>
+                    <Badge className={cn("rounded-none rounded-b-xl font-black text-sm uppercase tracking-widest px-5 py-1.5 border-x border-b", plan.badgeClass)}>
                       {plan.badge}
                     </Badge>
                   </div>
@@ -238,7 +233,7 @@ export default function PlanesPage() {
       {/* ── Social proof ──────────────────────────────────── */}
       <section className="border-y border-border/40 bg-muted/20 py-16">
         <div className="container max-w-5xl mx-auto px-4 md:px-8 text-center space-y-10">
-          <p className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
+          <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { quote: "En el primer mes recibimos 18 leads cualificados. El ROI fue inmediato.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro" },
@@ -254,7 +249,7 @@ export default function PlanesPage() {
                 <p className="text-sm font-medium text-muted-foreground leading-relaxed">"{t.quote}"</p>
                 <div>
                   <p className="font-black text-sm text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground font-medium">{t.company} · Plan {t.plan}</p>
+                  <p className="text-sm text-muted-foreground font-medium">{t.company} · Plan {t.plan}</p>
                 </div>
               </div>
             ))}
@@ -297,7 +292,7 @@ export default function PlanesPage() {
         <div className="bg-brand-indigo rounded-[3rem] p-16 text-center text-white space-y-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-10 mix-blend-overlay" />
           <div className="relative z-10 space-y-6">
-            <Badge className="bg-white/20 text-white border-white/20 font-black uppercase tracking-widest text-[10px] px-4 py-1.5">
+            <Badge className="bg-white/20 text-white border-white/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
               Comienza hoy
             </Badge>
             <h2 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
