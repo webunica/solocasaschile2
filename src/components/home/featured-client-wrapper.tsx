@@ -110,7 +110,7 @@ export function FeaturedClientWrapper({ items }: Props) {
                    
                    <Link 
                      href={`/constructora/${builder.slug}`} 
-                     className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "rounded-2xl font-black text-[10px] tracking-widest uppercase bg-muted/20 hover:bg-primary hover:text-white transition-all group-hover:px-10 duration-500")}
+                     className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "rounded-2xl font-bold tracking-widest uppercase bg-muted/20 hover:bg-primary hover:text-white transition-all group-hover:px-10 duration-500")}
                    >
                      Analizar Perfil <ArrowRight className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" />
                    </Link>

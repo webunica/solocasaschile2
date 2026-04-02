@@ -59,7 +59,7 @@ export default async function CompararPage({ searchParams }: PageProps) {
                 Navega por el catálogo comercial, selecciona los modelos que te interesen y utiliza la barra flotante inferior para contrastarlos aquí.
               </p>
             </div>
-            <Link href="/catalogo" className={buttonVariants({ variant: "default", size: "lg", className: "rounded-2xl font-black text-[10px] tracking-widest uppercase bg-brand-indigo shadow-xl" })}>
+            <Link href="/catalogo" className={buttonVariants({ variant: "default", size: "lg", className: "rounded-2xl font-bold tracking-widest uppercase bg-brand-indigo shadow-xl" })}>
               Ir al Catálogo de Modelos
             </Link>
           </div>

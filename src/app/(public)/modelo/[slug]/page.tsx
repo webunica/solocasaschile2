@@ -124,11 +124,11 @@ export default async function ModeloPage({ params }: PageProps) {
             {/* Header Content */}
             <div className="space-y-6">
                <div className="flex flex-wrap items-center gap-3">
-                  <Badge className="bg-brand-indigo text-white border-none rounded-full px-4 py-1.5 font-black text-[10px] tracking-widest uppercase shadow-lg shadow-primary/20">
+                  <Badge className="bg-brand-indigo text-white border-none rounded-full px-4 py-1.5 font-bold tracking-widest uppercase shadow-lg shadow-primary/20">
                     {TIPO_LABELS[modelo.tipo] || modelo.tipo || 'Casa'}
                   </Badge>
                   {constructora.plan === "premium" && (
-                    <Badge variant="outline" className="border-amber-500/20 text-amber-600 font-black text-[10px] tracking-widest uppercase bg-amber-500/5 px-4 py-1.5 rounded-full">
+                    <Badge variant="outline" className="border-amber-500/20 text-amber-600 font-bold tracking-widest uppercase bg-amber-500/5 px-4 py-1.5 rounded-full">
                        <Star className="w-3 h-3 mr-2 fill-current" /> Destacado
                     </Badge>
                   )}
@@ -173,7 +173,7 @@ export default async function ModeloPage({ params }: PageProps) {
                      </div>
                      <Link 
                         href="#form-cotizar"
-                        className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto rounded-xl h-14 px-8 font-black text-xs uppercase tracking-widest bg-brand-indigo shadow-lg shadow-primary/20 flex items-center justify-center")}
+                        className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto rounded-xl h-14 px-8 font-bold uppercase tracking-widest bg-brand-indigo shadow-lg shadow-primary/20 flex items-center justify-center")}
                      >
                         Cotizar Ahora
                      </Link>

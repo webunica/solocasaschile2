@@ -102,7 +102,7 @@ export function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                    <DialogTrigger render={
-                     <Button size="lg" className="w-full bg-brand-indigo text-white font-black rounded-2xl h-16 text-sm tracking-[0.1em] shadow-2xl shadow-primary/20">
+                     <Button size="lg" className="w-full bg-brand-indigo text-white font-bold rounded-2xl h-16 shadow-2xl shadow-primary/20">
                        SOLICITAR ASESORÍA EXPERTA
                        <ArrowRight className="w-5 h-5 ml-2" />
                      </Button>

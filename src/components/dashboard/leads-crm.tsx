@@ -128,7 +128,7 @@ export function LeadsCRM({ initialLeads }: Props) {
                ].join("\n")
              )}`}
              download="prospectos_solocasaschile.csv"
-             className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl h-14 px-8 font-black text-xs uppercase tracking-widest gap-3 shadow-xl shadow-black/5")}
+             className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl h-14 px-8 font-bold uppercase tracking-widest gap-3 shadow-xl shadow-black/5")}
            >
              <Download className="w-4 h-4" /> Exportar Base de Datos
            </a>

@@ -81,20 +81,20 @@ function BienvenidaContent() {
 
             {/* Primary CTA */}
             <div className="flex flex-wrap gap-3">
-              <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 bg-brand-indigo text-white font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all")}>
+              <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 bg-brand-indigo text-white font-bold uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all")}>
                 <LayoutDashboard className="w-4 h-4" /> Ir a mi panel
               </Link>
               {isPaid ? (
-                <Link href="/demo" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
+                <Link href="/demo" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
                   <Calendar className="w-4 h-4" /> Agendar demo
                 </Link>
               ) : (
-                <Link href="/dashboard/settings" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
+                <Link href="/dashboard/settings" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
                   <UserCircle className="w-4 h-4" /> Completar perfil
                 </Link>
               )}
               {!isPaid && (
-                <Link href="/dashboard/catalog/new" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-14 px-8 font-black text-xs uppercase tracking-widest rounded-2xl gap-2 text-muted-foreground hover:text-foreground transition-all")}>
+                <Link href="/dashboard/catalog/new" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 text-muted-foreground hover:text-foreground transition-all")}>
                   <Home className="w-4 h-4" /> Publicar mi primer modelo
                 </Link>
               )}
@@ -160,10 +160,10 @@ function BienvenidaContent() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <Link href="/demo" className={cn(buttonVariants({ size: "lg" }), "h-12 px-7 bg-white text-brand-indigo hover:bg-white/95 font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border-none shadow-xl transition-all hover:scale-105")}>
+                <Link href="/demo" className={cn(buttonVariants({ size: "lg" }), "h-12 px-7 bg-white text-brand-indigo hover:bg-white/95 font-bold uppercase tracking-widest rounded-2xl gap-2 border-none shadow-xl transition-all hover:scale-105")}>
                   <Calendar className="w-4 h-4" /> Agendar demo
                 </Link>
-                <Link href="/dashboard" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-12 px-7 text-white hover:bg-white/10 font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border border-white/20")}>
+                <Link href="/dashboard" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-12 px-7 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl gap-2 border border-white/20")}>
                   <LayoutDashboard className="w-4 h-4" /> Ir a mi panel
                 </Link>
               </div>

@@ -155,12 +155,12 @@ export function HeroLeadForm() {
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full bg-brand-indigo hover:opacity-95 font-black text-white h-14 md:h-16 rounded-2xl shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] tracking-tight xs:tracking-normal md:tracking-[0.2em] text-[10px] sm:text-xs md:text-sm group transition-all px-4"
+        className="w-full bg-brand-indigo hover:opacity-95 font-bold text-white h-14 md:h-16 rounded-2xl shadow-xl transition-all px-4"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
-          <div className="flex items-center justify-center gap-2 md:gap-3 whitespace-nowrap">
+          <div className="flex items-center justify-center gap-2 md:gap-3 whitespace-nowrap px-4">
             <span>SOLICITAR ASESORÍA EXPERTA</span>
             <Send className="w-3.5 h-3.5 md:w-5 md:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </div>

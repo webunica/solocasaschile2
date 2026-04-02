@@ -201,7 +201,7 @@ export default async function CatalogManagementPage() {
                 </div>
                 <Link 
                    href="/dashboard/catalog/new" 
-                   className={cn(buttonVariants({ variant: "default" }), "rounded-2xl h-16 px-12 font-black text-xs uppercase tracking-widest bg-brand-indigo shadow-2xl shadow-primary/20 text-white hover:text-white hover:scale-[1.03] transition-all")}
+                   className={cn(buttonVariants({ variant: "default" }), "rounded-2xl h-16 px-12 font-bold uppercase tracking-widest bg-brand-indigo shadow-2xl shadow-primary/20 text-white hover:text-white hover:scale-[1.03] transition-all")}
                 >
                    Lanzar Primer Modelo
                 </Link>

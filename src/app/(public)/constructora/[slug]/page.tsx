@@ -85,12 +85,12 @@ export default async function ConstructoraPage({ params }: PageProps) {
                 <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none italic">{constructora.nombre}</h1>
                 <div className="flex gap-2">
                   {constructora.verificada && (
-                    <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 px-4 py-1.5 font-black text-[10px] tracking-widest uppercase rounded-full">
+                    <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 px-4 py-1.5 font-bold tracking-widest uppercase rounded-full">
                       <ShieldCheck className="w-4 h-4 mr-2" /> Verificada
                     </Badge>
                   )}
                   {constructora.plan === "premium" && (
-                    <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 px-4 py-1.5 font-black text-[10px] tracking-widest uppercase rounded-full">
+                    <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 px-4 py-1.5 font-bold tracking-widest uppercase rounded-full">
                       <Star className="w-4 h-4 mr-2 fill-current" /> Premium
                     </Badge>
                   )}

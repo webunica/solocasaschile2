@@ -37,7 +37,7 @@ export async function FeaturedModelsSection() {
           </div>
           <Link 
             href="/catalogo" 
-            className={cn(buttonVariants({ size: "lg" }), "rounded-2xl font-black text-xs uppercase tracking-widest bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-white hover:text-white")}
+            className={cn(buttonVariants({ size: "lg" }), "rounded-2xl font-bold uppercase tracking-widest bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-white hover:text-white")}
           >
             Ver Catálogo Completo
             <ArrowRight className="w-4 h-4 ml-3" />
@@ -63,7 +63,7 @@ export async function FeaturedModelsSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60" />
                   
                   <div className="absolute top-6 left-6 flex flex-col gap-3">
-                     <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 px-4 py-1.5 font-black text-[10px] tracking-widest uppercase rounded-full">
+                     <Badge className="bg-white/10 backdrop-blur-md text-white border-white/20 px-4 py-1.5 font-bold tracking-widest uppercase rounded-full">
                        {TIPO_LABELS[modelo.tipo] || modelo.tipo}
                      </Badge>
                   </div>
@@ -125,7 +125,7 @@ export async function FeaturedModelsSection() {
 
                   <Link
                     href={`/modelo/${modelo.slug}`}
-                    className={cn(buttonVariants({ size: "lg" }), "w-full mt-10 rounded-2xl font-black text-xs tracking-[0.2em] uppercase bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all py-7 text-white hover:text-white")}
+                    className={cn(buttonVariants({ size: "lg" }), "w-full mt-10 rounded-2xl font-bold tracking-[0.2em] uppercase bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all py-7 text-white hover:text-white")}
                   >
                     Detalles Técnicos <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
                   </Link>

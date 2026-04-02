@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
                  <CheckCircle className="w-10 h-10 text-emerald-500" />
               </div>
               <div className="space-y-3">
-                 <p className="font-black text-xs uppercase tracking-widest text-emerald-600">Email Enviado</p>
+                 <p className="font-bold uppercase tracking-widest text-emerald-600">Email Enviado</p>
                  <p className="text-muted-foreground font-medium leading-relaxed italic">
                    Si existe una cuenta asociada, recibirás un enlace de seguridad en tu bandeja de entrada.
                  </p>

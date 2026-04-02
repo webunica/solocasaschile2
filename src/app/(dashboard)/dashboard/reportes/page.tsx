@@ -43,7 +43,7 @@ export default async function ReportesPage() {
            <Button variant="outline" className="rounded-2xl h-12 px-6 font-bold text-[10px] uppercase tracking-widest gap-2 border-border/60">
              <Calendar className="w-4 h-4" /> Últimos 30 días
            </Button>
-           <Button className="rounded-2xl h-12 px-8 font-black text-xs uppercase tracking-widest bg-brand-indigo text-white shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+           <Button className="rounded-2xl h-12 px-8 font-bold uppercase tracking-widest bg-brand-indigo text-white shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
              <Download className="w-4 h-4 mr-2" /> Exportar PDF
            </Button>
         </div>
@@ -176,7 +176,7 @@ export default async function ReportesPage() {
                <h3 className="text-3xl md:text-4xl font-black tracking-tighter leading-tight">Tu tasa de conversión es 25% <br /> superior al promedio regional.</h3>
                <p className="text-white/70 font-medium">Nuestra IA sugiere que añadir más fotos reales de interior aumentaría tus leads en un 15%.</p>
             </div>
-            <Button className="bg-white text-primary rounded-2xl h-14 px-10 font-black text-xs uppercase tracking-widest hover:bg-white/90 active:scale-95 transition-all shadow-xl shadow-black/10">
+            <Button className="bg-white text-primary rounded-2xl h-14 px-10 font-bold uppercase tracking-widest hover:bg-white/90 active:scale-95 transition-all shadow-xl shadow-black/10">
                Optimizar Catálogo <Share2 className="w-4 h-4 ml-3" />
             </Button>
          </div>

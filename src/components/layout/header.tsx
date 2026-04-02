@@ -80,7 +80,7 @@ export function Header() {
                   href="/login" 
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "sm" }), 
-                    "text-[10px] font-black uppercase tracking-widest hover:text-primary hover:bg-transparent transition-all"
+                    "hover:text-primary hover:bg-transparent transition-all"
                   )}
                 >
                   Acceder
@@ -91,7 +91,7 @@ export function Header() {
               href="/planes" 
               className={cn(
                 buttonVariants({ variant: "secondary", size: "default" }),
-                "rounded-2xl px-10 font-black text-[10px] uppercase tracking-[0.2em] hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
+                "rounded-2xl px-10 hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
               )}
             >
               Publicar Propiedad
@@ -152,7 +152,7 @@ export function Header() {
                       onClick={() => setIsOpen(false)}
                       className={cn(
                         buttonVariants({ variant: "secondary" }),
-                        "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em]"
+                        "w-full h-14 rounded-2xl"
                       )}
                    >
                       Publicar Propiedad

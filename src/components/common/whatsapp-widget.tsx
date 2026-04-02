@@ -92,7 +92,7 @@ export function WhatsAppWidget() {
                          <Home className="w-5 h-5 text-primary" />
                       </div>
                       <div className="flex-1">
-                         <p className="font-black text-xs uppercase tracking-widest text-foreground">Busco una casa</p>
+                         <p className="font-bold uppercase tracking-widest text-foreground">Busco una casa</p>
                          <p className="text-[10px] font-bold text-muted-foreground opacity-60 italic">Ver modelos y precios</p>
                       </div>
                       <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 transition-opacity" />
@@ -106,7 +106,7 @@ export function WhatsAppWidget() {
                          <Building2 className="w-5 h-5 text-primary" />
                       </div>
                       <div className="flex-1">
-                         <p className="font-black text-xs uppercase tracking-widest text-foreground">Soy Constructora</p>
+                         <p className="font-bold uppercase tracking-widest text-foreground">Soy Constructora</p>
                          <p className="text-[10px] font-bold text-muted-foreground opacity-60 italic">Publicar o gestionar catálogo</p>
                       </div>
                       <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 transition-opacity" />
@@ -150,7 +150,7 @@ export function WhatsAppWidget() {
 
                    <Button 
                      type="submit" 
-                     className="w-full h-12 bg-brand-indigo rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                     className="w-full h-12 bg-brand-indigo rounded-xl font-bold uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                    >
                      Iniciar Chat en WhatsApp <Send className="ml-2 w-4 h-4" />
                    </Button>

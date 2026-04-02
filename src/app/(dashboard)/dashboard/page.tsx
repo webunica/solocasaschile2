@@ -89,7 +89,7 @@ export default async function DashboardPage() {
           <div className="flex gap-4 w-full md:w-auto">
              <Link 
                href="/dashboard/catalog/new"
-               className={cn(buttonVariants({ variant: "default" }), "flex-1 md:flex-initial rounded-2xl h-14 px-10 font-black text-[10px] tracking-widest uppercase bg-brand-indigo shadow-2xl shadow-primary/20 hover:scale-[1.03] active:scale-95 transition-all text-white hover:text-white")}
+               className={cn(buttonVariants({ variant: "default" }), "flex-1 md:flex-initial rounded-2xl h-14 px-10 font-bold tracking-widest uppercase bg-brand-indigo shadow-2xl shadow-primary/20 hover:scale-[1.03] active:scale-95 transition-all text-white hover:text-white")}
              >
                Publicar Nuevo Modelo
              </Link>
@@ -205,7 +205,7 @@ export default async function DashboardPage() {
                 <p className="text-xs font-medium text-muted-foreground leading-relaxed">
                    Agenda una llamada estratégica hoy para mejorar tu tasa de conversión en la plataforma.
                 </p>
-                <Button variant="link" className="p-0 h-auto text-foreground font-black text-xs uppercase tracking-widest hover:text-primary transition-colors">Agendar Mentoría →</Button>
+                <Button variant="link" className="p-0 h-auto text-foreground font-bold uppercase tracking-widest hover:text-primary transition-colors">Agendar Mentoría →</Button>
              </div>
           </div>
        </div>

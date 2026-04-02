@@ -217,7 +217,7 @@ export default function PlanesPage() {
                     href={plan.ctaHref}
                     className={cn(
                       buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
-                      "w-full rounded-2xl h-14 font-black text-xs uppercase tracking-widest gap-2",
+                      "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2",
                       plan.ctaClass
                     )}
                   >
@@ -310,7 +310,7 @@ export default function PlanesPage() {
               href="/register"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "bg-white text-brand-indigo hover:bg-white/95 font-black text-xs uppercase tracking-widest rounded-2xl h-14 px-10 gap-2"
+                "bg-white text-brand-indigo hover:bg-white/95 font-bold uppercase tracking-widest rounded-2xl h-14 px-10 gap-2"
               )}
             >
               Crear cuenta gratuita <ArrowRight className="w-4 h-4" />
