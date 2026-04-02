@@ -125,9 +125,9 @@ export async function FeaturedModelsSection() {
 
                   <Link
                     href={`/modelo/${modelo.slug}`}
-                    className={cn(buttonVariants({ size: "lg" }), "w-full mt-10 rounded-2xl font-bold tracking-[0.2em] uppercase bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all py-7 text-white hover:text-white")}
+                    className={cn(buttonVariants({ size: "lg" }), "w-full mt-10 rounded-2xl font-black tracking-wider text-sm uppercase bg-brand-indigo shadow-xl shadow-brand-indigo/20 hover:scale-[1.02] active:scale-[0.98] transition-all py-7 text-white hover:text-white")}
                   >
-                    Detalles Técnicos <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
+                    Detalles Técnicos <ArrowRight className="w-5 h-5 ml-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                </div>
             </div>
