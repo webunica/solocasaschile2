@@ -64,7 +64,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-[120px] md:pt-[180px] pb-24 overflow-hidden hero-bg-custom">
+    <section className="relative min-h-[95vh] flex items-center pt-[100px] md:pt-[180px] pb-20 md:pb-24 overflow-hidden hero-bg-custom">
       {/* Impeccable Background Decoration */}
       <div className="absolute inset-0 bg-dot-pattern opacity-[0.12] pointer-events-none" />
       
@@ -85,7 +85,7 @@ export function HeroSection() {
       </div>
 
       {/* Andes Mountains Multi-layered Silhouette */}
-      <div className="absolute bottom-0 left-0 w-full h-[300px] md:h-[400px] opacity-[0.06] pointer-events-none select-none z-0">
+      <div className="absolute bottom-0 left-0 w-full h-[250px] md:h-[400px] opacity-[0.04] md:opacity-[0.06] pointer-events-none select-none z-0">
         <svg viewBox="0 0 1440 320" className="w-full h-full preserve-3d" preserveAspectRatio="none">
           <path fill="currentColor" className="text-brand-indigo/30" d="M0,160L40,144C80,128,160,96,240,106.7C320,117,400,171,480,181.3C560,192,640,160,720,138.7C800,117,880,107,960,112C1040,117,1120,139,1200,160C1280,181,1360,203,1400,213.3L1440,224L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z" />
           <path fill="currentColor" className="text-primary/40" d="M0,224L48,202.7C96,181,192,139,288,138.7C384,139,480,181,576,192C672,203,768,181,864,149.3C960,117,1056,75,1152,74.7C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" />
@@ -102,14 +102,14 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-8 text-center lg:text-left"
+              className="space-y-10 md:space-y-12 flex flex-col items-center lg:items-start text-center lg:text-left"
             >
               <div className="space-y-4">
                  <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo uppercase tracking-[0.2em] px-4 py-1.5 rounded-full inline-flex">
                     Plataforma #1 de Casas en Chile
                  </Badge>
-                   <h1 className="flex flex-col gap-4 text-center lg:text-left">
-                    <div className="flex flex-col gap-0 items-center lg:items-start min-h-[3em] md:min-h-[2.2em]">
+                   <h1 className="flex flex-col gap-5 md:gap-8 items-center lg:items-start w-full">
+                    <div className="flex flex-col gap-0 items-center lg:items-start min-h-[2.5em] md:min-h-[2.2em] w-full">
                        <span className="text-[clamp(1.5rem,5vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">CASAS</span>
                        <AnimatePresence mode="wait">
                           <motion.span
@@ -125,17 +125,17 @@ export function HeroSection() {
                        </AnimatePresence>
                     </div>
                     <div className="flex flex-col gap-3 w-full max-w-[270px] lg:max-w-none mx-auto lg:mx-0">
-                       <div className="bg-brand-teal text-brand-indigo px-4 py-2 rounded-none uppercase font-black text-[clamp(1.5rem,6vw,60px)] leading-none text-center lg:text-left w-full">
+                       <div className="bg-brand-teal text-brand-indigo px-4 py-2.5 rounded-none uppercase font-black text-[clamp(1.5rem,6vw,60px)] leading-none text-center lg:text-left w-full shadow-lg shadow-brand-teal/5">
                           COMPARA
                        </div>
-                       <div className="bg-brand-indigo text-brand-teal px-4 py-2 rounded-none uppercase font-black text-[clamp(1.5rem,6vw,60px)] leading-none text-center lg:text-left w-full">
+                       <div className="bg-brand-indigo text-brand-teal px-4 py-2.5 rounded-none uppercase font-black text-[clamp(1.5rem,6vw,60px)] leading-none text-center lg:text-left w-full shadow-lg shadow-brand-indigo/5">
                           Y COTIZA
                        </div>
                     </div>
                   </h1>
               </div>
               
-              <p className="text-base md:text-2xl text-muted-foreground/90 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-base md:text-2xl text-muted-foreground/90 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 px-2 md:px-0">
                  Encuentra tu hogar ideal entre <span className="text-foreground font-bold">+5.000 modelos</span> de casas SIP, modulares y tradicionales de <span className="text-foreground border-b-4 border-brand-teal/40 pb-1 font-black">226 constructoras</span> certificadas en todo Chile.
               </p>
 
@@ -143,7 +143,7 @@ export function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                    <DialogTrigger render={
-                     <Button size="lg" className="w-full bg-brand-indigo text-white font-black text-sm sm:text-lg rounded-2xl h-14 md:h-16 shadow-2xl shadow-primary/20">
+                     <Button size="lg" className="w-full bg-brand-indigo text-white font-black text-sm sm:text-lg rounded-2xl h-14 md:h-16 shadow-2xl shadow-brand-indigo/30 transition-transform active:scale-95">
                        SOLICITAR ASESORÍA EXPERTA
                        <ArrowRight className="w-5 h-5 ml-2" />
                      </Button>
