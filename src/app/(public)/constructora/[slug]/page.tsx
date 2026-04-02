@@ -104,7 +104,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
             </div>
             <div className="flex items-center gap-4">
                <ShareActions title={constructora.nombre} url={`/constructora/${constructora.slug}`} />
-               <Button size="lg" className="rounded-3xl h-16 px-12 font-black text-[12px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 brand-gradient border-none hover:scale-105 active:scale-95 transition-all">
+               <Button size="lg" className="rounded-3xl h-16 px-12 font-black text-[12px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20 bg-brand-indigo border-none hover:scale-105 active:scale-95 transition-all">
                   Contactar Pro
                </Button>
             </div>

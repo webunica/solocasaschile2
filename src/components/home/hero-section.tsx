@@ -102,7 +102,7 @@ export function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                  <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                    <DialogTrigger render={
-                     <Button size="lg" className="w-full brand-gradient text-white font-black rounded-2xl h-16 text-sm tracking-[0.1em] shadow-2xl shadow-primary/20">
+                     <Button size="lg" className="w-full bg-brand-indigo text-white font-black rounded-2xl h-16 text-sm tracking-[0.1em] shadow-2xl shadow-primary/20">
                        SOLICITAR ASESORÍA EXPERTA
                        <ArrowRight className="w-5 h-5 ml-2" />
                      </Button>
@@ -139,7 +139,7 @@ export function HeroSection() {
                    transition={{ delay: 0.4 + (i * 0.1) }}
                    className="flex flex-col items-center lg:items-start gap-3 group"
                  >
-                   <div className="w-12 h-12 bg-brand-indigo/5 backdrop-blur-md rounded-2xl flex items-center justify-center text-brand-indigo group-hover:brand-gradient group-hover:text-white transition-all duration-500">
+                   <div className="w-12 h-12 bg-brand-indigo/5 backdrop-blur-md rounded-2xl flex items-center justify-center text-brand-indigo group-hover:bg-brand-indigo group-hover:text-white transition-all duration-500">
                       {stat.icon}
                    </div>
                    <div className="space-y-1">

@@ -251,7 +251,7 @@ export function ComparadorTable({ modelos }: Props) {
               <td key={m.id} className="px-8 py-8 text-center border-l border-border/20">
                 <Link
                   href={`/modelo/${m.slug}`}
-                  className={cn(buttonVariants({ size: "lg" }), "w-full max-w-[200px] rounded-2xl font-black text-xs uppercase tracking-widest brand-gradient shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-white hover:text-white")}
+                  className={cn(buttonVariants({ size: "lg" }), "w-full max-w-[200px] rounded-2xl font-black text-xs uppercase tracking-widest bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-white hover:text-white")}
                 >
                   Continuar
                 </Link>

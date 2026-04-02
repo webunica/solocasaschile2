@@ -155,7 +155,7 @@ export function HeroLeadForm() {
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full brand-gradient hover:opacity-95 font-black text-white h-14 md:h-16 rounded-2xl shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] tracking-tight xs:tracking-normal md:tracking-[0.2em] text-[10px] sm:text-xs md:text-sm group transition-all px-4"
+        className="w-full bg-brand-indigo hover:opacity-95 font-black text-white h-14 md:h-16 rounded-2xl shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] tracking-tight xs:tracking-normal md:tracking-[0.2em] text-[10px] sm:text-xs md:text-sm group transition-all px-4"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />

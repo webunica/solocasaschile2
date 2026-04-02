@@ -108,7 +108,7 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
 
   if (success) return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center gap-10">
-      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-32 h-32 rounded-[2.5rem] brand-gradient flex items-center justify-center shadow-2xl">
+      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-32 h-32 rounded-[2.5rem] bg-brand-indigo flex items-center justify-center shadow-2xl">
         <CheckCircle2 className="w-16 h-16 text-white" />
       </motion.div>
       <div className="text-center space-y-3">
@@ -291,7 +291,7 @@ export function EditModelForm({ modelo }: { modelo: ModelWithConstructora }) {
 
         {/* Sidebar Actions */}
         <div className="flex flex-col gap-4">
-          <Button type="submit" disabled={loading} className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.3em] brand-gradient shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white hover:text-white">
+          <Button type="submit" disabled={loading} className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.3em] bg-brand-indigo shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white hover:text-white">
             {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5 mr-3" /> Guardar Cambios</>}
           </Button>
 

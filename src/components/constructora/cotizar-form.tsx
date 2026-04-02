@@ -179,7 +179,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full h-14 rounded-2xl brand-gradient font-black text-[10px] tracking-[0.2em] shadow-xl shadow-primary/20 hover:opacity-95 transition-all group"
+        className="w-full h-14 rounded-2xl bg-brand-indigo font-black text-[10px] tracking-[0.2em] shadow-xl shadow-primary/20 hover:opacity-95 transition-all group"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />

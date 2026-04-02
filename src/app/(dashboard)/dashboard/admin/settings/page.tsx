@@ -47,7 +47,7 @@ export default async function AdminSettingsPage() {
     <div className="max-w-4xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
       <div>
         <div className="flex items-center gap-3 mb-2">
-           <div className="w-10 h-10 rounded-2xl brand-gradient flex items-center justify-center text-white ring-4 ring-primary/10">
+           <div className="w-10 h-10 rounded-2xl bg-brand-indigo flex items-center justify-center text-white ring-4 ring-primary/10">
               <Settings2 className="w-5 h-5" />
            </div>
            <h1 className="text-4xl font-heading font-black tracking-tighter leading-none italic">

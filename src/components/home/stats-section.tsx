@@ -19,7 +19,7 @@ export function StatsSection() {
               key={stat.label} 
               className="p-8 md:p-12 lg:p-16 flex flex-col gap-8 group transition-all duration-700 bg-background hover:bg-muted/30 border-r border-b border-border/20"
             >
-              <div className="w-12 h-12 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:brand-gradient group-hover:text-white transition-all transform group-hover:scale-110 border border-border/20">
+              <div className="w-12 h-12 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-brand-indigo group-hover:text-white transition-all transform group-hover:scale-110 border border-border/20">
                  <stat.icon className="w-6 h-6" />
               </div>
               <div className="space-y-2">

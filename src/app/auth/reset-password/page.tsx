@@ -80,7 +80,7 @@ export default function ResetPasswordPage() {
           
           <div className="space-y-4">
              <div className="h-1.5 w-full bg-muted rounded-full relative overflow-hidden">
-                <div className="absolute inset-0 w-2/3 brand-gradient rounded-full" />
+                <div className="absolute inset-0 w-2/3 bg-brand-indigo rounded-full" />
              </div>
              <h2 className="text-4xl font-heading font-black tracking-tighter">
                Crear <span className="gradient-text">Contraseña</span>
@@ -126,7 +126,7 @@ export default function ResetPasswordPage() {
                 </div>
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full h-14 rounded-[2rem] brand-gradient font-black uppercase tracking-widest text-[10px] text-white shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none">
+              <Button type="submit" disabled={loading} className="w-full h-14 rounded-[2rem] bg-brand-indigo font-black uppercase tracking-widest text-[10px] text-white shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none">
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Actualizar Contraseña"}
               </Button>
             </form>

@@ -119,7 +119,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
         <div className="pt-4">
           <Button 
             onClick={() => setShowSuccess(false)}
-            className="h-14 px-10 rounded-2xl brand-gradient text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform"
+            className="h-14 px-10 rounded-2xl bg-brand-indigo text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform"
           >
              Redactar otro mensaje
           </Button>
@@ -242,7 +242,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
               type="submit"
               disabled={loading}
               className={cn(
-                "w-full h-16 rounded-2xl brand-gradient text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl transition-all flex items-center justify-center gap-2",
+                "w-full h-16 rounded-2xl bg-brand-indigo text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl transition-all flex items-center justify-center gap-2",
                 loading ? "opacity-50 cursor-not-allowed" : "hover:scale-[1.01] active:scale-95 shadow-primary/20"
               )}
             >

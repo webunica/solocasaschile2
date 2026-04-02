@@ -38,7 +38,7 @@ export function AnnouncementSettings({ initialSettings }: { initialSettings: any
   }
 
   const themes: Record<string, string> = {
-    brand: "brand-gradient text-white",
+    brand: "bg-brand-indigo text-white",
     dark: "bg-slate-950 text-white",
     emerald: "bg-emerald-600 text-white"
   }
@@ -143,7 +143,7 @@ export function AnnouncementSettings({ initialSettings }: { initialSettings: any
             <Button 
               onClick={handleSave} 
               disabled={loading}
-              className="w-full h-14 brand-gradient text-white font-black uppercase tracking-[0.2em] text-xs rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+              className="w-full h-14 bg-brand-indigo text-white font-black uppercase tracking-[0.2em] text-xs rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
               {loading ? (
                  <Loader2 className="w-4 h-4 animate-spin mr-2" />

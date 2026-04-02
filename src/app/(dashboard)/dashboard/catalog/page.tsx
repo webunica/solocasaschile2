@@ -68,7 +68,7 @@ export default async function CatalogManagementPage() {
              </div>
              <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                 <div 
-                  className={cn("h-full transition-all duration-1000", isLimitReached ? "bg-red-500" : "brand-gradient")} 
+                  className={cn("h-full transition-all duration-1000", isLimitReached ? "bg-red-500" : "bg-brand-indigo")} 
                   style={{ width: `${Math.min(100, (usedCount / limits.maxModels) * 100)}%` }} 
                 />
              </div>
@@ -78,7 +78,7 @@ export default async function CatalogManagementPage() {
             className={cn(
               buttonVariants({ variant: "default" }), 
               "rounded-2xl h-14 px-10 font-black text-[10px] uppercase tracking-widest shadow-2xl transition-all text-white hover:text-white",
-              isLimitReached ? "bg-muted text-muted-foreground cursor-not-allowed opacity-50" : "brand-gradient shadow-primary/20 hover:scale-[1.03] active:scale-95"
+              isLimitReached ? "bg-muted text-muted-foreground cursor-not-allowed opacity-50" : "bg-brand-indigo shadow-primary/20 hover:scale-[1.03] active:scale-95"
             )}
           >
             <Plus className="w-5 h-5 mr-3" /> Nuevo Modelo
@@ -201,7 +201,7 @@ export default async function CatalogManagementPage() {
                 </div>
                 <Link 
                    href="/dashboard/catalog/new" 
-                   className={cn(buttonVariants({ variant: "default" }), "rounded-2xl h-16 px-12 font-black text-xs uppercase tracking-widest brand-gradient shadow-2xl shadow-primary/20 text-white hover:text-white hover:scale-[1.03] transition-all")}
+                   className={cn(buttonVariants({ variant: "default" }), "rounded-2xl h-16 px-12 font-black text-xs uppercase tracking-widest bg-brand-indigo shadow-2xl shadow-primary/20 text-white hover:text-white hover:scale-[1.03] transition-all")}
                 >
                    Lanzar Primer Modelo
                 </Link>

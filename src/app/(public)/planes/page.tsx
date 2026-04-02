@@ -40,7 +40,7 @@ const PLANES = [
     ],
     cta: "Dominar el Mercado",
     ctaHref: "/register?plan=premium",
-    ctaClass: "brand-gradient text-white hover:opacity-90",
+    ctaClass: "bg-brand-indigo text-white hover:opacity-90",
     ctaVariant: "default" as const,
   },
   {
@@ -294,7 +294,7 @@ export default function PlanesPage() {
 
       {/* ── Final CTA ─────────────────────────────────────── */}
       <section className="container max-w-4xl mx-auto px-4 md:px-8">
-        <div className="brand-gradient rounded-[3rem] p-16 text-center text-white space-y-8 relative overflow-hidden">
+        <div className="bg-brand-indigo rounded-[3rem] p-16 text-center text-white space-y-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-10 mix-blend-overlay" />
           <div className="relative z-10 space-y-6">
             <Badge className="bg-white/20 text-white border-white/20 font-black uppercase tracking-widest text-[10px] px-4 py-1.5">

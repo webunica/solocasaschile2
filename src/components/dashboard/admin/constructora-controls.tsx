@@ -68,7 +68,7 @@ export function ConstructoraAdminControls({ constructora }: Props) {
         onClick={onToggleVerify}
         className={constructora.verificada 
           ? "border-emerald-500/30 text-emerald-600 hover:bg-emerald-50 bg-emerald-50/20" 
-          : "brand-gradient"}
+          : "bg-brand-indigo"}
       >
         {loading ? <Loader2 className="w-3 h-3 animate-spin mr-2" /> : (constructora.verificada ? <XCircle className="w-3 h-3 mr-2" /> : <ShieldCheck className="w-3 h-3 mr-2" />)}
         {constructora.verificada ? "Quitar Verificación" : "Verificar"}

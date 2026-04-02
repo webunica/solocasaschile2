@@ -89,7 +89,7 @@ export default function LoginPage() {
           
           <div className="space-y-4">
              <div className="h-1.5 w-full bg-muted rounded-full relative overflow-hidden">
-                <div className="absolute inset-0 w-1/2 brand-gradient rounded-full" />
+                <div className="absolute inset-0 w-1/2 bg-brand-indigo rounded-full" />
              </div>
              <h2 className="text-4xl font-heading font-black tracking-tighter">
                Acceso <span className="gradient-text">Constructor</span>
@@ -124,7 +124,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <Button type="submit" size="lg" disabled={loading} className="w-full h-14 brand-gradient text-white font-black tracking-[0.2em] text-[10px] uppercase rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 border-none">
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-14 bg-brand-indigo text-white font-black tracking-[0.2em] text-[10px] uppercase rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 border-none">
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="flex items-center gap-3">Iniciar Sesión <ArrowRight className="w-4 h-4" /></span>}
             </Button>
           </form>

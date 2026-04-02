@@ -124,7 +124,7 @@ export default async function ModeloPage({ params }: PageProps) {
             {/* Header Content */}
             <div className="space-y-6">
                <div className="flex flex-wrap items-center gap-3">
-                  <Badge className="brand-gradient text-white border-none rounded-full px-4 py-1.5 font-black text-[10px] tracking-widest uppercase shadow-lg shadow-primary/20">
+                  <Badge className="bg-brand-indigo text-white border-none rounded-full px-4 py-1.5 font-black text-[10px] tracking-widest uppercase shadow-lg shadow-primary/20">
                     {TIPO_LABELS[modelo.tipo] || modelo.tipo || 'Casa'}
                   </Badge>
                   {constructora.plan === "premium" && (
@@ -173,7 +173,7 @@ export default async function ModeloPage({ params }: PageProps) {
                      </div>
                      <Link 
                         href="#form-cotizar"
-                        className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto rounded-xl h-14 px-8 font-black text-xs uppercase tracking-widest brand-gradient shadow-lg shadow-primary/20 flex items-center justify-center")}
+                        className={cn(buttonVariants({ size: "lg" }), "w-full sm:w-auto rounded-xl h-14 px-8 font-black text-xs uppercase tracking-widest bg-brand-indigo shadow-lg shadow-primary/20 flex items-center justify-center")}
                      >
                         Cotizar Ahora
                      </Link>
@@ -284,7 +284,7 @@ export default async function ModeloPage({ params }: PageProps) {
           {/* Pricing & Checkout (Right Sticky) */}
           <div className="sticky top-40 space-y-8 h-fit pb-12">
              <div id="form-cotizar" className="bg-card/40 backdrop-blur-3xl border border-border/40 rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-12 shadow-2xl shadow-primary/10 relative overflow-hidden group/form">
-                <div className="absolute top-0 left-0 right-0 h-2 animate-gradient shadow-xl brand-gradient" />
+                <div className="absolute top-0 left-0 right-0 h-2 animate-gradient shadow-xl bg-brand-indigo" />
                 
                 <div className="space-y-8 md:space-y-10">
                    <div className="space-y-5">
@@ -327,7 +327,7 @@ export default async function ModeloPage({ params }: PageProps) {
                       
                       {/* Social Proof Capsule */}
                       <div className="bg-muted/20 rounded-2xl p-4 flex items-center gap-4 border border-border/20">
-                         <div className="w-10 h-10 rounded-xl brand-gradient flex items-center justify-center text-white shrink-0">
+                         <div className="w-10 h-10 rounded-xl bg-brand-indigo flex items-center justify-center text-white shrink-0">
                             <Zap className="w-5 h-5 fill-current" />
                          </div>
                          <div>

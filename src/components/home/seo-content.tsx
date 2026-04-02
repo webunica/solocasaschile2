@@ -123,7 +123,7 @@ export function SeoContent() {
           {/* Over 50 Section */}
           <div className="flex flex-col md:flex-row gap-16 items-center border-y border-border/40 py-20">
              <div className="flex-1 space-y-10">
-                <Badge className="brand-gradient text-white border-none py-1.5 px-6 rounded-full font-black text-[9px] uppercase tracking-widest">Life Design +50</Badge>
+                <Badge className="bg-brand-indigo text-white border-none py-1.5 px-6 rounded-full font-black text-[9px] uppercase tracking-widest">Life Design +50</Badge>
                 <h2 className="text-3xl md:text-5xl font-heading font-black tracking-tighter leading-tight uppercase">Beneficios para una Vida Plena</h2>
                 <div className="grid gap-8">
                    <div className="p-8 rounded-3xl bg-background border border-border/60 hover:border-brand-teal transition-all">

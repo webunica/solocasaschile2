@@ -90,8 +90,8 @@ export function Header() {
             <Link 
               href="/planes" 
               className={cn(
-                buttonVariants({ size: "default" }),
-                "brand-gradient text-white border-none rounded-2xl px-10 font-black text-[10px] uppercase tracking-[0.2em] shadow-[0_20px_40px_-10px_rgba(var(--primary-rgb),0.3)] hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
+                buttonVariants({ variant: "secondary", size: "default" }),
+                "rounded-2xl px-10 font-black text-[10px] uppercase tracking-[0.2em] hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
               )}
             >
               Publicar Propiedad
@@ -150,7 +150,10 @@ export function Header() {
                    <Link 
                       href="/planes" 
                       onClick={() => setIsOpen(false)}
-                      className="w-full flex items-center justify-center gap-3 brand-gradient text-white h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/20"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em]"
+                      )}
                    >
                       Publicar Propiedad
                    </Link>

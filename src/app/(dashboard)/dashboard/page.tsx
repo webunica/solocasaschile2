@@ -89,7 +89,7 @@ export default async function DashboardPage() {
           <div className="flex gap-4 w-full md:w-auto">
              <Link 
                href="/dashboard/catalog/new"
-               className={cn(buttonVariants({ variant: "default" }), "flex-1 md:flex-initial rounded-2xl h-14 px-10 font-black text-[10px] tracking-widest uppercase brand-gradient shadow-2xl shadow-primary/20 hover:scale-[1.03] active:scale-95 transition-all text-white hover:text-white")}
+               className={cn(buttonVariants({ variant: "default" }), "flex-1 md:flex-initial rounded-2xl h-14 px-10 font-black text-[10px] tracking-widest uppercase bg-brand-indigo shadow-2xl shadow-primary/20 hover:scale-[1.03] active:scale-95 transition-all text-white hover:text-white")}
              >
                Publicar Nuevo Modelo
              </Link>
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
                    {recentLeads.length > 0 ? recentLeads.map((lead: any) => (
                       <div key={lead.id} className="flex items-center justify-between p-8 hover:bg-primary/[0.02] transition-all group border-l-4 border-l-transparent hover:border-l-primary">
                          <div className="flex items-center gap-6">
-                            <div className="w-16 h-16 rounded-[1.5rem] bg-muted/40 border border-border/40 flex items-center justify-center text-foreground/40 font-black uppercase text-lg group-hover:brand-gradient group-hover:text-white group-hover:border-transparent transition-all duration-700 shadow-inner">
+                            <div className="w-16 h-16 rounded-[1.5rem] bg-muted/40 border border-border/40 flex items-center justify-center text-foreground/40 font-black uppercase text-lg group-hover:bg-brand-indigo group-hover:text-white group-hover:border-transparent transition-all duration-700 shadow-inner">
                                {lead.nombre_cliente.slice(0, 2)}
                             </div>
                             <div className="flex flex-col gap-1">
@@ -194,7 +194,7 @@ export default async function DashboardPage() {
              {/* Help Card */}
              <div className="p-10 rounded-[3rem] bg-muted/10 border border-border/40 space-y-6">
                 <div className="flex items-center gap-4">
-                   <div className="w-12 h-12 rounded-2xl brand-gradient flex items-center justify-center text-white shadow-lg">
+                   <div className="w-12 h-12 rounded-2xl bg-brand-indigo flex items-center justify-center text-white shadow-lg">
                       <MessageSquare className="w-6 h-6" />
                    </div>
                    <div className="space-y-0.5">

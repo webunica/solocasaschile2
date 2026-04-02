@@ -59,7 +59,7 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
         <div className="h-8 w-px bg-border/40 mx-1 sm:mx-2 hidden xs:block" />
         
         <Button variant="ghost" className="gap-2 sm:gap-4 px-2 sm:px-3 hover:bg-muted/50 rounded-xl sm:rounded-2xl group transition-all duration-300 border border-transparent hover:border-border/40">
-           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl brand-gradient flex items-center justify-center text-white font-black uppercase text-[10px] sm:text-xs shadow-lg shadow-primary/10 group-hover:scale-110 transition-transform"> 
+           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-brand-indigo flex items-center justify-center text-white font-black uppercase text-[10px] sm:text-xs shadow-lg shadow-primary/10 group-hover:scale-110 transition-transform"> 
             {initials} 
            </div>
             <div className="hidden sm:flex flex-col items-start gap-1">

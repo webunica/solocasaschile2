@@ -57,7 +57,7 @@ export function WhatsAppWidget() {
             className="mb-4 w-[350px] overflow-hidden rounded-[2.5rem] bg-background/80 backdrop-blur-2xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)]"
           >
             {/* Header */}
-            <div className="brand-gradient p-8 text-white relative">
+            <div className="bg-brand-indigo p-8 text-white relative">
               <button 
                 onClick={() => setIsOpen(false)}
                 className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
@@ -150,7 +150,7 @@ export function WhatsAppWidget() {
 
                    <Button 
                      type="submit" 
-                     className="w-full h-12 brand-gradient rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                     className="w-full h-12 bg-brand-indigo rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                    >
                      Iniciar Chat en WhatsApp <Send className="ml-2 w-4 h-4" />
                    </Button>
@@ -175,7 +175,7 @@ export function WhatsAppWidget() {
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           "relative w-16 h-16 rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-2xl",
-          isOpen ? "bg-background text-foreground rotate-90" : "brand-gradient text-white shadow-primary/20"
+          isOpen ? "bg-background text-foreground rotate-90" : "bg-brand-indigo text-white shadow-primary/20"
         )}
       >
         <AnimatePresence mode="wait">

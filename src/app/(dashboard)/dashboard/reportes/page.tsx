@@ -43,7 +43,7 @@ export default async function ReportesPage() {
            <Button variant="outline" className="rounded-2xl h-12 px-6 font-bold text-[10px] uppercase tracking-widest gap-2 border-border/60">
              <Calendar className="w-4 h-4" /> Últimos 30 días
            </Button>
-           <Button className="rounded-2xl h-12 px-8 font-black text-xs uppercase tracking-widest brand-gradient text-white shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+           <Button className="rounded-2xl h-12 px-8 font-black text-xs uppercase tracking-widest bg-brand-indigo text-white shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
              <Download className="w-4 h-4 mr-2" /> Exportar PDF
            </Button>
         </div>
@@ -108,7 +108,7 @@ export default async function ReportesPage() {
                           />
                           {/* Leads bar (Main) */}
                           <div 
-                            className="relative w-full brand-gradient rounded-t-2xl transition-all duration-1000 ease-out group-hover:opacity-80" 
+                            className="relative w-full bg-brand-indigo rounded-t-2xl transition-all duration-1000 ease-out group-hover:opacity-80" 
                             style={{ height: `${height}%` }}
                           >
                              <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-background border border-border/60 rounded-lg px-2 py-1 shadow-lg text-[10px] font-black pointer-events-none">
@@ -123,7 +123,7 @@ export default async function ReportesPage() {
              </div>
              <div className="mt-12 flex items-center gap-8 justify-center border-t border-border/40 pt-8">
                 <div className="flex items-center gap-2">
-                   <div className="w-3 h-3 rounded-full brand-gradient" />
+                   <div className="w-3 h-3 rounded-full bg-brand-indigo" />
                    <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Cotizaciones</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -167,7 +167,7 @@ export default async function ReportesPage() {
       </div>
 
       {/* Conversion Banner */}
-      <div className="p-12 rounded-[4rem] brand-gradient relative overflow-hidden text-white group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-700">
+      <div className="p-12 rounded-[4rem] bg-brand-indigo relative overflow-hidden text-white group cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transition-all duration-700">
          <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
          <div className="absolute -right-20 -top-20 w-80 h-80 bg-white/10 rounded-full blur-[100px] pointer-events-none" />
          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
