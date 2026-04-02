@@ -61,19 +61,31 @@ export function HeroSection() {
   return (
     <section className="relative flex items-center pt-[140px] md:pt-[180px] pb-10 md:pb-24 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[95vh]">
 
-      {/* ── Full-bleed background image (all screen sizes) ── */}
+      {/* ── Background images ── */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/slider/m_001.jpg"
-          alt="Casa prefabricada en Chile"
-          fill
-          className="object-cover object-center"
-          priority
-        />
-        {/* Mobile: stronger top-to-bottom fade so text is readable */}
-        <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
-        {/* Desktop: left-to-right fade — left side readable, right side shows photo */}
-        <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
+        {/* Mobile Background */}
+        <div className="block lg:hidden absolute inset-0">
+          <Image
+            src="/images/slider/m_001.jpg"
+            alt="Casa prefabricada en Chile"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
+        </div>
+
+        {/* Desktop/Tablet Background */}
+        <div className="hidden lg:block absolute inset-0">
+          <Image
+            src="/images/bg/hero-desktop.jpg"
+            alt="Nature landscape with rainbow"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
+        </div>
       </div>
 
       {/* ── Content ── */}
