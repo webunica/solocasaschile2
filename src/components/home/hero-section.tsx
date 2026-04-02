@@ -93,8 +93,8 @@ export function HeroSection() {
         </svg>
       </div>
 
-      <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-start">
+      <div className="container relative z-10 max-w-7xl mx-auto px-4 sm:px-10 lg:px-12">
+        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-start w-full">
           
           {/* Left: Branding & Benefits (Primary on Mobile) */}
           <div className="flex flex-col gap-10">
