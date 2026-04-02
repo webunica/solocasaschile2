@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next'
-import { getModelosFiltered } from '@/lib/supabase/services'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://solocasaschile.cl'
+  const baseUrl = 'https://solocasaschile.com'
 
   // Static routes
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -16,11 +16,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/tipos/llave-en-mano`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
   ]
 
+  const supabase = await createClient()
+
   // Dynamic model routes from Supabase
   let modelRoutes: MetadataRoute.Sitemap = []
   try {
-    const modelos = await getModelosFiltered({})
-    modelRoutes = modelos.map((m: any) => ({
+    const { data: modelos } = await supabase
+      .from('modelos')
+      .select('slug, created_at')
+      .eq('disponible', true)
+    modelRoutes = (modelos || []).map((m: { slug: string; created_at: string }) => ({
       url: `${baseUrl}/modelo/${m.slug}`,
       lastModified: new Date(m.created_at),
       changeFrequency: 'weekly' as const,
@@ -30,5 +35,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Graceful fallback if DB not available
   }
 
-  return [...staticRoutes, ...modelRoutes]
+  // Dynamic constructora routes from Supabase
+  let constructoraRoutes: MetadataRoute.Sitemap = []
+  try {
+    const { data: constructoras } = await supabase
+      .from('constructoras')
+      .select('slug, created_at')
+    constructoraRoutes = (constructoras || []).map((c: { slug: string; created_at: string }) => ({
+      url: `${baseUrl}/constructora/${c.slug}`,
+      lastModified: new Date(c.created_at),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }))
+  } catch {
+    // Graceful fallback
+  }
+
+  return [...staticRoutes, ...modelRoutes, ...constructoraRoutes]
 }

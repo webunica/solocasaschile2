@@ -159,7 +159,13 @@ export async function updateSettings(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
 
-  const data = {
+  // Check plan for SEO restriction
+  const { data: currentConst } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
+  const initialPlan = currentConst?.plan || 'gratis';
+
+  const isPaidPlan = initialPlan === 'pro' || initialPlan === 'premium';
+
+  const data: any = {
     nombre: formData.get('nombre') as string,
     descripcion: formData.get('descripcion') as string,
     telefono: formData.get('telefono') as string,
@@ -169,6 +175,16 @@ export async function updateSettings(formData: FormData) {
     logo_url: formData.get('logo_url') as string,
     image_url: formData.get('image_url') as string,
     video_url: formData.get('video_url') as string,
+  }
+
+  // SEO fields only if paid plan
+  if (isPaidPlan) {
+    data.seo_title = formData.get('seo_title') as string || null;
+    data.seo_description = formData.get('seo_description') as string || null;
+    const keywordsRaw = formData.get('seo_keywords') as string;
+    if (keywordsRaw) {
+      try { data.seo_keywords = JSON.parse(keywordsRaw); } catch { data.seo_keywords = []; }
+    }
   }
 
   const { error } = await supabase
@@ -229,6 +245,35 @@ export async function createModel(data: any) {
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
   revalidatePath('/dashboard/settings')
+  return { success: true }
+}
+
+export async function updateModel(id: string, data: any) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'No autenticado' }
+
+  const { data: currentModel } = await supabase.from('modelos').select('constructora_id, slug').eq('id', id).single();
+  if (currentModel?.constructora_id !== user.id) return { error: 'No autorizado' }
+
+  // 1. Check plan limits for photos
+  const { data: constructora } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
+  const limits = getPlanLimits(constructora?.plan || 'gratis');
+  if (data.imagenes_urls && data.imagenes_urls.length > limits.maxPhotos) {
+    return { error: `Tu plan permite un máximo de ${limits.maxPhotos} fotos.` };
+  }
+
+  const { error } = await supabase
+    .from('modelos')
+    .update(data)
+    .eq('id', id);
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/catalog')
+  revalidatePath('/catalogo')
+  revalidatePath(`/modelo/${currentModel.slug}`)
+  revalidatePath(`/modelo/${data.slug || currentModel.slug}`)
   return { success: true }
 }
 

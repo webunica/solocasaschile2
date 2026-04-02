@@ -19,3 +19,109 @@ export function StructuredData({ type, data }: StructuredDataProps) {
     />
   );
 }
+
+/** Helper: builds a rich House/Residence JSON-LD object from model data */
+export function buildModelJsonLd(modelo: {
+  nombre: string;
+  descripcion?: string | null;
+  imagenes_urls?: string[];
+  precio_desde_uf?: number;
+  superficie_m2?: number;
+  dormitorios?: number;
+  banos?: number;
+  pisos?: number;
+  tiempo_entrega?: string | null;
+  garantia_anos?: number | null;
+  recintos?: string[] | null;
+  tipo?: string;
+  uso?: string | null;
+  terminaciones?: Record<string, string> | null;
+  aislacion?: { calificacion_energetica?: string } | null;
+  slug: string;
+  constructora?: {
+    nombre?: string;
+    sitio_web?: string | null;
+    logo_url?: string | null;
+  } | null;
+}) {
+  const baseUrl = 'https://solocasaschile.com';
+  const amenities: any[] = [];
+
+  // Add terminaciones as amenity features
+  if (modelo.terminaciones) {
+    const labels: Record<string, string> = {
+      ventanas: 'Ventanas',
+      puertas_exteriores: 'Puerta exterior',
+      cocina: 'Cocina equipada',
+      bano_principal: 'Baño principal',
+      pisos: 'Pisos',
+      climatizacion: 'Climatización',
+    };
+    for (const [k, label] of Object.entries(labels)) {
+      const val = (modelo.terminaciones as any)[k];
+      if (val) {
+        amenities.push({
+          "@type": "LocationFeatureSpecification",
+          "name": label,
+          "value": val,
+        });
+      }
+    }
+  }
+
+  // Energy class
+  if (modelo.aislacion?.calificacion_energetica) {
+    amenities.push({
+      "@type": "LocationFeatureSpecification",
+      "name": "Calificación Energética",
+      "value": modelo.aislacion.calificacion_energetica,
+    });
+  }
+
+  // Recintos
+  if (modelo.recintos?.length) {
+    amenities.push({
+      "@type": "LocationFeatureSpecification",
+      "name": "Recintos incluidos",
+      "value": modelo.recintos.join(", "),
+    });
+  }
+
+  const jsonLd: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "House",
+    "name": modelo.nombre,
+    "description": modelo.descripcion || undefined,
+    "url": `${baseUrl}/modelo/${modelo.slug}`,
+    "image": modelo.imagenes_urls?.[0] || undefined,
+    "numberOfRooms": modelo.dormitorios || undefined,
+    "numberOfBedrooms": modelo.dormitorios || undefined,
+    "numberOfBathroomsTotal": modelo.banos || undefined,
+    "numberOfFullBathrooms": modelo.banos || undefined,
+    "floorSize": modelo.superficie_m2
+      ? { "@type": "QuantitativeValue", "value": modelo.superficie_m2, "unitCode": "MTK" }
+      : undefined,
+    "numberOfFloors": modelo.pisos || 1,
+    "leaseLength": modelo.tiempo_entrega ? { "@type": "QuantitativeValue", "value": modelo.tiempo_entrega } : undefined,
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "CLF",
+      "price": modelo.precio_desde_uf,
+      "availability": "https://schema.org/InStock",
+      "seller": modelo.constructora
+        ? {
+            "@type": "Organization",
+            "name": modelo.constructora.nombre,
+            "url": modelo.constructora.sitio_web || undefined,
+            "logo": modelo.constructora.logo_url || undefined,
+          }
+        : undefined,
+    },
+    "amenityFeature": amenities.length ? amenities : undefined,
+  };
+
+  // Clean undefined values
+  Object.keys(jsonLd).forEach(k => jsonLd[k] === undefined && delete jsonLd[k]);
+
+  return jsonLd;
+}

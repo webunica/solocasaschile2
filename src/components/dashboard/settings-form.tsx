@@ -10,9 +10,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { 
   Building2, Phone, Globe, MapPin, 
-  Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video 
+  Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
+  Search, Tag, X
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { SEOPanel } from "@/components/dashboard/seo-panel";
 
 interface Props {
   initialData: any;
@@ -228,7 +230,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
         </Card>
       </div>
 
-      {/* Right Column: Visual & Status */}
+      {/* Right Column: Visual, SEO & Status */}
       <div className="space-y-8">
         <Card className="rounded-3xl border-border/40 shadow-xl overflow-hidden">
            <CardContent className="p-8 space-y-8">
@@ -310,6 +312,34 @@ export function SettingsForm({ initialData, userEmail }: Props) {
               </div>
            </CardContent>
         </Card>
+
+        {/* SEO Card — Pro/Premium only */}
+        {(initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
+          <Card className="rounded-3xl border-border/40 shadow-xl overflow-hidden">
+            <CardContent className="p-8 space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center">
+                  <Search className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">SEO de la Empresa</h3>
+                  <p className="text-xs text-muted-foreground">Cómo aparece tu empresa en Google</p>
+                </div>
+                <Badge className="ml-auto bg-primary/10 text-primary border-none text-[9px] font-black uppercase tracking-widest">{initialData?.plan?.toUpperCase()}</Badge>
+              </div>
+
+              <Separator />
+
+              <SEOPanel
+                initialTitle={initialData?.seo_title || ""}
+                initialDescription={initialData?.seo_description || ""}
+                initialKeywords={initialData?.seo_keywords || []}
+                modelName={initialData?.nombre || ""}
+                modelSlug={`constructora/${initialData?.slug || ""}`}
+              />
+            </CardContent>
+          </Card>
+        )}
 
         {/* Action Card */}
         <Card className="rounded-3xl border-primary bg-primary text-white shadow-2xl shadow-primary/20 p-8 space-y-6">

@@ -20,6 +20,23 @@ export type ModelWithConstructora = {
   postventa?: boolean;
   especificaciones?: Record<string, string>;
   score?: number;
+  // SEO fields
+  seo_title?: string | null;
+  seo_description?: string | null;
+  seo_keywords?: string[] | null;
+  seo_og_image?: string | null;
+  canonical_url?: string | null;
+  // Expanded fields
+  pisos?: number | null;
+  codigo_modelo?: string | null;
+  uso?: string | null;
+  recintos?: string[] | null;
+  construccion?: any;
+  aislacion?: any;
+  terminaciones?: any;
+  instalaciones?: any;
+  logistica?: any;
+  soporte?: any;
   constructora: {
     id: string;
     nombre: string;
@@ -30,6 +47,9 @@ export type ModelWithConstructora = {
     verificada: boolean;
     score_confianza: number;
     regiones: string[];
+    seo_title?: string | null;
+    seo_description?: string | null;
+    seo_keywords?: string[] | null;
   };
 };
 
