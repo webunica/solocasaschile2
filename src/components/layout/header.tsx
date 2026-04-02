@@ -59,7 +59,7 @@ export function Header() {
         </Link>
         
         <div className="flex flex-1 items-center justify-end lg:justify-between gap-6">
-          <nav className="hidden lg:flex items-center space-x-12 text-[11px] font-black uppercase tracking-[0.25em]">
+          <nav className="hidden lg:flex items-center space-x-12 text-[15px] font-black uppercase tracking-[0.25em]">
             {NAV_LINKS.map((link) => (
               <Link 
                 key={link.href} 
@@ -117,7 +117,7 @@ export function Header() {
                    <Link 
                      href="/" 
                      onClick={() => setIsOpen(false)}
-                     className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 text-foreground font-black text-[10px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all group"
+                     className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 text-foreground font-black text-[15px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all group"
                    >
                      <Home className="w-5 h-5 opacity-40 group-hover:opacity-100" /> Inicio
                    </Link>
@@ -129,7 +129,7 @@ export function Header() {
                        key={link.href}
                        href={link.href}
                        onClick={() => setIsOpen(false)}
-                       className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-[10px] uppercase tracking-widest transition-all group"
+                       className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-[15px] uppercase tracking-widest transition-all group"
                      >
                        <link.icon className="w-5 h-5 opacity-40 group-hover:opacity-100" /> {link.label}
                      </Link>
@@ -140,7 +140,7 @@ export function Header() {
                    <Link 
                      href="/login" 
                      onClick={() => setIsOpen(false)}
-                     className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-[10px] uppercase tracking-widest transition-all"
+                     className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-black text-[15px] uppercase tracking-widest transition-all"
                    >
                      <CreditCard className="w-5 h-5 opacity-40" /> Mi Cuenta
                    </Link>
