@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/dashboard/', '/api/'],
       },
     ],
-    sitemap: 'https://solocasaschile.cl/sitemap.xml',
+    sitemap: 'https://solocasaschile.com/sitemap.xml',
   }
 }

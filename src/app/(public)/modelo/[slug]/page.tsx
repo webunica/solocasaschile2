@@ -10,26 +10,49 @@ import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn } from "@/lib/utils";
 import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video } from "lucide-react";
 import { PriceNotify } from "@/components/modelo/price-notify";
+import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+import { buildModelJsonLd, StructuredData } from "@/components/seo/structured-data";
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
     const { slug } = await params;
     const modelo = await getModelBySlug(slug);
     if (!modelo) return { title: "Modelo no encontrado | SolocasasChile" };
+
+    const m = modelo as any; // includes extended fields from DB
+    const baseUrl = 'https://solocasaschile.com';
+
+    const title = m.seo_title || `${m.nombre} | Casa ${TIPO_LABELS[m.tipo] || m.tipo} en Chile | SolocasasChile`;
+    const description = m.seo_description || m.descripcion?.substring(0, 160) || `Cotiza el modelo ${m.nombre} en SolocasasChile.`;
+    const ogImage = m.seo_og_image || (m.imagenes_urls?.[0]) || `${baseUrl}/og-image.jpg`;
+    const canonical = m.canonical_url || `${baseUrl}/modelo/${m.slug}`;
+    const keywords = m.seo_keywords?.length ? m.seo_keywords.join(', ') : `${m.nombre}, casa prefabricada chile, ${m.tipo} chile`;
+
     return {
-      title: `${modelo.nombre} | Casa ${modelo.tipo} | SolocasasChile`,
-      description: modelo.descripcion?.substring(0, 160) || `Cotiza el modelo ${modelo.nombre} en SolocasasChile.`,
+      title,
+      description,
+      keywords,
+      alternates: { canonical },
       openGraph: {
-        title: `${modelo.nombre} | SolocasasChile`,
-        description: modelo.descripcion?.substring(0, 160),
-        images: modelo.imagenes_urls && modelo.imagenes_urls.length > 0 ? [modelo.imagenes_urls[0]] : [],
+        title,
+        description,
+        images: [{ url: ogImage, width: 1200, height: 630, alt: m.nombre }],
         type: "article",
-      }
+        locale: "es_CL",
+        siteName: "SolocasasChile",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [ogImage],
+      },
     };
   } catch (error) {
     return { title: "Modelo | SolocasasChile" };
@@ -47,8 +70,6 @@ export const revalidate = 3600; // Recalculate at most once per hour
 
 import { ShareActions } from "@/components/ui/share-actions";
 import { getYoutubeEmbedUrl } from "@/lib/utils";
-
-import { StructuredData } from "@/components/seo/structured-data";
 
 export default async function ModeloPage({ params }: PageProps) {
   const { slug } = await params;
@@ -72,23 +93,31 @@ export default async function ModeloPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background relative pt-16 md:pt-24">
-      <StructuredData 
-        type="Product" 
-        data={{
-          name: modelo.nombre,
-          description: modelo.descripcion,
-          image: imagenes[0] || "",
-          offers: {
-            "@type": "Offer",
-            price: precio,
-            priceCurrency: "CLF", // UF code
-            availability: "https://schema.org/InStock"
-          },
-          brand: {
-            "@type": "Organization",
-            name: constructora.nombre
-          }
-        }} 
+      <StructuredData
+        type="House"
+        data={buildModelJsonLd({
+          nombre: modelo.nombre,
+          descripcion: modelo.descripcion,
+          imagenes_urls: imagenes,
+          precio_desde_uf: precio,
+          superficie_m2: modelo.superficie_m2,
+          dormitorios: modelo.dormitorios,
+          banos: modelo.banos,
+          pisos: (modelo as any).pisos,
+          tiempo_entrega: modelo.tiempo_entrega,
+          garantia_anos: modelo.garantia_anos,
+          recintos: (modelo as any).recintos,
+          tipo: modelo.tipo,
+          uso: (modelo as any).uso,
+          terminaciones: (modelo as any).terminaciones,
+          aislacion: (modelo as any).aislacion,
+          slug: modelo.slug,
+          constructora: constructora ? {
+            nombre: constructora.nombre,
+            sitio_web: (constructora as any).sitio_web,
+            logo_url: constructora.logo_url,
+          } : null,
+        })}
       />
       <StickyCTAMobile targetId="form-cotizar" />
       
@@ -237,6 +266,8 @@ export default async function ModeloPage({ params }: PageProps) {
                      </div>
                   </div>
                )}
+
+               <FichaExpandida modelo={modelo} />
 
             {/* Reputation Card (Trust) */}
             <div className="bg-background border-2 border-brand-indigo/10 rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-12 relative overflow-hidden group shadow-2xl shadow-primary/5">
