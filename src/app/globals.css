@@ -199,7 +199,7 @@
 }
 
 .form-input-premium {
-  @apply w-full bg-muted/40 border-border/60 h-16 rounded-2xl px-6 font-bold text-base transition-all focus:bg-background focus:ring-4 focus:ring-brand-indigo/10;
+  @apply w-full bg-muted/40 border-border/60 h-16 rounded-2xl pr-6 pl-14 font-bold text-base transition-all focus:bg-background focus:ring-4 focus:ring-brand-indigo/10;
 }
 
 ::placeholder {
