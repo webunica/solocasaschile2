@@ -92,9 +92,14 @@ export function HeroSection() {
                     <span className="text-[clamp(2rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">
                        CASAS PREFABRICADAS
                     </span>
-                    <span className="w-fit mx-auto lg:mx-0 bg-brand-teal text-brand-indigo px-8 md:px-12 py-3 md:py-6 rounded-[2rem] md:rounded-[2.5rem] uppercase font-black text-[clamp(2.5rem,8vw,72px)] leading-none shadow-xl shadow-brand-teal/20 transition-all hover:scale-105 duration-500 cursor-default">
-                       Compara y Cotiza
-                    </span>
+                    <div className="flex flex-col gap-3 w-fit mx-auto lg:mx-0">
+                       <span className="bg-brand-teal text-brand-indigo px-4 py-1 rounded-xl uppercase font-black text-[clamp(2rem,8vw,72px)] leading-none">
+                          COMPARA
+                       </span>
+                       <span className="bg-brand-indigo text-brand-teal px-4 py-1 rounded-xl uppercase font-black text-[clamp(2rem,8vw,72px)] leading-none">
+                          Y COTIZA
+                       </span>
+                    </div>
                   </h1>
               </div>
               
