@@ -47,7 +47,7 @@ export function StickyCTAMobile({ targetId }: { targetId: string }) {
                 </div>
                 <div className="flex flex-col">
                    <span className="text-[10px] font-black uppercase tracking-widest leading-none opacity-40">¿Te gusta?</span>
-                   <span className="text-sm font-black tracking-tighter leading-none mt-1">Cotiza Ahora</span>
+                   <span className="text-base font-black tracking-tighter leading-none mt-1">Cotiza Ahora</span>
                 </div>
              </div>
              <Button 

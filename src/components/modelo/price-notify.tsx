@@ -68,7 +68,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
                 </div>
                 <div>
                    <p className="font-black text-[10px] uppercase tracking-widest text-emerald-600 leading-none mb-1">Oportunidad Única</p>
-                   <p className="text-sm font-bold text-foreground leading-none tracking-tight">¡Avísame si baja de precio!</p>
+                   <p className="text-base font-bold text-foreground leading-none tracking-tight">¡Avísame si baja de precio!</p>
                 </div>
              </div>
              <Bell className="w-5 h-5 text-emerald-500 opacity-20 group-hover:opacity-100 group-hover:rotate-12 transition-all" />
@@ -84,7 +84,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-6 h-6 text-emerald-500" />
                  </div>
-                 <p className="text-sm font-black text-emerald-600 uppercase tracking-widest">¡Suscripción Exitosa!</p>
+                 <p className="text-base font-black text-emerald-600 uppercase tracking-widest">¡Suscripción Exitosa!</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -99,7 +99,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
                          Cancelar
                       </button>
                    </div>
-                   <p className="text-xs font-medium text-muted-foreground leading-relaxed italic">
+                   <p className="text-base font-medium text-muted-foreground leading-relaxed italic">
                       Déjanos tu correo y nuestro sistema te notificará automáticamente cuando este modelo tenga un descuento.
                    </p>
                 </div>
@@ -112,7 +112,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="h-12 pl-12 rounded-xl border-emerald-500/10 bg-emerald-500/5 focus:ring-emerald-500/20 font-bold text-sm"
+                      className="h-12 pl-12 rounded-xl border-emerald-500/10 bg-emerald-500/5 focus:ring-emerald-500/20 font-bold text-base"
                    />
                 </div>
 
