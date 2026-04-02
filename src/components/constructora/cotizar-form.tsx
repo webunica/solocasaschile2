@@ -103,74 +103,71 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-3">
-        <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Datos de Contacto</label>
+      <div className="space-y-4">
+        <label className="form-label">Datos de Contacto</label>
         
-        <div className="relative">
-          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-indigo opacity-60" />
+        <div className="relative group/input">
+          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
           <Input 
             name="name" 
             placeholder="Nombre completo" 
             required 
-            className="h-12 bg-muted/30 border-none rounded-xl pl-11 focus:bg-background transition-colors" 
+            className="form-input-premium pl-12" 
           />
         </div>
 
-        <div className="relative">
-          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-indigo opacity-60" />
+        <div className="relative group/input">
+          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
           <Input 
             name="email" 
             type="email" 
             placeholder="Correo electrónico" 
             required 
-            className="h-12 bg-muted/30 border-none rounded-xl pl-11 focus:bg-background transition-colors" 
+            className="form-input-premium pl-12" 
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="relative">
-            <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-indigo opacity-60" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="relative group/input">
+            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
             <Input 
               name="phone" 
               placeholder="Teléfono" 
               required
-              className="h-12 bg-muted/30 border-none rounded-xl pl-11 focus:bg-background transition-colors" 
+              className="form-input-premium pl-12" 
             />
           </div>
-          <div className="relative">
-            <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-indigo opacity-60" />
+          <div className="relative group/input">
+            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
             <select 
               name="region" 
               required
-              className="w-full h-12 bg-muted/30 border-none rounded-xl pl-11 pr-4 text-sm focus:bg-background transition-colors appearance-none cursor-pointer font-medium" 
+              className="form-input-premium pl-12 pr-4 appearance-none cursor-pointer" 
             >
               <option value="" disabled selected>Región</option>
               {REGIONES_CHILE.map(r => (
                 <option key={r} value={r}>{r}</option>
               ))}
             </select>
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-40">
-               <Loader2 className="w-3 h-3 rotate-180" /> {/* Chevron fallback if needed */}
-            </div>
           </div>
         </div>
       </div>
 
-      <div className="space-y-3">
-        <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Mensaje Adicional</label>
-        <div className="relative">
-          <MessageSquare className="absolute left-3.5 top-4 w-4 h-4 text-brand-indigo opacity-60" />
-          <Textarea 
+      <div className="space-y-4">
+        <label className="form-label">Mensaje Adicional</label>
+        <div className="relative group/input">
+          <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
+          <Input 
             name="message" 
             placeholder="Dudas sobre terreno, terminaciones o plazos..." 
-            className="bg-muted/30 border-none rounded-2xl min-h-[120px] pr-4 pt-4 pb-4 pl-12 focus:bg-background transition-colors" 
+            className="form-input-premium pl-12" 
           />
         </div>
       </div>
 
       {error && (
-        <p className="text-[10px] font-bold text-destructive flex items-center gap-2">
-           <span className="w-1.5 h-1.5 rounded-full bg-destructive animate-pulse" />
+        <p className="text-base font-bold text-destructive flex items-center gap-2">
+           <span className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
            {error}
         </p>
       )}
@@ -179,19 +176,19 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full h-14 rounded-2xl bg-brand-indigo font-black text-[10px] tracking-[0.2em] shadow-xl shadow-primary/20 hover:opacity-95 transition-all group"
+        className="w-full h-16 rounded-2xl bg-brand-indigo font-bold shadow-xl shadow-primary/20 hover:opacity-95 transition-all group"
       >
         {loading ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
           <>
             SOLICITAR ASESORÍA GRATIS
-            <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </>
         )}
       </Button>
 
-      <p className="text-[9px] text-center text-muted-foreground font-black uppercase tracking-widest opacity-40 py-2">
+      <p className="text-base text-center text-muted-foreground font-bold uppercase tracking-widest opacity-60 py-2">
         Sin compromisos · Gestión Directa
       </p>
     </form>

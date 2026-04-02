@@ -193,9 +193,17 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Specific button style for LATAM look */
-.btn-latam {
-  @apply rounded-full px-8 py-3 font-bold transition-all hover:scale-105 active:scale-95;
+/* Premium Form Styles */
+.form-label {
+  @apply text-base font-bold text-brand-indigo mb-2 block;
+}
+
+.form-input-premium {
+  @apply w-full bg-muted/40 border-border/60 h-16 rounded-2xl px-6 font-bold text-base transition-all focus:bg-background focus:ring-4 focus:ring-brand-indigo/10;
+}
+
+::placeholder {
+  @apply text-muted-foreground/60 font-medium;
 }
 
 .hero-bg-custom {
