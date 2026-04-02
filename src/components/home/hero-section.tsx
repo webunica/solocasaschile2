@@ -99,7 +99,7 @@ export function HeroSection() {
               {/* Headline */}
               <h1 className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
                 <div className="flex flex-col gap-0 items-center lg:items-start w-full">
-                  <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase [text-shadow:0_1px_8px_rgba(255,255,255,0.9)] lg:[text-shadow:none]">
+                  <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase [text-shadow:0_1px_8px_rgba(255,255,255,0.9)]">
                     CASAS
                   </span>
                   <AnimatePresence mode="wait">
@@ -109,7 +109,7 @@ export function HeroSection() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 8 }}
                       transition={{ duration: 0.35 }}
-                      className="text-brand-teal text-[clamp(2rem,8vw,64px)] font-black tracking-[-0.05em] leading-none uppercase [text-shadow:0_2px_16px_rgba(0,0,0,0.6),0_0_8px_rgba(0,0,0,0.4)] lg:[text-shadow:none]"
+                      className="text-brand-teal text-[clamp(2rem,8vw,64px)] font-black tracking-[-0.05em] leading-none uppercase [text-shadow:0_2px_16px_rgba(0,0,0,0.6),0_0_8px_rgba(0,0,0,0.4)]"
                     >
                       {CONSTRUCTION_TYPES[typeIndex]}
                     </motion.span>
