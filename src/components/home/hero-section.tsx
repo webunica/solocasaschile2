@@ -64,7 +64,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[95vh] flex items-center pt-[100px] md:pt-[180px] pb-20 md:pb-24 overflow-hidden hero-bg-custom">
+    <section className="relative min-h-[95vh] flex items-center pt-[100px] md:pt-[180px] pb-20 md:pb-24 overflow-x-clip w-full hero-bg-custom">
       {/* Impeccable Background Decoration */}
       <div className="absolute inset-0 bg-dot-pattern opacity-[0.12] pointer-events-none" />
       
@@ -93,8 +93,8 @@ export function HeroSection() {
         </svg>
       </div>
 
-      <div className="container relative z-10 max-w-7xl mx-auto px-4 sm:px-10 lg:px-12">
-        <div className="grid lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-start w-full">
+      <div className="container relative z-10 max-w-7xl mx-auto px-[6vw] md:px-12 flex flex-col items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-12 lg:gap-8 items-center lg:items-start w-full">
           
           {/* Left: Branding & Benefits (Primary on Mobile) */}
           <div className="flex flex-col gap-10">
