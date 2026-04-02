@@ -94,7 +94,7 @@ export function Header() {
                 "rounded-2xl px-10 hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
               )}
             >
-              Publicar Propiedad
+              Publicar Modelos
             </Link>
 
             {/* Hamburger Menu (Mobile/Tablet Only) */}
@@ -147,16 +147,16 @@ export function Header() {
                 </div>
 
                 <div className="absolute bottom-8 left-0 w-full px-8">
-                   <Link 
-                      href="/planes" 
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        buttonVariants({ variant: "secondary" }),
-                        "w-full h-14 rounded-2xl"
-                      )}
-                   >
-                      Publicar Propiedad
-                   </Link>
+                       <Link 
+                          href="/planes" 
+                          onClick={() => setIsOpen(false)}
+                          className={cn(
+                            buttonVariants({ variant: "secondary" }),
+                            "w-full h-14 rounded-2xl"
+                          )}
+                       >
+                          Publicar Modelos
+                       </Link>
                 </div>
               </SheetContent>
             </Sheet>
