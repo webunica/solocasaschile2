@@ -47,14 +47,14 @@ export function WhatsAppWidget() {
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[80] flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-[200] flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: "bottom right" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[350px] overflow-hidden rounded-[2.5rem] bg-background/80 backdrop-blur-2xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)]"
+            className="mb-4 w-[calc(100vw-3rem)] max-w-[380px] overflow-hidden rounded-[2.5rem] bg-background/95 backdrop-blur-3xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
           >
             {/* Header */}
             <div className="bg-brand-indigo p-8 text-white relative">
@@ -73,10 +73,10 @@ export function WhatsAppWidget() {
                    <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Soporte SolocasasChile</p>
                 </div>
               </div>
-              <p className="text-sm font-medium leading-relaxed">
+              <p className="text-sm font-medium leading-relaxed opacity-90">
                 {step === 1 
-                  ? "¿Cómo podemos ayudarte hoy? Queremos brindarte la mejor atención. 😊" 
-                  : "¡Genial! Solo necesitamos unos datos rápidos para conectar contigo."}
+                  ? "¿Cómo podemos ayudarte hoy? 😊" 
+                  : "¡Perfecto! Solo completemos estos datos:"}
               </p>
             </div>
 
@@ -152,7 +152,7 @@ export function WhatsAppWidget() {
                      type="submit" 
                      className="w-full h-12 bg-brand-indigo rounded-xl font-bold uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                    >
-                     Iniciar Chat en WhatsApp <Send className="ml-2 w-4 h-4" />
+                     INICIAR CHAT <Send className="ml-2 w-4 h-4" />
                    </Button>
 
                    <button 
@@ -160,7 +160,7 @@ export function WhatsAppWidget() {
                      onClick={() => setStep(1)}
                      className="w-full text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest text-center"
                    >
-                      AtMenu de opciones
+                      Volver a opciones
                    </button>
                 </form>
               )}
