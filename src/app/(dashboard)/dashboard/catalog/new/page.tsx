@@ -245,7 +245,7 @@ export default function NewModelPage() {
                
                <div className="space-y-3">
                   <Label htmlFor="tiempo_entrega" className="text-[10px] font-black uppercase tracking-widest opacity-60 line-clamp-1 text-foreground/60">Velocidad <span className="text-primary/40 block mt-1">Estimada</span></Label>
-                  <Input id="tiempo_entrega" name="tiempo_entrega" placeholder="Ej: 90 Días" required className="h-16 rounded-2xl bg-background/50 border-border/40 font-black text-xs uppercase tracking-widest text-center shadow-inner" />
+                  <Input id="tiempo_entrega" name="tiempo_entrega" placeholder="Ej: 90 Días" required className="h-16 rounded-2xl bg-background/50 border-border/40 font-bold uppercase tracking-widest text-center shadow-inner" />
                </div>
 
                <div className="col-span-2 lg:col-span-3 space-y-3">
@@ -284,7 +284,7 @@ export default function NewModelPage() {
                       <div className="w-16 h-16 rounded-3xl bg-muted/50 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-brand-indigo group-hover:text-white transition-all duration-700 shadow-inner">
                          <Upload className="w-6 h-6" />
                       </div>
-                      <p className="font-black text-xs uppercase tracking-widest text-foreground">Subir Renders</p>
+                      <p className="font-bold uppercase tracking-widest text-foreground">Subir Renders</p>
                       <p className="text-[10px] text-muted-foreground font-medium opacity-60">Formatos: JPG o PNG <br/> de alta resolución</p>
                    </motion.div>
                  ) : (

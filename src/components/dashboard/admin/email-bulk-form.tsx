@@ -119,7 +119,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
         <div className="pt-4">
           <Button 
             onClick={() => setShowSuccess(false)}
-            className="h-14 px-10 rounded-2xl bg-brand-indigo text-white font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform"
+            className="h-14 px-10 rounded-2xl bg-brand-indigo text-white font-bold uppercase tracking-widest hover:scale-105 transition-transform"
           >
              Redactar otro mensaje
           </Button>

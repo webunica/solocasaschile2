@@ -33,8 +33,8 @@ export function FinalCTA() {
            <Link
              href="/catalogo"
              className={cn(
-               buttonVariants({ size: "lg" }),
-               "bg-[#00FFD1] text-[#2B09BD] hover:bg-white font-black text-sm uppercase tracking-widest rounded-3xl h-16 px-12 group transition-all shadow-lg shadow-[#00FFD1]/20"
+               buttonVariants({ variant: "secondary", size: "lg" }),
+               "h-16 px-12 group transition-all rounded-3xl"
              )}
            >
              Explorar Catálogo <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform" />
@@ -44,7 +44,7 @@ export function FinalCTA() {
              href="/planes"
              className={cn(
                buttonVariants({ variant: "outline", size: "lg" }),
-               "border-white/40 text-white hover:bg-white/10 font-black text-sm uppercase tracking-widest rounded-3xl h-16 px-10 transition-all backdrop-blur-sm"
+               "border-white/40 text-white hover:bg-white/10 rounded-3xl h-16 px-10 transition-all backdrop-blur-sm"
              )}
            >
              Soy una Constructora

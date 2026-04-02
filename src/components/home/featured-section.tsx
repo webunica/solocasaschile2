@@ -49,7 +49,7 @@ export async function FeaturedConstructorsSection() {
           </div>
           <Link 
             href="/constructoras" 
-            className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl font-black text-xs uppercase tracking-widest border-primary/20 hover:bg-primary/10 transition-all px-8 py-6")}
+            className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl font-bold uppercase tracking-widest border-primary/20 hover:bg-primary/10 transition-all px-8 py-6")}
           >
             Ver Directorio de Empresas
             <ArrowRight className="w-4 h-4 ml-3" />

@@ -67,7 +67,7 @@ export function CatalogoGrid({ modelos }: Props) {
 
                 {/* Status/Plan Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
-                   <Badge className={cn("border-none backdrop-blur-md px-3 py-1 font-black text-[10px] tracking-widest uppercase", TIPO_COLORS[modelo.tipo])}>
+                   <Badge className={cn("border-none backdrop-blur-md px-3 py-1 font-bold tracking-widest uppercase", TIPO_COLORS[modelo.tipo])}>
                      {TIPO_LABELS[modelo.tipo] || modelo.tipo}
                    </Badge>
                 </div>

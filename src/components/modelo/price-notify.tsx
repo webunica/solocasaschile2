@@ -119,7 +119,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
                 <Button 
                    type="submit" 
                    disabled={loading}
-                   className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-emerald-500/20"
+                   className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold uppercase tracking-widest shadow-lg shadow-emerald-500/20"
                 >
                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Send className="w-4 h-4 mr-2" /> Activar Alerta de Precio</>}
                 </Button>

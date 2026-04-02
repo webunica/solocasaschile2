@@ -97,7 +97,7 @@ export default function ResetPasswordPage() {
                  <CheckCircle2 className="w-10 h-10 text-emerald-500" />
               </div>
               <div className="space-y-3">
-                 <p className="font-black text-xs uppercase tracking-widest text-emerald-600">Actualización Exitosa</p>
+                 <p className="font-bold uppercase tracking-widest text-emerald-600">Actualización Exitosa</p>
                  <p className="text-muted-foreground font-medium leading-relaxed italic">
                    Tu contraseña ha sido actualizada. Serás redirigido al login en segundos...
                  </p>

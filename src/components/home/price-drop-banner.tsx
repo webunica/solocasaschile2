@@ -55,7 +55,7 @@ export function PriceDropBanner() {
           <div className="relative z-10 grid lg:grid-cols-[1fr_400px] gap-12 lg:gap-16 items-center">
             <div className="space-y-10 lg:space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start">
                <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6">
-                  <Badge className="bg-white/20 text-white border-none py-1.5 px-4 font-black text-[10px] tracking-widest uppercase rounded-full w-fit">
+                  <Badge className="bg-white/20 text-white border-none py-1.5 px-4 font-bold tracking-widest uppercase rounded-full w-fit">
                      <Sparkles className="w-3 h-3 mr-2 text-emerald-200" /> Nuevo Servicio
                   </Badge>
                   <div className="flex items-center gap-2 text-white/70 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]">
@@ -105,7 +105,7 @@ export function PriceDropBanner() {
                   <Button 
                      type="submit"
                      disabled={loading}
-                     className="w-full h-14 bg-white text-emerald-700 hover:bg-emerald-50 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-black/10 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center"
+                     className="w-full h-14 bg-white text-emerald-700 hover:bg-emerald-50 rounded-2xl font-bold uppercase tracking-widest shadow-xl shadow-black/10 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center"
                   >
                      {loading ? (
                         <Loader2 className="w-5 h-5 animate-spin" />

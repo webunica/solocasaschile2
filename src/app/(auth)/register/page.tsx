@@ -100,7 +100,7 @@ function EmailSentScreen({
             onClick={onResend}
             disabled={resendLoading || resendDone}
             variant="outline"
-            className="w-full h-12 rounded-2xl font-black text-xs uppercase tracking-widest gap-2 border-border/40"
+            className="w-full h-12 rounded-2xl font-bold uppercase tracking-widest gap-2 border-border/40"
           >
             {resendLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
             Reenviar correo de activación
@@ -108,7 +108,7 @@ function EmailSentScreen({
           <Button
             onClick={onChangeEmail}
             variant="ghost"
-            className="w-full h-12 rounded-2xl font-black text-xs uppercase tracking-widest gap-2 text-muted-foreground hover:text-foreground"
+            className="w-full h-12 rounded-2xl font-bold uppercase tracking-widest gap-2 text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-3 h-3" /> Cambiar correo electrónico
           </Button>
