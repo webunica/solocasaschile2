@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, User, Mail, Phone, Home, Building2, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,12 +13,51 @@ const WHATSAPP_NUMBER = "56964130601"; // Official Sales Number
 export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     type: "" as "casa" | "constructora" | "",
   });
+
+  const playSound = () => {
+    try {
+      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3");
+      audio.volume = 0.4;
+      audio.play().catch(e => console.log("Audio play blocked by browser policy"));
+    } catch (e) {
+      console.error("Error playing sound", e);
+    }
+  };
+
+  const openWidget = () => {
+    if (!hasAutoOpened) {
+      setIsOpen(true);
+      setHasAutoOpened(true);
+      playSound();
+    }
+  };
+
+  useEffect(() => {
+    // Timer for 5 seconds
+    const timer = setTimeout(() => {
+      openWidget();
+    }, 5000);
+
+    // Mouse movement listener
+    const handleMouseMove = () => {
+      openWidget();
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [hasAutoOpened]);
 
   const handleStart = (type: "casa" | "constructora") => {
     setFormData({ ...formData, type });
@@ -69,7 +108,7 @@ export function WhatsAppWidget() {
                    <MessageCircle className="w-6 h-6 fill-white" />
                 </div>
                 <div>
-                   <h3 className="font-heading font-black text-xl tracking-tighter">¡Hola! 👋</h3>
+                   <h3 className="font-heading font-black text-xl tracking-tighter text-brand-teal">¡Hola! 👋</h3>
                    <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Soporte SolocasasChile</p>
                 </div>
               </div>
