@@ -39,8 +39,8 @@ export function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "fixed left-1/2 -translate-x-1/2 z-[100] border border-white/20",
-        "bg-background/80 backdrop-blur-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)]",
+        "fixed left-1/2 -translate-x-1/2 z-[100] border border-white/10 lg:border-white/20",
+        "bg-transparent lg:bg-background/80 backdrop-blur-none lg:backdrop-blur-3xl shadow-none lg:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.15)]",
         "transition-all duration-500"
       )}
     >
