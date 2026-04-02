@@ -168,7 +168,7 @@ export default async function ModeloPage({ params }: PageProps) {
                            <span className="text-4xl font-black tracking-tighter text-foreground">
                              {precio.toLocaleString("es-CL")}
                            </span>
-                           <span className="text-sm font-black text-brand-indigo">UF</span>
+                           <span className="text-base font-black text-brand-indigo">UF</span>
                         </div>
                      </div>
                      <Link 
@@ -332,7 +332,7 @@ export default async function ModeloPage({ params }: PageProps) {
                          </div>
                          <div>
                             <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Alta Demanda</p>
-                            <p className="text-xs font-bold text-muted-foreground">12 personas cotizaron hoy</p>
+                            <p className="text-base font-bold text-muted-foreground">12 personas cotizaron hoy</p>
                          </div>
                       </div>
                    </div>
