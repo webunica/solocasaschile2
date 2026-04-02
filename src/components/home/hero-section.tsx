@@ -73,10 +73,10 @@ export function HeroSection() {
       </div>
 
       <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-24 lg:gap-32 items-center">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Left: Branding & Benefits (Primary on Mobile) */}
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-10 lg:col-span-8">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -120,14 +120,6 @@ export function HeroSection() {
                      </div>
                    </DialogContent>
                  </Dialog>
-
-                 <Link 
-                   href="/catalogo"
-                   className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl h-16 font-black text-sm tracking-[0.1em] border-2 border-brand-indigo/10 hover:bg-brand-indigo/5 transition-all text-brand-indigo hover:text-brand-indigo")}
-                 >
-                   VER CATÁLOGO
-                   <Search className="w-5 h-5 ml-2" />
-                 </Link>
               </div>
 
               {/* Desktop Benefits Summary */}
@@ -180,25 +172,24 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.98, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="hidden lg:block relative w-full h-[600px] rounded-[3rem] shadow-[0_48px_128px_-32px_rgba(27,0,136,0.2)] overflow-hidden border-2 border-brand-indigo/10"
+            className="hidden lg:flex relative w-full h-[650px] lg:col-span-4"
           >
              <AnimatePresence mode="wait">
                 <motion.div
                   key={currentImageIndex}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1.2, ease: "easeInOut" }}
-                  className="absolute inset-0"
+                  className="absolute inset-0 flex items-center justify-center p-4"
                 >
                    <Image
                      src={SLIDER_IMAGES[currentImageIndex]}
                      alt={`Modelo destacado ${currentImageIndex + 1}`}
                      fill
-                     className="object-cover"
+                     className="object-contain"
                      priority={currentImageIndex === 0}
                    />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 pointer-events-none mix-blend-overlay" />
                 </motion.div>
              </AnimatePresence>
           </motion.div> 
