@@ -109,16 +109,16 @@ export function HeroSection() {
                     Plataforma #1 de Casas en Chile
                  </Badge>
                    <h1 className="flex flex-col gap-6 text-center lg:text-left">
-                    <div className="text-[clamp(2.1rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-[0.8] text-brand-indigo uppercase flex flex-col items-center lg:items-start min-h-[1.8em]">
-                       <span>CASAS</span>
+                    <div className="flex flex-col gap-1 items-center lg:items-start min-h-[3.2em] md:min-h-[2.2em]">
+                       <span className="text-[clamp(2rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">CASAS</span>
                        <AnimatePresence mode="wait">
                           <motion.span
                             key={typeIndex}
-                            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 10 }}
                             transition={{ duration: 0.4 }}
-                            className="text-brand-teal"
+                            className="text-brand-teal text-[clamp(2.2rem,8vw,76px)] font-black tracking-[-0.05em] leading-none uppercase"
                           >
                             {CONSTRUCTION_TYPES[typeIndex]}
                           </motion.span>
