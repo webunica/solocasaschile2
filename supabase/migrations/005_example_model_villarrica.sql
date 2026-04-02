@@ -58,7 +58,7 @@ BEGIN
         5,
         true,
         'El modelo Villarrica Lago Castor es la perfecta armonía entre rapidez constructiva y confort térmico absoluto. Con 180m² en una sola planta, su diseño longitudinal permite una conexión fluida con el entorno. Estructurada íntegramente en paneles SIP de alto rendimiento, es la elección ideal para quienes buscan eficiencia energética en climas variables sin sacrificar elegancia y amplitud.',
-        ARRAY['/images/placeholders/villarrica-main.jpg'],
+        ARRAY['/images/modelos/ejemplos/villarrica-facade.png'],
         'VLC-180-SIP',
         ARRAY['Gran Living con Chimenea central', 'Comedor con Techo a la vista', 'Cocina Abierta con Mesón de Roble', 'Dormitorio Principal en Suite con terraza privada', '2 Dormitorios con Baño Compartido', '3 Baños Totales', 'Lavandería Integrada', 'Corredor Exterior Tradicional'],
         JSONB_BUILD_OBJECT(
