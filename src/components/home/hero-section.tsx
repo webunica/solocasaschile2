@@ -123,23 +123,6 @@ export function HeroSection() {
                  </Dialog>
               </div>
 
-              {/* Desktop Benefits Summary */}
-              <div className="hidden lg:grid grid-cols-2 gap-6 pt-6 text-left">
-                 {[
-                   { icon: <LayoutDashboard className="w-5 h-5" />, title: "Comparador Pro", desc: "Evalúa modelos lado a lado" },
-                   { icon: <Info className="w-5 h-5" />, title: "Info Técnica", desc: "Planos y materiales det." }
-                 ].map((item, i) => (
-                   <div key={i} className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-brand-indigo/5 flex items-center justify-center text-brand-indigo shrink-0">
-                        {item.icon}
-                      </div>
-                      <div>
-                        <p className="font-black tracking-tight text-sm uppercase">{item.title}</p>
-                        <p className="text-xs text-muted-foreground font-medium">{item.desc}</p>
-                      </div>
-                   </div>
-                 ))}
-              </div>
             </motion.div>
 
             {/* Micro Stats Grid */}
