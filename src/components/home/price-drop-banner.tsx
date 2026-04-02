@@ -105,12 +105,14 @@ export function PriceDropBanner() {
                   <Button 
                      type="submit"
                      disabled={loading}
-                     className="w-full h-14 bg-white text-emerald-700 hover:bg-emerald-50 rounded-2xl font-bold uppercase tracking-widest shadow-xl shadow-black/10 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center"
+                     className="w-full h-15 bg-white text-emerald-700 hover:bg-emerald-50 rounded-2xl font-black text-sm uppercase tracking-wider shadow-xl shadow-brand-indigo/10 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center p-4"
                   >
                      {loading ? (
                         <Loader2 className="w-5 h-5 animate-spin" />
                      ) : (
-                        <>Suscibirme ahora <Send className="w-4 h-4 ml-3" /></>
+                        <span className="flex items-center justify-center gap-3">
+                          Suscribirme ahora <Send className="w-4 h-4" />
+                        </span>
                      )}
                   </Button>
                   <p className="text-[9px] text-white/40 text-center font-bold uppercase tracking-widest leading-relaxed">
