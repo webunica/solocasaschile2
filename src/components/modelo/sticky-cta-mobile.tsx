@@ -42,7 +42,7 @@ export function StickyCTAMobile({ targetId }: { targetId: string }) {
         >
           <div className="bg-foreground text-background rounded-[2.5rem] p-4 flex items-center justify-between shadow-2xl shadow-black/40 ring-1 ring-white/10 group active:scale-95 transition-transform">
              <div className="flex items-center gap-4 ml-2">
-                <div className="w-10 h-10 rounded-2xl brand-gradient flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded-2xl bg-brand-indigo flex items-center justify-center text-white">
                    <MessageSquare className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">

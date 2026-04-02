@@ -134,7 +134,7 @@ export function CatalogoGrid({ modelos }: Props) {
                 <div className="flex gap-3 mt-auto pt-6 border-t border-border/40">
                   <Link
                     href={`/modelo/${modelo.slug}`}
-                    className={cn(buttonVariants({ size: "lg" }), "flex-1 rounded-2xl font-black text-xs brand-gradient shadow-lg shadow-primary/20")}
+                    className={cn(buttonVariants({ size: "lg" }), "flex-1 rounded-2xl font-black text-xs bg-brand-indigo shadow-lg shadow-primary/20")}
                   >
                     Ver Detalles
                     <ArrowRight className="w-4 h-4 ml-2" />

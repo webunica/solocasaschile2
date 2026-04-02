@@ -81,7 +81,7 @@ function BienvenidaContent() {
 
             {/* Primary CTA */}
             <div className="flex flex-wrap gap-3">
-              <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 brand-gradient text-white font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all")}>
+              <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 bg-brand-indigo text-white font-black text-xs uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all")}>
                 <LayoutDashboard className="w-4 h-4" /> Ir a mi panel
               </Link>
               {isPaid ? (
@@ -148,7 +148,7 @@ function BienvenidaContent() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            className="brand-gradient rounded-3xl p-10 text-white relative overflow-hidden"
+            className="bg-brand-indigo rounded-3xl p-10 text-white relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-10 mix-blend-overlay" />
             <div className="relative z-10 space-y-5">

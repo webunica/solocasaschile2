@@ -225,7 +225,7 @@ export function LeadsCRM({ initialLeads }: Props) {
                       
                       {/* Left Side: Avatar & Identity */}
                       <div className="flex items-center gap-6 flex-1 min-w-0">
-                         <div className="w-16 h-16 rounded-[1.5rem] brand-gradient flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20 shrink-0">
+                         <div className="w-16 h-16 rounded-[1.5rem] bg-brand-indigo flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20 shrink-0">
                             {lead.nombre_cliente.charAt(0).toUpperCase()}
                          </div>
                          <div className="space-y-1.5 min-w-0">
@@ -295,7 +295,7 @@ export function LeadsCRM({ initialLeads }: Props) {
                               disabled={isPending}
                               className={cn(
                                 "h-12 px-6 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl",
-                                lead.estado === "convertido" ? "bg-muted text-muted-foreground hover:bg-muted/80" : "brand-gradient text-white shadow-primary/20 hover:scale-[1.03]"
+                                lead.estado === "convertido" ? "bg-muted text-muted-foreground hover:bg-muted/80" : "bg-brand-indigo text-white shadow-primary/20 hover:scale-[1.03]"
                               )}
                             >
                               {config.nextLabel}

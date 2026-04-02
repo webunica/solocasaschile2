@@ -116,7 +116,7 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                    href={c.sitio_web.startsWith('http') ? c.sitio_web : `https://${c.sitio_web}`} 
                    target="_blank" 
                    rel="noreferrer"
-                   className="flex items-center justify-center gap-2 w-full h-12 rounded-2xl brand-gradient text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20"
+                   className="flex items-center justify-center gap-2 w-full h-12 rounded-2xl bg-brand-indigo text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-primary/20"
                  >
                    <Globe className="w-4 h-4" /> Visitar Sitio Web
                  </a>
@@ -247,7 +247,7 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                        variant={currentPage === pageNum ? "default" : "outline"}
                        className={cn(
                          "h-10 w-10 rounded-xl font-black text-xs transition-all",
-                         currentPage === pageNum ? "brand-gradient text-white border-none shadow-lg shadow-primary/20 scale-110" : "border-border/40 hover:bg-primary/5"
+                         currentPage === pageNum ? "bg-brand-indigo text-white border-none shadow-lg shadow-primary/20 scale-110" : "border-border/40 hover:bg-primary/5"
                        )}
                        onClick={() => handlePageChange(pageNum)}
                      >

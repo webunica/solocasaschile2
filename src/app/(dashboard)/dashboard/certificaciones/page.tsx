@@ -35,7 +35,7 @@ export default async function CertificacionesPage() {
         </div>
         <Link 
           href="/planes"
-          className={cn(buttonVariants({ variant: "default" }), "brand-gradient h-14 px-10 rounded-2xl font-black uppercase text-xs tracking-widest text-white hover:text-white shadow-2xl shadow-primary/20")}
+          className={cn(buttonVariants({ variant: "default" }), "bg-brand-indigo h-14 px-10 rounded-2xl font-black uppercase text-xs tracking-widest text-white hover:text-white shadow-2xl shadow-primary/20")}
         >
           Ver Planes Pro y Premium
         </Link>
@@ -56,7 +56,7 @@ export default async function CertificacionesPage() {
           <h1 className="text-4xl font-heading font-black tracking-tighter italic">Sellos <span className="gradient-text">Industriales</span></h1>
           <p className="text-muted-foreground font-medium">Gestiona tus certificaciones de calidad y gremiales.</p>
         </div>
-        <Button className="brand-gradient h-12 px-8 rounded-xl font-black uppercase text-[10px] tracking-widest text-white hover:text-white shadow-xl">
+        <Button className="bg-brand-indigo h-12 px-8 rounded-xl font-black uppercase text-[10px] tracking-widest text-white hover:text-white shadow-xl">
           <Plus className="w-4 h-4 mr-2" /> Agregar Certificación
         </Button>
       </div>

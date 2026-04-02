@@ -45,7 +45,7 @@ export function AnnouncementBar() {
   if (!isVisible || !settings?.active) return null
 
   const themes = {
-    brand: "brand-gradient text-white",
+    brand: "bg-brand-indigo text-white",
     dark: "bg-slate-950 text-white",
     emerald: "bg-emerald-600 text-white"
   }

@@ -32,7 +32,7 @@ export default async function EditModelPage({ params }: { params: { id: string }
               <ArrowLeft className="w-4 h-4" /> Volver al Catálogo
            </Link>
            <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none text-foreground">
-             Edición <span className="brand-gradient bg-clip-text text-transparent italic">Maestra</span>
+             Edición <span className="bg-brand-indigo bg-clip-text text-transparent italic">Maestra</span>
            </h1>
            <p className="text-xl text-muted-foreground font-medium max-w-xl">
              Refina cada detalle de tu {modelo.nombre}. La precisión en la ficha técnica acelera el cierre de ventas.

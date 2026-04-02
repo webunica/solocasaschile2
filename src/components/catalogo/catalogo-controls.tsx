@@ -53,7 +53,7 @@ export function CatalogoControls({ tipo, region, min, max, sort }: Props) {
        {/* Mobile Filter Sheet */}
        <Sheet>
           <SheetTrigger asChild>
-            <Button variant="default" className="lg:hidden rounded-2xl h-12 px-6 font-black tracking-widest text-[10px] uppercase brand-gradient border-none shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+            <Button variant="default" className="lg:hidden rounded-2xl h-12 px-6 font-black tracking-widest text-[10px] uppercase bg-brand-indigo border-none shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
                <Filter className="w-4 h-4 mr-2" />
                Filtros
             </Button>

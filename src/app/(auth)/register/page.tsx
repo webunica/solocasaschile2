@@ -285,8 +285,8 @@ function RegisterForm() {
           {/* Step indicator */}
           <div className="space-y-4">
             <div className="flex gap-2">
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "brand-gradient" : "bg-muted")} />
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "brand-gradient" : "bg-muted")} />
+              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "bg-brand-indigo" : "bg-muted")} />
+              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "bg-brand-indigo" : "bg-muted")} />
             </div>
             <div className="flex justify-between items-center">
               <h1 className="text-4xl font-heading font-black tracking-tighter flex items-baseline gap-3">
@@ -357,7 +357,7 @@ function RegisterForm() {
               )}
             </AnimatePresence>
 
-            <Button type="submit" size="lg" disabled={loading} className="w-full h-14 brand-gradient text-white font-black tracking-[0.2em] text-[10px] uppercase rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 border-none">
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-14 bg-brand-indigo text-white font-black tracking-[0.2em] text-[10px] uppercase rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-105 active:scale-95 border-none">
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <span className="flex items-center gap-3">
                   {step === 1 ? "Siguiente Paso" : "Finalizar Registro"} <ArrowRight className="w-4 h-4" />

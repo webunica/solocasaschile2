@@ -124,7 +124,7 @@ export default function NewModelPage() {
       <motion.div 
         initial={{ scale: 0, rotate: -45 }} 
         animate={{ scale: 1, rotate: 0 }} 
-        className="w-32 h-32 rounded-[2.5rem] brand-gradient flex items-center justify-center shadow-2xl shadow-primary/30"
+        className="w-32 h-32 rounded-[2.5rem] bg-brand-indigo flex items-center justify-center shadow-2xl shadow-primary/30"
       >
         <CheckCircle2 className="w-16 h-16 text-white" />
       </motion.div>
@@ -281,7 +281,7 @@ export default function NewModelPage() {
                <AnimatePresence>
                  {previews.length === 0 ? (
                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3 p-6">
-                      <div className="w-16 h-16 rounded-3xl bg-muted/50 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:brand-gradient group-hover:text-white transition-all duration-700 shadow-inner">
+                      <div className="w-16 h-16 rounded-3xl bg-muted/50 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-brand-indigo group-hover:text-white transition-all duration-700 shadow-inner">
                          <Upload className="w-6 h-6" />
                       </div>
                       <p className="font-black text-xs uppercase tracking-widest text-foreground">Subir Renders</p>
@@ -343,7 +343,7 @@ export default function NewModelPage() {
             <Button 
               type="submit" 
               disabled={loading}
-              className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.3em] brand-gradient shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white hover:text-white"
+              className="w-full h-20 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.3em] bg-brand-indigo shadow-2xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-white hover:text-white"
             >
               {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : "Publicar Lanzamiento"}
             </Button>

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function FinalCTA() {
   return (
-    <section className="py-32 overflow-hidden brand-gradient relative w-full shadow-2xl">
+    <section className="py-32 overflow-hidden bg-brand-indigo relative w-full shadow-2xl">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-15 mix-blend-overlay" />
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#00FFD1]/10 rounded-full blur-3xl translate-y-1/4 -translate-x-1/4 pointer-events-none" />
