@@ -30,17 +30,38 @@ const SLIDER_IMAGES = [
   "/images/slider/m_008.jpg",
   "/images/slider/m_009.jpg",
 ];
+
+const CONSTRUCTION_TYPES = [
+  "PREFABRICADAS",
+  "PANEL SIP", 
+  "MODULARES", 
+  "CONTAINERS", 
+  "STEEL FRAMING", 
+  "MADERA", 
+  "HORMIGÓN", 
+  "MIXTOS"
+];
+
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [typeIndex, setTypeIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const sliderTimer = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % SLIDER_IMAGES.length);
     }, 4500);
-    return () => clearInterval(timer);
+
+    const typeTimer = setInterval(() => {
+      setTypeIndex((prev) => (prev + 1) % CONSTRUCTION_TYPES.length);
+    }, 3000);
+
+    return () => {
+      clearInterval(sliderTimer);
+      clearInterval(typeTimer);
+    };
   }, []);
 
   return (
@@ -89,14 +110,26 @@ export function HeroSection() {
                     Plataforma #1 de Casas en Chile
                  </Badge>
                   <h1 className="flex flex-col gap-6 text-center lg:text-left">
-                    <span className="text-[clamp(2rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">
-                       CASAS PREFABRICADAS
-                    </span>
+                    <div className="text-[clamp(2.1rem,6vw,4.5rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase flex flex-wrap justify-center lg:justify-start items-baseline gap-x-4 min-h-[0.9em]">
+                       <span>CASAS</span>
+                       <AnimatePresence mode="wait">
+                          <motion.span
+                            key={typeIndex}
+                            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                            transition={{ duration: 0.4 }}
+                            className="text-brand-teal"
+                          >
+                            {CONSTRUCTION_TYPES[typeIndex]}
+                          </motion.span>
+                       </AnimatePresence>
+                    </div>
                     <div className="flex flex-col gap-3 w-fit mx-auto lg:mx-0">
-                       <span className="bg-brand-teal text-brand-indigo px-4 py-1 rounded-xl uppercase font-black text-[clamp(2rem,8vw,72px)] leading-none">
+                       <span className="bg-brand-teal text-brand-indigo px-4 py-1 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none">
                           COMPARA
                        </span>
-                       <span className="bg-brand-indigo text-brand-teal px-4 py-1 rounded-xl uppercase font-black text-[clamp(2rem,8vw,72px)] leading-none">
+                       <span className="bg-brand-indigo text-brand-teal px-4 py-1 rounded-none uppercase font-black text-[clamp(2.3rem,8vw,72px)] leading-none">
                           Y COTIZA
                        </span>
                     </div>
