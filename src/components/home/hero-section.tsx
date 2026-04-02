@@ -61,8 +61,8 @@ export function HeroSection() {
   return (
     <section className="relative flex items-center pt-[140px] md:pt-[180px] pb-10 md:pb-24 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[95vh]">
 
-      {/* ── Mobile-only background image with dark gradient overlay ── */}
-      <div className="absolute inset-0 lg:hidden z-0">
+      {/* ── Full-bleed background image (all screen sizes) ── */}
+      <div className="absolute inset-0 z-0">
         <Image
           src="/images/slider/m_001.jpg"
           alt="Casa prefabricada en Chile"
@@ -70,34 +70,10 @@ export function HeroSection() {
           className="object-cover object-center"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
-      </div>
-
-      {/* ── Desktop background decorations ── */}
-      <div className="absolute inset-0 bg-dot-pattern opacity-[0.12] pointer-events-none hidden lg:block" />
-
-      <div className="absolute top-24 left-[10%] opacity-[0.08] pointer-events-none z-0 hidden lg:block">
-        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" className="text-primary">
-          <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="1" />
-          {[...Array(12)].map((_, i) => (
-            <line
-              key={i}
-              x1="100" y1="45" x2="100" y2="20"
-              stroke="currentColor"
-              strokeWidth="1"
-              transform={`rotate(${i * 30} 100 100)`}
-            />
-          ))}
-        </svg>
-      </div>
-
-      {/* Andes Silhouette — desktop only */}
-      <div className="absolute bottom-0 left-0 w-full h-[400px] opacity-[0.06] pointer-events-none select-none z-0 hidden md:block">
-        <svg viewBox="0 0 1440 320" className="w-full h-full" preserveAspectRatio="none">
-          <path fill="currentColor" className="text-brand-indigo/30" d="M0,160L40,144C80,128,160,96,240,106.7C320,117,400,171,480,181.3C560,192,640,160,720,138.7C800,117,880,107,960,112C1040,117,1120,139,1200,160C1280,181,1360,203,1400,213.3L1440,224L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z" />
-          <path fill="currentColor" className="text-primary/40" d="M0,224L48,202.7C96,181,192,139,288,138.7C384,139,480,181,576,192C672,203,768,181,864,149.3C960,117,1056,75,1152,74.7C1248,75,1344,117,1392,138.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" />
-          <path fill="currentColor" className="text-brand-teal/20" d="M0,288L60,256C120,224,240,160,360,160C480,160,600,224,720,224C840,224,960,160,1080,128C1200,96,1320,96,1380,96L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z" />
-        </svg>
+        {/* Mobile: stronger top-to-bottom fade so text is readable */}
+        <div className="absolute inset-0 lg:hidden bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
+        {/* Desktop: left-to-right fade — left side readable, right side shows photo */}
+        <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
       </div>
 
       {/* ── Content ── */}
@@ -218,32 +194,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right: Desktop Image Slider (hidden on mobile) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="hidden lg:flex relative w-full h-[700px] lg:pt-32"
-          >
-            <AnimatePresence>
-              <motion.div
-                key={currentImageIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center p-4"
-              >
-                <Image
-                  src={SLIDER_IMAGES[currentImageIndex]}
-                  alt={`Modelo destacado ${currentImageIndex + 1}`}
-                  fill
-                  className="object-contain grayscale-[0.85] contrast-[1.15] brightness-[1.1] transition-all duration-1000 hover:grayscale-0 hover:contrast-100 hover:brightness-100 cursor-zoom-in drop-shadow-[0_20px_50px_rgba(61,62,154,0.15)]"
-                  priority={currentImageIndex === 0}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
+          {/* Desktop slider hidden — bg image now covers full hero */}
 
         </div>
       </div>
