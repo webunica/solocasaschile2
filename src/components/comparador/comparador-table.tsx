@@ -17,6 +17,8 @@ const TIPO_LABELS: Record<string, string> = {
   sip: "Panel SIP",
   container: "Container",
   "llave-en-mano": "Llave en Mano",
+  "modular": "Modular",
+  "steel-framing": "Steel Framing",
 };
 
 type Row = {

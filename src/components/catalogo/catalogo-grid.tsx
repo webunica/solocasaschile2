@@ -18,6 +18,8 @@ const TIPO_LABELS: Record<string, string> = {
   sip: "Panel SIP",
   container: "Container",
   "llave-en-mano": "Llave en Mano",
+  "modular": "Modular",
+  "steel-framing": "Steel Framing",
 };
 
 const TIPO_COLORS: Record<string, string> = {
@@ -25,6 +27,8 @@ const TIPO_COLORS: Record<string, string> = {
   sip: "bg-emerald-500/10 text-emerald-600 border-emerald-200 dark:text-emerald-400 dark:border-emerald-500/20",
   container: "bg-orange-500/10 text-orange-600 border-orange-200 dark:text-orange-400 dark:border-orange-500/20",
   "llave-en-mano": "bg-purple-500/10 text-purple-600 border-purple-200 dark:text-purple-400 dark:border-purple-500/20",
+  "modular": "bg-teal-500/10 text-teal-600 border-teal-200 dark:text-teal-400 dark:border-teal-500/20",
+  "steel-framing": "bg-indigo-500/10 text-indigo-600 border-indigo-200 dark:text-indigo-400 dark:border-indigo-500/20",
 };
 
 interface Props {
