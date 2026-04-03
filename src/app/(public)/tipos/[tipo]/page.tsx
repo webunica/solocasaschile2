@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { SYSTEM_DETAILS as TIPO_INFO } from "@/config/construction-systems";
+import { buildFAQJsonLd, buildBreadcrumbJsonLd } from "@/components/seo/structured-data";
 
 interface PageProps {
   params: Promise<{ tipo: string }>;
@@ -19,9 +20,41 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { tipo } = await params;
   const info = TIPO_INFO[tipo];
+  const baseUrl = 'https://solocasaschile.com';
+
+  if (!info) return { title: "Tipo no encontrado | SolocasasChile" };
+
+  const title = `${info.title} en Chile | Modelos y Precios | SolocasasChile`;
+  const description = info.description
+    ? `${info.description} Compara modelos, precios desde UF y constructoras verificadas en Chile.`
+    : `Conoce todo sobre ${info.title} en Chile: precios, constructoras y modelos disponibles.`;
+
   return {
-    title: info ? `${info.title} | Comparar Modelos` : "Tipo no encontrado",
-    description: info?.description,
+    title,
+    description,
+    keywords: [
+      `${info.title.toLowerCase()} chile`,
+      `casas ${tipo} chile`,
+      `precio ${tipo} chile`,
+      `constructoras ${tipo}`,
+      "casas prefabricadas chile",
+    ],
+    alternates: { canonical: `${baseUrl}/tipos/${tipo}` },
+    openGraph: {
+      title,
+      description,
+      url: `${baseUrl}/tipos/${tipo}`,
+      siteName: "SolocasasChile",
+      locale: "es_CL",
+      type: "website",
+      images: [{ url: `${baseUrl}/og-image.jpg`, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@solocasaschile",
+      title,
+      description,
+    },
   };
 }
 
@@ -34,6 +67,35 @@ export default async function TipoPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildBreadcrumbJsonLd([
+            { name: "Inicio", url: "https://solocasaschile.com" },
+            { name: "Tipos de Casas", url: "https://solocasaschile.com/catalogo" },
+            { name: info.title, url: `https://solocasaschile.com/tipos/${tipo}` },
+          ])),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildFAQJsonLd([
+            {
+              question: `¿Qué es una casa ${info.title} en Chile?`,
+              answer: info.description || `Una casa ${info.title} es un sistema constructivo industrializado adaptado al clima y normativa chilena. ${info.benefits?.join('. ') || ''}`,
+            },
+            {
+              question: `¿Cuánto cuesta una casa ${info.title} en Chile?`,
+              answer: `El precio de una casa ${info.title} en Chile varía según el modelo y la constructora. En SolocasasChile puedes comparar precios desde UF de las mejores constructoras verificadas.`,
+            },
+            {
+              question: `¿Cuánto demora construir una casa ${info.title}?`,
+              answer: `Los tiempos de construcción de una casa ${info.title} son significativamente menores que la construcción tradicional. Dependen del modelo elegido y la constructora, pero pueden ir desde 30 días hasta 6 meses.`,
+            },
+          ])),
+        }}
+      />
       {/* Hero Section per Type */}
       <section className="relative py-24 md:py-32 bg-slate-950 overflow-hidden border-b border-white/5">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-indigo/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />

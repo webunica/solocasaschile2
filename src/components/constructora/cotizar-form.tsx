@@ -4,7 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   CheckCircle2, Loader2, Send, 
-  User, Mail, Phone, MapPin, MessageSquare 
+  User, Mail, Phone, MapPin, MessageSquare,
+  Lock, Clock, Zap
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,10 +92,10 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         <div className="mt-8 pt-8 border-t border-border/50 w-full">
            <Button 
              variant="outline" 
-             className="w-full rounded-2xl font-black text-[10px] uppercase tracking-widest border-border"
+             className="w-full rounded-2xl font-black text-sm uppercase tracking-widest border-border hover:bg-emerald-500/5 transition-colors"
              onClick={() => setSuccess(false)}
            >
-             Enviar otra solicitud
+             Cotizar otro proyecto
            </Button>
         </div>
       </motion.div>
@@ -176,21 +177,32 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full h-16 rounded-2xl bg-brand-indigo font-bold shadow-xl shadow-primary/20 hover:opacity-95 transition-all group"
+        className="w-full h-16 rounded-2xl bg-brand-indigo font-black text-base md:text-lg shadow-xl shadow-brand-indigo/20 hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
       >
+        {/* Shine effect */}
+        <div className="absolute inset-0 -translate-x-[150%] animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]" />
+        
         {loading ? (
-          <Loader2 className="w-5 h-5 animate-spin" />
+          <Loader2 className="w-6 h-6 animate-spin relative z-10" />
         ) : (
-          <>
-            SOLICITAR ASESORÍA GRATIS
-            <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </>
+          <span className="flex items-center justify-center gap-3 relative z-10">
+            SOLICITAR PRESUPUESTO FORMAL
+            <Send className="w-5 h-5 ml-1 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </span>
         )}
       </Button>
 
-      <p className="text-base text-center text-muted-foreground font-bold uppercase tracking-widest opacity-60 py-2">
-        Sin compromisos · Gestión Directa
-      </p>
+      <div className="flex flex-col items-center gap-2.5 pt-2">
+         <p className="text-[10px] text-center text-muted-foreground font-bold uppercase tracking-widest flex items-center gap-2">
+            <Lock className="w-3.5 h-3.5 opacity-60" /> Tus datos están 100% seguros
+         </p>
+         <div className="flex items-center gap-2 bg-brand-teal/10 px-4 py-1.5 rounded-full">
+            <Zap className="w-3.5 h-3.5 text-brand-teal fill-brand-teal/20" />
+            <p className="text-[10px] text-center text-brand-teal font-black uppercase tracking-[0.15em]">
+               Respuesta garantizada por la plataforma
+            </p>
+         </div>
+      </div>
     </form>
   );
 }

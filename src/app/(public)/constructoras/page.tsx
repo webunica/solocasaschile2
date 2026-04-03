@@ -96,10 +96,10 @@ export default async function ConstructorasPage() {
       <div className="container max-w-7xl mx-auto px-4 md:px-8 py-12 space-y-20">
         
         {/* Mapa de Chile */}
-        <section className="space-y-8">
+        <section className="space-y-8" aria-labelledby="section-mapa-heading">
           <div className="space-y-2">
-            <h2 className="text-3xl font-heading font-black tracking-tight flex items-center gap-3">
-              <MapPin className="w-7 h-7 text-brand-teal" /> Cobertura por Región
+            <h2 id="section-mapa-heading" className="text-3xl font-heading font-black tracking-tight flex items-center gap-3">
+              <MapPin className="w-7 h-7 text-brand-teal" aria-hidden="true" /> Cobertura por Región
             </h2>
             <p className="text-muted-foreground font-medium">Haz clic en cualquier punto del mapa para ver nuestra red de constructoras asociadas.</p>
           </div>
@@ -110,16 +110,16 @@ export default async function ConstructorasPage() {
 
         {/* Carrusel Constructoras Asociadas */}
         {asociadas.length > 0 && (
-          <section className="space-y-12">
-            <div className="space-y-4">
-               <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-2xl bg-brand-indigo flex items-center justify-center text-white shadow-lg shadow-primary/20">
-                     <Building2 className="w-5 h-5" />
-                  </div>
-                  <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
-                    Empresas Destacadas
-                  </h2>
-               </div>
+          <section className="space-y-12" aria-labelledby="section-destacadas-heading">
+             <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                   <div className="w-10 h-10 rounded-2xl bg-brand-indigo flex items-center justify-center text-white shadow-lg shadow-primary/20" aria-hidden="true">
+                      <Building2 className="w-5 h-5" />
+                   </div>
+                   <h2 id="section-destacadas-heading" className="text-3xl font-heading font-black tracking-tight text-foreground">
+                     Empresas Destacadas
+                   </h2>
+                </div>
                <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
                  Explora el catálogo de constructoras líderes. Empresas verificadas con historial real de proyectos y atención premium.
                </p>
@@ -129,15 +129,15 @@ export default async function ConstructorasPage() {
         )}
 
         {/* Listado de Constructoras Informativas / Directorio General */}
-        <section className="space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+        <section className="space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000" aria-labelledby="section-directorio-heading">
            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                 <div className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground border border-border/40">
-                    <List className="w-5 h-5" />
-                 </div>
-                 <h2 className="text-3xl font-heading font-black tracking-tight text-foreground">
-                    Directorio <span className="gradient-text">General</span>
-                 </h2>
+               <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground border border-border/40" aria-hidden="true">
+                     <List className="w-5 h-5" />
+                  </div>
+                  <h2 id="section-directorio-heading" className="text-3xl font-heading font-black tracking-tight text-foreground">
+                     Directorio <span className="gradient-text">General</span>
+                  </h2>
               </div>
               <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
                  Otras empresas del sector en Chile. Este listado incluye empresas en proceso de verificación o con perfiles informativos básicos.

@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { HeroSection } from "@/components/home/hero-section";
 import { FeaturedModelsSection } from "@/components/home/featured-models";
 import { PriceDropBanner } from "@/components/home/price-drop-banner";
 import { SeoContent } from "@/components/home/seo-content";
 import dynamic from "next/dynamic";
-import { StructuredData } from "@/components/seo/structured-data";
+import { buildWebSiteJsonLd, buildOrganizationJsonLd } from "@/components/seo/structured-data";
 
 // Lazy loading below-the-fold components
 const TypesSection = dynamic(() => import("@/components/home/types-section").then(m => m.TypesSection), { ssr: true });
@@ -16,16 +17,20 @@ const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(m => m
 export const revalidate = 3600;
 
 export default function Home() {
+  const websiteJsonLd = buildWebSiteJsonLd();
+  const orgJsonLd = buildOrganizationJsonLd();
+
   return (
     <main className="flex flex-col">
-      <StructuredData 
-        type="WebSite" 
-        data={{
-          name: "SolocasasChile",
-          url: "https://solocasaschile.com",
-          description: "El comparador inteligente de casas prefabricadas en Chile."
-        }} 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
+
       {/* A: Attention (Hero) */}
       <HeroSection />
 
@@ -39,13 +44,17 @@ export default function Home() {
       <PriceDropBanner />
 
       {/* Model Selection (The Product) */}
-      <FeaturedModelsSection />
+      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando modelos destacados...</div>}>
+         <FeaturedModelsSection />
+      </Suspense>
 
       {/* Flow & Education (How It Works) */}
       <HowItWorks />
 
       {/* Builder Directory (Options) */}
-      <FeaturedConstructorsSection />
+      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando directorio de empresas...</div>}>
+         <FeaturedConstructorsSection />
+      </Suspense>
 
       {/* SEO Authority & FAQ (Semantic Weight) */}
       <SeoContent />

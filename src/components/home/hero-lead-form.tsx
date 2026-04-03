@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, CheckCircle2, Building2, User, Mail, Phone, MessageSquare, Loader2 } from "lucide-react";
+import { 
+  Send, CheckCircle2, User, Mail, 
+  Phone, MessageSquare, Loader2, Lock, Zap 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -141,17 +144,32 @@ export function HeroLeadForm() {
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full bg-brand-indigo hover:opacity-95 font-bold text-white h-14 md:h-16 rounded-2xl shadow-xl transition-all px-4"
+        className="w-full bg-brand-indigo font-black text-white h-14 md:h-16 rounded-2xl shadow-xl transition-all hover:scale-[1.02] active:scale-95 group overflow-hidden relative"
       >
+        {/* Shine effect */}
+        <div className="absolute inset-0 -translate-x-[150%] animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]" />
+
         {loading ? (
-          <Loader2 className="w-5 h-5 animate-spin" />
+          <Loader2 className="w-6 h-6 animate-spin relative z-10" />
         ) : (
-          <div className="flex items-center justify-center gap-2 md:gap-3 whitespace-nowrap px-4">
-            <span>SOLICITAR ASESORÍA EXPERTA</span>
-            <Send className="w-3.5 h-3.5 md:w-5 md:h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          <div className="flex items-center justify-center gap-2 md:gap-3 whitespace-nowrap relative z-10 w-full px-2">
+            <span className="text-sm md:text-base">SOLICITAR ASESORÍA EXPERTA</span>
+            <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </div>
         )}
       </Button>
+
+      <div className="flex flex-col items-center gap-2.5 pt-3">
+         <p className="text-[10px] text-center text-muted-foreground font-bold uppercase tracking-widest flex items-center gap-2">
+            <Lock className="w-3.5 h-3.5 opacity-60 text-brand-indigo" /> Tus datos están 100% seguros
+         </p>
+         <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-1.5 rounded-full">
+            <Zap className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600/20" />
+            <p className="text-[10px] text-center text-emerald-700 font-black uppercase tracking-[0.15em]">
+               Respuesta profesional garantizada
+            </p>
+         </div>
+      </div>
     </form>
   );
 }

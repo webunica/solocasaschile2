@@ -20,27 +20,58 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const constructora = await getConstructoraBySlug(slug);
+  const baseUrl = 'https://solocasaschile.com';
+  const title = constructora
+    ? `${constructora.nombre} | Constructora de Casas Prefabricadas en Chile`
+    : "Constructora no encontrada | SolocasasChile";
+  const description = constructora?.descripcion
+    ? constructora.descripcion.substring(0, 160)
+    : `Conoce a ${constructora?.nombre}: casas prefabricadas, SIP y modulares en Chile. Verifica su score de confianza y catálogo de modelos.`;
+
   return {
-    title: constructora ? `${constructora.nombre} | Constructora en SolocasasChile` : "Constructora no encontrada",
-    description: constructora?.descripcion || `Descubre los modelos de casas prefabricadas de ${constructora?.nombre}.`,
+    title,
+    description,
+    keywords: constructora
+      ? [
+          constructora.nombre,
+          `${constructora.nombre} casas prefabricadas`,
+          "constructora casas chile",
+          "casas prefabricadas chile",
+          "casas sip chile",
+        ]
+      : [],
+    alternates: { canonical: `${baseUrl}/constructora/${slug}` },
     openGraph: {
-      title: constructora ? `${constructora.nombre} | Constructora en SolocasasChile` : "Constructora no encontrada",
-      description: constructora?.descripcion || "",
-      images: constructora?.logo_url ? [constructora.logo_url] : [],
-      type: "profile"
-    }
+      title,
+      description,
+      url: `${baseUrl}/constructora/${slug}`,
+      siteName: "SolocasasChile",
+      locale: "es_CL",
+      type: "profile",
+      images: constructora?.logo_url
+        ? [{ url: constructora.logo_url, width: 400, height: 400, alt: constructora.nombre }]
+        : [{ url: `${baseUrl}/og-image.jpg`, width: 1200, height: 630, alt: "SolocasasChile" }],
+    },
+    twitter: {
+      card: "summary",
+      site: "@solocasaschile",
+      title,
+      description,
+      images: constructora?.logo_url ? [constructora.logo_url] : [`${baseUrl}/twitter-image.jpg`],
+    },
   };
 }
 
 export const revalidate = 3600; // Recalculate at most once per hour
 
-import { StructuredData } from "@/components/seo/structured-data";
+import { StructuredData, buildBreadcrumbJsonLd } from "@/components/seo/structured-data";
 
 export default async function ConstructoraPage({ params }: PageProps) {
   const { slug } = await params;
   const constructora = await getConstructoraBySlug(slug);
   if (!constructora) notFound();
 
+  // getConstructoraBySlug is wrapped in React.cache() — deduplicates if called again in this request
   const modelos = await getModelsByConstructoraId(constructora.id);
 
   // Fallbacks for data from DB
@@ -62,6 +93,16 @@ export default async function ConstructoraPage({ params }: PageProps) {
           description: constructora.descripcion,
           url: `https://solocasaschile.com/constructora/${constructora.slug}`
         }} 
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildBreadcrumbJsonLd([
+            { name: "Inicio", url: "https://solocasaschile.com" },
+            { name: "Constructoras", url: "https://solocasaschile.com/constructoras" },
+            { name: constructora.nombre, url: `https://solocasaschile.com/constructora/${constructora.slug}` },
+          ])),
+        }}
       />
       {/* Header / Banner area */}
       <div className="relative h-72 md:h-[450px] w-full overflow-hidden">
@@ -175,7 +216,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
           </div>
 
           {/* Sidebar / Stats */}
-          <aside className="space-y-6">
+          <aside className="space-y-6" aria-label={`Información de ${constructora.nombre}`}>
              <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm">
                 <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Score de Confianza</h3>
                 <div className="flex items-center justify-between mb-4">

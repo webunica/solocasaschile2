@@ -2,57 +2,57 @@
 
 :root {
   /* Logo Identity Palette - Indigo & Vibrant Teal */
-  --brand-indigo: #503da0;  /* Strict Logo Indigo */
-  --brand-teal: #4df3c5;    /* Strict Logo Vibrant Teal */
-  --brand-sunset: #f97316;  /* Sunset Warmth Accent (for home feel) */
-  --brand-sand: #fefce8;    /* Warm Sunny Base */
+  --brand-indigo: hsl(251.5 44.8% 43.3%);  /* Strict Logo Indigo */
+  --brand-teal: hsl(163.4 87.4% 62.7%);    /* Strict Logo Vibrant Teal */
+  --brand-sunset: hsl(24.6 95% 53.1%);  /* Sunset Warmth Accent (for home feel) */
+  --brand-sand: hsl(54.5 91.7% 95.3%);    /* Warm Sunny Base */
 
   /* Light Mode (Brand & Vital) */
-  --background: #fdfdfb;    /* Clean Pearl Background */
-  --foreground: #2d1b6b;    /* Deeper version of Indigo for readable text */
-  --card: #ffffff;
-  --card-foreground: #2d1b6b;
-  --popover: #ffffff;
-  --popover-foreground: #2d1b6b;
+  --background: hsl(60 33.3% 98.8%);    /* Clean Pearl Background */
+  --foreground: hsl(253.5 59.7% 26.3%);    /* Deeper version of Indigo for readable text */
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(253.5 59.7% 26.3%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(253.5 59.7% 26.3%);
   
-  --primary: #503da0;       /* Indigo Base */
-  --primary-foreground: #ffffff;
+  --primary: hsl(251.5 44.8% 43.3%);       /* Indigo Base */
+  --primary-foreground: hsl(0 0% 100%);
   
-  --secondary: #4df3c5;     /* Logo Teal */
-  --secondary-foreground: #2d1b6b;
+  --secondary: hsl(163.4 87.4% 62.7%);     /* Logo Teal */
+  --secondary-foreground: hsl(253.5 59.7% 26.3%);
   
-  --muted: #f5f3ff;
-  --muted-foreground: #64748b;
-  --accent: #f0fdf4;
-  --accent-foreground: #503da0;
-  --destructive: #be123c;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #4df3c5;
+  --muted: hsl(250 100% 97.6%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(138.5 76.5% 96.7%);
+  --accent-foreground: hsl(251.5 44.8% 43.3%);
+  --destructive: hsl(345.3 82.7% 40.8%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(163.4 87.4% 62.7%);
 }
 
 .dark {
   /* Premium Dark Mode (Indigo accent) */
-  --background: #02020f;
-  --foreground: #f8fafc;
-  --card: #08081a;
-  --card-foreground: #ffffff;
-  --popover: #0a0a24;
-  --popover-foreground: #ffffff;
+  --background: hsl(240 76.5% 3.3%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(240 52.9% 6.7%);
+  --card-foreground: hsl(0 0% 100%);
+  --popover: hsl(240 56.5% 9%);
+  --popover-foreground: hsl(0 0% 100%);
   
-  --primary: #4fd3c5; /* Swap to Coral for better visibility on dark */
-  --primary-foreground: #ffffff;
+  --primary: hsl(173.6 60% 56.9%); /* Swap to Coral for better visibility on dark */
+  --primary-foreground: hsl(0 0% 100%);
   
-  --secondary: #1b0088;
-  --secondary-foreground: #ffffff;
-  --muted: #11112b;
-  --muted-foreground: #94a3b8;
-  --accent: #11112b;
-  --accent-foreground: #ffffff;
-  --border: #1e1e3f;
-  --input: #1e1e3f;
-  --ring: #4fd3c5;
+  --secondary: hsl(251.9 100% 26.7%);
+  --secondary-foreground: hsl(0 0% 100%);
+  --muted: hsl(240 43.3% 11.8%);
+  --muted-foreground: hsl(215 20.2% 65.1%);
+  --accent: hsl(240 43.3% 11.8%);
+  --accent-foreground: hsl(0 0% 100%);
+  --border: hsl(240 35.5% 18.2%);
+  --input: hsl(240 35.5% 18.2%);
+  --ring: hsl(173.6 60% 56.9%);
 }
 
 @theme {
@@ -152,14 +152,14 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #503da0 0%, #4df3c5 100%);
+  background: linear-gradient(135deg, hsl(251.5 44.8% 43.3%) 0%, hsl(163.4 87.4% 62.7%) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, #503da0 0%, #4df3c5 50%, #f97316 100%);
+  background: linear-gradient(135deg, hsl(251.5 44.8% 43.3%) 0%, hsl(163.4 87.4% 62.7%) 50%, hsl(24.6 95% 53.1%) 100%);
   background-size: 200% 200%;
   animation: dynamic-gradient 10s ease infinite;
 }

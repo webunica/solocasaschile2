@@ -72,7 +72,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
       <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16">
         <div className="flex flex-col lg:flex-row gap-16">
           {/* Filters Sidebar - Desktop Only */}
-          <aside className="hidden lg:block w-72 shrink-0">
+          <aside className="hidden lg:block w-72 shrink-0" aria-label="Filtros del catálogo">
             <div className="sticky top-32">
                <Suspense fallback={<Skeleton className="h-[600px] w-full rounded-[3rem]" />}>
                  <CatalogoFilters
@@ -86,7 +86,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
           </aside>
 
           {/* Catalog Main */}
-          <main className="flex-1 min-w-0">
+          <main className="flex-1 min-w-0" aria-label="Resultados del catálogo">
             <Suspense fallback={<CatalogoSkeleton />}>
                {modelos.length > 0 ? (
                  <CatalogoGrid modelos={modelos} />
