@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
+import { RegionesSelector } from "@/components/dashboard/regiones-selector";
 
 interface Props {
   initialData: any;
@@ -214,14 +215,8 @@ export function SettingsForm({ initialData, userEmail }: Props) {
               <Separator />
 
               <div className="space-y-2">
-                  <Label htmlFor="regiones" className="text-xs font-black uppercase tracking-widest opacity-60">Regiones donde opera (Separadas por coma)</Label>
-                  <Input 
-                    id="regiones" 
-                    name="regiones" 
-                    defaultValue={initialData?.regiones?.join(", ") || ""} 
-                    className="h-12 rounded-xl bg-muted/20 border-border/40"
-                    placeholder="Metropolitana, Valparaiso, Biobio..."
-                  />
+                  <Label htmlFor="regiones" className="text-xs font-black uppercase tracking-widest opacity-60">Regiones donde opera</Label>
+                  <RegionesSelector name="regiones" initialValue={initialData?.regiones || []} />
                   <p className="text-[10px] text-muted-foreground italic mt-2">
                     Asegúrate de escribir los nombres correctamente para mejorar tu posicionamiento en los filtros.
                   </p>
