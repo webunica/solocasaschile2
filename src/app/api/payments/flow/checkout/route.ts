@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     const ufAmount = PLAN_PRICES_UF[plan as keyof typeof PLAN_PRICES_UF][billing === 'yearly' ? 'yearly' : 'monthly'];
     const amountClp = Math.round(ufAmount * valorUfActual);
 
-    const subject = `Suscripción Plan ${plan.toUpperCase()} (${billing === 'yearly' ? 'Anual' : 'Mensual'})`;
+    const subject = `SoloCasasChile ${plan.toUpperCase()} ${billing === 'yearly' ? 'Anual' : 'Mensual'}`;
 
     // 1. Crear el pago en Flow
     const flowResult = await FlowService.createPayment({
@@ -59,13 +59,16 @@ export async function POST(req: NextRequest) {
     });
 
     // 2. Devolvemos la URL de redirección
-    return NextResponse.json({ url: `${flowResult.url}?token=${flowResult.token}` });
+    return NextResponse.json({ 
+        url: `${flowResult.url}?token=${flowResult.token}`,
+        order: flowResult.flowOrder 
+    });
 
   } catch (error: any) {
-    console.error('Checkout Error:', error.message);
+    console.error('[FLOW-CHECKOUT] Detailed Error:', error);
     return NextResponse.json({ 
       error: error.message.includes('Flow Payment Create Failed') 
-        ? 'Error de comunicación con Flow. Verifica tus API Keys.' 
+        ? `Error de comunicación con Flow: ${error.message}` 
         : 'Ocurrió un error al procesar el pago. Intenta de nuevo.' 
     }, { status: 500 });
   }
