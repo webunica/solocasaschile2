@@ -68,19 +68,51 @@ export async function POST(req: NextRequest) {
           to: [userEmail || 'soporte@solocasaschile.cl'],
           subject: '¡Tu plan de SoloCasasChile ha sido activado! 🚀',
           html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; padding: 24px;">
-              <h2 style="color: #4f46e5;">¡Felicidades, ${updatedData?.nombre || 'Constructora'}!</h2>
-              <p>Tu pago ha sido procesado con éxito y tu plan <strong>${plan.toUpperCase()}</strong> ya está activo.</p>
-              <div style="background: #f9fafb; padding: 16px; border-radius: 8px; margin: 20px 0;">
-                <p style="margin: 0; color: #6b7280; font-size: 14px;">Detalles de la suscripción:</p>
-                <p style="margin: 4px 0; font-weight: bold;">Plan: ${plan.toUpperCase()}</p>
-                <p style="margin: 4px 0; font-weight: bold;">Ciclo: ${billing === 'yearly' ? 'Anual (50% OFF)' : 'Mensual'}</p>
-                <p style="margin: 4px 0; font-weight: bold;">Próximo Cobro: ${nextBilling.toLocaleDateString('es-CL')}</p>
+            <div style="font-family: 'Inter', system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 24px; overflow: hidden; border: 1px solid #f1f5f9; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+              <!-- Header with Logo -->
+              <div style="background-color: #ffffff; padding: 40px 0; text-align: center; border-bottom: 1px solid #f8fafc;">
+                <img src="${process.env.NEXT_PUBLIC_APP_URL}/images/logo.png" alt="SoloCasasChile" style="height: 48px; width: auto;" />
               </div>
-              <p>Ahora puedes publicar tus modelos sin las limitaciones del plan gratuito y destacar en nuestro catálogo nacional.</p>
-              <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="display: inline-block; background: #4f46e5; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px;">Ir al Dashboard</a>
-              <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;" />
-              <p style="font-size: 12px; color: #9ca3af;">Si tienes dudas, contáctanos vía WhatsApp al soporte dedicado.</p>
+
+              <!-- Main Content -->
+              <div style="padding: 40px;">
+                <h1 style="color: #0f172a; font-size: 28px; font-weight: 800; margin: 0 0 16px 0; letter-spacing: -0.025em; text-align: center;">¡Suscripción Activada! 🚀</h1>
+                <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 32px 0; text-align: center;">Hola, <strong>${updatedData?.nombre || 'Constructora'}</strong>. Tu pago ha sido procesado exitosamente por Flow y tu cuenta ha sido actualizada automáticamente.</p>
+                
+                <div style="background-color: #f8fafc; border-radius: 16px; padding: 32px;">
+                  <h2 style="color: #0f172a; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 16px 0; opacity: 0.6;">Resumen de tu Plan</h2>
+                  
+                  <div style="border-bottom: 1px solid #e2e8f0; padding: 12px 0; display: flex; justify-content: space-between;">
+                    <span style="color: #64748b; font-weight: 500;">Plan Seleccionado</span>
+                    <span style="color: #4f46e5; font-weight: 800;">${plan.toUpperCase()}</span>
+                  </div>
+                  
+                  <div style="border-bottom: 1px solid #e2e8f0; padding: 12px 0; display: flex; justify-content: space-between;">
+                    <span style="color: #64748b; font-weight: 500;">Ciclo de Facturación</span>
+                    <span style="color: #0f172a; font-weight: 700;">${billing === 'yearly' ? 'Anual (50% OFF)' : 'Mensual'}</span>
+                  </div>
+
+                  <div style="padding: 12px 0; display: flex; justify-content: space-between;">
+                    <span style="color: #64748b; font-weight: 500;">Próximo Cobro</span>
+                    <span style="color: #0f172a; font-weight: 700;">${nextBilling.toLocaleDateString('es-CL')}</span>
+                  </div>
+                </div>
+
+                <!-- Action Button -->
+                <div style="margin-top: 40px; text-align: center;">
+                  <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="display: inline-block; background-color: #4f46e5; color: #ffffff; padding: 16px 40px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4);">Ir al Dashboard de Constructora</a>
+                </div>
+
+                <p style="color: #94a3b8; font-size: 14px; margin-top: 40px; text-align: center;">
+                  Desde ahora tu perfil aparecerá como <strong>Verificado</strong> y podrás publicar todos tus modelos según los límites de tu nuevo plan.
+                </p>
+              </div>
+
+              <!-- Footer -->
+              <div style="background-color: #f8fafc; padding: 24px; text-align: center;">
+                <p style="color: #94a3b8; font-size: 12px; margin: 0;">&copy; 2026 SoloCasasChile. Todos los derechos reservados.</p>
+                <p style="color: #94a3b8; font-size: 12px; margin: 12px 0 0 0;">Si tienes cualquier duda, contáctanos respondiendo a este correo o vía soporte prioritario en WhatsApp.</p>
+              </div>
             </div>
           `
         });

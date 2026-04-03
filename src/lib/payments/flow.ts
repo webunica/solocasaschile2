@@ -56,28 +56,40 @@ export class FlowService {
       commerceOrder: `ORD-${Date.now()}`,
       urlConfirmation: `${FLOW_CONFIG.appUrl}/api/payments/flow/confirm`,
       urlReturn: `${FLOW_CONFIG.appUrl}/dashboard/success?externalId=${params.externalId}`,
+      urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure?externalId=${params.externalId}`,
       ...params.optional
     };
 
+    console.log('[FLOW] Generando pago:', flowParams);
     flowParams.s = this.generateSignature(flowParams);
+    console.log('[FLOW] Firma generada:', flowParams.s);
 
     const formData = new URLSearchParams();
     for (const key in flowParams) {
       formData.append(key, String(flowParams[key]));
     }
 
-    const response = await fetch(`${FLOW_CONFIG.baseUrl}/payment/create`, {
+    const apiUrl = `${FLOW_CONFIG.baseUrl}/payment/create`;
+    console.log(`[FLOW] Solicitando a: ${apiUrl}`);
+
+    const response = await fetch(apiUrl, {
       method: 'POST',
       body: formData,
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Flow Error:', errorText);
-      throw new Error(`Flow Payment Create Failed: ${response.statusText}`);
+      console.error('[FLOW] Error de Respuesta:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      });
+      throw new Error(`Flow Payment Create Failed: ${response.statusText} (${errorText})`);
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log('[FLOW] Pago Creado con Éxito:', data);
+    return data;
   }
 
   /**

@@ -61,8 +61,13 @@ export async function getDashboardStats() {
   const { data: { user } } = await supabase.auth.getUser()
   const userId = user?.id ?? ''
   
-  // 1. Fetch profile to check role
-  const { data: profile } = await supabase.from('constructoras').select('role, nombre, score_confianza, verificada').eq('id', userId).maybeSingle();
+  // 1. Fetch profile to check role and subscription
+  const { data: profile } = await supabase
+    .from('constructoras')
+    .select('role, nombre, score_confianza, verificada, plan, plan_cycle, plan_status, next_billing_date')
+    .eq('id', userId)
+    .maybeSingle();
+    
   const isSuperAdmin = profile?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
 
   let modelsQuery = supabase.from('modelos').select('*', { count: 'exact', head: true })
@@ -75,9 +80,8 @@ export async function getDashboardStats() {
     recentLeadsQuery = recentLeadsQuery.eq('constructora_id', userId)
   }
 
-  // async-parallel: run all 4 queries concurrently instead of sequentially
+  // async-parallel: run all queries concurrently
   const [
-    // profile is already fetched above
     { count: modelsCount },
     { count: leadsCount },
     { data: recentLeads },
@@ -87,18 +91,21 @@ export async function getDashboardStats() {
     recentLeadsQuery,
   ])
 
-  const constructora = profile;
-
   return {
-    companyName: constructora?.nombre || 'Constructora',
-    confidenceScore: constructora?.score_confianza || 0,
-    isVerified: constructora?.verificada || false,
+    companyName: profile?.nombre || 'Constructora',
+    confidenceScore: profile?.score_confianza || 0,
+    isVerified: profile?.verificada || false,
+    plan: profile?.plan || 'gratis',
+    planCycle: profile?.plan_cycle || 'monthly',
+    planStatus: profile?.plan_status || 'active',
+    nextBillingDate: profile?.next_billing_date,
     modelsCount: modelsCount || 0,
     leadsCount: leadsCount || 0,
     recentLeads: recentLeads || [],
     totalViews: (leadsCount || 0) * 22 + (modelsCount || 0) * 45,
   }
 }
+
 
 export async function getModelById(id: string) {
   const supabase = await createClient()

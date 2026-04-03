@@ -1,7 +1,7 @@
 import { getDashboardStats } from "@/lib/supabase/services";
 import { 
   Users, Home, Store, ArrowUpRight, 
-  MessageSquare, LayoutGrid, BarChart2 
+  MessageSquare, LayoutGrid, BarChart2, AlertCircle
 } from "lucide-react";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
@@ -27,7 +27,10 @@ export default async function DashboardPage() {
     recentLeads, 
     totalViews,
     confidenceScore = 0,
-    isVerified = false
+    isVerified = false,
+    plan = 'gratis',
+    planStatus = 'active',
+    nextBillingDate
   } = await getDashboardStats();
 
   const STATS = [
@@ -50,7 +53,7 @@ export default async function DashboardPage() {
     { 
       title: "Modelos Activos", 
       value: String(modelsCount), 
-      change: "Sincronizado", 
+      change: plan === 'gratis' ? `${modelsCount}/3` : "Ilimitados", 
       trend: "neutral" as const, 
       icon: Home, 
       color: "text-brand-indigo bg-brand-indigo/5" 
@@ -67,6 +70,43 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-12 py-10">
+       {/* Subscription Alerts */}
+       {planStatus === 'past_due' && (
+         <div className="bg-red-500/5 border border-red-200/50 p-6 rounded-[2rem] flex flex-col md:flex-row items-center gap-6 shadow-xl shadow-red-500/5 animate-in fade-in slide-in-from-top-4 duration-500">
+           <div className="w-14 h-14 rounded-2xl bg-red-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-red-500/20">
+              <AlertCircle className="w-7 h-7" />
+           </div>
+           <div className="flex-1 space-y-1 text-center md:text-left">
+              <p className="text-red-600 font-black text-sm uppercase tracking-widest">Atención: Suscripción Pendiente</p>
+              <p className="text-slate-500 text-sm font-medium">No pudimos procesar tu último cobro. Tu catálogo pasará a modo gratuito pronto si no se resuelve.</p>
+           </div>
+           <Link 
+             href="/planes" 
+             className={cn(buttonVariants({ variant: "destructive" }), "rounded-xl h-12 px-8 font-bold uppercase tracking-widest text-[10px]")}
+           >
+             Regularizar Ahora
+           </Link>
+         </div>
+       )}
+
+       {planStatus === 'canceled' && (
+         <div className="bg-slate-100 border border-slate-200 p-6 rounded-[2rem] flex flex-col md:flex-row items-center gap-6">
+           <div className="w-14 h-14 rounded-2xl bg-slate-900 flex items-center justify-center text-white shrink-0">
+              <AlertCircle className="w-7 h-7" />
+           </div>
+           <div className="flex-1 space-y-1 text-center md:text-left">
+              <p className="text-slate-900 font-black text-sm uppercase tracking-widest">Suscripción Cancelada</p>
+              <p className="text-slate-500 text-sm font-medium">Tu plan ha finalizado. Vuelve a suscribirte para recuperar los beneficios premium.</p>
+           </div>
+           <Link 
+             href="/planes" 
+             className={cn(buttonVariants({ variant: "outline" }), "rounded-xl h-12 px-8 font-bold uppercase tracking-widest text-[10px]")}
+           >
+             Ver Planes
+           </Link>
+         </div>
+       )}
+
        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-border/40 pb-10">
           <div className="space-y-2">
              <div className="flex items-center gap-3 mb-2">
@@ -76,13 +116,24 @@ export default async function DashboardPage() {
                 )}>
                   {isVerified ? "Constructora Verificada" : "Estado: Operativo"}
                 </Badge>
+                <Badge className={cn(
+                  "rounded-full px-4 py-1 text-[10px] font-black uppercase tracking-widest border-none shadow-sm",
+                  plan === 'premium' ? "bg-amber-500 text-white" : 
+                  plan === 'pro' ? "bg-brand-indigo text-white" : "bg-slate-200 text-slate-600"
+                )}>
+                  Plan {plan}
+                </Badge>
                 <span className={cn("w-2 h-2 rounded-full animate-pulse", isVerified ? "bg-emerald-500" : "bg-primary")} />
              </div>
              <h1 className="text-4xl md:text-5xl font-heading font-black tracking-tighter text-foreground">
                 Hola, <span className="gradient-text">{companyName}</span>
              </h1>
              <p className="text-muted-foreground font-medium text-lg italic opacity-80">
-                Tu plataforma de comercialización modular está al día.
+                {plan === 'gratis' 
+                  ? "Estás usando la versión gratuita de SoloCasasChile." 
+                  : `Tu plan ${plan} está ${planStatus === 'active' ? 'activo' : 'pendiente'}.`
+                }
+                {nextBillingDate && ` Vence el ${new Date(nextBillingDate).toLocaleDateString('es-CL')}.`}
              </p>
           </div>
           <div className="flex gap-4 w-full md:w-auto">
@@ -146,7 +197,7 @@ export default async function DashboardPage() {
                             <div className="flex flex-col gap-1">
                                <span className="text-lg font-black text-foreground group-hover:text-primary transition-colors tracking-tight">{lead.nombre_cliente}</span>
                                <div className="flex items-center gap-3">
-                                  <span className="text-[10px] font-bold text-muted-foreground/60">{lead.email || 'Sin email'}</span>
+                                  <span className="text-[10px] font-bold text-muted-foreground/60">{lead.email_cliente || 'Sin email'}</span>
                                   <span className="w-1 h-1 rounded-full bg-border" />
                                   <Badge variant="secondary" className="text-[8px] font-black uppercase tracking-widest px-2 py-0 border-none opacity-80">
                                      {lead.modelo?.nombre || 'General'}
@@ -156,8 +207,8 @@ export default async function DashboardPage() {
                          </div>
                          <div className="flex flex-col items-end gap-3">
                             <Badge className={cn(
-                              "rounded-full px-5 py-1 text-[9px] font-black tracking-widest uppercase border-none shadow-sm",
-                              lead.estado === "nuevo" ? "bg-brand-teal text-white" : "bg-muted text-muted-foreground"
+                               "rounded-full px-5 py-1 text-[9px] font-black tracking-widest uppercase border-none shadow-sm",
+                               lead.estado === "nuevo" ? "bg-brand-teal text-white" : "bg-muted text-muted-foreground"
                             )}>
                                {lead.estado}
                             </Badge>
@@ -176,24 +227,45 @@ export default async function DashboardPage() {
 
           {/* Sidebar Area */}
           <div className="space-y-10">
-             {/* CTA Card */}
-             <Card className="rounded-[3rem] bg-foreground text-background overflow-hidden relative group shadow-2xl shadow-black/10">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] group-hover:bg-white/10 transition-colors" />
-                <CardHeader className="p-10">
-                   <CardTitle className="text-2xl font-black tracking-tighter text-white">Escala a Pro</CardTitle>
-                   <CardDescription className="text-white/60 font-medium text-sm leading-relaxed mt-4">
-                     Desbloquea modelos ilimitados, analíticas de Vercel y prioridad en el catálogo nacional.
-                   </CardDescription>
-                </CardHeader>
-                <CardContent className="px-10 pb-10">
-                   <Link 
-                     href="/planes" 
-                     className={cn(buttonVariants({ variant: "outline" }), "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-foreground transition-all")}
-                   >
-                     Ver Planes Premium
-                   </Link>
-                </CardContent>
-             </Card>
+             {/* CTA Card - CONDITIONAL */}
+             {plan === 'gratis' ? (
+                <Card className="rounded-[3rem] bg-foreground text-background overflow-hidden relative group shadow-2xl shadow-black/10">
+                   <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] group-hover:bg-white/10 transition-colors" />
+                   <CardHeader className="p-10">
+                      <CardTitle className="text-2xl font-black tracking-tighter text-white">Escala a Pro</CardTitle>
+                      <CardDescription className="text-white/60 font-medium text-sm leading-relaxed mt-4">
+                        Desbloquea modelos ilimitados, analíticas avanzadas y prioridad en el catálogo nacional.
+                      </CardDescription>
+                   </CardHeader>
+                   <CardContent className="px-10 pb-10">
+                      <Link 
+                        href="/planes" 
+                        className={cn(buttonVariants({ variant: "outline" }), "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-foreground transition-all")}
+                      >
+                        Ver Planes Premium
+                      </Link>
+                   </CardContent>
+                </Card>
+             ) : (
+                <Card className="rounded-[3rem] bg-brand-indigo text-white overflow-hidden relative group shadow-2xl shadow-brand-indigo/20">
+                   <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-[60px]" />
+                   <CardHeader className="p-10 text-center">
+                      <Badge className="w-fit mx-auto bg-white/20 text-white border-none mb-4 font-black tracking-widest text-[8px] uppercase">Plan Seleccionado</Badge>
+                      <CardTitle className="text-3xl font-black tracking-tighter text-white">Plan {plan.toUpperCase()}</CardTitle>
+                      <CardDescription className="text-white/70 font-medium text-sm mt-2">
+                        {planStatus === 'active' ? 'Tu suscripción está activa.' : 'Estamos verificando tu pago.'}
+                      </CardDescription>
+                   </CardHeader>
+                   <CardContent className="px-10 pb-10">
+                      <Link 
+                        href="/dashboard/settings" 
+                        className={cn(buttonVariants({ variant: "outline" }), "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-brand-indigo transition-all")}
+                      >
+                        Gestionar Suscripción
+                      </Link>
+                   </CardContent>
+                </Card>
+             )}
              
              {/* Help Card */}
              <div className="p-10 rounded-[3rem] bg-muted/10 border border-border/40 space-y-6">
