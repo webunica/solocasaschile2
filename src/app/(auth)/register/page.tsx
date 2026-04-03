@@ -16,9 +16,18 @@ import { register, resendConfirmation } from "@/lib/supabase/actions";
 import { cn } from "@/lib/utils";
 
 const PLAN_META = {
-  premium: { label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true, precio: "1.45", precioOriginal: "2.9" },
-  pro:     { label: "Pro",     icon: Zap,   color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true, precio: "0.95", precioOriginal: "1.9" },
-  gratis:  { label: "Gratis",  icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false, precio: "0", precioOriginal: "0" },
+  premium: { 
+    label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true,
+    prices: { monthly: "2.9", yearly: "1.45" }, original: "2.9" 
+  },
+  pro: { 
+    label: "Pro", icon: Zap, color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true,
+    prices: { monthly: "1.9", yearly: "0.95" }, original: "1.9"
+  },
+  gratis: { 
+    label: "Gratis", icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false,
+    prices: { monthly: "0", yearly: "0" }, original: "0"
+  },
 } as const;
 type PlanKey = keyof typeof PLAN_META;
 
@@ -129,9 +138,11 @@ function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const rawPlan = searchParams.get("plan") || "gratis";
+  const billing: 'monthly' | 'yearly' = (searchParams.get("billing") === 'monthly' ? 'monthly' : 'yearly');
   const plan: PlanKey = (rawPlan in PLAN_META ? rawPlan : "gratis") as PlanKey;
   const planMeta = PLAN_META[plan];
   const PlanIcon = planMeta.icon;
+  const currentPrice = planMeta.prices[billing as keyof typeof planMeta.prices] || "0";
 
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
@@ -281,14 +292,23 @@ function RegisterForm() {
                   <span className={cn("text-[11px] font-black uppercase tracking-widest leading-none", planMeta.color)}>
                     Plan {planMeta.label}
                   </span>
-                  <span className="text-[9px] font-bold text-red-500 uppercase tracking-tighter mt-1">Oferta Lanzamiento 50% DCTO</span>
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">
+                    Facturado {billing === 'yearly' ? 'Anual' : 'Mensual'}
+                  </span>
                 </div>
               </div>
               <div className="text-right">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold text-muted-foreground/40 line-through tracking-tighter">{planMeta.precioOriginal}</span>
-                  <span className="text-lg font-black tracking-tighter">{planMeta.precio}</span>
-                  <span className="text-[10px] font-bold opacity-60">UF</span>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2 justify-end">
+                    {billing === 'yearly' && (
+                      <span className="text-[10px] font-bold text-muted-foreground/40 line-through tracking-tighter">{planMeta.original}</span>
+                    )}
+                    <span className="text-lg font-black tracking-tighter">{currentPrice}</span>
+                    <span className="text-[10px] font-bold opacity-60">UF</span>
+                  </div>
+                  {billing === 'yearly' && (
+                    <span className="text-[8px] font-black text-red-500 uppercase">50% DISCOUNT APPLIED</span>
+                  )}
                 </div>
               </div>
             </motion.div>

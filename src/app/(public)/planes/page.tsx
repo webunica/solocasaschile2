@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -9,19 +12,15 @@ import {
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
 
-export const metadata: Metadata = {
-  title: "Planes para Constructoras | SolocasasChile",
-  description: "Publica tus modelos de casas prefabricadas en SolocasasChile. Planes Gratis, Pro y Premium con alcance nacional a +50.000 familias chilenas.",
-};
-
 const PLANES = [
   {
     id: "premium",
     nombre: "Premium",
-    precio: "1.45",
+    precioMensual: "2.9",
+    precioAnualEquiv: "1.45",
+    precioAnualTotal: "17.4",
     precioOriginal: "2.9",
-    descuento: "50% OFF",
-    periodo: "UF / mes",
+    descuento: "50% OFF ANUAL",
     icon: Crown,
     color: "text-amber-500",
     bgIcon: "bg-amber-500/10",
@@ -41,7 +40,7 @@ const PLANES = [
       { texto: "Posición #1 destacada en catálogo", ok: true },
       { texto: "Soporte dedicado 24/7 por WhatsApp", ok: true },
     ],
-    cta: "Aprovechar 50% DCTO",
+    cta: "Dominar el Mercado",
     ctaHref: "/register?plan=premium",
     ctaClass: "bg-brand-indigo text-white hover:opacity-90 shadow-lg shadow-primary/20",
     ctaVariant: "default" as const,
@@ -49,10 +48,11 @@ const PLANES = [
   {
     id: "pro",
     nombre: "Pro",
-    precio: "0.95",
+    precioMensual: "1.9",
+    precioAnualEquiv: "0.95",
+    precioAnualTotal: "11.4",
     precioOriginal: "1.9",
-    descuento: "50% OFF",
-    periodo: "UF / mes",
+    descuento: "50% OFF ANUAL",
     icon: Zap,
     color: "text-brand-teal",
     bgIcon: "bg-brand-teal/10",
@@ -72,7 +72,7 @@ const PLANES = [
       { texto: "Posición prioritaria en catálogo", ok: true },
       { texto: "Soporte por email prioritario", ok: true },
     ],
-    cta: "Activar Plan Pro",
+    cta: "Empezar a Escalar",
     ctaHref: "/register?plan=pro",
     ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white",
     ctaVariant: "default" as const,
@@ -80,8 +80,9 @@ const PLANES = [
   {
     id: "gratis",
     nombre: "Gratis",
-    precio: "0",
-    periodo: "para siempre",
+    precioMensual: "0",
+    precioAnualEquiv: "0",
+    periodo: "por 4 meses",
     icon: Building2,
     color: "text-muted-foreground",
     bgIcon: "bg-muted/60",
@@ -108,28 +109,30 @@ const PLANES = [
 
 const FAQS = [
   {
-    q: "¿Puedo cambiar de plan en cualquier momento?",
-    a: "Sí. Puedes subir o bajar de plan en cualquier momento desde tu panel. Los cambios se aplican al inicio del siguiente período de facturación.",
+    q: "¿Por qué el plan Gratis dura 4 meses?",
+    a: "Queremos que pruebes la potencia de la plataforma sin riesgos. 4 meses es tiempo suficiente para recibir tus primeros leads y cerrar ventas antes de decidir escalar a un plan Pro.",
+  },
+  {
+    q: "¿Cómo funciona el descuento anual?",
+    a: "Al elegir el pago anual, obtienes un 50% de descuento directo sobre el valor mensual. Es nuestra forma de premiar a las constructoras que se comprometen con su crecimiento a largo plazo.",
   },
   {
     q: "¿En qué moneda se cobra?",
     a: "Los planes Pro y Premium se cobran en UF (Unidad de Fomento chilena). El valor exacto en pesos se calcula al momento de la facturación según el valor diario de la UF.",
   },
   {
-    q: "¿Qué pasa con mis leads si bajo al plan Gratis?",
-    a: "Nunca pierdes tus leads. Todo el historial de prospectos permanece accesible siempre, independientemente del plan que tengas activo.",
-  },
-  {
-    q: "¿Cómo funciona el Badge 'Verificada'?",
-    a: "La verificación confirma que tu empresa está legalmente constituida en Chile. Nuestro equipo revisa los antecedentes y, si todo es correcto, activa el badge en tu perfil.",
+    q: "¿Qué pasa con mis leads si termina mi periodo gratis?",
+    a: "Tus leads son tuyos. Siempre tendrás acceso al historial de prospectos, incluso si decides no renovar o bajar de plan.",
   },
   {
     q: "¿Hay contrato de permanencia?",
-    a: "No. Todos los planes son mes a mes, sin contratos de permanencia. Puedes cancelar en cualquier momento y no se te cobrará el siguiente período.",
+    a: "El plan mensual no tiene permanencia. El plan anual se paga por adelantado y te garantiza el precio promocional durante los 12 meses de servicio.",
   },
 ];
 
 export default function PlanesPage() {
+  const [isYearly, setIsYearly] = useState(true);
+
   return (
     <div className="min-h-screen bg-background pb-32">
 
@@ -151,25 +154,54 @@ export default function PlanesPage() {
           </p>
 
           <div className="pt-10 flex flex-col items-center gap-8">
-            <div className="flex items-center gap-3 bg-red-500/10 text-red-600 px-6 py-3 rounded-2xl border border-red-500/20 font-black text-xs uppercase tracking-widest animate-bounce">
-              <Sparkles className="w-4 h-4" /> Oferta de Lanzamiento: 50% de Descuento
+            {/* Toggle Billing */}
+            <div className="flex items-center gap-4 bg-muted/30 p-1.5 rounded-[2rem] border border-border/40 backdrop-blur-md">
+              <button 
+                onClick={() => setIsYearly(false)}
+                className={cn(
+                  "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all",
+                  !isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Mensual
+              </button>
+              <button 
+                onClick={() => setIsYearly(true)}
+                className={cn(
+                  "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all relative",
+                  isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Anual
+                <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse">
+                  -50%
+                </span>
+              </button>
             </div>
-            <div className="space-y-4">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">La promoción finaliza en:</p>
+
+            <div className="flex items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-6 py-3 rounded-2xl border border-brand-indigo/10 font-black text-xs uppercase tracking-widest">
+              <Sparkles className="w-4 h-4 text-amber-500" /> 
+              {isYearly ? "Ahorra un 50% con el pago anual" : "Prueba la potencia del SaaS mes a mes"}
+            </div>
+
+            <div className="space-y-4 pt-4 border-t border-border/40 w-full max-w-md">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60 italic">Oferta especial de cierre por lanzamiento:</p>
               <PromotionCountdown />
-              <p className="text-xs font-bold text-red-500/80">Válido para suscripciones hasta el día 30 de Abril 2026</p>
+              <p className="text-xs font-bold text-red-500/80">Válido para nuevas constructoras hasta el 30 de abril</p>
             </div>
           </div>
         </div>
       </section>
-
-
 
       {/* ── Pricing grid ────────────────────────────────────── */}
       <section className="container max-w-6xl mx-auto px-4 md:px-8 py-12">
         <div className="grid md:grid-cols-3 gap-8 items-start">
           {PLANES.map((plan) => {
             const Icon = plan.icon;
+            const currentPrice = isYearly && plan.id !== 'gratis' ? plan.precioAnualEquiv : plan.precioMensual;
+            const originalPrice = plan.id !== 'gratis' ? plan.precioMensual : null;
+            const periodText = plan.id === 'gratis' ? (plan.periodo || 'por 4 meses') : (isYearly ? "UF / mes equiv." : "UF / mes");
+
             return (
               <div
                 key={plan.id}
@@ -201,16 +233,21 @@ export default function PlanesPage() {
                     <div>
                       <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
                       <div className="flex items-baseline gap-2 mt-2">
-                        {"precioOriginal" in plan && (
+                        {isYearly && originalPrice && (
                           <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
-                            {plan.precioOriginal}
+                            {originalPrice}
                           </span>
                         )}
-                        <span className="text-4xl font-black tracking-tighter">{plan.precio}</span>
-                        <span className="text-muted-foreground font-bold text-sm">{plan.periodo}</span>
-                        {"descuento" in plan && (
+                        <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
+                        <div className="flex flex-col">
+                           <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
+                           {isYearly && plan.id !== 'gratis' && (
+                             <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual ({plan.precioAnualTotal} UF)</span>
+                           )}
+                        </div>
+                        {isYearly && plan.id !== 'gratis' && (
                           <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
-                            {plan.descuento}
+                            50% OFF
                           </Badge>
                         )}
                       </div>
@@ -235,14 +272,14 @@ export default function PlanesPage() {
 
                   {/* CTA */}
                   <Link
-                    href={plan.ctaHref}
+                    href={`${plan.ctaHref}${isYearly ? '&billing=yearly' : '&billing=monthly'}`}
                     className={cn(
                       buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
                       "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2",
                       plan.ctaClass
                     )}
                   >
-                    {plan.cta} <ArrowRight className="w-4 h-4" />
+                    {isYearly && plan.id !== 'gratis' ? "Aprovechar 50% DCTO" : plan.cta} <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </div>
@@ -252,7 +289,7 @@ export default function PlanesPage() {
 
         {/* Trust note */}
         <p className="text-center text-sm text-muted-foreground font-medium mt-12 opacity-60">
-          Sin permanencia · Cancela cuando quieras · Los precios en UF se actualizan diariamente
+          Sin permanencia en planes mensuales · Los precios en UF se actualizan diariamente · Plan Gratis limitado a 4 meses por constructora.
         </p>
       </section>
 
@@ -262,9 +299,9 @@ export default function PlanesPage() {
           <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { quote: "En el primer mes recibimos 18 leads cualificados. El ROI fue inmediato.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro" },
-              { quote: "El badge verificada nos da credibilidad ante los clientes. Vale cada peso.", name: "Andrea Flores", company: "Constructora Biobío", plan: "Premium" },
-              { quote: "Empezamos con el plan gratis y en 2 meses ya teníamos clientes reales.", name: "Felipe Torres", company: "SIP Chile", plan: "Gratis → Pro" },
+              { quote: "Contratamos el plan anual pro con el 50% y la inversión se pagó sola en las primeras semanas.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro Anual" },
+              { quote: "Como super-admin, valoro que el badge verificado sea gratis si te comprometes con el año.", name: "Andrea Flores", company: "Constructora Biobío", plan: "Premium Anual" },
+              { quote: "Los 4 meses gratis nos permitieron probar la herramienta y recibir leads reales sin costo.", name: "Felipe Torres", company: "SIP Chile", plan: "Periodo Prueba" },
             ].map((t) => (
               <div key={t.name} className="bg-card/60 border border-border/40 rounded-[2rem] p-8 text-left space-y-4">
                 <div className="flex gap-0.5">
@@ -275,7 +312,7 @@ export default function PlanesPage() {
                 <p className="text-sm font-medium text-muted-foreground leading-relaxed">"{t.quote}"</p>
                 <div>
                   <p className="font-black text-sm text-foreground">{t.name}</p>
-                  <p className="text-sm text-muted-foreground font-medium">{t.company} · Plan {t.plan}</p>
+                  <p className="text-sm text-muted-foreground font-medium">{t.company} · {t.plan}</p>
                 </div>
               </div>
             ))}
@@ -287,7 +324,7 @@ export default function PlanesPage() {
       <section className="container max-w-3xl mx-auto px-4 md:px-8 py-24 space-y-6">
         <div className="text-center space-y-3 mb-12">
           <h2 className="text-4xl font-heading font-black tracking-tighter">Preguntas frecuentes</h2>
-          <p className="text-muted-foreground font-medium">Todo lo que necesitas saber antes de comenzar.</p>
+          <p className="text-muted-foreground font-medium">Todo lo que necesitas saber sobre los nuevos planes.</p>
         </div>
         <div className="space-y-4">
           {FAQS.map((faq) => (
@@ -322,19 +359,19 @@ export default function PlanesPage() {
               Comienza hoy
             </Badge>
             <h2 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
-              Tu próximo cliente<br />ya está buscando
+              Aprovecha el 50% DCTO<br />y domina tu zona
             </h2>
             <p className="text-white/80 font-medium text-lg max-w-md mx-auto">
-              Únete a más de 226 constructoras que ya usan SolocasasChile para hacer crecer su negocio.
+              Únete a las constructoras que ya están recibiendo leads reales cada semana.
             </p>
             <Link
-              href="/register"
+              href="/register?plan=pro&billing=yearly"
               className={cn(
                 buttonVariants({ size: "lg" }),
                 "bg-white text-brand-indigo hover:bg-white/95 font-bold uppercase tracking-widest rounded-2xl h-14 px-10 gap-2"
               )}
             >
-              Crear cuenta gratuita <ArrowRight className="w-4 h-4" />
+              Comenzar con 50% DCTO <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
