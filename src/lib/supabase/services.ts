@@ -60,17 +60,15 @@ export async function getDashboardStats() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   const userId = user?.id ?? ''
-  const isSuperAdmin = user?.app_metadata?.is_superadmin === true;
+  
+  // 1. Fetch profile to check role
+  const { data: profile } = await supabase.from('constructoras').select('role, nombre, score_confianza, verificada').eq('id', userId).maybeSingle();
+  const isSuperAdmin = profile?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
 
   let modelsQuery = supabase.from('modelos').select('*', { count: 'exact', head: true })
   let leadsQuery = supabase.from('leads').select('*', { count: 'exact', head: true })
   let recentLeadsQuery = supabase.from('leads').select(`*, modelo:modelos (nombre)`).order('created_at', { ascending: false }).limit(10)
-  let constructoraQuery = supabase
-    .from('constructoras')
-    .select('nombre, score_confianza, verificada')
-    .eq('id', userId)
-    .maybeSingle()
-
+  
   if (!isSuperAdmin) {
     modelsQuery = modelsQuery.eq('constructora_id', userId)
     leadsQuery = leadsQuery.eq('constructora_id', userId)
@@ -79,16 +77,17 @@ export async function getDashboardStats() {
 
   // async-parallel: run all 4 queries concurrently instead of sequentially
   const [
-    { data: constructora },
+    // profile is already fetched above
     { count: modelsCount },
     { count: leadsCount },
     { data: recentLeads },
   ] = await Promise.all([
-    constructoraQuery,
     modelsQuery,
     leadsQuery,
     recentLeadsQuery,
   ])
+
+  const constructora = profile;
 
   return {
     companyName: constructora?.nombre || 'Constructora',
