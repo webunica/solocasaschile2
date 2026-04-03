@@ -31,10 +31,10 @@ export default async function EditModelPage({ params }: { params: { id: string }
            <Link href="/dashboard/catalog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
               <ArrowLeft className="w-4 h-4" /> Volver al Catálogo
            </Link>
-           <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none text-foreground">
+           <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tighter leading-tight text-foreground">
              Edición <span className="bg-brand-indigo bg-clip-text text-transparent italic">Maestra</span>
            </h1>
-           <p className="text-xl text-muted-foreground font-medium max-w-xl">
+           <p className="text-sm md:text-base text-muted-foreground font-medium max-w-xl">
              Refina cada detalle de tu {modelo.nombre}. La precisión en la ficha técnica acelera el cierre de ventas.
            </p>
         </div>

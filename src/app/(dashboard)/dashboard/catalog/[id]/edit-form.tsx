@@ -354,21 +354,6 @@ export function EditModelForm({ modelo }: { modelo: any }) {
 
   return (
     <div className="py-8 space-y-8 max-w-5xl mx-auto px-4 pb-24">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-        <div className="space-y-4">
-          <Link href="/dashboard/catalog" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Volver al Catálogo
-          </Link>
-          <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none text-foreground">
-            Editar <span className="gradient-text italic">Modelo</span>
-          </h1>
-          <p className="text-xl text-muted-foreground font-medium max-w-xl">
-            Actualiza las especificaciones técnicas y mejora el SEO de tu vivienda.
-          </p>
-        </div>
-      </div>
-
       {error && (
         <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 text-red-600 text-sm font-medium">
           ⚠️ {error}
