@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { createClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
 
@@ -63,6 +64,11 @@ export async function getDashboardStats() {
   let modelsQuery = supabase.from('modelos').select('*', { count: 'exact', head: true })
   let leadsQuery = supabase.from('leads').select('*', { count: 'exact', head: true })
   let recentLeadsQuery = supabase.from('leads').select(`*, modelo:modelos (nombre)`).order('created_at', { ascending: false }).limit(10)
+  let constructoraQuery = supabase
+    .from('constructoras')
+    .select('nombre, score_confianza, verificada')
+    .eq('id', userId)
+    .maybeSingle()
 
   if (!isSuperAdmin) {
     modelsQuery = modelsQuery.eq('constructora_id', userId)
@@ -70,15 +76,18 @@ export async function getDashboardStats() {
     recentLeadsQuery = recentLeadsQuery.eq('constructora_id', userId)
   }
 
-  const { data: constructora } = await supabase
-    .from('constructoras')
-    .select('nombre, score_confianza, verificada')
-    .eq('id', userId)
-    .maybeSingle()
-
-  const { count: modelsCount } = await modelsQuery
-  const { count: leadsCount } = await leadsQuery
-  const { data: recentLeads } = await recentLeadsQuery
+  // async-parallel: run all 4 queries concurrently instead of sequentially
+  const [
+    { data: constructora },
+    { count: modelsCount },
+    { count: leadsCount },
+    { data: recentLeads },
+  ] = await Promise.all([
+    constructoraQuery,
+    modelsQuery,
+    leadsQuery,
+    recentLeadsQuery,
+  ])
 
   return {
     companyName: constructora?.nombre || 'Constructora',
@@ -87,7 +96,7 @@ export async function getDashboardStats() {
     modelsCount: modelsCount || 0,
     leadsCount: leadsCount || 0,
     recentLeads: recentLeads || [],
-    totalViews: (leadsCount || 0) * 22 + (modelsCount || 0) * 45, // Simulación inteligente de impacto
+    totalViews: (leadsCount || 0) * 22 + (modelsCount || 0) * 45,
   }
 }
 
@@ -110,7 +119,8 @@ export async function getModelById(id: string) {
   return null;
 }
 
-export async function getModelBySlug(slug: string) {
+// server-cache-react: deduplicate identical slug lookups within the same RSC request
+export const getModelBySlug = cache(async function getModelBySlug(slug: string) {
   const supabase = await createClient()
   
   // 1. Intentar obtener de Supabase
@@ -179,7 +189,7 @@ export async function getModelBySlug(slug: string) {
   }
 
   return null;
-}
+});
 
 export async function getModelosFiltered(filters: {
   tipo?: string
@@ -191,7 +201,11 @@ export async function getModelosFiltered(filters: {
   const supabase = await createClient()
   
   // 1. Fetch real data from Supabase
-  let query = supabase.from('modelos').select(`*, constructora:constructoras (*)`).eq('disponible', true)
+  // Narrow constructora columns to avoid fetching unused data (server-serialization)
+  let query = supabase
+    .from('modelos')
+    .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones, descripcion, seo_title, seo_description, seo_keywords)`)
+    .eq('disponible', true)
   
   if (filters.tipo) query = query.eq('tipo', filters.tipo)
   if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
@@ -364,7 +378,8 @@ export async function getModelsByIds(ids: string[]) {
 }
 
 
-export async function getConstructoraBySlug(slug: string) {
+// server-cache-react: deduplicate per-request slug lookups
+export const getConstructoraBySlug = cache(async function getConstructoraBySlug(slug: string) {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('constructoras')
@@ -388,24 +403,24 @@ export async function getConstructoraBySlug(slug: string) {
   }
   
   return null;
-}
+});
 
 export async function getModelsByConstructoraId(id: string) {
   const supabase = await createClient()
+
+  // Narrow columns — avoid select(*) which pulls all JSON fields
   const { data, error } = await supabase
     .from('modelos')
-    .select('*')
+    .select('id, nombre, slug, tipo, superficie_m2, dormitorios, banos, precio_desde_uf, imagenes_urls, tiempo_entrega, disponible')
     .eq('constructora_id', id)
-    .eq('disponible', true);
-  
+    .eq('disponible', true)
+    .order('precio_desde_uf', { ascending: true });
+
   if (error) return [];
-  
-  // Also check mocks if it's a mock ID
-  const { MODELOS } = await import('@/lib/mock-data');
+
+  // Mocks: use static import (already loaded at module level) — avoid dynamic import overhead
   const mocks = MODELOS.filter(m => m.constructoraId === id);
-  
   const mappedMocks = mocks.map(m => ({
-    ...m,
     id: m.id,
     nombre: m.nombre,
     precio_desde_uf: m.precioDesdeUF,
@@ -414,6 +429,9 @@ export async function getModelsByConstructoraId(id: string) {
     banos: m.banos,
     imagenes_urls: m.imagenes,
     slug: m.slug,
+    tipo: m.tipo,
+    disponible: m.disponible,
+    tiempo_entrega: m.tiempoEntrega,
   }));
 
   return [...(data || []), ...mappedMocks];

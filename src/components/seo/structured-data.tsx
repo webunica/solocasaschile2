@@ -125,3 +125,75 @@ export function buildModelJsonLd(modelo: {
 
   return jsonLd;
 }
+
+/** Helper: builds a BreadcrumbList JSON-LD */
+export function buildBreadcrumbJsonLd(items: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": item.url,
+    })),
+  };
+}
+
+/** Helper: builds an Organization JSON-LD for the homepage */
+export function buildOrganizationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SolocasasChile",
+    "url": "https://solocasaschile.com",
+    "logo": "https://solocasaschile.com/images/logo.png",
+    "description": "El comparador inteligente de casas prefabricadas, SIP, container y llave en mano en Chile.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "solicitud@solocasaschile.com",
+      "availableLanguage": "Spanish",
+    },
+    "sameAs": [
+      "https://www.instagram.com/solocasaschile",
+      "https://www.facebook.com/solocasaschile",
+    ],
+    "areaServed": { "@type": "Country", "name": "Chile" },
+  };
+}
+
+/** Helper: builds a WebSite JSON-LD with SearchAction (sitelinks searchbox) */
+export function buildWebSiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SolocasasChile",
+    "url": "https://solocasaschile.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://solocasaschile.com/catalogo?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/** Helper: builds a FAQPage JSON-LD */
+export function buildFAQJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
+  };
+}
+

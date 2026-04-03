@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -6,13 +6,26 @@ const spaceSans = Space_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
 });
 
 const spaceHeading = Space_Grotesk({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
+  display: "swap",
+  preload: true,
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f0f0f" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://solocasaschile.com'),
@@ -21,6 +34,22 @@ export const metadata: Metadata = {
     template: "%s | SolocasasChile"
   },
   description: "Compara modelos de casas prefabricadas, SIP, containers y llave en mano. Encuentra la mejor constructora verificada en Chile.",
+  keywords: [
+    "casas prefabricadas chile",
+    "casas sip chile",
+    "casas modulares chile",
+    "casas container chile",
+    "constructoras casas prefabricadas",
+    "comprar casa prefabricada",
+    "casas económicas chile",
+    "viviendas prefabricadas",
+    "casas llave en mano",
+    "solocasaschile",
+  ],
+  authors: [{ name: "SolocasasChile", url: "https://solocasaschile.com" }],
+  creator: "SolocasasChile",
+  publisher: "SolocasasChile",
+  category: "Real Estate",
   openGraph: {
     type: "website",
     locale: "es_CL",
@@ -32,16 +61,21 @@ export const metadata: Metadata = {
       url: "/og-image.jpg",
       width: 1200,
       height: 630,
-      alt: "SolocasasChile Portada"
+      alt: "SolocasasChile: Comparador de Casas Prefabricadas en Chile"
     }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "SolocasasChile",
-    description: "La forma más fácil e inteligente de comprar tu nueva casa prefabricada.",
+    site: "@solocasaschile",
+    creator: "@solocasaschile",
+    title: "SolocasasChile | Comparador de Casas Prefabricadas",
+    description: "La forma más fácil e inteligente de comprar tu nueva casa prefabricada en Chile.",
     images: ["/twitter-image.jpg"]
   },
   manifest: "/site.webmanifest",
+  alternates: {
+    canonical: "https://solocasaschile.com",
+  },
   robots: {
     index: true,
     follow: true,

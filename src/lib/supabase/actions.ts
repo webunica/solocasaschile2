@@ -326,6 +326,49 @@ export async function updateConstructoraScore(constructoraId: string, score: num
   return { success: true }
 }
 
+export async function adminUpdateConstructora(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  if (user?.app_metadata?.is_superadmin !== true) {
+    return { error: "Acceso denegado. Solo SuperAdmins pueden editar perfiles de terceros." }
+  }
+
+  const id = formData.get('id') as string
+  if (!id) return { error: "ID de constructora no proporcionado." }
+
+  const data: any = {
+    nombre: formData.get('nombre') as string,
+    descripcion: formData.get('descripcion') as string,
+    telefono: formData.get('telefono') as string,
+    sitio_web: formData.get('sitio_web') as string,
+    direccion: formData.get('direccion') as string,
+    regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean),
+    logo_url: formData.get('logo_url') as string,
+    image_url: formData.get('image_url') as string,
+    video_url: formData.get('video_url') as string,
+    seo_title: formData.get('seo_title') as string || null,
+    seo_description: formData.get('seo_description') as string || null,
+  }
+
+  const keywordsRaw = formData.get('seo_keywords') as string;
+  if (keywordsRaw) {
+    try { data.seo_keywords = JSON.parse(keywordsRaw); } catch { data.seo_keywords = []; }
+  }
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update(data)
+    .eq('id', id)
+
+  if (error) return { error: error.message }
+
+  revalidatePath('/dashboard/admin/constructoras')
+  revalidatePath(`/dashboard/admin/constructoras/${id}/edit`)
+  revalidatePath(`/constructora/${formData.get('slug')}`)
+  return { success: true }
+}
+
 export async function deleteModelo(id: string, _formData?: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

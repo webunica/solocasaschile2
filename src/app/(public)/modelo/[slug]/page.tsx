@@ -19,7 +19,7 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-import { buildModelJsonLd, StructuredData } from "@/components/seo/structured-data";
+import { buildModelJsonLd, buildBreadcrumbJsonLd, StructuredData } from "@/components/seo/structured-data";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   try {
@@ -120,6 +120,16 @@ export default async function ModeloPage({ params }: PageProps) {
             logo_url: constructora.logo_url,
           } : null,
         })}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildBreadcrumbJsonLd([
+            { name: "Inicio", url: "https://solocasaschile.com" },
+            { name: "Catálogo", url: "https://solocasaschile.com/catalogo" },
+            { name: modelo.nombre, url: `https://solocasaschile.com/modelo/${modelo.slug}` },
+          ])),
+        }}
       />
       <StickyCTAMobile targetId="form-cotizar" />
       

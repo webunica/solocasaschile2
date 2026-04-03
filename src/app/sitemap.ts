@@ -8,12 +8,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
     { url: `${baseUrl}/catalogo`, lastModified: new Date(), changeFrequency: 'hourly', priority: 0.9 },
-    { url: `${baseUrl}/constructoras`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/comparar`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/tipos/prefabricada`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/tipos/sip`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/tipos/container`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/tipos/llave-en-mano`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/constructoras`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/comparar`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/planes`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/terminos`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    // Tipos de construcción (high-intent keyword pages)
+    { url: `${baseUrl}/tipos/prefabricada`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/tipos/sip`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/tipos/container`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/tipos/llave-en-mano`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
   ]
 
   const supabase = await createClient()
