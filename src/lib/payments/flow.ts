@@ -30,12 +30,15 @@ export class FlowService {
     let stringToSign = '';
     
     for (const key of keys) {
-      if (key !== 's') {
+      // Flow v3: La firma NO incluye el parámetro 's' 
+      // Y para payment/create, NO se deben incluir los parámetros opcionales en la firma
+      if (key !== 's' && !key.startsWith('optional[')) {
         const value = params[key];
-        // En Flow v3, los parámetros se concatenan como llavevalorllavevalor sin separadores
         stringToSign += `${key}${value}`;
       }
     }
+    
+    // console.log('[FLOW-DEBUG] String to sign:', stringToSign); // Descomentar solo para debug extremo
     
     return crypto
       .createHmac('sha256', FLOW_CONFIG.secretKey)
