@@ -25,7 +25,9 @@ export class FlowService {
     
     for (const key of keys) {
       if (key !== 's') {
-        stringToSign += `${key}=${params[key]}`;
+        const value = params[key];
+        // En Flow v3, los parámetros se concatenan como llavevalorllavevalor sin separadores
+        stringToSign += `${key}${value}`;
       }
     }
     
