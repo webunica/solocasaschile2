@@ -24,6 +24,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Debes iniciar sesión para realizar un pago.' }, { status: 401 });
   }
 
+  // Verificar configuración antes de seguir
+  if (!process.env.FLOW_API_KEY || !process.env.FLOW_SECRET_KEY) {
+    console.error('FLOW_CONFIG_ERROR: Falta API Key o Secret Key de Flow en las variables de entorno.');
+    return NextResponse.json({ 
+      error: 'La pasarela de pago no está configurada correctamente. Contacta a soporte.' 
+    }, { status: 500 });
+  }
+
   try {
     const { plan, billing } = await req.json();
 
@@ -32,14 +40,14 @@ export async function POST(req: NextRequest) {
     }
 
     const amount = PLAN_PRICES[plan as keyof typeof PLAN_PRICES][billing === 'yearly' ? 'yearly' : 'monthly'];
-    const subject = `Suscripción SolocasasChile - Plan ${plan.toUpperCase()} (${billing === 'yearly' ? 'Anual' : 'Mensual'})`;
+    const subject = `Suscripción Plan ${plan.toUpperCase()} (${billing === 'yearly' ? 'Anual' : 'Mensual'})`;
 
     // 1. Crear el pago en Flow
     const flowResult = await FlowService.createPayment({
       subject,
       amount: Math.round(amount),
       email: user.email!,
-      externalId: user.id, // Usamos el ID de la constructora/usuario
+      externalId: user.id,
       optional: {
         'optional[plan]': plan,
         'optional[billing]': billing
@@ -50,7 +58,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: `${flowResult.url}?token=${flowResult.token}` });
 
   } catch (error: any) {
-    console.error('Checkout Error:', error);
-    return NextResponse.json({ error: 'Ocurrió un error al procesar el pago. Intenta de nuevo.' }, { status: 500 });
+    console.error('Checkout Error:', error.message);
+    return NextResponse.json({ 
+      error: error.message.includes('Flow Payment Create Failed') 
+        ? 'Error de comunicación con Flow. Verifica tus API Keys.' 
+        : 'Ocurrió un error al procesar el pago. Intenta de nuevo.' 
+    }, { status: 500 });
   }
 }
