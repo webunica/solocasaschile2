@@ -21,6 +21,7 @@ export type ModelWithConstructora = {
   postventa?: boolean;
   especificaciones?: Record<string, string>;
   score?: number;
+  visitas?: number;
   // SEO fields
   seo_title?: string | null;
   seo_description?: string | null;
