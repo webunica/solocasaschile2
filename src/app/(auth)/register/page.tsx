@@ -16,9 +16,9 @@ import { register, resendConfirmation } from "@/lib/supabase/actions";
 import { cn } from "@/lib/utils";
 
 const PLAN_META = {
-  premium: { label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true },
-  pro:     { label: "Pro",     icon: Zap,   color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true },
-  gratis:  { label: "Gratis",  icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false },
+  premium: { label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true, precio: "1.45", precioOriginal: "2.9" },
+  pro:     { label: "Pro",     icon: Zap,   color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true, precio: "0.95", precioOriginal: "1.9" },
+  gratis:  { label: "Gratis",  icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false, precio: "0", precioOriginal: "0" },
 } as const;
 type PlanKey = keyof typeof PLAN_META;
 
@@ -273,12 +273,24 @@ function RegisterForm() {
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              className={cn("flex items-center gap-3 px-4 py-3 rounded-2xl border", planMeta.bg, planMeta.border)}
+              className={cn("flex items-center justify-between gap-3 px-6 py-4 rounded-3xl border shadow-xl shadow-primary/5", planMeta.bg, planMeta.border)}
             >
-              <PlanIcon className={cn("w-4 h-4 shrink-0", planMeta.color)} />
-              <span className={cn("text-[11px] font-black uppercase tracking-widest", planMeta.color)}>
-                Registrándote en Plan {planMeta.label}
-              </span>
+              <div className="flex items-center gap-3">
+                <PlanIcon className={cn("w-5 h-5 shrink-0", planMeta.color)} />
+                <div className="flex flex-col">
+                  <span className={cn("text-[11px] font-black uppercase tracking-widest leading-none", planMeta.color)}>
+                    Plan {planMeta.label}
+                  </span>
+                  <span className="text-[9px] font-bold text-red-500 uppercase tracking-tighter mt-1">Oferta Lanzamiento 50% DCTO</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold text-muted-foreground/40 line-through tracking-tighter">{planMeta.precioOriginal}</span>
+                  <span className="text-lg font-black tracking-tighter">{planMeta.precio}</span>
+                  <span className="text-[10px] font-bold opacity-60">UF</span>
+                </div>
+              </div>
             </motion.div>
           )}
 

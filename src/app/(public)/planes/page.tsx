@@ -5,8 +5,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, Users, TrendingUp, Shield, ChevronDown
+  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles
 } from "lucide-react";
+import { PromotionCountdown } from "@/components/ui/promotion-countdown";
 
 export const metadata: Metadata = {
   title: "Planes para Constructoras | SolocasasChile",
@@ -17,15 +18,17 @@ const PLANES = [
   {
     id: "premium",
     nombre: "Premium",
-    precio: "2.9",
+    precio: "1.45",
+    precioOriginal: "2.9",
+    descuento: "50% OFF",
     periodo: "UF / mes",
     icon: Crown,
     color: "text-amber-500",
     bgIcon: "bg-amber-500/10",
-    borderClass: "border-amber-500/30 shadow-2xl shadow-amber-500/10",
-    gradientClass: "from-amber-500/5 to-transparent",
-    badge: "Top Constructora",
-    badgeClass: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+    borderClass: "border-amber-500/50 shadow-2xl shadow-amber-500/10 scale-105",
+    gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
+    badge: "OFERTA LANZAMIENTO",
+    badgeClass: "bg-red-500 text-white border-red-600 animate-pulse",
     features: [
       { texto: "Modelos ilimitados (Escalabilidad total)", ok: true },
       { texto: "20 fotos por modelo + video tour", ok: true },
@@ -38,23 +41,25 @@ const PLANES = [
       { texto: "Posición #1 destacada en catálogo", ok: true },
       { texto: "Soporte dedicado 24/7 por WhatsApp", ok: true },
     ],
-    cta: "Dominar el Mercado",
+    cta: "Aprovechar 50% DCTO",
     ctaHref: "/register?plan=premium",
-    ctaClass: "bg-brand-indigo text-white hover:opacity-90",
+    ctaClass: "bg-brand-indigo text-white hover:opacity-90 shadow-lg shadow-primary/20",
     ctaVariant: "default" as const,
   },
   {
     id: "pro",
     nombre: "Pro",
-    precio: "1.9",
+    precio: "0.95",
+    precioOriginal: "1.9",
+    descuento: "50% OFF",
     periodo: "UF / mes",
     icon: Zap,
     color: "text-brand-teal",
     bgIcon: "bg-brand-teal/10",
     borderClass: "border-brand-teal/40 shadow-2xl shadow-brand-teal/10",
     gradientClass: "from-brand-teal/5 to-transparent",
-    badge: "Más Rentable",
-    badgeClass: "bg-brand-teal/10 text-brand-teal border-brand-teal/30",
+    badge: "SÚPER PROMO",
+    badgeClass: "bg-brand-teal text-white border-brand-teal/30",
     features: [
       { texto: "15 modelos publicados", ok: true },
       { texto: "10 fotos por modelo", ok: true },
@@ -67,7 +72,7 @@ const PLANES = [
       { texto: "Posición prioritaria en catálogo", ok: true },
       { texto: "Soporte por email prioritario", ok: true },
     ],
-    cta: "Empezar a Escalar",
+    cta: "Activar Plan Pro",
     ctaHref: "/register?plan=pro",
     ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white",
     ctaVariant: "default" as const,
@@ -144,6 +149,17 @@ export default function PlanesPage() {
             <strong className="text-foreground">50.000 familias chilenas</strong>{" "}
             que buscan su hogar ideal cada mes.
           </p>
+
+          <div className="pt-10 flex flex-col items-center gap-8">
+            <div className="flex items-center gap-3 bg-red-500/10 text-red-600 px-6 py-3 rounded-2xl border border-red-500/20 font-black text-xs uppercase tracking-widest animate-bounce">
+              <Sparkles className="w-4 h-4" /> Oferta de Lanzamiento: 50% de Descuento
+            </div>
+            <div className="space-y-4">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">La promoción finaliza en:</p>
+              <PromotionCountdown />
+              <p className="text-xs font-bold text-red-500/80">Válido para suscripciones hasta el día 30 de Abril 2026</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -185,8 +201,18 @@ export default function PlanesPage() {
                     <div>
                       <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
                       <div className="flex items-baseline gap-2 mt-2">
+                        {"precioOriginal" in plan && (
+                          <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
+                            {plan.precioOriginal}
+                          </span>
+                        )}
                         <span className="text-4xl font-black tracking-tighter">{plan.precio}</span>
                         <span className="text-muted-foreground font-bold text-sm">{plan.periodo}</span>
+                        {"descuento" in plan && (
+                          <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
+                            {plan.descuento}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   </div>
