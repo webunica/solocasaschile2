@@ -1,5 +1,4 @@
 import { getDashboardStats } from "@/lib/supabase/services";
-import { motion } from "framer-motion";
 import { 
   Users, Home, Store, ArrowUpRight, 
   MessageSquare, LayoutGrid, BarChart2 
@@ -7,7 +6,7 @@ import {
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 // Helper for relative dates (simple version for Phase 3)
@@ -187,7 +186,12 @@ export default async function DashboardPage() {
                    </CardDescription>
                 </CardHeader>
                 <CardContent className="px-10 pb-10">
-                   <Button variant="outline" className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-foreground transition-all">Ver Planes Premium</Button>
+                   <Link 
+                     href="/planes" 
+                     className={cn(buttonVariants({ variant: "outline" }), "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-foreground transition-all")}
+                   >
+                     Ver Planes Premium
+                   </Link>
                 </CardContent>
              </Card>
              
@@ -205,7 +209,13 @@ export default async function DashboardPage() {
                 <p className="text-xs font-medium text-muted-foreground leading-relaxed">
                    Agenda una llamada estratégica hoy para mejorar tu tasa de conversión en la plataforma.
                 </p>
-                <Button variant="link" className="p-0 h-auto text-foreground font-bold uppercase tracking-widest hover:text-primary transition-colors">Agendar Mentoría →</Button>
+                <Link 
+                  href="https://wa.me/56964130601" 
+                  target="_blank"
+                  className={cn(buttonVariants({ variant: "link" }), "p-0 h-auto text-foreground font-bold uppercase tracking-widest hover:text-primary transition-colors")}
+                >
+                  Agendar Mentoría →
+                </Link>
              </div>
           </div>
        </div>
