@@ -49,6 +49,13 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath('/', 'layout')
+
+  // Redirigir según estado de plan
+  const { data: profile } = await supabase.from('constructoras').select('plan_status').eq('id', data.user.id).maybeSingle();
+  if (profile?.plan_status === 'pending') {
+    redirect('/planes?status=pending');
+  }
+
   redirect('/dashboard')
 }
 
@@ -99,7 +106,8 @@ export async function register(formData: FormData) {
       slug,
       email,
       telefono: phone,
-      plan, // use the plan the user selected
+      plan,
+      plan_status: plan === 'gratis' ? 'active' : 'pending',
       verificada: false,
       score_confianza: 50,
     }

@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { FlowService } from '@/lib/payments/flow';
+import { getUfValue } from '@/lib/payments/uf';
 
-// Valor fijo UF (puedes consultarlo vía API en el futuro si gustas)
-const UF_VALOR = 38500;
-
-const PLAN_PRICES = {
+const PLAN_PRICES_UF = {
   pro: {
-    monthly: 1.9 * UF_VALOR,
-    yearly: 0.95 * 12 * UF_VALOR,
+    monthly: 1.9,
+    yearly: 0.95 * 12,
   },
   premium: {
-    monthly: 2.9 * UF_VALOR,
-    yearly: 1.45 * 12 * UF_VALOR,
+    monthly: 2.9,
+    yearly: 1.45 * 12,
   }
 } as const;
 
@@ -39,18 +37,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Plan no válido.' }, { status: 400 });
     }
 
-    const amount = PLAN_PRICES[plan as keyof typeof PLAN_PRICES][billing === 'yearly' ? 'yearly' : 'monthly'];
+    // 0. Obtener valor dinámico de la UF
+    const valorUfActual = await getUfValue();
+    const ufAmount = PLAN_PRICES_UF[plan as keyof typeof PLAN_PRICES_UF][billing === 'yearly' ? 'yearly' : 'monthly'];
+    const amountClp = Math.round(ufAmount * valorUfActual);
+
     const subject = `Suscripción Plan ${plan.toUpperCase()} (${billing === 'yearly' ? 'Anual' : 'Mensual'})`;
 
     // 1. Crear el pago en Flow
     const flowResult = await FlowService.createPayment({
       subject,
-      amount: Math.round(amount),
+      amount: amountClp,
       email: user.email!,
       externalId: user.id,
       optional: {
+        'optional[constructoraId]': user.id,
         'optional[plan]': plan,
-        'optional[billing]': billing
+        'optional[billing]': billing,
+        'optional[uf_valor_usado]': String(valorUfActual)
       }
     });
 
