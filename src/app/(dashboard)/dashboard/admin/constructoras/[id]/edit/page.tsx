@@ -31,7 +31,14 @@ export default async function AdminEditConstructoraPage({ params }: PageProps) {
     .single();
 
   if (error || !constructora) {
-    notFound();
+    return (
+      <div className="p-10 border border-destructive text-destructive">
+        <h1>Error loading constructora</h1>
+        <p>ID: {id}</p>
+        <p>Error MSG: {error?.message}</p>
+        <p>Error details: {JSON.stringify(error)}</p>
+      </div>
+    );
   }
 
   return (
