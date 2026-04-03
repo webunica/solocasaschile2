@@ -11,7 +11,9 @@ import { cn } from "@/lib/utils";
 import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video } from "lucide-react";
 import { PriceNotify } from "@/components/modelo/price-notify";
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
+import { DynamicUrgency } from "@/components/ui/dynamic-urgency";
 import type { Metadata } from "next";
+
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -209,7 +211,8 @@ export default async function ModeloPage({ params }: PageProps) {
                   </div>
                   <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-medium bg-muted/20 p-3 rounded-lg border border-border/10">
                      <Zap className="w-4 h-4 text-amber-500 fill-current animate-pulse" />
-                     <span>Alta Demanda: 12 cotizaciones hoy</span>
+                     <DynamicUrgency variant="compact" />
+
                   </div>
                </div>
             </div>
@@ -363,7 +366,7 @@ export default async function ModeloPage({ params }: PageProps) {
                          </div>
                          <div>
                             <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Alta Demanda</p>
-                            <p className="text-base font-bold text-muted-foreground">12 personas cotizaron hoy</p>
+                            <DynamicUrgency />
                          </div>
                       </div>
                    </div>
