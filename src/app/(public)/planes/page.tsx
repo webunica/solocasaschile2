@@ -153,41 +153,47 @@ export default function PlanesPage() {
             que buscan su hogar ideal cada mes.
           </p>
 
-          <div className="pt-10 flex flex-col items-center gap-8">
-            {/* Toggle Billing */}
-            <div className="flex items-center gap-4 bg-muted/30 p-1.5 rounded-[2rem] border border-border/40 backdrop-blur-md">
-              <button 
-                onClick={() => setIsYearly(false)}
-                className={cn(
-                  "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all",
-                  !isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                Mensual
-              </button>
-              <button 
-                onClick={() => setIsYearly(true)}
-                className={cn(
-                  "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all relative",
-                  isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                Anual
-                <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse">
-                  -50%
-                </span>
-              </button>
-            </div>
-
-            <div className="flex items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-6 py-3 rounded-2xl border border-brand-indigo/10 font-black text-xs uppercase tracking-widest">
-              <Sparkles className="w-4 h-4 text-amber-500" /> 
-              {isYearly ? "Ahorra un 50% con el pago anual" : "Prueba la potencia del SaaS mes a mes"}
-            </div>
-
-            <div className="space-y-4 pt-4 border-t border-border/40 w-full max-w-md">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60 italic">Oferta especial de cierre por lanzamiento:</p>
+          <div className="pt-10 flex flex-col items-center gap-12">
+            
+            {/* Countdown first to create urgency */}
+            <div className="space-y-6 w-full max-w-md">
+              <p className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60 italic drop-shadow-sm">Oferta de Lanzamiento exclusiva para nuevas Constructoras:</p>
               <PromotionCountdown />
-              <p className="text-xs font-bold text-red-500/80">Válido para nuevas constructoras hasta el 30 de abril</p>
+              <p className="text-xs font-bold text-red-500/80 uppercase tracking-widest bg-red-500/5 py-2 rounded-lg border border-red-500/10">Válido hasta el 30 de abril 2026</p>
+            </div>
+
+            <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
+
+            {/* Toggle Billing and Discount Badge closer to the plans */}
+            <div className="flex flex-col items-center gap-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+              <div className="flex items-center gap-4 bg-muted/30 p-1.5 rounded-[2rem] border border-border/40 backdrop-blur-md shadow-inner">
+                <button 
+                  onClick={() => setIsYearly(false)}
+                  className={cn(
+                    "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all",
+                    !isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  Mensual
+                </button>
+                <button 
+                  onClick={() => setIsYearly(true)}
+                  className={cn(
+                    "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all relative",
+                    isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  Anual
+                  <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse shadow-lg shadow-red-500/20">
+                    -50%
+                  </span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
+                <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
+                {isYearly ? "Estás ahorrando un 50% con el pago anual" : "Ahorra un 50% cambiando al pago anual"}
+              </div>
             </div>
           </div>
         </div>
