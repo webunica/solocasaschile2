@@ -40,7 +40,7 @@ BEGIN
         'Puerto Octay',
         'puerto-octay-120',
         'steel-framing',
-        'vivienda-unifamiliar',
+        'vivienda', -- Cambiado de 'vivienda-unifamiliar' por constraint
         120,
         3,
         2,
@@ -52,7 +52,7 @@ BEGIN
         'El modelo Puerto Octay es una vivienda modular de arquitectura sofisticada, diseñada para terrenos amplios del sur de Chile. Construida con tecnología Steel Framing, ofrece una eficiencia térmica superior y gran rapidez de montaje, con ventanales de piso a cielo que integran el paisaje.',
         ARRAY['/images/modelos/ejemplos/puerto-octay-exterior.png', '/images/modelos/ejemplos/puerto-octay-interior.png'],
         'PO-120-SF',
-        ARRAY['Living-Comedor Concepto Abierto', 'Cocina con Isla Desayunadora', 'Dormitorio Principal en Suite', '2 Dormitorios Juveniles', '2 Baños Completos', 'Terraza Panorámica'],
+        to_jsonb(ARRAY['Living-Comedor Concepto Abierto', 'Cocina con Isla Desayunadora', 'Dormitorio Principal en Suite', '2 Dormitorios Juveniles', '2 Baños Completos', 'Terraza Panorámica']), -- Usando to_jsonb para corregir error de casteo
         JSONB_BUILD_OBJECT(
             'sistema_constructivo', 'Modular Steel Framing Galv.',
             'estructura', 'Perfiles de acero galvanizado liviano de alta resistencia',
@@ -84,12 +84,16 @@ BEGIN
         JSONB_BUILD_OBJECT(
             'garantia_estructura', '10 Años (Leyes Chilenas)',
             'certificaciones', 'ISO 9001 - Estándares Passivhaus adaptados'
-        ),
-        'Modelo Puerto Octay | Vivienda Modular 120m² Steel Framing',
-        'Descubre la libertad del modelo Puerto Octay: 120m² de diseño moderno, 3 dormitorios y alta eficiencia térmica en Steel Framing.',
-        ARRAY['puerto octay', 'vivienda modular', 'steel framing', 'casa moderna', '120m2']
+        ), -- Cierre de soporte
+        'Modelo Puerto Octay | Vivienda Modular 120m² Steel Framing', -- seo_title
+        'Descubre la libertad del modelo Puerto Octay: 120m² de diseño moderno, 3 dormitorios y alta eficiencia térmica en Steel Framing.', -- seo_description
+        to_jsonb(ARRAY['puerto octay', 'vivienda modular', 'steel framing', 'casa moderna', '120m2']) -- seo_keywords
     )
-    ON CONFLICT (slug) DO NOTHING;
+    ON CONFLICT (slug) DO UPDATE SET
+        precio_desde_uf = EXCLUDED.precio_desde_uf,
+        recintos = EXCLUDED.recintos,
+        seo_keywords = EXCLUDED.seo_keywords;
+
 
     -- 2. Insertar el modelo "Volcán Puntiagudo"
     INSERT INTO public.modelos (
@@ -126,7 +130,7 @@ BEGIN
         'Volcán Puntiagudo',
         'volcan-puntiagudo-100',
         'modular',
-        'vivienda-compacta',
+        'cabana', -- Cambiado de 'vivienda-compacta' por constraint
         100,
         3,
         2,
@@ -138,7 +142,7 @@ BEGIN
         'Perfecta para parcelas de descanso, la "Volcán Puntiagudo" destaca por su diseño acogedor que mezcla madera y metal. Se trata de un modelo modular de 100m² optimizado para climas húmedos y fríos del sur de Chile, ofreciendo un refugio térmicamente imbatible y funcional.',
         ARRAY['/images/modelos/ejemplos/volcan-puntiagudo-exterior.png', '/images/modelos/ejemplos/volcan-puntiagudo-interior.png'],
         'VP-100-MOD',
-        ARRAY['Acceso Techado', 'Living-Comedor con Hogar a leña', 'Cocina integrada con barra', 'Dormitorio Superior en Mezannine', '2 Dormitorios planta baja', '1 Baño Principal', '1 Medio Baño'],
+        to_jsonb(ARRAY['Acceso Techado', 'Living-Comedor con Hogar a leña', 'Cocina integrada con barra', 'Dormitorio Superior en Mezannine', '2 Dormitorios planta baja', '1 Baño Principal', '1 Medio Baño']),
         JSONB_BUILD_OBJECT(
             'sistema_constructivo', 'Módulos Tridimensionales Autoportantes',
             'estructura', 'Chasis de acero estructural con tratamiento anticorrosivo',
@@ -173,8 +177,14 @@ BEGIN
         ),
         'Ficha Técnica Volcán Puntiagudo | 100m² Modular Bosque & Lago',
         'Explora la Volcán Puntiagudo: 100m² de calidez y tecnología modular para tu terreno soñado en el sur de Chile.',
-        ARRAY['volcan puntiagudo', 'casa cabaña', 'casa modular', 'chile sur', '100m2']
+        to_jsonb(ARRAY['volcan puntiagudo', 'casa cabaña', 'casa modular', 'chile sur', '100m2'])
     )
-    ON CONFLICT (slug) DO NOTHING;
+    ON CONFLICT (slug) DO UPDATE SET
+        precio_desde_uf = EXCLUDED.precio_desde_uf,
+        recintos = EXCLUDED.recintos,
+        seo_keywords = EXCLUDED.seo_keywords;
 
 END $$;
+
+
+
