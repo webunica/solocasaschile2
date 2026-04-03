@@ -127,19 +127,33 @@ export function DashboardSidebar({
                   </>
                 )}
                 
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    asChild 
-                    isActive={pathname === "/dashboard/admin/settings"}
-                    tooltip="Configuración del Sitio"
-                    className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
-                  >
-                    <Link href="/dashboard/admin/settings">
-                      <LayoutDashboard className="w-4.5 h-4.5" />
-                      <span className="ml-3 text-sm">Configuración Sitio</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === "/dashboard/admin/pagos"}
+                        tooltip="Historial de Pagos"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                      >
+                        <Link href="/dashboard/admin/pagos">
+                          <BarChart3 className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Pagos Globales</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === "/dashboard/admin/settings"}
+                        tooltip="Configuración del Sitio"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                      >
+                        <Link href="/dashboard/admin/settings">
+                          <Settings className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Configuración Sitio</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
@@ -149,6 +163,20 @@ export function DashboardSidebar({
           <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-40 mb-3">SISTEMA</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1.5">
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  asChild 
+                  isActive={pathname === "/dashboard/settings/facturacion"}
+                  tooltip="Plan y Facturación"
+                  className="h-10 px-3 md:px-4 transition-all font-semibold rounded-xl hover:bg-muted/50 text-muted-foreground"
+                >
+                  <Link href="/dashboard/settings/facturacion">
+                    <Building2 className="w-4.5 h-4.5 opacity-80" />
+                    <span className="ml-3 text-sm font-semibold">Plan y Facturación</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
               {SUPPORT_MENU.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
