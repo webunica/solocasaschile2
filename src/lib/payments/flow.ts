@@ -1,8 +1,8 @@
 import crypto from 'crypto';
 
 const FLOW_CONFIG = {
-  apiKey: process.env.FLOW_API_KEY || '',
-  secretKey: process.env.FLOW_SECRET_KEY || '',
+  apiKey: (process.env.FLOW_API_KEY || '').trim(),
+  secretKey: (process.env.FLOW_SECRET_KEY || '').trim(),
   baseUrl: process.env.FLOW_ENV === 'production' 
     ? 'https://www.flow.cl/api' 
     : 'https://sandbox.flow.cl/api',
@@ -11,9 +11,6 @@ const FLOW_CONFIG = {
 
 // Log settings on load (masked)
 console.info(`[FLOW-CONFIG] Env: ${process.env.FLOW_ENV || 'sandbox'}, Base: ${FLOW_CONFIG.baseUrl}, App: ${FLOW_CONFIG.appUrl}`);
-if (!FLOW_CONFIG.apiKey || !FLOW_CONFIG.secretKey) {
-  console.warn('[FLOW-CONFIG] ERROR: API Keys are missing in process.env');
-}
 
 export interface FlowPaymentResponse {
   url: string;
@@ -30,15 +27,13 @@ export class FlowService {
     let stringToSign = '';
     
     for (const key of keys) {
-      // Flow v3: La firma NO incluye el parámetro 's' 
-      // Y para payment/create, NO se deben incluir los parámetros opcionales en la firma
-      if (key !== 's' && !key.startsWith('optional[')) {
+      if (key !== 's') {
         const value = params[key];
         stringToSign += `${key}${value}`;
       }
     }
     
-    // console.log('[FLOW-DEBUG] String to sign:', stringToSign); // Descomentar solo para debug extremo
+    console.debug(`[FLOW-SIGN] String: ${stringToSign}`);
     
     return crypto
       .createHmac('sha256', FLOW_CONFIG.secretKey)
