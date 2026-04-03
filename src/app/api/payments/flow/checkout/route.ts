@@ -44,18 +44,12 @@ export async function POST(req: NextRequest) {
 
     const subject = `SoloCasasChile ${plan.toUpperCase()} ${billing === 'yearly' ? 'Anual' : 'Mensual'}`;
 
-    // 1. Crear el pago en Flow
+    // 1. Crear el pago en Flow (PRUEBA DE FIRMA BÁSICA)
     const flowResult = await FlowService.createPayment({
       subject,
       amount: amountClp,
       email: user.email!,
-      externalId: user.id,
-      optional: {
-        'optional[constructoraId]': user.id,
-        'optional[plan]': plan,
-        'optional[billing]': billing,
-        'optional[uf_valor_usado]': String(valorUfActual)
-      }
+      externalId: user.id
     });
 
     // 2. Devolvemos la URL de redirección
