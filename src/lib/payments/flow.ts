@@ -9,6 +9,12 @@ const FLOW_CONFIG = {
   appUrl: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 };
 
+// Log settings on load (masked)
+console.info(`[FLOW-CONFIG] Env: ${process.env.FLOW_ENV || 'sandbox'}, Base: ${FLOW_CONFIG.baseUrl}, App: ${FLOW_CONFIG.appUrl}`);
+if (!FLOW_CONFIG.apiKey || !FLOW_CONFIG.secretKey) {
+  console.warn('[FLOW-CONFIG] ERROR: API Keys are missing in process.env');
+}
+
 export interface FlowPaymentResponse {
   url: string;
   token: string;
@@ -49,9 +55,9 @@ export class FlowService {
   }): Promise<FlowPaymentResponse> {
     const flowParams: Record<string, any> = {
       apiKey: FLOW_CONFIG.apiKey,
-      subject: params.subject,
+      subject: String(params.subject).substring(0, 50), // Evitar caracteres extraños y límite de Flow
       currency: 'CLP',
-      amount: params.amount,
+      amount: Math.round(params.amount), // Asegurar entero
       email: params.email,
       commerceOrder: `ORD-${Date.now()}`,
       urlConfirmation: `${FLOW_CONFIG.appUrl}/api/payments/flow/confirm`,
