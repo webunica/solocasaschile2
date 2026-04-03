@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,11 +9,18 @@ import { buttonVariants, Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles, Loader2
+  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles, Loader2, Info
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const PLANES = [
   {
@@ -135,8 +142,25 @@ const FAQS = [
 
 export default function PlanesPage() {
   const [isYearly, setIsYearly] = useState(true);
+  const [ufValue, setUfValue] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const isStatusPending = searchParams?.get('status') === 'pending';
+
+  // Fetch current UF for price estimation
+  useEffect(() => {
+    fetch('/api/market/uf')
+      .then(res => res.json())
+      .then(data => setUfValue(data.uf))
+      .catch(() => console.warn("No se pudo cargar el valor de la UF para el resumen."));
+  }, []);
+
+  const formatPriceCLP = (uf: string) => {
+    if (!ufValue) return null;
+    const clp = Math.round(parseFloat(uf) * ufValue);
+    return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(clp);
+  };
 
   const handlePurchase = async (planId: string, billing: 'monthly' | 'yearly') => {
     if (planId === 'gratis') {
@@ -188,6 +212,33 @@ export default function PlanesPage() {
 
       {/* ── Hero ────────────────────────────────────────────── */}
       <section className="relative pt-20 pb-10 text-center overflow-hidden border-b border-border/40">
+        {/* Pending Status Alert */}
+        {isStatusPending && (
+          <div className="container max-w-4xl mx-auto px-4 mb-10">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-brand-indigo/10 border border-brand-indigo/30 p-5 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl shadow-brand-indigo/5"
+            >
+              <div className="flex items-center gap-4 text-left">
+                <div className="w-12 h-12 rounded-2xl bg-brand-indigo flex items-center justify-center shadow-lg shadow-brand-indigo/20">
+                  <Zap className="w-6 h-6 text-white animate-pulse" />
+                </div>
+                <div>
+                  <h3 className="font-black text-slate-900 uppercase tracking-tighter">¡Casi listo para publicar!</h3>
+                  <p className="text-sm text-slate-500 font-medium leading-tight">Solo falta completar tu pago para activar tu plan y empezar a recibir leads.</p>
+                </div>
+              </div>
+              <Button 
+                onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}
+                className="rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] px-8 h-12 border-none shadow-xl shadow-slate-200"
+              >
+                Elegir y Pagar Ahora
+              </Button>
+            </motion.div>
+          </div>
+        )}
+
         <div className="absolute inset-0 bg-gradient-to-b from-primary/4 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-teal/8 rounded-full blur-[100px] pointer-events-none" />
         <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10 space-y-6">
@@ -280,7 +331,7 @@ export default function PlanesPage() {
                   </div>
                 )}
 
-                <div className="p-10 pt-12 flex flex-col gap-8 relative z-10 flex-1">
+                                <div className="p-10 pt-12 flex flex-col gap-8 relative z-10 flex-1">
                   {/* Header */}
                   <div className="space-y-4">
                     <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", plan.bgIcon)}>
@@ -288,24 +339,42 @@ export default function PlanesPage() {
                     </div>
                     <div>
                       <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
-                      <div className="flex items-baseline gap-2 mt-2">
-                        {isYearly && originalPrice && (
-                          <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
-                            {originalPrice}
-                          </span>
-                        )}
-                        <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
-                        <div className="flex flex-col">
-                           <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
-                           {isYearly && plan.id !== 'gratis' && (
-                             <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual ({plan.precioAnualTotal} UF)</span>
+                      <div className="flex flex-col gap-1 mt-2">
+                         <div className="flex items-baseline gap-2">
+                           {isYearly && originalPrice && (
+                             <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
+                               {originalPrice}
+                             </span>
                            )}
-                        </div>
-                        {isYearly && plan.id !== 'gratis' && (
-                          <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
-                            50% OFF
-                          </Badge>
-                        )}
+                           <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
+                           <div className="flex flex-col">
+                              <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
+                              {isYearly && plan.id !== 'gratis' && (
+                                <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual</span>
+                              )}
+                           </div>
+                           {isYearly && plan.id !== 'gratis' && (
+                             <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
+                               50% OFF
+                             </Badge>
+                           )}
+                         </div>
+                         
+                         {/* Equivalent in CLP */}
+                         {plan.id !== 'gratis' && ufValue && (
+                           <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-xs bg-emerald-50 w-fit px-3 py-1 rounded-full border border-emerald-100 shadow-sm animate-in fade-in slide-in-from-left-2 duration-700">
+                             <TooltipProvider>
+                               <Tooltip>
+                                 <TooltipTrigger className="flex items-center gap-1">
+                                   ~ {formatPriceCLP(currentPrice)} <Info className="w-3 h-3 opacity-50" />
+                                 </TooltipTrigger>
+                                 <TooltipContent className="bg-slate-900 text-white border-none rounded-xl p-3 text-[10px] font-bold">
+                                   Precio estimado basado en UF actual: ${ufValue.toLocaleString('es-CL')}
+                                 </TooltipContent>
+                               </Tooltip>
+                             </TooltipProvider>
+                           </div>
+                         )}
                       </div>
                     </div>
                   </div>

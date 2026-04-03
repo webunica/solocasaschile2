@@ -30,6 +30,11 @@ export default async function DashboardLayout({
   const isAdmin = isSuperAdmin || profile?.role === 'admin' || user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
   const userName = user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
 
+  // Bloqueo de Dashboard si el pago está pendiente
+  if (profile?.plan_status === 'pending' && !isSuperAdmin) {
+    redirect('/planes?status=pending');
+  }
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">
