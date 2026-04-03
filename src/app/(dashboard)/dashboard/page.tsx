@@ -1,7 +1,8 @@
 import { getDashboardStats } from "@/lib/supabase/services";
 import { 
   Users, Home, Store, ArrowUpRight, 
-  MessageSquare, LayoutGrid, BarChart2, AlertCircle
+  MessageSquare, LayoutGrid, BarChart2, AlertCircle,
+  Calendar
 } from "lucide-react";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
@@ -256,12 +257,21 @@ export default async function DashboardPage() {
                         {planStatus === 'active' ? 'Tu suscripción está activa.' : 'Estamos verificando tu pago.'}
                       </CardDescription>
                    </CardHeader>
-                   <CardContent className="px-10 pb-10">
+                   <CardContent className="px-10 pb-10 space-y-4">
+                      <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/10 border border-white/10">
+                         <Calendar className="w-5 h-5 text-white/60" />
+                         <div>
+                            <p className="text-[10px] font-black uppercase text-white/50 tracking-widest leading-none mb-1">Próxima Renovación</p>
+                            <p className="font-black text-white text-sm">
+                               {nextBillingDate ? new Date(nextBillingDate).toLocaleDateString('es-CL', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Pendiente'}
+                            </p>
+                         </div>
+                      </div>
                       <Link 
-                        href="/dashboard/settings" 
+                        href="/dashboard/settings/facturacion" 
                         className={cn(buttonVariants({ variant: "outline" }), "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-brand-indigo transition-all")}
                       >
-                        Gestionar Suscripción
+                        Ver Facturación y Plan
                       </Link>
                    </CardContent>
                 </Card>
