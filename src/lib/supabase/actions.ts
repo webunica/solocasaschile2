@@ -519,3 +519,13 @@ export async function sendBulkEmail(formData: FormData) {
   }
 }
 
+export async function incrementModelView(modeloId: string) {
+  try {
+    const supabase = await createClient();
+    // Llama al RPC que creamos en la migración (seguro a nivel de fila y atómico)
+    await supabase.rpc('increment_visitas', { modelo_id: modeloId });
+  } catch (err) {
+    console.error("Error incrementing views:", err);
+  }
+}
+

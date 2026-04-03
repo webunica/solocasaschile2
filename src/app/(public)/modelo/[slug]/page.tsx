@@ -219,10 +219,8 @@ export default async function ModeloPage({ params }: PageProps) {
                         Cotizar Ahora
                      </Link>
                   </div>
-                  <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-medium bg-muted/20 p-3 rounded-lg border border-border/10">
-                     <Zap className="w-4 h-4 text-amber-500 fill-current animate-pulse" />
-                     <DynamicUrgency variant="compact" />
-
+                  <div className="pt-2">
+                     <DynamicUrgency variant="compact" modeloId={modelo.id} initialCount={modelo.visitas} />
                   </div>
                </div>
             </div>
@@ -370,15 +368,7 @@ export default async function ModeloPage({ params }: PageProps) {
                       />
                       
                       {/* Social Proof Capsule */}
-                      <div className="bg-muted/20 rounded-2xl p-4 flex items-center gap-4 border border-border/20">
-                         <div className="w-10 h-10 rounded-xl bg-brand-indigo flex items-center justify-center text-white shrink-0">
-                            <Zap className="w-5 h-5 fill-current" />
-                         </div>
-                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Alta Demanda</p>
-                            <DynamicUrgency />
-                         </div>
-                      </div>
+                      <DynamicUrgency modeloId={modelo.id} initialCount={modelo.visitas} />
                    </div>
 
                    <CotizarForm
