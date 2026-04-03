@@ -78,24 +78,31 @@ export class FlowService {
     const apiUrl = `${FLOW_CONFIG.baseUrl}/payment/create`;
     console.log(`[FLOW] Solicitando a: ${apiUrl}`);
 
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      body: formData,
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos para Flow
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('[FLOW] Error de Respuesta:', {
-        status: response.status,
-        statusText: response.statusText,
-        body: errorText
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal
       });
-      throw new Error(`Flow Payment Create Failed: ${response.statusText} (${errorText})`);
-    }
 
-    const data = await response.json();
-    console.log('[FLOW] Pago Creado con Éxito:', data);
-    return data;
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Flow Payment Create Failed: ${response.statusText} (${errorText})`);
+      }
+
+      const data = await response.json();
+      console.log('[FLOW] Pago Creado con Éxito:', data);
+      return data;
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') throw new Error('El servicio de Flow no respondió a tiempo. Intenta de nuevo.');
+      throw error;
+    }
   }
 
   /**
@@ -114,12 +121,21 @@ export class FlowService {
       url.searchParams.append(key, String(params[key]));
     }
 
-    const response = await fetch(url.toString());
-    
-    if (!response.ok) {
-        throw new Error(`Flow getStatus failed: ${response.statusText}`);
-    }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-    return response.json();
+    try {
+      const response = await fetch(url.toString(), { signal: controller.signal });
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+          throw new Error(`Flow getStatus failed: ${response.statusText}`);
+      }
+
+      return response.json();
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
   }
 }
