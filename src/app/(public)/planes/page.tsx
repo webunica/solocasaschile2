@@ -154,13 +154,16 @@ export default function PlanesPage() {
           return;
         }
 
+        console.log("Iniciando checkout para:", { planId, billing });
         const response = await fetch('/api/payments/flow/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ plan: planId, billing })
         });
 
+        console.log("Respuesta recibida de la API:", response.status);
         const data = await response.json();
+        console.log("Datos de Flow:", data);
 
         if (data.url) {
           window.location.href = data.url;
