@@ -253,12 +253,17 @@ export async function updateModel(id: string, data: any) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
 
+  const { data: profile } = await supabase.from('constructoras').select('role, plan').eq('id', user.id).single();
+  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
+
   const { data: currentModel } = await supabase.from('modelos').select('constructora_id, slug').eq('id', id).single();
-  if (currentModel?.constructora_id !== user.id) return { error: 'No autorizado' }
+  
+  if (currentModel?.constructora_id !== user.id && !isSuperAdmin) {
+    return { error: 'No autorizado' }
+  }
 
   // 1. Check plan limits for photos
-  const { data: constructora } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
-  const limits = getPlanLimits(constructora?.plan || 'gratis');
+  const limits = getPlanLimits(isSuperAdmin ? 'premium' : (profile?.plan || 'gratis'));
   if (data.imagenes_urls && data.imagenes_urls.length > limits.maxPhotos) {
     return { error: `Tu plan permite un máximo de ${limits.maxPhotos} fotos.` };
   }
