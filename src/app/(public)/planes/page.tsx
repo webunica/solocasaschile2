@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants, Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles
+  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles, Loader2
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
+import { toast } from "sonner";
+import { createClient } from "@/lib/supabase/client";
 
 const PLANES = [
   {
@@ -132,9 +135,53 @@ const FAQS = [
 
 export default function PlanesPage() {
   const [isYearly, setIsYearly] = useState(true);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
+  const handlePurchase = async (planId: string, billing: 'monthly' | 'yearly') => {
+    if (planId === 'gratis') {
+      router.push(`/register?plan=${planId}`);
+      return;
+    }
+
+    startTransition(async () => {
+      try {
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (!session) {
+          router.push(`/register?plan=${planId}&billing=${billing}`);
+          return;
+        }
+
+        const response = await fetch('/api/payments/flow/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan: planId, billing })
+        });
+
+        const data = await response.json();
+
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          toast.error(data.error || "Error al iniciar el pago.");
+        }
+      } catch (error) {
+        toast.error("Ocurrió un error inesperado. Intenta de nuevo.");
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background pb-32">
+      {/* Loading Overlay */}
+      {isPending && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center flex-col gap-4">
+           <div className="w-16 h-16 rounded-full border-4 border-brand-indigo/20 border-t-brand-indigo animate-spin" />
+           <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Iniciando pago seguro con Flow...</p>
+        </div>
+      )}
 
       {/* ── Hero ────────────────────────────────────────────── */}
       <section className="relative pt-20 pb-10 text-center overflow-hidden border-b border-border/40">
@@ -277,16 +324,35 @@ export default function PlanesPage() {
                   </ul>
 
                   {/* CTA */}
-                  <Link
-                    href={`${plan.ctaHref}${isYearly ? '&billing=yearly' : '&billing=monthly'}`}
-                    className={cn(
-                      buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
-                      "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2",
-                      plan.ctaClass
-                    )}
-                  >
-                    {isYearly && plan.id !== 'gratis' ? "Aprovechar 50% DCTO" : plan.cta} <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  {plan.id === 'gratis' ? (
+                    <Link
+                      href={`${plan.ctaHref}`}
+                      className={cn(
+                        buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
+                        "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2 opacity-80",
+                        plan.ctaClass
+                      )}
+                    >
+                      {plan.cta} <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  ) : (
+                    <Button
+                      onClick={() => handlePurchase(plan.id, isYearly ? 'yearly' : 'monthly')}
+                      disabled={isPending}
+                      className={cn(
+                        "w-full rounded-2xl h-14 font-extrabold uppercase tracking-widest gap-2 transition-all hover:scale-[1.02] active:scale-95",
+                        plan.ctaClass
+                      )}
+                    >
+                      {isPending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        <>
+                          {isYearly ? "Pagar con 50% DCTO" : "Pagar Plan Ahora"} <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
+                    </Button>
+                  )}
                 </div>
               </div>
             );
@@ -370,15 +436,19 @@ export default function PlanesPage() {
             <p className="text-white/80 font-medium text-lg max-w-md mx-auto">
               Únete a las constructoras que ya están recibiendo leads reales cada semana.
             </p>
-            <Link
-              href="/register?plan=pro&billing=yearly"
+            <Button
+              disabled={isPending}
+              onClick={() => handlePurchase('pro', 'yearly')}
               className={cn(
-                buttonVariants({ size: "lg" }),
-                "bg-white text-brand-indigo hover:bg-white/95 font-bold uppercase tracking-widest rounded-2xl h-14 px-10 gap-2"
+                "bg-white text-brand-indigo hover:bg-white/95 font-black uppercase tracking-widest rounded-2xl h-14 px-10 gap-2 shadow-2xl transition-all hover:scale-105 active:scale-95"
               )}
             >
-              Comenzar con 50% DCTO <ArrowRight className="w-4 h-4" />
-            </Link>
+              {isPending ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <>Comenzar con 50% DCTO <ArrowRight className="w-4 h-4" /></>
+              )}
+            </Button>
           </div>
         </div>
       </section>
