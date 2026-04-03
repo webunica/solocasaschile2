@@ -177,7 +177,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         type="submit" 
         size="lg" 
         disabled={loading}
-        className="w-full h-16 rounded-2xl bg-brand-indigo font-black text-base md:text-lg shadow-xl shadow-brand-indigo/20 hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
+        className="w-full h-auto min-h-[64px] py-3 px-4 rounded-2xl bg-brand-indigo font-black text-xs sm:text-sm md:text-base shadow-xl shadow-brand-indigo/20 hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
       >
         {/* Shine effect */}
         <div className="absolute inset-0 -translate-x-[150%] animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]" />
@@ -185,9 +185,9 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         {loading ? (
           <Loader2 className="w-6 h-6 animate-spin relative z-10" />
         ) : (
-          <span className="flex items-center justify-center gap-3 relative z-10">
+          <span className="flex items-center justify-center gap-2 md:gap-3 relative z-10 whitespace-normal text-center leading-tight">
             SOLICITAR PRESUPUESTO FORMAL
-            <Send className="w-5 h-5 ml-1 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            <Send className="w-4 h-4 md:w-5 md:h-5 shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </span>
         )}
       </Button>
