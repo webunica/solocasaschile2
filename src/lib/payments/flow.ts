@@ -61,8 +61,7 @@ export class FlowService {
       commerceOrder: `ORD-${Date.now()}`,
       urlConfirmation: `${FLOW_CONFIG.appUrl}/api/payments/flow/confirm`,
       urlReturn: `${FLOW_CONFIG.appUrl}/dashboard/success`,
-      urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`,
-      ...params.optional
+      urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`
     };
 
     console.log('[FLOW] Generando pago:', flowParams);
