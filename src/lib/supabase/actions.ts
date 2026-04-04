@@ -119,8 +119,57 @@ export async function register(formData: FormData) {
       return { needsConfirmation: true }
     }
 
-    // Auto-confirmado (email confirmation disabled) — insertar y redirigir a bienvenida
+    // Insertar/actualizar perfil de constructora
     await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id', ignoreDuplicates: true })
+
+    // --- ENVIAR EMAILS DE BIENVENIDA ---
+    try {
+      // 1. Email al usuario
+      await resend.emails.send({
+        from: 'SoloCasasChile <sistema@solocasaschile.com>',
+        to: [email],
+        subject: '¡Bienvenido a SoloCasasChile! 🏠',
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+            <div style="background: #0b9e86; padding: 30px; text-align: center; color: white;">
+              <h1 style="margin: 0; font-size: 24px;">¡Hola ${companyName}!</h1>
+            </div>
+            <div style="padding: 30px; color: #334155; line-height: 1.6;">
+              <p>Gracias por unirte a <strong>SoloCasasChile</strong>, la plataforma líder para constructoras y modelos de casas en Chile.</p>
+              <p>Tu cuenta ha sido creada exitosamente con el plan <strong>${plan.toUpperCase()}</strong>.</p>
+              <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="margin: 0;"><strong>Próximos pasos:</strong></p>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                  <li>Completa el perfil de tu constructora.</li>
+                  <li>Sube tus primeros modelos de casas.</li>
+                  <li>Gestiona tus modelos desde tu panel de control.</li>
+                </ul>
+              </div>
+              <a href="${siteUrl}/dashboard" style="display: block; background: #0b9e86; color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px;">Acceder a mi Panel</a>
+            </div>
+          </div>
+        `
+      });
+
+      // 2. Email al administrador (Aviso de nueva constructora)
+      await resend.emails.send({
+        from: 'SoloCasasChile <sistema@solocasaschile.com>',
+        to: ['info.javiermillar@gmail.com'],
+        subject: '🚀 Nueva Constructora Registrada',
+        html: `
+          <div style="font-family: sans-serif; padding: 20px;">
+            <h2>Nueva Constructora en la plataforma</h2>
+            <p><strong>Nombre:</strong> ${companyName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Teléfono:</strong> ${phone}</p>
+            <p><strong>Plan seleccionado:</strong> ${plan.toUpperCase()}</p>
+          </div>
+        `
+      });
+    } catch (e) {
+      console.error('Error enviando emails de registro:', e);
+    }
+
     revalidatePath('/', 'layout')
     return { redirectTo: `/bienvenida?plan=${plan}` }
 
