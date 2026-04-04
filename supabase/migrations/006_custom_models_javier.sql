@@ -1,10 +1,16 @@
--- Script para insertar modelos personalizados para Javier (Super Admin)
+    -- Script para insertar modelos personalizados para Javier (Super Admin)
 -- Constructora Master: cb85b919-4008-46bc-bbb8-b3211152280c
 
 DO $$
 DECLARE
     admin_id UUID := 'cb85b919-4008-46bc-bbb8-b3211152280c';
 BEGIN
+    -- 0. Corregir datos de la Constructora
+    UPDATE public.constructoras
+    SET nombre = 'Constructora Master',
+        slug = 'constructora-master'
+    WHERE id = admin_id;
+
     -- 1. Insertar el modelo "Puerto Octay"
     INSERT INTO public.modelos (
         id,
@@ -40,7 +46,7 @@ BEGIN
         'Puerto Octay',
         'puerto-octay-120',
         'steel-framing',
-        'vivienda', -- Cambiado de 'vivienda-unifamiliar' por constraint
+        'vivienda',
         120,
         3,
         2,
@@ -52,7 +58,7 @@ BEGIN
         'El modelo Puerto Octay es una vivienda modular de arquitectura sofisticada, diseñada para terrenos amplios del sur de Chile. Construida con tecnología Steel Framing, ofrece una eficiencia térmica superior y gran rapidez de montaje, con ventanales de piso a cielo que integran el paisaje.',
         ARRAY['/images/modelos/ejemplos/puerto-octay-exterior.png', '/images/modelos/ejemplos/puerto-octay-interior.png'],
         'PO-120-SF',
-        to_jsonb(ARRAY['Living-Comedor Concepto Abierto', 'Cocina con Isla Desayunadora', 'Dormitorio Principal en Suite', '2 Dormitorios Juveniles', '2 Baños Completos', 'Terraza Panorámica']), -- Usando to_jsonb para corregir error de casteo
+        to_jsonb(ARRAY['Living-Comedor Concepto Abierto', 'Cocina con Isla Desayunadora', 'Dormitorio Principal en Suite', '2 Dormitorios Juveniles', '2 Baños Completos', 'Terraza Panorámica']),
         JSONB_BUILD_OBJECT(
             'sistema_constructivo', 'Modular Steel Framing Galv.',
             'estructura', 'Perfiles de acero galvanizado liviano de alta resistencia',
@@ -84,10 +90,10 @@ BEGIN
         JSONB_BUILD_OBJECT(
             'garantia_estructura', '10 Años (Leyes Chilenas)',
             'certificaciones', 'ISO 9001 - Estándares Passivhaus adaptados'
-        ), -- Cierre de soporte
-        'Modelo Puerto Octay | Vivienda Modular 120m² Steel Framing', -- seo_title
-        'Descubre la libertad del modelo Puerto Octay: 120m² de diseño moderno, 3 dormitorios y alta eficiencia térmica en Steel Framing.', -- seo_description
-        to_jsonb(ARRAY['puerto octay', 'vivienda modular', 'steel framing', 'casa moderna', '120m2']) -- seo_keywords
+        ),
+        'Modelo Puerto Octay | Vivienda Modular 120m² Steel Framing',
+        'Descubre la libertad del modelo Puerto Octay: 120m² de diseño moderno, 3 dormitorios y alta eficiencia térmica en Steel Framing.',
+        to_jsonb(ARRAY['puerto octay', 'vivienda modular', 'steel framing', 'casa moderna', '120m2'])
     )
     ON CONFLICT (slug) DO UPDATE SET
         precio_desde_uf = EXCLUDED.precio_desde_uf,
@@ -130,7 +136,7 @@ BEGIN
         'Volcán Puntiagudo',
         'volcan-puntiagudo-100',
         'modular',
-        'cabana', -- Cambiado de 'vivienda-compacta' por constraint
+        'cabana',
         100,
         3,
         2,
@@ -185,6 +191,3 @@ BEGIN
         seo_keywords = EXCLUDED.seo_keywords;
 
 END $$;
-
-
-

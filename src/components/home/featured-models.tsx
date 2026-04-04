@@ -17,8 +17,9 @@ const TIPO_LABELS: Record<string, string> = {
 
 export async function FeaturedModelsSection() {
   const models = await getModelosFiltered({});
-  // Take top 3 for the home page
-  const featured = models.slice(0, 3);
+  // Filtrar modelos de Constructora Master (ID: cb85b919-4008-46bc-bbb8-b3211152280c)
+  const masterId = 'cb85b919-4008-46bc-bbb8-b3211152280c';
+  const featured = models.filter(m => m.constructora_id === masterId).slice(0, 3);
 
   if (featured.length === 0) return null;
 
@@ -28,13 +29,13 @@ export async function FeaturedModelsSection() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-2xl space-y-4">
              <Badge variant="outline" className="border-primary/20 text-primary uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-full">
-                Lo más buscado
+                Lo más nuevo
              </Badge>
              <h2 className="text-4xl md:text-6xl font-heading font-black tracking-tighter leading-none">
-               Modelos Populares en <span className="text-brand-indigo">Chile</span>
+               Últimos Modelos de <span className="text-brand-indigo text-nowrap">Constructora Master</span>
              </h2>
              <p className="text-muted-foreground text-xl font-medium max-w-xl">
-               Una selección de los diseños más cotizados por su eficiencia térmica y versatilidad arquitectónica.
+               Diseños de vanguardia con los más altos estándares de eficiencia y arquitectura en Chile.
              </p>
           </div>
           <Link 
