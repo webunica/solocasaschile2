@@ -108,9 +108,10 @@ export async function POST(req: NextRequest) {
 
       // Enviar email de éxito
       try {
+        // 1. Email al usuario
         await resend.emails.send({
-          from: 'SoloCasasChile <sistema@solocasaschile.cl>',
-          to: [userEmail || 'soporte@solocasaschile.cl'],
+          from: 'SoloCasasChile <sistema@solocasaschile.com>',
+          to: [userEmail || 'soporte@solocasaschile.com'],
           subject: '¡Tu plan de SoloCasasChile ha sido activado! 🚀',
           html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid #eee;">
@@ -127,6 +128,23 @@ export async function POST(req: NextRequest) {
                   </div>
                   <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="display: block; background: #4f46e5; color: white; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold;">Ir a mi Panel</a>
                </div>
+            </div>
+          `
+        });
+
+        // 2. Email al administrador (Aviso de pago exitoso)
+        await resend.emails.send({
+          from: 'SoloCasasChile <sistema@solocasaschile.com>',
+          to: ['info.javiermillar@gmail.com'],
+          subject: `💰 VENTA: Plan ${plan.toUpperCase()} Activado`,
+          html: `
+            <div style="font-family: sans-serif; padding: 20px;">
+              <h2>¡Nueva Venta Realizada!</h2>
+              <p><strong>Constructora:</strong> ${updatedData?.nombre}</p>
+              <p><strong>Monto:</strong> ${amount}</p>
+              <p><strong>Plan:</strong> ${plan.toUpperCase()}</p>
+              <p><strong>Ciclo:</strong> ${billing === 'yearly' ? 'Anual' : 'Mensual'}</p>
+              <p><strong>Orden Flow:</strong> ${flowOrder}</p>
             </div>
           `
         });
