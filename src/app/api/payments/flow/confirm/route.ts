@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
       try {
         // 1. Email al usuario
         await resend.emails.send({
-          from: 'SoloCasasChile <sistema@solocasaschile.com>',
+          from: 'SoloCasasChile <contacto@solocasaschile.com>',
           to: [userEmail || 'soporte@solocasaschile.com'],
           subject: '¡Tu plan de SoloCasasChile ha sido activado! 🚀',
           html: `
@@ -134,7 +134,7 @@ export async function POST(req: NextRequest) {
 
         // 2. Email al administrador (Aviso de pago exitoso)
         await resend.emails.send({
-          from: 'SoloCasasChile <sistema@solocasaschile.com>',
+          from: 'SoloCasasChile <contacto@solocasaschile.com>',
           to: ['info.javiermillar@gmail.com'],
           subject: `💰 VENTA: Plan ${plan.toUpperCase()} Activado`,
           html: `

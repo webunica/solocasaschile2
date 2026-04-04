@@ -126,7 +126,7 @@ export async function register(formData: FormData) {
     try {
       // 1. Email al usuario
       await resend.emails.send({
-        from: 'SoloCasasChile <sistema@solocasaschile.com>',
+        from: 'SoloCasasChile <contacto@solocasaschile.com>',
         to: [email],
         subject: '¡Bienvenido a SoloCasasChile! 🏠',
         html: `
@@ -153,7 +153,7 @@ export async function register(formData: FormData) {
 
       // 2. Email al administrador (Aviso de nueva constructora)
       await resend.emails.send({
-        from: 'SoloCasasChile <sistema@solocasaschile.com>',
+        from: 'SoloCasasChile <contacto@solocasaschile.com>',
         to: ['info.javiermillar@gmail.com'],
         subject: '🚀 Nueva Constructora Registrada',
         html: `
