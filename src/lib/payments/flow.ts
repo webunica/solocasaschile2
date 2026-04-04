@@ -27,8 +27,8 @@ export class FlowService {
     let stringToSign = '';
     
     for (const key of keys) {
-      // Flow v3: 's' es la firma y 'optional' no se firman en payment/create
-      if (key !== 's' && !key.startsWith('optional[')) {
+      // Flow v3: 's' es la firma. Todos los demás parámetros (incluidos los opcionales) DEBEN firmarse.
+      if (key !== 's') {
         const value = params[key];
         stringToSign += `${key}${value}`;
       }
