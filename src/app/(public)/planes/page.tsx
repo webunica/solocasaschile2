@@ -249,18 +249,14 @@ export default function PlanesPage() {
             Elige el plan <span className="gradient-text">correcto</span>
           </h1>
           <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-            Conecta tus modelos de casas prefabricadas con más de{" "}
-            <strong className="text-foreground">50.000 familias chilenas</strong>{" "}
-            que buscan su hogar ideal cada mes.
+            Mejora el posicionamiento de tu constructora y recibe leads reales directamente en tu panel de control.
           </p>
 
           <div className="pt-10 flex flex-col items-center gap-12">
             
             {/* Countdown first to create urgency */}
             <div className="space-y-6 w-full max-w-md">
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60 italic drop-shadow-sm">Oferta de Lanzamiento exclusiva para nuevas Constructoras:</p>
               <PromotionCountdown />
-              <p className="text-xs font-bold text-red-500/80 uppercase tracking-widest bg-red-500/5 py-2 rounded-lg border border-red-500/10">Válido hasta el 30 de abril 2026</p>
             </div>
 
             <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
@@ -488,8 +484,8 @@ export default function PlanesPage() {
         </div>
         <p className="text-center text-sm text-muted-foreground font-medium pt-8">
           ¿Más dudas? Escríbenos a{" "}
-          <a href="mailto:contacto@solocasaschile.cl" className="text-primary font-bold hover:underline underline-offset-4">
-            contacto@solocasaschile.cl
+          <a href="mailto:contacto@solocasaschile.com" className="text-primary font-bold hover:underline underline-offset-4">
+            contacto@solocasaschile.com
           </a>
         </p>
       </section>
