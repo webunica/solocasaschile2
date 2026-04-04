@@ -43,7 +43,19 @@ export async function POST(req: NextRequest) {
     };
     const dbStatus = statusMap[statusResult.status] || 'pending';
 
-    // 2. Registrar el intento/resultado del pago en la tabla 'pagos' (Historial)
+    // 2. Comprobar si ya procesamos este pago como 'paid' para evitar re-procesos
+    const { data: existingPayment } = await supabase
+      .from('pagos')
+      .select('status')
+      .eq('flow_order', String(flowOrder))
+      .maybeSingle();
+
+    if (existingPayment?.status === 'paid' && dbStatus === 'paid') {
+      console.info(`[FLOW-WEBHOOK] El pago ${flowOrder} ya fue procesado como Pagado. Ignorando.`);
+      return NextResponse.json({ message: 'Pago ya procesado anteriormente.' });
+    }
+
+    // 3. Registrar/Actualizar el intento/resultado del pago en la tabla 'pagos' (Historial)
     const { error: paymentError } = await supabase
       .from('pagos')
       .upsert({
@@ -63,7 +75,7 @@ export async function POST(req: NextRequest) {
       // pero es importante loguearlo.
     }
 
-    // 3. LÓGICA SEGÚN ESTADO DE PAGO
+    // 4. LÓGICA SEGÚN ESTADO DE PAGO
     
     // --- CASO A: PAGO EXITOSO (Estado 2) ---
     if (statusResult.status === 2) {
