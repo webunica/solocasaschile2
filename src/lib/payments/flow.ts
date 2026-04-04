@@ -27,8 +27,8 @@ export class FlowService {
     let stringToSign = '';
     
     for (const key of keys) {
-      // Flow v3: 's' es la firma. Todos los demás parámetros (incluidos los opcionales) DEBEN firmarse.
-      if (key !== 's') {
+      // Flow v3: Solo se firman los parámetros REQUERIDOS. 's' y 'optional' se excluyen.
+      if (key !== 's' && !key.startsWith('optional[')) {
         const value = params[key];
         stringToSign += `${key}${value}`;
       }
