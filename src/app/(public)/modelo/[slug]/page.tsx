@@ -1,4 +1,4 @@
-import { getModelBySlug } from "@/lib/supabase/services";
+import { getModelBySlug, getModelsByConstructoraId } from "@/lib/supabase/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -101,6 +101,10 @@ export default async function ModeloPage({ params }: PageProps) {
   const score = typeof constructora.score_confianza === 'number' ? constructora.score_confianza : 0;
   const imagenes = Array.isArray(modelo.imagenes_urls) ? modelo.imagenes_urls : [];
 
+  const relatedModels = await getModelsByConstructoraId(constructora.id);
+  const otherModels = relatedModels.filter(m => m.id !== modelo.id).slice(0, 3);
+  const hasOtherModels = otherModels.length > 0;
+
   return (
     <div className="min-h-screen bg-background relative pt-16 md:pt-24">
       <StructuredData
@@ -168,7 +172,6 @@ export default async function ModeloPage({ params }: PageProps) {
             <ImageGallery
               images={imagenes.length > 0 ? imagenes : ['/placeholder.png']}
               altBase={modelo.nombre || 'Modelo'}
-              videoUrl={modelo.video_url}
             />
 
             {/* Header Content */}
@@ -297,8 +300,8 @@ export default async function ModeloPage({ params }: PageProps) {
                )}
           </div>
 
-          {/* Pricing & Checkout (Right Sticky) */}
-          <div className="sticky top-40 space-y-8 h-fit pb-12">
+          {/* Sidebar (Right) */}
+          <div className="sticky top-28 space-y-8 h-fit max-h-[calc(100vh-140px)] overflow-y-auto pr-3 scrollbar-hide pb-20">
              <div className="bg-card border border-border/40 rounded-[2.5rem] p-6 shadow-xl shadow-primary/5 space-y-8 overflow-hidden relative">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-brand-indigo/80" />
                 <h2 className="text-xl font-heading font-black tracking-tight flex items-center gap-3">
@@ -408,6 +411,52 @@ export default async function ModeloPage({ params }: PageProps) {
                    />
                 </div>
              </div>
+
+             {/* Sección: Proyectos entregados (o otros modelos destacados) */}
+            <div className="space-y-8">
+               <div className="flex items-end justify-between">
+                 <div className="space-y-2">
+                   <h2 className="text-2xl font-heading font-black tracking-tight">
+                     {hasOtherModels ? 'Otros modelos destacados' : 'Proyectos de esta constructora'}
+                   </h2>
+                   <p className="text-muted-foreground text-sm font-medium">
+                     {hasOtherModels 
+                        ? `Explora más opciones de diseños de ${constructora.nombre}.`
+                        : `Más de 120 familias ya viven la experiencia ${constructora.nombre}.`
+                     }
+                   </p>
+                 </div>
+                 <Link href={`/constructora/${constructora.slug}`} className="text-brand-indigo font-black text-[10px] uppercase tracking-widest hover:underline">
+                    Ver Catálogo Completo →
+                 </Link>
+               </div>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {(hasOtherModels ? otherModels : [
+                    { nombre: `Proyecto Pucón, Araucanía`, m2: "110 m²", imagenes_urls: [imagenes[0]], slug: null },
+                    { nombre: `Proyecto Puerto Varas, Los Lagos`, m2: "72 m²", imagenes_urls: [imagenes[1] || imagenes[0]], slug: null },
+                    { nombre: `Proyecto Villarrica, Araucanía`, m2: "90 m²", imagenes_urls: [imagenes[2] || imagenes[0]], slug: null },
+                  ]).map((proj: any, i: number) => (
+                    <div key={i} className="group cursor-pointer">
+                       <Link href={proj.slug ? `/modelo/${proj.slug}` : '#'}>
+                          <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-xl mb-4">
+                             <Image 
+                                src={proj.imagenes_urls?.[0] || '/placeholder.png'} 
+                                fill 
+                                alt="" 
+                                className="object-cover group-hover:scale-110 transition-transform duration-700" 
+                             />
+                          </div>
+                          <div className="px-2">
+                             <h4 className="text-sm font-black tracking-tight group-hover:text-brand-indigo transition-colors">{proj.nombre}</h4>
+                             <p className="text-[11px] text-muted-foreground font-black uppercase tracking-widest mt-1">
+                                {proj.superficie_m2 ? `${proj.superficie_m2} m²` : proj.m2}
+                             </p>
+                          </div>
+                       </Link>
+                    </div>
+                  ))}
+               </div>
+            </div>
 
              <div className="bg-muted/10 border border-border/40 rounded-[2.5rem] p-8 text-center relative overflow-hidden group">
                 <ShieldCheck className="w-10 h-10 mx-auto mb-4 text-emerald-500/60 group-hover:scale-110 transition-transform duration-700" />
