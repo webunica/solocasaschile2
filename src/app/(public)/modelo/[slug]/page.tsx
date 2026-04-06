@@ -240,6 +240,8 @@ export default async function ModeloPage({ params }: PageProps) {
                  </div>
               </div>
 
+               <IncluyeNoIncluye modelo={modelo} isSidebar className="mb-4" />
+
                <div id="form-cotizar" className="bg-brand-indigo rounded-[3.5rem] p-12 text-white shadow-2xl shadow-brand-indigo/30 relative overflow-hidden text-center flex flex-col items-center gap-6">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                   <div className="relative z-10 space-y-4">
