@@ -690,55 +690,82 @@ export async function incrementModelView(modeloId: string) {
 // ─── ADMINISTRACIÓN DE SELLOS ────────────────────────────────────────────────
 
 export async function aprobarSello(formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('No autenticado')
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autenticado')
 
-  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).single()
-  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true
-  if (!isSuperAdmin) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).single()
+    const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true
+    if (!isSuperAdmin) throw new Error('No autorizado')
 
-  const id = formData.get('sellosId') as string
-  
-  const { error } = await supabase
-    .from('constructora_sellos')
-    .update({ 
-      estado: 'aprobado',
-      otorgado_at: new Date().toISOString()
-    })
-    .eq('id', id)
+    const id = formData.get('sellosId') as string
+    if (!id) throw new Error('ID de sello no proporcionado')
+    
+    console.log(`[Admin] Aprobando sello ID: ${id}`);
 
-  if (error) throw new Error(error.message)
+    const { error: errorUpdate } = await supabase
+      .from('constructora_sellos')
+      .update({ 
+        estado: 'aprobado',
+        otorgado_at: new Date().toISOString()
+      })
+      .eq('id', id)
 
-  revalidatePath('/dashboard/admin/sellos')
-  revalidatePath('/dashboard/sellos')
+    if (errorUpdate) {
+      console.error("[Admin] Error al aprobar:", errorUpdate);
+      throw new Error(errorUpdate.message);
+    }
+
+    revalidatePath('/dashboard/admin/sellos')
+    revalidatePath('/dashboard/sellos')
+    revalidatePath('/constructoras') // For catalog
+    console.log("[Admin] Sello aprobado exitosamente");
+
+  } catch (err: any) {
+    console.error("[Admin] Excepción en aprobarSello:", err);
+    throw err;
+  }
 }
 
 export async function rechazarSello(formData: FormData) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('No autenticado')
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) throw new Error('No autenticado')
 
-  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).single()
-  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true
-  if (!isSuperAdmin) throw new Error('No autorizado')
+    const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).single()
+    const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true
+    if (!isSuperAdmin) throw new Error('No autorizado')
 
-  const id = formData.get('sellosId') as string
-  const comentario = formData.get('comentario') as string
-  
-  const { error } = await supabase
-    .from('constructora_sellos')
-    .update({ 
-      estado: 'rechazado',
-      comentario_admin: comentario,
-      otorgado_at: new Date().toISOString()
-    })
-    .eq('id', id)
+    const id = formData.get('sellosId') as string
+    const comentario = formData.get('comentario') as string
+    if (!id) throw new Error('ID de sello no proporcionado')
+    
+    console.log(`[Admin] Rechazando sello ID: ${id}`);
 
-  if (error) throw new Error(error.message)
+    const { error: errorUpdate } = await supabase
+      .from('constructora_sellos')
+      .update({ 
+        estado: 'rechazado',
+        comentario_admin: comentario,
+        otorgado_at: new Date().toISOString()
+      })
+      .eq('id', id)
 
-  revalidatePath('/dashboard/admin/sellos')
-  revalidatePath('/dashboard/sellos')
+    if (errorUpdate) {
+      console.error("[Admin] Error al rechazar:", errorUpdate);
+      throw new Error(errorUpdate.message);
+    }
+
+    revalidatePath('/dashboard/admin/sellos')
+    revalidatePath('/dashboard/sellos')
+    console.log("[Admin] Sello rechazado exitosamente");
+
+  } catch (err: any) {
+    console.error("[Admin] Excepción en rechazarSello:", err);
+    throw err;
+  }
 }
 
 export async function solicitarSello(formData: FormData) {
