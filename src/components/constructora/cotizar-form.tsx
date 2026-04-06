@@ -55,7 +55,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
       nombre_cliente: (formData.get("name") as string) || "Cliente Anónimo",
       email_cliente: (formData.get("email") as string) || "",
       telefono_cliente: (formData.get("phone") as string) || "No especificado",
-      mensaje: `[Región: ${formData.get("region") || "No especificada"}] \n${(formData.get("message") as string) || ""}`,
+      mensaje: `[Región: ${formData.get("region") || "No especificada"}]\n[Terreno: ${formData.get("terreno") || "No especificado"}]\n[Interés: ${formData.get("interes") || "No especificado"}]\n[Superficie: ${formData.get("superficie") || "No especificado"}]\n\n${(formData.get("message") as string) || ""}`,
     };
 
     try {
@@ -155,13 +155,54 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
       </div>
 
       <div className="space-y-4">
-        <label className="form-label">Mensaje Adicional</label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="relative group/input">
+            <select 
+              name="terreno" 
+              required
+              className="form-input-premium pl-4 pr-4 appearance-none cursor-pointer" 
+              defaultValue=""
+            >
+              <option value="" disabled>¿Tienes terreno?</option>
+              <option value="Sí, tengo terreno">Sí, tengo terreno</option>
+              <option value="No, estoy buscando">No, estoy buscando</option>
+              <option value="En proceso de compra">En proceso de compra</option>
+            </select>
+          </div>
+          <div className="relative group/input">
+            <select 
+              name="interes" 
+              required
+              className="form-input-premium pl-4 pr-4 appearance-none cursor-pointer" 
+              defaultValue=""
+            >
+              <option value="" disabled>¿Qué necesitas?</option>
+              <option value="Cotización aproximada">Cotización aproximada</option>
+              <option value="Presupuesto oficial">Presupuesto oficial</option>
+              <option value="Agendar visite/videollamada">Agendar visita/videollamada</option>
+              <option value="Solo información">Solo información</option>
+            </select>
+          </div>
+        </div>
         <div className="relative group/input">
-          <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
-          <Input 
+          <select 
+            name="superficie" 
+            required
+            className="form-input-premium pl-4 pr-4 appearance-none cursor-pointer" 
+            defaultValue="Este modelo"
+          >
+            <option value="Este modelo">Quiero este modelo exacto</option>
+            <option value="Versión más pequeña">Versión más pequeña (ej: 72 m²)</option>
+            <option value="Versión más grande">Versión más grande (ej: 110 m²)</option>
+            <option value="Modelo personalizado">Modelo personalizado / Otra medida</option>
+          </select>
+        </div>
+        <div className="relative group/input">
+          <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all opacity-70" />
+          <Textarea 
             name="message" 
-            placeholder="Dudas sobre terreno, terminaciones o plazos..." 
-            className="form-input-premium pl-12" 
+            defaultValue={`Hola, me interesa cotizar el modelo ${modeloNombre}. Me gustaría recibir más información sobre el precio final puesto en obra y tiempos de entrega.`}
+            className="form-input-premium pl-12 min-h-[100px] resize-y py-4 leading-relaxed" 
           />
         </div>
       </div>
