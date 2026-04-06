@@ -193,18 +193,44 @@ export default async function ModeloPage({ params }: PageProps) {
 
               <FichaExpandida modelo={modelo} />
 
+               <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
+               
+               {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
+                 <div className="space-y-10">
+                    <h2 className="text-3xl font-heading font-black tracking-tight">Tour Virtual</h2>
+                    <div className="relative aspect-video rounded-[3rem] overflow-hidden border-8 border-card shadow-2xl">
+                       <iframe src={getYoutubeEmbedUrl(modelo.video_url)!} className="absolute inset-0 w-full h-full" allowFullScreen />
+                    </div>
+                 </div>
+               )}
 
-              <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
-              
-              {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
-                <div className="space-y-10">
-                   <h2 className="text-3xl font-heading font-black tracking-tight">Tour Virtual</h2>
-                   <div className="relative aspect-video rounded-[3rem] overflow-hidden border-8 border-card shadow-2xl">
-                      <iframe src={getYoutubeEmbedUrl(modelo.video_url)!} className="absolute inset-0 w-full h-full" allowFullScreen />
-                   </div>
-                </div>
-              )}
-           </div>
+               {/* Otros diseños destacados moved to bottom of main column */}
+               {hasOtherModels && (
+                 <div className="space-y-12 pt-16 border-t border-border/40">
+                    <div className="flex items-center justify-between">
+                       <h2 className="text-3xl font-heading font-black tracking-tight">Otros diseños de {constructora.nombre}</h2>
+                       <Link href={`/constructora/${constructora.slug}`} className="text-xs font-black uppercase tracking-widest text-brand-indigo hover:underline">Ver catálogo completo →</Link>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                       {otherModels.map((m: any) => (
+                        <Link key={m.id} href={`/modelo/${m.slug}`} className="group space-y-4">
+                           <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-indigo/5">
+                              <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                           </div>
+                           <div className="space-y-1">
+                              <h4 className="text-sm font-black tracking-tight group-hover:text-brand-indigo transition-colors">{m.nombre}</h4>
+                              <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                                 <span>{m.superficie_m2}m²</span>
+                                 <span>•</span>
+                                 <span>{m.dormitorios} Dorm</span>
+                              </div>
+                           </div>
+                        </Link>
+                      ))}
+                    </div>
+                 </div>
+               )}
+            </div>
 
            {/* Sidebar Sticky Form */}
            <div className="sticky top-40 space-y-12">
