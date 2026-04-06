@@ -209,7 +209,7 @@ export function EditModelForm({ modelo }: { modelo: any }) {
   const [files, setFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>(modelo.imagenes_urls || []);
   const [planoFile, setPlanoFile] = useState<File | null>(null);
-  const [planoPreview, setPlanoPreview] = useState<string | null>(modelo.plano_url || null);
+  const [planoPreview, setPlanoPreview] = useState<string | null>(modelo.construccion?.plano_url || null);
   const [plan, setPlan] = useState<string>("gratis");
   const [planLimits, setPlanLimits] = useState<any>(null);
   const planoInputRef = useRef<HTMLInputElement>(null);
@@ -304,15 +304,20 @@ export function EditModelForm({ modelo }: { modelo: any }) {
       const finalImages = [...existingImages, ...newUrls];
 
       // Upload plano si existe
-      let finalPlanoUrl = planoPreview;
+      let finalPlanoUrl = modelo.construccion?.plano_url || null; // Start with existing remote url, not blob preview
       if (planoFile) {
         const ext = planoFile.name.split('.').pop();
         const path = `${user.id}/plano-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         const { error: uploadError } = await supabase.storage.from('model_images').upload(path, planoFile);
-        if (!uploadError) {
+        if (uploadError) {
+          throw new Error("Error al subir el plano: " + uploadError.message);
+        } else {
           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(path);
           finalPlanoUrl = publicUrl;
         }
+      } else if (!planoPreview) {
+        // user removed the plano
+        finalPlanoUrl = null;
       }
 
       // Parse JSONB
@@ -347,13 +352,12 @@ export function EditModelForm({ modelo }: { modelo: any }) {
         imagenes_urls: finalImages,
         disponible: formData.get('disponible') === 'true',
         video_url: formData.get('video_url') as string || null,
-        plano_url: finalPlanoUrl || null,
         // Extended
         pisos: Number(formData.get('pisos')) || 1,
         codigo_modelo: formData.get('codigo_modelo') as string || null,
         uso: formData.get('uso') as string || 'vivienda',
         recintos,
-        construccion: parseJsonField('construccion') || null,
+        construccion: { ...parseJsonField('construccion'), ...(finalPlanoUrl ? { plano_url: finalPlanoUrl } : {}) },
         aislacion: parseJsonField('aislacion') || null,
         terminaciones: parseJsonField('terminaciones') || null,
         instalaciones: parseJsonField('instalaciones') || null,

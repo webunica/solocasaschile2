@@ -272,7 +272,7 @@ export default async function ModeloPage({ params }: PageProps) {
                </div>
             </div>
 
-            <ModeloPlano planoUrl={(modelo as any).plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
+            <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
 
             <IncluyeNoIncluye modelo={modelo} className="py-12 border-t border-border/20" />
 
