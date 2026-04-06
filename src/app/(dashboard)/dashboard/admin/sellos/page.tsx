@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { ShieldCheck, BadgeCheck, Clock, CheckCircle2, XCircle, Building2 } from "lucide-react";
-import { aprobarSello, rechazarSello } from "@/lib/supabase/actions";
+import { SelloActionButtons } from "@/components/dashboard/admin/sello-action-buttons";
 
 export const metadata = {
   title: "Verificación de Sellos | Admin",
@@ -133,36 +133,7 @@ export default async function AdminSellosPage() {
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex flex-col gap-3 shrink-0">
-                  <form className="space-y-3">
-                    <input type="hidden" name="sellosId" value={s.id} />
-                    
-                    <button
-                      formAction={aprobarSello}
-                      type="submit"
-                      className="w-full flex items-center justify-center gap-2 bg-brand-teal text-white rounded-2xl px-6 py-2.5 text-xs font-black uppercase tracking-widest hover:bg-brand-teal/90 transition-all cursor-pointer shadow-lg shadow-brand-teal/20"
-                    >
-                      <CheckCircle2 className="w-4 h-4" /> Aprobar
-                    </button>
-
-                    <div className="pt-2 space-y-2">
-                       <input
-                        type="text"
-                        name="comentario"
-                        placeholder="Motivo del rechazo..."
-                        className="w-full rounded-xl border border-border/60 bg-background px-3 py-2 text-xs font-medium placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-brand-indigo"
-                      />
-                      <button
-                        formAction={rechazarSello}
-                        type="submit"
-                        className="w-full flex items-center justify-center gap-2 border border-destructive/30 text-destructive rounded-2xl px-6 py-2.5 text-xs font-black uppercase tracking-widest hover:bg-destructive/5 transition-all cursor-pointer"
-                      >
-                        <XCircle className="w-4 h-4" /> Rechazar
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <SelloActionButtons selloId={s.id} />
               </div>
             ))}
           </div>
