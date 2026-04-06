@@ -301,7 +301,7 @@ export default async function ModeloPage({ params }: PageProps) {
           </div>
 
           {/* Sidebar (Right) */}
-          <div className="sticky top-28 space-y-8 h-fit max-h-[calc(100vh-140px)] overflow-y-auto pr-3 scrollbar-hide pb-20">
+          <div className="sticky top-28 space-y-8 h-fit pb-20">
              <div className="bg-card border border-border/40 rounded-[2.5rem] p-6 shadow-xl shadow-primary/5 space-y-8 overflow-hidden relative">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-brand-indigo/80" />
                 <h2 className="text-xl font-heading font-black tracking-tight flex items-center gap-3">
