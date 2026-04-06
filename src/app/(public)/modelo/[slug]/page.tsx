@@ -76,7 +76,7 @@ export default async function ModeloPage({ params }: PageProps) {
         </div>
       </div>
 
-      <div className="container max-w-screen-2xl mx-auto px-4 md:px-12 py-8 md:py-16 overflow-x-hidden space-y-24">
+      <div className="container max-w-screen-2xl mx-auto px-4 md:px-12 py-8 md:py-16 overflow-x-hidden space-y-12">
         
         {/* TOP ROW: Gallery + Price Card */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 items-start">
@@ -131,7 +131,7 @@ export default async function ModeloPage({ params }: PageProps) {
                        constructoraId={constructora.id}
                        constructoraNombre={constructora.nombre}
                        trigger={
-                          <Button size="lg" className="w-full rounded-2xl h-16 font-black uppercase tracking-[0.2em] bg-brand-indigo shadow-xl shadow-primary/20 flex items-center justify-center text-xs">
+                          <Button size="lg" variant="secondary" className="w-full rounded-2xl h-16 font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-teal/20 flex items-center justify-center text-xs">
                              <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Cotización
                           </Button>
                        }
@@ -264,7 +264,7 @@ export default async function ModeloPage({ params }: PageProps) {
               constructoraId={constructora.id}
               constructoraNombre={constructora.nombre}
               trigger={
-                 <Button size="lg" className="rounded-full px-12 h-20 text-lg font-black uppercase tracking-widest bg-brand-indigo shadow-2xl">
+                 <Button size="lg" variant="secondary" className="rounded-full px-12 h-20 text-lg font-black uppercase tracking-widest shadow-2xl shadow-brand-teal/20">
                     Conversar con Asesor
                  </Button>
               }
