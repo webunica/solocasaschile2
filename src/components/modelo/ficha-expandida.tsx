@@ -1,8 +1,5 @@
-/**
- * FichaExpandida
- * Renderiza las secciones opcionales de la ficha técnica completa del modelo.
- * Cada sección aparece SOLO si tiene datos en la DB.
- */
+import React from 'react';
+import { Bed, TrendingUp, Building2, Zap, Package, ChevronRight } from "lucide-react";
 
 interface FichaExpandidaProps {
   modelo: any;
@@ -10,198 +7,101 @@ interface FichaExpandidaProps {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-5 pt-6 border-t border-border/20">
-      <h2 className="text-xl md:text-2xl font-heading font-black tracking-tight">{title}</h2>
+    <div className="space-y-8 py-12 border-t border-border/20 first:border-t-0">
+      <div className="space-y-2">
+         <h2 className="text-3xl font-heading font-black tracking-tight">{title}</h2>
+         <p className="text-muted-foreground text-sm font-medium">Información detallada sobre este modelo.</p>
+      </div>
       {children}
     </div>
   );
 }
 
-function SpecGrid({ items }: { items: { label: string; value: string }[] }) {
-  return (
-    <div className="grid grid-cols-1 gap-2.5">
-      {items.map(({ label, value }) => (
-        <div key={label} className="bg-muted/10 border border-border/30 rounded-2xl p-4 group/spec">
-          <p className="text-[9px] font-black uppercase tracking-widest opacity-40 mb-1 group-hover/spec:opacity-60 transition-opacity">{label}</p>
-          <p className="text-sm font-black text-foreground/90 leading-tight">{value}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function hasData(obj: any): boolean {
-  if (!obj || typeof obj !== 'object') return false;
-  return Object.values(obj).some(v => v !== null && v !== undefined && v !== '');
-}
-
 export function FichaExpandida({ modelo }: FichaExpandidaProps) {
-  const con = modelo.construccion;
-  const ais = modelo.aislacion;
-  const ter = modelo.terminaciones;
-  const ins = modelo.instalaciones;
-  const log = modelo.logistica;
-  const sop = modelo.soporte;
-
+  const con = modelo.construccion || {};
+  const ais = modelo.aislacion || {};
+  const ter = modelo.terminaciones || {};
+  
   const labelMap = {
     construccion: { sistema_constructivo: 'Sistema', estructura: 'Estructura', muros_exteriores: 'Muros exteriores', muros_interiores: 'Muros interiores', techumbre: 'Techumbre', piso_interior: 'Piso plataforma', fundacion: 'Fundaciones' } as Record<string, string>,
     aislacion: { termica: 'Aislación Térmica', acustica: 'Aislación Acústica', condensacion: 'Condensación', zona_climatica: 'Zona Climática' } as Record<string, string>,
     terminaciones: { ventanas: 'Ventanas', puertas_exteriores: 'Puerta Exterior', puertas_interiores: 'Puertas Interiores', cocina: 'Cocina', bano_principal: 'Baño Principal', bano_servicio: 'Baño Servicio', pisos: 'Pisos', cielos: 'Cielos', paredes: 'Paredes' } as Record<string, string>,
-    instalaciones: { electrica: 'Eléctrica', sanitaria: 'Sanitaria', agua_caliente: 'Agua Caliente', gas: 'Gas', climatizacion: 'Climatización', ventilacion: 'Ventilación', internet_tv: 'Internet y TV' } as Record<string, string>,
   };
 
   function toItems(obj: Record<string, string>, map: Record<string, string>, skip: string[] = ['notas']): { label: string; value: string }[] {
     return Object.entries(obj).filter(([k, v]) => !skip.includes(k) && v).map(([k, v]) => ({ label: map[k] || k, value: v }));
   }
 
+  const itemsConstruccion = toItems(con, labelMap.construccion, ['notas', 'plano_url']);
+  const itemsAislacion = toItems(ais, labelMap.aislacion).slice(0, 2);
+  const itemsTerminaciones = toItems(ter, labelMap.terminaciones).slice(0, 3);
+
+  const allItems = [...itemsConstruccion, ...itemsAislacion, ...itemsTerminaciones];
+
   return (
-    <>
+    <div className="space-y-24">
       {/* Distribución y Uso */}
-      {(modelo.recintos?.length > 0 || modelo.uso || modelo.pisos > 1 || modelo.codigo_modelo) && (
-        <Section title="Distribución y Uso">
-          <div className="flex flex-wrap gap-2">
-            {modelo.uso && (
-              <span className="px-4 py-2 bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo text-xs font-black uppercase tracking-widest rounded-full">
-                {modelo.uso === 'cabana' ? 'Cabaña' : modelo.uso === 'uso-mixto' ? 'Uso Mixto' : modelo.uso === 'social' ? 'Vivienda Social' : modelo.uso === 'oficina' ? 'Oficina' : 'Vivienda'}
-              </span>
-            )}
-            {modelo.pisos > 1 && (
-              <span className="px-4 py-2 bg-muted/30 border border-border/40 text-foreground text-xs font-black uppercase tracking-widest rounded-full">
-                {modelo.pisos} Pisos
-              </span>
-            )}
-            {modelo.codigo_modelo && (
-              <span className="px-4 py-2 bg-muted/30 border border-border/40 text-muted-foreground text-xs font-bold rounded-full">
-                Cód: {modelo.codigo_modelo}
-              </span>
-            )}
-          </div>
-          {modelo.recintos?.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {modelo.recintos.map((r: string) => (
-                <span key={r} className="px-3 py-1.5 bg-muted/20 border border-border/30 text-foreground/70 text-xs font-medium rounded-xl">
-                  {r}
-                </span>
-              ))}
-            </div>
-          )}
-        </Section>
-      )}
-
-      {/* Construcción y Estructura */}
-      {hasData(con) && (
-        <Section title="🏗 Construcción y Estructura">
-          <SpecGrid items={toItems(con, labelMap.construccion, ['notas', 'plano_url'])} />
-          {con.notas && <p className="text-sm text-muted-foreground italic border-l-4 border-border/30 pl-4">{con.notas}</p>}
-        </Section>
-      )}
-
-      {/* Aislación y Eficiencia */}
-      {hasData(ais) && (
-        <Section title="🌡 Aislación y Eficiencia Energética">
-          {ais.calificacion_energetica && (
-            <div className="flex items-center gap-4 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-5 mb-4">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 text-2xl font-black">
-                {ais.calificacion_energetica}
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">Calificación Energética</p>
-                <p className="text-sm font-bold text-emerald-700">Clase {ais.calificacion_energetica} de eficiencia energética</p>
-              </div>
-            </div>
-          )}
-          <SpecGrid items={toItems(ais, labelMap.aislacion, ['notas', 'calificacion_energetica'])} />
-        </Section>
-      )}
-
-      {/* Terminaciones */}
-      {hasData(ter) && (
-        <Section title="🎨 Terminaciones y Equipamiento">
-          <SpecGrid items={toItems(ter, labelMap.terminaciones)} />
-        </Section>
-      )}
-
-      {/* Instalaciones */}
-      {hasData(ins) && (
-        <Section title="⚡ Instalaciones">
-          <SpecGrid items={toItems(ins, labelMap.instalaciones)} />
-        </Section>
-      )}
-
-      {/* Logística de Compra */}
-      {hasData(log) && (
-        <Section title="🚚 Logística de Compra">
-          <div className="flex flex-col gap-3">
-            {log.que_incluye && (
-              <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-5">
-                <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">✅ Incluye</p>
-                <p className="text-sm font-medium leading-relaxed">{log.que_incluye}</p>
-              </div>
-            )}
-            {log.que_no_incluye && (
-              <div className="bg-muted/10 border border-border/30 rounded-2xl p-5">
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">❌ No incluye</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{log.que_no_incluye}</p>
-              </div>
-            )}
-            <div className="grid grid-cols-1 gap-3">
-              {(['transporte', 'montaje', 'plazo_fabricacion', 'plazo_montaje'] as const).filter(k => log[k]).map(k => {
-                const labels = { transporte: '🚛 Transporte', montaje: '🔧 Montaje', plazo_fabricacion: '🏭 Fabricación', plazo_montaje: '📅 Montaje en terreno' };
-                return (
-                  <div key={k} className="bg-muted/10 border border-border/30 rounded-2xl p-4">
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">{labels[k]}</p>
-                    <p className="text-sm font-black">{log[k]}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          {log.personalizacion && (
-            <div className="bg-brand-indigo/5 border border-brand-indigo/20 rounded-2xl p-5">
-              <p className="text-[10px] font-black uppercase tracking-widest text-brand-indigo mb-2">✏️ Personalización</p>
-              <p className="text-sm font-medium leading-relaxed">{log.personalizacion}</p>
-            </div>
-          )}
-        </Section>
-      )}
-
-      {/* Soporte y Garantías */}
-      {hasData(sop) && (
-        <Section title="🛡 Soporte y Garantías">
-          <div className="grid grid-cols-1 gap-3">
-            {(['garantia_estructura', 'garantia_impermeabilizacion', 'garantia_terminaciones', 'garantia_instalaciones'] as const).filter(k => sop[k]).map(k => {
-              const labels = { garantia_estructura: 'Estructura', garantia_impermeabilizacion: 'Impermeab.', garantia_terminaciones: 'Terminaciones', garantia_instalaciones: 'Instalaciones' };
-              return (
-                <div key={k} className="bg-background border border-border/40 rounded-2xl p-4 flex items-center justify-between group/sop">
-                  <p className="text-[10px] font-black uppercase tracking-widest opacity-40 group-hover/sop:opacity-70 transition-opacity">{labels[k]}</p>
-                  <p className="text-sm font-black text-brand-indigo">{sop[k]}</p>
+      {(modelo.recintos?.length > 0 || modelo.uso || modelo.pisos > 1) && (
+        <div className="space-y-8">
+           <div className="space-y-2">
+              <h2 className="text-3xl font-heading font-black tracking-tight">Distribución y Espacios</h2>
+              <p className="text-muted-foreground text-sm font-medium">Cada metro cuadrado diseñado para maximizar la funcionalidad.</p>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {modelo.uso && (
+                <div className="bg-card border border-border/40 p-6 rounded-[2rem] flex items-start gap-4">
+                   <div className="w-12 h-12 bg-muted/30 rounded-2xl flex items-center justify-center shrink-0">
+                      <Bed className="w-6 h-6 text-brand-indigo" />
+                   </div>
+                   <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Uso sugerido</span>
+                      <p className="text-sm font-black capitalize">{modelo.uso.replace(/-/g, ' ')}</p>
+                   </div>
                 </div>
-              );
-            })}
-          </div>
-          {sop.postventa_descripcion && (
-            <div className="bg-muted/10 border border-border/30 rounded-2xl p-5">
-              <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">🔄 Postventa</p>
-              <p className="text-sm font-medium">{sop.postventa_descripcion}</p>
-            </div>
-          )}
-          {sop.normativa && (
-            <div className="bg-muted/10 border border-border/30 rounded-2xl p-5">
-              <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">📋 Normativa</p>
-              <p className="text-sm font-medium">{sop.normativa}</p>
-            </div>
-          )}
-          {sop.certificaciones && (
-            <div className="flex flex-wrap gap-2">
-              {String(sop.certificaciones).split(',').filter(Boolean).map((c: string) => (
-                <span key={c} className="px-4 py-2 bg-brand-teal/10 border border-brand-teal/20 text-brand-teal text-xs font-black uppercase tracking-widest rounded-full">
-                  ✓ {c.trim()}
-                </span>
-              ))}
-            </div>
-          )}
-        </Section>
+              )}
+              {modelo.pisos > 1 && (
+                <div className="bg-card border border-border/40 p-6 rounded-[2rem] flex items-start gap-4">
+                   <div className="w-12 h-12 bg-muted/30 rounded-2xl flex items-center justify-center shrink-0">
+                      <TrendingUp className="w-6 h-6 text-brand-indigo" />
+                   </div>
+                   <div className="space-y-1">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Niveles</span>
+                      <p className="text-sm font-black">{modelo.pisos} Plantas</p>
+                   </div>
+                </div>
+              )}
+           </div>
+        </div>
       )}
-    </>
+
+      {/* Ficha Técnica Detallada (The 3-column grid from reference) */}
+      <div id="ficha-tecnica" className="space-y-10 scroll-mt-40">
+         <div className="space-y-2">
+            <h2 className="text-3xl font-heading font-black tracking-tight text-brand-indigo">Ficha técnica detallada</h2>
+            <p className="text-muted-foreground text-sm font-medium">Especificaciones principales del modelo {modelo.nombre}.</p>
+         </div>
+
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+            {allItems.map((item, i) => (
+              <div key={i} className="flex items-start gap-5 group">
+                 <div className="w-14 h-14 bg-card border border-border/40 rounded-[1.5rem] flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-brand-indigo group-hover:text-white transition-all transform duration-500 shadow-sm">
+                    {i % 3 === 0 ? <Building2 className="w-6 h-6" /> : i % 3 === 1 ? <Zap className="w-6 h-6" /> : <Package className="w-6 h-6" />}
+                 </div>
+                 <div className="space-y-1.5 pt-1">
+                    <span className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground opacity-60 leading-none block">{item.label}</span>
+                    <p className="text-[14px] font-black leading-tight tracking-tight text-foreground/90">{item.value}</p>
+                 </div>
+              </div>
+            ))}
+         </div>
+
+         <div className="pt-8 text-center md:text-left flex items-center gap-6 border-t border-border/10">
+            <button className="text-brand-indigo font-black text-[10px] uppercase tracking-[0.2em] hover:opacity-70 transition-opacity flex items-center gap-2">
+               Ver memorias técnicas completas <ChevronRight className="w-4 h-4" />
+            </button>
+         </div>
+      </div>
+    </div>
   );
 }
