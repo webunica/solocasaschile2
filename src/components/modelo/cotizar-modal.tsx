@@ -108,7 +108,7 @@ export function CotizarModal({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         {trigger || (
-          <Button size="lg" className="bg-brand-indigo font-black rounded-2xl w-full h-16">
+          <Button size="lg" variant="secondary" className="font-black rounded-2xl w-full h-16 shadow-xl shadow-brand-teal/20">
             SOLICITAR COTIZACIÓN
           </Button>
         )}
@@ -190,7 +190,7 @@ export function CotizarModal({
                           <SelectTrigger className="h-14 pl-12 rounded-2xl bg-muted/10 border-border/30 border-2 font-black text-sm text-left focus:bg-background transition-all">
                              <SelectValue placeholder="Seleccionar" />
                           </SelectTrigger>
-                          <SelectContent className="rounded-2xl border-2 border-border/40 shadow-xl">
+                          <SelectContent className="rounded-2xl border-2 border-border/40 shadow-2xl z-[9000] relative">
                              {REGIONES.map(r => (
                                <SelectItem key={r} value={r} className="font-bold py-3 hover:bg-brand-indigo/10">{r}</SelectItem>
                              ))}
@@ -241,8 +241,9 @@ export function CotizarModal({
               <Button 
                 type="submit" 
                 size="lg" 
+                variant="secondary"
                 disabled={loading}
-                className="w-full bg-brand-indigo font-black text-white h-16 rounded-2xl shadow-xl shadow-brand-indigo/20 hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
+                className="w-full font-black h-16 rounded-2xl shadow-xl shadow-brand-teal/20 hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
               >
                 <div className="absolute inset-0 -translate-x-[150%] animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]" />
                 {loading ? (
