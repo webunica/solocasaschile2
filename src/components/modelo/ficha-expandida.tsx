@@ -91,7 +91,7 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
       {/* Construcción y Estructura */}
       {hasData(con) && (
         <Section title="🏗 Construcción y Estructura">
-          <SpecGrid items={toItems(con, labelMap.construccion)} />
+          <SpecGrid items={toItems(con, labelMap.construccion, ['notas', 'plano_url'])} />
           {con.notas && <p className="text-sm text-muted-foreground italic border-l-4 border-border/30 pl-4">{con.notas}</p>}
         </Section>
       )}
