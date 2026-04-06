@@ -55,7 +55,7 @@
   --ring: hsl(173.6 60% 56.9%);
 }
 
-@theme {
+@theme inline {
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
 
