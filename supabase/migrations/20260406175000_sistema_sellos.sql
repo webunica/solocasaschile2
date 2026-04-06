@@ -50,9 +50,10 @@ CREATE POLICY "Constructora can insert own sellos" ON public.constructora_sellos
 CREATE POLICY "Admins can update sellos" ON public.constructora_sellos
   FOR UPDATE
   USING (
+    ((auth.jwt() -> 'app_metadata' ->> 'is_superadmin')::boolean = true) OR
     EXISTS (
       SELECT 1 FROM public.constructoras
-      WHERE id = auth.uid() AND role = 'superadmin'
+      WHERE id = auth.uid() AND role IN ('admin', 'superadmin')
     )
   );
 
@@ -60,9 +61,10 @@ CREATE POLICY "Admins can update sellos" ON public.constructora_sellos
 CREATE POLICY "Admins can delete sellos" ON public.constructora_sellos
   FOR DELETE
   USING (
+    ((auth.jwt() -> 'app_metadata' ->> 'is_superadmin')::boolean = true) OR
     EXISTS (
       SELECT 1 FROM public.constructoras
-      WHERE id = auth.uid() AND role = 'superadmin'
+      WHERE id = auth.uid() AND role IN ('admin', 'superadmin')
     )
   );
 
