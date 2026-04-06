@@ -44,7 +44,7 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
       {(modelo.recintos?.length > 0 || modelo.uso || modelo.pisos > 1) && (
         <div className="space-y-8">
            <div className="space-y-2">
-              <h2 className="text-3xl font-heading font-black tracking-tight">Distribución y Espacios</h2>
+              <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight text-brand-indigo">Distribución y Espacios</h2>
               <p className="text-muted-foreground text-sm font-medium">Cada metro cuadrado diseñado para maximizar la funcionalidad.</p>
            </div>
            
@@ -78,7 +78,7 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
       {/* Ficha Técnica Detallada (The 3-column grid from reference) */}
       <div id="ficha-tecnica" className="space-y-10 scroll-mt-40">
          <div className="space-y-2">
-            <h2 className="text-3xl font-heading font-black tracking-tight text-brand-indigo">Ficha técnica detallada</h2>
+            <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight text-brand-indigo">Ficha técnica detallada</h2>
             <p className="text-muted-foreground text-sm font-medium">Especificaciones principales del modelo {modelo.nombre}.</p>
          </div>
 

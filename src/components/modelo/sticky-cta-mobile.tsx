@@ -1,35 +1,39 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { MessageSquare, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { CotizarModal } from "./cotizar-modal";
+import { Button } from "../ui/button";
 
-export function StickyCTAMobile({ targetId }: { targetId: string }) {
+interface StickyCTAMobileProps {
+  modeloId: string;
+  modeloNombre: string;
+  constructoraId: string;
+  constructoraNombre: string;
+}
+
+export function StickyCTAMobile({ 
+  modeloId, 
+  modeloNombre, 
+  constructoraId, 
+  constructoraNombre 
+}: StickyCTAMobileProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show after user scrolls past the gallery/hero (e.g. 600px)
-      // and hide when they reach the actual form
-      const target = document.getElementById(targetId);
-      if (!target) return;
+      // Show after user scrolls past the gallery/hero (e.g. 500px)
+      const scrolled = window.scrollY > 500;
+      // We don't hide it at the end anymore, always accessible unless they reach the very bottom footer
+      const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
       
-      const targetRect = target.getBoundingClientRect();
-      const scrolled = window.scrollY > 600;
-      const reachedTarget = targetRect.top < window.innerHeight;
-      
-      setIsVisible(scrolled && !reachedTarget);
+      setIsVisible(scrolled && !isAtBottom);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [targetId]);
-
-  const scrollToForm = () => {
-    const target = document.getElementById(targetId);
-    target?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   return (
     <AnimatePresence>
@@ -38,25 +42,33 @@ export function StickyCTAMobile({ targetId }: { targetId: string }) {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-6 left-6 right-6 z-[60] lg:hidden"
+          className="fixed bottom-6 left-4 right-4 z-[90] lg:hidden"
         >
-          <div className="bg-foreground text-background rounded-[2.5rem] p-4 flex items-center justify-between shadow-2xl shadow-black/40 ring-1 ring-white/10 group active:scale-95 transition-transform">
-             <div className="flex items-center gap-4 ml-2">
-                <div className="w-10 h-10 rounded-2xl bg-brand-indigo flex items-center justify-center text-white">
-                   <MessageSquare className="w-5 h-5" />
+          <CotizarModal
+            modeloId={modeloId}
+            modeloNombre={modeloNombre}
+            constructoraId={constructoraId}
+            constructoraNombre={constructoraNombre}
+            trigger={
+                <div className="bg-brand-indigo/95 backdrop-blur-xl text-white rounded-[2rem] p-3 flex items-center justify-between shadow-2xl shadow-brand-indigo/40 ring-1 ring-white/20 active:scale-95 transition-transform cursor-pointer">
+                    <div className="flex items-center gap-3 ml-2">
+                        <div className="w-10 h-10 rounded-xl bg-brand-teal flex items-center justify-center text-brand-indigo">
+                            <MessageSquare className="w-5 h-5" />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-[9px] font-black uppercase tracking-widest leading-none opacity-60">Tu casa ideal</span>
+                            <span className="text-sm font-black tracking-tighter leading-none mt-1">Consultar Ahora</span>
+                        </div>
+                    </div>
+                    <Button 
+                        variant="secondary"
+                        className="rounded-xl h-11 px-6 font-black text-[10px] uppercase tracking-widest shadow-lg shadow-brand-teal/20"
+                    >
+                        Cotizar <ArrowRight className="w-3 h-3 ml-2" />
+                    </Button>
                 </div>
-                <div className="flex flex-col">
-                   <span className="text-[10px] font-black uppercase tracking-widest leading-none opacity-40">¿Te gusta?</span>
-                   <span className="text-base font-black tracking-tighter leading-none mt-1">Cotiza Ahora</span>
-                </div>
-             </div>
-             <Button 
-               onClick={scrollToForm}
-               className="rounded-2xl h-11 px-6 font-black text-[10px] uppercase tracking-widest bg-white text-black hover:bg-white/90"
-             >
-               Solicitar <ArrowRight className="w-3 h-3 ml-2" />
-             </Button>
-          </div>
+            }
+          />
         </motion.div>
       )}
     </AnimatePresence>

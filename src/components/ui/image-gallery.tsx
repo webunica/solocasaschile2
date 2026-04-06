@@ -61,7 +61,7 @@ export function ImageGallery({ images, altBase, videoUrl }: Props) {
         </div>
 
         {/* Bottom thumbnails grid */}
-        <div className="grid grid-cols-4 md:grid-cols-6 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
           {images.slice(1, 7).map((img, i) => (
              <div 
                key={i}
