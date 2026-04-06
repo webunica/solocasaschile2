@@ -18,47 +18,47 @@ interface SellosGridProps {
   className?: string;
 }
 
-// Mapa: slug → ícono y color
+// Mapa: slug → ícono y color con alto contraste
 const SELLO_META: Record<string, { icon: React.ReactNode; color: string; bg: string }> = {
   "perfil-completo": {
     icon: <Building2 className="w-4 h-4" />,
-    color: "text-brand-indigo",
-    bg: "bg-brand-indigo/8 border-brand-indigo/20",
+    color: "text-indigo-800 dark:text-indigo-300",
+    bg: "bg-indigo-100 dark:bg-indigo-900/30 border-indigo-300 dark:border-indigo-700/50",
   },
   "empresa-activa": {
     icon: <Zap className="w-4 h-4" />,
-    color: "text-brand-teal",
-    bg: "bg-brand-teal/8 border-brand-teal/20",
+    color: "text-teal-800 dark:text-teal-300",
+    bg: "bg-teal-100 dark:bg-teal-900/30 border-teal-300 dark:border-teal-700/50",
   },
   "especialidad-definida": {
     icon: <CheckCircle2 className="w-4 h-4" />,
-    color: "text-emerald-600",
-    bg: "bg-emerald-50 border-emerald-200",
+    color: "text-emerald-800 dark:text-emerald-300",
+    bg: "bg-emerald-100 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-700/50",
   },
   "fotos-reales": {
     icon: <Image className="w-4 h-4" />,
-    color: "text-sky-600",
-    bg: "bg-sky-50 border-sky-200",
+    color: "text-sky-800 dark:text-sky-300",
+    bg: "bg-sky-100 dark:bg-sky-900/30 border-sky-300 dark:border-sky-700/50",
   },
   "experiencia-10-anos": {
     icon: <Clock className="w-4 h-4" />,
-    color: "text-amber-600",
-    bg: "bg-amber-50 border-amber-200",
+    color: "text-amber-800 dark:text-amber-300",
+    bg: "bg-amber-100 dark:bg-amber-900/30 border-amber-300 dark:border-amber-700/50",
   },
   "fechas-obra": {
     icon: <Calendar className="w-4 h-4" />,
-    color: "text-violet-600",
-    bg: "bg-violet-50 border-violet-200",
+    color: "text-violet-800 dark:text-violet-300",
+    bg: "bg-violet-100 dark:bg-violet-900/30 border-violet-300 dark:border-violet-700/50",
   },
   "empresa-verificada": {
     icon: <BadgeCheck className="w-4 h-4" />,
-    color: "text-brand-indigo",
-    bg: "bg-brand-indigo/10 border-brand-indigo/30",
+    color: "text-indigo-800 dark:text-indigo-300",
+    bg: "bg-indigo-100 dark:bg-indigo-900/30 border-indigo-300 dark:border-indigo-700/50",
   },
   "info-comercial-validada": {
     icon: <ShieldCheck className="w-4 h-4" />,
-    color: "text-brand-teal",
-    bg: "bg-brand-teal/10 border-brand-teal/30",
+    color: "text-teal-800 dark:text-teal-300",
+    bg: "bg-teal-100 dark:bg-teal-900/30 border-teal-300 dark:border-teal-700/50",
   },
 };
 
