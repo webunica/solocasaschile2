@@ -233,6 +233,8 @@ export async function updateSettings(formData: FormData) {
     logo_url: formData.get('logo_url') as string,
     image_url: formData.get('image_url') as string,
     video_url: formData.get('video_url') as string,
+    especialidad_principal: formData.get('especialidad_principal') as string || null,
+    anio_inicio: formData.get('anio_inicio') ? parseInt(formData.get('anio_inicio') as string, 10) : null,
   }
 
   // SEO fields only if paid plan
