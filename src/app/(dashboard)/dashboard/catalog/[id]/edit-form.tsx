@@ -119,18 +119,26 @@ function FieldTextarea({ id, name, placeholder, rows = 3, defaultValue }: { id: 
 // Recintos Selection Component
 // ─────────────────────────────────────────────
 
-function RecintosSelector({ name, initialValue = [] }: { name: string; initialValue?: string[] }) {
+function RecintosSelector({ name, initialValue = [], onChange }: { name: string; initialValue?: string[]; onChange?: () => void }) {
   const [selected, setSelected] = useState<string[]>(initialValue || []);
   const [custom, setCustom] = useState("");
 
-  const toggle = (r: string) =>
+  const notifyChange = () => {
+    // Delay to let React render the hidden input first
+    setTimeout(() => { onChange?.() }, 50);
+  };
+
+  const toggle = (r: string) => {
     setSelected(prev => prev.includes(r) ? prev.filter(x => x !== r) : [...prev, r]);
+    notifyChange();
+  };
 
   const addCustom = () => {
     const v = custom.trim();
     if (v && !selected.includes(v)) {
       setSelected(prev => [...prev, v]);
       setCustom("");
+      notifyChange();
     }
   };
 
@@ -190,7 +198,11 @@ function RecintosSelector({ name, initialValue = [] }: { name: string; initialVa
 export function EditModelForm({ modelo }: { modelo: any }) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const autoSaveTimer = useRef<NodeJS.Timeout | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isAutoSaving, setIsAutoSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [previews, setPreviews] = useState<string[]>(modelo.imagenes_urls || []);
@@ -244,13 +256,17 @@ export function EditModelForm({ modelo }: { modelo: any }) {
     setPreviews(prev => prev.filter((_, i) => i !== idx));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  const submitHandler = async (e?: React.FormEvent<HTMLFormElement>, isAuto = false) => {
+    if (e) e.preventDefault();
+    if (!formRef.current) return;
+
+    if (isAuto) setIsAutoSaving(true);
+    else setLoading(true);
+    
     setError(null);
 
     const supabase = createClient();
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(formRef.current);
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -326,12 +342,41 @@ export function EditModelForm({ modelo }: { modelo: any }) {
 
       if (result.error) throw new Error(result.error);
 
-      setSuccess(true);
-      setTimeout(() => router.push('/dashboard/catalog'), 2000);
+      if (newUrls.length > 0) {
+        setExistingImages(finalImages);
+        setFiles([]);
+        setPreviews(finalImages);
+      }
+      
+      setLastSaved(new Date());
+
+      if (!isAuto) {
+        setSuccess(true);
+        setTimeout(() => router.push('/dashboard/catalog'), 2000);
+      }
     } catch (err: any) {
-      setError(err.message || "Error al actualizar");
-      setLoading(false);
+      if (!isAuto) setError(err.message || "Error al actualizar");
+    } finally {
+      setIsAutoSaving(false);
+      if (!isAuto) setLoading(false);
     }
+  };
+
+  const handleFormChange = () => {
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current);
+    autoSaveTimer.current = setTimeout(() => {
+      submitHandler(undefined, true);
+    }, 2500); // 2.5s debounce
+  };
+
+  const handleImagesWithAutoSave = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleImages(e);
+    handleFormChange();
+  };
+  
+  const removeImageWithAutoSave = (i: number) => {
+    removeImage(i);
+    handleFormChange();
   };
 
   if (success) return (
@@ -354,7 +399,7 @@ export function EditModelForm({ modelo }: { modelo: any }) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form ref={formRef} onSubmit={e => submitHandler(e, false)} onChange={handleFormChange} className="space-y-6">
 
         {/* ── Identidad ───────────────────────────── */}
         <FormSection
@@ -437,7 +482,7 @@ export function EditModelForm({ modelo }: { modelo: any }) {
             </Field>
           </div>
           <Field label="Recintos Incluidos">
-            <RecintosSelector name="recintos" initialValue={modelo.recintos || []} />
+            <RecintosSelector name="recintos" initialValue={modelo.recintos || []} onChange={handleFormChange} />
           </Field>
         </FormSection>
 
@@ -573,13 +618,13 @@ export function EditModelForm({ modelo }: { modelo: any }) {
               >
                 <Upload className="w-10 h-10 mx-auto mb-2 opacity-40" />
                 <p className="text-[10px] font-bold uppercase tracking-widest">Añadir más fotos</p>
-                <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
+                <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImagesWithAutoSave} />
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {previews.map((src, i) => (
                   <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border">
                     <img src={src} className="w-full h-full object-cover" />
-                    <button type="button" onClick={() => removeImage(i)} className="absolute top-1 right-1 w-6 h-6 bg-black/60 rounded-full flex items-center justify-center text-white">
+                    <button type="button" onClick={() => removeImageWithAutoSave(i)} className="absolute top-1 right-1 w-6 h-6 bg-black/60 rounded-full flex items-center justify-center text-white">
                       <X className="w-3 h-3" />
                     </button>
                   </div>
@@ -618,8 +663,16 @@ export function EditModelForm({ modelo }: { modelo: any }) {
 
         {/* ── Actions ────────────────────────────────── */}
         <div className="flex flex-col gap-4 pt-6">
-          <Button type="submit" disabled={loading} className="w-full h-20 rounded-[2.5rem] font-black uppercase tracking-widest bg-brand-indigo text-white shadow-2xl">
-            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5 mr-3" /> Sincronizar Cambios</>}
+          <div className="flex justify-between items-center px-4 mb-2">
+            <span className={cn("text-[11px] font-black uppercase tracking-widest text-muted-foreground transition-opacity", 
+              isAutoSaving ? "opacity-100 flex items-center text-primary" : "opacity-60"
+            )}>
+              {isAutoSaving ? <><Loader2 className="w-3 h-3 mr-2 animate-spin" /> Guardando en segundo plano...</> 
+                : lastSaved ? `Autoguardado completado a las ${lastSaved.toLocaleTimeString()}` : "Autoguardado activado"}
+            </span>
+          </div>
+          <Button type="submit" disabled={loading || isAutoSaving} className="w-full h-20 rounded-[2.5rem] font-black uppercase tracking-widest bg-brand-indigo text-white shadow-2xl">
+            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <><Save className="w-5 h-5 mr-3" /> Sincronizar Cambios Definitivos</>}
           </Button>
           <div className="grid grid-cols-2 gap-4">
              <Link href={`/modelo/${modelo.slug}`} target="_blank" className="h-14 rounded-3xl border border-border flex items-center justify-center font-black text-[10px] uppercase tracking-widest hover:bg-muted/50">
