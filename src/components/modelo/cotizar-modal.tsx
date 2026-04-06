@@ -25,6 +25,7 @@ import {
   CheckCircle2, MapPin, LandPlot 
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { submitLead } from "@/lib/supabase/actions";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -81,16 +82,15 @@ export function CotizarModal({
       mensaje: `[COTIZACIÓN MODELO: ${modeloNombre}] - Region: ${formData.get("region")} - Terreno: ${terreno}. Mensaje: ${formData.get("message")}`,
       modelo_id: modeloId,
       constructora_id: constructoraId,
+      modelo_nombre: modeloNombre,
+      constructora_nombre: constructoraNombre,
     };
 
     try {
-      const supabase = createClient();
-      const { error: insertError } = await supabase
-        .from("leads")
-        .insert([leadData]);
+      const { error: submitError, success: submitSuccess } = await submitLead(leadData as any);
 
-      if (insertError) throw insertError;
-
+      if (submitError) throw new Error(submitError);
+      
       setSuccess(true);
       setTimeout(() => {
         setOpen(false);

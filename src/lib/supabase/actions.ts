@@ -576,6 +576,97 @@ export async function sendBulkEmail(formData: FormData) {
   }
 }
 
+export async function submitLead(data: {
+  nombre_cliente: string;
+  email_cliente: string;
+  telefono_cliente: string;
+  mensaje: string;
+  modelo_id: string;
+  constructora_id: string;
+  modelo_nombre: string;
+  constructora_nombre: string;
+}) {
+  const supabase = await createClient();
+
+  // 1. Insertar en la base de datos
+  const { error: insertError } = await supabase
+    .from('leads')
+    .insert([{
+      nombre_cliente: data.nombre_cliente,
+      email_cliente: data.email_cliente,
+      telefono_cliente: data.telefono_cliente,
+      mensaje: data.mensaje,
+      modelo_id: data.modelo_id,
+      constructora_id: data.constructora_id,
+      estado: 'nuevo'
+    }]);
+
+  if (insertError) {
+    console.error('Error al insertar lead:', insertError);
+    return { error: 'Error al procesar tu solicitud.' };
+  }
+
+  // 2. Enviar correos via Resend
+  try {
+    // A. Email de confirmación al USUARIO
+    await resend.emails.send({
+      from: 'SoloCasasChile <contacto@solocasaschile.com>',
+      to: [data.email_cliente],
+      subject: `Hemos recibido tu solicitud de cotización - ${data.modelo_nombre} 🏠`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
+          <div style="background: #0b9e86; padding: 24px 30px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">¡Hola ${data.nombre_cliente}!</h1>
+          </div>
+          <div style="padding: 40px 30px; line-height: 1.6; color: #334155; font-size: 15px;">
+            <p>Gracias por tu interés en el modelo <strong>${data.modelo_nombre}</strong> de <strong>${data.constructora_nombre}</strong>.</p>
+            <p>Hemos recibido tu mensaje correctamente. Un ejecutivo de la constructora se pondrá en contacto contigo a la brevedad para brindarte toda la información técnica y comercial que necesites.</p>
+            
+            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e2e8f0;">
+              <p style="margin: 0 0 10px 0; font-weight: bold; color: #0b9e86;">Resumen de tu solicitud:</p>
+              <p style="margin: 5px 0;"><strong>Modelo:</strong> ${data.modelo_nombre}</p>
+              <p style="margin: 5px 0;"><strong>Constructora:</strong> ${data.constructora_nombre}</p>
+            </div>
+
+            <p>Si tienes cualquier otra duda, puedes responder a este correo.</p>
+            <p style="margin-top: 30px;">Atentamente,<br>El equipo de <strong>SolocasasChile.com</strong></p>
+          </div>
+        </div>
+      `
+    });
+
+    // B. Email de notificación a la PLATAFORMA (contacto@solocasaschile.com)
+    await resend.emails.send({
+      from: 'Sistema SolocasasChile <leads@solocasaschile.com>',
+      to: ['contacto@solocasaschile.com'],
+      replyTo: data.email_cliente,
+      subject: `Nuevo Lead: ${data.modelo_nombre} - ${data.nombre_cliente}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #0b9e86;">🚀 Nuevo interesado en SolocasasChile</h2>
+          <hr style="border: 0; border-top: 1px solid #eee;" />
+          <p><strong>Cliente:</strong> ${data.nombre_cliente}</p>
+          <p><strong>Email:</strong> ${data.email_cliente}</p>
+          <p><strong>Teléfono:</strong> ${data.telefono_cliente}</p>
+          <p><strong>Modelo interesado:</strong> ${data.modelo_nombre}</p>
+          <p><strong>Constructora:</strong> ${data.constructora_nombre}</p>
+          <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 20px;">
+            <p><strong>Mensaje/Detalles:</strong></p>
+            <p>${data.mensaje.replace(/\n/g, '<br>')}</p>
+          </div>
+        </div>
+      `
+    });
+
+  } catch (emailError) {
+    console.error('Error al enviar correos de lead:', emailError);
+    // No cortamos el flujo para el usuario si falla el email, ya se insertó en la DB.
+  }
+
+  return { success: true };
+}
+
+
 export async function incrementModelView(modeloId: string) {
   try {
     const supabase = await createClient();
@@ -585,4 +676,3 @@ export async function incrementModelView(modeloId: string) {
     console.error("Error incrementing views:", err);
   }
 }
-
