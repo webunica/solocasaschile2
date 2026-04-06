@@ -704,17 +704,22 @@ export async function aprobarSello(formData: FormData) {
     
     console.log(`[Admin] Aprobando sello ID: ${id}`);
 
-    const { error: errorUpdate } = await supabase
+    const { data, error: errorUpdate } = await supabase
       .from('constructora_sellos')
       .update({ 
         estado: 'aprobado',
         otorgado_at: new Date().toISOString()
       })
       .eq('id', id)
+      .select()
 
     if (errorUpdate) {
       console.error("[Admin] Error al aprobar:", errorUpdate);
       throw new Error(errorUpdate.message);
+    }
+
+    if (!data || data.length === 0) {
+      throw new Error("Permisos insuficientes en base de datos (RLS) o sello no existe.");
     }
 
     revalidatePath('/dashboard/admin/sellos')
@@ -745,7 +750,7 @@ export async function rechazarSello(formData: FormData) {
     
     console.log(`[Admin] Rechazando sello ID: ${id}`);
 
-    const { error: errorUpdate } = await supabase
+    const { data, error: errorUpdate } = await supabase
       .from('constructora_sellos')
       .update({ 
         estado: 'rechazado',
@@ -753,10 +758,15 @@ export async function rechazarSello(formData: FormData) {
         otorgado_at: new Date().toISOString()
       })
       .eq('id', id)
+      .select()
 
     if (errorUpdate) {
       console.error("[Admin] Error al rechazar:", errorUpdate);
       throw new Error(errorUpdate.message);
+    }
+
+    if (!data || data.length === 0) {
+      throw new Error("Permisos insuficientes en base de datos (RLS) o sello no existe.");
     }
 
     revalidatePath('/dashboard/admin/sellos')
