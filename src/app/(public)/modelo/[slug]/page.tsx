@@ -22,7 +22,7 @@ interface PageProps {
 
 const TIPO_LABELS: Record<string, string> = {
   prefabricada: "Prefabricada",
-  sip: "Panel SIP",
+  sip: "SIP",
   container: "Container",
   "llave-en-mano": "Llave en Mano",
   "modular": "Modular",
@@ -169,8 +169,9 @@ export default async function ModeloPage({ params }: PageProps) {
               <div className="space-y-8">
                  <div className="space-y-4">
                     <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tight text-foreground leading-[0.9]">{modelo.nombre}</h1>
-                    <p className="text-xl md:text-2xl text-muted-foreground font-black tracking-tight opacity-70">
-                       {TIPO_LABELS[modelo.tipo] || 'Casa'} de {modelo.superficie_m2}m² | {modelo.dormitorios} Dorm | {modelo.banos} Baños
+                    <p className="text-lg md:text-xl text-muted-foreground font-bold tracking-tight opacity-80">
+                       Casa {TIPO_LABELS[modelo.tipo] || 'Modelo'} de {modelo.superficie_m2} m² | {modelo.dormitorios} dormitorios | {modelo.banos} baños
+                       {modelo.tiempo_entrega && ` | Entrega en ${modelo.tiempo_entrega} días`}
                     </p>
                  </div>
                  <p className="text-lg md:text-2xl text-muted-foreground font-medium leading-[1.4] max-w-4xl border-l-[6px] border-brand-indigo/10 pl-8">
