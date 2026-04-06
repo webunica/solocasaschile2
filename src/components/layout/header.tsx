@@ -94,7 +94,7 @@ export function Header() {
                 "rounded-2xl px-10 hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
               )}
             >
-              Publicar Modelos
+              Comienza Gratis
             </Link>
 
             {/* Hamburger Menu (Mobile/Tablet Only) */}
@@ -155,7 +155,7 @@ export function Header() {
                             "w-full h-14 rounded-2xl"
                           )}
                        >
-                          Publicar Modelos
+                          Comienza Gratis
                        </Link>
                 </div>
               </SheetContent>
