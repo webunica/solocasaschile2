@@ -168,6 +168,7 @@ export default async function ModeloPage({ params }: PageProps) {
             <ImageGallery
               images={imagenes.length > 0 ? imagenes : ['/placeholder.png']}
               altBase={modelo.nombre || 'Modelo'}
+              videoUrl={modelo.video_url}
             />
 
             {/* Header Content */}

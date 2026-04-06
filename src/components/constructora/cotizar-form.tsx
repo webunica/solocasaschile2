@@ -103,147 +103,104 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-4">
-        <label className="form-label">Datos de Contacto</label>
-        
-        <div className="relative group/input">
-          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
-          <Input 
-            name="name" 
-            placeholder="Nombre completo" 
-            required 
-            className="form-input-premium pl-12" 
-          />
+    <div className="bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-[2.5rem] p-8 shadow-2xl shadow-indigo-500/20 text-white relative overflow-hidden group/form">
+      {/* Decorative Blur */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2" />
+      
+      <div className="relative z-10 space-y-8">
+        <div className="text-center space-y-3">
+          <h3 className="text-xl md:text-2xl font-black font-heading tracking-tight leading-loose">¿Listo para cotizar tu casa?</h3>
+          <p className="text-white/70 text-[10px] md:text-xs font-bold uppercase tracking-[0.1em]">
+            Recibe una propuesta personalizada en menos de 24 horas.
+          </p>
         </div>
 
-        <div className="relative group/input">
-          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
-          <Input 
-            name="email" 
-            type="email" 
-            placeholder="Correo electrónico" 
-            required 
-            className="form-input-premium pl-12" 
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 gap-4">
+            {/* Región y Terreno Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white/50 px-1">Región</label>
+                <select 
+                  name="region" 
+                  defaultValue=""
+                  required
+                  className="w-full h-14 rounded-2xl bg-white/10 border border-white/20 text-white px-4 font-bold text-sm focus:bg-white focus:text-indigo-900 transition-all cursor-pointer outline-none"
+                >
+                  <option value="" disabled className="text-indigo-900">Selecciona tu región</option>
+                  {REGIONES_CHILE.map(r => (
+                    <option key={r} value={r} className="text-indigo-900 font-medium">{r}</option>
+                  ))}
+                </select>
+              </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="relative group/input">
-            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
-            <Input 
-              name="phone" 
-              placeholder="Teléfono" 
-              required
-              className="form-input-premium pl-12" 
-            />
-          </div>
-          <div className="relative group/input">
-            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
-            <select 
-              name="region" 
-              required
-              className="form-input-premium pl-12 pr-4 appearance-none cursor-pointer" 
-            >
-              <option value="" disabled selected>Región</option>
-              {REGIONES_CHILE.map(r => (
-                <option key={r} value={r}>{r}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white/50 px-1">¿Tienes terreno?</label>
+                <div className="flex bg-white/10 rounded-2xl p-1 h-12">
+                   <label className="flex-1 flex items-center justify-center gap-2 cursor-pointer rounded-xl hover:bg-white/5 transition-all text-xs font-black has-[:checked]:bg-white has-[:checked]:text-indigo-700">
+                      <input type="radio" name="terreno" value="Sí" className="hidden" defaultChecked />
+                      <span>SÍ</span>
+                   </label>
+                   <label className="flex-1 flex items-center justify-center gap-2 cursor-pointer rounded-xl hover:bg-white/5 transition-all text-xs font-black has-[:checked]:bg-white has-[:checked]:text-indigo-700">
+                      <input type="radio" name="terreno" value="No" className="hidden" />
+                      <span>NO</span>
+                   </label>
+                </div>
+              </div>
+            </div>
 
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="relative group/input">
-            <select 
-              name="terreno" 
-              required
-              className="form-input-premium pl-4 pr-4 appearance-none cursor-pointer" 
-              defaultValue=""
-            >
-              <option value="" disabled>¿Tienes terreno?</option>
-              <option value="Sí, tengo terreno">Sí, tengo terreno</option>
-              <option value="No, estoy buscando">No, estoy buscando</option>
-              <option value="En proceso de compra">En proceso de compra</option>
-            </select>
+            {/* Inputs Principales */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <input 
+                name="name" 
+                placeholder="Nombre" 
+                required 
+                className="h-14 rounded-2xl bg-white border-transparent text-indigo-900 px-5 font-bold text-sm placeholder:text-indigo-400 focus:ring-4 focus:ring-brand-indigo/30 transition-all"
+              />
+              <input 
+                name="phone" 
+                placeholder="Teléfono" 
+                required
+                className="h-14 rounded-2xl bg-white border-transparent text-indigo-900 px-5 font-bold text-sm placeholder:text-indigo-400 focus:ring-4 focus:ring-brand-indigo/30 transition-all"
+              />
+              <input 
+                name="email" 
+                type="email" 
+                placeholder="Email" 
+                required 
+                className="h-14 rounded-2xl bg-white border-transparent text-indigo-900 px-5 font-bold text-sm placeholder:text-indigo-400 focus:ring-4 focus:ring-brand-indigo/30 transition-all"
+              />
+            </div>
           </div>
-          <div className="relative group/input">
-            <select 
-              name="interes" 
-              required
-              className="form-input-premium pl-4 pr-4 appearance-none cursor-pointer" 
-              defaultValue=""
-            >
-              <option value="" disabled>¿Qué necesitas?</option>
-              <option value="Cotización aproximada">Cotización aproximada</option>
-              <option value="Presupuesto oficial">Presupuesto oficial</option>
-              <option value="Agendar visite/videollamada">Agendar visita/videollamada</option>
-              <option value="Solo información">Solo información</option>
-            </select>
-          </div>
-        </div>
-        <div className="relative group/input">
-          <select 
-            name="superficie" 
-            required
-            className="form-input-premium pl-4 pr-4 appearance-none cursor-pointer" 
-            defaultValue="Este modelo"
+
+          <Button 
+            type="submit" 
+            disabled={loading}
+            className="w-full h-16 rounded-2xl bg-[#00F5A0] hover:bg-[#00D98F] text-[#003B27] font-black uppercase tracking-widest text-sm shadow-xl shadow-black/10 hover:scale-[1.02] active:scale-95 transition-all"
           >
-            <option value="Este modelo">Quiero este modelo exacto</option>
-            <option value="Versión más pequeña">Versión más pequeña (ej: 72 m²)</option>
-            <option value="Versión más grande">Versión más grande (ej: 110 m²)</option>
-            <option value="Modelo personalizado">Modelo personalizado / Otra medida</option>
-          </select>
-        </div>
-        <div className="relative group/input">
-          <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all opacity-70" />
-          <Textarea 
-            name="message" 
-            defaultValue={`Hola, me interesa cotizar el modelo ${modeloNombre}. Me gustaría recibir más información sobre el precio final puesto en obra y tiempos de entrega.`}
-            className="form-input-premium pl-12 min-h-[100px] resize-y py-4 leading-relaxed" 
-          />
+            {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : "Solicitar cotización gratuita"}
+          </Button>
+
+          <p className="text-[10px] text-center text-white/40 font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+            <Lock className="w-3.5 h-3.5" /> Tus datos están 100% protegidos. Respuesta garantizada.
+          </p>
+        </form>
+
+        <div className="grid grid-cols-3 gap-1 pt-6 border-t border-white/10">
+          <div className="text-center space-y-1">
+             <Clock className="w-5 h-5 mx-auto text-white/50" />
+             <p className="text-[8px] font-black opacity-60">Respuesta en 24h</p>
+          </div>
+          <div className="text-center space-y-1">
+             <MessageSquare className="w-5 h-5 mx-auto text-white/50" />
+             <p className="text-[8px] font-black opacity-60">Asesoría sin compromiso</p>
+          </div>
+          <div className="text-center space-y-1">
+             <CheckCircle2 className="w-5 h-5 mx-auto text-white/50" />
+             <p className="text-[8px] font-black opacity-60">Información verificada</p>
+          </div>
         </div>
       </div>
-
-      {error && (
-        <p className="text-base font-bold text-destructive flex items-center gap-2">
-           <span className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
-           {error}
-        </p>
-      )}
-
-      <Button 
-        type="submit" 
-        size="lg" 
-        disabled={loading}
-        className="w-full h-auto min-h-[64px] py-3 px-4 rounded-2xl bg-brand-indigo font-black text-xs sm:text-sm md:text-base shadow-xl shadow-brand-indigo/20 hover:scale-[1.02] active:scale-95 transition-all group overflow-hidden relative"
-      >
-        {/* Shine effect */}
-        <div className="absolute inset-0 -translate-x-[150%] animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]" />
-        
-        {loading ? (
-          <Loader2 className="w-6 h-6 animate-spin relative z-10" />
-        ) : (
-          <span className="flex items-center justify-center gap-2 md:gap-3 relative z-10 whitespace-normal text-center leading-tight">
-            SOLICITAR PRESUPUESTO FORMAL
-            <Send className="w-4 h-4 md:w-5 md:h-5 shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </span>
-        )}
-      </Button>
-
-      <div className="flex flex-col items-center gap-2.5 pt-2">
-         <p className="text-[10px] text-center text-muted-foreground font-bold uppercase tracking-widest flex items-center gap-2">
-            <Lock className="w-3.5 h-3.5 opacity-60" /> Tus datos están 100% seguros
-         </p>
-         <div className="flex items-center gap-2 bg-brand-teal/10 px-4 py-1.5 rounded-full">
-            <Zap className="w-3.5 h-3.5 text-brand-teal fill-brand-teal/20" />
-            <p className="text-[10px] text-center text-brand-teal font-black uppercase tracking-[0.15em]">
-               Respuesta garantizada por la plataforma
-            </p>
-         </div>
-      </div>
-    </form>
+    </div>
   );
 }
