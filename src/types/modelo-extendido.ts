@@ -48,6 +48,7 @@ export interface ConstruccionData {
   techumbre?: string;             // "Zinc-aluminio inclinado", "EPDM plana"
   piso_interior?: string;         // "Piso flotante HDF", "Porcelanato 60x60"
   fundacion?: string;             // "Radier hormigón", "Pilotes de madera"
+  plano_url?: string;             // URL a imagen del plano
   notas?: string;
 }
 
