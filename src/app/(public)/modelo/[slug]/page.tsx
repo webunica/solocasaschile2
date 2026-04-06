@@ -66,7 +66,12 @@ export default async function ModeloPage({ params }: PageProps) {
         })}
       />
       
-      <StickyCTAMobile targetId="form-cotizar" />
+      <StickyCTAMobile 
+        modeloId={modelo.id}
+        modeloNombre={modelo.nombre}
+        constructoraId={constructora.id}
+        constructoraNombre={constructora.nombre}
+      />
       
       <div className="border-b bg-background/95 backdrop-blur-3xl sticky top-20 md:top-32 z-[80]">
         <div className="container max-w-screen-2xl mx-auto px-6 md:px-12 py-4 md:py-5 flex items-center justify-between">
@@ -164,11 +169,12 @@ export default async function ModeloPage({ params }: PageProps) {
         </div>
 
         {/* MIDDLE ROW: Info Header + Specs + Sidebar */}
+        {/* We use flex-col for mobile and order- classes to ensure Sidebar comes BEFORE Related Designs in mobile stack */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-start">
-           <div className="space-y-24">
+           <div className="space-y-24 order-1">
               <div className="space-y-8">
                  <div className="space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tight text-foreground leading-[0.9]">{modelo.nombre}</h1>
+                    <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tight text-foreground leading-[1.1]">{modelo.nombre}</h1>
                     <p className="text-lg md:text-xl text-muted-foreground font-bold tracking-tight opacity-80">
                        Casa {TIPO_LABELS[modelo.tipo] || 'Modelo'} de {modelo.superficie_m2} m² | {modelo.dormitorios} dormitorios | {modelo.banos} baños
                        {modelo.tiempo_entrega && ` | Entrega en ${modelo.tiempo_entrega} días`}
@@ -203,37 +209,10 @@ export default async function ModeloPage({ params }: PageProps) {
                     </div>
                  </div>
                )}
-
-               {/* Otros diseños destacados moved to bottom of main column */}
-               {hasOtherModels && (
-                 <div className="space-y-12 pt-16 border-t border-border/40">
-                    <div className="flex items-center justify-between">
-                       <h2 className="text-3xl font-heading font-black tracking-tight">Otros diseños de {constructora.nombre}</h2>
-                       <Link href={`/constructora/${constructora.slug}`} className="text-xs font-black uppercase tracking-widest text-brand-indigo hover:underline">Ver catálogo completo →</Link>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                       {otherModels.map((m: any) => (
-                        <Link key={m.id} href={`/modelo/${m.slug}`} className="group space-y-4">
-                           <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-indigo/5">
-                              <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                           </div>
-                           <div className="space-y-1">
-                              <h4 className="text-sm font-black tracking-tight group-hover:text-brand-indigo transition-colors">{m.nombre}</h4>
-                              <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                                 <span>{m.superficie_m2}m²</span>
-                                 <span>•</span>
-                                 <span>{m.dormitorios} Dorm</span>
-                              </div>
-                           </div>
-                        </Link>
-                      ))}
-                    </div>
-                 </div>
-               )}
             </div>
 
-           {/* Sidebar Sticky Form */}
-           <div className="sticky top-40 space-y-12">
+           {/* Sidebar Sticky Form - order-2 in mobile means it comes AFTER the main column content but BEFORE anything after the grid */}
+           <div className="sticky top-40 space-y-12 order-2">
               <div className="bg-card border border-brand-indigo/10 rounded-[3rem] p-10 flex flex-col gap-8 items-center text-center shadow-xl shadow-brand-indigo/5">
                  <div className="relative w-28 h-28 flex items-center justify-center">
                     <svg className="w-full h-full -rotate-90">
@@ -284,6 +263,33 @@ export default async function ModeloPage({ params }: PageProps) {
                </div>
            </div>
         </div>
+
+        {/* Otros diseños destacados moved OUTSIDE the main grid to ensure it's at the VERY bottom in mobile stack */}
+        {hasOtherModels && (
+           <div className="space-y-12 pt-16 border-t border-border/40">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                 <h2 className="text-3xl font-heading font-black tracking-tight">Otros diseños de {constructora.nombre}</h2>
+                 <Link href={`/constructora/${constructora.slug}`} className="text-xs font-black uppercase tracking-widest text-brand-indigo hover:underline">Ver catálogo completo →</Link>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                 {otherModels.map((m: any) => (
+                  <Link key={m.id} href={`/modelo/${m.slug}`} className="group space-y-4">
+                     <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-indigo/5">
+                        <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                     </div>
+                     <div className="space-y-1">
+                        <h4 className="text-sm font-black tracking-tight group-hover:text-brand-indigo transition-colors">{m.nombre}</h4>
+                        <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                           <span>{m.superficie_m2}m²</span>
+                           <span>•</span>
+                           <span>{m.dormitorios} Dorm</span>
+                        </div>
+                     </div>
+                  </Link>
+                ))}
+              </div>
+           </div>
+         )}
 
         <div className="bg-muted/10 border border-border/40 rounded-[3rem] p-12 flex flex-col md:flex-row items-center justify-between gap-12 group">
            <div className="space-y-4 text-center md:text-left">
