@@ -143,7 +143,7 @@ export default async function ModeloPage({ params }: PageProps) {
       
       {/* Breadcrumb / Back button */}
       <div className="border-b bg-background/95 backdrop-blur-3xl sticky top-20 md:top-32 z-[80]">
-        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-4 md:py-5 flex items-center justify-between">
+        <div className="container max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-6 md:px-12 py-4 md:py-5 flex items-center justify-between">
           <Link
             href="/catalogo"
             className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-all w-fit group"
@@ -159,8 +159,8 @@ export default async function ModeloPage({ params }: PageProps) {
         </div>
       </div>
 
-      <div className="container max-w-7xl mx-auto px-4 md:px-12 py-8 md:py-16 overflow-x-hidden">
-        <div className="grid lg:grid-cols-[1fr_420px] gap-12 lg:gap-24 items-start w-full">
+      <div className="container max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 md:px-12 py-8 md:py-16 overflow-x-hidden">
+        <div className="grid lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-12 lg:gap-24 items-start w-full">
           
           {/* Main Content (Left) */}
           <div className="space-y-12 md:space-y-16">
