@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { aprobarSello, rechazarSello } from "@/lib/supabase/actions";
+import { useRouter } from "next/navigation";
 
 interface SelloActionButtonsProps {
   selloId: string;
 }
 
 export function SelloActionButtons({ selloId }: SelloActionButtonsProps) {
+  const router = useRouter();
   const [loading, setLoading] = useState<"aprobar" | "rechazar" | null>(null);
   const [comentario, setComentario] = useState("");
 
@@ -17,7 +19,13 @@ export function SelloActionButtons({ selloId }: SelloActionButtonsProps) {
       setLoading("aprobar");
       const formData = new FormData();
       formData.append("sellosId", selloId);
-      await aprobarSello(formData);
+      const res = await aprobarSello(formData);
+      
+      if (res?.success) {
+        router.refresh();
+      } else if (res?.error) {
+        alert("Error: " + res.error);
+      }
     } catch (error) {
       console.error("Error al aprobar:", error);
       alert("Error al aprobar el sello. Revisa la consola.");
@@ -37,7 +45,14 @@ export function SelloActionButtons({ selloId }: SelloActionButtonsProps) {
       const formData = new FormData();
       formData.append("sellosId", selloId);
       formData.append("comentario", comentario);
-      await rechazarSello(formData);
+      const res = await rechazarSello(formData);
+      
+      if (res?.success) {
+        setComentario("");
+        router.refresh();
+      } else if (res?.error) {
+        alert("Error: " + res.error);
+      }
     } catch (error) {
       console.error("Error al rechazar:", error);
       alert("Error al rechazar el sello.");

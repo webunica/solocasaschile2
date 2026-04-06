@@ -721,10 +721,11 @@ export async function aprobarSello(formData: FormData) {
     revalidatePath('/dashboard/sellos')
     revalidatePath('/constructoras') // For catalog
     console.log("[Admin] Sello aprobado exitosamente");
+    return { success: true };
 
   } catch (err: any) {
     console.error("[Admin] Excepción en aprobarSello:", err);
-    throw err;
+    return { success: false, error: err.message || "Error desconocido" };
   }
 }
 
@@ -761,10 +762,11 @@ export async function rechazarSello(formData: FormData) {
     revalidatePath('/dashboard/admin/sellos')
     revalidatePath('/dashboard/sellos')
     console.log("[Admin] Sello rechazado exitosamente");
+    return { success: true };
 
   } catch (err: any) {
     console.error("[Admin] Excepción en rechazarSello:", err);
-    throw err;
+    return { success: false, error: err.message || "Error desconocido" };
   }
 }
 
