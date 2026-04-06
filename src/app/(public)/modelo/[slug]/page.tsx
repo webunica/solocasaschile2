@@ -40,17 +40,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ModeloPage({ params }: PageProps) {
   const { slug } = await params;
   const modelo = await getModelBySlug(slug);
-  if (!modelo) notFound();
+  
+  if (!modelo) {
+    notFound();
+  }
 
   const constructora = modelo.constructora || { id: 'unknown', nombre: 'Constructora', logo_url: '/placeholder.png', score_confianza: 0 };
   const precio = modelo.precio_desde_uf || 0;
-  const score = constructora.score_confianza || 0;
   const imagenes = modelo.imagenes_urls || [];
   const relatedModels = await getModelsByConstructoraId(constructora.id);
-  const otherModels = relatedModels.filter(m => m.id !== modelo.id).slice(0, 3);
+  const otherModels = relatedModels.filter((m: any) => m.id !== modelo.id).slice(0, 3);
   const hasOtherModels = otherModels.length > 0;
   
   const sellos = await getSellosDeConstructora(constructora.id);
+  const maxSellosTotales = 8;
+  const scoreConfianza = Math.max(10, Math.min(100, Math.round((sellos.length / maxSellosTotales) * 100)));
 
   return (
     <div className="min-h-screen bg-background relative pt-16 md:pt-24 font-sans">
@@ -216,14 +220,31 @@ export default async function ModeloPage({ params }: PageProps) {
 
             {/* Sidebar Sticky Form - order-2 in mobile means it comes AFTER the main column content but BEFORE anything after the grid */}
             <div className="sticky top-40 space-y-12 order-2">
-               {/* Constructora Spotlight */}
-               <div className="bg-card border border-border/40 rounded-[3rem] p-8 space-y-6 shadow-xl shadow-brand-indigo/5 hover:border-brand-indigo/30 transition-colors">
-                  <div className="flex flex-col items-center text-center space-y-4">
-                     {constructora.logo_url && (
-                         <div className="w-20 h-20 rounded-3xl bg-white border border-border/40 flex items-center justify-center p-3 shadow-lg shadow-black/5 shrink-0 overflow-hidden">
-                            <Image src={constructora.logo_url} width={80} height={80} alt={constructora.nombre} className="max-w-[80%] max-h-[80%] object-contain" />
-                         </div>
-                     )}
+               {/* Constructora Spotlight with Score */}
+               <div className="bg-card border border-border/40 rounded-[3rem] p-8 space-y-6 shadow-xl shadow-brand-indigo/5 hover:border-brand-indigo/30 transition-colors relative overflow-hidden">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-32 bg-gradient-to-b from-brand-indigo/5 to-transparent pointer-events-none" />
+                  
+                  <div className="flex flex-col items-center text-center space-y-5 relative z-10 pt-2">
+                     <div className="relative w-32 h-32 flex items-center justify-center mb-2 group">
+                        {/* Dynamic Circular Graph */}
+                        <svg className="absolute inset-0 w-full h-full -rotate-90 drop-shadow-sm transition-all duration-1000">
+                           <circle cx="64" cy="64" r="60" className="stroke-muted/30 fill-none" strokeWidth="4" />
+                           <circle cx="64" cy="64" r="60" className="stroke-brand-indigo fill-none transition-all duration-1000 ease-out" strokeWidth="6" strokeDasharray="376.99" strokeDashoffset={376.99 - (376.99 * scoreConfianza) / 100} strokeLinecap="round" />
+                        </svg>
+                        
+                        {/* Logo inside circle */}
+                        {constructora.logo_url && (
+                            <div className="relative w-[100px] h-[100px] rounded-full bg-white flex items-center justify-center p-3 shadow-inner shadow-black/5 overflow-hidden z-10 border border-border/40 group-hover:scale-105 transition-transform">
+                               <Image src={constructora.logo_url} width={80} height={80} alt={constructora.nombre} className="w-full h-auto max-h-[80px] object-contain" />
+                            </div>
+                        )}
+                        
+                        {/* Score Badge */}
+                        <div className="absolute -bottom-3 bg-brand-indigo text-white font-black text-[12px] rounded-full px-4 py-1 shadow-xl z-20 border-[3px] border-background animate-in slide-in-from-bottom-2 fade-in duration-500">
+                           {scoreConfianza}% Confianza
+                        </div>
+                     </div>
+
                      <div className="space-y-1">
                         <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center justify-center gap-1.5"><Building2 className="w-3 h-3" /> Construido por</p>
                         <h3 className="text-2xl font-black">{constructora.nombre}</h3>
@@ -231,10 +252,12 @@ export default async function ModeloPage({ params }: PageProps) {
                   </div>
 
                   {sellos.length > 0 && (
-                     <div className="bg-brand-indigo/5 border border-brand-indigo/10 rounded-[2rem] p-6 space-y-4">
-                        <div className="flex items-center justify-between pb-2 border-b border-brand-indigo/10">
-                           <p className="text-[10px] font-black uppercase tracking-widest text-brand-indigo">Confiabilidad</p>
-                           <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo bg-brand-indigo/10 text-[9px] px-2 h-5 rounded-full">{sellos.length} Sellos</Badge>
+                     <div className="bg-brand-indigo/5 border border-brand-indigo/10 rounded-[2rem] p-6 space-y-4 relative z-10">
+                        <div className="flex items-center justify-between pb-3 border-b border-brand-indigo/10">
+                           <p className="text-[10px] font-black uppercase tracking-widest text-brand-indigo">Insignias Obtenidas</p>
+                           <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo bg-brand-indigo/10 text-[9px] px-2 h-5 rounded-full font-black">
+                              {sellos.length} / 8 completadas
+                           </Badge>
                         </div>
                         <SellosGrid sellos={sellos.slice(0, 4)} compact />
                      </div>
@@ -242,9 +265,9 @@ export default async function ModeloPage({ params }: PageProps) {
 
                   <Link 
                      href={`/constructora/${constructora.slug}`}
-                     className="flex items-center justify-center w-full rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest hover:bg-brand-indigo hover:text-white transition-all border border-brand-indigo/20 text-brand-indigo"
+                     className="relative z-10 flex items-center justify-center w-full rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest hover:bg-brand-indigo hover:text-white transition-all border border-brand-indigo/20 text-brand-indigo shadow-sm"
                   >
-                     Ver Todo Sobre la Empresa →
+                     Ver Perfil y {sellos.length > 4 ? `+${sellos.length - 4}` : 'Más'} Insignias →
                   </Link>
                </div>
 
