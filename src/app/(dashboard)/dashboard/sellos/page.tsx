@@ -6,6 +6,7 @@ import { ShieldCheck, BadgeCheck, Clock, CheckCircle2, XCircle } from "lucide-re
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { solicitarSello } from "@/lib/supabase/actions";
+import { SolicitarSelloForm } from "@/components/dashboard/sellos/solicitar-sello-form";
 import Link from "next/link";
 
 export const metadata = {
@@ -145,17 +146,7 @@ export default async function SellosDashboardPage() {
                         <Clock className="w-3 h-3" /> En revisión
                       </span>
                     ) : isManual ? (
-                      <form action={solicitarSello}>
-                        <input type="hidden" name="selloId" value={sello.id} />
-                        <Button 
-                          type="submit" 
-                          size="sm" 
-                          variant="outline" 
-                          className="h-8 px-4 text-[10px] font-black uppercase tracking-widest rounded-full border-brand-indigo/30 text-brand-indigo hover:bg-brand-indigo hover:text-white transition-all"
-                        >
-                          Solicitar Verificación
-                        </Button>
-                      </form>
+                      <SolicitarSelloForm sello={sello} />
                     ) : (
                       <Link 
                         href={sello.slug === 'empresa-activa' ? '/dashboard/catalog' : '/dashboard/settings'}
