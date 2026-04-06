@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getPlanLimits } from '../constants/plans'
 import { resend } from '@/lib/resend'
+import { recalcularSellosAutomaticos } from '@/lib/services/sellos'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -251,6 +252,9 @@ export async function updateSettings(formData: FormData) {
 
   if (error) return { error: error.message }
 
+  // Recalculo automático de sellos
+  await recalcularSellosAutomaticos(user.id);
+
   revalidatePath('/dashboard/settings')
   revalidatePath(`/constructora/${formData.get('slug')}`)
   return { success: true }
@@ -299,6 +303,9 @@ export async function createModel(data: any) {
 
   if (error) return { error: error.message }
 
+  // Recalculo automático de sellos
+  await recalcularSellosAutomaticos(user.id);
+
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
   revalidatePath('/dashboard/settings')
@@ -331,6 +338,9 @@ export async function updateModel(id: string, data: any) {
     .eq('id', id);
 
   if (error) return { error: error.message }
+
+  // Recalculo automático de sellos
+  await recalcularSellosAutomaticos(currentModel.constructora_id);
 
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
