@@ -46,6 +46,26 @@ CREATE POLICY "Constructora sellos read access" ON public.constructora_sellos FO
 -- constructora_sellos: Constructoras can request (insert) their own manual seals
 CREATE POLICY "Constructora can insert own sellos" ON public.constructora_sellos FOR INSERT WITH CHECK (auth.uid() = constructora_id AND estado = 'pendiente');
 
+-- constructora_sellos: Admins can update stamps (approve/reject)
+CREATE POLICY "Admins can update sellos" ON public.constructora_sellos
+  FOR UPDATE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.constructoras
+      WHERE id = auth.uid() AND role = 'superadmin'
+    )
+  );
+
+-- constructora_sellos: Admins can delete if needed
+CREATE POLICY "Admins can delete sellos" ON public.constructora_sellos
+  FOR DELETE
+  USING (
+    EXISTS (
+      SELECT 1 FROM public.constructoras
+      WHERE id = auth.uid() AND role = 'superadmin'
+    )
+  );
+
 -- constructora_sellos: Constructoras can view their own pending/rejected
 -- Note: the "read access" above already allows reading all, so this is fine.
 
