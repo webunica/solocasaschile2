@@ -8,13 +8,14 @@ import { CotizarForm } from "@/components/constructora/cotizar-form";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn } from "@/lib/utils";
-import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video } from "lucide-react";
+import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video, Building2, Package, TrendingUp } from "lucide-react";
 import { PriceNotify } from "@/components/modelo/price-notify";
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import { PruebaSocial } from "@/components/modelo/prueba-social";
 import { ModeloResumenHero } from "@/components/modelo/modelo-resumen-hero";
 import { FichaTecnicaCompleta } from "@/components/modelo/ficha-tecnica-completa";
 import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
+import { ModeloPlano } from "@/components/modelo/modelo-plano";
 import { ScoreInfoModal } from "@/components/modelo/score-info-modal";
 import { DynamicUrgency } from "@/components/ui/dynamic-urgency";
 import type { Metadata } from "next";
@@ -238,16 +239,44 @@ export default async function ModeloPage({ params }: PageProps) {
               {modelo.descripcion || 'Sin descripción disponible.'}
             </p>
 
-               <div className="space-y-8 md:space-y-10">
-                  <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight flex items-center gap-4">
-                    <Square className="w-6 h-6 md:w-8 md:h-8 text-brand-teal opacity-40 shrink-0" /> 
-                    Ficha Técnica Industrial
-                  </h2>
-                  
-                  <FichaTecnicaCompleta modelo={modelo} />
+            {/* Reputation Card (Trust) */}
+            <div className="bg-background border border-brand-indigo/20 rounded-[2.5rem] md:rounded-[3rem] p-8 relative overflow-hidden group shadow-lg shadow-brand-indigo/5 mt-8">
+               <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-indigo/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+               <div className="flex flex-col md:flex-row gap-8 items-center relative z-10 w-full">
+                  <div className="shrink-0 scale-100 md:scale-110">
+                     <div className="relative w-24 h-24 flex items-center justify-center">
+                        <svg className="w-full h-full -rotate-90">
+                           <circle cx="48" cy="48" r="44" className="stroke-muted-foreground/10 fill-none" strokeWidth="8" />
+                           <circle 
+                             cx="48" cy="48" r="44" 
+                             className="stroke-brand-indigo fill-none transition-all duration-1000" 
+                             strokeWidth="8" 
+                             strokeDasharray={276.46}
+                             strokeDashoffset={276.46 - (276.46 * score) / 100}
+                             strokeLinecap="round"
+                           />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                           <span className="text-2xl font-black text-brand-indigo">{score}</span>
+                           <span className="text-[7px] font-bold uppercase tracking-widest opacity-40 mb-1">Score</span>
+                           <ScoreInfoModal />
+                        </div>
+                     </div>
+                  </div>
+                  <div className="flex-1 space-y-4 text-center md:text-left w-full">
+                     <div className="space-y-1 text-left w-full">
+                        <h3 className="text-2xl font-heading font-black tracking-tighter">Constructora Certificada</h3>
+                        <p className="text-sm text-muted-foreground font-medium max-w-sm leading-relaxed">Auditoría aprobada por el sistema de verificación técnica SolocasasChile.</p>
+                     </div>
+                  </div>
                </div>
+            </div>
 
-               {/* Video Section */}
+            <ModeloPlano planoUrl={(modelo as any).plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
+
+            <IncluyeNoIncluye modelo={modelo} className="py-12 border-t border-border/20" />
+
+            {/* Video Section */}
                {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
                   <div className="space-y-8 md:space-y-10">
                      <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight flex items-center gap-4">
@@ -265,57 +294,40 @@ export default async function ModeloPage({ params }: PageProps) {
                      </div>
                   </div>
                )}
-
-               <IncluyeNoIncluye modelo={modelo} className="py-12 border-t border-border/20" />
-
-               <FichaExpandida modelo={modelo} />
-
-            {/* Reputation Card (Trust) */}
-            <div className="bg-background border-2 border-brand-indigo/10 rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-12 relative overflow-hidden group shadow-2xl shadow-primary/5">
-               <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-indigo/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-               <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center relative z-10">
-                  <div className="shrink-0 scale-110 md:scale-125">
-                     <div className="relative w-28 h-28 md:w-32 md:h-32 flex items-center justify-center">
-                        <svg className="w-full h-full -rotate-90">
-                           <circle cx="56 md:64" cy="56 md:64" r="50 md:58" className="stroke-muted-foreground/10 fill-none" strokeWidth="10" />
-                           <circle 
-                             cx="64" cy="64" r="58" 
-                             className="stroke-brand-indigo fill-none transition-all duration-1000" 
-                             strokeWidth="10" 
-                             strokeDasharray={364.4}
-                             strokeDashoffset={364.4 - (364.4 * score) / 100}
-                             strokeLinecap="round"
-                           />
-                        </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center">
-                           <span className="text-2xl md:text-3xl font-black text-brand-indigo">{score}</span>
-                           <span className="text-[8px] font-bold uppercase tracking-widest opacity-40 mb-1">Score</span>
-                           <ScoreInfoModal />
-                        </div>
-                     </div>
-                  </div>
-                  <div className="flex-1 space-y-4 md:space-y-6 text-center md:text-left">
-                     <div className="space-y-2">
-                        <h3 className="text-2xl md:text-4xl font-heading font-black tracking-tighter">Constructora Certificada</h3>
-                        <p className="text-lg md:text-xl text-muted-foreground font-medium max-w-lg leading-relaxed">Auditoría aprobada por el sistema de verificación técnica SolocasasChile.</p>
-                     </div>
-                     <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4">
-                        {constructora.verificada && (
-                          <div className="flex items-center gap-3 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-brand-teal bg-brand-teal/5 px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-brand-teal/10">
-                            <ShieldCheck className="w-4 h-4" /> Verificada
-                          </div>
-                        )}
-                        <Link href={`/constructora/${constructora.slug || 'unknown'}`} className="flex items-center gap-3 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo bg-brand-indigo/5 px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-brand-indigo/10 hover:bg-brand-indigo/10 transition-colors">
-                           Ver Perfil Industrial <ArrowLeft className="w-3 h-3 rotate-180" />
-                        </Link>
-                     </div>
-                  </div>
-               </div>
-            </div>
           </div>
 
           {/* Pricing & Checkout (Right Sticky) */}
           <div className="sticky top-40 space-y-8 h-fit pb-12">
+             <div className="bg-card border border-border/40 rounded-[2.5rem] p-6 shadow-xl shadow-primary/5 space-y-8 overflow-hidden relative">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-brand-indigo/80" />
+                <h2 className="text-xl font-heading font-black tracking-tight flex items-center gap-3">
+                  <Square className="w-5 h-5 text-brand-indigo opacity-50 shrink-0" /> 
+                  Ficha Técnica
+                </h2>
+                <FichaTecnicaCompleta modelo={modelo} className="space-y-6" />
+                <FichaExpandida modelo={modelo} />
+             </div>
+
+             {/* 4 Build Features block */}
+             <div className="grid grid-cols-2 gap-4">
+               <div className="bg-card border border-border/40 rounded-3xl p-5 hover:bg-muted/30 transition-colors">
+                  <Building2 className="w-8 h-8 text-brand-indigo mb-3 opacity-80" />
+                  <p className="text-sm font-black tracking-tight leading-tight">Sistema Integrado</p>
+               </div>
+               <div className="bg-card border border-border/40 rounded-3xl p-5 hover:bg-muted/30 transition-colors">
+                  <Package className="w-8 h-8 text-brand-teal mb-3 opacity-80" />
+                  <p className="text-sm font-black tracking-tight leading-tight">Entrega Optimizada</p>
+               </div>
+               <div className="bg-card border border-border/40 rounded-3xl p-5 hover:bg-muted/30 transition-colors">
+                  <ShieldCheck className="w-8 h-8 text-brand-indigo mb-3 opacity-80" />
+                  <p className="text-sm font-black tracking-tight leading-tight">Garantía Extendida</p>
+               </div>
+               <div className="bg-card border border-border/40 rounded-3xl p-5 hover:bg-muted/30 transition-colors">
+                  <TrendingUp className="w-8 h-8 text-emerald-500 mb-3 opacity-80" />
+                  <p className="text-sm font-black tracking-tight leading-tight">Diseño Eficiente</p>
+               </div>
+             </div>
+
              <div id="form-cotizar" className="bg-card/40 backdrop-blur-3xl border border-border/40 rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-12 shadow-2xl shadow-primary/10 relative overflow-hidden group/form">
                 <div className="absolute top-0 left-0 right-0 h-2 animate-gradient shadow-xl bg-brand-indigo" />
                 

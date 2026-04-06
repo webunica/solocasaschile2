@@ -208,8 +208,11 @@ export function EditModelForm({ modelo }: { modelo: any }) {
   const [previews, setPreviews] = useState<string[]>(modelo.imagenes_urls || []);
   const [files, setFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>(modelo.imagenes_urls || []);
+  const [planoFile, setPlanoFile] = useState<File | null>(null);
+  const [planoPreview, setPlanoPreview] = useState<string | null>(modelo.plano_url || null);
   const [plan, setPlan] = useState<string>("gratis");
   const [planLimits, setPlanLimits] = useState<any>(null);
+  const planoInputRef = useRef<HTMLInputElement>(null);
   
   // Real-time SEO Preview track
   const [modelName, setModelName] = useState(modelo.nombre);
@@ -244,6 +247,21 @@ export function EditModelForm({ modelo }: { modelo: any }) {
     const selected = Array.from(e.target.files || []).slice(0, limitLeft);
     setFiles(prev => [...prev, ...selected]);
     setPreviews(prev => [...prev, ...selected.map(f => URL.createObjectURL(f))]);
+  };
+
+  const handlePlano = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPlanoFile(file);
+      setPlanoPreview(URL.createObjectURL(file));
+      handleFormChange();
+    }
+  };
+
+  const removePlanoWithAutoSave = () => {
+    setPlanoFile(null);
+    setPlanoPreview(null);
+    handleFormChange();
   };
 
   const removeImage = (idx: number) => {
@@ -285,6 +303,18 @@ export function EditModelForm({ modelo }: { modelo: any }) {
 
       const finalImages = [...existingImages, ...newUrls];
 
+      // Upload plano si existe
+      let finalPlanoUrl = planoPreview;
+      if (planoFile) {
+        const ext = planoFile.name.split('.').pop();
+        const path = `${user.id}/plano-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { error: uploadError } = await supabase.storage.from('model_images').upload(path, planoFile);
+        if (!uploadError) {
+          const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(path);
+          finalPlanoUrl = publicUrl;
+        }
+      }
+
       // Parse JSONB
       const parseJsonField = (field: string) => {
         const keys = Array.from(formData.keys()).filter(k => k.startsWith(`${field}.`));
@@ -317,6 +347,7 @@ export function EditModelForm({ modelo }: { modelo: any }) {
         imagenes_urls: finalImages,
         disponible: formData.get('disponible') === 'true',
         video_url: formData.get('video_url') as string || null,
+        plano_url: finalPlanoUrl || null,
         // Extended
         pisos: Number(formData.get('pisos')) || 1,
         codigo_modelo: formData.get('codigo_modelo') as string || null,
@@ -632,7 +663,30 @@ export function EditModelForm({ modelo }: { modelo: any }) {
               </div>
             </div>
             <div className="space-y-4">
-              <Label className="text-xs font-black uppercase tracking-widest opacity-60">Enlace Video Tour</Label>
+              <Label className="text-xs font-black uppercase tracking-widest opacity-60">Plano de Distribución</Label>
+              <div
+                onClick={() => !planoPreview && planoInputRef.current?.click()}
+                className={cn(
+                  "border-2 border-dashed border-border/60 rounded-3xl relative overflow-hidden transition-all",
+                  planoPreview ? "" : "p-6 text-center cursor-pointer hover:bg-muted/30"
+                )}
+              >
+                {!planoPreview ? (
+                  <>
+                    <Upload className="w-10 h-10 mx-auto mb-2 opacity-40 text-brand-indigo" />
+                    <p className="text-[10px] font-bold uppercase tracking-widest">Añadir plano (PNG/JPG)</p>
+                  </>
+                ) : (
+                  <div className="relative aspect-video">
+                    <img src={planoPreview} className="w-full h-full object-cover" />
+                    <button type="button" onClick={removePlanoWithAutoSave} className="absolute top-2 right-2 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+                <input ref={planoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePlano} />
+              </div>
+              <Label className="text-xs font-black uppercase tracking-widest opacity-60 mt-4 block">Enlace Video Tour</Label>
               <Input id="video_url" name="video_url" defaultValue={modelo.video_url || ""} placeholder="YouTube/Vimeo URL" className="h-12 rounded-2xl" />
             </div>
           </div>
