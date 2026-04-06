@@ -304,19 +304,22 @@ export function EditModelForm({ modelo }: { modelo: any }) {
       const finalImages = [...existingImages, ...newUrls];
 
       // Upload plano si existe
-      let finalPlanoUrl = modelo.construccion?.plano_url || null; // Start with existing remote url, not blob preview
+      let finalPlanoUrl = planoPreview; // Usamos el preview actual como base del estado
+      
       if (planoFile) {
+        console.log("DEBUG: Subiendo archivo de plano...", planoFile.name);
         const ext = planoFile.name.split('.').pop();
         const path = `${user.id}/plano-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         const { error: uploadError } = await supabase.storage.from('model_images').upload(path, planoFile);
         if (uploadError) {
+          console.error("DEBUG: Error de storage:", uploadError);
           throw new Error("Error al subir el plano: " + uploadError.message);
         } else {
           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(path);
           finalPlanoUrl = publicUrl;
+          console.log("DEBUG: Plano subido con éxito:", finalPlanoUrl);
         }
       } else if (!planoPreview) {
-        // user removed the plano
         finalPlanoUrl = null;
       }
 
@@ -390,7 +393,8 @@ export function EditModelForm({ modelo }: { modelo: any }) {
         setTimeout(() => router.push('/dashboard/catalog'), 2000);
       }
     } catch (err: any) {
-      if (!isAuto) setError(err.message || "Error al actualizar");
+      console.error("DEBUG: Error en submitHandler:", err);
+      setError(err.message || "Error al actualizar");
     } finally {
       setIsAutoSaving(false);
       if (!isAuto) setLoading(false);
