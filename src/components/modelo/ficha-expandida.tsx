@@ -19,11 +19,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function SpecGrid({ items }: { items: { label: string; value: string }[] }) {
   return (
-    <div className="grid md:grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 gap-2.5">
       {items.map(({ label, value }) => (
-        <div key={label} className="bg-muted/10 border border-border/30 rounded-2xl p-4">
-          <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">{label}</p>
-          <p className="text-sm font-semibold text-foreground">{value}</p>
+        <div key={label} className="bg-muted/10 border border-border/30 rounded-2xl p-4 group/spec">
+          <p className="text-[9px] font-black uppercase tracking-widest opacity-40 mb-1 group-hover/spec:opacity-60 transition-opacity">{label}</p>
+          <p className="text-sm font-black text-foreground/90 leading-tight">{value}</p>
         </div>
       ))}
     </div>
@@ -131,7 +131,7 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
       {/* Logística de Compra */}
       {hasData(log) && (
         <Section title="🚚 Logística de Compra">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-3">
             {log.que_incluye && (
               <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-2xl p-5">
                 <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">✅ Incluye</p>
@@ -144,15 +144,17 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
                 <p className="text-sm text-muted-foreground leading-relaxed">{log.que_no_incluye}</p>
               </div>
             )}
-            {(['transporte', 'montaje', 'plazo_fabricacion', 'plazo_montaje'] as const).filter(k => log[k]).map(k => {
-              const labels = { transporte: '🚛 Transporte', montaje: '🔧 Montaje', plazo_fabricacion: '🏭 Fabricación', plazo_montaje: '📅 Montaje en terreno' };
-              return (
-                <div key={k} className="bg-muted/10 border border-border/30 rounded-2xl p-4">
-                  <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">{labels[k]}</p>
-                  <p className="text-sm font-semibold">{log[k]}</p>
-                </div>
-              );
-            })}
+            <div className="grid grid-cols-1 gap-3">
+              {(['transporte', 'montaje', 'plazo_fabricacion', 'plazo_montaje'] as const).filter(k => log[k]).map(k => {
+                const labels = { transporte: '🚛 Transporte', montaje: '🔧 Montaje', plazo_fabricacion: '🏭 Fabricación', plazo_montaje: '📅 Montaje en terreno' };
+                return (
+                  <div key={k} className="bg-muted/10 border border-border/30 rounded-2xl p-4">
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">{labels[k]}</p>
+                    <p className="text-sm font-black">{log[k]}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
           {log.personalizacion && (
             <div className="bg-brand-indigo/5 border border-brand-indigo/20 rounded-2xl p-5">
@@ -166,13 +168,13 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
       {/* Soporte y Garantías */}
       {hasData(sop) && (
         <Section title="🛡 Soporte y Garantías">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-3">
             {(['garantia_estructura', 'garantia_impermeabilizacion', 'garantia_terminaciones', 'garantia_instalaciones'] as const).filter(k => sop[k]).map(k => {
               const labels = { garantia_estructura: 'Estructura', garantia_impermeabilizacion: 'Impermeab.', garantia_terminaciones: 'Terminaciones', garantia_instalaciones: 'Instalaciones' };
               return (
-                <div key={k} className="bg-background border-2 border-border/40 rounded-2xl p-5 text-center">
-                  <p className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">{labels[k]}</p>
-                  <p className="text-2xl font-black text-brand-indigo">{sop[k]}</p>
+                <div key={k} className="bg-background border border-border/40 rounded-2xl p-4 flex items-center justify-between group/sop">
+                  <p className="text-[10px] font-black uppercase tracking-widest opacity-40 group-hover/sop:opacity-70 transition-opacity">{labels[k]}</p>
+                  <p className="text-sm font-black text-brand-indigo">{sop[k]}</p>
                 </div>
               );
             })}
