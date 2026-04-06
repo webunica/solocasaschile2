@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { CotizarForm } from "@/components/constructora/cotizar-form";
+import { CotizarModal } from "@/components/modelo/cotizar-modal";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn, getYoutubeEmbedUrl } from "@/lib/utils";
@@ -123,13 +124,30 @@ export default async function ModeloPage({ params }: PageProps) {
                        </div>
                     </div>
 
-                    <Link href="#form-cotizar" className={cn(buttonVariants({ size: "lg" }), "w-full rounded-2xl h-16 font-black uppercase tracking-[0.2em] bg-brand-indigo shadow-xl shadow-primary/20 flex items-center justify-center text-xs")}>
-                       <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Cotización
-                    </Link>
+                    {/* Modal Trigger for Pricing Card */}
+                    <CotizarModal
+                       modeloId={modelo.id}
+                       modeloNombre={modelo.nombre}
+                       constructoraId={constructora.id}
+                       constructoraNombre={constructora.nombre}
+                       trigger={
+                          <Button size="lg" className="w-full rounded-2xl h-16 font-black uppercase tracking-[0.2em] bg-brand-indigo shadow-xl shadow-primary/20 flex items-center justify-center text-xs">
+                             <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Cotización
+                          </Button>
+                       }
+                    />
 
-                    <Link href="#form-cotizar" className="block w-full text-brand-indigo font-black text-[10px] uppercase tracking-widest hover:underline text-center">
-                       Ver otros formatos →
-                    </Link>
+                    <CotizarModal
+                       modeloId={modelo.id}
+                       modeloNombre={modelo.nombre}
+                       constructoraId={constructora.id}
+                       constructoraNombre={constructora.nombre}
+                       trigger={
+                          <button className="block w-full text-brand-indigo font-black text-[10px] uppercase tracking-widest hover:underline text-center">
+                             Ver otros formatos →
+                          </button>
+                       }
+                    />
                  </div>
               </div>
 
@@ -240,9 +258,17 @@ export default async function ModeloPage({ params }: PageProps) {
               <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight">¿Deseas personalizar este diseño?</h2>
               <p className="text-muted-foreground text-lg font-medium max-w-xl">Adapta los planos según tus necesidades y terreno.</p>
            </div>
-           <Link href="#form-cotizar" className={cn(buttonVariants({ size: "lg" }), "rounded-full px-12 h-20 text-lg font-black uppercase tracking-widest bg-brand-indigo shadow-2xl")}>
-              Conversar con Asesor
-           </Link>
+           <CotizarModal
+              modeloId={modelo.id}
+              modeloNombre={modelo.nombre}
+              constructoraId={constructora.id}
+              constructoraNombre={constructora.nombre}
+              trigger={
+                 <Button size="lg" className="rounded-full px-12 h-20 text-lg font-black uppercase tracking-widest bg-brand-indigo shadow-2xl">
+                    Conversar con Asesor
+                 </Button>
+              }
+           />
         </div>
 
       </div>
