@@ -193,21 +193,6 @@ export default async function ModeloPage({ params }: PageProps) {
 
               <FichaExpandida modelo={modelo} />
 
-               {/* Related Designs */}
-               <div className="space-y-10">
-                  <h2 className="text-3xl font-heading font-black tracking-tight">Otros diseños destacados</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                     {(hasOtherModels ? otherModels : []).map((m: any) => (
-                      <Link key={m.id} href={`/modelo/${m.slug}`} className="group">
-                         <div className="relative aspect-video rounded-[1.5rem] overflow-hidden shadow-xl mb-4">
-                            <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                         </div>
-                         <h4 className="text-sm font-black tracking-tight group-hover:text-brand-indigo transition-colors">{m.nombre}</h4>
-                         <p className="text-[10px] font-bold text-muted-foreground uppercase mt-1">{m.superficie_m2}m²</p>
-                      </Link>
-                    ))}
-                  </div>
-               </div>
 
               <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
               
