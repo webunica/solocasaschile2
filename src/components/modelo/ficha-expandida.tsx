@@ -37,43 +37,12 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
   const itemsTerminaciones = toItems(ter, labelMap.terminaciones).slice(0, 3);
 
   const allItems = [...itemsConstruccion, ...itemsAislacion, ...itemsTerminaciones];
+  
+  if (modelo.uso) allItems.push({ label: 'Uso sugerido', value: modelo.uso.replace(/-/g, ' ') });
+  if (modelo.pisos > 1) allItems.push({ label: 'Niveles', value: `${modelo.pisos} Plantas` });
 
   return (
     <div className="space-y-24">
-      {/* Distribución y Uso */}
-      {(modelo.recintos?.length > 0 || modelo.uso || modelo.pisos > 1) && (
-        <div className="space-y-8">
-           <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight text-brand-indigo">Distribución y Espacios</h2>
-              <p className="text-muted-foreground text-sm font-medium">Cada metro cuadrado diseñado para maximizar la funcionalidad.</p>
-           </div>
-           
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {modelo.uso && (
-                <div className="bg-card border border-border/40 p-6 rounded-[2rem] flex items-start gap-4">
-                   <div className="w-12 h-12 bg-muted/30 rounded-2xl flex items-center justify-center shrink-0">
-                      <Bed className="w-6 h-6 text-brand-indigo" />
-                   </div>
-                   <div className="space-y-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Uso sugerido</span>
-                      <p className="text-sm font-black capitalize">{modelo.uso.replace(/-/g, ' ')}</p>
-                   </div>
-                </div>
-              )}
-              {modelo.pisos > 1 && (
-                <div className="bg-card border border-border/40 p-6 rounded-[2rem] flex items-start gap-4">
-                   <div className="w-12 h-12 bg-muted/30 rounded-2xl flex items-center justify-center shrink-0">
-                      <TrendingUp className="w-6 h-6 text-brand-indigo" />
-                   </div>
-                   <div className="space-y-1">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Niveles</span>
-                      <p className="text-sm font-black">{modelo.pisos} Plantas</p>
-                   </div>
-                </div>
-              )}
-           </div>
-        </div>
-      )}
 
       {/* Ficha Técnica Detallada (The 3-column grid from reference) */}
       <div id="ficha-tecnica" className="space-y-10 scroll-mt-40">
