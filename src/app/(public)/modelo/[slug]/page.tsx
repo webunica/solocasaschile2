@@ -241,15 +241,35 @@ export default async function ModeloPage({ params }: PageProps) {
                  </div>
               </div>
 
-              <div id="form-cotizar" className="bg-brand-indigo rounded-[3.5rem] p-12 text-white shadow-2xl shadow-brand-indigo/30 relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                 <CotizarForm
-                    modeloId={modelo.id}
-                    modeloNombre={modelo.nombre}
-                    constructoraId={constructora.id || 'external'}
-                    constructoraNombre={constructora.nombre || 'Constructora'}
-                 />
-              </div>
+               <div id="form-cotizar" className="bg-brand-indigo rounded-[3.5rem] p-12 text-white shadow-2xl shadow-brand-indigo/30 relative overflow-hidden text-center flex flex-col items-center gap-6">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                  <div className="relative z-10 space-y-4">
+                     <h3 className="text-2xl font-black tracking-tight leading-tight">¿Listo para cotizar tu casa?</h3>
+                     <p className="text-sm font-medium opacity-80">Recibe una propuesta personalizada en menos de 24 horas.</p>
+                  </div>
+                  <CotizarModal
+                     modeloId={modelo.id}
+                     modeloNombre={modelo.nombre}
+                     constructoraId={constructora.id}
+                     constructoraNombre={constructora.nombre}
+                     trigger={
+                        <Button size="lg" variant="secondary" className="w-full rounded-2xl h-16 font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-teal/20 relative z-10">
+                           <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Asesoría
+                        </Button>
+                     }
+                  />
+                  <div className="relative z-10 grid grid-cols-3 gap-4 w-full pt-4 border-t border-white/10 opacity-60">
+                     <div className="text-[8px] font-black uppercase tracking-widest flex flex-col items-center gap-1">
+                        <Clock className="w-3 h-3" /> 24h
+                     </div>
+                     <div className="text-[8px] font-black uppercase tracking-widest flex flex-col items-center gap-1 border-x border-white/10">
+                        <MessageSquare className="w-3 h-3" /> Sin compromiso
+                     </div>
+                     <div className="text-[8px] font-black uppercase tracking-widest flex flex-col items-center gap-1">
+                        <ShieldCheck className="w-3 h-3" /> Verificado
+                     </div>
+                  </div>
+               </div>
            </div>
         </div>
 
