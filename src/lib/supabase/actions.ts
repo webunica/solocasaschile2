@@ -686,3 +686,57 @@ export async function incrementModelView(modeloId: string) {
     console.error("Error incrementing views:", err);
   }
 }
+
+// ─── ADMINISTRACIÓN DE SELLOS ────────────────────────────────────────────────
+
+export async function aprobarSello(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).single()
+  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true
+  if (!isSuperAdmin) throw new Error('No autorizado')
+
+  const id = formData.get('sellosId') as string
+  
+  const { error } = await supabase
+    .from('constructora_sellos')
+    .update({ 
+      estado: 'aprobado',
+      otorgado_at: new Date().toISOString()
+    })
+    .eq('id', id)
+
+  if (error) throw new Error(error.message)
+
+  revalidatePath('/dashboard/admin/sellos')
+  revalidatePath('/dashboard/sellos')
+}
+
+export async function rechazarSello(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).single()
+  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true
+  if (!isSuperAdmin) throw new Error('No autorizado')
+
+  const id = formData.get('sellosId') as string
+  const comentario = formData.get('comentario') as string
+  
+  const { error } = await supabase
+    .from('constructora_sellos')
+    .update({ 
+      estado: 'rechazado',
+      comentario_admin: comentario,
+      otorgado_at: new Date().toISOString()
+    })
+    .eq('id', id)
+
+  if (error) throw new Error(error.message)
+
+  revalidatePath('/dashboard/admin/sellos')
+  revalidatePath('/dashboard/sellos')
+}

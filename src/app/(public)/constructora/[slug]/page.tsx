@@ -1,4 +1,4 @@
-import { getConstructoraBySlug, getModelsByConstructoraId } from "@/lib/supabase/services";
+import { getConstructoraBySlug, getModelsByConstructoraId, getSellosDeConstructora } from "@/lib/supabase/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { ShareActions } from "@/components/ui/share-actions";
+import { SellosGrid } from "@/components/constructora/sellos-grid";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -73,6 +74,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
 
   // getConstructoraBySlug is wrapped in React.cache() — deduplicates if called again in this request
   const modelos = await getModelsByConstructoraId(constructora.id);
+  const sellos = await getSellosDeConstructora(constructora.id);
 
   // Fallbacks for data from DB
   const logo = constructora.logo_url || '/placeholder.png';
@@ -171,6 +173,14 @@ export default async function ConstructoraPage({ params }: PageProps) {
                 ))}
               </div>
             </section>
+
+            {/* Sellos de confianza */}
+            {sellos.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-heading font-bold mb-5">Sellos de Confianza</h2>
+                <SellosGrid sellos={sellos} />
+              </section>
+            )}
 
             {/* Models Section */}
             <section>
