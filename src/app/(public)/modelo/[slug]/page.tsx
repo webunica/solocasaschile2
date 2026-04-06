@@ -1,4 +1,4 @@
-import { getModelBySlug, getModelsByConstructoraId } from "@/lib/supabase/services";
+import { getModelBySlug, getModelsByConstructoraId, getSellosDeConstructora } from "@/lib/supabase/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import { CotizarModal } from "@/components/modelo/cotizar-modal";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn, getYoutubeEmbedUrl } from "@/lib/utils";
+import { SellosGrid } from "@/components/constructora/sellos-grid";
 import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video, Building2, Package, TrendingUp } from "lucide-react";
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
@@ -48,6 +49,8 @@ export default async function ModeloPage({ params }: PageProps) {
   const relatedModels = await getModelsByConstructoraId(constructora.id);
   const otherModels = relatedModels.filter(m => m.id !== modelo.id).slice(0, 3);
   const hasOtherModels = otherModels.length > 0;
+  
+  const sellos = await getSellosDeConstructora(constructora.id);
 
   return (
     <div className="min-h-screen bg-background relative pt-16 md:pt-24 font-sans">
@@ -211,24 +214,39 @@ export default async function ModeloPage({ params }: PageProps) {
                )}
             </div>
 
-           {/* Sidebar Sticky Form - order-2 in mobile means it comes AFTER the main column content but BEFORE anything after the grid */}
-           <div className="sticky top-40 space-y-12 order-2">
-              <div className="bg-card border border-brand-indigo/10 rounded-[3rem] p-10 flex flex-col gap-8 items-center text-center shadow-xl shadow-brand-indigo/5">
-                 <div className="relative w-28 h-28 flex items-center justify-center">
-                    <svg className="w-full h-full -rotate-90">
-                       <circle cx="56" cy="56" r="50" className="stroke-muted-foreground/10 fill-none" strokeWidth="10" />
-                       <circle cx="56" cy="56" r="50" className="stroke-brand-indigo fill-none" strokeWidth="10" strokeDasharray="314.16" strokeDashoffset={314.16 - (314.16 * (score || 85)) / 100} strokeLinecap="round" />
-                    </svg>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                       <span className="text-3xl font-black text-brand-indigo">{score || 85}</span>
-                       <span className="text-[8px] font-bold uppercase tracking-widest opacity-40">Confianza</span>
-                    </div>
-                 </div>
-                 <div className="space-y-2">
-                    <h3 className="text-2xl font-black tracking-tight">Sello de Calidad</h3>
-                    <p className="text-sm text-muted-foreground font-medium px-4">Verificación técnica oficial.</p>
-                 </div>
-              </div>
+            {/* Sidebar Sticky Form - order-2 in mobile means it comes AFTER the main column content but BEFORE anything after the grid */}
+            <div className="sticky top-40 space-y-12 order-2">
+               {/* Constructora Spotlight */}
+               <div className="bg-card border border-border/40 rounded-[3rem] p-8 space-y-6 shadow-xl shadow-brand-indigo/5 hover:border-brand-indigo/30 transition-colors">
+                  <div className="flex flex-col items-center text-center space-y-4">
+                     {constructora.logo_url && (
+                         <div className="w-20 h-20 rounded-3xl bg-white border border-border/40 flex items-center justify-center p-3 shadow-lg shadow-black/5 shrink-0 overflow-hidden">
+                            <Image src={constructora.logo_url} width={80} height={80} alt={constructora.nombre} className="max-w-[80%] max-h-[80%] object-contain" />
+                         </div>
+                     )}
+                     <div className="space-y-1">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center justify-center gap-1.5"><Building2 className="w-3 h-3" /> Construido por</p>
+                        <h3 className="text-2xl font-black">{constructora.nombre}</h3>
+                     </div>
+                  </div>
+
+                  {sellos.length > 0 && (
+                     <div className="bg-brand-indigo/5 border border-brand-indigo/10 rounded-[2rem] p-6 space-y-4">
+                        <div className="flex items-center justify-between pb-2 border-b border-brand-indigo/10">
+                           <p className="text-[10px] font-black uppercase tracking-widest text-brand-indigo">Confiabilidad</p>
+                           <Badge variant="outline" className="border-brand-indigo/20 text-brand-indigo bg-brand-indigo/10 text-[9px] px-2 h-5 rounded-full">{sellos.length} Sellos</Badge>
+                        </div>
+                        <SellosGrid sellos={sellos.slice(0, 4)} compact />
+                     </div>
+                  )}
+
+                  <Link 
+                     href={`/constructora/${constructora.slug}`}
+                     className="flex items-center justify-center w-full rounded-2xl h-12 text-[10px] font-black uppercase tracking-widest hover:bg-brand-indigo hover:text-white transition-all border border-brand-indigo/20 text-brand-indigo"
+                  >
+                     Ver Todo Sobre la Empresa →
+                  </Link>
+               </div>
 
                <IncluyeNoIncluye modelo={modelo} isSidebar className="mb-4" />
 
