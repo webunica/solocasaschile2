@@ -11,6 +11,11 @@ import { cn } from "@/lib/utils";
 import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video } from "lucide-react";
 import { PriceNotify } from "@/components/modelo/price-notify";
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
+import { PruebaSocial } from "@/components/modelo/prueba-social";
+import { ModeloResumenHero } from "@/components/modelo/modelo-resumen-hero";
+import { FichaTecnicaCompleta } from "@/components/modelo/ficha-tecnica-completa";
+import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
+import { ScoreInfoModal } from "@/components/modelo/score-info-modal";
 import { DynamicUrgency } from "@/components/ui/dynamic-urgency";
 import type { Metadata } from "next";
 
@@ -181,6 +186,8 @@ export default async function ModeloPage({ params }: PageProps) {
                  {modelo.nombre}
                </h1>
 
+               <ModeloResumenHero modelo={modelo} className="pt-2" />
+
                <div className="flex items-center gap-4 pt-4 border-t border-border/40">
                   <div className="w-10 h-10 md:w-16 md:h-16 rounded-[0.8rem] md:rounded-[1.5rem] border-2 border-primary/20 bg-primary/5 flex items-center justify-center p-2 md:p-3 shrink-0">
                      <Image 
@@ -231,34 +238,13 @@ export default async function ModeloPage({ params }: PageProps) {
               {modelo.descripcion || 'Sin descripción disponible.'}
             </p>
 
-               {/* Technical Specs Grid */}
                <div className="space-y-8 md:space-y-10">
                   <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight flex items-center gap-4">
                     <Square className="w-6 h-6 md:w-8 md:h-8 text-brand-teal opacity-40 shrink-0" /> 
                     Ficha Técnica Industrial
                   </h2>
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-                    {[
-                       { icon: <Square className="w-5 h-5 md:w-6 md:h-6 text-brand-indigo" />, label: "Área Total", value: `${modelo.superficie_m2 || 0} m²` },
-                       { icon: <Bed className="w-5 h-5 md:w-6 md:h-6 text-brand-indigo" />, label: "Dormitorios", value: `${modelo.dormitorios || 0} Dorms` },
-                       { icon: <Bath className="w-5 h-5 md:w-6 md:h-6 text-brand-indigo" />, label: "Baños", value: `${modelo.banos || 0} Baños` },
-                       { icon: <Clock className="w-5 h-5 md:w-6 md:h-6 text-brand-indigo" />, label: "Entrega Est.", value: modelo.tiempo_entrega || 'Consultar' },
-                       { icon: <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-brand-indigo" />, label: "Garantía", value: `${modelo.garantia_anos || 1} Años` },
-                       { icon: <Zap className="w-5 h-5 md:w-6 md:h-6 text-brand-indigo" />, label: "Postventa", value: modelo.postventa ? "Disponible" : "Consultar" },
-                    ].map((spec) => (
-                       <div key={spec.label} className="bg-muted/10 border border-border/40 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] space-y-3 md:space-y-4 hover:bg-muted/20 transition-all hover:-translate-y-1 duration-500">
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-background flex items-center justify-center shadow-xl shadow-black/5">
-                             {spec.icon}
-                          </div>
-                          <div>
-                            <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-40 leading-none mb-1.5 md:mb-2">
-                               {spec.label}
-                            </p>
-                            <p className="text-lg md:text-xl font-black tracking-tight">{spec.value}</p>
-                          </div>
-                       </div>
-                    ))}
-                  </div>
+                  
+                  <FichaTecnicaCompleta modelo={modelo} />
                </div>
 
                {/* Video Section */}
@@ -279,6 +265,8 @@ export default async function ModeloPage({ params }: PageProps) {
                      </div>
                   </div>
                )}
+
+               <IncluyeNoIncluye modelo={modelo} className="py-12 border-t border-border/20" />
 
                <FichaExpandida modelo={modelo} />
 
@@ -301,7 +289,8 @@ export default async function ModeloPage({ params }: PageProps) {
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
                            <span className="text-2xl md:text-3xl font-black text-brand-indigo">{score}</span>
-                           <span className="text-[8px] font-bold uppercase tracking-widest opacity-40">Score</span>
+                           <span className="text-[8px] font-bold uppercase tracking-widest opacity-40 mb-1">Score</span>
+                           <ScoreInfoModal />
                         </div>
                      </div>
                   </div>
@@ -338,27 +327,47 @@ export default async function ModeloPage({ params }: PageProps) {
                             Disponibilidad Real
                          </Badge>
                       </div>
-                      <div className="flex items-baseline gap-2">
-                         <span className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-none">
-                            {precio.toLocaleString("es-CL")}
-                         </span>
-                         <span className="text-2xl font-black text-brand-indigo">UF</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between px-2">
-                         <div className="flex flex-col">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">Valor M²</span>
-                            <div className="flex items-baseline gap-1.5">
-                               <span className="text-2xl font-black tracking-tight">{(precio / (modelo.superficie_m2 || 1)).toFixed(2)}</span>
-                               <span className="text-[10px] font-bold text-brand-indigo uppercase">UF/M²</span>
+                      {/* Price — guarded against 0 */}
+                      {precio > 0 ? (
+                        <>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-none">
+                              {precio.toLocaleString("es-CL")}
+                            </span>
+                            <span className="text-2xl font-black text-brand-indigo">UF</span>
+                          </div>
+
+                          <div className="flex items-center justify-between px-2">
+                            <div className="flex flex-col">
+                              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">Valor M²</span>
+                              <div className="flex items-baseline gap-1.5">
+                                <span className="text-2xl font-black tracking-tight">{(precio / (modelo.superficie_m2 || 1)).toFixed(2)}</span>
+                                <span className="text-[10px] font-bold text-brand-indigo uppercase">UF/M²</span>
+                              </div>
                             </div>
-                         </div>
-                         <div className="h-8 w-px bg-border/40" />
-                         <div className="flex flex-col text-right">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">Área</span>
-                            <span className="text-lg font-bold">{modelo.superficie_m2 || 0} m²</span>
-                         </div>
-                      </div>
+                            <div className="h-8 w-px bg-border/40" />
+                            <div className="flex flex-col text-right">
+                              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-40">Área</span>
+                              <span className="text-lg font-bold">{modelo.superficie_m2 || 0} m²</span>
+                            </div>
+                          </div>
+
+                          {/* Microcopy */}
+                          <p className="text-[10px] text-muted-foreground/50 leading-relaxed font-medium border-l-2 border-border/30 pl-3">
+                            Precio referencial. No incluye obras de fundación, conexiones a servicios, terminaciones de piso flotante ni permisos de construcción.
+                          </p>
+
+                          {/* Variant link */}
+                          <a href="#form-cotizar" className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-brand-indigo hover:text-brand-teal transition-colors">
+                            <span>→</span> Consultar versión 72 m² o 110 m²
+                          </a>
+                        </>
+                      ) : (
+                        <div className="flex flex-col gap-2">
+                          <p className="text-3xl font-black tracking-tight text-muted-foreground">Consultar precio</p>
+                          <p className="text-[11px] text-muted-foreground/60 font-medium leading-relaxed">Solicita tu cotización personalizada para obtener el valor según tu región, terreno y especificaciones.</p>
+                        </div>
+                      )}
 
                       <div className="h-px bg-border/40 w-full" />
 
@@ -370,7 +379,12 @@ export default async function ModeloPage({ params }: PageProps) {
                       />
                       
                       {/* Social Proof Capsule */}
-                      <DynamicUrgency modeloId={modelo.id} initialCount={modelo.visitas} />
+                      <PruebaSocial 
+                         modeloId={modelo.id} 
+                         initialCount={modelo.visitas}
+                         constructora={constructora}
+                         updatedAt={(modelo as any).updated_at}
+                      />
                    </div>
 
                    <CotizarForm
