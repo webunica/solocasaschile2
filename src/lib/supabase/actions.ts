@@ -740,3 +740,26 @@ export async function rechazarSello(formData: FormData) {
   revalidatePath('/dashboard/admin/sellos')
   revalidatePath('/dashboard/sellos')
 }
+
+export async function solicitarSello(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+
+  const selloId = formData.get('selloId') as string
+  const evidenciaUrl = formData.get('evidenciaUrl') as string || null
+
+  const { error } = await supabase
+    .from('constructora_sellos')
+    .insert([{
+      constructora_id: user.id,
+      sello_id: selloId,
+      estado: 'pendiente',
+      evidencia_url: evidenciaUrl
+    }])
+
+  if (error) throw new Error(error.message)
+
+  revalidatePath('/dashboard/sellos')
+  revalidatePath('/dashboard/admin/sellos')
+}

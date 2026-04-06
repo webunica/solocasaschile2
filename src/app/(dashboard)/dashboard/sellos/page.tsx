@@ -4,6 +4,9 @@ import { getSellosDeConstructora } from "@/lib/supabase/services";
 import { SellosGrid } from "@/components/constructora/sellos-grid";
 import { ShieldCheck, BadgeCheck, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { solicitarSello } from "@/lib/supabase/actions";
+import Link from "next/link";
 
 export const metadata = {
   title: "Mis Sellos de Confianza | Dashboard",
@@ -132,7 +135,7 @@ export default async function SellosDashboardPage() {
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     {sello.descripcion}
                   </p>
-                  <div className="pt-1">
+                  <div className="pt-2">
                     {isAprobado ? (
                       <span className="flex items-center gap-1.5 text-[10px] font-black text-brand-teal uppercase tracking-widest">
                         <CheckCircle2 className="w-3 h-3" /> Obtenido
@@ -142,13 +145,24 @@ export default async function SellosDashboardPage() {
                         <Clock className="w-3 h-3" /> En revisión
                       </span>
                     ) : isManual ? (
-                      <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">
-                        Requiere solicitud y documentación
-                      </span>
+                      <form action={solicitarSello}>
+                        <input type="hidden" name="selloId" value={sello.id} />
+                        <Button 
+                          type="submit" 
+                          size="sm" 
+                          variant="outline" 
+                          className="h-8 px-4 text-[10px] font-black uppercase tracking-widest rounded-full border-brand-indigo/30 text-brand-indigo hover:bg-brand-indigo hover:text-white transition-all"
+                        >
+                          Solicitar Verificación
+                        </Button>
+                      </form>
                     ) : (
-                      <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-widest">
-                        Se asigna automáticamente al completar perfil
-                      </span>
+                      <Link 
+                        href={sello.slug === 'empresa-activa' ? '/dashboard/catalog' : '/dashboard/settings'}
+                        className="h-8 inline-flex items-center text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-brand-indigo transition-colors"
+                      >
+                        Ir a completar →
+                      </Link>
                     )}
                   </div>
                 </div>
