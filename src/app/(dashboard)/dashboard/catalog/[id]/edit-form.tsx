@@ -65,22 +65,16 @@ function FormSection({
         </div>
         <ChevronDown className={cn("w-5 h-5 text-muted-foreground/40 transition-transform duration-300 shrink-0", open && "rotate-180")} />
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="content"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.28, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <div className="px-8 md:px-10 pb-10 space-y-6 border-t border-border/20 pt-6">
-              {children}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div
+        initial={defaultOpen ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.28, ease: "easeInOut" }}
+        className="overflow-hidden"
+      >
+        <div className={cn("px-8 md:px-10 pb-10 space-y-6 border-t border-border/20 pt-6", !open && "pointer-events-none")}>
+          {children}
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
