@@ -211,8 +211,6 @@ export default async function ModeloPage({ params }: PageProps) {
 
               <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
               
-              <IncluyeNoIncluye modelo={modelo} />
-              
               {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
                 <div className="space-y-10">
                    <h2 className="text-3xl font-heading font-black tracking-tight">Tour Virtual</h2>
