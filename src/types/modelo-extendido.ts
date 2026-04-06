@@ -164,6 +164,7 @@ export interface ModeloExtendido extends ModeloSEO {
 
   // Legacy (especificaciones libres)
   especificaciones?: Record<string, string> | null;
+  plano_url?: string | null;
 
   // Metadata
   created_at?: string;

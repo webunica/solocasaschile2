@@ -195,6 +195,9 @@ export default function NewModelPage() {
   const [error, setError] = useState<string | null>(null);
   const [previews, setPreviews] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+  const [planoFile, setPlanoFile] = useState<File | null>(null);
+  const [planoPreview, setPlanoPreview] = useState<string | null>(null);
+  const planoInputRef = useRef<HTMLInputElement>(null);
   const [planLimits, setPlanLimits] = useState<any>(null);
   const [plan, setPlan] = useState<string>("gratis");
   const [modelName, setModelName] = useState("");
@@ -228,6 +231,19 @@ export default function NewModelPage() {
     setPreviews(prev => prev.filter((_, i) => i !== idx));
   };
 
+  const handlePlano = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPlanoFile(file);
+      setPlanoPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removePlano = () => {
+    setPlanoFile(null);
+    setPlanoPreview(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -250,7 +266,24 @@ export default function NewModelPage() {
           if (uploadError) continue;
           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
           imageUrls.push(publicUrl);
-        } catch { /* ignore single upload error */ }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      let plano_url = null;
+      if (planoFile) {
+        try {
+          const ext = planoFile.name.split('.').pop();
+          const filePath = `${user.id}/plano-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+          const { error: uploadError } = await supabase.storage.from('model_images').upload(filePath, planoFile);
+          if (!uploadError) {
+             const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
+             plano_url = publicUrl;
+          }
+        } catch (e) {
+           console.error(e);
+        }
       }
 
       // Parse JSONB sections
@@ -294,6 +327,7 @@ export default function NewModelPage() {
         recintos,
         imagenes_urls: imageUrls,
         video_url: formData.get('video_url') as string || null,
+        plano_url: plano_url || null,
         // Ficha técnica expandida
         construccion: parseJsonField('construccion') || null,
         aislacion: parseJsonField('aislacion') || null,
@@ -747,24 +781,52 @@ export default function NewModelPage() {
               <input ref={fileInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleImages} />
             </div>
 
-            {/* Video */}
-            <div className="space-y-4">
-              <Label className="text-xs font-black uppercase tracking-widest opacity-60">Video Tour</Label>
-              <div className={cn(
-                "space-y-3 p-6 border border-border/40 rounded-3xl bg-card/30",
-                !isPaidPlan && "opacity-40 grayscale pointer-events-none"
-              )}>
-                {!isPaidPlan && (
-                  <Badge className="bg-primary/10 text-primary border-none text-[9px] font-black uppercase tracking-widest mb-2">
-                    Solo plan Pro/Premium
-                  </Badge>
-                )}
-                <Input
-                  id="video_url" name="video_url"
-                  placeholder="URL de YouTube o Vimeo"
-                  className="h-12 rounded-2xl bg-background/50 border-border/40 font-medium"
-                />
-                <p className="text-[10px] font-bold text-muted-foreground opacity-60">Integración con YouTube y Vimeo habilitada.</p>
+            {/* Video Y Plano */}
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <Label className="text-xs font-black uppercase tracking-widest opacity-60">Plano de Distribución</Label>
+                <div
+                  onClick={() => !planoPreview && planoInputRef.current?.click()}
+                  className={cn(
+                    "border-2 border-dashed border-border/40 rounded-3xl relative overflow-hidden transition-all bg-card/30 min-h-[160px]",
+                    planoPreview ? "" : "p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-muted/30"
+                  )}
+                >
+                  {!planoPreview ? (
+                    <>
+                      <Upload className="w-10 h-10 mx-auto mb-2 text-brand-indigo opacity-40" />
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-center mt-2">Añadir plano (PNG/JPG)</p>
+                    </>
+                  ) : (
+                    <div className="relative aspect-video w-full">
+                      <img src={planoPreview} className="w-full h-full object-cover" />
+                      <button type="button" onClick={removePlano} className="absolute top-2 right-2 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors">
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                  <input ref={planoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePlano} />
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <Label className="text-xs font-black uppercase tracking-widest opacity-60">Video Tour</Label>
+                <div className={cn(
+                  "space-y-3 p-6 border border-border/40 rounded-3xl bg-card/30",
+                  !isPaidPlan && "opacity-40 grayscale pointer-events-none"
+                )}>
+                  {!isPaidPlan && (
+                    <Badge className="bg-primary/10 text-primary border-none text-[9px] font-black uppercase tracking-widest mb-2">
+                      Solo plan Pro/Premium
+                    </Badge>
+                  )}
+                  <Input
+                    id="video_url" name="video_url"
+                    placeholder="URL de YouTube o Vimeo"
+                    className="h-12 rounded-2xl bg-background/50 border-border/40 font-medium"
+                  />
+                  <p className="text-[10px] font-bold text-muted-foreground opacity-60">Integración con YouTube y Vimeo habilitada.</p>
+                </div>
               </div>
             </div>
           </div>
