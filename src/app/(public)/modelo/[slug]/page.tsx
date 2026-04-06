@@ -240,7 +240,7 @@ export default async function ModeloPage({ params }: PageProps) {
               <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight">¿Deseas personalizar este diseño?</h2>
               <p className="text-muted-foreground text-lg font-medium max-w-xl">Adapta los planos según tus necesidades y terreno.</p>
            </div>
-           <Link href="#form-cotizar" className={cn(buttonVariants({ size: "xl" }), "rounded-full px-12 h-20 text-lg font-black uppercase tracking-widest bg-brand-indigo shadow-2xl")}>
+           <Link href="#form-cotizar" className={cn(buttonVariants({ size: "lg" }), "rounded-full px-12 h-20 text-lg font-black uppercase tracking-widest bg-brand-indigo shadow-2xl")}>
               Conversar con Asesor
            </Link>
         </div>
