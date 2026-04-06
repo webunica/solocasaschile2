@@ -199,6 +199,31 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                     placeholder="Av. Kennedy 1234, Santiago"
                   />
                </div>
+
+               <div className="space-y-2">
+                  <Label htmlFor="especialidad_principal" className="text-xs font-black uppercase tracking-widest opacity-60">Especialidad Principal</Label>
+                  <Input 
+                    id="especialidad_principal" 
+                    name="especialidad_principal" 
+                    defaultValue={initialData?.especialidad_principal || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="Ejem: Casas Modulares, Construcción SIP"
+                  />
+               </div>
+
+               <div className="space-y-2">
+                  <Label htmlFor="anio_inicio" className="text-xs font-black uppercase tracking-widest opacity-60">Año de Fundación</Label>
+                  <Input 
+                    id="anio_inicio" 
+                    name="anio_inicio" 
+                    type="number"
+                    min="1800"
+                    max={new Date().getFullYear()}
+                    defaultValue={initialData?.anio_inicio || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="Ejem: 2010"
+                  />
+               </div>
             </div>
           </CardContent>
         </Card>
