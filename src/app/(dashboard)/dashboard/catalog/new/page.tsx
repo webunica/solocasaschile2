@@ -277,12 +277,11 @@ export default function NewModelPage() {
           const ext = planoFile.name.split('.').pop();
           const filePath = `${user.id}/plano-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
           const { error: uploadError } = await supabase.storage.from('model_images').upload(filePath, planoFile);
-          if (!uploadError) {
-             const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
-             plano_url = publicUrl;
-          }
-        } catch (e) {
-           console.error(e);
+          if (uploadError) throw uploadError;
+          const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
+          plano_url = publicUrl;
+        } catch (e: any) {
+           throw new Error("Error al subir plano: " + e.message);
         }
       }
 
@@ -327,9 +326,7 @@ export default function NewModelPage() {
         recintos,
         imagenes_urls: imageUrls,
         video_url: formData.get('video_url') as string || null,
-        plano_url: plano_url || null,
-        // Ficha técnica expandida
-        construccion: parseJsonField('construccion') || null,
+        construccion: { ...parseJsonField('construccion'), ...(plano_url ? { plano_url } : {}) },
         aislacion: parseJsonField('aislacion') || null,
         terminaciones: parseJsonField('terminaciones') || null,
         instalaciones: parseJsonField('instalaciones') || null,
