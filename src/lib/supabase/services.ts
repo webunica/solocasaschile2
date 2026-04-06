@@ -443,3 +443,36 @@ export async function getModelsByConstructoraId(id: string) {
 
   return [...(data || []), ...mappedMocks];
 }
+
+/**
+ * Obtiene los sellos aprobados de una constructora, enriquecidos con el catálogo.
+ * Retorna vacío si las tablas aún no existen (graceful fallback).
+ */
+export async function getSellosDeConstructora(constructoraId: string) {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('constructora_sellos')
+      .select(`
+        id,
+        estado,
+        otorgado_at,
+        sello:sello_id (
+          id,
+          slug,
+          nombre,
+          descripcion,
+          tipo,
+          icono_url
+        )
+      `)
+      .eq('constructora_id', constructoraId)
+      .eq('estado', 'aprobado')
+      .order('otorgado_at', { ascending: true });
+
+    if (error) return [];
+    return data || [];
+  } catch {
+    return [];
+  }
+}

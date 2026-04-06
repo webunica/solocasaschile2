@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
   HelpCircle, LogOut, LayoutDashboard, 
-  MessageSquare, Award, Video, Mail
+  MessageSquare, Award, Video, Mail, ShieldCheck
 } from "lucide-react";
 import {
   Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
@@ -21,6 +21,7 @@ const DASHBOARD_MENU = [
   { title: "Inicio", icon: LayoutDashboard, href: "/dashboard" },
   { title: "Gestionar Modelos", icon: Home, href: "/dashboard/catalog" },
   { title: "Ver Prospectos", icon: Users, href: "/dashboard/leads" },
+  { title: "Sellos de Confianza", icon: ShieldCheck, href: "/dashboard/sellos" },
   { title: "Agendar Demo", icon: Video, href: "/demo" },
   { title: "Testimonios", icon: MessageSquare, href: "/dashboard/testimonios" },
   { title: "Certificaciones", icon: Award, href: "/dashboard/certificaciones" },
