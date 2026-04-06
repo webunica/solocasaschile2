@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
   HelpCircle, LogOut, LayoutDashboard, 
-  MessageSquare, Award, Video, Mail, ShieldCheck
+  MessageSquare, Award, Video, Mail, ShieldCheck, BadgeCheck
 } from "lucide-react";
 import {
   Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
@@ -138,6 +138,20 @@ export function DashboardSidebar({
                         <Link href="/dashboard/admin/pagos">
                           <BarChart3 className="w-4.5 h-4.5" />
                           <span className="ml-3 text-sm">Pagos Globales</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === "/dashboard/admin/sellos"}
+                        tooltip="Validar Sellos"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                      >
+                        <Link href="/dashboard/admin/sellos">
+                          <BadgeCheck className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Validar Sellos</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
