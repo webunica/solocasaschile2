@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Metadata } from "next";
 import { REGIONES_CHILE } from "@/config/regions";
+import { getRegionDisplayName } from "@/lib/regions";
 import type { TipoModelo } from "@/lib/mock-data";
 import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
 
@@ -36,11 +37,8 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const maxUF = params.max ? parseInt(params.max) : undefined;
   const sortBy = params.sort;
 
-  // Resolve region display name for slider label
-  const slugify = (t: string) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s-]/g, "").replace(/[\s_]+/g, "-").replace(/^-+|-+$/g, "")
-  const regionLabel = regionFilter
-    ? REGIONES_CHILE.find(r => slugify(r) === slugify(regionFilter)) || regionFilter
-    : undefined
+  // Resolve region display name for slider label using the shared utility
+  const regionLabel = getRegionDisplayName(regionFilter);
 
   // Real fetch from Supabase
   const [modelos, featuredModels] = await Promise.all([
