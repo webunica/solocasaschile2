@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { FlowService } from '@/lib/payments/flow';
 import { resend } from '@/lib/resend';
+import { z } from 'zod';
+
+const WebhookSchema = z.object({
+  token: z.string().min(1, "Token de Flow requerido")
+});
 
 /**
  * Recibe la confirmación de pago de Flow (Webhook)
@@ -9,11 +14,14 @@ import { resend } from '@/lib/resend';
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
-    const token = formData.get('token') as string;
+    const tokenRaw = formData.get('token');
 
-    if (!token) {
-      return NextResponse.json({ error: 'Token no encontrado' }, { status: 400 });
+    const validation = WebhookSchema.safeParse({ token: tokenRaw });
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.error.format() }, { status: 400 });
     }
+
+    const { token } = validation.data;
 
     console.info(`[FLOW-WEBHOOK] Procesando confirmación para token: ${token}`);
 
@@ -133,9 +141,10 @@ export async function POST(req: NextRequest) {
         });
 
         // 2. Email al administrador (Aviso de pago exitoso)
+        const adminEmail = process.env.ADMIN_EMAIL || 'info.javiermillar@gmail.com';
         await resend.emails.send({
           from: 'SoloCasasChile <contacto@solocasaschile.com>',
-          to: ['info.javiermillar@gmail.com'],
+          to: [adminEmail],
           subject: `💰 VENTA: Plan ${plan.toUpperCase()} Activado`,
           html: `
             <div style="font-family: sans-serif; padding: 20px;">
