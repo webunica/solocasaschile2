@@ -230,21 +230,29 @@ export async function getModelosFiltered(filters: {
   if (filters.tipo) query = query.eq('tipo', filters.tipo)
   if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
   if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
-  if (regionDisp) query = query.contains('constructoras.regiones', [regionDisp])
+  // NOTE: Region filter applied in JS below — PostgREST dot-notation on joined tables is unreliable
 
   const { data: dbData } = await query
 
   // 2. Map DB data to ensure it matches ModelWithConstructora perfectly
-  const mappedDbData = (dbData as any[] || []).map(m => ({
+  const allDbData = (dbData as any[] || []).map(m => ({
     ...m,
     imagenes_urls: m.imagenes_urls || [],
     precio_desde_uf: m.precio_desde_uf || 0,
     constructora: m.constructora ? {
       ...m.constructora,
-      logo_url: m.constructora.logo_url || '/placeholder.png', // Corregido: antes puse logo
+      logo_url: m.constructora.logo_url || '/placeholder.png',
       score_confianza: m.constructora.score_confianza || 0
     } : null
   })) as ModelWithConstructora[]
+
+  // Apply region filter in JS — works 100% reliably for both DB and mock data
+  const mappedDbData = regionDisp
+    ? allDbData.filter(m => {
+        const regiones: string[] = m.constructora?.regiones || []
+        return regiones.includes(regionDisp)
+      })
+    : allDbData
 
   // 3. Merge with Showcase Mock Data (Austral SIP example)
   // We map mock data to match the ModelWithConstructora (snake_case)
