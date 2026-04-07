@@ -153,9 +153,10 @@ export async function register(formData: FormData) {
       });
 
       // 2. Email al administrador (Aviso de nueva constructora)
+      const adminEmail = process.env.ADMIN_EMAIL || 'info.javiermillar@gmail.com';
       await resend.emails.send({
         from: 'SoloCasasChile <contacto@solocasaschile.com>',
-        to: ['info.javiermillar@gmail.com'],
+        to: [adminEmail],
         subject: '🚀 Nueva Constructora Registrada',
         html: `
           <div style="font-family: sans-serif; padding: 20px;">

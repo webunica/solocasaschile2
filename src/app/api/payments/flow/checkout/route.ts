@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { FlowService } from '@/lib/payments/flow';
 import { getUfValue } from '@/lib/payments/uf';
+import { z } from 'zod';
+
+const CheckoutSchema = z.object({
+  plan: z.enum(['pro', 'premium']),
+  billing: z.enum(['monthly', 'yearly'])
+});
 
 const PLAN_PRICES_UF = {
   pro: {
@@ -31,11 +37,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { plan, billing } = await req.json();
-
-    if (!['pro', 'premium'].includes(plan)) {
-      return NextResponse.json({ error: 'Plan no válido.' }, { status: 400 });
+    const body = await req.json();
+    const validation = CheckoutSchema.safeParse(body);
+    
+    if (!validation.success) {
+      return NextResponse.json({ error: 'Datos de suscripción no válidos.', details: validation.error.format() }, { status: 400 });
     }
+
+    const { plan, billing } = validation.data;
 
     // 0. Obtener valor dinámico de la UF
     const valorUfActual = await getUfValue();
