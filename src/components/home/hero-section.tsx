@@ -139,15 +139,14 @@ export function HeroSection() {
               </h1>
 
               {/* Description */}
-              <p className="text-sm md:text-xl text-foreground/80 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Encuentra tu hogar ideal entre{" "}
-                <span className="text-foreground font-bold">+5.000 modelos</span>{" "}
-                de casas SIP, modulares y tradicionales de{" "}
-                <span className="text-foreground border-b-2 border-brand-teal/50 pb-0.5 font-black">
-                  226 constructoras
-                </span>{" "}
-                certificadas en todo Chile.
-              </p>
+              <div className="flex flex-col gap-1 items-center lg:items-start text-center lg:text-left">
+                <p className="text-xl md:text-3xl font-black text-brand-indigo tracking-tight leading-none uppercase italic underline decoration-brand-teal decoration-4 underline-offset-4">
+                  Fichas técnicas claras
+                </p>
+                <p className="text-lg md:text-2xl font-black text-brand-teal uppercase tracking-tighter leading-none [text-shadow:0_1px_4px_rgba(0,0,0,0.2)]">
+                  DATOS ÚTILES Y ORDENADOS
+                </p>
+              </div>
 
               {/* CTA button */}
               <div className="w-full max-w-xs sm:max-w-none mx-auto lg:mx-0">
@@ -183,7 +182,7 @@ export function HeroSection() {
             {/* Stats grid */}
             <div className="grid grid-cols-3 gap-3 md:gap-8 justify-items-center lg:justify-items-start border-t border-brand-indigo/10 pt-6 md:pt-10">
               {[
-                { icon: <Building2 className="w-4 h-4 md:w-5 md:h-5" />, val: "+5.000", label: "Modelos" },
+                { icon: <Building2 className="w-4 h-4 md:w-5 md:h-5" />, val: "Información", label: "Clara" },
                 { icon: <ShieldCheck className="w-4 h-4 md:w-5 md:h-5" />, val: "Auditoría", label: "Calidad" },
                 { icon: <Globe className="w-4 h-4 md:w-5 md:h-5" />, val: "16 Regiones", label: "Cobertura" },
               ].map((stat, i) => (
