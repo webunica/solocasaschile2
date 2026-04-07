@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getPlanLimits } from '../constants/plans'
@@ -173,6 +173,7 @@ export async function register(formData: FormData) {
     }
 
     revalidatePath('/', 'layout')
+    revalidateTag('constructoras', 'max')
     return { redirectTo: `/bienvenida?plan=${plan}` }
 
   } catch (err: any) {
@@ -260,6 +261,8 @@ export async function updateSettings(formData: FormData) {
 
   revalidatePath('/dashboard/settings')
   revalidatePath(`/constructora/${formData.get('slug')}`)
+  revalidateTag('constructoras', 'max')
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -312,6 +315,7 @@ export async function createModel(data: any) {
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
   revalidatePath('/dashboard/settings')
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -349,6 +353,7 @@ export async function updateModel(id: string, data: any) {
   revalidatePath('/catalogo')
   revalidatePath(`/modelo/${currentModel.slug}`)
   revalidatePath(`/modelo/${data.slug || currentModel.slug}`)
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -368,6 +373,8 @@ export async function toggleVerification(constructoraId: string, status: boolean
 
   if (error) throw error
   revalidatePath('/dashboard/admin/constructoras')
+  revalidateTag('constructoras', 'max')
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -383,6 +390,8 @@ export async function updateConstructoraPlan(constructoraId: string, plan: strin
 
   if (error) throw error
   revalidatePath('/dashboard/admin/constructoras')
+  revalidateTag('constructoras', 'max')
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -398,6 +407,8 @@ export async function updateConstructoraScore(constructoraId: string, score: num
 
   if (error) throw error
   revalidatePath('/dashboard/admin/constructoras')
+  revalidateTag('constructoras', 'max')
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -441,6 +452,8 @@ export async function adminUpdateConstructora(formData: FormData) {
   revalidatePath('/dashboard/admin/constructoras')
   revalidatePath(`/dashboard/admin/constructoras/${id}/edit`)
   revalidatePath(`/constructora/${formData.get('slug')}`)
+  revalidateTag('constructoras', 'max')
+  revalidateTag('modelos', 'max')
   return { success: true }
 }
 
@@ -465,6 +478,7 @@ export async function deleteModelo(id: string, _formData?: FormData) {
   // Revalidate all affected routes
   revalidatePath('/comparar')
   revalidatePath('/modelo/[slug]', 'page')
+  revalidateTag('modelos', 'max')
 }
 
 export async function toggleFeaturedModelo(id: string, featured: boolean) {
@@ -487,6 +501,8 @@ export async function toggleFeaturedModelo(id: string, featured: boolean) {
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
   revalidatePath('/')
+  revalidateTag('modelos', 'max')
+  revalidateTag('featured', 'max')
 }
 
 export async function updateSiteSettings(key: string, value: any) {
@@ -519,6 +535,8 @@ export async function updateSiteSettings(key: string, value: any) {
   if (error) throw error
   
   revalidatePath('/', 'layout')
+  revalidateTag('modelos', 'max')
+  revalidateTag('featured', 'max')
   return { success: true }
 }
 
