@@ -33,7 +33,7 @@ export default async function CatalogManagementPage() {
     errorMsg = err.message || "Error al conectar con la base de datos";
   }
 
-  const isSuperAdmin = constructora?.role === 'superadmin';
+  const isSuperAdmin = constructora?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
   const limits = getPlanLimits(isSuperAdmin ? 'premium' : (constructora?.plan || 'gratis'));
   const usedCount = modelos.length;
   // Solo aplicamos límites reales si no es admin, para evitar bloqueos visuales
