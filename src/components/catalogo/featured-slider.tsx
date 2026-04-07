@@ -71,7 +71,7 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative min-h-[480px] lg:min-h-[520px] flex items-center"
+          className="relative min-h-[340px] lg:min-h-[380px] flex items-center"
         >
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
@@ -87,10 +87,10 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
           </div>
 
           {/* Content */}
-          <div className="container relative z-10 px-8 lg:px-16 py-12 lg:py-16 max-w-4xl mr-auto ml-0">
-            <div className="space-y-6">
+          <div className="container relative z-10 px-8 lg:px-16 py-8 lg:py-10 max-w-4xl mr-auto ml-0">
+            <div className="space-y-4">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-teal/20 text-brand-teal font-black uppercase tracking-widest text-[10px] md:text-xs backdrop-blur-md border border-brand-teal/20">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#134e4a] text-[#2dd4bf] font-black uppercase tracking-widest text-[10px] md:text-xs backdrop-blur-md border border-[#2dd4bf]/20 shadow-xl">
                 <MapPin className="w-4 h-4" />
                 <span>{badge}</span>
                 {models.length > 1 && (
@@ -102,7 +102,7 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
 
               {/* Title */}
               <div className="space-y-2">
-                <h2 className="text-4xl lg:text-7xl font-heading font-black tracking-tighter italic text-foreground leading-[0.9]">
+                <h2 className="text-3xl lg:text-6xl font-heading font-black tracking-tighter italic text-foreground leading-[0.9]">
                   {current.nombre}
                 </h2>
                 <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
               </div>
 
               {/* Specs */}
-              <div className="grid grid-cols-3 gap-6 max-w-md bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-2xl">
+              <div className="grid grid-cols-3 gap-6 max-w-sm bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-2xl">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 text-primary">
                     <Ruler className="w-4 h-4" />
@@ -158,8 +158,8 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
               {/* Price + CTA */}
               <div className="flex flex-wrap items-center gap-6 pt-4">
                 <div className="space-y-1">
-                  <div className="text-[#1b0088] text-4xl lg:text-5xl font-black tracking-tighter leading-none italic">
-                    {current.precio_desde_uf.toLocaleString()} <span className="text-2xl not-italic">UF</span>
+                  <div className="text-[#1b0088] text-3xl lg:text-4xl font-black tracking-tighter leading-none italic">
+                    {current.precio_desde_uf.toLocaleString()} <span className="text-xl not-italic">UF</span>
                   </div>
                   <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Precio base desde</div>
                 </div>
@@ -167,7 +167,7 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
                 <Link href={`/modelo/${current.slug}`}>
                   <Button
                     size="lg"
-                    className="h-16 px-10 rounded-2xl bg-brand-indigo text-white font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                    className="h-14 px-8 rounded-2xl bg-brand-indigo text-white font-black uppercase tracking-widest text-[10px] shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                   >
                     Ver ficha técnica
                   </Button>
