@@ -104,7 +104,7 @@ export default async function ModeloPage({ params }: PageProps) {
                  <div className="space-y-6">
                     <div className="flex items-center justify-between">
                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-60">Presupuesto Referencial</p>
-                       <Badge variant="outline" className="border-teal-300 text-teal-800 font-black text-[9px] tracking-widest uppercase bg-teal-100 dark:bg-teal-900/30 dark:border-teal-700/50 dark:text-teal-300 px-3 py-1 rounded-full animate-pulse">
+                       <Badge variant="outline" className="border-teal-300 text-teal-800 font-black text-[9px] tracking-widest uppercase bg-teal-100 px-3 py-1 rounded-full animate-pulse">
                           Disponibilidad Real
                        </Badge>
                     </div>
@@ -255,7 +255,7 @@ export default async function ModeloPage({ params }: PageProps) {
                      <div className="bg-brand-indigo/5 border border-brand-indigo/10 rounded-[2rem] p-6 space-y-4 relative z-10">
                         <div className="flex items-center justify-between pb-3 border-b border-brand-indigo/10">
                            <p className="text-[10px] font-black uppercase tracking-widest text-brand-indigo">Insignias Obtenidas</p>
-                           <Badge variant="outline" className="border-indigo-300 text-indigo-800 bg-indigo-100 dark:bg-indigo-900/30 dark:border-indigo-700/50 dark:text-indigo-300 text-[9px] px-2 h-5 rounded-full font-black">
+                           <Badge variant="outline" className="border-indigo-300 text-indigo-800 bg-indigo-100 text-[9px] px-2 h-5 rounded-full font-black">
                               {sellos.length} / {maxSellosTotales} completadas
                            </Badge>
                         </div>
