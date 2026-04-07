@@ -533,8 +533,8 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
       .from('modelos')
       .select(`*, constructora:constructoras!inner (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
       .eq('disponible', true)
-      // Custom OR: Manual featured OR Premium Plan
-      .or('is_featured.eq.true, plan.eq.premium', { foreignTable: 'constructoras' }) 
+      // High-performance cross-table OR for PostgREST
+      .or(`is_featured.eq.true,constructora.plan.eq.premium`) 
     
     if (regionDisp) {
       console.log("DEBUG: Filtering featured models by region:", regionDisp);
