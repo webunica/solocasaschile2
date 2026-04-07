@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { createClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
+import { REGIONES_CHILE } from '@/config/regions'
 
 export type ModelWithConstructora = {
   id: string;
@@ -332,7 +333,7 @@ export async function getModelosByConstructora() {
 
   let query = supabase
     .from('modelos')
-    .select(`*, constructora:constructoras (*)`)
+    .select(`*, constructora:constructoras (*), is_featured, featured_order`)
     .order('created_at', { ascending: false })
   
   if (!isSuperAdmin) {
@@ -527,8 +528,6 @@ export async function getMegaMenuAds() {
     return null;
   }
 }
-
-import { REGIONES_CHILE } from "@/config/regions";
 
 /** Obtiene modelos destacados filtrados por region o globales */
 export async function getFeaturedModelsByRegion(regionSlug?: string) {
