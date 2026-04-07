@@ -7,6 +7,9 @@ import { CatalogoControls } from "@/components/catalogo/catalogo-controls";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Metadata } from "next";
+import { REGIONES_CHILE } from "@/config/regions";
+import type { TipoModelo } from "@/lib/mock-data";
+import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
 
 export const dynamic = "force-dynamic";
 
@@ -24,9 +27,6 @@ interface PageProps {
     sort?: string;
   }>;
 }
-import type { TipoModelo } from "@/lib/mock-data";
-
-import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
 
 export default async function CatalogoPage({ searchParams }: PageProps) {
   const params = await searchParams;
@@ -36,15 +36,15 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const maxUF = params.max ? parseInt(params.max) : undefined;
   const sortBy = params.sort;
 
+  // Resolve region display name for slider label
+  const slugify = (t: string) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w\s-]/g, "").replace(/[\s_]+/g, "-").replace(/^-+|-+$/g, "")
+  const regionLabel = regionFilter
+    ? REGIONES_CHILE.find(r => slugify(r) === slugify(regionFilter)) || regionFilter
+    : undefined
+
   // Real fetch from Supabase
   const [modelos, featuredModels] = await Promise.all([
-     getModelosFiltered({
-      tipo: tipoFilter,
-      minUF,
-      maxUF,
-      region: regionFilter,
-      sortBy
-    }),
+    getModelosFiltered({ tipo: tipoFilter, minUF, maxUF, region: regionFilter, sortBy }),
     getFeaturedModelsByRegion(regionFilter)
   ]);
 
@@ -94,7 +94,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
             <Suspense fallback={<CatalogoSkeleton />}>
                <div className="space-y-12">
                  {featuredModels.length > 0 && (
-                    <FeaturedSlider models={featuredModels} />
+                    <FeaturedSlider models={featuredModels} regionLabel={regionLabel} />
                  )}
 
                  {modelos.length > 0 ? (
