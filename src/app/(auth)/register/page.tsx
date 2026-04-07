@@ -242,7 +242,7 @@ function RegisterForm() {
           </Link>
           <div className="space-y-3">
             <h1 className="text-4xl lg:text-5xl font-heading font-black tracking-tighter text-white uppercase italic">
-              {planMeta.isPaid ? "Último Paso" : "Crea tu Cuenta"}
+              {planMeta.isPaid ? "Último Paso" : "Empieza tu prueba gratis"}
             </h1>
             <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
               {planMeta.isPaid 
@@ -297,33 +297,33 @@ function RegisterForm() {
                 <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-5">
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Razón Social</Label>
-                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl border-white/20 bg-slate-900/80 hover:bg-slate-900 px-6 font-bold focus:bg-slate-900 focus:ring-2 focus:ring-[#00BFFF] transition-all text-white placeholder:text-slate-400 placeholder:opacity-100" />
+                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">RUT Empresa</Label>
-                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-white/20 bg-slate-900/80 hover:bg-slate-900 px-6 font-bold focus:bg-slate-900 focus:ring-2 focus:ring-[#00BFFF] transition-all text-white placeholder:text-slate-400 placeholder:opacity-100" />
+                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Teléfono</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-white/20 bg-slate-900/80 hover:bg-slate-900 px-6 font-bold focus:bg-slate-900 focus:ring-2 focus:ring-[#00BFFF] transition-all text-white placeholder:text-slate-400 placeholder:opacity-100" />
+                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
                   </div>
                 </motion.div>
               ) : (
                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Email Corporativo</Label>
-                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-white/20 bg-slate-900/80 hover:bg-slate-900 px-6 font-bold focus:bg-slate-900 focus:ring-2 focus:ring-[#00BFFF] transition-all text-white placeholder:text-slate-400 placeholder:opacity-100" />
+                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
                   </div>
                   <div className="space-y-2 relative">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Contraseña</Label>
-                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-white/20 bg-slate-900/80 hover:bg-slate-900 px-6 font-bold focus:bg-slate-900 focus:ring-2 focus:ring-[#00BFFF] transition-all text-white pr-12 placeholder:text-slate-400 placeholder:opacity-100" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-white/40 hover:text-white transition-colors">
+                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] pr-12 placeholder:text-[#152331]/50" />
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-[#152331]/40 hover:text-[#152331] transition-colors">
                       {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Confirmar</Label>
-                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-white/20 bg-slate-900/80 hover:bg-slate-900 px-6 font-bold focus:bg-slate-900 focus:ring-2 focus:ring-[#00BFFF] transition-all text-white placeholder:text-slate-400 placeholder:opacity-100" />
+                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
                   </div>
                 </motion.div>
               )}
