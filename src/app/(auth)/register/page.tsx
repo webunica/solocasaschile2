@@ -247,7 +247,7 @@ function RegisterForm() {
             <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
               {planMeta.isPaid 
                 ? `Activa ahora tu Plan ${planMeta.label} y comienza a recibir leads.`
-                : "Únete a la mayor red de constructoras en Chile."}
+                : "Prueba gratis por 4 meses gratis..."}
             </p>
           </div>
         </div>
