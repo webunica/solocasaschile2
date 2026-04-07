@@ -40,7 +40,22 @@ const CATEGORIAS_ESPECIALES = [
   { name: "Entrega Inmediata", href: "/catalogo?filtro=entrega-inmediata" },
 ];
 
-export function MegaMenu() {
+export function MegaMenu({ ads }: { ads?: any }) {
+  const featuredConstructora = ads?.constructora;
+  const featuredModelo = ads?.modelo;
+
+  // Fallbacks para datos vacíos o carga inicial
+  const cName = featuredConstructora?.nombre || "Austral SIP";
+  const cSlug = featuredConstructora?.slug || "austral-sip";
+  const cImage = featuredConstructora?.image || featuredConstructora?.logo_url || "/images/modelos/austral/nocturna.jpg";
+  const cDesc = featuredConstructora?.descripcion || "Expertos en eficiencia térmica";
+
+  const mName = featuredModelo?.nombre || "Casa Nogal SIP 120";
+  const mSlug = featuredModelo?.slug || "casa-nogal-sip-120";
+  const mImage = (featuredModelo?.imagenes_urls && featuredModelo?.imagenes_urls[0]) || "/hero.png";
+  const mPrice = featuredModelo?.precio_desde_uf || 1200;
+  const mSize = featuredModelo?.superficie_m2 || 120;
+  const mDorms = featuredModelo?.dormitorios || 3;
   return (
     <motion.div
       initial={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -57,19 +72,19 @@ export function MegaMenu() {
             <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
             Constructora Destacada
           </div>
-          <Link href="/constructoras/austral-sip" className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
+          <Link href={`/constructoras/${cSlug}`} className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
             <div className="aspect-[4/3] relative">
                <Image 
-                src="/images/modelos/austral/nocturna.jpg" 
-                alt="Austral SIP" 
+                src={cImage} 
+                alt={cName} 
                 fill 
                 className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
+              <div className="absolute bottom-4 left-4 right-4 text-left">
                 <div className="bg-white/90 backdrop-blur-sm w-fit px-2 py-0.5 rounded text-[9px] font-black text-primary mb-2 uppercase tracking-tighter shadow-sm">Premium Partner</div>
-                <h4 className="text-white font-black text-lg leading-tight uppercase tracking-tight">Austral SIP</h4>
-                <p className="text-white/70 text-[10px] line-clamp-1 mt-1 font-medium">Líderes en eficiencia energética</p>
+                <h4 className="text-white font-black text-lg leading-tight uppercase tracking-tight">{cName}</h4>
+                <p className="text-white/70 text-[10px] line-clamp-1 mt-1 font-medium italic">{cDesc}</p>
               </div>
             </div>
           </Link>
@@ -154,26 +169,26 @@ export function MegaMenu() {
             <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-ping" />
             Modelo Destacado
           </div>
-          <Link href="/modelos/casa-nogal-sip-120" className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
+          <Link href={`/modelo/${mSlug}`} className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
             <div className="aspect-[4/3] relative">
                <Image 
-                src="/hero.png" 
-                alt="Casa Nogal" 
+                src={mImage} 
+                alt={mName} 
                 fill 
                 className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />
-              <div className="absolute top-3 right-3 bg-orange-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 uppercase tracking-tighter animate-bounce">-15% OFF</div>
+              <div className="absolute top-3 right-3 bg-orange-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 uppercase tracking-tighter animate-bounce">Destacado</div>
             </div>
-            <div className="p-4 bg-white">
-              <h4 className="text-[#1b0088] font-black text-sm uppercase tracking-tight leading-tight group-hover:text-primary transition-colors">Casa Nogal SIP 120</h4>
+            <div className="p-4 bg-white text-left">
+              <h4 className="text-[#1b0088] font-black text-sm uppercase tracking-tight leading-tight group-hover:text-primary transition-colors">{mName}</h4>
               <div className="flex items-center gap-3 mt-2 text-[10px] font-bold text-muted-foreground">
-                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> 120m²</span>
-                <span className="flex items-center gap-1 font-black text-primary border-l border-border/40 pl-3">3 Dormitorios</span>
+                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {mSize}m²</span>
+                <span className="flex items-center gap-1 font-black text-primary border-l border-border/40 pl-3">{mDorms} Dormitorios</span>
               </div>
               <div className="mt-4 flex items-center justify-between border-t border-border/10 pt-3">
                 <div className="flex flex-col">
                   <span className="text-[10px] text-muted-foreground font-bold uppercase leading-none mb-1">Desde</span>
-                  <span className="text-primary font-black text-lg leading-none">1.200 UF</span>
+                  <span className="text-primary font-black text-lg leading-none">{mPrice.toLocaleString()} UF</span>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
                   <ChevronRight className="w-4 h-4" />
