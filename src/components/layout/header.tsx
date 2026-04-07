@@ -52,7 +52,7 @@ export function Header() {
             alt="SolocasasChile" 
             width={200} 
             height={150} 
-            className="h-12 md:h-20 w-auto object-contain relative z-10"
+            className="h-10 md:h-16 w-auto object-contain relative z-10"
             style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.12))" }}
             priority
           />
@@ -64,10 +64,10 @@ export function Header() {
               <Link 
                 key={link.href} 
                 href={link.href} 
-                className="text-muted-foreground hover:text-primary transition-all relative group py-2"
+                className="text-[#1b0088] hover:opacity-80 transition-all relative group py-2"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b0088] transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </nav>
@@ -129,7 +129,7 @@ export function Header() {
                        key={link.href}
                        href={link.href}
                        onClick={() => setIsOpen(false)}
-                       className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-bold text-[15px] tracking-tight transition-all group"
+                       className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-[#1b0088] font-bold text-[15px] tracking-tight transition-all group"
                      >
                        <link.icon className="w-5 h-5 opacity-40 group-hover:opacity-100" /> {link.label}
                      </Link>
