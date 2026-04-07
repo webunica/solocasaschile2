@@ -1,4 +1,5 @@
 import { cache } from 'react'
+import { unstable_cache, revalidateTag } from 'next/cache'
 import { createClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
 import { REGIONES_CHILE } from '@/config/regions'
@@ -129,77 +130,79 @@ export async function getModelById(id: string) {
   return null;
 }
 
-// server-cache-react: deduplicate identical slug lookups within the same RSC request
-export const getModelBySlug = cache(async function getModelBySlug(slug: string) {
-  const supabase = await createClient()
-  
-  // 1. Intentar obtener de Supabase
-  const { data, error } = await supabase
-    .from('modelos')
-    .select(`*, constructora:constructoras (*)`)
-    .eq('slug', slug)
-    .maybeSingle()
-  
-  if (data && !error) {
-    // Asegurar compatibilidad (algunos campos podrían venir null de DB)
-    return {
-      ...data,
-      imagenes_urls: data.imagenes_urls || [],
-      precio_desde_uf: data.precio_desde_uf || 0,
-      constructora: data.constructora ? {
-        ...data.constructora,
-        id: data.constructora.id || data.constructora_id,
-        score_confianza: data.constructora.score_confianza || 0,
-        logo_url: data.constructora.logo_url || '/placeholder.png'
-      } : {
-        id: 'external',
-        nombre: 'Constructora No Asignada',
-        plan: 'gratis',
-        score_confianza: 0,
-        verificada: false,
-        slug: 'unknown',
-        logo_url: '/placeholder.png',
-        regiones: []
+// server-cache: shared cache for models detail
+export const getModelBySlug = cache(async (slug: string) => {
+  return unstable_cache(
+    async (slug: string) => {
+      const supabase = await createClient()
+      const { data, error } = await supabase
+        .from('modelos')
+        .select(`*, constructora:constructoras (*)`)
+        .eq('slug', slug)
+        .maybeSingle()
+      
+      if (data && !error) {
+        return {
+          ...data,
+          imagenes_urls: data.imagenes_urls || [],
+          precio_desde_uf: data.precio_desde_uf || 0,
+          constructora: data.constructora ? {
+            ...data.constructora,
+            id: data.constructora.id || data.constructora_id,
+            score_confianza: data.constructora.score_confianza || 0,
+            logo_url: data.constructora.logo_url || '/placeholder.png'
+          } : {
+            id: 'external',
+            nombre: 'Constructora No Asignada',
+            plan: 'gratis',
+            score_confianza: 0,
+            verificada: false,
+            slug: 'unknown',
+            logo_url: '/placeholder.png',
+            regiones: []
+          }
+        } as ModelWithConstructora;
       }
-    } as ModelWithConstructora;
-  }
 
-  // 2. Fallback to Mocks
-  const mock = MODELOS.find(m => m.slug === slug);
-  if (mock) {
-    return {
-      id: mock.id,
-      constructora_id: mock.constructoraId,
-      nombre: mock.nombre,
-      slug: mock.slug,
-      tipo: mock.tipo,
-      superficie_m2: mock.superficieM2,
-      dormitorios: mock.dormitorios,
-      banos: mock.banos,
-      precio_desde_uf: mock.precioDesdeUF,
-      imagenes_urls: mock.imagenes || [],
-      tiempo_entrega: mock.tiempoEntrega,
-      descripcion: mock.descripcion,
-      disponible: mock.disponible,
-      garantia_anos: mock.garantiaAnos,
-      postventa: mock.postventa,
-      especificaciones: mock.especificaciones,
-      constructora: {
-        id: mock.constructoraId,
-        nombre: mock.constructoraNombre,
-        slug: mock.constructoraSlug,
-        plan: mock.constructoraPlan,
-        verificada: true,
-        score_confianza: 100,
-        logo_url: mock.imagenes[0], 
-        regiones: ["Metropolitana"],
-        descripcion: "Constructora referente de alta eficiencia."
+      // 2. Fallback to Mocks
+      const mock = MODELOS.find(m => m.slug === slug);
+      if (mock) {
+        return {
+          id: mock.id,
+          constructora_id: mock.constructoraId,
+          nombre: mock.nombre,
+          slug: mock.slug,
+          tipo: mock.tipo,
+          superficie_m2: mock.superficieM2,
+          dormitorios: mock.dormitorios,
+          banos: mock.banos,
+          precio_desde_uf: mock.precioDesdeUF,
+          imagenes_urls: mock.imagenes || [],
+          tiempo_entrega: mock.tiempoEntrega,
+          descripcion: mock.descripcion,
+          disponible: mock.disponible,
+          garantia_anos: mock.garantiaAnos,
+          postventa: mock.postventa,
+          especificaciones: mock.especificaciones,
+          constructora: {
+            id: mock.constructoraId,
+            nombre: mock.constructoraNombre,
+            slug: mock.constructoraSlug,
+            plan: mock.constructoraPlan,
+            verificada: true,
+            score_confianza: 100,
+            logo_url: mock.imagenes[0], 
+            regiones: ["Metropolitana"],
+            descripcion: "Constructora referente de alta eficiencia."
+          }
+        } as ModelWithConstructora;
       }
-    } as ModelWithConstructora;
-  }
-
-  return null;
-});
+      return null;
+    },
+    ['model-detail', slug],
+    { revalidate: 3600, tags: ['modelos', `model-${slug}`] }
+  )(slug)
+})
 
 function getRegionDisplayName(slug?: string) {
   if (!slug) return slug;
@@ -212,6 +215,7 @@ function getRegionDisplayName(slug?: string) {
   return REGIONES_CHILE.find(r => slugify(r) === slugify(slug)) || slug;
 }
 
+/** Modelos filtrados del catálogo público (con caché) */
 export async function getModelosFiltered(filters: {
   tipo?: string
   minUF?: number
@@ -219,108 +223,103 @@ export async function getModelosFiltered(filters: {
   region?: string
   sortBy?: string
 }) {
-  const supabase = await createClient()
-  const regionDisp = getRegionDisplayName(filters.region);
+  return unstable_cache(
+    async (filters) => {
+      const supabase = await createClient()
+      const regionDisp = getRegionDisplayName(filters.region);
 
-  // 1. Fetch real data from Supabase
-  let query = supabase
-    .from('modelos')
-    .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones, descripcion, seo_title, seo_description, seo_keywords)`)
-    .eq('disponible', true)
-  
-  if (filters.tipo) query = query.eq('tipo', filters.tipo)
-  if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
-  if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
-  // NOTE: Region filter applied in JS below — PostgREST dot-notation on joined tables is unreliable
+      // 1. Fetch real data from Supabase
+      let query = supabase
+        .from('modelos')
+        .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones, descripcion, seo_title, seo_description, seo_keywords)`)
+        .eq('disponible', true)
+      
+      if (filters.tipo) query = query.eq('tipo', filters.tipo)
+      if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
+      if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
 
-  const { data: dbData } = await query
+      const { data: dbData } = await query
 
-  // 2. Map DB data to ensure it matches ModelWithConstructora perfectly
-  const allDbData = (dbData as any[] || []).map(m => ({
-    ...m,
-    imagenes_urls: m.imagenes_urls || [],
-    precio_desde_uf: m.precio_desde_uf || 0,
-    constructora: m.constructora ? {
-      ...m.constructora,
-      logo_url: m.constructora.logo_url || '/placeholder.png',
-      score_confianza: m.constructora.score_confianza || 0
-    } : null
-  })) as ModelWithConstructora[]
+      // 2. Map DB data
+      const allDbData = (dbData as any[] || []).map(m => ({
+        ...m,
+        imagenes_urls: m.imagenes_urls || [],
+        precio_desde_uf: m.precio_desde_uf || 0,
+        constructora: m.constructora ? {
+          ...m.constructora,
+          logo_url: m.constructora.logo_url || '/placeholder.png',
+          score_confianza: m.constructora.score_confianza || 0
+        } : null
+      })) as ModelWithConstructora[]
 
-  // Apply region filter in JS — works 100% reliably for both DB and mock data
-  const mappedDbData = regionDisp
-    ? allDbData.filter(m => {
-        const regiones: string[] = m.constructora?.regiones || []
-        return regiones.includes(regionDisp)
+      const mappedDbData = regionDisp
+        ? allDbData.filter(m => {
+            const regiones: string[] = m.constructora?.regiones || []
+            return regiones.includes(regionDisp)
+          })
+        : allDbData
+
+      // 3. Merge with Mocks
+      const showcaseData = MODELOS.map(m => ({
+        id: m.id,
+        constructora_id: m.constructoraId,
+        nombre: m.nombre,
+        slug: m.slug,
+        tipo: m.tipo,
+        superficie_m2: m.superficieM2,
+        dormitorios: m.dormitorios,
+        banos: m.banos,
+        precio_desde_uf: m.precioDesdeUF,
+        imagenes_urls: m.imagenes || [],
+        tiempo_entrega: m.tiempoEntrega,
+        descripcion: m.descripcion,
+        disponible: m.disponible,
+        garantia_anos: m.garantiaAnos,
+        postventa: m.postventa,
+        constructora: {
+          id: m.constructoraId,
+          nombre: m.constructoraNombre,
+          slug: m.constructoraSlug,
+          plan: m.constructoraPlan,
+          verificada: true,
+          score_confianza: 100,
+          logo_url: m.imagenes[0], 
+          regiones: ["Metropolitana", "Valparaíso", "Biobío", "Los Lagos"],
+          descripcion: "Expertos en construcción modular SIP de alta eficiencia."
+        }
+      })) as ModelWithConstructora[]
+
+      const filteredMocks = showcaseData.filter(m => {
+        if (filters.tipo && m.tipo !== filters.tipo) return false
+        if (filters.minUF && m.precio_desde_uf < filters.minUF) return false
+        if (filters.maxUF && m.precio_desde_uf > filters.maxUF) return false
+        if (regionDisp && !m.constructora.regiones.includes(regionDisp)) return false
+        return true
       })
-    : allDbData
 
-  // 3. Merge with Showcase Mock Data (Austral SIP example)
-  // We map mock data to match the ModelWithConstructora (snake_case)
-  const showcaseData = MODELOS.map(m => ({
-    id: m.id,
-    constructora_id: m.constructoraId,
-    nombre: m.nombre,
-    slug: m.slug,
-    tipo: m.tipo,
-    superficie_m2: m.superficieM2,
-    dormitorios: m.dormitorios,
-    banos: m.banos,
-    precio_desde_uf: m.precioDesdeUF,
-    imagenes_urls: m.imagenes || [],
-    tiempo_entrega: m.tiempoEntrega,
-    descripcion: m.descripcion,
-    disponible: m.disponible,
-    garantia_anos: m.garantiaAnos,
-    postventa: m.postventa,
-    constructora: {
-      id: m.constructoraId,
-      nombre: m.constructoraNombre,
-      slug: m.constructoraSlug,
-      plan: m.constructoraPlan,
-      verificada: true,
-      score_confianza: 100,
-      logo_url: m.imagenes[0], 
-      regiones: ["Metropolitana", "Valparaíso", "Biobío", "Los Lagos"],
-      descripcion: "Expertos en construcción modular SIP de alta eficiencia."
-    }
-  })) as ModelWithConstructora[]
+      const dbSlugs = new Set(mappedDbData.map(m => m.slug))
+      const uniqueMocks = filteredMocks.filter(m => !dbSlugs.has(m.slug))
+      const allData = [...mappedDbData, ...uniqueMocks]
+      
+      const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 }
+      const sorted = allData.sort((a, b) => {
+        if (a.id === 'm0') return -1
+        if (b.id === 'm0') return 1
+        const planA = a.constructora?.plan || 'gratis'
+        const planB = b.constructora?.plan || 'gratis'
+        const planDiff = (planOrder[planA] ?? 2) - (planOrder[planB] ?? 2)
+        if (filters.sortBy === 'price_asc') return a.precio_desde_uf - b.precio_desde_uf
+        if (filters.sortBy === 'price_desc') return b.precio_desde_uf - a.precio_desde_uf
+        if (filters.sortBy === 'm2_desc') return b.superficie_m2 - a.superficie_m2
+        if (planDiff !== 0) return planDiff
+        return a.precio_desde_uf - b.precio_desde_uf
+      })
 
-  const filteredMocks = showcaseData.filter(m => {
-    if (filters.tipo && m.tipo !== filters.tipo) return false
-    if (filters.minUF && m.precio_desde_uf < filters.minUF) return false
-    if (filters.maxUF && m.precio_desde_uf > filters.maxUF) return false
-    if (regionDisp && !m.constructora.regiones.includes(regionDisp)) return false
-    return true
-  })
-
-  // 3. Keep DB models first and filter out Mocks that share the same slug (Priority to DB/User content)
-  const dbSlugs = new Set(mappedDbData.map(m => m.slug))
-  const uniqueMocks = filteredMocks.filter(m => !dbSlugs.has(m.slug))
-  
-  const allData = [...mappedDbData, ...uniqueMocks]
-
-  const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 }
-  
-  const sorted = allData.sort((a, b) => {
-    // Priority 0: Specific ID (Showcase first)
-    if (a.id === 'm0') return -1
-    if (b.id === 'm0') return 1
-
-    const planA = a.constructora?.plan || 'gratis'
-    const planB = b.constructora?.plan || 'gratis'
-    const planDiff = (planOrder[planA] ?? 2) - (planOrder[planB] ?? 2)
-    
-    if (filters.sortBy === 'price_asc') return a.precio_desde_uf - b.precio_desde_uf
-    if (filters.sortBy === 'price_desc') return b.precio_desde_uf - a.precio_desde_uf
-    if (filters.sortBy === 'm2_desc') return b.superficie_m2 - a.superficie_m2
-
-    // Default: Plan Priority > Price Asc
-    if (planDiff !== 0) return planDiff
-    return a.precio_desde_uf - b.precio_desde_uf
-  })
-
-  return sorted
+      return sorted
+    },
+    ['catalog-filtered', JSON.stringify(filters)],
+    { revalidate: 1800, tags: ['modelos', 'catalog'] }
+  )(filters)
 }
 
 /** Modelos pertenecientes a la constructora autenticada (dashboard privado) */
@@ -529,74 +528,72 @@ export async function getMegaMenuAds() {
   }
 }
 
-/** Obtiene modelos destacados filtrados por region o globales */
+/** Obtiene modelos destacados filtrados por region (con caché) */
 export async function getFeaturedModelsByRegion(regionSlug?: string) {
-  try {
-    const supabase = await createClient()
-    const regionDisp = getRegionDisplayName(regionSlug);
+  return unstable_cache(
+    async (regionSlug?: string) => {
+      try {
+        const supabase = await createClient()
+        const regionDisp = getRegionDisplayName(regionSlug);
 
-    // Two separate queries and merge — avoids broken cross-table PostgREST OR syntax
-    const [{ data: featuredData }, { data: premiumData }] = await Promise.all([
-      // 1. Models manually starred by admin
-      supabase
-        .from('modelos')
-        .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
-        .eq('disponible', true)
-        .eq('is_featured', true),
-      // 2. Models from Premium constructors
-      supabase
-        .from('modelos')
-        .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
-        .eq('disponible', true)
-    ])
+        const [{ data: featuredData }, { data: premiumData }] = await Promise.all([
+          supabase
+            .from('modelos')
+            .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
+            .eq('disponible', true)
+            .eq('is_featured', true),
+          supabase
+            .from('modelos')
+            .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
+            .eq('disponible', true)
+        ])
 
-    // Merge, deduplicate by id
-    const allRaw = [...(featuredData || []), ...(premiumData || [])]
-    const seen = new Set<string>()
-    const unique = allRaw.filter(m => {
-      if (seen.has(m.id)) return false
-      seen.add(m.id)
-      return true
-    })
-
-    // Filter: only Premium plan OR manually featured
-    const filtered = unique.filter(m => 
-      m.is_featured === true || m.constructora?.plan === 'premium'
-    )
-
-    // Filter by region in JS (100% reliable)
-    const regional = regionDisp 
-      ? filtered.filter(m => {
-          const regiones: string[] = m.constructora?.regiones || []
-          return regiones.includes(regionDisp)
+        const allRaw = [...(featuredData || []), ...(premiumData || [])]
+        const seen = new Set<string>()
+        const unique = allRaw.filter(m => {
+          if (seen.has(m.id)) return false
+          seen.add(m.id)
+          return true
         })
-      : filtered
 
-    if (!regional.length) return []
+        const filtered = unique.filter(m => 
+          m.is_featured === true || m.constructora?.plan === 'premium'
+        )
 
-    // Map to ModelWithConstructora
-    const models = regional.map(m => ({
-      ...m,
-      imagenes_urls: m.imagenes_urls || [],
-      precio_desde_uf: m.precio_desde_uf || 0,
-      constructora: m.constructora ? {
-        ...m.constructora,
-        logo_url: m.constructora.logo_url || '/placeholder.png',
-        score_confianza: m.constructora.score_confianza || 0
-      } : null
-    })) as ModelWithConstructora[]
+        const regional = regionDisp 
+          ? filtered.filter(m => {
+              const regiones: string[] = m.constructora?.regiones || []
+              return regiones.includes(regionDisp)
+            })
+          : filtered
 
-    // Sort: manual featured first, then by featured_order
-    return models.sort((a, b) => {
-      if (a.is_featured && !b.is_featured) return -1
-      if (!a.is_featured && b.is_featured) return 1
-      return (a.featured_order || 0) - (b.featured_order || 0)
-    }).slice(0, 10)
+        if (!regional.length) return []
 
-  } catch (error) {
-    console.error("Error fetching featured models:", error)
-    return []
-  }
+        const models = regional.map(m => ({
+          ...m,
+          imagenes_urls: m.imagenes_urls || [],
+          precio_desde_uf: m.precio_desde_uf || 0,
+          constructora: m.constructora ? {
+            ...m.constructora,
+            logo_url: m.constructora.logo_url || '/placeholder.png',
+            score_confianza: m.constructora.score_confianza || 0
+          } : null
+        })) as ModelWithConstructora[]
+
+        return models.sort((a, b) => {
+          if (a.is_featured && !b.is_featured) return -1
+          if (!a.is_featured && b.is_featured) return 1
+          return (a.featured_order || 0) - (b.featured_order || 0)
+        }).slice(0, 10)
+
+      } catch (error) {
+        console.error("Error fetching featured models:", error)
+        return []
+      }
+    },
+    ['featured-models', regionSlug || 'all'],
+    { revalidate: 3600, tags: ['modelos', 'featured'] }
+  )(regionSlug)
 }
 
 async function getConstructoraById(id: string) {
