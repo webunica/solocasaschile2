@@ -101,7 +101,7 @@ export async function register(formData: FormData) {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
 
-    const constructoraPayload = {
+    const constructoraPayload: any = {
       id: authData.user.id,
       nombre: companyName,
       slug,
@@ -111,6 +111,13 @@ export async function register(formData: FormData) {
       plan_status: plan === 'gratis' ? 'active' : 'pending',
       verificada: false,
       score_confianza: 50,
+    }
+
+    // El plan gratuito dura 4 meses
+    if (plan === 'gratis') {
+      const expirationDate = new Date();
+      expirationDate.setMonth(expirationDate.getMonth() + 4);
+      constructoraPayload.next_billing_date = expirationDate.toISOString();
     }
 
     // Si necesita confirmar email (sesión es null)

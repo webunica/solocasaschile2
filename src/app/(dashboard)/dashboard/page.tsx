@@ -230,21 +230,47 @@ export default async function DashboardPage() {
           <div className="space-y-10">
              {/* CTA Card - CONDITIONAL */}
              {plan === 'gratis' ? (
-                <Card className="rounded-[3rem] bg-foreground text-background overflow-hidden relative group shadow-2xl shadow-black/10">
-                   <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-[60px] group-hover:bg-white/10 transition-colors" />
-                   <CardHeader className="p-10">
-                      <CardTitle className="text-2xl font-black tracking-tighter text-white">Escala a Pro</CardTitle>
-                      <CardDescription className="text-white/60 font-medium text-sm leading-relaxed mt-4">
-                        Desbloquea modelos ilimitados, analíticas avanzadas y prioridad en el catálogo nacional.
+                <Card className="rounded-[3rem] bg-[#0047AB] text-white overflow-hidden relative group shadow-2xl shadow-blue-900/40 border-none">
+                   <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-[60px]" />
+                   <CardHeader className="p-10 pb-6 relative z-10">
+                      <div className="flex items-center gap-3 mb-6">
+                         <Badge className="bg-white/20 text-white border-none font-black tracking-widest text-[8px] uppercase px-3">Plan Gratuito</Badge>
+                         {nextBillingDate && (
+                           <Badge variant="outline" className="text-white border-white/40 font-black tracking-widest text-[8px] uppercase px-3 bg-white/10 backdrop-blur-md italic animate-pulse">
+                              {Math.ceil((new Date(nextBillingDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))} días restantes
+                           </Badge>
+                         )}
+                      </div>
+                      <CardTitle className="text-4xl font-black tracking-tighter text-white leading-[0.95] italic">Escala tu Constructora</CardTitle>
+                      <CardDescription className="text-white/70 font-medium text-sm mt-4 leading-relaxed">
+                        Tu acceso gratuito vence el <span className="text-white font-black">{nextBillingDate ? new Date(nextBillingDate).toLocaleDateString('es-CL') : 'pronto'}</span>. 
+                        No pierdas la oportunidad de destacar tus modelos ante miles de clientes.
                       </CardDescription>
                    </CardHeader>
-                   <CardContent className="px-10 pb-10">
+                   <CardContent className="px-10 pb-10 space-y-6 relative z-10">
+                      <div className="grid grid-cols-2 gap-3 mb-2">
+                         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center group-hover:bg-white/10 transition-colors">
+                            <p className="text-[10px] font-black uppercase text-white/40 tracking-widest leading-none mb-1">PRO</p>
+                            <div className="flex items-baseline gap-1">
+                               <p className="font-black text-xl text-white">1.9</p>
+                               <span className="text-[10px] font-bold text-white/60">UF</span>
+                            </div>
+                         </div>
+                         <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center group-hover:bg-white/10 transition-colors">
+                            <p className="text-[10px] font-black uppercase text-white/40 tracking-widest leading-none mb-1">PREMIUM</p>
+                            <div className="flex items-baseline gap-1">
+                               <p className="font-black text-xl text-white">2.9</p>
+                               <span className="text-[10px] font-bold text-white/60">UF</span>
+                            </div>
+                         </div>
+                      </div>
                       <Link 
                         href="/planes" 
-                        className={cn(buttonVariants({ variant: "outline" }), "w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest border-white/20 text-white hover:bg-white hover:text-foreground transition-all")}
+                        className={cn(buttonVariants({ variant: "default" }), "w-full h-16 rounded-3xl font-black text-xs uppercase tracking-widest bg-white text-[#0047AB] hover:bg-white/90 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-black/20")}
                       >
-                        Ver Planes Premium
+                        Actualizar Plan Ahora
                       </Link>
+                      <p className="text-[8px] text-center font-black uppercase tracking-widest text-white/40">Sin contratos forzosos. Cancela cuando quieras.</p>
                    </CardContent>
                 </Card>
              ) : (
