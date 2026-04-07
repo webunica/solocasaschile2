@@ -71,7 +71,13 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16">
+      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-16">
+        {/* 1. Featured Slider - Full Width of Container */}
+        {featuredModels.length > 0 && (
+          <FeaturedSlider models={featuredModels} regionLabel={regionLabel} />
+        )}
+
+        {/* 2. Main Content: Filters + Grid */}
         <div className="flex flex-col lg:flex-row gap-16">
           {/* Filters Sidebar - Desktop Only */}
           <aside className="hidden lg:block w-72 shrink-0" aria-label="Filtros del catálogo">
@@ -91,10 +97,6 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
           <main className="flex-1 min-w-0" aria-label="Resultados del catálogo">
             <Suspense fallback={<CatalogoSkeleton />}>
                <div className="space-y-12">
-                 {featuredModels.length > 0 && (
-                    <FeaturedSlider models={featuredModels} regionLabel={regionLabel} />
-                 )}
-
                  {modelos.length > 0 ? (
                    <CatalogoGrid modelos={modelos} />
                  ) : (
