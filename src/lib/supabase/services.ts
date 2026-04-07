@@ -39,6 +39,8 @@ export type ModelWithConstructora = {
   instalaciones?: any;
   logistica?: any;
   soporte?: any;
+  is_featured?: boolean;
+  featured_order?: number;
   constructora: {
     id: string;
     nombre: string;
