@@ -510,23 +510,25 @@ export async function getMegaMenuAds() {
 export async function getFeaturedModelsByRegion(region?: string) {
   try {
     const supabase = await createClient()
+    
+    // Fetch all models from Premium constructors OR manually featured
     let query = supabase
       .from('modelos')
-      .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
-      .eq('is_featured', true)
+      .select(`*, constructora:constructoras!inner (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
       .eq('disponible', true)
-      .order('featured_order', { ascending: true })
+      // Custom OR: Manual featured OR Premium Plan
+      .or('is_featured.eq.true, plan.eq.premium', { foreignTable: 'constructoras' }) 
     
     if (region) {
-      // Usamos el mismo patrón: si la constructora está en esa región
       query = query.contains('constructoras.regiones', [region])
     }
   
-    const { data, error } = await query
+    const { data: dbData, error } = await query
     
-    if (error || !data) return []
-  
-    return (data as any[]).map(m => ({
+    if (error || !dbData) return []
+
+    // Map and Sort (Manual Featured First, then rest)
+    const models = (dbData as any[]).map(m => ({
       ...m,
       imagenes_urls: m.imagenes_urls || [],
       precio_desde_uf: m.precio_desde_uf || 0,
@@ -536,6 +538,14 @@ export async function getFeaturedModelsByRegion(region?: string) {
         score_confianza: m.constructora.score_confianza || 0
       } : null
     })) as ModelWithConstructora[]
+
+    // Sort priority: is_featured (true first), then featured_order
+    return models.sort((a, b) => {
+      if (a.is_featured && !b.is_featured) return -1
+      if (!a.is_featured && b.is_featured) return 1
+      return (a.featured_order || 0) - (b.featured_order || 0)
+    }).slice(0, 10); // Limit to top 10 for slider performance
+
   } catch (error) {
     console.error("DEBUG: Error fetching featured models:", error);
     return []
