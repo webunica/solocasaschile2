@@ -527,27 +527,48 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
   try {
     const supabase = await createClient()
     const regionDisp = getRegionDisplayName(regionSlug);
-    
-    // Fetch all models from Premium constructors OR manually featured
-    let query = supabase
-      .from('modelos')
-      .select(`*, constructora:constructoras!inner (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
-      .eq('disponible', true)
-      // High-performance cross-table OR for PostgREST
-      .or(`is_featured.eq.true,constructora.plan.eq.premium`) 
-    
-    if (regionDisp) {
-      console.log("DEBUG: Filtering featured models by region:", regionDisp);
-      // Use the alias 'constructora' assigned in the select
-      query = query.contains('constructora.regiones', [regionDisp])
-    }
-  
-    const { data: dbData, error } = await query
-    
-    if (error || !dbData) return []
 
-    // Map and Sort (Manual Featured First, then rest)
-    const models = (dbData as any[]).map(m => ({
+    // Two separate queries and merge — avoids broken cross-table PostgREST OR syntax
+    const [{ data: featuredData }, { data: premiumData }] = await Promise.all([
+      // 1. Models manually starred by admin
+      supabase
+        .from('modelos')
+        .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
+        .eq('disponible', true)
+        .eq('is_featured', true),
+      // 2. Models from Premium constructors
+      supabase
+        .from('modelos')
+        .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
+        .eq('disponible', true)
+    ])
+
+    // Merge, deduplicate by id
+    const allRaw = [...(featuredData || []), ...(premiumData || [])]
+    const seen = new Set<string>()
+    const unique = allRaw.filter(m => {
+      if (seen.has(m.id)) return false
+      seen.add(m.id)
+      return true
+    })
+
+    // Filter: only Premium plan OR manually featured
+    const filtered = unique.filter(m => 
+      m.is_featured === true || m.constructora?.plan === 'premium'
+    )
+
+    // Filter by region in JS (100% reliable)
+    const regional = regionDisp 
+      ? filtered.filter(m => {
+          const regiones: string[] = m.constructora?.regiones || []
+          return regiones.includes(regionDisp)
+        })
+      : filtered
+
+    if (!regional.length) return []
+
+    // Map to ModelWithConstructora
+    const models = regional.map(m => ({
       ...m,
       imagenes_urls: m.imagenes_urls || [],
       precio_desde_uf: m.precio_desde_uf || 0,
@@ -558,15 +579,15 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
       } : null
     })) as ModelWithConstructora[]
 
-    // Sort priority: is_featured (true first), then featured_order
+    // Sort: manual featured first, then by featured_order
     return models.sort((a, b) => {
       if (a.is_featured && !b.is_featured) return -1
       if (!a.is_featured && b.is_featured) return 1
       return (a.featured_order || 0) - (b.featured_order || 0)
-    }).slice(0, 10); // Limit to top 10 for slider performance
+    }).slice(0, 10)
 
   } catch (error) {
-    console.error("DEBUG: Error fetching featured models:", error);
+    console.error("Error fetching featured models:", error)
     return []
   }
 }
