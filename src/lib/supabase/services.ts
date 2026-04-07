@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import { unstable_cache, revalidateTag } from 'next/cache'
-import { createClient } from './server'
+import { createClient, createPublicClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
 import { REGIONES_CHILE } from '@/config/regions'
 
@@ -112,7 +112,7 @@ export async function getDashboardStats() {
 
 
 export async function getModelById(id: string) {
-  const supabase = await createClient()
+  const supabase = await createPublicClient()
   const { data, error } = await supabase
     .from('modelos')
     .select(`*, constructora:constructoras (*)`)
@@ -134,7 +134,7 @@ export async function getModelById(id: string) {
 export const getModelBySlug = cache(async (slug: string) => {
   return unstable_cache(
     async (slug: string) => {
-      const supabase = await createClient()
+      const supabase = await createPublicClient()
       const { data, error } = await supabase
         .from('modelos')
         .select(`*, constructora:constructoras (*)`)
@@ -225,7 +225,7 @@ export async function getModelosFiltered(filters: {
 }) {
   return unstable_cache(
     async (filters) => {
-      const supabase = await createClient()
+      const supabase = await createPublicClient()
       const regionDisp = getRegionDisplayName(filters.region);
 
       // 1. Fetch real data from Supabase
@@ -350,13 +350,13 @@ export async function getModelosByConstructora() {
 }
 
 export async function createLead(leadData: any) {
-  const supabase = await createClient()
+  const supabase = await createPublicClient()
   return await supabase.from('leads').insert([leadData]).select()
 }
 
 export async function getModelsByIds(ids: string[]) {
   if (!ids.length) return []
-  const supabase = await createClient()
+  const supabase = await createPublicClient()
   const dbIds = ids.filter(id => /^[0-9a-f-]{36}$/i.test(id));
   const { data: dbData } = await supabase
     .from('modelos')
@@ -409,7 +409,7 @@ export async function getModelsByIds(ids: string[]) {
 
 // server-cache-react: deduplicate per-request slug lookups
 export const getConstructoraBySlug = cache(async function getConstructoraBySlug(slug: string) {
-  const supabase = await createClient()
+  const supabase = await createPublicClient()
   const { data, error } = await supabase
     .from('constructoras')
     .select('*')
@@ -435,7 +435,7 @@ export const getConstructoraBySlug = cache(async function getConstructoraBySlug(
 });
 
 export async function getModelsByConstructoraId(id: string) {
-  const supabase = await createClient()
+  const supabase = await createPublicClient()
 
   // Narrow columns — avoid select(*) which pulls all JSON fields
   const { data, error } = await supabase
@@ -502,7 +502,7 @@ export async function getSellosDeConstructora(constructoraId: string) {
 /** Obtiene la configuración de publicidad del Mega Menú */
 export async function getMegaMenuAds() {
   try {
-    const supabase = await createClient();
+    const supabase = await createPublicClient();
     const { data: setting } = await supabase
       .from('site_settings')
       .select('value')
@@ -533,7 +533,7 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
   return unstable_cache(
     async (regionSlug?: string) => {
       try {
-        const supabase = await createClient()
+        const supabase = await createPublicClient()
         const regionDisp = getRegionDisplayName(regionSlug);
 
         const [{ data: featuredData }, { data: premiumData }] = await Promise.all([
