@@ -53,7 +53,7 @@ export default async function ModeloPage({ params }: PageProps) {
   const hasOtherModels = otherModels.length > 0;
   
   const sellos = await getSellosDeConstructora(constructora.id);
-  const maxSellosTotales = 8;
+  const maxSellosTotales = 2;
   const scoreConfianza = Math.max(10, Math.min(100, Math.round((sellos.length / maxSellosTotales) * 100)));
 
   return (
