@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo", icon: Library },
   { href: "/comparar", label: "Comparador", icon: ArrowLeftRight },
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
+  { href: "/planes", label: "Precios", icon: CreditCard },
 ];
 
 export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
@@ -108,7 +109,7 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
             </div>
              
             <Link 
-              href="/planes" 
+              href="/register" 
               className={cn(
                 buttonVariants({ variant: "secondary", size: "default" }),
                 "rounded-2xl px-10 hover:-translate-y-0.5 active:translate-y-0 transition-all h-12 hidden lg:inline-flex"
@@ -168,7 +169,7 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
 
                 <div className="absolute bottom-8 left-0 w-full px-8">
                        <Link 
-                          href="/planes" 
+                          href="/register" 
                           onClick={() => setIsOpen(false)}
                           className={cn(
                             buttonVariants({ variant: "secondary" }),

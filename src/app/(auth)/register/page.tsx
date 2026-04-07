@@ -218,85 +218,52 @@ function RegisterForm() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 lg:p-12">
-      <div className="w-full max-w-lg space-y-12">
+    <div className="min-h-screen bg-[#002660] flex flex-col items-center justify-center p-6 lg:p-12 relative overflow-hidden">
+      {/* Decorative Cobalt accents */}
+      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#0047AB] rounded-full blur-[120px] opacity-20 pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-[#0047AB] rounded-full blur-[100px] opacity-30 pointer-events-none" />
+
+      <div className="w-full max-w-lg space-y-10 relative z-10">
         
-        {/* Logo & Header */}
-        <div className="text-center space-y-6">
+        {/* Header */}
+        <div className="text-center space-y-8">
           <Link href="/" className="inline-block hover:scale-105 transition-transform">
             <Image
               src="/images/logo-vertical.png"
               alt="SolocasasChile"
-              width={140}
-              height={100}
-              className="h-16 w-auto object-contain mx-auto"
+              width={160}
+              height={120}
+              className="h-20 w-auto object-contain mx-auto brightness-0 invert"
               priority
             />
           </Link>
-          <div className="space-y-2">
-            <h1 className="text-4xl lg:text-5xl font-heading font-black tracking-tighter text-slate-900 uppercase">
+          <div className="space-y-3">
+            <h1 className="text-4xl lg:text-5xl font-heading font-black tracking-tighter text-white uppercase italic">
               {planMeta.isPaid ? "Último Paso" : "Crea tu Cuenta"}
             </h1>
-            <p className="text-slate-500 font-medium text-lg leading-tight max-w-sm mx-auto">
+            <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
               {planMeta.isPaid 
-                ? `Completa tu registro para activar el Plan ${planMeta.label}.`
-                : "Únete a la mayor red de constructoras modulares de Chile."}
+                ? `Activa ahora tu Plan ${planMeta.label} y comienza a recibir leads.`
+                : "Únete a la mayor red de constructoras en Chile."}
             </p>
           </div>
         </div>
 
-        {/* Plan badge for paid plans */}
-        {planMeta.isPaid && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={cn("bg-white flex items-center justify-between gap-4 px-8 py-6 rounded-[2.5rem] border shadow-2xl shadow-slate-200/50", planMeta.border)}
-          >
-            <div className="flex items-center gap-4">
-              <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center shadow-inner", planMeta.bg)}>
-                <PlanIcon className={cn("w-6 h-6", planMeta.color)} />
-              </div>
-              <div className="flex flex-col">
-                <span className={cn("text-xs font-black uppercase tracking-widest leading-none", planMeta.color)}>
-                  Plan {planMeta.label}
-                </span>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mt-1">
-                  Renovación {billing === 'yearly' ? 'Anual' : 'Mensual'}
-                </span>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 justify-end">
-                  {billing === 'yearly' && (
-                    <span className="text-xs font-bold text-slate-300 line-through tracking-tighter">{planMeta.original}</span>
-                  )}
-                  <span className="text-3xl font-black text-slate-900 tracking-tighter">{currentPrice}</span>
-                  <span className="text-xs font-bold text-slate-400">UF</span>
-                </div>
-                {billing === 'yearly' && (
-                  <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Ahorras 50% hoy</span>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Main Card */}
-        <div className="bg-white rounded-[3rem] p-10 lg:p-14 shadow-2xl shadow-slate-200/60 border border-slate-100 flex flex-col space-y-10">
+        {/* Form Card */}
+        <div className="bg-[#003487]/50 backdrop-blur-2xl rounded-[3rem] p-10 lg:p-14 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col space-y-10">
           
           {/* Step indicator */}
           <div className="space-y-4">
             <div className="flex gap-2">
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "bg-brand-indigo" : "bg-slate-100")} />
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "bg-brand-indigo" : "bg-slate-100")} />
+              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "bg-[#00BFFF]" : "bg-white/10")} />
+              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "bg-[#00BFFF]" : "bg-white/10")} />
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">
-                Información de {step === 1 ? "Empresa" : "Acceso"}
+            <div className="flex justify-between items-center text-white/40">
+              <span className="text-[10px] font-black tracking-[0.2em] uppercase">
+                {step === 1 ? "Empresa" : "Acceso"}
               </span>
               {step === 2 && (
-                <button onClick={() => setStep(1)} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-brand-indigo transition-colors flex items-center gap-2">
+                <button onClick={() => setStep(1)} className="text-[10px] font-black uppercase tracking-widest hover:text-[#00BFFF] transition-colors flex items-center gap-2">
                   <ArrowLeft className="w-3 h-3" /> Atrás
                 </button>
               )}
@@ -310,7 +277,7 @@ function RegisterForm() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center gap-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl p-5 text-xs font-black uppercase tracking-widest leading-relaxed"
+                className="flex items-center gap-4 bg-red-500/10 border border-red-500/30 text-red-500 rounded-2xl p-5 text-xs font-bold uppercase tracking-widest leading-relaxed"
               >
                 <AlertCircle className="w-5 h-5 shrink-0" />
                 {error}
@@ -319,64 +286,64 @@ function RegisterForm() {
           </AnimatePresence>
 
           {/* Form */}
-          <form className="space-y-8" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="plan" value={plan} />
 
             <AnimatePresence mode="wait">
               {step === 1 ? (
-                <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-6">
+                <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-5">
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-2">Razón Social</Label>
-                    <Input id="companyName" name="companyName" placeholder="Constructora SpA" required className="h-16 rounded-2xl border-slate-100 bg-slate-50/50 px-6 font-bold focus:bg-white transition-all text-slate-900" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-white/40 ml-2">Razón Social</Label>
+                    <Input id="companyName" name="companyName" placeholder="Constructora SpA" required className="h-14 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 px-6 font-bold focus:bg-white/10 transition-all text-white placeholder:text-white/20" />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-2">RUT Empresa</Label>
-                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-16 rounded-2xl border-slate-100 bg-slate-50/50 px-6 font-bold focus:bg-white transition-all text-slate-900" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-white/40 ml-2">RUT Empresa</Label>
+                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 px-6 font-bold focus:bg-white/10 transition-all text-white placeholder:text-white/20" />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-2">Teléfono</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-16 rounded-2xl border-slate-100 bg-slate-50/50 px-6 font-bold focus:bg-white transition-all text-slate-900" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-white/40 ml-2">Teléfono</Label>
+                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 px-6 font-bold focus:bg-white/10 transition-all text-white placeholder:text-white/20" />
                   </div>
                 </motion.div>
               ) : (
-                <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+                <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-2">Email Corporativo</Label>
-                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-16 rounded-2xl border-slate-100 bg-slate-50/50 px-6 font-bold focus:bg-white transition-all text-slate-900" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-white/40 ml-2">Email Corporativo</Label>
+                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 px-6 font-bold focus:bg-white/10 transition-all text-white placeholder:text-white/20" />
                   </div>
                   <div className="space-y-2 relative">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-2">Contraseña</Label>
-                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-16 rounded-2xl border-slate-100 bg-slate-50/50 px-6 font-bold focus:bg-white transition-all text-slate-900 pr-12" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-5 text-slate-300 hover:text-slate-500 transition-colors">
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-white/40 ml-2">Contraseña</Label>
+                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 px-6 font-bold focus:bg-white/10 transition-all text-white pr-12 placeholder:text-white/20" />
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-white/40 hover:text-white transition-colors">
                       {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-2">Confirmar</Label>
-                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-16 rounded-2xl border-slate-100 bg-slate-50/50 px-6 font-bold focus:bg-white transition-all text-slate-900" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-white/40 ml-2">Confirmar</Label>
+                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 px-6 font-bold focus:bg-white/10 transition-all text-white placeholder:text-white/20" />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <Button type="submit" size="lg" disabled={loading} className="w-full h-16 bg-slate-900 text-white font-black tracking-[0.2em] text-xs uppercase rounded-[2rem] shadow-xl shadow-slate-200 transition-all hover:scale-[1.02] active:scale-95 border-none">
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-16 bg-[#0047AB] text-white font-black tracking-[0.2em] text-xs uppercase rounded-[2rem] shadow-2xl shadow-black/20 transition-all hover:scale-[1.02] active:scale-95 border-none hover:bg-[#0052c4]">
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <span className="flex items-center gap-3">
-                  {step === 1 ? "Siguiente Paso" : "Finalizar y Pagar"} <ArrowRight className="w-4 h-4" />
+                  {step === 1 ? "Siguiente Paso" : "Finalizar Registro"} <ArrowRight className="w-4 h-4" />
                 </span>
               )}
             </Button>
           </form>
 
-          <p className="text-[10px] text-slate-400 text-center font-bold px-4 leading-relaxed uppercase tracking-widest">
-            Al registrarte, declaras conocer los <Link href="/terminos" className="underline hover:text-slate-700 transition-colors">Términos</Link> y la <Link href="/privacidad" className="underline hover:text-slate-700 transition-colors">Privacidad</Link>.
+          <p className="text-[10px] text-white/30 text-center font-bold px-4 leading-relaxed uppercase tracking-widest">
+            Al registrarte, declaras conocer los <Link href="/terminos" className="underline hover:text-white/60 transition-colors">Términos</Link> y la <Link href="/privacidad" className="underline hover:text-white/60 transition-colors">Privacidad</Link>.
           </p>
         </div>
 
         <div className="text-center">
           <Link href="/login" className="inline-flex items-center gap-4 group">
-            <span className="text-xs font-bold text-slate-400 group-hover:text-slate-500 transition-colors">¿Ya tienes cuenta?</span>
-            <span className="text-xs font-black uppercase tracking-widest text-slate-900 border-b-2 border-slate-900 pb-0.5">Iniciar Sesión</span>
+            <span className="text-xs font-bold text-white/40 group-hover:text-white/60 transition-colors">¿Ya tienes cuenta?</span>
+            <span className="text-xs font-black uppercase tracking-widest text-white border-b-2 border-[#00BFFF] pb-0.5">Iniciar Sesión</span>
           </Link>
         </div>
 
