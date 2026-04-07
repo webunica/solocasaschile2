@@ -13,7 +13,7 @@ const WHATSAPP_NUMBER = "56964130601"; // Official Sales Number
 export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [hasAutoOpened, setHasAutoOpened] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,43 +21,16 @@ export function WhatsAppWidget() {
     type: "" as "casa" | "constructora" | "",
   });
 
-  const playSound = () => {
-    try {
-      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3");
-      audio.volume = 0.4;
-      audio.play().catch(e => console.log("Audio play blocked by browser policy"));
-    } catch (e) {
-      console.error("Error playing sound", e);
-    }
-  };
-
-  const openWidget = () => {
-    if (!hasAutoOpened) {
-      setIsOpen(true);
-      setHasAutoOpened(true);
-      playSound();
-    }
-  };
-
   useEffect(() => {
-    // Timer for 5 seconds
+    // Show tip/hint after 3 seconds instead of opening the whole widget
     const timer = setTimeout(() => {
-      openWidget();
-    }, 5000);
+      if (!isOpen && !hasAutoOpened) {
+        setShowHint(true);
+      }
+    }, 3000);
 
-    // Mouse movement listener
-    const handleMouseMove = () => {
-      openWidget();
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [hasAutoOpened]);
+    return () => clearTimeout(timer);
+  }, [isOpen, hasAutoOpened]);
 
   const handleStart = (type: "casa" | "constructora") => {
     setFormData({ ...formData, type });
@@ -78,6 +51,8 @@ export function WhatsAppWidget() {
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     window.open(whatsappUrl, "_blank");
     setIsOpen(false);
+    setHasAutoOpened(true);
+    setShowHint(false);
     // Reset after some time
     setTimeout(() => {
       setStep(1);
@@ -88,118 +63,131 @@ export function WhatsAppWidget() {
   return (
     <div className="fixed bottom-6 right-6 z-[200] flex flex-col items-end">
       <AnimatePresence>
+        {showHint && !isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="mb-4 mr-2 bg-white px-4 py-2 rounded-2xl shadow-xl border border-border/50 text-[11px] font-black uppercase tracking-widest text-brand-indigo flex items-center gap-2 relative"
+          >
+            <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse" />
+            ¿Necesitas ayuda? Chatea aquí
+            <div className="absolute top-full right-6 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-white" />
+          </motion.div>
+        )}
+
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: "bottom right" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[calc(100vw-3rem)] max-w-[380px] overflow-hidden rounded-[2.5rem] bg-background/95 backdrop-blur-3xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
+            className="mb-4 w-[calc(100vw-3rem)] max-w-[340px] overflow-hidden rounded-[2rem] bg-background/95 backdrop-blur-3xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
           >
             {/* Header */}
-            <div className="bg-brand-indigo p-8 text-white relative">
+            <div className="bg-brand-indigo p-6 text-white relative">
               <button 
                 onClick={() => setIsOpen(false)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3 h-3" />
               </button>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-md">
-                   <MessageCircle className="w-6 h-6 fill-white" />
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md">
+                   <MessageCircle className="w-5 h-5 fill-white" />
                 </div>
                 <div>
-                   <h3 className="font-heading font-black text-xl tracking-tighter text-brand-teal">¡Hola! 👋</h3>
-                   <p className="text-white/70 text-xs font-bold uppercase tracking-widest">Soporte SolocasasChile</p>
+                   <h3 className="font-heading font-black text-lg tracking-tighter text-brand-teal">¡Hola! 👋</h3>
+                   <p className="text-white/70 text-[9px] font-black uppercase tracking-widest leading-none">Soporte SolocasasChile</p>
                 </div>
               </div>
-              <p className="text-sm font-medium leading-relaxed opacity-90">
+              <p className="text-[13px] font-medium leading-tight opacity-90">
                 {step === 1 
-                  ? "¿Cómo podemos ayudarte hoy? 😊" 
-                  : "¡Perfecto! Solo completemos estos datos:"}
+                  ? "¿En qué podemos ayudarte? 😊" 
+                  : "Por favor, completa tus datos:"}
               </p>
             </div>
 
             {/* Content */}
-            <div className="p-8">
+            <div className="p-6">
               {step === 1 ? (
-                <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 gap-3">
                    <button 
                      onClick={() => handleStart("casa")}
-                     className="group flex items-center gap-4 p-5 rounded-2xl border-2 border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
+                     className="group flex items-center gap-3 p-4 rounded-xl border border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
                    >
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                         <Home className="w-5 h-5 text-primary" />
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                         <Home className="w-4 h-4 text-primary" />
                       </div>
                       <div className="flex-1">
-                         <p className="font-bold uppercase tracking-widest text-foreground">Busco una casa</p>
-                         <p className="text-[10px] font-bold text-muted-foreground opacity-60 italic">Ver modelos y precios</p>
+                         <p className="text-[11px] font-black uppercase tracking-widest text-foreground">Busco una casa</p>
+                         <p className="text-[9px] font-bold text-muted-foreground opacity-60 italic">Modelos y precios</p>
                       </div>
-                      <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-3 h-3 opacity-20 group-hover:opacity-100 transition-opacity" />
                    </button>
 
                    <button 
                      onClick={() => handleStart("constructora")}
-                     className="group flex items-center gap-4 p-5 rounded-2xl border-2 border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
+                     className="group flex items-center gap-3 p-4 rounded-xl border border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
                    >
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                         <Building2 className="w-5 h-5 text-primary" />
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                         <Building2 className="w-4 h-4 text-primary" />
                       </div>
                       <div className="flex-1">
-                         <p className="font-bold uppercase tracking-widest text-foreground">Soy Constructora</p>
-                         <p className="text-[10px] font-bold text-muted-foreground opacity-60 italic">Publicar o gestionar catálogo</p>
+                         <p className="text-[11px] font-black uppercase tracking-widest text-foreground">Soy Constructora</p>
+                         <p className="text-[9px] font-bold text-muted-foreground opacity-60 italic">Gestionar catálogo</p>
                       </div>
-                      <ChevronRight className="w-4 h-4 opacity-20 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-3 h-3 opacity-20 group-hover:opacity-100 transition-opacity" />
                    </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                   <div className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3">
+                   <div className="space-y-3">
                       <div className="relative group">
-                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" />
                          <Input 
-                           placeholder="Tu nombre completo" 
+                           placeholder="Nombre completo" 
                            value={formData.name}
                            onChange={(e) => setFormData({...formData, name: e.target.value})}
-                           className="h-12 pl-12 rounded-xl bg-muted/40 border-none font-bold" 
+                           className="h-10 pl-10 rounded-lg bg-muted text-xs font-bold" 
                            required 
                          />
                       </div>
                       <div className="relative group">
-                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" />
                          <Input 
                            type="email"
-                           placeholder="Email corporativo o personal" 
+                           placeholder="Tu Email" 
                            value={formData.email}
                            onChange={(e) => setFormData({...formData, email: e.target.value})}
-                           className="h-12 pl-12 rounded-xl bg-muted/40 border-none font-bold" 
+                           className="h-10 pl-10 rounded-lg bg-muted text-xs font-bold" 
                            required 
                          />
                       </div>
                       <div className="relative group">
-                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" />
                          <Input 
                            type="tel"
                            placeholder="Teléfono (Opcional)" 
                            value={formData.phone}
                            onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                           className="h-12 pl-12 rounded-xl bg-muted/40 border-none font-bold" 
+                           className="h-10 pl-10 rounded-lg bg-muted text-xs font-bold" 
                          />
                       </div>
                    </div>
 
                    <Button 
                      type="submit" 
-                     className="w-full h-12 bg-brand-indigo rounded-xl font-bold uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+                     className="w-full h-11 bg-brand-indigo rounded-lg font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                    >
-                     INICIAR CHAT <Send className="ml-2 w-4 h-4" />
+                     INICIAR CHAT <Send className="ml-2 w-3 h-3" />
                    </Button>
 
                    <button 
                      type="button" 
                      onClick={() => setStep(1)}
-                     className="w-full text-[10px] font-bold text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest text-center"
+                     className="w-full text-[9px] font-black text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest text-center"
                    >
-                      Volver a opciones
+                      Volver
                    </button>
                 </form>
               )}
@@ -211,20 +199,24 @@ export function WhatsAppWidget() {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          setShowHint(false);
+          if (!hasAutoOpened) setHasAutoOpened(true);
+        }}
         className={cn(
-          "relative w-16 h-16 rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-2xl",
+          "relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl",
           isOpen ? "bg-background text-foreground rotate-90" : "bg-brand-indigo text-white shadow-primary/20"
         )}
       >
         <AnimatePresence mode="wait">
            {isOpen ? (
              <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <X className="w-7 h-7" />
+                <X className="w-6 h-6" />
              </motion.div>
            ) : (
              <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <MessageCircle className="w-8 h-8 fill-white" />
+                <MessageCircle className="w-7 h-7 fill-white" />
              </motion.div>
            )}
         </AnimatePresence>
