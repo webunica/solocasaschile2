@@ -1,8 +1,8 @@
 import { getModelosByConstructora } from "@/lib/supabase/services";
-import { deleteModelo } from "@/lib/supabase/actions";
+import { deleteModelo, toggleFeaturedModelo } from "@/lib/supabase/actions";
 import { 
   Plus, Search, Edit2, Trash2, 
-  Eye, LayoutGrid, List, Filter, Home
+  Eye, LayoutGrid, List, Filter, Home, Star
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -164,6 +164,21 @@ export default async function CatalogManagementPage() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-3">
+                   {isSuperAdmin && (
+                      <form action={toggleFeaturedModelo.bind(null, modelo.id, !modelo.is_featured)}>
+                         <button
+                           type="submit"
+                           title={modelo.is_featured ? "Quitar de destacados" : "Marcar como destacado"}
+                           className={cn(
+                              buttonVariants({ variant: "outline" }), 
+                              "h-14 w-14 rounded-2xl border-border/40 p-0 hover:scale-105 transition-all shadow-sm",
+                              modelo.is_featured ? "bg-amber-50 border-amber-200 text-amber-500 hover:text-amber-600 hover:bg-amber-100" : "hover:text-amber-500"
+                           )}
+                         >
+                            <Star className={cn("w-5 h-5", modelo.is_featured && "fill-current")} />
+                         </button>
+                      </form>
+                   )}
                    <Link 
                      href={`/modelo/${modelo.slug || '#'}`} 
                      target="_blank"
