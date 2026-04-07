@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard } from "lucide-react";
+import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard, User } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 const NAV_LINKS = [
@@ -79,10 +79,10 @@ export function Header() {
                 <Link 
                   href="/login" 
                   className={cn(
-                    buttonVariants({ variant: "ghost", size: "sm" }), 
-                    "hover:text-primary hover:bg-transparent transition-all"
+                    "flex items-center gap-2 text-[15px] font-bold text-[#1b0088] hover:opacity-80 transition-all px-4 py-2"
                   )}
                 >
+                  <User className="w-4 h-4" />
                   Acceder
                 </Link>
             </div>
