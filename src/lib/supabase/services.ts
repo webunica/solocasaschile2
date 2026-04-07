@@ -200,6 +200,17 @@ export const getModelBySlug = cache(async function getModelBySlug(slug: string) 
   return null;
 });
 
+function getRegionDisplayName(slug?: string) {
+  if (!slug) return slug;
+  const slugify = (text: string) => text.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  
+  return REGIONES_CHILE.find(r => slugify(r) === slugify(slug)) || slug;
+}
+
 export async function getModelosFiltered(filters: {
   tipo?: string
   minUF?: number
@@ -208,9 +219,9 @@ export async function getModelosFiltered(filters: {
   sortBy?: string
 }) {
   const supabase = await createClient()
-  
+  const regionDisp = getRegionDisplayName(filters.region);
+
   // 1. Fetch real data from Supabase
-  // Narrow constructora columns to avoid fetching unused data (server-serialization)
   let query = supabase
     .from('modelos')
     .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones, descripcion, seo_title, seo_description, seo_keywords)`)
@@ -219,7 +230,7 @@ export async function getModelosFiltered(filters: {
   if (filters.tipo) query = query.eq('tipo', filters.tipo)
   if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
   if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
-  if (filters.region) query = query.contains('constructoras.regiones', [filters.region])
+  if (regionDisp) query = query.contains('constructoras.regiones', [regionDisp])
 
   const { data: dbData } = await query
 
@@ -270,6 +281,7 @@ export async function getModelosFiltered(filters: {
     if (filters.tipo && m.tipo !== filters.tipo) return false
     if (filters.minUF && m.precio_desde_uf < filters.minUF) return false
     if (filters.maxUF && m.precio_desde_uf > filters.maxUF) return false
+    if (regionDisp && !m.constructora.regiones.includes(regionDisp)) return false
     return true
   })
 
@@ -508,10 +520,13 @@ export async function getMegaMenuAds() {
   }
 }
 
+import { REGIONES_CHILE } from "@/config/regions";
+
 /** Obtiene modelos destacados filtrados por region o globales */
-export async function getFeaturedModelsByRegion(region?: string) {
+export async function getFeaturedModelsByRegion(regionSlug?: string) {
   try {
     const supabase = await createClient()
+    const regionDisp = getRegionDisplayName(regionSlug);
     
     // Fetch all models from Premium constructors OR manually featured
     let query = supabase
@@ -521,8 +536,8 @@ export async function getFeaturedModelsByRegion(region?: string) {
       // Custom OR: Manual featured OR Premium Plan
       .or('is_featured.eq.true, plan.eq.premium', { foreignTable: 'constructoras' }) 
     
-    if (region) {
-      query = query.contains('constructoras.regiones', [region])
+    if (regionDisp) {
+      query = query.contains('constructoras.regiones', [regionDisp])
     }
   
     const { data: dbData, error } = await query
