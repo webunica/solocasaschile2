@@ -7,8 +7,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard, User } from "lucide-react";
+import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard, User, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { MegaMenu } from "./mega-menu";
 
 const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo", icon: Library },
@@ -19,6 +20,7 @@ const NAV_LINKS = [
 export function Header() {
   const { scrollY } = useScroll();
   const [isOpen, setIsOpen] = useState(false);
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
   
   // Adaptive height and style based on scroll
   const headerY = useTransform(scrollY, [0, 50], [20, 10]);
@@ -44,7 +46,7 @@ export function Header() {
         "transition-all duration-500"
       )}
     >
-      <div className="container flex h-20 md:h-24 items-center px-4 sm:px-10 md:px-16 max-w-7xl mx-auto overflow-hidden">
+      <div className="container flex h-20 md:h-24 items-center px-4 sm:px-10 md:px-16 max-w-7xl mx-auto">
         <Link href="/" className="mr-6 lg:mr-16 flex items-center group shrink-0 relative transition-transform hover:scale-[1.02]">
           <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <Image 
@@ -61,16 +63,48 @@ export function Header() {
         <div className="flex flex-1 items-center justify-end lg:justify-between gap-6">
           <nav className="hidden lg:flex items-center space-x-12 text-[15px] font-bold tracking-tight">
             {NAV_LINKS.map((link) => (
-              <Link 
-                key={link.href} 
-                href={link.href} 
-                className="text-[#1b0088] hover:opacity-80 transition-all relative group py-2"
+              <div 
+                key={link.href}
+                className="relative"
+                onMouseEnter={() => link.label === "Catálogo" && setShowMegaMenu(true)}
+                onMouseLeave={() => link.label === "Catálogo" && setShowMegaMenu(false)}
               >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#1b0088] transition-all duration-300 group-hover:w-full" />
-              </Link>
+                <Link 
+                  href={link.href} 
+                  className={cn(
+                    "text-[#1b0088] hover:opacity-80 transition-all relative group py-8 flex items-center gap-1",
+                    showMegaMenu && link.label === "Catálogo" && "opacity-100"
+                  )}
+                >
+                  {link.label}
+                  {link.label === "Catálogo" && (
+                    <ChevronDown className={cn(
+                      "w-4 h-4 transition-transform duration-300",
+                      showMegaMenu && "rotate-180"
+                    )} />
+                  )}
+                  <span className={cn(
+                    "absolute bottom-4 left-0 h-0.5 bg-[#1b0088] transition-all duration-300",
+                    showMegaMenu && link.label === "Catálogo" ? "w-full" : "w-0 group-hover:w-full"
+                  )} />
+                </Link>
+              </div>
             ))}
           </nav>
+          
+          <AnimatePresence>
+            {showMegaMenu && (
+              <div 
+                className="absolute top-full left-0 w-full pt-2 pointer-events-none"
+                onMouseEnter={() => setShowMegaMenu(true)}
+                onMouseLeave={() => setShowMegaMenu(false)}
+              >
+                <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
+                   <MegaMenu />
+                </div>
+              </div>
+            )}
+          </AnimatePresence>
           
           <div className="flex items-center gap-4 sm:gap-6">
             {/* Desktop Actions */}
