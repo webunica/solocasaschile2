@@ -3,6 +3,7 @@ import { unstable_cache, revalidateTag } from 'next/cache'
 import { createClient, createPublicClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
 import { REGIONES_CHILE } from '@/config/regions'
+import { getRegionDisplayName } from '@/lib/regions'
 
 export type ModelWithConstructora = {
   id: string;
@@ -204,16 +205,7 @@ export const getModelBySlug = cache(async (slug: string) => {
   )(slug)
 })
 
-function getRegionDisplayName(slug?: string) {
-  if (!slug) return slug;
-  const slugify = (text: string) => text.toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-  
-  return REGIONES_CHILE.find(r => slugify(r) === slugify(slug)) || slug;
-}
+// getRegionDisplayName se movió a @/lib/regions
 
 /** Modelos filtrados del catálogo público (con caché) */
 export async function getModelosFiltered(filters: {

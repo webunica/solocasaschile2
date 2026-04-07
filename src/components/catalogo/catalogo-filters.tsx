@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { X } from "lucide-react";
 import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
 import type { TipoModelo } from "@/lib/mock-data";
+import { slugifyRegion } from "@/lib/regions";
 
 const TIPOS = CONSTRUCTION_SYSTEMS.map(s => ({
   value: s.id as TipoModelo,
@@ -137,22 +138,26 @@ export function CatalogoFilters({ currentTipo, currentRegion, currentMin, curren
           Región
         </Label>
         <div className="flex flex-wrap gap-1.5">
-          {REGIONES.map((r) => (
-            <Badge
-              key={r}
-              variant={currentRegion === r ? "default" : "secondary"}
-              className={`cursor-pointer transition-all text-xs ${
-                currentRegion === r
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-primary/10 hover:text-primary"
-              }`}
-              onClick={() =>
-                updateFilter("region", currentRegion === r ? undefined : r)
-              }
-            >
-              {r}
-            </Badge>
-          ))}
+          {REGIONES.map((r) => {
+            const slug = slugifyRegion(r);
+            const isActive = currentRegion === slug;
+            return (
+              <Badge
+                key={r}
+                variant={isActive ? "default" : "secondary"}
+                className={`cursor-pointer transition-all text-xs ${
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "hover:bg-primary/10 hover:text-primary"
+                }`}
+                onClick={() =>
+                  updateFilter("region", isActive ? undefined : slug)
+                }
+              >
+                {r}
+              </Badge>
+            );
+          })}
         </div>
       </div>
     </div>
