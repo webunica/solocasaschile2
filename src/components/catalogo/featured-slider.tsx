@@ -49,7 +49,7 @@ export function FeaturedSlider({ models }: FeaturedSliderProps) {
                alt={current.nombre}
                fill
                className="object-cover transition-transform duration-[10s] hover:scale-110"
-               priority
+               priority={index === 0}
              />
              <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent hidden lg:block" />

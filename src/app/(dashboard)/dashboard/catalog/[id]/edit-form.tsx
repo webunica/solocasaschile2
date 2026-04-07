@@ -307,17 +307,14 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
       let finalPlanoUrl = planoPreview; // Usamos el preview actual como base del estado
       
       if (planoFile) {
-        console.log("DEBUG: Subiendo archivo de plano...", planoFile.name);
         const ext = planoFile.name.split('.').pop();
         const path = `${user.id}/plano-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         const { error: uploadError } = await supabase.storage.from('model_images').upload(path, planoFile);
         if (uploadError) {
-          console.error("DEBUG: Error de storage:", uploadError);
           throw new Error("Error al subir el plano: " + uploadError.message);
         } else {
           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(path);
           finalPlanoUrl = publicUrl;
-          console.log("DEBUG: Plano subido con éxito:", finalPlanoUrl);
         }
       } else if (!planoPreview) {
         finalPlanoUrl = null;
