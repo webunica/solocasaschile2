@@ -10,6 +10,8 @@ import {
   Palette
 } from "lucide-react";
 import { AnnouncementSettings } from "@/components/dashboard/admin/announcement-settings";
+import { MegaMenuSettings } from "@/components/dashboard/admin/mega-menu-settings";
+import { getModelosByConstructora } from "@/lib/supabase/services";
 
 export default async function AdminSettingsPage() {
   const supabase = await createClient();
@@ -42,6 +44,29 @@ export default async function AdminSettingsPage() {
     buttonText: "Ver más",
     theme: "brand"
   };
+
+  // Fetch mega menu settings
+  const { data: megaMenuSetting } = await supabase
+    .from('site_settings')
+    .select('value')
+    .eq('key', 'mega_menu_ads')
+    .maybeSingle();
+
+  // Fetch constructoras and models for the selecting dropdowns
+  const { data: constructorasData } = await supabase.from('constructoras')
+    .select('id, nombre')
+    .order('nombre', { ascending: true });
+
+  const { data: modelosData } = await supabase.from('modelos')
+    .select(`id, nombre, constructora:constructoras (nombre)`)
+    .order('nombre', { ascending: true });
+
+  const constructoras = (constructorasData || []).map((c: any) => ({ id: c.id, nombre: c.nombre }));
+  const modelos = (modelosData || []).map((m: any) => ({ 
+    id: m.id, 
+    nombre: m.nombre, 
+    constructora_nombre: (m.constructora as any)?.nombre || 'Desconocida' 
+  }));
 
   return (
     <div className="max-w-4xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
@@ -79,6 +104,19 @@ export default async function AdminSettingsPage() {
               <AnnouncementSettings initialSettings={currentSettings} />
             </div>
           </div>
+        </section>
+
+        {/* Sección: Mega Menú Desktop */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-2 text-primary font-black uppercase tracking-widest text-[10px]">
+             <Layout className="w-4 h-4" />
+             <span>Navegación & Catálogo</span>
+          </div>
+          <MegaMenuSettings 
+            initialSettings={megaMenuSetting?.value} 
+            constructoras={constructoras} 
+            modelos={modelos} 
+          />
         </section>
 
         {/* Sección: Otras Configuraciones (Placeholders) */}

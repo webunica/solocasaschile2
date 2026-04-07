@@ -476,3 +476,42 @@ export async function getSellosDeConstructora(constructoraId: string) {
     return [];
   }
 }
+
+/** Obtiene la configuración de publicidad del Mega Menú */
+export async function getMegaMenuAds() {
+  try {
+    const supabase = await createClient();
+    const { data: setting } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'mega_menu_ads')
+      .maybeSingle();
+
+    if (!setting?.value) return null;
+
+    const { featuredConstructoraId, featuredModeloId } = setting.value;
+
+    const [constructora, modelo] = await Promise.all([
+      featuredConstructoraId ? getConstructoraById(featuredConstructoraId) : null,
+      featuredModeloId ? getModelById(featuredModeloId) : null
+    ]);
+
+    return {
+      constructora,
+      modelo
+    };
+  } catch (error) {
+    console.error("Error fetching mega menu ads:", error);
+    return null;
+  }
+}
+
+async function getConstructoraById(id: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('constructoras')
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+  return data;
+}

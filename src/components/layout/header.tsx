@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
 ];
 
-export function Header() {
+export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
   const { scrollY } = useScroll();
   const [isOpen, setIsOpen] = useState(false);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
@@ -88,23 +88,24 @@ export function Header() {
                     showMegaMenu && link.label === "Catálogo" ? "w-full" : "w-0 group-hover:w-full"
                   )} />
                 </Link>
+                {link.label === "Catálogo" && (
+                  <AnimatePresence>
+                    {showMegaMenu && (
+                      <div 
+                        className="absolute top-full left-0 w-full pt-2 pointer-events-none"
+                        onMouseEnter={() => setShowMegaMenu(true)}
+                        onMouseLeave={() => setShowMegaMenu(false)}
+                      >
+                        <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
+                           <MegaMenu ads={megaMenuAds} />
+                        </div>
+                      </div>
+                    )}
+                  </AnimatePresence>
+                )}
               </div>
             ))}
           </nav>
-          
-          <AnimatePresence>
-            {showMegaMenu && (
-              <div 
-                className="absolute top-full left-0 w-full pt-2 pointer-events-none"
-                onMouseEnter={() => setShowMegaMenu(true)}
-                onMouseLeave={() => setShowMegaMenu(false)}
-              >
-                <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
-                   <MegaMenu />
-                </div>
-              </div>
-            )}
-          </AnimatePresence>
           
           <div className="flex items-center gap-4 sm:gap-6">
             {/* Desktop Actions */}
