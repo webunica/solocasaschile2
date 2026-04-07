@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, Loader2, CheckCircle2, 
-  X, Home, Video, ArrowLeft,
+  X, Home, Video, ArrowLeft, Star,
   ShieldCheck, Zap, ChevronDown,
   Building2, Thermometer, Paintbrush, Plug, Truck, Award, Search, Save, Eye
 } from "lucide-react";
@@ -195,7 +195,7 @@ function RecintosSelector({ name, initialValue = [], onChange }: { name: string;
 // Main Component
 // ─────────────────────────────────────────────
 
-export function EditModelForm({ modelo }: { modelo: any }) {
+export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAdmin?: boolean }) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -366,6 +366,8 @@ export function EditModelForm({ modelo }: { modelo: any }) {
         instalaciones: parseJsonField('instalaciones') || null,
         logistica: parseJsonField('logistica') || null,
         soporte: parseJsonField('soporte') || null,
+        is_featured: formData.get('is_featured') === 'true',
+        featured_order: Number(formData.get('featured_order')) || 0,
       };
 
       // SEO only if paid
@@ -699,6 +701,42 @@ export function EditModelForm({ modelo }: { modelo: any }) {
             </div>
           </div>
         </FormSection>
+
+        {/* ── Slider y Destacados (Admin Only) ────────── */}
+        {isSuperAdmin && (
+          <FormSection
+            icon={<Star className="w-5 h-5 text-amber-500" />}
+            title="Slider y Destacados"
+            subtitle="Configuración para el Carrusel de la Región"
+            iconColor="text-amber-500"
+            iconBg="bg-amber-500/10"
+          >
+            <div className="grid md:grid-cols-2 gap-6">
+              <Field id="is_featured" label="Destacar en el Slider">
+                <select id="is_featured" name="is_featured" defaultValue={modelo.is_featured ? 'true' : 'false'}
+                  className="w-full h-12 rounded-2xl border border-border/40 bg-background/50 px-4 text-sm font-black uppercase tracking-widest focus:ring-0 appearance-none cursor-pointer"
+                >
+                  <option value="true">SÍ - Mostrar en Slider</option>
+                  <option value="false">NO - Ocultar del Slider</option>
+                </select>
+              </Field>
+              <Field id="featured_order" label="Orden (Prioridad)">
+                <Input 
+                  id="featured_order" 
+                  name="featured_order" 
+                  type="number" 
+                  defaultValue={modelo.featured_order || 0} 
+                  className="h-12 rounded-2xl bg-background/50 font-black text-lg text-center" 
+                />
+              </Field>
+              <div className="md:col-span-2">
+                 <p className="text-[10px] text-muted-foreground italic font-medium opacity-60">
+                    * Los modelos destacados aparecerán en el carrusel superior del catálogo cuando se filtre por las regiones de la constructora asociada.
+                 </p>
+              </div>
+            </div>
+          </FormSection>
+        )}
 
         {/* ── SEO ────────────────────────────────────── */}
         <FormSection

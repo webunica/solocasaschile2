@@ -462,11 +462,30 @@ export async function deleteModelo(id: string, _formData?: FormData) {
   if (error) throw error
   
   // Revalidate all affected routes
+  revalidatePath('/comparar')
+  revalidatePath('/modelo/[slug]', 'page')
+}
+
+export async function toggleFeaturedModelo(id: string, featured: boolean) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No autenticado')
+  
+  const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).maybeSingle();
+  const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
+
+  if (!isSuperAdmin) throw new Error('No autorizado. Solo SuperAdmins pueden destacar modelos.');
+
+  const { error } = await supabase
+    .from('modelos')
+    .update({ is_featured: featured })
+    .eq('id', id)
+
+  if (error) throw error
+  
   revalidatePath('/dashboard/catalog')
   revalidatePath('/catalogo')
   revalidatePath('/')
-  revalidatePath('/comparar')
-  revalidatePath('/modelo/[slug]', 'page')
 }
 
 export async function updateSiteSettings(key: string, value: any) {

@@ -1,5 +1,6 @@
-import { getModelosFiltered } from "@/lib/supabase/services";
+import { getModelosFiltered, getFeaturedModelsByRegion } from "@/lib/supabase/services";
 import { CatalogoGrid } from "@/components/catalogo/catalogo-grid";
+import { FeaturedSlider } from "@/components/catalogo/featured-slider";
 import { CatalogoFilters } from "@/components/catalogo/catalogo-filters";
 import { CatalogoEmpty } from "@/components/catalogo/catalogo-empty";
 import { CatalogoControls } from "@/components/catalogo/catalogo-controls";
@@ -36,13 +37,16 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const sortBy = params.sort;
 
   // Real fetch from Supabase
-  const modelos = await getModelosFiltered({
-    tipo: tipoFilter,
-    minUF,
-    maxUF,
-    region: regionFilter,
-    sortBy
-  });
+  const [modelos, featuredModels] = await Promise.all([
+     getModelosFiltered({
+      tipo: tipoFilter,
+      minUF,
+      maxUF,
+      region: regionFilter,
+      sortBy
+    }),
+    getFeaturedModelsByRegion(regionFilter)
+  ]);
 
   return (
     <div className="min-h-screen bg-background pt-20">
@@ -88,13 +92,19 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
           {/* Catalog Main */}
           <main className="flex-1 min-w-0" aria-label="Resultados del catálogo">
             <Suspense fallback={<CatalogoSkeleton />}>
-               {modelos.length > 0 ? (
-                 <CatalogoGrid modelos={modelos} />
-               ) : (
-                 <div className="py-12 lg:py-20">
-                    <CatalogoEmpty />
-                 </div>
-               )}
+               <div className="space-y-12">
+                 {featuredModels.length > 0 && (
+                    <FeaturedSlider models={featuredModels} />
+                 )}
+
+                 {modelos.length > 0 ? (
+                   <CatalogoGrid modelos={modelos} />
+                 ) : (
+                   <div className="py-12 lg:py-20">
+                      <CatalogoEmpty />
+                   </div>
+                 )}
+               </div>
             </Suspense>
           </main>
         </div>

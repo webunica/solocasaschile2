@@ -506,6 +506,42 @@ export async function getMegaMenuAds() {
   }
 }
 
+/** Obtiene modelos destacados filtrados por region o globales */
+export async function getFeaturedModelsByRegion(region?: string) {
+  try {
+    const supabase = await createClient()
+    let query = supabase
+      .from('modelos')
+      .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
+      .eq('is_featured', true)
+      .eq('disponible', true)
+      .order('featured_order', { ascending: true })
+    
+    if (region) {
+      // Usamos el mismo patrón: si la constructora está en esa región
+      query = query.contains('constructoras.regiones', [region])
+    }
+  
+    const { data, error } = await query
+    
+    if (error || !data) return []
+  
+    return (data as any[]).map(m => ({
+      ...m,
+      imagenes_urls: m.imagenes_urls || [],
+      precio_desde_uf: m.precio_desde_uf || 0,
+      constructora: m.constructora ? {
+        ...m.constructora,
+        logo_url: m.constructora.logo_url || '/placeholder.png',
+        score_confianza: m.constructora.score_confianza || 0
+      } : null
+    })) as ModelWithConstructora[]
+  } catch (error) {
+    console.error("DEBUG: Error fetching featured models:", error);
+    return []
+  }
+}
+
 async function getConstructoraById(id: string) {
   const supabase = await createClient();
   const { data } = await supabase
