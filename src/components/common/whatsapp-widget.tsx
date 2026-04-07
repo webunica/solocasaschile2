@@ -14,6 +14,7 @@ export function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [showHint, setShowHint] = useState(false);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
