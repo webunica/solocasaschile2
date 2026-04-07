@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronRight, MapPin, Building2, Star, Zap } from "lucide-react";
 
@@ -46,121 +47,176 @@ export function MegaMenu() {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.98 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute top-full left-0 w-full bg-background/95 backdrop-blur-xl border border-border/40 shadow-2xl rounded-3xl mt-4 overflow-hidden z-50 p-8 pt-10"
+      className="absolute top-full left-0 w-full bg-white border border-border/40 shadow-2xl rounded-3xl mt-4 overflow-hidden z-50 p-6 md:p-10"
     >
-      <div className="container max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        {/* Columna 1: Regiones */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-[#1b0088] font-bold text-lg">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <MapPin className="w-5 h-5 text-primary" />
-            </div>
-            Regiones
+      <div className="max-w-[1500px] mx-auto flex flex-col md:grid md:grid-cols-12 gap-10">
+        
+        {/* LADO IZQUIERDO: Constructora Destacada (Admin Controlled) */}
+        <div className="md:col-span-3 space-y-4 text-left">
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">
+            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
+            Constructora Destacada
           </div>
-          <ul className="space-y-3">
-            {REGIONES.map((item) => (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className={`group flex items-center justify-between text-[15px] transition-colors ${
-                    item.isAll ? "text-primary font-bold pt-2 border-t border-border/40" : "text-muted-foreground hover:text-[#1b0088]"
-                  }`}
-                >
-                  {item.name}
-                  <ChevronRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Link href="/constructoras/austral-sip" className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
+            <div className="aspect-[4/3] relative">
+               <Image 
+                src="/images/modelos/austral/nocturna.jpg" 
+                alt="Austral SIP" 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="bg-white/90 backdrop-blur-sm w-fit px-2 py-0.5 rounded text-[9px] font-black text-primary mb-2 uppercase tracking-tighter shadow-sm">Premium Partner</div>
+                <h4 className="text-white font-black text-lg leading-tight uppercase tracking-tight">Austral SIP</h4>
+                <p className="text-white/70 text-[10px] line-clamp-1 mt-1 font-medium">Líderes en eficiencia energética</p>
+              </div>
+            </div>
+          </Link>
+          <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
+            <p className="text-[11px] text-muted-foreground leading-relaxed italic">
+              "Fomentamos la construcción sustentable con tecnología SIP de última generación."
+            </p>
+          </div>
         </div>
 
-        {/* Columna 2: Materiales */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-[#1b0088] font-bold text-lg">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Building2 className="w-5 h-5 text-primary" />
+        {/* CENTRO: Categorías y Navegación (3 Columnas de Links) */}
+        <div className="md:col-span-6 grid grid-cols-1 md:grid-cols-3 gap-8 border-x border-border/10 px-8">
+          {/* Regiones */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 text-[#1b0088] font-black text-[13px] uppercase tracking-widest border-b border-primary/10 pb-2">
+              <MapPin className="w-3.5 h-3.5 text-primary" />
+              Regiones
             </div>
-            Por Material
-          </div>
-          <ul className="space-y-3">
-             {TIPOS_MATERIALES.map((item) => (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className="group flex items-center justify-between text-[15px] text-muted-foreground hover:text-[#1b0088] transition-colors"
-                >
-                  {item.name}
-                  <ChevronRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Columna 3: Estilo */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-[#1b0088] font-bold text-lg">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Star className="w-5 h-5 text-primary" />
-            </div>
-            Por Estilo
-          </div>
-          <ul className="space-y-3">
-             {TIPOS_ESTILO.map((item) => (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className="group flex items-center justify-between text-[15px] text-muted-foreground hover:text-[#1b0088] transition-colors"
-                >
-                  {item.name}
-                  <ChevronRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Columna 4: Especiales */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-[#1b0088] font-bold text-lg">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Zap className="w-5 h-5 text-primary" />
-            </div>
-            Opciones Rápidas
-          </div>
-          <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10 space-y-4">
-             <ul className="space-y-3">
-              {CATEGORIAS_ESPECIALES.map((item) => (
+            <ul className="space-y-3">
+              {REGIONES.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="group flex items-center justify-between text-[15px] font-medium text-foreground hover:text-primary transition-colors"
+                    className={`group flex items-center justify-between text-[13px] font-bold transition-colors ${
+                      item.isAll ? "text-primary pt-1 border-t border-border/40 mt-2" : "text-slate-600 hover:text-[#1b0088]"
+                    }`}
                   >
                     {item.name}
-                    <ChevronRight className="w-4 h-4 opacity-10 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                   </Link>
                 </li>
               ))}
             </ul>
-            <Link 
-              href="/catalogo" 
-              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary hover:underline pt-2"
-            >
-              Ver todo el catálogo <ChevronRight className="w-3 h-3" />
-            </Link>
+          </div>
+
+          {/* Construcciones */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 text-[#1b0088] font-black text-[13px] uppercase tracking-widest border-b border-primary/10 pb-2">
+              <Building2 className="w-3.5 h-3.5 text-primary" />
+              Materiales
+            </div>
+            <ul className="space-y-3">
+               {TIPOS_MATERIALES.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="group flex items-center justify-between text-[13px] font-bold text-slate-600 hover:text-[#1b0088] transition-colors"
+                  >
+                    {item.name}
+                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Estilos / Especiales */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 text-[#1b0088] font-black text-[13px] uppercase tracking-widest border-b border-primary/10 pb-2">
+              <Star className="w-3.5 h-3.5 text-primary" />
+              Especiales
+            </div>
+            <ul className="space-y-3">
+               {CATEGORIAS_ESPECIALES.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="group flex items-center justify-between text-[13px] font-bold text-slate-600 hover:text-[#1b0088] transition-colors"
+                  >
+                    {item.name}
+                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+
+        {/* LADO DERECHO: Modelo Destacado (Admin Controlled) */}
+        <div className="md:col-span-3 space-y-4 text-left">
+          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-1">
+            <div className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-ping" />
+            Modelo Destacado
+          </div>
+          <Link href="/modelos/casa-nogal-sip-120" className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
+            <div className="aspect-[4/3] relative">
+               <Image 
+                src="/hero.png" 
+                alt="Casa Nogal" 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+              />
+              <div className="absolute top-3 right-3 bg-orange-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 uppercase tracking-tighter animate-bounce">-15% OFF</div>
+            </div>
+            <div className="p-4 bg-white">
+              <h4 className="text-[#1b0088] font-black text-sm uppercase tracking-tight leading-tight group-hover:text-primary transition-colors">Casa Nogal SIP 120</h4>
+              <div className="flex items-center gap-3 mt-2 text-[10px] font-bold text-muted-foreground">
+                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> 120m²</span>
+                <span className="flex items-center gap-1 font-black text-primary border-l border-border/40 pl-3">3 Dormitorios</span>
+              </div>
+              <div className="mt-4 flex items-center justify-between border-t border-border/10 pt-3">
+                <div className="flex flex-col">
+                  <span className="text-[10px] text-muted-foreground font-bold uppercase leading-none mb-1">Desde</span>
+                  <span className="text-primary font-black text-lg leading-none">1.200 UF</span>
+                </div>
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                  <ChevronRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </Link>
+          <button className="w-full py-3 px-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+            Ver Oferta de la Semana
+            <Zap className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
-      
-      {/* Footer del Mega Menu opcional */}
-      <div className="mt-12 pt-6 border-t border-border/40 flex items-center justify-between text-muted-foreground text-sm">
-        <p>¿No encuentras lo que buscas? <Link href="/contacto" className="text-primary font-bold hover:underline">Contáctanos ahora</Link></p>
-        <div className="flex gap-4">
-          <span>+5,000 Modelos</span>
-          <span className="w-1 h-1 bg-muted-foreground/30 rounded-full my-auto" />
-          <span>+200 Constructoras</span>
-          <span className="w-1 h-1 bg-muted-foreground/30 rounded-full my-auto" />
-          <span>Todo Chile</span>
+
+      {/* Footer del Mega Menu con métricas de confianza */}
+      <div className="mt-10 pt-6 border-t border-border/10 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-3 group cursor-pointer">
+            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-[#1b0088] group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+              <Zap className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-[11px] font-black text-[#1b0088] uppercase leading-none tracking-tight">Entrega Rápida</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Modelos en Stock</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 group cursor-pointer border-l border-border/10 pl-8">
+            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-[#1b0088] group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+              <Building2 className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-[11px] font-black text-[#1b0088] uppercase leading-none tracking-tight">Garantía Estructural</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Hasta 10 años</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-4 bg-slate-50 p-2 pr-6 rounded-2xl border border-border/10">
+          <div className="bg-white p-2 px-4 rounded-xl shadow-sm">
+            <p className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mb-0.5">¿Eres una constructora?</p>
+            <p className="text-[9px] text-primary font-bold uppercase leading-none">Únete a la plataforma líder</p>
+          </div>
+          <Link href="/planes" className="px-6 py-2.5 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#1b0088] transition-all shadow-lg shadow-primary/20">Publica aquí</Link>
         </div>
       </div>
     </motion.div>
