@@ -537,7 +537,9 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
       .or('is_featured.eq.true, plan.eq.premium', { foreignTable: 'constructoras' }) 
     
     if (regionDisp) {
-      query = query.contains('constructoras.regiones', [regionDisp])
+      console.log("DEBUG: Filtering featured models by region:", regionDisp);
+      // Use the alias 'constructora' assigned in the select
+      query = query.contains('constructora.regiones', [regionDisp])
     }
   
     const { data: dbData, error } = await query
