@@ -46,7 +46,7 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
         "transition-all duration-500"
       )}
     >
-      <div className="container flex h-20 md:h-24 items-center px-4 sm:px-10 md:px-16 max-w-7xl mx-auto">
+      <div className="container flex h-20 md:h-24 items-center px-4 sm:px-10 md:px-16 max-w-7xl mx-auto relative">
         <Link href="/" className="mr-6 lg:mr-16 flex items-center group shrink-0 relative transition-transform hover:scale-[1.02]">
           <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <Image 
@@ -88,25 +88,10 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
                     showMegaMenu && link.label === "Catálogo" ? "w-full" : "w-0 group-hover:w-full"
                   )} />
                 </Link>
-                {link.label === "Catálogo" && (
-                  <AnimatePresence>
-                    {showMegaMenu && (
-                      <div 
-                        className="absolute top-full left-0 w-full pt-2 pointer-events-none"
-                        onMouseEnter={() => setShowMegaMenu(true)}
-                        onMouseLeave={() => setShowMegaMenu(false)}
-                      >
-                        <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
-                           <MegaMenu ads={megaMenuAds} />
-                        </div>
-                      </div>
-                    )}
-                  </AnimatePresence>
-                )}
               </div>
             ))}
           </nav>
-          
+
           <div className="flex items-center gap-4 sm:gap-6">
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center gap-3 border-r border-border/40 pr-8">
@@ -197,8 +182,21 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
             </Sheet>
           </div>
         </div>
+
+        <AnimatePresence>
+          {showMegaMenu && (
+            <div 
+              className="absolute top-full left-0 w-full pt-2 pointer-events-none"
+              onMouseEnter={() => setShowMegaMenu(true)}
+              onMouseLeave={() => setShowMegaMenu(false)}
+            >
+              <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
+                 <MegaMenu ads={megaMenuAds} />
+              </div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.header>
   );
 }
-

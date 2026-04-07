@@ -22,9 +22,9 @@ export function MegaMenuSettings({
   constructoras: any[], 
   modelos: any[] 
 }) {
-  const [settings, setSettings] = useState(initialSettings || {
-    featuredConstructoraId: '',
-    featuredModeloId: ''
+  const [settings, setSettings] = useState({
+    featuredConstructoraId: initialSettings?.featuredConstructoraId || initialSettings?.featured_constructora_id || '',
+    featuredModeloId: initialSettings?.featuredModeloId || initialSettings?.featured_modelo_id || ''
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
