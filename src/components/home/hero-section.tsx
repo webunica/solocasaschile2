@@ -234,8 +234,8 @@ export function HeroSection() {
               />
               
               {/* Center Logo */}
-              <div className="bg-white/90 backdrop-blur-sm p-6 rounded-full shadow-2xl z-10 border border-white/50">
-                <Image src="/images/solocasaschile-logo.png" alt="SoloCasas" width={80} height={80} className="w-20 h-auto object-contain drop-shadow-md" unoptimized />
+              <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-2xl z-10 border border-white/50 w-48 h-48 flex items-center justify-center">
+                <Image src="/images/chica-hero.png" alt="Bienvenida SoloCasas" width={150} height={150} className="w-full h-auto object-contain drop-shadow-md" unoptimized />
               </div>
               
               {/* Orbiting Icons */}
@@ -253,12 +253,12 @@ export function HeroSection() {
                   transition={{ duration: 30, ease: "linear", repeat: Infinity }}
                 >
                   <motion.div 
-                    className={`absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
+                    className={`absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
                     initial={{ rotate: -(i * 90) }}
                     animate={{ rotate: -(360 + (i * 90)) }}
                     transition={{ duration: 30, ease: "linear", repeat: Infinity }}
                   >
-                    <item.icon className="w-6 h-6" />
+                    <item.icon className="w-10 h-10" />
                   </motion.div>
                 </motion.div>
               ))}
