@@ -65,7 +65,7 @@ export function HeroSection() {
       <div 
         className="absolute inset-0 z-0 opacity-90"
         style={{
-          backgroundImage: "radial-gradient( circle 476px at 54.8% 51.5%, rgba(168,229,253,1) 0%, rgba(244,244,254,1) 42.3%, rgba(244,244,254,1) 100.2% )",
+          backgroundImage: "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)",
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat"
