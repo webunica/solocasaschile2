@@ -241,7 +241,7 @@ function RegisterForm() {
             />
           </Link>
           <div className="space-y-3">
-            <h1 className="text-4xl lg:text-5xl font-heading font-black tracking-tighter text-white uppercase italic">
+            <h1 className="text-3xl lg:text-5xl font-heading font-black tracking-tighter text-white uppercase italic whitespace-nowrap">
               {planMeta.isPaid ? "Último Paso" : "Empieza tu prueba gratis"}
             </h1>
             <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
@@ -297,33 +297,33 @@ function RegisterForm() {
                 <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-5">
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Razón Social</Label>
-                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
+                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">RUT Empresa</Label>
-                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
+                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Teléfono</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
+                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
                   </div>
                 </motion.div>
               ) : (
                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Email Corporativo</Label>
-                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
+                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
                   </div>
                   <div className="space-y-2 relative">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Contraseña</Label>
-                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] pr-12 placeholder:text-[#152331]/50" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-[#152331]/40 hover:text-[#152331] transition-colors">
+                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] pr-12 placeholder:text-[#152331]/70" />
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-[#152331]/60 hover:text-[#152331] transition-colors">
                       {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
                   <div className="space-y-2">
                     <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Confirmar</Label>
-                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/50" />
+                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
                   </div>
                 </motion.div>
               )}
