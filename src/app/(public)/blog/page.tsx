@@ -67,8 +67,8 @@ export default async function BlogPage() {
                     </div>
                   )}
                   <div className="absolute top-4 left-4">
-                    <Badge className="bg-white/90 backdrop-blur-md text-brand-indigo border-none shadow-sm hover:bg-white">
-                      Artículo
+                    <Badge className="bg-white/90 backdrop-blur-md text-brand-indigo border-none shadow-sm hover:bg-white font-bold">
+                      {post.category || "Artículo"}
                     </Badge>
                   </div>
                 </div>

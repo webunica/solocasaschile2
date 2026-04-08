@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.blog_posts (
   title text NOT NULL,
   excerpt text NOT NULL,
   content_md text NOT NULL,
+  category text DEFAULT 'General',
   target_audience text,
   cover_image_url text,
   seo_keywords text[],

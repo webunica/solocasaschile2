@@ -12,6 +12,7 @@ const HowItWorks = dynamic(() => import("@/components/home/how-it-works").then(m
 const FeaturedConstructorsSection = dynamic(() => import("@/components/home/featured-section").then(m => m.FeaturedConstructorsSection), { ssr: true });
 const TrustSection = dynamic(() => import("@/components/home/trust-section").then(m => m.TrustSection), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(m => m.FinalCTA), { ssr: true });
+const LatestPosts = dynamic(() => import("@/components/home/latest-posts").then(m => m.LatestPosts), { ssr: true });
 
 // ISR with a baseline revalidation of 1 hour (3600 seconds)
 export const revalidate = 3600;
@@ -58,6 +59,9 @@ export default function Home() {
 
       {/* SEO Authority & FAQ (Semantic Weight) */}
       <SeoContent />
+
+      {/* G: Growth & Engagement (Blog) */}
+      <LatestPosts />
 
       {/* A: Action (Final CTA) */}
       <FinalCTA />

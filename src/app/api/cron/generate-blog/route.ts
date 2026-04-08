@@ -54,6 +54,7 @@ export async function GET(req: Request) {
           {
             "title": "título SEO atractivo",
             "slug": "slug-url-amigable",
+            "category": "Categoría (ej: Construcción, Diseño, Legal, Financiero)",
             "excerpt": "resumen corto para redes sociales",
             "content_md": "contenido extenso en markdown con subtítulos, tablas y listas",
             "target_audience": "público objetivo",

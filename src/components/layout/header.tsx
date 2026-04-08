@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo", icon: Library },
   { href: "/comparar", label: "Comparador", icon: ArrowLeftRight },
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
+  { href: "/blog", label: "Blog", icon: LayoutGrid },
   { href: "/planes", label: "Precios", icon: CreditCard },
 ];
 
