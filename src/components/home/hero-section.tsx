@@ -148,13 +148,11 @@ export function HeroSection() {
               transition={{ duration: 0.7 }}
               className="space-y-5 md:space-y-12 flex flex-col items-center lg:items-start text-center lg:text-left"
             >
-              {/* Badge */}
-              <Badge
-                variant="outline"
-                className="border-brand-indigo/30 text-brand-indigo uppercase tracking-[0.15em] px-4 py-1.5 rounded-full inline-flex text-[10px] md:text-sm bg-white/70 lg:bg-transparent backdrop-blur-sm font-extrabold"
-              >
-                Plataforma #1 de Casas en Chile
-              </Badge>
+              {/* Top Text */}
+              <div className="text-brand-indigo font-black uppercase tracking-tight text-sm md:text-base pt-6 md:pt-10 leading-tight">
+                Cientos de modelos de casas<br/>
+                Prefabricadas en un solo lugar
+              </div>
 
               {/* Headline */}
               <h1 className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
@@ -185,13 +183,22 @@ export function HeroSection() {
                         onChange={(e) => setSelectedRegion(e.target.value)}
                       >
                          <option value="">¿En qué región buscas?</option>
+                         <option value="arica">Arica y Parinacota</option>
+                         <option value="tarapaca">Tarapacá</option>
+                         <option value="antofagasta">Antofagasta</option>
+                         <option value="atacama">Atacama</option>
+                         <option value="coquimbo">Coquimbo</option>
+                         <option value="valparaiso">Valparaíso</option>
                          <option value="metropolitana">Región Metropolitana</option>
-                         <option value="valparaiso">Región de Valparaíso</option>
-                         <option value="biobio">Región del Biobío</option>
-                         <option value="araucania">Región de la Araucanía</option>
-                         <option value="coquimbo">Región de Coquimbo</option>
-                         <option value="los-lagos">Región de Los Lagos</option>
-                         <option value="antofagasta">Región de Antofagasta</option>
+                         <option value="ohiggins">O'Higgins</option>
+                         <option value="maule">Maule</option>
+                         <option value="nuble">Ñuble</option>
+                         <option value="biobio">Biobío</option>
+                         <option value="araucania">La Araucanía</option>
+                         <option value="los-rios">Los Ríos</option>
+                         <option value="los-lagos">Los Lagos</option>
+                         <option value="aysen">Aysén</option>
+                         <option value="magallanes">Magallanes</option>
                       </select>
                    </div>
                    <button 
