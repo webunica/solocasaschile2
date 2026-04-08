@@ -39,6 +39,43 @@ const CONSTRUCTION_TYPES = [
   "HORMIGÓN",
 ];
 
+const TYPEWRITER_TEXTS = [
+  "Fichas Claras de Modelos",
+  "Auditoría a constructoras",
+  "En 16 Regiones"
+];
+
+function TypewriterLoop() {
+  const [index, setIndex] = useState(0);
+  const [subIndex, setSubIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    if (subIndex === TYPEWRITER_TEXTS[index].length + 1 && !isDeleting) {
+      const timeout = setTimeout(() => setIsDeleting(true), 1500);
+      return () => clearTimeout(timeout);
+    }
+    if (subIndex === 0 && isDeleting) {
+      setIsDeleting(false);
+      setIndex((prev) => (prev + 1) % TYPEWRITER_TEXTS.length);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
+    }, isDeleting ? 30 : 60);
+
+    return () => clearTimeout(timeout);
+  }, [subIndex, index, isDeleting]);
+
+  return (
+    <div className="text-base md:text-xl font-black text-white/90 uppercase tracking-[0.15em] mt-8 h-8 flex flex-row items-center justify-center lg:justify-start w-full [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]">
+       {TYPEWRITER_TEXTS[index].substring(0, subIndex)}
+       <span className="animate-pulse bg-brand-teal ml-1 w-2.5 h-6 opacity-80 inline-block" />
+    </div>
+  );
+}
+
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -166,61 +203,9 @@ export function HeroSection() {
                 </div>
               </h1>
 
-              {/* CTA button */}
-              <div className="w-full max-w-xs sm:max-w-none mx-auto lg:mx-0">
-                <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                  <DialogTrigger
-                    render={
-                      <Button
-                        size="lg"
-                        className="w-full sm:w-auto bg-brand-teal text-brand-indigo font-black text-sm md:text-base rounded-2xl h-12 md:h-16 px-6 md:px-8 shadow-xl shadow-brand-teal/25 transition-transform active:scale-95 border-b-4 border-brand-indigo/20"
-                      >
-                        SOLICITAR ASESORÍA EXPERTA
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    }
-                  />
-                  <DialogContent className="sm:max-w-[550px] w-[95vw] max-w-[95vw] p-0 overflow-hidden rounded-3xl border-none shadow-2xl">
-                    <div className="p-6 md:p-12 bg-background w-full space-y-6 border-t-8 border-brand-indigo">
-                      <DialogHeader>
-                        <DialogTitle className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none">
-                          Asesoría <span className="text-brand-teal">Profesional</span>
-                        </DialogTitle>
-                        <p className="text-muted-foreground font-medium text-sm">
-                          Cuéntanos sobre tu proyecto y recibe atención técnica personalizada.
-                        </p>
-                      </DialogHeader>
-                      <HeroLeadForm />
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
+              {/* Typewriter replaced CTA and Stats */}
+              <TypewriterLoop />
             </motion.div>
-
-            {/* Stats grid */}
-            <div className="grid grid-cols-3 gap-3 md:gap-8 justify-items-center lg:justify-items-start border-t border-brand-indigo/10 pt-6 md:pt-10">
-              {[
-                { icon: <Building2 className="w-4 h-4 md:w-5 md:h-5" />, val: "Información", label: "Clara" },
-                { icon: <ShieldCheck className="w-4 h-4 md:w-5 md:h-5" />, val: "Auditoría", label: "Calidad" },
-                { icon: <Globe className="w-4 h-4 md:w-5 md:h-5" />, val: "16 Regiones", label: "Cobertura" },
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + i * 0.1 }}
-                  className="flex flex-col items-center lg:items-start gap-2 md:gap-3 group"
-                >
-                  <div className="w-9 h-9 md:w-12 md:h-12 bg-brand-indigo/8 rounded-xl md:rounded-2xl flex items-center justify-center text-brand-indigo group-hover:bg-brand-indigo group-hover:text-white transition-all duration-500">
-                    {stat.icon}
-                  </div>
-                  <div className="space-y-0.5 min-w-0">
-                    <div className="text-xs md:text-xl font-black text-brand-indigo tracking-tight leading-none truncate">{stat.val}</div>
-                    <div className="text-[8px] md:text-[9px] text-muted-foreground font-black uppercase tracking-widest leading-none opacity-60">{stat.label}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </div>
 
           {/* Circular Animation Area */}
@@ -235,7 +220,7 @@ export function HeroSection() {
               
               {/* Center Logo */}
               <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-2xl z-10 border border-white/50 w-48 h-48 flex items-center justify-center">
-                <Image src="/images/chica-hero.png" alt="Bienvenida SoloCasas" width={150} height={150} className="w-full h-auto object-contain drop-shadow-md" unoptimized />
+                <Image src="/images/busqueda.png" alt="Búsqueda" width={150} height={150} className="w-full h-auto object-contain drop-shadow-md" unoptimized />
               </div>
               
               {/* Orbiting Icons */}
@@ -262,9 +247,6 @@ export function HeroSection() {
                   </motion.div>
                 </motion.div>
               ))}
-            </div>
-            <div className="mt-8 text-center bg-white/60 backdrop-blur-sm px-6 py-2 rounded-full border border-white/40 shadow-sm text-sm font-bold text-[#1b0088]">
-              Busca, Encuentra y Cotiza
             </div>
           </div>
 
