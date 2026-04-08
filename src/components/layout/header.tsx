@@ -51,7 +51,7 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
         <Link href="/" className="mr-6 lg:mr-16 flex items-center group shrink-0 relative transition-transform hover:scale-[1.02]">
           <div className="absolute -inset-4 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <Image 
-            src="/images/logo-vertical.png" 
+            src="/images/solocasaschile-logo.png" 
             alt="SolocasasChile" 
             width={200} 
             height={150} 
