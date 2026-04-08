@@ -18,9 +18,18 @@ const BLOG_TOPICS = [
 ];
 
 export async function GET(req: Request) {
-  // Check for auth (Vercel Cron Secret or standard Auth)
+  const { searchParams } = new URL(req.url);
+  const secretParam = searchParams.get('secret');
   const authHeader = req.headers.get('authorization');
-  if (process.env.NODE_ENV === 'production' && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  
+  // Check for auth (Vercel Cron Secret or Manual Secret Param)
+  const cronSecret = process.env.CRON_SECRET;
+  const isAuthorized = 
+    process.env.NODE_ENV === 'development' || 
+    authHeader === `Bearer ${cronSecret}` || 
+    (cronSecret && secretParam === cronSecret);
+
+  if (!isAuthorized) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
