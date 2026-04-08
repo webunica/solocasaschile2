@@ -241,8 +241,8 @@ function RegisterForm() {
             />
           </Link>
           <div className="space-y-3">
-            <h1 className="text-3xl lg:text-5xl font-heading font-black tracking-tighter text-white uppercase italic whitespace-nowrap">
-              {planMeta.isPaid ? "Último Paso" : "Empieza tu prueba gratis"}
+            <h1 className="text-3xl lg:text-5xl font-heading font-black tracking-tighter text-white italic whitespace-nowrap">
+              {planMeta.isPaid ? "Último paso" : "Empieza tu prueba gratis"}
             </h1>
             <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
               {planMeta.isPaid 
