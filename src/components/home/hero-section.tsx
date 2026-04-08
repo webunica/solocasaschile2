@@ -69,7 +69,7 @@ function TypewriterLoop() {
   }, [subIndex, index, isDeleting]);
 
   return (
-    <div className="text-base md:text-xl font-black text-white/90 uppercase tracking-[0.15em] mt-8 h-8 flex flex-row items-center justify-center lg:justify-start w-full [text-shadow:0_1px_4px_rgba(0,0,0,0.5)]">
+    <div className="text-base md:text-xl font-black text-[#5340a1] uppercase tracking-[0.15em] mt-8 h-8 flex flex-row items-center justify-center lg:justify-start w-full drop-shadow-sm">
        {TYPEWRITER_TEXTS[index].substring(0, subIndex)}
        <span className="animate-pulse bg-brand-teal ml-1 w-2.5 h-6 opacity-80 inline-block" />
     </div>
@@ -201,6 +201,17 @@ export function HeroSection() {
                      Buscar <Search className="w-4 h-4" />
                    </button>
                 </div>
+
+                <ul className="grid grid-cols-2 gap-y-2 gap-x-2 mt-4 lg:mt-6 w-full max-w-md mx-auto lg:mx-0">
+                  {CONSTRUCTION_TYPES.map((type) => (
+                    <li key={type} className="flex items-center gap-2 text-[11px] md:text-xs font-black text-slate-800 tracking-wider">
+                      <div className="w-4 h-4 rounded-full bg-brand-teal/20 flex items-center justify-center shrink-0">
+                        <ShieldCheck className="w-2.5 h-2.5 text-brand-teal" />
+                      </div>
+                      {type}
+                    </li>
+                  ))}
+                </ul>
               </h1>
 
               {/* Typewriter replaced CTA and Stats */}
@@ -238,12 +249,12 @@ export function HeroSection() {
                   transition={{ duration: 30, ease: "linear", repeat: Infinity }}
                 >
                   <motion.div 
-                    className={`absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
+                    className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
                     initial={{ rotate: -(i * 90) }}
                     animate={{ rotate: -(360 + (i * 90)) }}
                     transition={{ duration: 30, ease: "linear", repeat: Infinity }}
                   >
-                    <item.icon className="w-10 h-10" />
+                    <item.icon className="w-7 h-7" />
                   </motion.div>
                 </motion.div>
               ))}

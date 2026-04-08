@@ -8,10 +8,19 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { HeroLeadForm } from "./hero-lead-form";
 
 export function TypesSection() {
   const [index, setIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -56,27 +65,56 @@ export function TypesSection() {
             </h2>
           </div>
           
-          <div className="flex flex-col gap-6 items-start lg:items-end">
+          <div className="flex flex-col gap-6 items-start lg:items-end w-full lg:w-auto">
              <p className="text-xl text-muted-foreground font-medium max-w-md leading-relaxed hidden lg:block opacity-70">
                Filtramos la industria para ofrecerte los modelos que combinan diseño vanguardista con eficiencia real.
              </p>
-             <div className="flex gap-2">
-                <Button 
-                  onClick={prev} 
-                  variant="outline" 
-                  size="icon" 
-                  className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </Button>
-                <Button 
-                  onClick={next} 
-                  variant="outline" 
-                  size="icon" 
-                  className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </Button>
+             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                  <DialogTrigger
+                    render={
+                      <Button
+                        size="lg"
+                        className="bg-brand-teal text-brand-indigo font-black text-xs md:text-sm rounded-2xl h-12 px-6 shadow-xl shadow-brand-teal/25 transition-transform active:scale-95 border-b-4 border-brand-indigo/20 flex"
+                      >
+                        SOLICITAR ASESORÍA EXPERTA
+                        <ArrowRight className="w-4 h-4 ml-2 opacity-80" />
+                      </Button>
+                    }
+                  />
+                  <DialogContent className="sm:max-w-[550px] w-[95vw] max-w-[95vw] p-0 overflow-hidden rounded-3xl border-none shadow-2xl">
+                    <div className="p-6 md:p-12 bg-background w-full space-y-6 border-t-8 border-brand-indigo">
+                      <DialogHeader>
+                        <DialogTitle className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none">
+                          Asesoría <span className="text-brand-teal">Profesional</span>
+                        </DialogTitle>
+                        <p className="text-muted-foreground font-medium text-sm">
+                          Cuéntanos sobre tu proyecto y recibe atención técnica personalizada.
+                        </p>
+                      </DialogHeader>
+                      <HeroLeadForm />
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={prev} 
+                    variant="outline" 
+                    size="icon" 
+                    className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10 bg-white shadow-sm"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </Button>
+                  <Button 
+                    onClick={next} 
+                    variant="outline" 
+                    size="icon" 
+                    className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10 bg-white shadow-sm"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </Button>
+                </div>
              </div>
           </div>
         </div>
