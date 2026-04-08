@@ -62,31 +62,15 @@ export function HeroSection() {
     <section className="relative flex items-center pt-[140px] md:pt-[180px] pb-10 md:pb-24 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[95vh]">
 
       {/* ── Background images ── */}
-      <div className="absolute inset-0 z-0">
-        {/* Mobile/Tablet Background */}
-        <div className="block lg:hidden absolute inset-0">
-          <Image
-            src="/images/bg/hero-main.jpg"
-            alt="Casa prefabricada en Chile"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
-        </div>
-
-        {/* Desktop Background */}
-        <div className="hidden lg:block absolute inset-0">
-          <Image
-            src="/images/bg/hero-main.jpg"
-            alt="Casa moderna prefabricada"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
-        </div>
-      </div>
+      <div 
+        className="absolute inset-0 z-0 opacity-90"
+        style={{
+          backgroundImage: "linear-gradient(90deg, rgb(235, 251, 229) 0%, rgb(164, 184, 163) 25%, rgb(126, 166, 141) 50%, rgb(147, 211, 182) 75%, rgb(212, 255, 250) 100%)",
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat"
+        }}
+      />
 
       {/* ── Content ── */}
       <div className="container relative z-10 max-w-7xl mx-auto px-5 md:px-12 flex flex-col items-center">

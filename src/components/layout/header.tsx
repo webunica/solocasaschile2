@@ -55,7 +55,7 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
             alt="SolocasasChile" 
             width={200} 
             height={150} 
-            className="h-10 md:h-16 w-auto object-contain relative z-10"
+            className="h-[75px] w-auto object-contain relative z-10"
             style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.12))" }}
             priority
           />
