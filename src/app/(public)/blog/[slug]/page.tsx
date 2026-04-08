@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ShareActions } from "@/components/ui/share-actions";
 import { BlogPost } from "@/types/blog";
 
 export const dynamic = "force-dynamic";
@@ -88,6 +89,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <Calendar className="w-4 h-4 text-brand-teal" />
                 {format(new Date(post.created_at), "dd 'de' MMMM, yyyy", { locale: es })}
              </div>
+             <div className="h-8 w-px bg-slate-200 hidden md:block" />
+             <ShareActions 
+               title={post.title} 
+               url={`/blog/${post.slug}`} 
+               showLabel={true}
+               className="hidden sm:flex"
+             />
           </div>
         </div>
       </div>
@@ -114,6 +122,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content_md}
           </ReactMarkdown>
+        </div>
+
+        {/* Bottom Share */}
+        <div className="py-12 border-t border-slate-100 mt-12 flex flex-col items-center gap-6">
+           <ShareActions 
+             title={post.title} 
+             url={`/blog/${post.slug}`} 
+             showLabel={true}
+           />
         </div>
 
         {/* CTA Box */}
