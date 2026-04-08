@@ -117,29 +117,41 @@ export async function GET(req: Request) {
 
     if (dbError) throw dbError;
 
-    // 6. Trigger Webhook for Social Media (Make.com)
+    let webhookStatus = "not_fired";
     if (process.env.MAKE_WEBHOOK_URL) {
-      await fetch(process.env.MAKE_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: postData.title,
-          excerpt: postData.excerpt,
-          socialHook: postData.social_hook,
-          hashtags: postData.hashtags,
-          imageUrl: publicUrl,
-          link: `https://solocasaschile.cl/blog/${postData.slug}`
-        })
-      });
-      
-      // Update status
-      await supabase
-        .from('blog_posts')
-        .update({ social_hook_fired: true })
-        .eq('slug', postData.slug);
+      try {
+        const webhookResponse = await fetch(process.env.MAKE_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: postData.title,
+            excerpt: postData.excerpt,
+            socialHook: postData.social_hook,
+            hashtags: postData.hashtags,
+            imageUrl: publicUrl,
+            link: `https://solocasaschile.cl/blog/${postData.slug}`
+          })
+        });
+        webhookStatus = webhookResponse.ok ? "success" : `failed_${webhookResponse.status}`;
+        
+        // Update status in DB
+        if (webhookResponse.ok) {
+          await supabase
+            .from('blog_posts')
+            .update({ social_hook_fired: true })
+            .eq('slug', postData.slug);
+        }
+      } catch (err: any) {
+        webhookStatus = `error_${err.message}`;
+      }
     }
 
-    return NextResponse.json({ success: true, slug: postData.slug });
+    return NextResponse.json({ 
+      success: true, 
+      slug: postData.slug,
+      webhook_status: webhookStatus,
+      env_check: process.env.MAKE_WEBHOOK_URL ? "defined" : "undefined"
+    });
 
   } catch (error: any) {
     console.error("Cron Generation Error:", error);
