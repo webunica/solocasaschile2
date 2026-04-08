@@ -186,15 +186,18 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
 
         <AnimatePresence>
           {showMegaMenu && (
-            <div 
-              className="absolute top-full left-0 w-full pt-2 pointer-events-none"
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+              className="absolute top-full left-0 w-full pt-2 pointer-events-none z-50"
               onMouseEnter={() => setShowMegaMenu(true)}
               onMouseLeave={() => setShowMegaMenu(false)}
             >
               <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
-                 <MegaMenu ads={megaMenuAds} />
+                 <MegaMenu ads={megaMenuAds} onClose={() => setShowMegaMenu(false)} />
               </div>
-            </div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
