@@ -62,22 +62,22 @@ export function HeroSection() {
     <section className="relative flex items-center pt-[140px] md:pt-[180px] pb-10 md:pb-24 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[95vh]">
 
       {/* ── Background images ── */}
-      <div 
-        className="absolute inset-0 z-0 opacity-90"
-        style={{
-          backgroundImage: "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)",
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat"
-        }}
-      />
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/bg/cielo_solocasaschile.webp"
+          alt="Cielo background"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+      </div>
 
       {/* ── Content ── */}
       <div className="container relative z-10 max-w-7xl mx-auto px-5 md:px-12 flex flex-col items-center">
         <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-8 lg:gap-8 items-center lg:items-start w-full">
 
           {/* Left column */}
-          <div className="flex flex-col gap-6 md:gap-10">
+          <div className="flex flex-col gap-6 md:gap-10 grayscale">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
