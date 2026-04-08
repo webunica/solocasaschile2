@@ -4,6 +4,7 @@ export interface BlogPost {
   title: string;
   excerpt: string;
   content_md: string;
+  category: string | null;
   target_audience: string | null;
   cover_image_url: string | null;
   seo_keywords: string[] | null;
