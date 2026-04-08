@@ -40,7 +40,7 @@ const CATEGORIAS_ESPECIALES = [
   { name: "Entrega Inmediata", href: "/catalogo?filtro=entrega-inmediata" },
 ];
 
-export function MegaMenu({ ads }: { ads?: any }) {
+export function MegaMenu({ ads, onClose }: { ads?: any; onClose?: () => void }) {
   const featuredConstructora = ads?.constructora;
   const featuredModelo = ads?.modelo;
 
@@ -58,6 +58,7 @@ export function MegaMenu({ ads }: { ads?: any }) {
   const mDorms = featuredModelo?.dormitorios || 3;
   return (
     <motion.div
+      onClick={onClose}
       initial={{ opacity: 0, y: 10, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.98 }}
