@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createPublicClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar, User } from "lucide-react";
@@ -14,10 +14,7 @@ export const metadata = {
 };
 
 async function getPosts() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = await createPublicClient();
 
   const { data: posts } = await supabase
     .from("blog_posts")
