@@ -56,6 +56,8 @@ export async function GET(req: Request) {
             "slug": "slug-url-amigable",
             "category": "Categoría (ej: Construcción, Diseño, Legal, Financiero)",
             "excerpt": "resumen corto para redes sociales",
+            "social_hook": "Resumen estilo post de Instagram con emojis y tono de experto",
+            "hashtags": "#casaprefabricada #chile #construccion #solocasas",
             "content_md": "contenido extenso en markdown con subtítulos, tablas y listas",
             "target_audience": "público objetivo",
             "seo_keywords": ["keyword1", "keyword2"]
@@ -64,7 +66,9 @@ export async function GET(req: Request) {
         {
           role: "user",
           content: `Genera un post de blog sobre el tema: ${topic}. 
-          Enfócate en consejos prácticos para Chile, menciona UF y estándares locales.`
+          Enfócate en consejos prácticos para Chile, menciona UF y estándares locales.
+          El campo 'social_hook' debe ser un párrafo breve, con emojis, diseñado para captar la atención en redes sociales.
+          El campo 'hashtags' debe incluir entre 5 y 10 etiquetas relevantes.`
         }
       ],
       response_format: { type: "json_object" }
@@ -121,6 +125,8 @@ export async function GET(req: Request) {
         body: JSON.stringify({
           title: postData.title,
           excerpt: postData.excerpt,
+          socialHook: postData.social_hook,
+          hashtags: postData.hashtags,
           imageUrl: publicUrl,
           link: `https://solocasaschile.cl/blog/${postData.slug}`
         })
