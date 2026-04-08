@@ -63,13 +63,29 @@ export function HeroSection() {
 
       {/* ── Background images ── */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/images/bg/cielo_solocasaschile.webp"
-          alt="Cielo background"
-          fill
-          className="object-cover object-center"
-          priority
-        />
+        {/* Mobile/Tablet Background */}
+        <div className="block lg:hidden absolute inset-0">
+          <Image
+            src="/images/bg/hero-main.jpg"
+            alt="Casa prefabricada en Chile"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
+        </div>
+
+        {/* Desktop Background */}
+        <div className="hidden lg:block absolute inset-0">
+          <Image
+            src="/images/bg/hero-main.jpg"
+            alt="Casa moderna prefabricada"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
+        </div>
       </div>
 
       {/* ── Content ── */}
@@ -77,7 +93,7 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-8 lg:gap-8 items-center lg:items-start w-full">
 
           {/* Left column */}
-          <div className="flex flex-col gap-6 md:gap-10 grayscale">
+          <div className="flex flex-col gap-6 md:gap-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
