@@ -4,8 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Building2, ShieldCheck, Globe, ArrowRight } from "lucide-react";
+import { Building2, ShieldCheck, Globe, ArrowRight, Search, MapPin, Phone, Home } from "lucide-react";
 import { HeroLeadForm } from "./hero-lead-form";
+import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -42,6 +43,16 @@ export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [typeIndex, setTypeIndex] = useState(0);
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const router = useRouter();
+
+  const handleSearch = () => {
+     if (selectedRegion) {
+        router.push(`/catalogo?region=${selectedRegion}`);
+     } else {
+        router.push(`/catalogo`);
+     }
+  };
 
   useEffect(() => {
     const sliderTimer = setInterval(() => {
@@ -59,7 +70,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative flex items-center pt-[140px] md:pt-[180px] pb-10 md:pb-24 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[95vh]">
+    <section className="relative flex items-center pt-[120px] md:pt-[150px] pb-10 md:pb-16 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[70vh]">
 
       {/* ── Background images ── */}
       <div className="absolute inset-0 z-0">
@@ -128,25 +139,32 @@ export function HeroSection() {
                   </AnimatePresence>
                 </div>
 
-                <div className="flex flex-col gap-2 w-full max-w-xs md:max-w-sm lg:max-w-none mx-auto lg:mx-0">
-                  <div className="bg-brand-teal text-brand-indigo px-4 py-2 rounded-none uppercase font-black text-[clamp(1.8rem,7vw,60px)] leading-none text-center lg:text-left w-full shadow-md shadow-brand-teal/10">
-                    COMPARA
-                  </div>
-                  <div className="bg-brand-indigo text-brand-teal px-4 py-2 rounded-none uppercase font-black text-[clamp(1.8rem,7vw,60px)] leading-none text-center lg:text-left w-full shadow-md shadow-brand-indigo/10">
-                    Y COTIZA
-                  </div>
+                <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md mx-auto lg:mx-0 bg-white/20 backdrop-blur-md p-2 rounded-2xl border border-white/40 shadow-xl mt-6">
+                   <div className="flex-1 relative">
+                      <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary w-5 h-5 opacity-60" />
+                      <select 
+                        className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
+                        value={selectedRegion}
+                        onChange={(e) => setSelectedRegion(e.target.value)}
+                      >
+                         <option value="">¿En qué región buscas?</option>
+                         <option value="metropolitana">Región Metropolitana</option>
+                         <option value="valparaiso">Región de Valparaíso</option>
+                         <option value="biobio">Región del Biobío</option>
+                         <option value="araucania">Región de la Araucanía</option>
+                         <option value="coquimbo">Región de Coquimbo</option>
+                         <option value="los-lagos">Región de Los Lagos</option>
+                         <option value="antofagasta">Región de Antofagasta</option>
+                      </select>
+                   </div>
+                   <button 
+                     onClick={handleSearch}
+                     className="h-12 bg-primary text-white font-black px-8 rounded-xl shadow-lg shadow-primary/30 hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
+                   >
+                     Buscar <Search className="w-4 h-4" />
+                   </button>
                 </div>
               </h1>
-
-              {/* Description */}
-              <div className="flex flex-col gap-1 items-center lg:items-start text-center lg:text-left">
-                <p className="text-xl md:text-3xl font-black text-brand-indigo tracking-tight leading-none uppercase italic underline decoration-brand-teal decoration-4 underline-offset-4">
-                  Fichas técnicas claras
-                </p>
-                <p className="text-lg md:text-2xl font-black text-brand-teal uppercase tracking-tighter leading-none [text-shadow:0_1px_4px_rgba(0,0,0,0.2)]">
-                  DATOS ÚTILES Y ORDENADOS
-                </p>
-              </div>
 
               {/* CTA button */}
               <div className="w-full max-w-xs sm:max-w-none mx-auto lg:mx-0">
@@ -205,7 +223,50 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Desktop slider hidden — bg image now covers full hero */}
+          {/* Circular Animation Area */}
+          <div className="hidden lg:flex flex-col h-full items-center justify-center w-full min-h-[400px]">
+            <div className="relative w-[340px] h-[340px] flex items-center justify-center">
+              {/* Spinning Dashed Track */}
+              <motion.div 
+                animate={{ rotate: 360 }} 
+                transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+                className="absolute inset-0 rounded-full border-[2px] border-dashed border-primary/30"
+              />
+              
+              {/* Center Logo */}
+              <div className="bg-white/90 backdrop-blur-sm p-6 rounded-full shadow-2xl z-10 border border-white/50">
+                <Image src="/images/solocasaschile-logo.png" alt="SoloCasas" width={80} height={80} className="w-20 h-auto object-contain drop-shadow-md" unoptimized />
+              </div>
+              
+              {/* Orbiting Icons */}
+              {[
+                { icon: Search, color: "text-blue-600", bg: "bg-blue-50" },
+                { icon: MapPin, color: "text-teal-600", bg: "bg-teal-50" },
+                { icon: Home, color: "text-[#1b0088]", bg: "bg-indigo-50" },
+                { icon: Phone, color: "text-purple-600", bg: "bg-purple-50" }
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute inset-0 pointer-events-none"
+                  initial={{ rotate: i * 90 }}
+                  animate={{ rotate: 360 + (i * 90) }}
+                  transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+                >
+                  <motion.div 
+                    className={`absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
+                    initial={{ rotate: -(i * 90) }}
+                    animate={{ rotate: -(360 + (i * 90)) }}
+                    transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+                  >
+                    <item.icon className="w-6 h-6" />
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+            <div className="mt-8 text-center bg-white/60 backdrop-blur-sm px-6 py-2 rounded-full border border-white/40 shadow-sm text-sm font-bold text-[#1b0088]">
+              Busca, Encuentra y Cotiza
+            </div>
+          </div>
 
         </div>
       </div>
