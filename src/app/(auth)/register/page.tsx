@@ -219,54 +219,53 @@ function RegisterForm() {
 
   return (
     <div 
-      className="min-h-screen flex flex-col items-center justify-center p-6 lg:p-12 relative overflow-hidden"
-      style={{ background: 'linear-gradient(to right, #000000, #152331)' }}
+      className="min-h-screen flex flex-col items-center justify-center p-6 lg:p-12 relative overflow-hidden bg-slate-50"
     >
-      {/* Decorative Cobalt accents */}
-      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#0047AB] rounded-full blur-[120px] opacity-20 pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-[#0047AB] rounded-full blur-[100px] opacity-30 pointer-events-none" />
+      {/* Decorative Brand accents */}
+      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-brand-teal/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-brand-indigo/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="w-full max-w-lg space-y-10 relative z-10">
         
         {/* Header */}
-        <div className="text-center space-y-8">
+        <div className="text-center space-y-6">
           <Link href="/" className="inline-block hover:scale-105 transition-transform">
             <Image
               src="/images/logo-vertical.png"
               alt="SolocasasChile"
               width={160}
               height={120}
-              className="h-20 w-auto object-contain mx-auto brightness-0 invert"
+              className="h-24 w-auto object-contain mx-auto"
               priority
             />
           </Link>
           <div className="space-y-3">
-            <h1 className="text-3xl lg:text-5xl font-heading font-black tracking-tighter text-white whitespace-nowrap">
-              {planMeta.isPaid ? "Último paso" : "Empieza tu prueba gratis"}
+            <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo whitespace-nowrap">
+              {planMeta.isPaid ? "Último paso" : "Únete a la plataforma"}
             </h1>
-            <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
+            <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm mx-auto">
               {planMeta.isPaid 
                 ? `Activa ahora tu Plan ${planMeta.label} y comienza a recibir leads.`
-                : "Prueba gratis por 4 meses..."}
+                : "Cientos de constructoras de casas prefabricadas en todo Chile confían en nosotros."}
             </p>
           </div>
         </div>
 
         {/* Form Card */}
-        <div className="bg-[#003487]/50 backdrop-blur-2xl rounded-[3rem] p-10 lg:p-14 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col space-y-10">
+        <div className="bg-white rounded-[3rem] p-8 lg:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-border/50 flex flex-col space-y-10">
           
           {/* Step indicator */}
           <div className="space-y-4">
             <div className="flex gap-2">
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "bg-[#00BFFF]" : "bg-white/10")} />
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "bg-[#00BFFF]" : "bg-white/10")} />
+              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "bg-brand-teal" : "bg-slate-100")} />
+              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "bg-brand-teal" : "bg-slate-100")} />
             </div>
-            <div className="flex justify-between items-center text-white/60">
-              <span className="text-[10px] font-black tracking-[0.2em] uppercase">
-                {step === 1 ? "Empresa" : "Acceso"}
+            <div className="flex justify-between items-center text-muted-foreground">
+              <span className="text-[10px] font-black tracking-[0.2em] uppercase text-brand-indigo">
+                {step === 1 ? "Paso 1: Empresa" : "Paso 2: Acceso"}
               </span>
               {step === 2 && (
-                <button onClick={() => setStep(1)} className="text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2">
+                <button onClick={() => setStep(1)} className="text-[10px] font-black uppercase tracking-widest hover:text-brand-indigo transition-colors flex items-center gap-2">
                   <ArrowLeft className="w-3 h-3" /> Atrás
                 </button>
               )}
@@ -296,57 +295,57 @@ function RegisterForm() {
               {step === 1 ? (
                 <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-5">
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Razón Social</Label>
-                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Razón Social</Label>
+                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">RUT Empresa</Label>
-                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">RUT Empresa</Label>
+                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Teléfono</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Teléfono</Label>
+                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
                   </div>
                 </motion.div>
               ) : (
                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Email Corporativo</Label>
-                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Email Corporativo</Label>
+                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
                   </div>
                   <div className="space-y-2 relative">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Contraseña</Label>
-                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] pr-12 placeholder:text-[#152331]/70" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-[#152331]/60 hover:text-[#152331] transition-colors">
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Contraseña</Label>
+                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 pr-12 placeholder:text-slate-400" />
+                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-slate-400 hover:text-slate-700 transition-colors">
                       {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-[#00BFFF] ml-2">Confirmar</Label>
-                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl border-none !bg-white px-6 font-bold focus:ring-2 focus:ring-[#00BFFF] transition-all text-[#152331] placeholder:text-[#152331]/70" />
+                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Confirmar</Label>
+                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            <Button type="submit" size="lg" disabled={loading} className="w-full h-16 bg-[#0047AB] text-white font-black tracking-[0.2em] text-xs uppercase rounded-[2rem] shadow-2xl shadow-black/20 transition-all hover:scale-[1.02] active:scale-95 border-none hover:bg-[#0052c4]">
+            <Button type="submit" size="lg" disabled={loading} className="w-full h-16 bg-brand-teal text-brand-indigo font-black tracking-[0.2em] text-xs uppercase rounded-[2rem] shadow-xl shadow-brand-teal/20 transition-transform active:scale-95 border-none hover:bg-[#34dac5]">
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <span className="flex items-center gap-3">
-                  {step === 1 ? "Siguiente Paso" : "Finalizar Registro"} <ArrowRight className="w-4 h-4" />
+                  {step === 1 ? "Siguiente Paso" : "Finalizar Registro"} <ArrowRight className="w-4 h-4 opacity-70" />
                 </span>
               )}
             </Button>
           </form>
 
-          <p className="text-[10px] text-white/30 text-center font-bold px-4 leading-relaxed uppercase tracking-widest">
-            Al registrarte, declaras conocer los <Link href="/terminos" className="underline hover:text-white/60 transition-colors">Términos</Link> y la <Link href="/privacidad" className="underline hover:text-white/60 transition-colors">Privacidad</Link>.
+          <p className="text-[10px] text-muted-foreground text-center font-bold px-4 leading-relaxed uppercase tracking-widest">
+            Al registrarte, declaras conocer los <Link href="/terminos" className="text-brand-indigo hover:underline transition-colors">Términos</Link> y la <Link href="/privacidad" className="text-brand-indigo hover:underline transition-colors">Privacidad</Link>.
           </p>
         </div>
 
         <div className="text-center">
           <Link href="/login" className="inline-flex items-center gap-4 group">
-            <span className="text-xs font-bold text-white/40 group-hover:text-white/60 transition-colors">¿Ya tienes cuenta?</span>
-            <span className="text-xs font-black uppercase tracking-widest text-white border-b-2 border-[#00BFFF] pb-0.5">Iniciar Sesión</span>
+            <span className="text-xs font-bold text-muted-foreground group-hover:text-foreground transition-colors">¿Ya tienes cuenta?</span>
+            <span className="text-xs font-black uppercase tracking-widest text-brand-indigo border-b-2 border-brand-teal pb-0.5">Iniciar Sesión</span>
           </Link>
         </div>
 
