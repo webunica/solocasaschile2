@@ -241,13 +241,13 @@ function RegisterForm() {
             />
           </Link>
           <div className="space-y-3">
-            <h1 className="text-3xl lg:text-5xl font-heading font-black tracking-tighter text-white italic whitespace-nowrap">
+            <h1 className="text-3xl lg:text-5xl font-heading font-black tracking-tighter text-white whitespace-nowrap">
               {planMeta.isPaid ? "Último paso" : "Empieza tu prueba gratis"}
             </h1>
             <p className="text-white/60 font-medium text-lg leading-tight max-w-sm mx-auto">
               {planMeta.isPaid 
                 ? `Activa ahora tu Plan ${planMeta.label} y comienza a recibir leads.`
-                : "Prueba gratis por 4 meses gratis..."}
+                : "Prueba gratis por 4 meses..."}
             </p>
           </div>
         </div>
