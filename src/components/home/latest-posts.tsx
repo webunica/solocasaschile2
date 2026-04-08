@@ -9,7 +9,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/types/blog";
-import { createPublicClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 
 export function LatestPosts() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -17,9 +17,7 @@ export function LatestPosts() {
 
   useEffect(() => {
     async function fetchPosts() {
-      // Note: We use the fetch API or a safe internal way since this is a client component
-      // For simplicity and speed, I'll fetch them from the public API or Supabase directly
-      const supabase = await createPublicClient();
+      const supabase = createClient();
       const { data } = await supabase
         .from("blog_posts")
         .select("*")
