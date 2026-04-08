@@ -14,6 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { HeroLeadForm } from "./hero-lead-form";
 
@@ -82,9 +83,9 @@ export function TypesSection() {
                       </Button>
                     }
                   />
-                  <DialogContent className="sm:max-w-[550px] w-[95vw] max-w-[95vw] p-0 overflow-hidden rounded-3xl border-none shadow-2xl">
-                    <div className="p-6 md:p-12 bg-background w-full space-y-6 border-t-8 border-brand-indigo">
-                      <DialogHeader>
+                  <DialogContent className="sm:max-w-[550px] w-[95vw] max-w-[95vw] p-0 rounded-3xl border-none shadow-2xl max-h-[90dvh] overflow-y-auto">
+                    <div className="p-5 md:p-12 bg-background w-full space-y-5 md:space-y-6 border-t-8 border-brand-indigo relative">
+                      <DialogHeader className="pt-2">
                         <DialogTitle className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none">
                           Asesoría <span className="text-brand-teal">Profesional</span>
                         </DialogTitle>
@@ -93,6 +94,11 @@ export function TypesSection() {
                         </p>
                       </DialogHeader>
                       <HeroLeadForm />
+                      <div className="w-full flex justify-center pt-2 pb-2">
+                        <DialogClose className="text-xs font-bold text-muted-foreground underline underline-offset-4 p-2.5 rounded-lg active:scale-95 transition-all">
+                          Cerrar ventana
+                        </DialogClose>
+                      </div>
                     </div>
                   </DialogContent>
                 </Dialog>

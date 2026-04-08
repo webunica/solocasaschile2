@@ -41,7 +41,7 @@ const CONSTRUCTION_TYPES = [
 
 const TYPEWRITER_TEXTS = [
   "Fichas Claras de Modelos",
-  "Auditoría a constructoras",
+  "Constructoras validadas",
   "En 16 Regiones"
 ];
 
@@ -70,8 +70,8 @@ function TypewriterLoop() {
 
   return (
     <div className="text-base md:text-xl font-black text-[#5340a1] uppercase tracking-[0.15em] mt-8 h-8 flex flex-row items-center justify-center lg:justify-start w-full drop-shadow-sm">
-       {TYPEWRITER_TEXTS[index].substring(0, subIndex)}
-       <span className="animate-pulse bg-brand-teal ml-1 w-2.5 h-6 opacity-80 inline-block" />
+      {TYPEWRITER_TEXTS[index].substring(0, subIndex)}
+      <span className="animate-pulse bg-brand-teal ml-1 w-2.5 h-6 opacity-80 inline-block" />
     </div>
   );
 }
@@ -84,11 +84,11 @@ export function HeroSection() {
   const router = useRouter();
 
   const handleSearch = () => {
-     if (selectedRegion) {
-        router.push(`/catalogo?region=${selectedRegion}`);
-     } else {
-        router.push(`/catalogo`);
-     }
+    if (selectedRegion) {
+      router.push(`/catalogo?region=${selectedRegion}`);
+    } else {
+      router.push(`/catalogo`);
+    }
   };
 
   useEffect(() => {
@@ -150,7 +150,7 @@ export function HeroSection() {
             >
               {/* Top Text */}
               <div className="text-brand-indigo font-black uppercase tracking-tight text-sm md:text-base pt-6 md:pt-10 leading-tight">
-                Cientos de modelos de casas<br/>
+                Cientos de modelos de casas<br />
                 Prefabricadas en un solo lugar
               </div>
 
@@ -175,38 +175,38 @@ export function HeroSection() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md mx-auto lg:mx-0 bg-white/20 backdrop-blur-md p-2 rounded-2xl border border-white/40 shadow-xl mt-6">
-                   <div className="flex-1 relative">
-                      <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary w-5 h-5 opacity-60" />
-                      <select 
-                        className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
-                        value={selectedRegion}
-                        onChange={(e) => setSelectedRegion(e.target.value)}
-                      >
-                         <option value="">¿En qué región buscas?</option>
-                         <option value="arica">Arica y Parinacota</option>
-                         <option value="tarapaca">Tarapacá</option>
-                         <option value="antofagasta">Antofagasta</option>
-                         <option value="atacama">Atacama</option>
-                         <option value="coquimbo">Coquimbo</option>
-                         <option value="valparaiso">Valparaíso</option>
-                         <option value="metropolitana">Región Metropolitana</option>
-                         <option value="ohiggins">O'Higgins</option>
-                         <option value="maule">Maule</option>
-                         <option value="nuble">Ñuble</option>
-                         <option value="biobio">Biobío</option>
-                         <option value="araucania">La Araucanía</option>
-                         <option value="los-rios">Los Ríos</option>
-                         <option value="los-lagos">Los Lagos</option>
-                         <option value="aysen">Aysén</option>
-                         <option value="magallanes">Magallanes</option>
-                      </select>
-                   </div>
-                   <button 
-                     onClick={handleSearch}
-                     className="h-12 bg-primary text-white font-black px-8 rounded-xl shadow-lg shadow-primary/30 hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
-                   >
-                     Buscar <Search className="w-4 h-4" />
-                   </button>
+                  <div className="flex-1 relative">
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary w-5 h-5 opacity-60" />
+                    <select
+                      className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
+                      value={selectedRegion}
+                      onChange={(e) => setSelectedRegion(e.target.value)}
+                    >
+                      <option value="">¿En qué región buscas?</option>
+                      <option value="arica">Arica y Parinacota</option>
+                      <option value="tarapaca">Tarapacá</option>
+                      <option value="antofagasta">Antofagasta</option>
+                      <option value="atacama">Atacama</option>
+                      <option value="coquimbo">Coquimbo</option>
+                      <option value="valparaiso">Valparaíso</option>
+                      <option value="metropolitana">Región Metropolitana</option>
+                      <option value="ohiggins">O'Higgins</option>
+                      <option value="maule">Maule</option>
+                      <option value="nuble">Ñuble</option>
+                      <option value="biobio">Biobío</option>
+                      <option value="araucania">La Araucanía</option>
+                      <option value="los-rios">Los Ríos</option>
+                      <option value="los-lagos">Los Lagos</option>
+                      <option value="aysen">Aysén</option>
+                      <option value="magallanes">Magallanes</option>
+                    </select>
+                  </div>
+                  <button
+                    onClick={handleSearch}
+                    className="h-12 bg-primary text-white font-black px-8 rounded-xl shadow-lg shadow-primary/30 hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
+                  >
+                    Buscar <Search className="w-4 h-4" />
+                  </button>
                 </div>
 
                 <ul className="grid grid-cols-2 gap-y-2 gap-x-2 mt-4 lg:mt-6 w-full max-w-md mx-auto lg:mx-0">
@@ -230,17 +230,17 @@ export function HeroSection() {
           <div className="hidden lg:flex flex-col h-full items-center justify-center w-full min-h-[400px]">
             <div className="relative w-[340px] h-[340px] flex items-center justify-center">
               {/* Spinning Dashed Track */}
-              <motion.div 
-                animate={{ rotate: 360 }} 
+              <motion.div
+                animate={{ rotate: 360 }}
                 transition={{ duration: 30, ease: "linear", repeat: Infinity }}
                 className="absolute inset-0 rounded-full border-[2px] border-dashed border-primary/30"
               />
-              
+
               {/* Center Logo */}
               <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-2xl z-10 border border-white/50 w-48 h-48 flex items-center justify-center">
                 <Image src="/images/busqueda.png" alt="Búsqueda" width={150} height={150} className="w-full h-auto object-contain drop-shadow-md" unoptimized />
               </div>
-              
+
               {/* Orbiting Icons */}
               {[
                 { icon: Search, color: "text-blue-600", bg: "bg-blue-50" },
@@ -255,7 +255,7 @@ export function HeroSection() {
                   animate={{ rotate: 360 + (i * 90) }}
                   transition={{ duration: 30, ease: "linear", repeat: Infinity }}
                 >
-                  <motion.div 
+                  <motion.div
                     className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
                     initial={{ rotate: -(i * 90) }}
                     animate={{ rotate: -(360 + (i * 90)) }}
