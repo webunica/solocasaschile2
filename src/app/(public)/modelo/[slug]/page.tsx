@@ -181,13 +181,13 @@ export default async function ModeloPage({ params }: PageProps) {
            <div className="space-y-24 order-1">
               <div className="space-y-8">
                  <div className="space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tight text-foreground leading-[1.1]">{modelo.nombre}</h1>
-                    <p className="text-lg md:text-xl text-muted-foreground font-bold tracking-tight opacity-80">
+                    <h1 className="text-2xl md:text-4xl font-heading font-black tracking-tight text-foreground leading-[1.15]">{modelo.nombre}</h1>
+                    <p className="text-sm md:text-base text-muted-foreground font-semibold tracking-tight opacity-70">
                        Casa {TIPO_LABELS[modelo.tipo] || 'Modelo'} de {modelo.superficie_m2} m² | {modelo.dormitorios} dormitorios | {modelo.banos} baños
                        {modelo.tiempo_entrega && ` | Entrega en ${modelo.tiempo_entrega} días`}
                     </p>
                  </div>
-                 <p className="text-lg md:text-2xl text-muted-foreground font-medium leading-[1.4] max-w-4xl border-l-[6px] border-brand-indigo/10 pl-8">
+                 <p className="text-sm md:text-base text-muted-foreground font-medium leading-relaxed max-w-4xl border-l-[4px] border-brand-indigo/10 pl-6 whitespace-pre-line">
                    {modelo.descripcion || 'Diseño de concepto abierto, amplio y eficiente.'}
                  </p>
                  <div className="flex flex-wrap gap-4 pt-4">
