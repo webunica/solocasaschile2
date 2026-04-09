@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  RefreshCw, Search, MapPin, 
-  Package, CheckCircle2, AlertCircle,
-  Loader2, ArrowRight
-} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Info, RefreshCw, MapPin, Package, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { REGIONES_CHILE } from "@/config/regions";
@@ -36,6 +33,7 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
     try {
       const response = await fetch("/api/admin/sync-suppliers", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           categoryId: category.id,
           categoryName: category.name,
@@ -101,7 +99,7 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
                 >
                   <div className="flex justify-between items-start mb-6">
                     <div className={cn(
-                      "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 tint-primary",
+                      "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500",
                       isDone ? "bg-emerald-500 text-white" : "bg-white text-slate-400 group-hover:bg-[#fa8823] group-hover:text-white"
                     )}>
                       {isDone ? <CheckCircle2 className="w-6 h-6" /> : <Package className="w-6 h-6" />}
@@ -133,19 +131,16 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
       </Card>
       
       <div className="p-10 rounded-[2.5rem] bg-brand-indigo/5 border border-brand-indigo/10 flex items-start gap-6">
-         <div className="w-12 h-12 rounded-2xl bg-brand-indigo flex items-center justify-center shrink-0">
-            <Info className="w-6 h-6 text-white" />
-         </div>
-         <div className="space-y-2">
-            <h4 className="text-xl font-black tracking-tight leading-none">Consejo de Optimización</h4>
-            <p className="text-muted-foreground font-medium leading-relaxed">
-              La sincronización consume créditos de SerpApi. Recomendamos sincronizar primero las regiones con mayor volumen de construcción (Metropolitana, Valparaíso, Biobío) y luego expandir.
-            </p>
-         </div>
+        <div className="w-12 h-12 rounded-2xl bg-brand-indigo flex items-center justify-center shrink-0">
+          <Info className="w-6 h-6 text-white" />
+        </div>
+        <div className="space-y-2">
+          <h4 className="text-xl font-black tracking-tight leading-none">Consejo de Optimización</h4>
+          <p className="text-muted-foreground font-medium leading-relaxed">
+            La sincronización consume créditos de SerpApi. Recomendamos sincronizar primero las regiones con mayor volumen de construcción (Metropolitana, Valparaíso, Biobío) y luego expandir.
+          </p>
+        </div>
       </div>
     </div>
   );
 }
-
-import { cn } from "@/lib/utils";
-import { Info } from "lucide-react";
