@@ -141,39 +141,25 @@ function RegisterForm() {
   const billing: 'monthly' | 'yearly' = (searchParams.get("billing") === 'monthly' ? 'monthly' : 'yearly');
   const plan: PlanKey = (rawPlan in PLAN_META ? rawPlan : "gratis") as PlanKey;
   const planMeta = PLAN_META[plan];
-  const PlanIcon = planMeta.icon;
   const currentPrice = planMeta.prices[billing as keyof typeof planMeta.prices] || "0";
 
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendDone, setResendDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [step, setStep] = useState(1);
-  const [step1Data, setStep1Data] = useState<Record<string, string>>({});
   const [showPass, setShowPass] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [sentTo, setSentTo] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const currentFormData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
     
-    if (step < 2) { 
-      setStep1Data(Object.fromEntries(currentFormData.entries()) as Record<string, string>);
-      setStep(2); 
-      return; 
-    }
-
     setLoading(true);
     setError(null);
     
-    // Combine step 1 data with step 2 data
-    const finalFormData = new FormData();
-    Object.entries(step1Data).forEach(([k, v]) => finalFormData.append(k, v));
-    Array.from(currentFormData.entries()).forEach(([k, v]) => finalFormData.append(k, v as string));
-
-    const password = finalFormData.get("password") as string;
-    const confirm = finalFormData.get("confirmPassword") as string;
+    const password = formData.get("password") as string;
+    const confirm = formData.get("confirmPassword") as string;
 
     if (password !== confirm) {
       setError("Las contraseñas no coinciden.");
@@ -182,7 +168,7 @@ function RegisterForm() {
     }
 
     try {
-      const result = await register(finalFormData);
+      const result = await register(formData);
       if (result?.error) {
         const msg = result.error.includes("already registered")
           ? "Este email ya está registrado. Inicia sesión en su lugar."
@@ -190,7 +176,7 @@ function RegisterForm() {
         setError(msg);
         setLoading(false);
       } else if (result?.needsConfirmation) {
-        setSentTo(finalFormData.get("email") as string);
+        setSentTo(formData.get("email") as string);
         setEmailSent(true);
         setLoading(false);
       } else if (result?.redirectTo) {
@@ -241,12 +227,10 @@ function RegisterForm() {
           </Link>
           <div className="space-y-3">
             <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo whitespace-nowrap">
-              {planMeta.isPaid ? "Último paso" : "Únete a la plataforma"}
+              {planMeta.isPaid ? "Registro Directo" : "Únete a la plataforma"}
             </h1>
             <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm mx-auto">
-              {planMeta.isPaid 
-                ? `Activa ahora tu Plan ${planMeta.label} y comienza a recibir leads.`
-                : "Cientos de constructoras de casas prefabricadas en todo Chile confían en nosotros."}
+              Solo necesitas tu correo para comenzar.
             </p>
           </div>
         </div>
@@ -254,24 +238,6 @@ function RegisterForm() {
         {/* Form Card */}
         <div className="bg-white rounded-[3rem] p-8 lg:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-border/50 flex flex-col space-y-10">
           
-          {/* Step indicator */}
-          <div className="space-y-4">
-            <div className="flex gap-2">
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 1 ? "bg-brand-teal" : "bg-slate-100")} />
-              <div className={cn("h-1.5 flex-1 rounded-full transition-all duration-700", step >= 2 ? "bg-brand-teal" : "bg-slate-100")} />
-            </div>
-            <div className="flex justify-between items-center text-muted-foreground">
-              <span className="text-[10px] font-black tracking-[0.2em] uppercase text-brand-indigo">
-                {step === 1 ? "Paso 1: Empresa" : "Paso 2: Acceso"}
-              </span>
-              {step === 2 && (
-                <button onClick={() => setStep(1)} className="text-[10px] font-black uppercase tracking-widest hover:text-brand-indigo transition-colors flex items-center gap-2">
-                  <ArrowLeft className="w-3 h-3" /> Atrás
-                </button>
-              )}
-            </div>
-          </div>
-
           {/* Error */}
           <AnimatePresence>
             {error && (
@@ -291,47 +257,28 @@ function RegisterForm() {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="plan" value={plan} />
 
-            <AnimatePresence mode="wait">
-              {step === 1 ? (
-                <motion.div key="step1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="space-y-5">
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Razón Social</Label>
-                    <Input id="companyName" name="companyName" placeholder="Ej: Constructora SpA" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">RUT Empresa</Label>
-                    <Input id="rut" name="rut" placeholder="76.xxx.xxx-k" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Teléfono</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+56 9 ..." required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Email Corporativo</Label>
-                    <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
-                  </div>
-                  <div className="space-y-2 relative">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Contraseña</Label>
-                    <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 pr-12 placeholder:text-slate-400" />
-                    <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-slate-400 hover:text-slate-700 transition-colors">
-                      {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Confirmar</Label>
-                    <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Email Corporativo</Label>
+                <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
+              </div>
+              <div className="space-y-2 relative">
+                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Contraseña</Label>
+                <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 pr-12 placeholder:text-slate-400" />
+                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-slate-400 hover:text-slate-700 transition-colors">
+                  {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Confirmar</Label>
+                <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
+              </div>
+            </div>
 
             <Button type="submit" size="lg" disabled={loading} className="w-full h-16 bg-brand-teal text-brand-indigo font-black tracking-[0.2em] text-xs uppercase rounded-[2rem] shadow-xl shadow-brand-teal/20 transition-transform active:scale-95 border-none hover:bg-[#34dac5]">
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                 <span className="flex items-center gap-3">
-                  {step === 1 ? "Siguiente Paso" : "Finalizar Registro"} <ArrowRight className="w-4 h-4 opacity-70" />
+                  Crear Cuenta <ArrowRight className="w-4 h-4 opacity-70" />
                 </span>
               )}
             </Button>
