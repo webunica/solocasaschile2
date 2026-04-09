@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { 
   Building2, Phone, Globe, MapPin, 
   Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
-  Search, Tag, X, Plus, Trash2, Star
+  Search, Tag, X, Plus, Trash2, Star, MessageSquare
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
