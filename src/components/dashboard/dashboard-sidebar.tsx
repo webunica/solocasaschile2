@@ -159,6 +159,20 @@ export function DashboardSidebar({
                     <SidebarMenuItem>
                       <SidebarMenuButton 
                         asChild 
+                        isActive={pathname === "/dashboard/admin/constru"}
+                        tooltip="Gestión Constru"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-orange-500/5 text-[#fa8823]"
+                      >
+                        <Link href="/dashboard/admin/constru">
+                          <Package className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Gestión Constru</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
                         isActive={pathname === "/dashboard/admin/settings"}
                         tooltip="Configuración del Sitio"
                         className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
