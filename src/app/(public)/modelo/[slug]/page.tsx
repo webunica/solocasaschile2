@@ -182,9 +182,9 @@ export default async function ModeloPage({ params }: PageProps) {
               <div className="space-y-8">
                  <div className="space-y-4">
                     <h1 className="text-2xl md:text-4xl font-heading font-black tracking-tight text-foreground leading-[1.15]">{modelo.nombre}</h1>
-                    <p className="text-sm md:text-base text-muted-foreground font-semibold tracking-tight opacity-70">
+                    <p className="text-sm md:text-base text-[#4285F4] font-bold tracking-tight">
                        Casa {TIPO_LABELS[modelo.tipo] || 'Modelo'} de {modelo.superficie_m2} m² | {modelo.dormitorios} dormitorios | {modelo.banos} baños
-                       {modelo.tiempo_entrega && ` | Entrega en ${modelo.tiempo_entrega} días`}
+                       {modelo.tiempo_entrega && ` | Entrega en ${modelo.tiempo_entrega.toLowerCase().includes('día') ? modelo.tiempo_entrega : `${modelo.tiempo_entrega} días`}`}
                     </p>
                  </div>
                  <p className="text-sm md:text-base text-muted-foreground font-medium leading-relaxed max-w-4xl border-l-[4px] border-brand-indigo/10 pl-6 whitespace-pre-line">
