@@ -229,9 +229,6 @@ export function SettingsForm({ initialData, userEmail }: Props) {
     setLoading(false);
   }
 
-    setLoading(false);
-  }
-
   return (
     <form action={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Left Column: Basic Info */}
