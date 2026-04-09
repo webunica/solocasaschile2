@@ -188,16 +188,29 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                   />
                </div>
                
-               <div className="space-y-2">
-                  <Label htmlFor="sitio_web" className="text-xs font-black uppercase tracking-widest opacity-60">Sitio Web</Label>
-                  <Input 
-                    id="sitio_web" 
-                    name="sitio_web" 
-                    defaultValue={initialData?.sitio_web || ""} 
-                    className="h-12 rounded-xl bg-muted/20 border-border/40"
-                    placeholder="https://www.tuweb.cl"
-                  />
-               </div>
+                <div className="space-y-2">
+                   <Label htmlFor="sitio_web" className="text-xs font-black uppercase tracking-widest opacity-60">Sitio Web</Label>
+                   <Input 
+                     id="sitio_web" 
+                     name="sitio_web" 
+                     defaultValue={initialData?.sitio_web || ""} 
+                     className="h-12 rounded-xl bg-muted/20 border-border/40"
+                     placeholder="https://www.tuweb.cl"
+                   />
+                </div>
+
+                <div className="space-y-2">
+                   <Label htmlFor="email" className="text-xs font-black uppercase tracking-widest opacity-60">Email de Contacto</Label>
+                   <Input 
+                     id="email" 
+                     name="email" 
+                     type="email"
+                     defaultValue={initialData?.email || userEmail || ""} 
+                     className="h-12 rounded-xl bg-muted/20 border-border/40 font-bold text-primary"
+                     placeholder="contacto@tuempresa.cl"
+                   />
+                   <p className="text-[10px] text-muted-foreground italic">Este email recibirá todas las cotizaciones por defecto.</p>
+                </div>
             
             {(initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
               <div className="space-y-4 pt-4 border-t border-border/40">

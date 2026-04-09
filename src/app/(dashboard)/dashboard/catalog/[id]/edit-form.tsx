@@ -345,6 +345,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
         dormitorios: Number(formData.get('dormitorios')),
         banos: Number(formData.get('banos')),
         precio_desde_uf: Number(formData.get('precio_desde_uf')),
+        contacto_email: formData.get('contacto_email') as string || null,
         tiempo_entrega: formData.get('tiempo_entrega') as string,
         garantia_anos: Number(formData.get('garantia_anos')),
         postventa: formData.get('postventa') === 'true',
@@ -472,6 +473,14 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
                 <option value="true">Público (Activo)</option>
                 <option value="false">Privado (Borrador)</option>
               </select>
+            </Field>
+            <Field id="contacto_email" label="Email de contacto" hint="Si se deja vacío, se usará el email general de la empresa para recibir cotizaciones.">
+              <Input
+                id="contacto_email" name="contacto_email" type="email"
+                placeholder="email@ejemplo.com"
+                defaultValue={modelo.contacto_email}
+                className="h-12 rounded-2xl bg-background/50 border-border/40 font-medium"
+              />
             </Field>
             <Field id="uso" label="Uso Principal">
               <select id="uso" name="uso" defaultValue={modelo.uso || 'vivienda'}
