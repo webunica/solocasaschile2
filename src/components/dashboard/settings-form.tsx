@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { 
   Building2, Phone, Globe, MapPin, 
   Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
-  Search, Tag, X
+  Search, Tag, X, Plus, Trash2, Star
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
@@ -20,6 +20,97 @@ import { RegionesSelector } from "@/components/dashboard/regiones-selector";
 interface Props {
   initialData: any;
   userEmail: string | undefined;
+}
+
+function TestimoniosSelector({ name, initialValue = [] }: { name: string; initialValue?: any[] }) {
+  const [testimonios, setTestimonios] = useState<any[]>(initialValue || []);
+
+  const addTestimonio = () => {
+    setTestimonios([...testimonios, { nombre: "", texto: "", cargo: "", estrellas: 5 }]);
+  };
+
+  const removeTestimonio = (index: number) => {
+    setTestimonios(testimonios.filter((_, i) => i !== index));
+  };
+
+  const updateTestimonio = (index: number, field: string, value: any) => {
+    const newTestimonios = [...testimonios];
+    newTestimonios[index][field] = value;
+    setTestimonios(newTestimonios);
+  };
+
+  return (
+    <div className="space-y-6">
+      <input type="hidden" name={name} value={JSON.stringify(testimonios)} />
+      
+      {testimonios.map((t, index) => (
+        <div key={index} className="p-6 bg-muted/20 border border-border/40 rounded-2xl space-y-4 relative group">
+          <button 
+            type="button" 
+            onClick={() => removeTestimonio(index)}
+            className="absolute top-4 right-4 text-muted-foreground hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-black uppercase opacity-60">Nombre del Cliente</Label>
+              <Input 
+                value={t.nombre} 
+                onChange={(e) => updateTestimonio(index, "nombre", e.target.value)}
+                placeholder="Ej: Juan Pérez"
+                className="h-10 rounded-xl"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[10px] font-black uppercase opacity-60">Cargo / Ubicación</Label>
+              <Input 
+                value={t.cargo} 
+                onChange={(e) => updateTestimonio(index, "cargo", e.target.value)}
+                placeholder="Ej: Propietario en Colina"
+                className="h-10 rounded-xl"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-[10px] font-black uppercase opacity-60">Testimonio</Label>
+            <Textarea 
+              value={t.texto} 
+              onChange={(e) => updateTestimonio(index, "texto", e.target.value)}
+              placeholder="¿Qué dijo el cliente sobre su experiencia?"
+              className="min-h-[80px] rounded-xl resize-none"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Label className="text-[10px] font-black uppercase opacity-60 mr-2">Valoración:</Label>
+            <div className="flex gap-1">
+              {[1,2,3,4,5].map(star => (
+                <button 
+                  key={star} 
+                  type="button" 
+                  onClick={() => updateTestimonio(index, "estrellas", star)}
+                >
+                  <Star className={cn("w-4 h-4", t.estrellas >= star ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30")} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <Button 
+        type="button" 
+        variant="outline" 
+        onClick={addTestimonio}
+        className="w-full h-12 border-dashed rounded-xl flex items-center justify-center gap-2 hover:bg-primary/5 hover:border-primary/40 transition-all"
+      >
+        <Plus className="w-4 h-4" /> Agregar Testimonio
+      </Button>
+    </div>
+  );
 }
 
 export function SettingsForm({ initialData, userEmail }: Props) {
@@ -135,6 +226,9 @@ export function SettingsForm({ initialData, userEmail }: Props) {
     } else {
       setMessage({ type: "error", text: result.error || "Error al guardar los cambios." });
     }
+    setLoading(false);
+  }
+
     setLoading(false);
   }
 
@@ -313,6 +407,26 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                     Asegúrate de escribir los nombres correctamente para mejorar tu posicionamiento en los filtros.
                   </p>
                </div>
+             </CardContent>
+        </Card>
+
+        {/* Testimonios Section */}
+        <Card className="rounded-3xl border-border/40 shadow-xl overflow-hidden">
+           <CardContent className="p-8 space-y-6">
+              <div className="flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                    <MessageSquare className="w-5 h-5" />
+                 </div>
+                 <h3 className="text-xl font-bold">Testimonios de Clientes</h3>
+              </div>
+              
+              <Separator />
+
+              <TestimoniosSelector name="testimonios" initialValue={initialData?.testimonios || []} />
+              
+              <p className="text-[10px] text-muted-foreground italic">
+                Los testimonios ayudan a construir confianza con potenciales compradores. Se mostrarán en las fichas de tus modelos.
+              </p>
            </CardContent>
         </Card>
       </div>
