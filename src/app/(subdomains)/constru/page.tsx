@@ -89,14 +89,26 @@ export default async function ConstruHomePage() {
   }
 
   // Usuario Premium: mostrar el directorio
-  const { data: categories } = await supabase
-    .from('material_categories')
-    .select('*')
-    .order('name');
+  const [
+    { data: categories },
+    { count: totalSuppliers },
+    { data: userFavorites },
+  ] = await Promise.all([
+    supabase.from('material_categories').select('*').order('name'),
+    supabase.from('material_suppliers').select('*', { count: 'exact', head: true }),
+    supabase.from('supplier_favorites').select('supplier_id').eq('user_id', user.id),
+  ]);
+
+  const favoriteIds = (userFavorites || []).map((f: any) => f.supplier_id);
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <SuppliersDirectory categories={categories || []} />
+      <SuppliersDirectory 
+        categories={categories || []} 
+        totalSuppliers={totalSuppliers || 0}
+        initialFavoriteIds={favoriteIds}
+        userId={user.id}
+      />
     </div>
   );
 }
