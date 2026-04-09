@@ -209,15 +209,39 @@ export function HeroSection() {
                   </button>
                 </div>
 
-                <ul className="grid grid-cols-2 gap-y-2 gap-x-2 mt-4 lg:mt-6 w-full max-w-md mx-auto lg:mx-0">
-                  {CONSTRUCTION_TYPES.map((type) => (
-                    <li key={type} className="flex items-center gap-2 text-[11px] md:text-xs font-black text-slate-800 tracking-wider">
-                      <div className="w-4 h-4 rounded-full bg-brand-teal/20 flex items-center justify-center shrink-0">
-                        <ShieldCheck className="w-2.5 h-2.5 text-brand-teal" />
-                      </div>
-                      {type}
-                    </li>
-                  ))}
+                <ul className="grid grid-cols-2 gap-y-3 gap-x-4 mt-6 lg:mt-8 w-full max-w-md mx-auto lg:mx-0">
+                  {CONSTRUCTION_TYPES.map((type) => {
+                    const hrefMap: Record<string, string> = {
+                      "PREFABRICADAS": "/catalogo?tipo=prefabricada",
+                      "PANEL SIP": "/catalogo?tipo=sip",
+                      "MODULARES": "/catalogo?tipo=modular",
+                      "CONTAINERS": "/catalogo?tipo=container",
+                      "STEEL FRAMING": "/catalogo?tipo=steel-framing",
+                      "MADERA": "/catalogo?tipo=madera",
+                      "HORMIGÓN": "/catalogo?tipo=hormigon",
+                    };
+                    const href = hrefMap[type] || "/catalogo";
+
+                    return (
+                      <li key={type}>
+                        <Link href={href} className="group flex items-center gap-3 text-[11px] md:text-xs font-black text-[#1b0088] tracking-wider hover:translate-x-1 transition-transform">
+                          <div className="w-6 h-6 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
+                            <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                          </div>
+                          <span className="opacity-80 group-hover:opacity-100 group-hover:text-primary transition-all underline decoration-brand-teal/30 underline-offset-4 decoration-2">
+                            {type}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                  {/* Item 8: Pronto casas rodantes */}
+                  <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-slate-400 tracking-wider">
+                    <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
+                      <Zap className="w-3.5 h-3.5 text-slate-300" />
+                    </div>
+                    <span className="opacity-60 italic">¡Pronto casas rodantes!</span>
+                  </li>
                 </ul>
               </h1>
 
