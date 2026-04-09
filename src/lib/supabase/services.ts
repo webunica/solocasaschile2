@@ -57,6 +57,7 @@ export type ModelWithConstructora = {
     seo_title?: string | null;
     seo_description?: string | null;
     seo_keywords?: string[] | null;
+    testimonios?: any[] | null;
   };
 };
 
