@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
   HelpCircle, LogOut, LayoutDashboard, 
-  MessageSquare, Award, Video, Mail, ShieldCheck, BadgeCheck
+  MessageSquare, Award, Video, Mail, ShieldCheck, BadgeCheck, Package
 } from "lucide-react";
 import {
   Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
