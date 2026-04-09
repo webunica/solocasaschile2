@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { 
   ShieldCheck, Star, MapPin, 
   Calendar, Briefcase, ChevronRight,
-  Bed, Bath, Square, ArrowRight
+  Bed, Bath, Square, ArrowRight, Quote
 } from "lucide-react";
 import type { Metadata } from "next";
 import { ShareActions } from "@/components/ui/share-actions";
@@ -223,6 +223,48 @@ export default async function ConstructoraPage({ params }: PageProps) {
                 ))}
               </div>
             </section>
+
+            {/* Testimonios Section */}
+            {constructora.testimonios && (constructora.testimonios as any[]).length > 0 && (
+              <section className="space-y-8 pt-8">
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-heading font-black tracking-tighter italic">Testimonios de Clientes</h2>
+                  <p className="text-muted-foreground font-medium">Lo que dicen quienes ya construyeron con {constructora.nombre}</p>
+                </div>
+                <div className="grid gap-6">
+                  {(constructora.testimonios as any[]).map((t: any, i: number) => (
+                    <div key={i} className="bg-card border border-border/40 rounded-[2.5rem] p-10 space-y-6 relative group hover:border-brand-indigo/30 transition-all shadow-sm overflow-hidden">
+                       <Quote className="absolute -top-4 -right-4 w-32 h-32 opacity-[0.03] rotate-12 transition-transform group-hover:rotate-0 duration-700" />
+                       <div className="flex gap-1">
+                          {[...Array(5)].map((_, starI) => (
+                            <Star key={starI} className={cn("w-5 h-5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
+                          ))}
+                       </div>
+                       <p className="text-xl md:text-2xl font-medium italic leading-relaxed text-foreground tracking-tight">"{t.texto}"</p>
+                       <div className="flex items-center gap-4 pt-4">
+                          <div className="w-14 h-14 rounded-2xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo text-xl">
+                             {t.nombre.charAt(0)}
+                          </div>
+                          <div>
+                             <p className="font-black text-lg leading-tight">{t.nombre}</p>
+                             <div className="flex items-center gap-3 mt-1">
+                                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">{t.cargo || 'Cliente Verificado'}</p>
+                                {t.modelo_id && t.modelo_id !== 'general' && (
+                                  <>
+                                    <span className="w-1 h-1 rounded-full bg-muted-foreground/20" />
+                                    <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest text-brand-indigo border-brand-indigo/20 px-3">
+                                      {modelos.find((m: any) => m.id === t.modelo_id)?.nombre || 'Modelo específico'}
+                                    </Badge>
+                                  </>
+                                )}
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
 
           {/* Sidebar / Stats */}

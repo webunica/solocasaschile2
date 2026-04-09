@@ -21,13 +21,14 @@ import { cn } from "@/lib/utils";
 interface Props {
   initialData: any;
   userEmail: string | undefined;
+  models: any[];
 }
 
-function TestimoniosSelector({ name, initialValue = [] }: { name: string; initialValue?: any[] }) {
+function TestimoniosSelector({ name, initialValue = [], models }: { name: string; initialValue?: any[]; models: any[] }) {
   const [testimonios, setTestimonios] = useState<any[]>(initialValue || []);
 
   const addTestimonio = () => {
-    setTestimonios([...testimonios, { nombre: "", texto: "", cargo: "", estrellas: 5 }]);
+    setTestimonios([...testimonios, { nombre: "", texto: "", cargo: "", estrellas: 5, modelo_id: "general" }]);
   };
 
   const removeTestimonio = (index: number) => {
@@ -75,28 +76,46 @@ function TestimoniosSelector({ name, initialValue = [] }: { name: string; initia
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-[10px] font-black uppercase opacity-60">Testimonio</Label>
-            <Textarea 
-              value={t.texto} 
-              onChange={(e) => updateTestimonio(index, "texto", e.target.value)}
-              placeholder="¿Qué dijo el cliente sobre su experiencia?"
-              className="min-h-[80px] rounded-xl resize-none"
-            />
-          </div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label className="text-[10px] font-black uppercase opacity-60">Testimonio</Label>
+              <Textarea 
+                value={t.texto} 
+                onChange={(e) => updateTestimonio(index, "texto", e.target.value)}
+                placeholder="¿Qué dijo el cliente sobre su experiencia?"
+                className="min-h-[80px] rounded-xl resize-none"
+              />
+            </div>
 
-          <div className="flex items-center gap-2">
-            <Label className="text-[10px] font-black uppercase opacity-60 mr-2">Valoración:</Label>
-            <div className="flex gap-1">
-              {[1,2,3,4,5].map(star => (
-                <button 
-                  key={star} 
-                  type="button" 
-                  onClick={() => updateTestimonio(index, "estrellas", star)}
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black uppercase opacity-60">Asignar a Modelo</Label>
+                <select 
+                  className="w-full h-10 px-3 rounded-xl bg-background border border-border text-xs font-bold focus:ring-1 focus:ring-primary/20 outline-none"
+                  value={t.modelo_id || "general"}
+                  onChange={(e) => updateTestimonio(index, "modelo_id", e.target.value)}
                 >
-                  <Star className={cn("w-4 h-4", t.estrellas >= star ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30")} />
-                </button>
-              ))}
+                  <option value="general">General (Toda la constructora)</option>
+                  {models.map(m => (
+                    <option key={m.id} value={m.id}>{m.nombre}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black uppercase opacity-60 block mb-2">Valoración</Label>
+                <div className="flex gap-1 h-10 items-center">
+                  {[1,2,3,4,5].map(star => (
+                    <button 
+                      key={star} 
+                      type="button" 
+                      onClick={() => updateTestimonio(index, "estrellas", star)}
+                    >
+                      <Star className={cn("w-4 h-4", t.estrellas >= star ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30")} />
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -114,7 +133,7 @@ function TestimoniosSelector({ name, initialValue = [] }: { name: string; initia
   );
 }
 
-export function SettingsForm({ initialData, userEmail }: Props) {
+export function SettingsForm({ initialData, userEmail, models }: Props) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -420,7 +439,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
               
               <Separator />
 
-              <TestimoniosSelector name="testimonios" initialValue={initialData?.testimonios || []} />
+              <TestimoniosSelector name="testimonios" initialValue={initialData?.testimonios || []} models={models} />
               
               <p className="text-[10px] text-muted-foreground italic">
                 Los testimonios ayudan a construir confianza con potenciales compradores. Se mostrarán en las fichas de tus modelos.

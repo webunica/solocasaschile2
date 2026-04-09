@@ -5,6 +5,7 @@ import { MessageSquare } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { TestimoniosManager } from "@/components/dashboard/testimonios-manager";
+import { getModelsByConstructoraId } from "@/lib/supabase/services";
 
 export default async function TestimoniosPage() {
   const supabase = await createClient();
@@ -19,6 +20,9 @@ export default async function TestimoniosPage() {
 
   const isEligible = constructora?.plan !== 'gratis';
   const testimonios = (constructora?.testimonios as any[]) || [];
+  
+  // Fetch models for target selection
+  const models = await getModelsByConstructoraId(user.id);
 
   if (!isEligible) {
     return (
@@ -43,5 +47,5 @@ export default async function TestimoniosPage() {
     );
   }
 
-  return <TestimoniosManager initialTestimonios={testimonios} />;
+  return <TestimoniosManager initialTestimonios={testimonios} models={models} />;
 }

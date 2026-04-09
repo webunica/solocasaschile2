@@ -206,36 +206,51 @@ export default async function ModeloPage({ params }: PageProps) {
 
               <FichaExpandida modelo={modelo} />
 
-               {/* Testimonios de la Constructora (Social Proof) */}
-               {constructora.testimonios && Array.isArray(constructora.testimonios) && (constructora.testimonios as any[]).length > 0 && (
-                 <div className="space-y-12 py-16 border-t border-border/40">
-                    <div className="space-y-3">
-                      <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight italic">Lo que dicen los clientes</h2>
-                      <p className="text-muted-foreground text-lg font-medium">Experiencias reales construyendo con {constructora.nombre}</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                       {(constructora.testimonios as any[]).map((t: any, i: number) => (
-                         <div key={i} className="bg-card border border-border/40 rounded-[3rem] p-10 space-y-6 shadow-sm hover:shadow-xl transition-all duration-500 group">
-                            <div className="flex gap-1.5">
-                               {[...Array(5)].map((_, starI) => (
-                                 <Star key={starI} className={cn("w-5 h-5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
-                               ))}
-                            </div>
-                            <p className="text-xl font-medium italic leading-relaxed text-foreground/90">"{t.texto}"</p>
-                            <div className="pt-4 flex items-center gap-4">
-                               <div className="w-12 h-12 rounded-2xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo uppercase">
-                                  {t.nombre.charAt(0)}
+                {/* Testimonios del Modelo (Social Proof) */}
+                {(() => {
+                  const modelTestimonios = (constructora.testimonios as any[] || []).filter(t => t.modelo_id === modelo.id);
+                  if (modelTestimonios.length === 0) return null;
+
+                  return (
+                    <div className="space-y-12 py-16 border-t border-border/40">
+                       <div className="space-y-3">
+                         <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight italic">Experiencias con este modelo</h2>
+                         <p className="text-muted-foreground text-lg font-medium">Lo que dicen quienes ya construyeron su {modelo.nombre}</p>
+                       </div>
+                       
+                       <div className="relative">
+                          <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+                             {modelTestimonios.map((t: any, i: number) => (
+                               <div key={i} className="min-w-[320px] md:min-w-[500px] bg-card border border-border/40 rounded-[3rem] p-10 space-y-6 shadow-sm hover:shadow-xl transition-all duration-500 group snap-center">
+                                  <div className="flex gap-1.5">
+                                     {[...Array(5)].map((_, starI) => (
+                                       <Star key={starI} className={cn("w-5 h-5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
+                                     ))}
+                                  </div>
+                                  <p className="text-lg md:text-xl font-medium italic leading-relaxed text-foreground/90">"{t.texto}"</p>
+                                  <div className="pt-4 flex items-center gap-4">
+                                     <div className="w-12 h-12 rounded-2xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo uppercase">
+                                        {t.nombre.charAt(0)}
+                                     </div>
+                                     <div>
+                                        <p className="font-black text-lg leading-tight">{t.nombre}</p>
+                                        {t.cargo && <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">{t.cargo}</p>}
+                                     </div>
+                                  </div>
                                </div>
-                               <div>
-                                  <p className="font-black text-lg leading-tight">{t.nombre}</p>
-                                  {t.cargo && <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">{t.cargo}</p>}
-                               </div>
-                            </div>
-                         </div>
-                       ))}
+                             ))}
+                          </div>
+                          
+                          {/* Hint for scrolling */}
+                          <div className="flex justify-center md:hidden gap-1 mt-4">
+                             {modelTestimonios.map((_, i) => (
+                               <div key={i} className="w-1.5 h-1.5 rounded-full bg-brand-indigo/20" />
+                             ))}
+                          </div>
+                       </div>
                     </div>
-                 </div>
-               )}
+                  );
+                })()}
 
                <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
                
