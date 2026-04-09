@@ -934,6 +934,8 @@ export async function updateTestimonios(testimonios: any[]) {
   revalidatePath('/dashboard/settings')
   revalidatePath('/modelo/[slug]', 'layout')
   revalidatePath('/constructora/[slug]', 'layout')
+  revalidateTag('modelos', 'max')
+  revalidateTag('constructoras', 'max')
   
   if (constructora?.slug) {
     revalidatePath(`/constructora/${constructora.slug}`)
