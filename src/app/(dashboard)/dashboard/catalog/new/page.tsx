@@ -317,6 +317,7 @@ export default function NewModelPage() {
         banos: Number(formData.get('banos')),
         pisos: Number(formData.get('pisos')) || 1,
         precio_desde_uf: Number(formData.get('precio_desde_uf')),
+        contacto_email: formData.get('contacto_email') as string || null,
         tiempo_entrega: formData.get('tiempo_entrega') as string,
         garantia_anos: Number(formData.get('garantia_anos')),
         postventa: formData.get('postventa') === 'true',
@@ -426,6 +427,13 @@ export default function NewModelPage() {
                 <option value="">Seleccionar tipo...</option>
                 {TIPOS.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
+            </Field>
+            <Field id="contacto_email" label="Email de contacto" hint="Si se deja vacío, se usará el email general de la empresa para recibir cotizaciones.">
+              <Input
+                id="contacto_email" name="contacto_email" type="email"
+                placeholder="email@ejemplo.com"
+                className="h-12 rounded-2xl bg-background/50 border-border/40 focus:border-primary/40 font-medium"
+              />
             </Field>
             <Field id="uso" label="Uso Principal">
               <select id="uso" name="uso"

@@ -241,6 +241,7 @@ export async function updateSettings(formData: FormData) {
   const data: any = {
     nombre: formData.get('nombre') as string,
     razon_social: formData.get('razon_social') as string,
+    email: formData.get('email') as string,
     descripcion: formData.get('descripcion') as string,
     telefono: formData.get('telefono') as string,
     rut: formData.get('rut') as string,
@@ -655,7 +656,20 @@ export async function submitLead(data: {
 }) {
   const supabase = await createClient();
 
-  // 1. Insertar en la base de datos
+  // 1. Obtener email de la constructora o del modelo
+  const { data: leadConfig } = await supabase
+    .from('modelos')
+    .select(`
+      contacto_email,
+      constructora:constructoras (email, nombre)
+    `)
+    .eq('id', data.modelo_id)
+    .single();
+
+  const destinatarioEmail = leadConfig?.contacto_email || leadConfig?.constructora?.email;
+  const constructoraNombreReal = leadConfig?.constructora?.nombre || data.constructora_nombre;
+
+  // 2. Insertar en la base de datos
   const { error: insertError } = await supabase
     .from('leads')
     .insert([{
@@ -673,7 +687,7 @@ export async function submitLead(data: {
     return { error: 'Error al procesar tu solicitud.' };
   }
 
-  // 2. Enviar correos via Resend
+  // 3. Enviar correos via Resend
   try {
     // A. Email de confirmación al USUARIO
     await resend.emails.send({
@@ -702,12 +716,47 @@ export async function submitLead(data: {
       `
     });
 
-    // B. Email de notificación a la PLATAFORMA (contacto@solocasaschile.com)
+    // B. Email de notificación a la CONSTRUCTORA
+    if (destinatarioEmail) {
+      await resend.emails.send({
+        from: 'SoloCasasChile <leads@solocasaschile.com>',
+        to: [destinatarioEmail],
+        replyTo: data.email_cliente,
+        subject: `Nueva Cotización: ${data.modelo_nombre} - ${data.nombre_cliente}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
+            <div style="background: #1e293b; padding: 24px 30px; text-align: center;">
+              <h1 style="color: white; margin: 0; font-size: 20px;">🚀 Tienes un nuevo interesado</h1>
+            </div>
+            <div style="padding: 30px; line-height: 1.6; color: #334155; font-size: 14px;">
+              <p>Has recibido una nueva solicitud de cotización a través de SolocasasChile.</p>
+              
+              <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0;">
+                <p style="margin: 0 0 15px 0; font-weight: bold; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">Datos del Cliente:</p>
+                <p style="margin: 5px 0;"><strong>Nombre:</strong> ${data.nombre_cliente}</p>
+                <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${data.email_cliente}">${data.email_cliente}</a></p>
+                <p style="margin: 5px 0;"><strong>Teléfono:</strong> <a href="tel:${data.telefono_cliente}">${data.telefono_cliente}</a></p>
+                <p style="margin: 15px 0 5px 0;"><strong>Mensaje:</strong></p>
+                <p style="background: white; padding: 10px; border-radius: 4px; border: 1px solid #eee; margin: 0;">${data.mensaje.replace(/\n/g, '<br>')}</p>
+              </div>
+
+              <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #dcfce7;">
+                <p style="margin: 0;"><strong>Modelo consultado:</strong> ${data.modelo_nombre}</p>
+              </div>
+              
+              <p style="margin-top: 25px; font-size: 12px; color: #64748b;">* Te recomendamos contactar al cliente dentro de las primeras 24 horas para aumentar las posibilidades de cierre.</p>
+            </div>
+          </div>
+        `
+      });
+    }
+
+    // C. Email de notificación a la PLATAFORMA (bcc/log)
     await resend.emails.send({
       from: 'Sistema SolocasasChile <leads@solocasaschile.com>',
       to: ['contacto@solocasaschile.com'],
       replyTo: data.email_cliente,
-      subject: `Nuevo Lead: ${data.modelo_nombre} - ${data.nombre_cliente}`,
+      subject: `[Log] Nuevo Lead: ${data.modelo_nombre} - ${data.nombre_cliente}`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
           <h2 style="color: #0b9e86;">🚀 Nuevo interesado en SolocasasChile</h2>
@@ -717,6 +766,7 @@ export async function submitLead(data: {
           <p><strong>Teléfono:</strong> ${data.telefono_cliente}</p>
           <p><strong>Modelo interesado:</strong> ${data.modelo_nombre}</p>
           <p><strong>Constructora:</strong> ${data.constructora_nombre}</p>
+          <p><strong>Enviado a Constructora:</strong> ${destinatarioEmail || 'No definido'}</p>
           <div style="background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 20px;">
             <p><strong>Mensaje/Detalles:</strong></p>
             <p>${data.mensaje.replace(/\n/g, '<br>')}</p>
