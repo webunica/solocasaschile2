@@ -178,7 +178,7 @@ export default async function ModeloPage({ params }: PageProps) {
         {/* MIDDLE ROW: Info Header + Specs + Sidebar */}
         {/* We use flex-col for mobile and order- classes to ensure Sidebar comes BEFORE Related Designs in mobile stack */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-16 lg:gap-24 items-start">
-           <div className="space-y-24 order-1">
+           <div className="space-y-24 order-1 min-w-0">
               <div className="space-y-8">
                  <div className="space-y-4">
                     <h1 className="text-2xl md:text-4xl font-heading font-black tracking-tight text-foreground leading-[1.15]">{modelo.nombre}</h1>
