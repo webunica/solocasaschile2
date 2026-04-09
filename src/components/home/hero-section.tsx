@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { Building2, ShieldCheck, Globe, ArrowRight, Search, MapPin, Phone, Home } from "lucide-react";
+import { Building2, ShieldCheck, Globe, ArrowRight, Search, MapPin, Phone, Home, Zap } from "lucide-react";
+import Link from "next/link";
 import { HeroLeadForm } from "./hero-lead-form";
 import { useRouter } from "next/navigation";
 import {
