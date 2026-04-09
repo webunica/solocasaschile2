@@ -33,9 +33,41 @@ export function SettingsForm({ initialData, userEmail }: Props) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
+  function validateRut(rut: string) {
+    if (!rut) return true; // Optional field in some contexts, but if provided, validate it
+    const cleanRut = rut.replace(/\./g, "").replace(/-/g, "").toUpperCase();
+    if (cleanRut.length < 8) return false;
+
+    const body = cleanRut.slice(0, -1);
+    const dv = cleanRut.slice(-1);
+
+    if (!body.match(/^[0-9]+$/)) return false;
+
+    let sum = 0;
+    let multiplier = 2;
+
+    for (let i = body.length - 1; i >= 0; i--) {
+      sum += parseInt(body[i]) * multiplier;
+      multiplier = multiplier === 7 ? 2 : multiplier + 1;
+    }
+
+    const expectedDv = 11 - (sum % 11);
+    let dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
+
+    return dvChar === dv;
+  }
+
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setMessage(null);
+
+    // Validate RUT if provided
+    const rut = formData.get("rut") as string;
+    if (rut && !validateRut(rut)) {
+      setMessage({ type: "error", text: "El RUT ingresado no es válido. Revisa el dígito verificador." });
+      setLoading(false);
+      return;
+    }
     
     // 1. Upload logo if changed
     let finalLogoUrl = initialData?.logo_url || "";
@@ -123,7 +155,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
 
             <div className="grid md:grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <Label htmlFor="nombre" className="text-xs font-black uppercase tracking-widest opacity-60">Nombre Comercial</Label>
+                  <Label htmlFor="nombre" className="text-xs font-black uppercase tracking-widest opacity-60">Nombre Comercial / Razón Social</Label>
                   <Input 
                     id="nombre" 
                     name="nombre" 
@@ -131,6 +163,17 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                     className="h-12 rounded-xl bg-muted/20 border-border/40"
                     placeholder="Ejem: ModuLar Pro Chile"
                     required
+                  />
+               </div>
+
+               <div className="space-y-2">
+                  <Label htmlFor="rut" className="text-xs font-black uppercase tracking-widest opacity-60">RUT Empresa</Label>
+                  <Input 
+                    id="rut" 
+                    name="rut" 
+                    defaultValue={initialData?.rut || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="76.123.456-K"
                   />
                </div>
                

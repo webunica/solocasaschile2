@@ -66,11 +66,13 @@ export async function register(formData: FormData) {
 
     const email = formData.get('email') as string
     const password = formData.get('password') as string
-    const companyName = formData.get('companyName') as string
-    const rut = formData.get('rut') as string
-    const repName = formData.get('repName') as string
-    const phone = formData.get('phone') as string
     const plan = (formData.get('plan') as string) || 'gratis'
+    
+    // Default values if not provided in registration form
+    const companyName = (formData.get('companyName') as string) || email.split('@')[0]
+    const rut = (formData.get('rut') as string) || ''
+    const repName = (formData.get('repName') as string) || ''
+    const phone = (formData.get('phone') as string) || ''
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile.com'
 
@@ -95,11 +97,14 @@ export async function register(formData: FormData) {
       return { error: 'No se pudo crear la cuenta. Intenta de nuevo.' }
     }
 
-    const slug = companyName
+    const baseSlug = companyName
       .toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
+    
+    // Ensure unique slug if based on email placeholder
+    const slug = `${baseSlug}-${authData.user.id.slice(0, 5)}`
 
     const constructoraPayload: any = {
       id: authData.user.id,
@@ -107,6 +112,7 @@ export async function register(formData: FormData) {
       slug,
       email,
       telefono: phone,
+      rut: rut,
       plan,
       plan_status: plan === 'gratis' ? 'active' : 'pending',
       verificada: false,
@@ -236,6 +242,7 @@ export async function updateSettings(formData: FormData) {
     nombre: formData.get('nombre') as string,
     descripcion: formData.get('descripcion') as string,
     telefono: formData.get('telefono') as string,
+    rut: formData.get('rut') as string,
     sitio_web: formData.get('sitio_web') as string,
     direccion: formData.get('direccion') as string,
     regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean),
@@ -434,6 +441,7 @@ export async function adminUpdateConstructora(formData: FormData) {
     nombre: formData.get('nombre') as string,
     descripcion: formData.get('descripcion') as string,
     telefono: formData.get('telefono') as string,
+    rut: formData.get('rut') as string,
     sitio_web: formData.get('sitio_web') as string,
     direccion: formData.get('direccion') as string,
     regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean),
