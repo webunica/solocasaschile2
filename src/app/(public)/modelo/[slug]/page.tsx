@@ -206,6 +206,37 @@ export default async function ModeloPage({ params }: PageProps) {
 
               <FichaExpandida modelo={modelo} />
 
+               {/* Testimonios de la Constructora (Social Proof) */}
+               {constructora.testimonios && Array.isArray(constructora.testimonios) && (constructora.testimonios as any[]).length > 0 && (
+                 <div className="space-y-12 py-16 border-t border-border/40">
+                    <div className="space-y-3">
+                      <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight italic">Lo que dicen los clientes</h2>
+                      <p className="text-muted-foreground text-lg font-medium">Experiencias reales construyendo con {constructora.nombre}</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                       {(constructora.testimonios as any[]).map((t: any, i: number) => (
+                         <div key={i} className="bg-card border border-border/40 rounded-[3rem] p-10 space-y-6 shadow-sm hover:shadow-xl transition-all duration-500 group">
+                            <div className="flex gap-1.5">
+                               {[...Array(5)].map((_, starI) => (
+                                 <Star key={starI} className={cn("w-5 h-5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
+                               ))}
+                            </div>
+                            <p className="text-xl font-medium italic leading-relaxed text-foreground/90">"{t.texto}"</p>
+                            <div className="pt-4 flex items-center gap-4">
+                               <div className="w-12 h-12 rounded-2xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo uppercase">
+                                  {t.nombre.charAt(0)}
+                               </div>
+                               <div>
+                                  <p className="font-black text-lg leading-tight">{t.nombre}</p>
+                                  {t.cargo && <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">{t.cargo}</p>}
+                               </div>
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+               )}
+
                <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
                
                {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (

@@ -253,6 +253,7 @@ export async function updateSettings(formData: FormData) {
     video_url: formData.get('video_url') as string,
     especialidad_principal: formData.get('especialidad_principal') as string || null,
     anio_inicio: formData.get('anio_inicio') ? parseInt(formData.get('anio_inicio') as string, 10) : null,
+    testimonios: formData.get('testimonios') ? JSON.parse(formData.get('testimonios') as string) : [],
   }
 
   // SEO fields only if paid plan
