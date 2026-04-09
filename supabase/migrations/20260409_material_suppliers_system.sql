@@ -33,6 +33,12 @@ ALTER TABLE material_suppliers ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Lectura pública de categorías" ON material_categories FOR SELECT USING (true);
 CREATE POLICY "Lectura pública de proveedores" ON material_suppliers FOR SELECT USING (true);
 
+-- Permitir inserción/actualización a usuarios autenticados (el API route usa el server client)
+CREATE POLICY "Inserción autenticada de proveedores" ON material_suppliers 
+  FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Actualización autenticada de proveedores" ON material_suppliers 
+  FOR UPDATE USING (auth.role() = 'authenticated');
+
 -- 5. Insertar las 12 categorías SIP iniciales
 INSERT INTO material_categories (name, slug, description) VALUES
 ('Paneles SIP (Muros, Tabiques, Techos)', 'paneles-sip', 'Sistemas de paneles aislantes estructurales'),
