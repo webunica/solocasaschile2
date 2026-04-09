@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { REGIONES_CHILE } from "@/config/regions";
 import { slugifyRegion } from "@/lib/regions";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface Category {
   id: string;
