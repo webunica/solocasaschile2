@@ -64,7 +64,7 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
               alt="SolocasasChile" 
               width={160} 
               height={120} 
-              className="w-[30vw] h-auto object-contain"
+              className="w-[40vw] h-auto object-contain"
               priority
             />
           </Link>
