@@ -155,7 +155,7 @@ export function SettingsForm({ initialData, userEmail }: Props) {
 
             <div className="grid md:grid-cols-2 gap-6">
                <div className="space-y-2">
-                  <Label htmlFor="nombre" className="text-xs font-black uppercase tracking-widest opacity-60">Nombre Comercial / Razón Social</Label>
+                  <Label htmlFor="nombre" className="text-xs font-black uppercase tracking-widest opacity-60">Nombre Comercial</Label>
                   <Input 
                     id="nombre" 
                     name="nombre" 
@@ -163,6 +163,17 @@ export function SettingsForm({ initialData, userEmail }: Props) {
                     className="h-12 rounded-xl bg-muted/20 border-border/40"
                     placeholder="Ejem: ModuLar Pro Chile"
                     required
+                  />
+               </div>
+
+               <div className="space-y-2">
+                  <Label htmlFor="razon_social" className="text-xs font-black uppercase tracking-widest opacity-60">Razón Social (Legal)</Label>
+                  <Input 
+                    id="razon_social" 
+                    name="razon_social" 
+                    defaultValue={initialData?.razon_social || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="Ejem: Constructora Master SpA"
                   />
                </div>
 
