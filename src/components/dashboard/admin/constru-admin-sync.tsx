@@ -36,6 +36,7 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           categoryId: category.id,
+          categorySlug: category.slug,
           categoryName: category.name,
           regionName,
           regionSlug: selectedRegion

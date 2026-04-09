@@ -7,26 +7,37 @@ export async function POST(request: Request) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
     
-    // Solo permitir a usuarios autenticados (Idealmente chequear rol admin)
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "No autenticado" }, { status: 401 });
     }
 
-    const { categoryId, categoryName, regionName, regionSlug } = await request.json();
+    const { categoryId, categorySlug, categoryName, regionName, regionSlug } = await request.json();
 
-    if (!categoryId || !categoryName || !regionName || !regionSlug) {
-      return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
+    if (!categoryId || !categorySlug || !categoryName || !regionName || !regionSlug) {
+      return NextResponse.json({ 
+        error: "Faltan parámetros requeridos",
+        received: { categoryId, categorySlug, categoryName, regionName, regionSlug }
+      }, { status: 400 });
     }
 
-    const result = await syncSuppliersForCategory(categoryId, categoryName, regionName, regionSlug);
+    const result = await syncSuppliersForCategory(categoryId, categorySlug, categoryName, regionName, regionSlug);
 
     return NextResponse.json({ 
       success: true, 
-      message: `Sincronizados ${result.count} proveedores para ${categoryName} en ${regionName}` 
+      message: result.count > 0
+        ? `✅ ${result.count} proveedores sincronizados para "${categoryName}" en ${regionName}`
+        : `ℹ️ No se encontraron resultados (búsqueda: "${result.query}")`,
+      count: result.count,
+      query: result.query,
     });
 
   } catch (error: any) {
     console.error("Sync Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      error: error.message,
+      hint: error.message.includes('SERPAPI_KEY') 
+        ? 'Ve a Vercel > Settings > Environment Variables y agrega SERPAPI_KEY' 
+        : 'Revisa los logs de Vercel para más detalles'
+    }, { status: 500 });
   }
 }
