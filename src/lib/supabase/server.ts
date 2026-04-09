@@ -12,7 +12,16 @@ export async function createClient() {
     return mockSupabaseClient as any;
   }
 
+  // Dominio compartido para que la sesión funcione en app. y constru.
+  const isProduction = process.env.NODE_ENV === 'production';
+  const cookieDomain = isProduction ? '.solocasaschile.com' : undefined;
+
   return createServerClient(url, key, {
+    cookieOptions: cookieDomain ? {
+      domain: cookieDomain,
+      secure: true,
+      sameSite: 'lax' as const,
+    } : undefined,
     cookies: {
       getAll() {
         return cookieStore.getAll()
@@ -20,7 +29,10 @@ export async function createClient() {
       setAll(cookiesToSet: any[]) {
         try {
           cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
+            cookieStore.set(name, value, {
+              ...options,
+              ...(cookieDomain ? { domain: cookieDomain } : {}),
+            })
           )
         } catch {
           // The `setAll` method was called from a Server Component.
