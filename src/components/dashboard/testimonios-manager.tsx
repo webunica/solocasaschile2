@@ -4,13 +4,20 @@ import { useState } from "react";
 import { updateTestimonios } from "@/lib/supabase/actions";
 import { 
   Quote, Plus, Trash2, Star, Save, 
-  CheckCircle2, AlertCircle, Loader2, User
+  CheckCircle2, AlertCircle, Loader2, User, Building2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 interface Testimonio {
@@ -18,19 +25,21 @@ interface Testimonio {
   texto: string;
   cargo: string;
   estrellas: number;
+  modelo_id?: string;
 }
 
 interface TestimoniosManagerProps {
   initialTestimonios: Testimonio[];
+  models: any[];
 }
 
-export function TestimoniosManager({ initialTestimonios }: TestimoniosManagerProps) {
+export function TestimoniosManager({ initialTestimonios, models }: TestimoniosManagerProps) {
   const [testimonios, setTestimonios] = useState<Testimonio[]>(initialTestimonios || []);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const addTestimonio = () => {
-    setTestimonios([{ nombre: "", texto: "", cargo: "", estrellas: 5 }, ...testimonios]);
+    setTestimonios([{ nombre: "", texto: "", cargo: "", estrellas: 5, modelo_id: "general" }, ...testimonios]);
   };
 
   const removeTestimonio = (index: number) => {
@@ -96,17 +105,41 @@ export function TestimoniosManager({ initialTestimonios }: TestimoniosManagerPro
           <Card key={index} className="rounded-[3rem] border-border/40 bg-card/40 backdrop-blur-xl relative group transition-all hover:border-brand-indigo/30 shadow-sm hover:shadow-xl">
             <div className="p-10 space-y-8">
               <div className="flex justify-between items-start">
-                <div className="flex gap-1.5">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button 
-                      key={star} 
-                      onClick={() => updateTestimonio(index, "estrellas", star)}
-                      className="transition-transform hover:scale-125"
+                <div className="space-y-4 flex-1">
+                  <div className="flex gap-1.5">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button 
+                        key={star} 
+                        onClick={() => updateTestimonio(index, "estrellas", star)}
+                        className="transition-transform hover:scale-125"
+                      >
+                        <Star className={cn("w-5 h-5 transition-colors", t.estrellas >= star ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
+                      </button>
+                    ))}
+                  </div>
+                  
+                  <div className="w-full max-w-[280px]">
+                    <label className="text-[9px] font-black uppercase tracking-widest text-brand-indigo mb-1.5 block ml-1">Asignar a Modelo</label>
+                    <Select 
+                      value={t.modelo_id || "general"} 
+                      onValueChange={(val) => updateTestimonio(index, "modelo_id", val)}
                     >
-                      <Star className={cn("w-5 h-5 transition-colors", t.estrellas >= star ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
-                    </button>
-                  ))}
+                      <SelectTrigger className="h-10 rounded-xl bg-muted/40 border-none font-bold text-xs ring-0 focus:ring-1 focus:ring-brand-indigo/30">
+                        <Building2 className="w-3 h-3 mr-2 opacity-40" />
+                        <SelectValue placeholder="General (Toda la constructora)" />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border-border/40 shadow-2xl">
+                        <SelectItem value="general" className="rounded-xl font-bold py-3">General (Constructor)</SelectItem>
+                        {models.map(m => (
+                          <SelectItem key={m.id} value={m.id} className="rounded-xl font-bold py-3 italic">
+                             {m.nombre}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+
                 <Button 
                   variant="ghost" 
                   size="icon" 

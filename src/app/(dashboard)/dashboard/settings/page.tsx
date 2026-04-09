@@ -3,6 +3,7 @@ import { SettingsForm } from "@/components/dashboard/settings-form";
 import { AnnouncementSettings } from "@/components/dashboard/admin/announcement-settings";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { getModelsByConstructoraId } from "@/lib/supabase/services";
 
 export const metadata: Metadata = {
   title: "Perfil y Configuración | SolocasasChile",
@@ -21,6 +22,8 @@ export default async function SettingsPage() {
     .select("*")
     .eq("id", user.id)
     .single();
+
+  const models = await getModelsByConstructoraId(user.id);
 
   const isSuperAdmin = user.app_metadata?.is_superadmin === true;
   const isAdmin = isSuperAdmin || constructora?.role === 'superadmin' || constructora?.role === 'admin' || user.app_metadata?.role === 'admin' || user.user_metadata?.role === 'admin';
@@ -57,7 +60,7 @@ export default async function SettingsPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               Perfil de Constructora
            </div>
-           <SettingsForm initialData={constructora} userEmail={user.email} />
+           <SettingsForm initialData={constructora} userEmail={user.email} models={models} />
         </section>
 
         {isAdmin && (
