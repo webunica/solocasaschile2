@@ -254,11 +254,6 @@ export default function PlanesPage() {
 
           <div className="pt-10 flex flex-col items-center gap-12">
             
-            {/* Countdown first to create urgency */}
-            <div className="space-y-6 w-full max-w-md">
-              <PromotionCountdown />
-            </div>
-
             <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
 
             {/* Toggle Billing and Discount Badge closer to the plans */}
@@ -287,9 +282,18 @@ export default function PlanesPage() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
-                <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
-                {isYearly ? "Estás ahorrando un 50% con el pago anual" : "Ahorra un 50% cambiando al pago anual"}
+              <div className="flex flex-col md:flex-row items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
+                <div className="flex items-center gap-3">
+                  <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
+                  {isYearly ? "Estás ahorrando un 50% con el pago anual" : "Ahorra un 50% cambiando al pago anual"}
+                </div>
+                {isYearly && (
+                  <div className="flex items-center gap-2 border-l border-brand-indigo/20 pl-4 ml-1">
+                    <Timer className="w-4 h-4 text-brand-indigo/60" />
+                    <span className="text-[10px] text-muted-foreground">Termina en:</span>
+                    <PromotionCountdown variant="compact" />
+                  </div>
+                )}
               </div>
             </div>
           </div>

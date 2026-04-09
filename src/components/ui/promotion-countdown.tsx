@@ -9,7 +9,11 @@ interface TimeLeft {
   seconds: number;
 }
 
-export function PromotionCountdown() {
+interface PromotionCountdownProps {
+  variant?: 'bulky' | 'compact';
+}
+
+export function PromotionCountdown({ variant = 'bulky' }: PromotionCountdownProps) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
@@ -37,6 +41,17 @@ export function PromotionCountdown() {
   }, []);
 
   if (!timeLeft) return null;
+
+  if (variant === 'compact') {
+    return (
+      <span className="flex items-center gap-1.5 font-black">
+        <span className="text-amber-500">{timeLeft.days}d</span>
+        <span>{String(timeLeft.hours).padStart(2, '0')}h</span>
+        <span>{String(timeLeft.minutes).padStart(2, '0')}m</span>
+        <span className="text-red-500 tabular-nums">{String(timeLeft.seconds).padStart(2, '0')}s</span>
+      </span>
+    );
+  }
 
   return (
     <div className="flex items-center justify-center gap-4 sm:gap-8 bg-brand-indigo/10 backdrop-blur-md border border-brand-indigo/30 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-brand-indigo/10">
