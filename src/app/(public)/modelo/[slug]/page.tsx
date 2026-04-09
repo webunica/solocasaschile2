@@ -208,14 +208,17 @@ export default async function ModeloPage({ params }: PageProps) {
 
                 {/* Testimonios del Modelo (Social Proof) */}
                 {(() => {
-                  const modelTestimonios = (constructora.testimonios as any[] || []).filter(t => t.modelo_id === modelo.id);
+                  const testimonios = constructora.testimonios as any[] || [];
+                  // Show testimonials for this specific model OR general ones
+                  const modelTestimonios = testimonios.filter(t => t.modelo_id === modelo.id || t.modelo_id === 'general' || !t.modelo_id);
+                  
                   if (modelTestimonios.length === 0) return null;
 
                   return (
                     <div className="space-y-12 py-16 border-t border-border/40">
                        <div className="space-y-3">
-                         <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight italic">Experiencias con este modelo</h2>
-                         <p className="text-muted-foreground text-lg font-medium">Lo que dicen quienes ya construyeron su {modelo.nombre}</p>
+                         <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight italic">Lo que dicen los clientes</h2>
+                         <p className="text-muted-foreground text-lg font-medium">Experiencias reales construyendo con {constructora.nombre}</p>
                        </div>
                        
                        <div className="relative">
