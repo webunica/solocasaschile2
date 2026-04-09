@@ -910,3 +910,31 @@ export async function solicitarSello(formData: FormData) {
   revalidatePath('/dashboard/sellos')
   revalidatePath('/dashboard/admin/sellos')
 }
+
+export async function updateTestimonios(testimonios: any[]) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'No autenticado' }
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update({ testimonios })
+    .eq('id', user.id)
+
+  if (error) return { success: false, error: error.message }
+
+  // Buscamos el slug para revalidar la ruta pública
+  const { data: constructora } = await supabase
+    .from('constructoras')
+    .select('slug')
+    .eq('id', user.id)
+    .single();
+
+  revalidatePath('/dashboard/testimonios')
+  revalidatePath('/dashboard/settings')
+  if (constructora?.slug) {
+    revalidatePath(`/constructora/${constructora.slug}`)
+  }
+  
+  return { success: true }
+}
