@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
 import { RegionesSelector } from "@/components/dashboard/regiones-selector";
+import { cn } from "@/lib/utils";
 
 interface Props {
   initialData: any;
