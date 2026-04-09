@@ -59,8 +59,7 @@ export function CatalogoGrid({ modelos }: Props) {
             transition={{ duration: 0.5, delay: i * 0.05 }}
           >
             <Card className="group overflow-hidden border-border/40 hover:border-primary/30 transition-all hover:shadow-2xl hover:shadow-primary/5 bg-card/50 backdrop-blur-sm h-full flex flex-col rounded-[2.5rem]">
-              {/* Image Container */}
-              <div className="relative h-56 overflow-hidden shrink-0">
+              <Link href={`/modelo/${modelo.slug}`} className="relative h-56 overflow-hidden shrink-0 block">
                 <Image
                   src={modelo.imagenes_urls?.[0] || 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1000'}
                   alt={modelo.nombre}
@@ -92,7 +91,7 @@ export function CatalogoGrid({ modelos }: Props) {
                      {modelo.precio_desde_uf.toLocaleString("es-CL")} <span className="text-sm font-medium ml-1 opacity-80">UF</span>
                    </p>
                 </div>
-              </div>
+              </Link>
 
               <CardContent className="p-8 flex flex-col flex-1">
                 {/* Constructora Info */}
@@ -111,9 +110,11 @@ export function CatalogoGrid({ modelos }: Props) {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-heading font-black tracking-tight text-foreground line-clamp-2 mb-6 group-hover:text-primary transition-colors">
-                  {modelo.nombre}
-                </h3>
+                <Link href={`/modelo/${modelo.slug}`} className="block group">
+                  <h3 className="text-xl font-heading font-black tracking-tight text-foreground line-clamp-2 mb-6 group-hover:text-primary transition-colors">
+                    {modelo.nombre}
+                  </h3>
+                </Link>
 
                 {/* Specs Grid */}
                 <div className="grid grid-cols-3 gap-4 mb-8">

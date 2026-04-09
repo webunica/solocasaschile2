@@ -54,7 +54,7 @@ export async function FeaturedModelsSection() {
               className="group relative flex flex-col bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3.5rem] overflow-hidden hover:shadow-[0_48px_100px_-24px_rgba(27,0,136,0.15)] hover:-translate-y-2 transition-all duration-700"
             >
                {/* Image Area */}
-               <div className="relative h-72 overflow-hidden shrink-0">
+               <Link href={`/modelo/${modelo.slug}`} className="relative h-72 overflow-hidden shrink-0 block">
                   <Image 
                     src={modelo.imagenes_urls?.[0] || '/hero.png'}
                     alt={modelo.nombre}
@@ -85,7 +85,7 @@ export async function FeaturedModelsSection() {
                        {modelo.precio_desde_uf.toLocaleString("es-CL")} <span className="text-sm font-medium ml-1">UF</span>
                      </p>
                   </div>
-               </div>
+               </Link>
 
                {/* Info Area */}
                <div className="p-10 flex flex-col flex-1 items-start">
@@ -104,9 +104,11 @@ export async function FeaturedModelsSection() {
                      </span>
                   </div>
 
-                  <h3 className="text-2xl font-heading font-black tracking-tight text-foreground mb-8 line-clamp-2 leading-tight group-hover:text-primary transition-colors">
-                    {modelo.nombre}
-                  </h3>
+                  <Link href={`/modelo/${modelo.slug}`} className="block group">
+                    <h3 className="text-2xl font-heading font-black tracking-tight text-foreground mb-8 line-clamp-2 leading-tight group-hover:text-primary transition-colors">
+                      {modelo.nombre}
+                    </h3>
+                  </Link>
 
                   <div className="grid grid-cols-3 gap-6 w-full border-t border-border/40 pt-8 mt-auto">
                      <div className="flex flex-col gap-1.5">
