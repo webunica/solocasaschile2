@@ -24,7 +24,7 @@ export function IncluyeNoIncluye({ modelo, className, isSidebar }: IncluyeNoIncl
     "Transporte a obra (según zona)",
   ];
 
-  const defaultExcludes = [
+  let dynamicExcludes = [
     "Obras de fundación (radier o pilotes)",
     "Conexiones a redes públicas",
     "Artefactos de baño y cocina",
@@ -33,13 +33,24 @@ export function IncluyeNoIncluye({ modelo, className, isSidebar }: IncluyeNoIncl
     "Montaje en terreno",
   ];
 
+  // Filtrar exclusiones si hay datos específicos en la ficha técnica
+  if (modelo.construccion?.fundacion) {
+    dynamicExcludes = dynamicExcludes.filter(e => !e.includes("fundación"));
+  }
+  if (modelo.terminaciones?.pisos) {
+    dynamicExcludes = dynamicExcludes.filter(e => !e.includes("piso"));
+  }
+  if (modelo.terminaciones?.cocina || modelo.terminaciones?.bano_principal) {
+    dynamicExcludes = dynamicExcludes.filter(e => !e.includes("Artefactos"));
+  }
+
   const parseList = (text: string) => {
     if (!text) return null;
     return text.split('\n').filter(line => line.trim().length > 0);
   };
 
   const includesList = parseList(includes) || defaultIncludes;
-  const excludesList = parseList(excludes) || defaultExcludes;
+  const excludesList = parseList(excludes) || dynamicExcludes;
 
   if (isSidebar) {
     return (
