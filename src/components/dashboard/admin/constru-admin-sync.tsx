@@ -17,8 +17,38 @@ interface Category {
 
 export function ConstruAdminSync({ categories }: { categories: Category[] }) {
   const [loading, setLoading] = useState<string | null>(null);
+  const [syncingAll, setSyncingAll] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState("");
   const [syncResults, setSyncResults] = useState<string[]>([]);
+  const [allSyncSummary, setAllSyncSummary] = useState<{ total: number; errors: number } | null>(null);
+
+  const handleSyncAll = async () => {
+    if (!selectedRegion) { toast.error("Por favor selecciona una región primero"); return; }
+    const regionName = REGIONES_CHILE.find(r => slugifyRegion(r) === selectedRegion);
+    setSyncingAll(true);
+    setAllSyncSummary(null);
+    try {
+      const response = await fetch("/api/admin/sync-region", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ regionName, regionSlug: selectedRegion })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAllSyncSummary({ total: data.totalSynced, errors: data.errors });
+        // Marcar todas las categorías como sincronizadas
+        const allKeys = categories.map(c => `${c.id}-${selectedRegion}`);
+        setSyncResults(prev => [...new Set([...prev, ...allKeys])]);
+        toast.success(`✅ ${data.totalSynced} proveedores sincronizados en ${regionName}`);
+      } else {
+        throw new Error(data.error || "Error desconocido");
+      }
+    } catch (err: any) {
+      toast.error(`Error: ${err.message}`);
+    } finally {
+      setSyncingAll(false);
+    }
+  };
 
   const handleSync = async (category: Category) => {
     if (!selectedRegion) {
@@ -85,6 +115,36 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
             </div>
           </div>
         </CardHeader>
+        
+        {/* Sync All Banner */}
+        <div className="px-10 py-5 border-b border-border/40 bg-[#fa8823]/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-0.5">
+            <p className="font-black text-sm">Sincronización masiva</p>
+            <p className="text-xs text-muted-foreground font-medium">
+              Sincroniza las {categories.length} categorías de una sola vez para la región seleccionada.{" "}
+              <span className="text-[#fa8823] font-black">~{categories.length} créditos SerpApi</span>
+            </p>
+          </div>
+          <div className="flex items-center gap-4 shrink-0">
+            {allSyncSummary && (
+              <div className="flex items-center gap-2 text-emerald-600 text-xs font-black">
+                <CheckCircle2 className="w-4 h-4" />
+                {allSyncSummary.total} proveedores · {allSyncSummary.errors > 0 ? `${allSyncSummary.errors} errores` : 'Sin errores'}
+              </div>
+            )}
+            <Button
+              onClick={handleSyncAll}
+              disabled={syncingAll || !!loading || !selectedRegion}
+              className="h-12 px-6 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] bg-[#fa8823] text-white hover:bg-[#e07720] shadow-lg shadow-[#fa8823]/20 transition-all active:scale-95 whitespace-nowrap"
+            >
+              {syncingAll ? (
+                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sincronizando...</>
+              ) : (
+                <><RefreshCw className="w-4 h-4 mr-2" /> Sincronizar Toda la Región</>
+              )}
+            </Button>
+          </div>
+        </div>
         
         <CardContent className="p-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
