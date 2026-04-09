@@ -122,7 +122,7 @@ export function TestimoniosManager({ initialTestimonios, models }: TestimoniosMa
                     <label className="text-[9px] font-black uppercase tracking-widest text-brand-indigo mb-1.5 block ml-1">Asignar a Modelo</label>
                     <Select 
                       value={t.modelo_id || "general"} 
-                      onValueChange={(val) => updateTestimonio(index, "modelo_id", val)}
+                      onValueChange={(val: string) => updateTestimonio(index, "modelo_id", val)}
                     >
                       <SelectTrigger className="h-10 rounded-xl bg-muted/40 border-none font-bold text-xs ring-0 focus:ring-1 focus:ring-brand-indigo/30">
                         <Building2 className="w-3 h-3 mr-2 opacity-40" />
