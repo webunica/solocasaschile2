@@ -129,6 +129,28 @@ export function AdminEditForm({ initialData }: Props) {
                     required
                   />
                </div>
+
+               <div className="space-y-2">
+                  <Label htmlFor="razon_social" className="text-xs font-black uppercase tracking-widest opacity-60">Razón Social (Legal)</Label>
+                  <Input 
+                    id="razon_social" 
+                    name="razon_social" 
+                    defaultValue={initialData?.razon_social || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="Ejem: Constructora Master SpA"
+                  />
+               </div>
+
+               <div className="space-y-2">
+                  <Label htmlFor="rut" className="text-xs font-black uppercase tracking-widest opacity-60">RUT Empresa</Label>
+                  <Input 
+                    id="rut" 
+                    name="rut" 
+                    defaultValue={initialData?.rut || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="76.xxx.xxx-k"
+                  />
+               </div>
                
                <div className="space-y-2">
                   <Label htmlFor="sitio_web" className="text-xs font-black uppercase tracking-widest opacity-60">Sitio Web</Label>

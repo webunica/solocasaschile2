@@ -240,6 +240,7 @@ export async function updateSettings(formData: FormData) {
 
   const data: any = {
     nombre: formData.get('nombre') as string,
+    razon_social: formData.get('razon_social') as string,
     descripcion: formData.get('descripcion') as string,
     telefono: formData.get('telefono') as string,
     rut: formData.get('rut') as string,
@@ -439,6 +440,7 @@ export async function adminUpdateConstructora(formData: FormData) {
 
   const data: any = {
     nombre: formData.get('nombre') as string,
+    razon_social: formData.get('razon_social') as string,
     descripcion: formData.get('descripcion') as string,
     telefono: formData.get('telefono') as string,
     rut: formData.get('rut') as string,
