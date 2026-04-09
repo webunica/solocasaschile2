@@ -17,9 +17,10 @@ const CATEGORY_SEARCH_TERMS: Record<string, string> = {
 };
 
 export async function searchSuppliersInGoogle(query: string) {
-  const apiKey = process.env.SERPAPI_KEY;
+  // Aceptar ambos nombres posibles de la variable
+  const apiKey = process.env.SERPAPI_KEY || process.env.SERPAPI_API_KEY;
   if (!apiKey) {
-    throw new Error('SERPAPI_KEY no está configurada. Agrégala en las variables de entorno de Vercel.');
+    throw new Error('SerpApi key no encontrada. Verifica que la variable se llame SERPAPI_KEY o SERPAPI_API_KEY en Vercel.');
   }
 
   const searchUrl = `https://serpapi.com/search.json?engine=google_maps&q=${encodeURIComponent(query)}&type=search&api_key=${apiKey}&hl=es&gl=cl`;
