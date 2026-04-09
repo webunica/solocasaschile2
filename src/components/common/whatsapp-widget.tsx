@@ -62,27 +62,15 @@ export function WhatsAppWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[200] flex flex-col items-end">
+    <div className="fixed bottom-6 right-6 z-[200] flex flex-col items-end gap-3 pointer-events-none">
       <AnimatePresence>
-        {showHint && !isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: 20, scale: 0.8 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="mb-4 mr-2 bg-white px-4 py-2 rounded-2xl shadow-xl border border-border/50 text-[11px] font-black uppercase tracking-widest text-brand-indigo flex items-center gap-2 relative"
-          >
-            <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse" />
-            ¿Necesitas ayuda? Chatea aquí
-            <div className="absolute top-full right-6 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-white" />
-          </motion.div>
-        )}
-
+        {/* Chat Window (Appears above the button row) */}
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: "bottom right" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[calc(100vw-3rem)] max-w-[340px] overflow-hidden rounded-[2rem] bg-background/95 backdrop-blur-3xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)]"
+            className="mb-2 w-[calc(100vw-3rem)] max-w-[340px] overflow-hidden rounded-[2rem] bg-background/95 backdrop-blur-3xl border border-white/20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] pointer-events-auto"
           >
             {/* Header */}
             <div className="bg-brand-indigo p-6 text-white relative">
@@ -197,39 +185,58 @@ export function WhatsAppWidget() {
         )}
       </AnimatePresence>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => {
-          setIsOpen(!isOpen);
-          setShowHint(false);
-          if (!hasAutoOpened) setHasAutoOpened(true);
-        }}
-        className={cn(
-          "relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl",
-          isOpen ? "bg-background text-foreground rotate-90" : "bg-brand-indigo text-white shadow-primary/20"
-        )}
-      >
-        <AnimatePresence mode="wait">
-           {isOpen ? (
-             <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <X className="w-6 h-6" />
-             </motion.div>
-           ) : (
-             <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <MessageCircle className="w-7 h-7 fill-white" />
-             </motion.div>
-           )}
+      {/* Bottom Row (Hint + Toggle Button) */}
+      <div className="flex items-center justify-end gap-3 w-max h-14 pointer-events-auto">
+        <AnimatePresence>
+          {showHint && !isOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: 20, scale: 0.8 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 20, scale: 0.8 }}
+              className="bg-white px-4 py-2 rounded-2xl shadow-xl border border-border/50 text-[11px] font-black uppercase tracking-widest text-brand-indigo flex items-center gap-2 relative whitespace-nowrap"
+            >
+              <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse" />
+              ¿Necesitas ayuda? Chatea aquí
+              {/* Pointer Triangle - Pointing Right */}
+              <div className="absolute left-full top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px] border-l-white" />
+            </motion.div>
+          )}
         </AnimatePresence>
-        
-        {!isOpen && (
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="absolute inset-0 rounded-[2rem] bg-current opacity-20 pointer-events-none"
-          />
-        )}
-      </motion.button>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            setIsOpen(!isOpen);
+            setShowHint(false);
+            if (!hasAutoOpened) setHasAutoOpened(true);
+          }}
+          className={cn(
+            "relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl shrink-0",
+            isOpen ? "bg-background text-foreground rotate-90" : "bg-brand-indigo text-white shadow-primary/20"
+          )}
+        >
+          <AnimatePresence mode="wait">
+             {isOpen ? (
+               <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <X className="w-6 h-6" />
+               </motion.div>
+             ) : (
+               <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  <MessageCircle className="w-7 h-7 fill-white" />
+               </motion.div>
+             )}
+          </AnimatePresence>
+          
+          {!isOpen && (
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute inset-0 rounded-[2rem] bg-current opacity-20 pointer-events-none"
+            />
+          )}
+        </motion.button>
+      </div>
     </div>
   );
 }
