@@ -211,7 +211,7 @@ export default function PlanesPage() {
       )}
 
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="relative pt-20 pb-10 text-center overflow-hidden border-b border-border/40">
+      <section className="relative pt-32 pb-10 text-center overflow-hidden border-b border-border/40">
         {/* Pending Status Alert */}
         {isStatusPending && (
           <div className="container max-w-4xl mx-auto px-4 mb-10">
@@ -252,7 +252,7 @@ export default function PlanesPage() {
             Mejora el posicionamiento de tu constructora y recibe leads reales directamente en tu panel de control.
           </p>
 
-          <div className="pt-10 flex flex-col items-center gap-12">
+          <div className="pt-4 flex flex-col items-center gap-12">
             
             <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
 
