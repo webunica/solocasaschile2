@@ -60,11 +60,11 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
         >
           <Link href="/" className="mr-6 flex items-center group shrink-0 relative transition-transform">
             <Image 
-              src="/images/logo-vertical.png" 
+              src="/images/logo-mobile.png" 
               alt="SolocasasChile" 
               width={160} 
               height={120} 
-              className="h-10 w-auto object-contain"
+              className="w-[30vw] h-auto object-contain"
               priority
             />
           </Link>

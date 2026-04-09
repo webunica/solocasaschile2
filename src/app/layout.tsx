@@ -93,6 +93,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { WhatsAppWidget } from "@/components/common/whatsapp-widget";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { AuthErrorHandler } from "@/components/common/auth-error-handler";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export default function RootLayout({
   children,
@@ -115,6 +116,9 @@ export default function RootLayout({
           {children}
           <WhatsAppWidget />
         </ThemeProvider>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );
