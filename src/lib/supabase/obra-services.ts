@@ -98,15 +98,23 @@ export async function getObraProject(id: string): Promise<ObraProject | null> {
 
   if (!data) return null;
 
-  // Ordenar etapas y especificaciones por orden
-  if (data.stages) {
-    data.stages = (data.stages as ObraStage[]).sort((a, b) => a.orden - b.orden);
-  }
-  if (data.specs) {
-    data.specs = (data.specs as any[]).sort((a, b) => a.orden - b.orden);
+  const projectData = { ...data };
+
+  // Ordenar y sanitizar etapas
+  if (projectData.stages && Array.isArray(projectData.stages)) {
+    projectData.stages = (projectData.stages as ObraStage[]).sort((a, b) => (a.orden || 0) - (b.orden || 0));
+  } else {
+    projectData.stages = [];
   }
 
-  return data as ObraProject;
+  // Ordenar y sanitizar especificaciones
+  if (projectData.specs && Array.isArray(projectData.specs)) {
+    projectData.specs = (projectData.specs as any[]).sort((a, b) => (a.orden || 0) - (b.orden || 0));
+  } else {
+    projectData.specs = [];
+  }
+
+  return projectData as ObraProject;
 }
 
 /** Proyecto para portal del cliente (solo visible_cliente = true) */
