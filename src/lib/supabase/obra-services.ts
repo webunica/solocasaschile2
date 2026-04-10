@@ -85,7 +85,8 @@ export async function getObraProject(id: string): Promise<ObraProject | null> {
     .select(`
       *,
       constructora:constructoras(nombre, logo_url),
-      stages:obra_stages(* , files:obra_stage_files(*))
+      stages:obra_stages(* , files:obra_stage_files(*)),
+      specs:obra_project_specs(*)
     `)
     .eq('id', id)
     .maybeSingle();
@@ -97,9 +98,12 @@ export async function getObraProject(id: string): Promise<ObraProject | null> {
 
   if (!data) return null;
 
-  // Ordenar etapas por orden
+  // Ordenar etapas y especificaciones por orden
   if (data.stages) {
     data.stages = (data.stages as ObraStage[]).sort((a, b) => a.orden - b.orden);
+  }
+  if (data.specs) {
+    data.specs = (data.specs as any[]).sort((a, b) => a.orden - b.orden);
   }
 
   return data as ObraProject;
@@ -120,7 +124,8 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
         fecha_inicio_real, fecha_termino_real,
         responsable, observaciones, visible_cliente,
         files:obra_stage_files(*)
-      )
+      ),
+      specs:obra_project_specs(*)
     `)
     .eq('id', id)
     .maybeSingle();
@@ -136,6 +141,11 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
         ...s,
         files: (s.files ?? []).filter((f: ObraStageFile) => f.visible_cliente),
       }));
+  }
+
+  // Ordenar especificaciones por orden
+  if (data.specs) {
+    data.specs = (data.specs as any[]).sort((a, b) => a.orden - b.orden);
   }
 
   return data as ObraProject;
