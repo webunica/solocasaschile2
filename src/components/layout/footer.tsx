@@ -11,7 +11,19 @@ export function Footer() {
     <footer className="bg-[#2B09BD] text-white pt-20 pb-10 relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
-          
+          {/* Brand Col */}
+          <div className="space-y-6 lg:pr-4">
+            <Link href="/" className="inline-block group">
+              <Image
+                src="/images/logo-vertical.png"
+                alt="SolocasasChile"
+                width={160}
+                height={120}
+                className="h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
+            </Link>
+            
             <p className="text-[14px] leading-relaxed text-white/80 font-normal">
               La plataforma líder en comparación de modelos de casas y proyectos inmobiliarios en Chile. <strong>SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.</strong>
             </p>
