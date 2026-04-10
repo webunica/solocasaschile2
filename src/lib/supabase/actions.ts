@@ -2,6 +2,7 @@
 
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { z } from "zod";
 import { createClient } from '@/lib/supabase/server'
 import { getPlanLimits } from '../constants/plans'
 import { resend } from '@/lib/resend'
@@ -911,10 +912,28 @@ export async function solicitarSello(formData: FormData) {
   revalidatePath('/dashboard/admin/sellos')
 }
 
-export async function updateTestimonios(testimonios: any[]) {
+const TestimonioSchema = z.object({
+  nombre: z.string().min(1, "El nombre es obligatorio").max(100),
+  texto: z.string().min(1, "El testimonio no puede estar vacío").max(2000),
+  cargo: z.string().max(100).optional().nullable(),
+  estrellas: z.number().min(1).max(5),
+  modelo_id: z.string().optional().nullable()
+});
+
+const TestimoniosArraySchema = z.array(TestimonioSchema);
+
+export async function updateTestimonios(testimoniosRaw: any[]) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'No autenticado' }
+
+  // Validar esquema
+  const validation = TestimoniosArraySchema.safeParse(testimoniosRaw);
+  if (!validation.success) {
+    return { success: false, error: "Datos de testimonios inválidos o demasiado largos." };
+  }
+
+  const testimonios = validation.data;
 
   const { error } = await supabase
     .from('constructoras')
