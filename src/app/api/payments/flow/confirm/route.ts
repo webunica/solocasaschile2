@@ -168,8 +168,8 @@ export async function POST(req: NextRequest) {
       
       try {
         await resend.emails.send({
-          from: 'SoloCasasChile <sistema@solocasaschile.cl>',
-          to: [userEmail || 'soporte@solocasaschile.cl'],
+          from: 'SoloCasasChile <sistema@solocasaschile.com>',
+          to: [userEmail || 'soporte@solocasaschile.com'],
           subject: 'Problema con tu pago en SoloCasasChile ⚠️',
           html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid #eee;">

@@ -34,7 +34,7 @@ export const mockSupabaseClient = {
       data: { 
         user: { 
           id: '00000000-0000-0000-0000-000000000000', 
-          email: 'demo@solocasaschile.cl',
+          email: 'demo@solocasaschile.com',
           user_metadata: { nombre: 'Demo Admin' }
         } 
       }, 
