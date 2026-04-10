@@ -92,11 +92,19 @@ export async function getObraProject(id: string): Promise<ObraProject | null> {
     .maybeSingle();
 
   if (error) {
-    console.error('[obra-services] getObraProject:', error.message);
+    console.error('❌ [obra-services] Error en getObraProject:', {
+      code: error.code,
+      message: error.message,
+      details: error.details,
+      hint: error.hint
+    });
     return null;
   }
 
-  if (!data) return null;
+  if (!data) {
+    console.warn('⚠️ [obra-services] No se encontró el proyecto con ID:', id);
+    return null;
+  }
 
   const projectData = { ...data };
 
