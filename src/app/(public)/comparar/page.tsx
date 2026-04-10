@@ -23,7 +23,7 @@ export default async function CompararPage({ searchParams }: PageProps) {
   const modelos = await getModelsByIds(idsParam);
 
   return (
-    <div className="min-h-screen bg-background pb-24 pt-32">
+    <div className="min-h-screen bg-background pb-24 pt-44">
       {/* Header / Hero Section */}
       <section className="relative overflow-hidden border-b border-border/40 bg-card/10 pb-20 pt-12">
         {/* Background Decor */}

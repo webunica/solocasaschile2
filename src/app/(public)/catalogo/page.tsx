@@ -47,7 +47,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   ]);
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background pt-40">
       <div className="border-b bg-card/40 backdrop-blur-xl">
         <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">

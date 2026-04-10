@@ -211,7 +211,7 @@ export default function PlanesPage() {
       )}
 
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-10 text-center overflow-hidden border-b border-border/40">
+      <section className="relative pt-44 pb-10 text-center overflow-hidden border-b border-border/40">
         {/* Pending Status Alert */}
         {isStatusPending && (
           <div className="container max-w-4xl mx-auto px-4 mb-10">

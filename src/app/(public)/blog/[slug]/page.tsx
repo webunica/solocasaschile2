@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   return (
-    <article className="min-h-screen pt-32 pb-20 bg-white">
+    <article className="min-h-screen pt-44 pb-20 bg-white">
       {/* Header Info */}
       <div className="container px-6 max-w-4xl mx-auto space-y-8">
         <Link 
