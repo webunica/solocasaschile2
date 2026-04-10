@@ -214,22 +214,22 @@ function RegisterForm() {
       <div className="w-full max-w-lg space-y-10 relative z-10">
         
         {/* Header */}
-        <div className="text-center space-y-6">
-          <Link href="/" className="inline-block hover:scale-105 transition-transform">
+        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+          <Link href="/" className="shrink-0 hover:scale-105 transition-transform">
             <Image
               src="/images/logo-vertical.png"
               alt="SolocasasChile"
               width={160}
               height={120}
-              className="h-24 w-auto object-contain mx-auto"
+              className="h-[86px] w-auto object-contain mx-auto"
               priority
             />
           </Link>
-          <div className="space-y-3">
-            <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo whitespace-nowrap">
+          <div className="text-center md:text-left space-y-2">
+            <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo leading-[0.9]">
               {planMeta.isPaid ? "Registro Directo" : "Únete a la plataforma"}
             </h1>
-            <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm mx-auto">
+            <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm">
               Solo necesitas tu correo para comenzar.
             </p>
           </div>
@@ -259,19 +259,19 @@ function RegisterForm() {
 
             <div className="space-y-5">
               <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Email Corporativo</Label>
-                <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
+                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-indigo/60 ml-2">Email Corporativo</Label>
+                <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-500" />
               </div>
               <div className="space-y-2 relative">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Contraseña</Label>
-                <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 pr-12 placeholder:text-slate-400" />
+                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-indigo/60 ml-2">Contraseña</Label>
+                <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 pr-12 placeholder:text-slate-500" />
                 <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-slate-400 hover:text-slate-700 transition-colors">
                   {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
               <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-teal ml-2">Confirmar</Label>
-                <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-400" />
+                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-indigo/60 ml-2">Confirmar</Label>
+                <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-500" />
               </div>
             </div>
 
