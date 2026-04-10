@@ -31,20 +31,31 @@ export async function POST(
     // 2. Buscar el ID de la plantilla por defecto si no se envió una
     let finalTemplateId = templateId;
     if (!templateId || templateId === 'default') {
-      const { data: defaultT } = await supabase
+      const { data: defaultT, error: tError } = await supabase
         .from('obra_stage_templates')
         .select('id')
         .eq('is_default', true)
         .maybeSingle();
       
+      if (tError) {
+        console.error("❌ [api/obras/stages] Error al buscar plantilla:", tError.message);
+        return NextResponse.json({ error: "Error database: " + tError.message }, { status: 500 });
+      }
+
       if (!defaultT) {
-        return NextResponse.json({ error: "No default template found" }, { status: 404 });
+        console.warn("⚠️ [api/obras/stages] No se encontró plantilla por defecto en obra_stage_templates");
+        return NextResponse.json({ error: "No default template found. Run SQL seed." }, { status: 404 });
       }
       finalTemplateId = defaultT.id;
     }
 
     // 3. Aplicar la plantilla
-    await applyStageTemplate(projectId, finalTemplateId, project.fecha_inicio_estimada || undefined);
+    try {
+      await applyStageTemplate(projectId, finalTemplateId, project.fecha_inicio_estimada || undefined);
+    } catch (applyErr: any) {
+      console.error("❌ [api/obras/stages] Error en applyStageTemplate:", applyErr.message);
+      return NextResponse.json({ error: applyErr.message }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true });
 
