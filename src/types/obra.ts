@@ -44,6 +44,21 @@ export type ObraIncidentTipo =
 
 // ── Entidades principales ──────────────────────────────────
 
+export interface ObraProjectSpec {
+  id: string;
+  project_id: string;
+  categoria: string;
+  elemento: string;
+  valor: string;
+  estado: 'pendiente' | 'esperando_materiales' | 'en_proceso' | 'finalizado';
+  fecha_estimada: string | null;
+  fecha_real: string | null;
+  observaciones: string | null;
+  orden: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface ObraProject {
   id: string;
   constructora_id: string;
@@ -52,6 +67,9 @@ export interface ObraProject {
   nombre: string;
   codigo_interno: string | null;
   tipo_construccion: string | null;
+  superficie_m2: number | null;
+  dormitorios: number | null;
+  banos: number | null;
   region: string | null;
   comuna: string | null;
   direccion_referencia: string | null;

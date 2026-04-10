@@ -259,18 +259,15 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
   let finalConstructoraId = constructora.id;
   const isSuperAdmin = constructora.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
 
-  // Si es superadmin y seleccionó un modelo de otra constructora,
-  // asignamos el proyecto a la constructora dueña de ese modelo.
-  if (isSuperAdmin && dto.modelo_id) {
-    const { data: modelInfo } = await supabase
-      .from('modelos')
-      .select('constructora_id')
-      .eq('id', dto.modelo_id)
-      .maybeSingle();
-      
-    if (modelInfo && modelInfo.constructora_id) {
-      finalConstructoraId = modelInfo.constructora_id;
-    }
+  let modelData: any = null;
+  if (dto.modelo_id) {
+    const { data: mData } = await supabase.from('modelos').select('*').eq('id', dto.modelo_id).maybeSingle();
+    modelData = mData;
+  }
+
+  // Si es superadmin y seleccionó un modelo de otra constructora, asignamos a la dueña del modelo
+  if (isSuperAdmin && modelData?.constructora_id) {
+    finalConstructoraId = modelData.constructora_id;
   }
 
   // Crear proyecto
@@ -290,6 +287,9 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
       observaciones_generales: dto.observaciones_generales,
       prioridad: dto.prioridad ?? 'normal',
       modelo_id: dto.modelo_id,
+      superficie_m2: modelData?.superficie_m2 ?? null,
+      dormitorios: modelData?.dormitorios ?? null,
+      banos: modelData?.banos ?? null,
     })
     .select()
     .single();
@@ -297,6 +297,36 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
   if (error || !project) {
     console.error('[obra-services] createObraProject:', error?.message);
     return null;
+  }
+
+  // Si trae metadata del modelo, generar las especificaciones (checklist)
+  if (modelData) {
+    const specsToInsert: any[] = [];
+    const pushCategory = (catName: string, catData: any) => {
+      if (!catData) return;
+      Object.entries(catData).forEach(([key, value]) => {
+        if (key !== 'notas' && value && String(value).trim() !== '') {
+          specsToInsert.push({
+            project_id: project.id,
+            categoria: catName,
+            elemento: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            valor: String(value),
+            estado: 'pendiente',
+            orden: specsToInsert.length,
+          });
+        }
+      });
+    };
+
+    pushCategory('Construcción', modelData.construccion);
+    pushCategory('Aislación', modelData.aislacion);
+    pushCategory('Terminaciones', modelData.terminaciones);
+    pushCategory('Instalaciones', modelData.instalaciones);
+
+    if (specsToInsert.length > 0) {
+      const { error: specError } = await supabase.from('obra_project_specs').insert(specsToInsert);
+      if (specError) console.error('[obra-services] createObraProject (specs):', specError.message);
+    }
   }
 
   // Aplicar plantilla de etapas si se seleccionó

@@ -37,7 +37,8 @@ export default function NuevoProyectoPage() {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const [modelos, setModelos] = useState<{ id: string, nombre: string, tipo: string, constructora?: { nombre: string } }[]>([]);
+  const [modelos, setModelos] = useState<any[]>([]);
+  const [selectedModel, setSelectedModel] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchModelos = async () => {
@@ -50,7 +51,7 @@ export default function NuevoProyectoPage() {
 
       let query = supabase
         .from("modelos")
-        .select("id, nombre, tipo, constructora:constructoras(nombre)")
+        .select("id, nombre, tipo, superficie_m2, dormitorios, banos, construccion, terminaciones, aislacion, instalaciones, constructora:constructoras(nombre)")
         .order("nombre", { ascending: true });
         
       if (!isSuperAdmin) {
@@ -58,7 +59,7 @@ export default function NuevoProyectoPage() {
       }
         
       const { data } = await query;
-      if (data) setModelos(data as any);
+      if (data) setModelos(data);
     };
     fetchModelos();
   }, []);
@@ -66,11 +67,13 @@ export default function NuevoProyectoPage() {
   const handleModelChange = (id: string) => {
     if (id === "ninguno") {
       setForm(prev => ({ ...prev, modelo_id: "ninguno" }));
+      setSelectedModel(null);
       return;
     }
     const model = modelos.find(m => m.id === id);
     if (!model) return;
     
+    setSelectedModel(model);
     setForm(prev => ({
       ...prev,
       modelo_id: id,
@@ -202,6 +205,55 @@ export default function NuevoProyectoPage() {
             </div>
           </div>
         </div>
+
+        {/* Model Data Preview */}
+        {selectedModel && (
+          <div className="p-8 rounded-[2rem] bg-brand-indigo/5 border border-brand-indigo/10 space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-brand-indigo/20 flex items-center justify-center">
+                <CheckCircle2 className="w-4 h-4 text-brand-indigo" />
+              </div>
+              <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo">Especificaciones a importar</h3>
+            </div>
+            <p className="text-sm text-brand-indigo/70 font-medium">Al crear el proyecto, estos datos técnicos del modelo se cargarán automáticamente como elementos gestionables (checklists de estado) dentro de su ficha de seguimiento.</p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pb-4 border-b border-brand-indigo/10">
+              <div className="space-y-1">
+                <p className="text-xs font-black uppercase text-brand-indigo/40 tracking-widest">Sup. M2</p>
+                <p className="text-sm font-bold text-brand-indigo">{selectedModel.superficie_m2 || "--"} m²</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs font-black uppercase text-brand-indigo/40 tracking-widest">Dormitorios</p>
+                <p className="text-sm font-bold text-brand-indigo">{selectedModel.dormitorios || "--"}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-xs font-black uppercase text-brand-indigo/40 tracking-widest">Baños</p>
+                <p className="text-sm font-bold text-brand-indigo">{selectedModel.banos || "--"}</p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 text-sm">
+              {['construccion', 'terminaciones', 'aislacion', 'instalaciones'].map((cat) => {
+                const data = selectedModel[cat];
+                if (!data || Object.keys(data).filter(k => k !== 'notas' && data[k]).length === 0) return null;
+                return (
+                  <div key={cat} className="space-y-3">
+                    <p className="text-xs font-black uppercase tracking-widest text-brand-indigo/50 bg-white/50 inline-block px-3 py-1 rounded-full">{cat}</p>
+                    <ul className="space-y-2">
+                      {Object.entries(data).filter(([k,v]) => k !== 'notas' && v).map(([key, value]) => (
+                        <li key={key} className="flex gap-2 text-brand-indigo font-medium">
+                          <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-brand-teal mt-1.5" />
+                          <span className="capitalize">{key.replace(/_/g, ' ')}:</span>
+                          <span className="text-brand-indigo/70 font-normal">{String(value)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Ubicación */}
         <div className="p-8 rounded-[2rem] bg-white border border-border/40 space-y-6">
