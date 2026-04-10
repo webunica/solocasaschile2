@@ -45,9 +45,13 @@ function StagePhotos({
       if (res.ok) {
         const newFile = await res.json();
         setFiles(prev => [newFile, ...prev]);
+      } else {
+        const errData = await res.json();
+        alert(`Error al subir foto: ${errData.error || "Revisa los permisos del bucket obra-files"}`);
       }
     } catch (err) {
       console.error(err);
+      alert("Error crítico de conexión al subir la imagen.");
     } finally {
       setUploading(false);
     }
