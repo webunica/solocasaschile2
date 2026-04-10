@@ -469,6 +469,16 @@ export async function applyStageTemplate(
   const etapas = template.etapas as ObraStageTemplateItem[];
   let currentDate = startDate ? new Date(startDate) : new Date();
 
+  // EVITAR DUPLICADOS: Verificar si ya existen etapas para este proyecto
+  const { count } = await supabase
+    .from('obra_stages')
+    .select('*', { count: 'exact', head: true })
+    .eq('project_id', projectId);
+
+  if (count && count > 0) {
+    throw new Error("El proyecto ya tiene etapas definidas. No se puede aplicar la plantilla nuevamente.");
+  }
+
   const stagesToInsert = etapas.map(e => {
     const startEst = new Date(currentDate);
     const endEst = new Date(currentDate);
@@ -483,6 +493,7 @@ export async function applyStageTemplate(
       fecha_termino_estimada: endEst.toISOString().split('T')[0],
       estado: 'pendiente',
       porcentaje_avance: 0,
+      visible_cliente: true // Asegurar visibilidad por defecto
     };
 
     currentDate = new Date(endEst);
