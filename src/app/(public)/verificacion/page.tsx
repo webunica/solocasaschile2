@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, ShieldCheck, FileCheck, Search, Users, MapPin, Award, CheckCircle2, AlertCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
