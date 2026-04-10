@@ -456,11 +456,13 @@ export async function applyStageTemplate(
 ): Promise<void> {
   const supabase = await createClient();
 
-  const { data: template } = await supabase
+  const { data: templates } = await supabase
     .from('obra_stage_templates')
     .select('etapas')
     .eq('id', templateId)
-    .maybeSingle();
+    .limit(1);
+
+  const template = templates?.[0];
 
   if (!template) return;
 
