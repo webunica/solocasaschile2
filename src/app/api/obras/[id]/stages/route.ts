@@ -18,11 +18,13 @@ export async function POST(
     const { templateId } = await req.json();
 
     // 1. Validar que el proyecto existe
-    const { data: project } = await supabase
+    const { data: projects } = await supabase
       .from('obra_projects')
       .select('id, fecha_inicio_estimada')
       .eq('id', projectId)
-      .maybeSingle();
+      .limit(1);
+    
+    const project = projects?.[0];
 
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });

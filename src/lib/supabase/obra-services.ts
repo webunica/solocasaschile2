@@ -81,14 +81,16 @@ export async function getObraProject(id: string): Promise<ObraProject | null> {
   const supabase = await createClient();
 
   // 1. Obtener proyecto base primero (más robusto)
-  const { data: project, error: pError } = await supabase
+  const { data: projectList, error: pError } = await supabase
     .from('obra_projects')
     .select(`
       *,
       constructora:constructoras(nombre, logo_url)
     `)
     .eq('id', id)
-    .maybeSingle();
+    .limit(1);
+
+  const project = projectList?.[0];
 
   if (pError || !project) {
     console.error('❌ [obra-services] Proyecto no encontrado:', { id, error: pError?.message });
