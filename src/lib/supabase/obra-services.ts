@@ -397,9 +397,15 @@ export async function updateObraStage(
 ): Promise<boolean> {
   const supabase = await createClient();
 
+  // Sanitizar: Convertir strings vacíos a null para evitar errores de tipo fecha en Postgres
+  const sanitizedDto = Object.entries(dto).reduce((acc, [key, value]) => {
+    acc[key as keyof UpdateObraStageDTO] = value === "" ? null : value;
+    return acc;
+  }, {} as any);
+
   const { error } = await supabase
     .from('obra_stages')
-    .update({ ...dto, updated_at: new Date().toISOString() })
+    .update({ ...sanitizedDto, updated_at: new Date().toISOString() })
     .eq('id', stageId);
 
   if (error) {
