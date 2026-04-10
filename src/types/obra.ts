@@ -90,6 +90,7 @@ export interface ObraProject {
   constructora?: { nombre: string; logo_url: string | null };
   stages?: ObraStage[];
   files?: ObraStageFile[];
+  specs?: ObraProjectSpec[];
 }
 
 export interface ObraStage {
