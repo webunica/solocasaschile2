@@ -98,7 +98,7 @@ export function ProjectSpecsList({ initialSpecs, projectId }: { initialSpecs: Ob
                   </div>
 
                   <div className="shrink-0 flex items-center gap-2 ml-5 sm:ml-0">
-                    <Select value={item.estado} onValueChange={(val) => handleUpdateEstado(item.id, val)}>
+                    <Select value={item.estado} onValueChange={(val) => handleUpdateEstado(item.id, val as string)}>
                       <SelectTrigger className={cn(
                         "h-8 rounded-lg text-xs font-bold border-0 font-sans shadow-none pl-2.5 bg-transparent",
                         item.estado === 'pendiente' ? "text-slate-500" :
