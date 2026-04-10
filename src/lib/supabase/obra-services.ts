@@ -80,49 +80,40 @@ export async function getObraProjects(): Promise<ObraProject[]> {
 export async function getObraProject(id: string): Promise<ObraProject | null> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  // 1. Obtener proyecto base primero (más robusto)
+  const { data: project, error: pError } = await supabase
     .from('obra_projects')
     .select(`
       *,
-      constructora:constructoras(nombre, logo_url),
-      stages:obra_stages(* , files:obra_stage_files(*)),
-      specs:obra_project_specs(*)
+      constructora:constructoras(nombre, logo_url)
     `)
     .eq('id', id)
     .maybeSingle();
 
-  if (error) {
-    console.error('❌ [obra-services] Error en getObraProject:', {
-      code: error.code,
-      message: error.message,
-      details: error.details,
-      hint: error.hint
-    });
+  if (pError || !project) {
+    console.error('❌ [obra-services] Proyecto no encontrado:', { id, error: pError?.message });
     return null;
   }
 
-  if (!data) {
-    console.warn('⚠️ [obra-services] No se encontró el proyecto con ID:', id);
-    return null;
-  }
+  // 2. Intentar traer etapas y especificaciones por separado
+  const { data: stages } = await supabase
+    .from('obra_stages')
+    .select('*, files:obra_stage_files(*)')
+    .eq('project_id', id)
+    .order('orden', { ascending: true });
 
-  const projectData = { ...data };
+  const { data: specs } = await supabase
+    .from('obra_project_specs')
+    .select('*')
+    .eq('project_id', id)
+    .order('orden', { ascending: true });
 
-  // Ordenar y sanitizar etapas
-  if (projectData.stages && Array.isArray(projectData.stages)) {
-    projectData.stages = (projectData.stages as ObraStage[]).sort((a, b) => (a.orden || 0) - (b.orden || 0));
-  } else {
-    projectData.stages = [];
-  }
-
-  // Ordenar y sanitizar especificaciones
-  if (projectData.specs && Array.isArray(projectData.specs)) {
-    projectData.specs = (projectData.specs as any[]).sort((a, b) => (a.orden || 0) - (b.orden || 0));
-  } else {
-    projectData.specs = [];
-  }
-
-  return projectData as ObraProject;
+  // 3. Unir todo
+  return {
+    ...project,
+    stages: stages || [],
+    specs: specs || []
+  } as ObraProject;
 }
 
 /** Proyecto para portal del cliente (solo visible_cliente = true) */
