@@ -95,6 +95,7 @@ export function PremiumCarousel({ constructoras }: { constructoras: any[] }) {
                 Perfil <ArrowRight className="w-3 h-3 ml-1" />
               </span>
             </div>
+            </Link>
           );
         })}
       </div>
