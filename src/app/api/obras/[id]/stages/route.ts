@@ -59,10 +59,13 @@ export async function POST(
       return NextResponse.json({ error: applyErr.message }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: "Plantilla aplicada con éxito" });
 
   } catch (error: any) {
-    console.error("[api/obras/stages] POST Error:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("❌ [api/obras/stages] POST Critical Error:", error.message);
+    return NextResponse.json({ 
+      error: error.message || "Error interno del servidor",
+      details: error.toString() 
+    }, { status: 500 });
   }
 }
