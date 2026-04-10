@@ -9,7 +9,96 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronUp, Save, Loader2, AlertTriangle, Plus, Layers } from "lucide-react";
+import { ChevronDown, ChevronUp, Save, Loader2, AlertTriangle, Plus, Layers, Camera, Image as ImageIcon, Eye, EyeOff, Trash2 } from "lucide-react";
+
+import { createClient } from "@/lib/supabase/client";
+
+// Componente para la galería de fotos por etapa
+function StagePhotos({ 
+  stageId, 
+  projectId, 
+  initialFiles 
+}: { 
+  stageId: string; 
+  projectId: string; 
+  initialFiles: any[] 
+}) {
+  const [files, setFiles] = useState(initialFiles || []);
+  const [uploading, setUploading] = useState(false);
+  const supabase = createClient();
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("stageId", stageId);
+    formData.append("tipo", "foto");
+
+    try {
+      const res = await fetch(`/api/obras/${projectId}/files`, {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        const newFile = await res.json();
+        setFiles(prev => [newFile, ...prev]);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-4 pt-4 border-t border-border/40">
+      <div className="flex items-center justify-between">
+        <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+          <Camera className="w-3.5 h-3.5" /> Evidencia Fotográfica
+        </Label>
+        <label className={cn(
+          "flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-teal/10 text-brand-teal text-[10px] font-black uppercase tracking-wider cursor-pointer hover:bg-brand-teal/20 transition-colors",
+          uploading && "opacity-50 pointer-events-none"
+        )}>
+          {uploading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
+          Subir Foto
+          <input type="file" className="hidden" accept="image/*" onChange={handleUpload} disabled={uploading} />
+        </label>
+      </div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+        {files.map((file: any) => {
+          // Generar URL pública o firmada
+          const { data } = supabase.storage.from('obra-files').getPublicUrl(file.storage_path);
+          const imageUrl = data.publicUrl;
+
+          return (
+            <div key={file.id} className="group relative aspect-square rounded-2xl bg-slate-100 overflow-hidden border border-border/40 shadow-sm">
+              <img 
+                src={imageUrl} 
+                alt={file.nombre}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <button className="p-1.5 rounded-lg bg-white/20 text-white hover:bg-white/40 transition-colors">
+                  {file.visible_cliente ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+            </div>
+          );
+        })}
+        {files.length === 0 && !uploading && (
+          <div className="col-span-full py-8 text-center border-2 border-dashed border-border/20 rounded-2xl">
+            <p className="text-[11px] text-muted-foreground font-medium">Sin fotos de evidencia todavía</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 const ESTADOS: { value: ObraStageEstado; label: string }[] = [
   { value: "pendiente",      label: "Pendiente"       },
@@ -168,6 +257,13 @@ function StageRow({
               onChange={e => setForm(p => ({ ...p, observaciones: e.target.value }))}
             />
           </div>
+
+          {/* Galería de Fotos */}
+          <StagePhotos 
+            stageId={stage.id} 
+            projectId={projectId} 
+            initialFiles={(stage as any).files || []} 
+          />
 
           {/* Retraso */}
           <div className="flex items-start gap-4 p-4 rounded-2xl bg-amber-50 border border-amber-200">
