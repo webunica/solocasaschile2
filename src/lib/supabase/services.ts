@@ -61,6 +61,31 @@ export type ModelWithConstructora = {
   };
 };
 
+/** Obtiene los últimos posts para el mega menu (con caché) */
+export async function getLatestBlogPosts(limit = 2) {
+  return unstable_cache(
+    async (limit: number) => {
+      try {
+        const supabase = await createPublicClient()
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('is_published', true)
+          .order('created_at', { ascending: false })
+          .limit(limit)
+
+        if (error) throw error
+        return data || []
+      } catch (error) {
+        console.error("Error fetching latest blog posts:", error)
+        return []
+      }
+    },
+    ['latest-blog-posts', limit.toString()],
+    { revalidate: 3600, tags: ['blog'] }
+  )(limit)
+}
+
 /** Stats del dashboard filtradas por la constructora autenticada */
 export async function getDashboardStats() {
   const supabase = await createClient()

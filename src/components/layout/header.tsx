@@ -10,19 +10,22 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard, User, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { MegaMenu } from "./mega-menu";
+import { BlogMegaMenu } from "./blog-mega-menu";
+import { BlogPost } from "@/types/blog";
 
 const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo", icon: Library },
   { href: "/comparar", label: "Comparador", icon: ArrowLeftRight },
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
-  { href: "/blog", label: "Blog", icon: LayoutGrid },
+  { href: "/blog", label: "Blog", icon: LayoutGrid, hasMegaMenu: true },
   { href: "/planes", label: "Precios", icon: CreditCard },
 ];
 
-export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
+export function Header({ megaMenuAds, latestBlogPosts }: { megaMenuAds?: any; latestBlogPosts?: BlogPost[] }) {
   const { scrollY } = useScroll();
   const [isOpen, setIsOpen] = useState(false);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [showBlogMenu, setShowBlogMenu] = useState(false);
   
   // Adaptive height and style based on scroll
   const headerY = useTransform(scrollY, [0, 50], [20, 10]);
@@ -86,34 +89,48 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
         
         <div className="flex flex-1 items-center justify-end lg:justify-between gap-6">
           <nav className="hidden lg:flex items-center space-x-12 text-[15px] font-bold tracking-tight">
-            {NAV_LINKS.map((link) => (
-              <div 
-                key={link.href}
-                className="relative"
-                onMouseEnter={() => link.label === "Catálogo" && setShowMegaMenu(true)}
-                onMouseLeave={() => link.label === "Catálogo" && setShowMegaMenu(false)}
-              >
-                <Link 
-                  href={link.href} 
-                  className={cn(
-                    "text-[#1b0088] hover:opacity-80 transition-all relative group py-8 flex items-center gap-1",
-                    showMegaMenu && link.label === "Catálogo" && "opacity-100"
-                  )}
+            {NAV_LINKS.map((link) => {
+              const isActiveMegaMenu = (link.label === "Catálogo" && showMegaMenu) || (link.label === "Blog" && showBlogMenu);
+              
+              return (
+                <div 
+                  key={link.href}
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (link.label === "Catálogo") {
+                      setShowMegaMenu(true);
+                      setShowBlogMenu(false);
+                    } else if (link.label === "Blog") {
+                      setShowBlogMenu(true);
+                      setShowMegaMenu(false);
+                    } else {
+                      setShowMegaMenu(false);
+                      setShowBlogMenu(false);
+                    }
+                  }}
                 >
-                  {link.label}
-                  {link.label === "Catálogo" && (
-                    <ChevronDown className={cn(
-                      "w-4 h-4 transition-transform duration-300",
-                      showMegaMenu && "rotate-180"
+                  <Link 
+                    href={link.href} 
+                    className={cn(
+                      "text-[#1b0088] hover:opacity-80 transition-all relative group py-8 flex items-center gap-1",
+                      isActiveMegaMenu && "opacity-100"
+                    )}
+                  >
+                    {link.label}
+                    {(link.label === "Catálogo" || link.label === "Blog") && (
+                      <ChevronDown className={cn(
+                        "w-4 h-4 transition-transform duration-300",
+                        isActiveMegaMenu && "rotate-180"
+                      )} />
+                    )}
+                    <span className={cn(
+                      "absolute bottom-4 left-0 h-0.5 bg-[#1b0088] transition-all duration-300",
+                      isActiveMegaMenu ? "w-full" : "w-0 group-hover:w-full"
                     )} />
-                  )}
-                  <span className={cn(
-                    "absolute bottom-4 left-0 h-0.5 bg-[#1b0088] transition-all duration-300",
-                    showMegaMenu && link.label === "Catálogo" ? "w-full" : "w-0 group-hover:w-full"
-                  )} />
-                </Link>
-              </div>
-            ))}
+                  </Link>
+                </div>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-4 sm:gap-6">
@@ -207,22 +224,24 @@ export function Header({ megaMenuAds }: { megaMenuAds?: any }) {
           </div>
         </div>
 
-        <AnimatePresence>
-          {showMegaMenu && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.15 } }}
-              className="absolute top-full left-0 w-full pt-2 pointer-events-none z-50"
-              onMouseEnter={() => setShowMegaMenu(true)}
-              onMouseLeave={() => setShowMegaMenu(false)}
-            >
-              <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
-                 <MegaMenu ads={megaMenuAds} onClose={() => setShowMegaMenu(false)} />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div 
+          className="absolute top-full left-0 w-full pt-2 pointer-events-none z-50"
+          onMouseLeave={() => {
+            setShowMegaMenu(false);
+            setShowBlogMenu(false);
+          }}
+        >
+          <div className="container max-w-7xl mx-auto px-4 pointer-events-auto">
+            <AnimatePresence>
+              {showMegaMenu && (
+                <MegaMenu ads={megaMenuAds} onClose={() => setShowMegaMenu(false)} />
+              )}
+              {showBlogMenu && (
+                <BlogMegaMenu posts={latestBlogPosts || []} onClose={() => setShowBlogMenu(false)} />
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </motion.header>
   );
