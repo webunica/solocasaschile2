@@ -177,6 +177,7 @@ export interface CreateObraProjectDTO {
   ejecutivo_responsable?: string;
   observaciones_generales?: string;
   prioridad?: ObraProjectPrioridad;
+  modelo_id?: string;
   template_id?: string; // ID de plantilla de etapas a aplicar
 }
 
