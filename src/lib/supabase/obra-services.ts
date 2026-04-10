@@ -490,7 +490,12 @@ export async function applyStageTemplate(
     return stage;
   });
 
-  await supabase.from('obra_stages').insert(stagesToInsert);
+  const { error: insertError } = await supabase.from('obra_stages').insert(stagesToInsert);
+  
+  if (insertError) {
+    console.error('❌ [obra-services] Error al insertar etapas:', insertError.message);
+    throw new Error(`Error database (insert): ${insertError.message}`);
+  }
 }
 
 // ──────────────────────────────────────────────
