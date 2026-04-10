@@ -32,7 +32,7 @@ export default function PrivacidadPage() {
     {
       title: "5. Sus Derechos",
       icon: FileText,
-      content: "Usted tiene derecho a acceder, rectificar o eliminar sus datos personales en cualquier momento. Puede ejercer estos derechos enviando un correo electrónico a privacidad@solocasaschile.cl."
+      content: "Usted tiene derecho a acceder, rectificar o eliminar sus datos personales en cualquier momento. Puede ejercer estos derechos enviando un correo electrónico a privacidad@solocasaschile.com."
     },
     {
       title: "6. Cambios en la Política",
@@ -84,7 +84,7 @@ export default function PrivacidadPage() {
           <p className="text-white/70 font-medium">Nuestro equipo de cumplimiento está listo para ayudarte con cualquier consulta sobre tus datos.</p>
           <div className="pt-4">
             <a 
-              href="mailto:privacidad@solocasaschile.cl" 
+              href="mailto:privacidad@solocasaschile.com" 
               className="inline-flex h-14 px-10 items-center justify-center bg-brand-teal text-white font-black uppercase tracking-widest rounded-2xl hover:bg-white hover:text-brand-indigo transition-all shadow-lg shadow-brand-teal/20"
             >
               Contactar a Privacidad

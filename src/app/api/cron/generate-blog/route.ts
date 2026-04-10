@@ -129,7 +129,7 @@ export async function GET(req: Request) {
             socialHook: postData.social_hook,
             hashtags: postData.hashtags,
             imageUrl: publicUrl,
-            link: `https://solocasaschile.cl/blog/${postData.slug}`
+            link: `https://solocasaschile.com/blog/${postData.slug}`
           })
         });
         webhookStatus = webhookResponse.ok ? "success" : `failed_${webhookResponse.status}`;

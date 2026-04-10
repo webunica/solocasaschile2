@@ -37,7 +37,7 @@ export function DashboardSidebar({
   isSuperAdmin,
   isAdmin, 
   userName = "Constructor", 
-  userEmail = "soporte@solocasaschile.cl" 
+  userEmail = "soporte@solocasaschile.com" 
 }: { 
   isSuperAdmin?: boolean;
   isAdmin?: boolean;
