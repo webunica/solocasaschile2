@@ -31,12 +31,14 @@ export async function POST(
     // 2. Buscar el ID de la plantilla por defecto si no se envió una
     let finalTemplateId = templateId;
     if (!templateId || templateId === 'default') {
-      const { data: defaultT, error: tError } = await supabase
+      const { data: defaultTemplates, error: tError } = await supabase
         .from('obra_stage_templates')
         .select('id')
         .eq('is_default', true)
-        .maybeSingle();
+        .limit(1);
       
+      const defaultT = defaultTemplates?.[0];
+
       if (tError) {
         console.error("❌ [api/obras/stages] Error al buscar plantilla:", tError.message);
         return NextResponse.json({ error: "Error database: " + tError.message }, { status: 500 });
