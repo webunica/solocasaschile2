@@ -37,7 +37,7 @@ export default function NuevoProyectoPage() {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const [modelos, setModelos] = useState<{ id: string, nombre_modelo: string, tipo_casa: string }[]>([]);
+  const [modelos, setModelos] = useState<{ id: string, nombre_modelo: string, tipo_casa: string, constructora?: { nombre: string } }[]>([]);
 
   useEffect(() => {
     const fetchModelos = async () => {
@@ -45,14 +45,20 @@ export default function NuevoProyectoPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       
-      // La constructora.id = user.id en el sistema
-      const { data } = await supabase
+      const { data: profile } = await supabase.from('constructoras').select('role').eq('id', user.id).maybeSingle();
+      const isSuperAdmin = profile?.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
+
+      let query = supabase
         .from("modelos")
-        .select("id, nombre_modelo, tipo_casa")
-        .eq("constructora_id", user.id)
+        .select("id, nombre_modelo, tipo_casa, constructora:constructoras(nombre)")
         .order("nombre_modelo", { ascending: true });
         
-      if (data) setModelos(data);
+      if (!isSuperAdmin) {
+        query = query.eq("constructora_id", user.id);
+      }
+        
+      const { data } = await query;
+      if (data) setModelos(data as any);
     };
     fetchModelos();
   }, []);
@@ -152,7 +158,9 @@ export default function NuevoProyectoPage() {
                 <SelectContent>
                   <SelectItem value="ninguno">Ningún modelo (A medida)</SelectItem>
                   {modelos.map(m => (
-                    <SelectItem key={m.id} value={m.id}>{m.nombre_modelo}</SelectItem>
+                    <SelectItem key={m.id} value={m.id}>
+                      {m.nombre_modelo} {m.constructora ? `(${m.constructora.nombre})` : ""}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
