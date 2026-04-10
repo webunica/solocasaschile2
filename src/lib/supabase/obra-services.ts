@@ -247,20 +247,37 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // Obtener constructora_id del usuario
+  // Obtener constructora_id del usuario y su rol
   const { data: constructora } = await supabase
     .from('constructoras')
-    .select('id')
+    .select('id, role')
     .eq('id', user.id)
     .maybeSingle();
 
   if (!constructora) return null;
 
+  let finalConstructoraId = constructora.id;
+  const isSuperAdmin = constructora.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
+
+  // Si es superadmin y seleccionó un modelo de otra constructora,
+  // asignamos el proyecto a la constructora dueña de ese modelo.
+  if (isSuperAdmin && dto.modelo_id) {
+    const { data: modelInfo } = await supabase
+      .from('modelos')
+      .select('constructora_id')
+      .eq('id', dto.modelo_id)
+      .maybeSingle();
+      
+    if (modelInfo && modelInfo.constructora_id) {
+      finalConstructoraId = modelInfo.constructora_id;
+    }
+  }
+
   // Crear proyecto
   const { data: project, error } = await supabase
     .from('obra_projects')
     .insert({
-      constructora_id: constructora.id,
+      constructora_id: finalConstructoraId,
       nombre: dto.nombre,
       codigo_interno: dto.codigo_interno,
       tipo_construccion: dto.tipo_construccion,
