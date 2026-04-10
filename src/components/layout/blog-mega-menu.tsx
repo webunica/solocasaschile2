@@ -24,16 +24,16 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
     >
       <div className="max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-12">
         
-        {/* LADO IZQUIERDO: Blog y Artículos (6 columnas) */}
+        {/* LADO IZQUIERDO: Recursos y Artículos (6 columnas) */}
         <div className="md:col-span-7 space-y-8 text-left">
           <div className="flex items-center justify-between">
-             <h3 className="text-2xl font-black font-heading tracking-tight text-brand-indigo italic">Blog y <span className="text-brand-teal">Artículos</span></h3>
+             <h3 className="text-2xl font-black font-heading tracking-tight text-brand-indigo italic">Recursos y <span className="text-brand-teal">Artículos</span></h3>
              <Link 
                href="/blog" 
                className="text-xs font-black uppercase tracking-widest text-[#1b0088]/60 hover:text-brand-teal transition-all flex items-center gap-2 group"
                onClick={onClose}
              >
-                Descubre Más 
+                Ver Todo
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
              </Link>
           </div>
@@ -90,10 +90,10 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
             <ul className="space-y-4">
                {[
                  { name: "Nosotros", href: "/nosotros", icon: Sparkles },
-                 { name: "Casos de Éxito", href: "/casos", icon: BookOpen },
+                 { name: "Casos de Éxito", href: "/premium-access", icon: BookOpen },
                  { name: "Eventos", href: "/eventos", icon: Megaphone },
-                 { name: "Tutoriales", href: "/tutoriales", icon: Compass, active: true },
-                 { name: "Glosario 🔍", href: "/glosario", icon: Search },
+                 { name: "Tutoriales", href: "/premium-access", icon: Compass, active: true },
+                 { name: "Glosario 🔍", href: "/premium-access", icon: Search },
                ].map((item) => (
                  <li key={item.name}>
                    <Link 
@@ -121,7 +121,7 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
                     Contacta directamente con especialistas en materiales y servicios para tu obra.
                   </p>
                   <Link 
-                    href="/constructoras" 
+                    href="https://constru.solocasaschile.com" 
                     className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:gap-2 transition-all"
                     onClick={onClose}
                   >
@@ -136,7 +136,7 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
                 <span className="text-lg">🎉</span>
               </div>
               <Link 
-                href="/comparar"
+                href="/premium-access"
                 className="block w-full py-4 bg-brand-teal text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-brand-indigo hover:shadow-xl hover:-translate-y-0.5 transition-all text-center shadow-lg shadow-brand-teal/20"
                 onClick={onClose}
               >
