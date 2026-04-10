@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import {
   Calendar, MapPin, CheckCircle2, Clock, FileText,
   Image as ImageIcon, ChevronRight, HardHat, ArrowLeft,
-  Download, Share2, Info
+  Download, Share2, Info, User
 } from "lucide-react";
 import type { ObraStage, ObraStageFile } from "@/types/obra";
 
