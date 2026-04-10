@@ -22,7 +22,7 @@ export default async function PremiumAccessPage() {
     <div className="min-h-screen flex flex-col bg-slate-50">
       <Header megaMenuAds={megaMenuAds} latestBlogPosts={latestBlogPosts} />
       
-      <main className="flex-1 pt-32 pb-20">
+      <main className="flex-1 pt-44 pb-20">
         <div className="container px-6 md:px-12 max-w-7xl mx-auto">
           
           <div className="grid lg:grid-cols-2 gap-16 items-center">

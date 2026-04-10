@@ -16,7 +16,7 @@ export default async function NotFound() {
     <div className="min-h-screen flex flex-col">
       <Header megaMenuAds={megaMenuAds} latestBlogPosts={latestBlogPosts} />
       
-      <main className="flex-1 pt-32 pb-20">
+      <main className="flex-1 pt-44 pb-20">
         <div className="container px-6 md:px-12 max-w-7xl mx-auto space-y-20">
           
           {/* Hero Section */}
