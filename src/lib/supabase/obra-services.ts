@@ -251,7 +251,7 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
   const { data: constructora } = await supabase
     .from('constructoras')
     .select('id')
-    .eq('user_id', user.id)
+    .eq('id', user.id)
     .maybeSingle();
 
   if (!constructora) return null;

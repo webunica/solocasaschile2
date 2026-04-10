@@ -183,7 +183,7 @@ CREATE POLICY "constructora_own_projects" ON obra_projects
     OR EXISTS (
       SELECT 1 FROM constructoras c
       WHERE c.id = obra_projects.constructora_id
-      AND c.user_id = auth.uid()
+      AND c.id = auth.uid()
     )
     OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
   );
@@ -197,7 +197,7 @@ CREATE POLICY "stages_via_project" ON obra_stages
       AND (
         p.constructora_id = auth.uid()
         OR p.client_user_id = auth.uid()
-        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.user_id = auth.uid())
+        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.id = auth.uid())
         OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
       )
     )
@@ -212,7 +212,7 @@ CREATE POLICY "files_via_project" ON obra_stage_files
       AND (
         p.constructora_id = auth.uid()
         OR (p.client_user_id = auth.uid() AND obra_stage_files.visible_cliente = true)
-        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.user_id = auth.uid())
+        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.id = auth.uid())
         OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
       )
     )
@@ -227,7 +227,7 @@ CREATE POLICY "incidents_via_project" ON obra_incidents
       AND (
         p.constructora_id = auth.uid()
         OR (p.client_user_id = auth.uid() AND obra_incidents.visible_cliente = true)
-        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.user_id = auth.uid())
+        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.id = auth.uid())
         OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
       )
     )
@@ -246,7 +246,7 @@ CREATE POLICY "comments_via_project" ON obra_comments
       AND (
         p.constructora_id = auth.uid()
         OR (p.client_user_id = auth.uid() AND obra_comments.visible_cliente = true)
-        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.user_id = auth.uid())
+        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.id = auth.uid())
         OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
       )
     )
@@ -257,7 +257,7 @@ CREATE POLICY "templates_own_or_global" ON obra_stage_templates
   FOR SELECT USING (
     constructora_id IS NULL
     OR constructora_id = auth.uid()
-    OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = obra_stage_templates.constructora_id AND c.user_id = auth.uid())
+    OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = obra_stage_templates.constructora_id AND c.id = auth.uid())
     OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
   );
 
@@ -275,7 +275,7 @@ CREATE POLICY "health_logs_via_project" ON obra_health_logs
       WHERE p.id = obra_health_logs.project_id
       AND (
         p.constructora_id = auth.uid()
-        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.user_id = auth.uid())
+        OR EXISTS (SELECT 1 FROM constructoras c WHERE c.id = p.constructora_id AND c.id = auth.uid())
         OR (SELECT raw_app_meta_data->>'role' FROM auth.users WHERE id = auth.uid()) IN ('superadmin', 'admin')
       )
     )
