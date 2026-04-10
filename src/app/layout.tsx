@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     default: "SolocasasChile | El comparador de casas prefabricadas en Chile",
     template: "%s | SolocasasChile"
   },
-  description: "Compara modelos de casas prefabricadas, SIP, containers y llave en mano. Encuentra la mejor constructora verificada en Chile.",
+  description: "Compara modelos de casas prefabricadas, SIP, containers y llave en mano en Chile. SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.",
   keywords: [
     "casas prefabricadas chile",
     "casas sip chile",

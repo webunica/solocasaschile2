@@ -247,7 +247,16 @@ export function HeroSection() {
               </h1>
 
               {/* Typewriter replaced CTA and Stats */}
-              <TypewriterLoop />
+              <div className="space-y-6 w-full">
+                <TypewriterLoop />
+                
+                {/* Blindaje de Identidad */}
+                <div className="pt-4 border-t border-brand-indigo/10 lg:max-w-md mx-auto lg:mx-0">
+                  <p className="text-[10px] md:text-[11px] font-bold text-brand-indigo/60 uppercase tracking-widest leading-relaxed">
+                    <span className="text-brand-indigo font-black">Nota de Independencia:</span> SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </div>
 
