@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { getVerificationStatus, getStatusColor } from "@/lib/utils/trust";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -169,7 +170,15 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                          <Building2 className="w-5 h-5 text-primary" />
                       </div>
-                      <span className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate">{c.nombre}</span>
+                      <div className="flex flex-col">
+                        <span className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate">{c.nombre}</span>
+                        <div className={cn(
+                          "inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-tighter border w-fit mt-1",
+                          getStatusColor(getVerificationStatus(c))
+                        )}>
+                          {getVerificationStatus(c)}
+                        </div>
+                      </div>
                     </div>
                   </td>
                   <td className="p-5">

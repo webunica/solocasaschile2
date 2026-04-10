@@ -7,6 +7,7 @@ import { ShieldCheck, Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { getVerificationStatus, getStatusColor } from "@/lib/utils/trust";
 
 export function PremiumCarousel({ constructoras }: { constructoras: any[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -39,12 +40,14 @@ export function PremiumCarousel({ constructoras }: { constructoras: any[] }) {
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 max-w-[100vw] will-change-scroll"
       >
-        {constructoras.map((c) => (
-          <Link
-            key={c.id}
-            href={`/constructora/${c.slug}`}
-            className="group flex-none w-[80vw] sm:w-[350px] snap-center bg-card/40 backdrop-blur-xl border border-border/40 rounded-[2.5rem] p-8 hover:border-primary/30 hover:-translate-y-1 transition-all shadow-lg hover:shadow-xl hover:shadow-primary/5 flex flex-col gap-6"
-          >
+        {constructoras.map((c) => {
+          const status = getVerificationStatus(c);
+          return (
+            <Link
+              key={c.id}
+              href={`/constructora/${c.slug}`}
+              className="group flex-none w-[80vw] sm:w-[350px] snap-center bg-card/40 backdrop-blur-xl border border-border/40 rounded-[2.5rem] p-8 hover:border-primary/30 hover:-translate-y-1 transition-all shadow-lg hover:shadow-xl hover:shadow-primary/5 flex flex-col gap-6"
+            >
             {/* Logo + plan badge */}
             <div className="flex items-start justify-between">
               <div className="w-16 h-16 rounded-2xl border-2 border-border/40 bg-background flex items-center justify-center p-3 overflow-hidden group-hover:border-primary/30 transition-colors">
@@ -64,10 +67,15 @@ export function PremiumCarousel({ constructoras }: { constructoras: any[] }) {
             </div>
 
             {/* Info */}
-            <div className="flex-1 space-y-2">
-              <div className="flex items-center gap-2">
+            <div className="flex-1 space-y-4">
+              <div className="space-y-1">
                 <h3 className="font-heading font-black text-xl tracking-tight group-hover:text-primary transition-colors line-clamp-1">{c.nombre}</h3>
-                {c.verificada && <ShieldCheck className="w-5 h-5 text-emerald-500 shrink-0" />}
+                <div className={cn(
+                  "inline-flex items-center px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter border",
+                  getStatusColor(status)
+                )}>
+                  {status}
+                </div>
               </div>
               {c.descripcion && (
                 <p className="text-muted-foreground font-medium text-sm line-clamp-2 leading-relaxed">{c.descripcion}</p>

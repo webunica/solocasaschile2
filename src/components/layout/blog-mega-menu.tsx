@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ChevronRight, ArrowRight, Search, Sparkles, BookOpen, Users, Compass, Megaphone } from "lucide-react";
+import { ChevronRight, ArrowRight, Search, Sparkles, BookOpen, Users, Compass, Megaphone, ShieldCheck, MessageSquare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/types/blog";
 
@@ -86,27 +86,28 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
         {/* LADO DERECHO: Impacto y Recursos (5 columnas) */}
         <div className="md:col-span-5 grid grid-cols-2 gap-8 border-l border-border/10 pl-12 items-start">
           <div className="space-y-6">
-            <h3 className="text-lg font-black font-heading tracking-tight text-brand-indigo">Impacto</h3>
-            <ul className="space-y-4">
-               {[
-                 { name: "Nosotros", href: "/nosotros", icon: Sparkles },
-                 { name: "Casos de Éxito", href: "/premium-access", icon: BookOpen },
-                 { name: "Eventos", href: "/eventos", icon: Megaphone },
-                 { name: "Tutoriales", href: "/premium-access", icon: Compass, active: true },
-                 { name: "Glosario 🔍", href: "/premium-access", icon: Search },
-               ].map((item) => (
-                 <li key={item.name}>
-                   <Link 
-                     href={item.href}
-                     className={`text-[13px] font-bold transition-all hover:text-brand-teal flex items-center gap-3 ${item.active ? 'text-brand-teal' : 'text-slate-600'}`}
-                     onClick={onClose}
-                   >
-                     {/* <item.icon className="w-4 h-4 opacity-40" /> */}
-                     {item.name}
-                   </Link>
-                 </li>
-               ))}
-            </ul>
+                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo/40 mb-4 px-4 flex items-center gap-2">
+                    <Sparkles className="w-3 h-3 text-brand-teal" /> Información Corporativa
+                  </h4>
+                  <div className="space-y-1">
+                    {[
+                      { name: "Sobre Nosotros", href: "/nosotros", icon: Users },
+                      { name: "¿Cómo verificamos?", href: "/verificacion", icon: ShieldCheck },
+                      { name: "Preguntas Frecuentes", href: "/#faq", icon: MessageSquare },
+                    ].map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="flex items-center gap-3 p-4 rounded-2xl hover:bg-brand-indigo/5 transition-all group"
+                        onClick={onClose}
+                      >
+                        <div className="w-8 h-8 rounded-xl bg-brand-indigo/5 flex items-center justify-center text-brand-indigo group-hover:bg-brand-indigo group-hover:text-white transition-all">
+                          <item.icon className="w-4 h-4" />
+                        </div>
+                        <span className="text-xs font-bold text-slate-600 group-hover:text-brand-indigo transition-colors">{item.name}</span>
+                      </Link>
+                    ))}
+                  </div>
           </div>
 
           <div className="space-y-8">
