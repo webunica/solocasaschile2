@@ -37,7 +37,7 @@ export default function NuevoProyectoPage() {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const [modelos, setModelos] = useState<{ id: string, nombre_modelo: string, tipo_casa: string, constructora?: { nombre: string } }[]>([]);
+  const [modelos, setModelos] = useState<{ id: string, nombre: string, tipo: string, constructora?: { nombre: string } }[]>([]);
 
   useEffect(() => {
     const fetchModelos = async () => {
@@ -50,8 +50,8 @@ export default function NuevoProyectoPage() {
 
       let query = supabase
         .from("modelos")
-        .select("id, nombre_modelo, tipo_casa, constructora:constructoras(nombre)")
-        .order("nombre_modelo", { ascending: true });
+        .select("id, nombre, tipo, constructora:constructoras(nombre)")
+        .order("nombre", { ascending: true });
         
       if (!isSuperAdmin) {
         query = query.eq("constructora_id", user.id);
@@ -74,7 +74,7 @@ export default function NuevoProyectoPage() {
     setForm(prev => ({
       ...prev,
       modelo_id: id,
-      tipo_construccion: model.tipo_casa ? model.tipo_casa.toLowerCase().replace(/ /g, '-') : prev.tipo_construccion
+      tipo_construccion: model.tipo ? model.tipo.toLowerCase().replace(/ /g, '-') : prev.tipo_construccion
     }));
   };
 
@@ -159,7 +159,7 @@ export default function NuevoProyectoPage() {
                   <SelectItem value="ninguno">Ningún modelo (A medida)</SelectItem>
                   {modelos.map(m => (
                     <SelectItem key={m.id} value={m.id}>
-                      {m.nombre_modelo} {m.constructora ? `(${m.constructora.nombre})` : ""}
+                      {m.nombre} {m.constructora ? `(${m.constructora.nombre})` : ""}
                     </SelectItem>
                   ))}
                 </SelectContent>
