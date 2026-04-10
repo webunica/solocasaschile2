@@ -122,7 +122,7 @@ export async function getObraProject(id: string): Promise<ObraProject | null> {
 export async function getObraProjectForClient(id: string): Promise<ObraProject | null> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  const { data: projectList, error } = await supabase
     .from('obra_projects')
     .select(`
       *,
@@ -137,7 +137,9 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
       specs:obra_project_specs(*)
     `)
     .eq('id', id)
-    .maybeSingle();
+    .limit(1);
+
+  const data = projectList?.[0];
 
   if (error || !data) return null;
 
