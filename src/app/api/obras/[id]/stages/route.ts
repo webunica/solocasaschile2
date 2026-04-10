@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { applyStageTemplate } from "@/lib/supabase/obra-services";
+import { applyStageTemplate, getObraStages } from "@/lib/supabase/obra-services";
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id: projectId } = await params;
+  const stages = await getObraStages(projectId);
+  return NextResponse.json({ stages });
+}
 
 export async function POST(
   req: NextRequest,
