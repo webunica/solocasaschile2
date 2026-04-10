@@ -7,12 +7,13 @@ import { ProjectHealthBadge } from "@/components/obras/health-badge";
 import { GanttChart } from "@/components/obras/gantt-chart";
 import { ProjectTimeline } from "@/components/obras/project-timeline";
 import { StageStatusBadge } from "@/components/obras/stage-status-badge";
+import { ProjectSpecsList } from "@/components/obras/project-specs-list";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft, Calendar, MapPin, HardHat, User, FileText,
-  Image as ImageIcon, Settings, ChevronRight, Clock
+  Image as ImageIcon, Settings, ChevronRight, Clock, CheckSquare
 } from "lucide-react";
 import type { ObraStage } from "@/types/obra";
 
@@ -186,6 +187,24 @@ export default async function ObraDetailPage({ params }: { params: Promise<{ id:
               )}
             </div>
           </div>
+
+          {/* Especificaciones / Checklists de Materiales */}
+          {((project as any).specs?.length > 0) && (
+            <div className="p-6 rounded-[2rem] bg-white border border-border/40 shadow-sm space-y-4">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-brand-teal/10 flex items-center justify-center shrink-0">
+                  <CheckSquare className="w-5 h-5 text-brand-teal" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-black text-base tracking-tight leading-tight">Especificaciones y Materiales</h3>
+                  <p className="text-[10px] uppercase font-black tracking-widest text-muted-foreground">Estado de instalación</p>
+                </div>
+              </div>
+              
+              <ProjectSpecsList initialSpecs={(project as any).specs} projectId={id} />
+            </div>
+          )}
+
         </div>
 
         {/* Columna derecha: info lateral */}
