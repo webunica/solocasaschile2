@@ -134,13 +134,21 @@ function StageRow({
 
   const handleSave = () => {
     startTransition(async () => {
-      await fetch(`/api/obras/${projectId}/stages/${stage.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      onSaved();
-      setOpen(false);
+      try {
+        const res = await fetch(`/api/obras/${projectId}/stages/${stage.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        });
+        
+        if (!res.ok) throw new Error("Error al guardar los cambios");
+        
+        onSaved();
+        setOpen(false);
+      } catch (error) {
+        console.error("Save error:", error);
+        alert("No se pudieron guardar los cambios. Por favor, revisa tu conexión o permisos.");
+      }
     });
   };
 
