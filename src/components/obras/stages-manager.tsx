@@ -322,7 +322,8 @@ export function StagesManager({ stages, projectId }: { stages: ObraStage[]; proj
       if (res.ok) {
         window.location.reload(); // Refresh to show new stages
       } else {
-        alert("Error al cargar etapas");
+        const errData = await res.json();
+        alert(`Error: ${errData.error || "No se pudieron cargar las etapas"}`);
       }
     } catch (err) {
       console.error(err);
