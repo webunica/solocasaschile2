@@ -235,16 +235,24 @@ export default function NuevoProyectoPage() {
             <div className="grid md:grid-cols-2 gap-6 text-sm">
               {['construccion', 'terminaciones', 'aislacion', 'instalaciones'].map((cat) => {
                 const data = selectedModel[cat];
-                if (!data || Object.keys(data).filter(k => k !== 'notas' && data[k]).length === 0) return null;
+                if (!data) return null;
+                // Filtrar notas, planos y urls
+                const filteredEntries = Object.entries(data).filter(([k, v]) => {
+                  const key = k.toLowerCase();
+                  return v && key !== 'notas' && !key.includes('plano') && !key.includes('url');
+                });
+
+                if (filteredEntries.length === 0) return null;
+
                 return (
                   <div key={cat} className="space-y-3">
                     <p className="text-xs font-black uppercase tracking-widest text-brand-indigo/50 bg-white/50 inline-block px-3 py-1 rounded-full">{cat}</p>
                     <ul className="space-y-2">
-                      {Object.entries(data).filter(([k,v]) => k !== 'notas' && v).map(([key, value]) => (
+                      {filteredEntries.map(([key, value]) => (
                         <li key={key} className="flex gap-2 text-brand-indigo font-medium">
                           <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-brand-teal mt-1.5" />
                           <span className="capitalize">{key.replace(/_/g, ' ')}:</span>
-                          <span className="text-brand-indigo/70 font-normal">{String(value)}</span>
+                          <span className="text-brand-indigo/70 font-normal truncate max-w-[200px]">{String(value)}</span>
                         </li>
                       ))}
                     </ul>
