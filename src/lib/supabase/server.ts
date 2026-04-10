@@ -13,7 +13,7 @@ export async function createClient() {
   }
 
   // Dominio compartido para que la sesión funcione en app. y constru.
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction = process.env.VERCEL_ENV === 'production' || (!process.env.VERCEL_ENV && process.env.NODE_ENV === 'production');
   const cookieDomain = isProduction ? '.solocasaschile.com' : undefined;
 
   return createServerClient(url, key, {
