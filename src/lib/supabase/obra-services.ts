@@ -272,6 +272,7 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
       ejecutivo_responsable: dto.ejecutivo_responsable,
       observaciones_generales: dto.observaciones_generales,
       prioridad: dto.prioridad ?? 'normal',
+      modelo_id: dto.modelo_id,
     })
     .select()
     .single();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ export default function NuevoProyectoPage() {
   const [form, setForm] = useState({
     nombre: "",
     codigo_interno: "",
+    modelo_id: "ninguno",
     tipo_construccion: "",
     region: "",
     comuna: "",
@@ -36,16 +37,56 @@ export default function NuevoProyectoPage() {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
+  const [modelos, setModelos] = useState<{ id: string, nombre_modelo: string, tipo_casa: string }[]>([]);
+
+  useEffect(() => {
+    const fetchModelos = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      // La constructora.id = user.id en el sistema
+      const { data } = await supabase
+        .from("modelos")
+        .select("id, nombre_modelo, tipo_casa")
+        .eq("constructora_id", user.id)
+        .order("nombre_modelo", { ascending: true });
+        
+      if (data) setModelos(data);
+    };
+    fetchModelos();
+  }, []);
+
+  const handleModelChange = (id: string) => {
+    if (id === "ninguno") {
+      setForm(prev => ({ ...prev, modelo_id: "ninguno" }));
+      return;
+    }
+    const model = modelos.find(m => m.id === id);
+    if (!model) return;
+    
+    setForm(prev => ({
+      ...prev,
+      modelo_id: id,
+      tipo_construccion: model.tipo_casa ? model.tipo_casa.toLowerCase().replace(/ /g, '-') : prev.tipo_construccion
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.nombre) return;
     setLoading(true);
 
     try {
+      const payload = {
+        ...form,
+        modelo_id: form.modelo_id === "ninguno" ? undefined : form.modelo_id
+      };
+
       const res = await fetch("/api/obras", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
@@ -102,7 +143,22 @@ export default function NuevoProyectoPage() {
           <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo/60">Datos del Proyecto</h3>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="md:col-span-2 space-y-2">
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Modelo Asociado (Opcional)</Label>
+              <Select value={form.modelo_id} onValueChange={(v: string | null) => handleModelChange(v ?? "ninguno")}>
+                <SelectTrigger className="h-12 rounded-xl">
+                  <SelectValue placeholder="Seleccionar modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ninguno">Ningún modelo (Proyecto 100% a medida)</SelectItem>
+                  {modelos.map(m => (
+                    <SelectItem key={m.id} value={m.id}>{m.nombre_modelo}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Nombre del Proyecto *</Label>
               <Input
                 placeholder="Ej: Casa Modelo Alerce - Fam. González"
