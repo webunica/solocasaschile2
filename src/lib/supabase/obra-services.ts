@@ -315,7 +315,8 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
     const pushCategory = (catName: string, catData: any) => {
       if (!catData) return;
       Object.entries(catData).forEach(([key, value]) => {
-        if (key !== 'notas' && value && String(value).trim() !== '') {
+        const k = key.toLowerCase();
+        if (value && k !== 'notas' && !k.includes('plano') && !k.includes('url')) {
           specsToInsert.push({
             project_id: project.id,
             categoria: catName,
