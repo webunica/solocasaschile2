@@ -143,14 +143,14 @@ export default function NuevoProyectoPage() {
           <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo/60">Datos del Proyecto</h3>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+            <div className="md:col-span-2 space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Modelo Asociado (Opcional)</Label>
               <Select value={form.modelo_id} onValueChange={(v: string | null) => handleModelChange(v ?? "ninguno")}>
                 <SelectTrigger className="h-12 rounded-xl">
                   <SelectValue placeholder="Seleccionar modelo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ninguno">Ningún modelo (Proyecto 100% a medida)</SelectItem>
+                  <SelectItem value="ninguno">Ningún modelo (A medida)</SelectItem>
                   {modelos.map(m => (
                     <SelectItem key={m.id} value={m.id}>{m.nombre_modelo}</SelectItem>
                   ))}
@@ -158,7 +158,7 @@ export default function NuevoProyectoPage() {
               </Select>
             </div>
 
-            <div className="space-y-2">
+            <div className="md:col-span-2 space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Nombre del Proyecto *</Label>
               <Input
                 placeholder="Ej: Casa Modelo Alerce - Fam. González"
