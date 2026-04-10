@@ -215,42 +215,35 @@ export default async function ModeloPage({ params }: PageProps) {
                   if (modelTestimonios.length === 0) return null;
 
                   return (
-                    <div className="space-y-12 py-16 border-t border-border/40">
-                       <div className="space-y-3">
-                         <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tight italic">Lo que dicen los clientes</h2>
-                         <p className="text-muted-foreground text-lg font-medium">Experiencias reales construyendo con {constructora.nombre}</p>
+                    <div className="space-y-8 py-12 border-t border-border/40">
+                       <div className="space-y-2">
+                         <h2 className="text-2xl md:text-3xl font-heading font-black tracking-tight italic">Testimonios Verificados</h2>
+                         <p className="text-muted-foreground text-sm font-medium">Experiencias construyendo con {constructora.nombre}</p>
                        </div>
                        
                        <div className="relative">
-                          <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+                          <div className="flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                              {modelTestimonios.map((t: any, i: number) => (
-                               <div key={i} className="min-w-[320px] md:min-w-[500px] bg-card border border-border/40 rounded-[3rem] p-10 space-y-6 shadow-sm hover:shadow-xl transition-all duration-500 group snap-center">
-                                  <div className="flex gap-1.5">
+                               <div key={i} className="min-w-[280px] md:min-w-[320px] bg-card border border-border/40 rounded-[2rem] p-6 space-y-4 shadow-sm hover:shadow-lg transition-all duration-300 group snap-center">
+                                  <div className="flex gap-1">
                                      {[...Array(5)].map((_, starI) => (
-                                       <Star key={starI} className={cn("w-5 h-5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
+                                       <Star key={starI} className={cn("w-3.5 h-3.5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
                                      ))}
                                   </div>
-                                  <p className="text-lg md:text-xl font-medium italic leading-relaxed text-foreground/90">"{t.texto}"</p>
-                                  <div className="pt-4 flex items-center gap-4">
-                                     <div className="w-12 h-12 rounded-2xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo uppercase">
+                                  <p className="text-sm md:text-base font-medium italic leading-relaxed text-foreground/90 line-clamp-4">"{t.texto}"</p>
+                                  <div className="pt-2 flex items-center gap-3">
+                                     <div className="w-10 h-10 rounded-xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo text-sm">
                                         {t.nombre.charAt(0)}
                                      </div>
                                      <div>
-                                        <p className="font-black text-lg leading-tight">{t.nombre}</p>
-                                        {t.cargo && <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mt-1">{t.cargo}</p>}
+                                        <p className="font-black text-sm leading-tight">{t.nombre}</p>
+                                        {t.cargo && <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-0.5">{t.cargo}</p>}
                                      </div>
                                   </div>
                                </div>
                              ))}
                           </div>
-                          
-                          {/* Hint for scrolling */}
-                          <div className="flex justify-center md:hidden gap-1 mt-4">
-                             {modelTestimonios.map((_, i) => (
-                               <div key={i} className="w-1.5 h-1.5 rounded-full bg-brand-indigo/20" />
-                             ))}
-                          </div>
-                       </div>
+                      </div>
                     </div>
                   );
                 })()}
