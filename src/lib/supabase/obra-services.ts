@@ -449,7 +449,7 @@ async function recalcProjectProgress(projectId: string) {
 // SERVER ACTIONS — PLANTILLAS
 // ──────────────────────────────────────────────
 
-async function applyStageTemplate(
+export async function applyStageTemplate(
   projectId: string,
   templateId: string,
   startDate?: string

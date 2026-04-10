@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronUp, Save, Loader2, AlertTriangle } from "lucide-react";
+import { ChevronDown, ChevronUp, Save, Loader2, AlertTriangle, Plus, Layers } from "lucide-react";
 
 const ESTADOS: { value: ObraStageEstado; label: string }[] = [
   { value: "pendiente",      label: "Pendiente"       },
@@ -211,6 +211,29 @@ function StageRow({
 
 export function StagesManager({ stages, projectId }: { stages: ObraStage[]; projectId: string }) {
   const [key, setKey] = useState(0); // force re-fetch hint for parent
+  const [isImporting, setIsImporting] = useState(false);
+
+  const handleImportDefault = async () => {
+    if (!confirm("¿Cargar las etapas estándar para este proyecto?")) return;
+    
+    setIsImporting(true);
+    try {
+      const res = await fetch(`/api/obras/${projectId}/stages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ templateId: 'default' }),
+      });
+      if (res.ok) {
+        window.location.reload(); // Refresh to show new stages
+      } else {
+        alert("Error al cargar etapas");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsImporting(false);
+    }
+  };
 
   return (
     <div className="space-y-3">
@@ -222,9 +245,30 @@ export function StagesManager({ stages, projectId }: { stages: ObraStage[]; proj
           onSaved={() => setKey(k => k + 1)}
         />
       ))}
+      
       {stages.length === 0 && (
-        <div className="text-center py-16 text-muted-foreground font-medium text-sm">
-          Sin etapas. Las etapas se crean automáticamente al crear un proyecto con la plantilla estándar.
+        <div className="text-center py-20 bg-white rounded-[2.5rem] border border-dashed border-border/60 space-y-6">
+          <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-300">
+            <Layers className="w-8 h-8" />
+          </div>
+          <div className="max-w-xs mx-auto space-y-2">
+            <p className="font-black text-foreground">Sin etapas definidas</p>
+            <p className="text-sm text-muted-foreground font-medium">
+              Este proyecto aún no tiene una línea de tiempo. Puedes cargar las etapas estándar de construcción ahora.
+            </p>
+          </div>
+          <Button
+            onClick={handleImportDefault}
+            disabled={isImporting}
+            className="rounded-2xl px-8 font-black uppercase tracking-wider text-xs bg-brand-indigo text-white shadow-xl shadow-brand-indigo/20"
+          >
+            {isImporting ? (
+              <Loader2 className="w-4 h-4 animate-spin mr-2" />
+            ) : (
+              <Plus className="w-4 h-4 mr-2" />
+            )}
+            Cargar Etapas Estándar
+          </Button>
         </div>
       )}
     </div>
