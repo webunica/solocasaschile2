@@ -257,13 +257,16 @@ export function CotizarModal({
               </Button>
 
               <div className="flex flex-col items-center gap-3 pt-2">
-                 <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest flex items-center gap-2">
-                    <Lock className="w-3.5 h-3.5 text-brand-indigo/60" /> Tus datos están 100% seguros
-                 </p>
-                 <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-1.5 rounded-full">
+                  <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest flex flex-col items-center gap-1.5 leading-none">
+                    <span className="flex items-center gap-2">
+                       <Lock className="w-3.5 h-3.5 text-brand-indigo/60" /> Tus datos están 100% seguros
+                    </span>
+                    <Link href="/privacidad" onClick={() => setOpen(false)} className="hover:text-brand-indigo transition-colors underline underline-offset-2 opacity-60 hover:opacity-100">Políticas de Privacidad</Link>
+                  </p>
+                  <div className="flex items-center gap-2 bg-emerald-500/10 px-4 py-1.5 rounded-full">
                     <Zap className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600/20" />
                     <p className="text-[10px] text-emerald-700 font-black uppercase tracking-widest">Respuesta profesional garantizada</p>
-                 </div>
+                  </div>
               </div>
             </form>
           </div>
