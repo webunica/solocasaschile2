@@ -1,0 +1,264 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowLeft, HardHat, Loader2, CheckCircle2 } from "lucide-react";
+import Link from "next/link";
+import type { ObraProjectPrioridad } from "@/types/obra";
+import { REGIONES_CHILE } from "@/config/regions";
+
+export default function NuevoProyectoPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const [form, setForm] = useState({
+    nombre: "",
+    codigo_interno: "",
+    tipo_construccion: "",
+    region: "",
+    comuna: "",
+    direccion_referencia: "",
+    fecha_inicio_estimada: "",
+    fecha_termino_estimada: "",
+    ejecutivo_responsable: "",
+    observaciones_generales: "",
+    prioridad: "normal" as ObraProjectPrioridad,
+  });
+
+  const handleChange = (field: string, value: string) => {
+    setForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.nombre) return;
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/obras", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setSuccess(true);
+        setTimeout(() => router.push(`/dashboard/obras/${data.id}`), 1200);
+      }
+    } catch (err) {
+      console.error("Error creating project:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const TIPOS = [
+    "Prefabricada", "Panel SIP", "Modular", "Container",
+    "Steel Framing", "Madera", "Hormigón", "Mixto", "Otro"
+  ];
+
+  if (success) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
+        <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center animate-bounce">
+          <CheckCircle2 className="w-10 h-10 text-emerald-600" />
+        </div>
+        <p className="text-xl font-black text-foreground">¡Proyecto creado exitosamente!</p>
+        <p className="text-sm text-muted-foreground font-medium">Redirigiendo al detalle...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-8">
+      {/* Header */}
+      <div className="space-y-4">
+        <Link href="/dashboard/obras" className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-brand-indigo transition-colors">
+          <ArrowLeft className="w-4 h-4" /> Volver a Proyectos
+        </Link>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-brand-indigo/10 flex items-center justify-center">
+            <HardHat className="w-5 h-5 text-brand-indigo" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-heading font-black tracking-tight">Nuevo Proyecto de Obra</h1>
+            <p className="text-sm text-muted-foreground font-medium">Completa la información para crear un nuevo seguimiento</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Formulario */}
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Datos principales */}
+        <div className="p-8 rounded-[2rem] bg-white border border-border/40 space-y-6">
+          <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo/60">Datos del Proyecto</h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="md:col-span-2 space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Nombre del Proyecto *</Label>
+              <Input
+                placeholder="Ej: Casa Modelo Alerce - Fam. González"
+                value={form.nombre}
+                onChange={e => handleChange("nombre", e.target.value)}
+                required
+                className="h-12 rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Código Interno</Label>
+              <Input
+                placeholder="Ej: PRJ-2026-001"
+                value={form.codigo_interno}
+                onChange={e => handleChange("codigo_interno", e.target.value)}
+                className="h-12 rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Tipo de Construcción</Label>
+              <Select value={form.tipo_construccion} onValueChange={(v: string | null) => handleChange("tipo_construccion", v ?? "")}>
+                <SelectTrigger className="h-12 rounded-xl">
+                  <SelectValue placeholder="Seleccionar tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {TIPOS.map(t => (
+                    <SelectItem key={t} value={t.toLowerCase().replace(/ /g, '-')}>{t}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        {/* Ubicación */}
+        <div className="p-8 rounded-[2rem] bg-white border border-border/40 space-y-6">
+          <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo/60">Ubicación</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Región</Label>
+              <Select value={form.region} onValueChange={(v: string | null) => handleChange("region", v ?? "")}>
+                <SelectTrigger className="h-12 rounded-xl">
+                  <SelectValue placeholder="Seleccionar región" />
+                </SelectTrigger>
+                <SelectContent>
+                  {REGIONES_CHILE.map((r: string) => (
+                    <SelectItem key={r} value={r}>{r}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Comuna</Label>
+              <Input
+                placeholder="Ej: Temuco"
+                value={form.comuna}
+                onChange={e => handleChange("comuna", e.target.value)}
+                className="h-12 rounded-xl"
+              />
+            </div>
+            <div className="md:col-span-2 space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Dirección / Referencia de Terreno</Label>
+              <Input
+                placeholder="Ej: Parcela 12, camino a Maquehue km 5"
+                value={form.direccion_referencia}
+                onChange={e => handleChange("direccion_referencia", e.target.value)}
+                className="h-12 rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Fechas y prioridad */}
+        <div className="p-8 rounded-[2rem] bg-white border border-border/40 space-y-6">
+          <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo/60">Planificación</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Fecha Inicio Estimada</Label>
+              <Input
+                type="date"
+                value={form.fecha_inicio_estimada}
+                onChange={e => handleChange("fecha_inicio_estimada", e.target.value)}
+                className="h-12 rounded-xl"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Fecha Término Estimada</Label>
+              <Input
+                type="date"
+                value={form.fecha_termino_estimada}
+                onChange={e => handleChange("fecha_termino_estimada", e.target.value)}
+                className="h-12 rounded-xl"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Prioridad</Label>
+              <Select value={form.prioridad} onValueChange={(v: string | null) => handleChange("prioridad", v ?? "")}>
+                <SelectTrigger className="h-12 rounded-xl">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="baja">Baja</SelectItem>
+                  <SelectItem value="normal">Normal</SelectItem>
+                  <SelectItem value="alta">Alta</SelectItem>
+                  <SelectItem value="urgente">Urgente</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        {/* Responsable y notas */}
+        <div className="p-8 rounded-[2rem] bg-white border border-border/40 space-y-6">
+          <h3 className="text-sm font-black uppercase tracking-widest text-brand-indigo/60">Responsable y Notas</h3>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Ejecutivo Responsable</Label>
+              <Input
+                placeholder="Nombre del responsable"
+                value={form.ejecutivo_responsable}
+                onChange={e => handleChange("ejecutivo_responsable", e.target.value)}
+                className="h-12 rounded-xl"
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Observaciones Generales</Label>
+            <Textarea
+              placeholder="Notas internas sobre el proyecto..."
+              value={form.observaciones_generales}
+              onChange={e => handleChange("observaciones_generales", e.target.value)}
+              rows={4}
+              className="rounded-xl resize-none"
+            />
+          </div>
+        </div>
+
+        {/* Submit */}
+        <div className="flex justify-end gap-4">
+          <Link href="/dashboard/obras">
+            <Button type="button" variant="outline" className="rounded-xl h-12 px-8 font-bold">
+              Cancelar
+            </Button>
+          </Link>
+          <Button
+            type="submit"
+            disabled={loading || !form.nombre}
+            className="rounded-xl h-12 px-10 font-black uppercase tracking-wider bg-brand-indigo shadow-xl shadow-brand-indigo/20 text-white"
+          >
+            {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+            Crear Proyecto
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+}
