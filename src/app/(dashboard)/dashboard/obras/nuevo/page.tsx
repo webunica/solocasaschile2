@@ -146,7 +146,7 @@ export default function NuevoProyectoPage() {
             <div className="md:col-span-2 space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Modelo Asociado (Opcional)</Label>
               <Select value={form.modelo_id} onValueChange={(v: string | null) => handleModelChange(v ?? "ninguno")}>
-                <SelectTrigger className="h-12 rounded-xl">
+                <SelectTrigger className="w-full h-12 rounded-xl">
                   <SelectValue placeholder="Seleccionar modelo" />
                 </SelectTrigger>
                 <SelectContent>
@@ -182,7 +182,7 @@ export default function NuevoProyectoPage() {
             <div className="space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Tipo de Construcción</Label>
               <Select value={form.tipo_construccion} onValueChange={(v: string | null) => handleChange("tipo_construccion", v ?? "")}>
-                <SelectTrigger className="h-12 rounded-xl">
+                <SelectTrigger className="w-full h-12 rounded-xl">
                   <SelectValue placeholder="Seleccionar tipo" />
                 </SelectTrigger>
                 <SelectContent>
@@ -202,7 +202,7 @@ export default function NuevoProyectoPage() {
             <div className="space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Región</Label>
               <Select value={form.region} onValueChange={(v: string | null) => handleChange("region", v ?? "")}>
-                <SelectTrigger className="h-12 rounded-xl">
+                <SelectTrigger className="w-full h-12 rounded-xl">
                   <SelectValue placeholder="Seleccionar región" />
                 </SelectTrigger>
                 <SelectContent>
@@ -258,7 +258,7 @@ export default function NuevoProyectoPage() {
             <div className="space-y-2">
               <Label className="text-xs font-black uppercase tracking-widest text-muted-foreground">Prioridad</Label>
               <Select value={form.prioridad} onValueChange={(v: string | null) => handleChange("prioridad", v ?? "")}>
-                <SelectTrigger className="h-12 rounded-xl">
+                <SelectTrigger className="w-full h-12 rounded-xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
