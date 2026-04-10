@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { href: "/catalogo", label: "Catálogo", icon: Library },
   { href: "/comparar", label: "Comparador", icon: ArrowLeftRight },
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
-  { href: "/blog", label: "Blog", icon: LayoutGrid, hasMegaMenu: true },
+  { href: "/blog", label: "Recursos", icon: LayoutGrid, hasMegaMenu: true },
   { href: "/planes", label: "Precios", icon: CreditCard },
 ];
 
@@ -90,7 +90,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: { megaMenuAds?: any; la
         <div className="flex flex-1 items-center justify-end lg:justify-between gap-6">
           <nav className="hidden lg:flex items-center space-x-12 text-[15px] font-bold tracking-tight">
             {NAV_LINKS.map((link) => {
-              const isActiveMegaMenu = (link.label === "Catálogo" && showMegaMenu) || (link.label === "Blog" && showBlogMenu);
+              const isActiveMegaMenu = (link.label === "Catálogo" && showMegaMenu) || (link.label === "Recursos" && showBlogMenu);
               
               return (
                 <div 
@@ -100,7 +100,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: { megaMenuAds?: any; la
                     if (link.label === "Catálogo") {
                       setShowMegaMenu(true);
                       setShowBlogMenu(false);
-                    } else if (link.label === "Blog") {
+                    } else if (link.label === "Recursos") {
                       setShowBlogMenu(true);
                       setShowMegaMenu(false);
                     } else {
@@ -117,7 +117,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: { megaMenuAds?: any; la
                     )}
                   >
                     {link.label}
-                    {(link.label === "Catálogo" || link.label === "Blog") && (
+                    {(link.label === "Catálogo" || link.label === "Recursos") && (
                       <ChevronDown className={cn(
                         "w-4 h-4 transition-transform duration-300",
                         isActiveMegaMenu && "rotate-180"
