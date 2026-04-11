@@ -69,7 +69,8 @@ export function SeguimientoPromo() {
           {/* Visual Presentation - Carousel Frame */}
           <div className="w-full lg:w-1/2 relative">
              <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
-               <DialogTrigger asChild>
+               <DialogTrigger 
+                 render={
                   <div className="relative h-[500px] w-full rounded-[3rem] border border-border/40 shadow-2xl overflow-hidden group cursor-zoom-in">
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -132,7 +133,8 @@ export function SeguimientoPromo() {
                        ))}
                     </div>
                   </div>
-               </DialogTrigger>
+                 }
+               />
                <DialogContent className="max-w-[95vw] sm:max-w-7xl h-[90vh] p-0 border-none bg-transparent shadow-none selection:bg-transparent">
                   <DialogHeader className="sr-only">
                     <DialogTitle>{slide.title}</DialogTitle>
