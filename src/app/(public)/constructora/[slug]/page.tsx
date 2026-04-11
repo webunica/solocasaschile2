@@ -1,4 +1,4 @@
-import { getConstructoraBySlug, getModelsByConstructoraId, getSellosDeConstructora } from "@/lib/supabase/services";
+import { getConstructoraBySlug, getModelsByConstructoraId, getSellosDeConstructora, getPublicProjectsByConstructoraId } from "@/lib/supabase/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,7 @@ import {
 import type { Metadata } from "next";
 import { ShareActions } from "@/components/ui/share-actions";
 import { SellosGrid } from "@/components/constructora/sellos-grid";
+import { ProjectShowcaseGrid } from "@/components/constructora/project-showcase-grid";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -75,6 +76,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
   // getConstructoraBySlug is wrapped in React.cache() — deduplicates if called again in this request
   const modelos = await getModelsByConstructoraId(constructora.id);
   const sellos = await getSellosDeConstructora(constructora.id);
+  const proyectosPublicos = await getPublicProjectsByConstructoraId(constructora.id);
 
   // Fallbacks for data from DB
   const logo = constructora.logo_url || '/placeholder.png';
@@ -181,6 +183,12 @@ export default async function ConstructoraPage({ params }: PageProps) {
                 <SellosGrid sellos={sellos} />
               </section>
             )}
+
+            {/* Showcase de Proyectos Recientes */}
+            <ProjectShowcaseGrid 
+              projects={proyectosPublicos} 
+              constructoraNombre={constructora.nombre} 
+            />
 
             {/* Models Section */}
             <section>

@@ -623,3 +623,25 @@ async function getConstructoraById(id: string) {
     .maybeSingle();
   return data;
 }
+
+/** Obtiene proyectos públicos para mostrar en el portafolio de la constructora */
+export async function getPublicProjectsByConstructoraId(constructoraId: string) {
+  try {
+    const supabase = await createPublicClient();
+    const { data, error } = await supabase
+      .from('obra_projects')
+      .select('id, nombre, region, comuna, estado, porcentaje_avance, thumbnail_url, tipo_construccion, created_at')
+      .eq('constructora_id', constructoraId)
+      .eq('visible_en_perfil', true)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Error fetching public projects:", error);
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.error("Unexpected error fetching public projects:", error);
+    return [];
+  }
+}
