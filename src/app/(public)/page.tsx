@@ -13,6 +13,7 @@ const FeaturedConstructorsSection = dynamic(() => import("@/components/home/feat
 const TrustSection = dynamic(() => import("@/components/home/trust-section").then(m => m.TrustSection), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(m => m.FinalCTA), { ssr: true });
 const LatestPosts = dynamic(() => import("@/components/home/latest-posts").then(m => m.LatestPosts), { ssr: true });
+const SeguimientoPromo = dynamic(() => import("@/components/home/seguimiento-promo").then(m => m.SeguimientoPromo), { ssr: true });
 
 // ISR with a baseline revalidation of 1 hour (3600 seconds)
 export const revalidate = 3600;
@@ -37,6 +38,9 @@ export default function Home() {
 
       {/* Trust & Authority (Early Social Proof) */}
       <TrustSection />
+
+      {/* New: Project Tracking Awareness (Conversion Hook) */}
+      <SeguimientoPromo />
 
       {/* Concept Identification (Categorization) */}
       <TypesSection />

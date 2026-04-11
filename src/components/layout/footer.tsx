@@ -52,8 +52,8 @@ export function Footer() {
                 { name: "Inicio", path: "/" },
                 { name: "Catálogo", path: "/catalogo" },
                 { name: "Constructoras", path: "/constructoras" },
+                { name: "Seguimiento de Obra", path: "/seguimiento-de-obras" },
                 { name: "Comparador", path: "/comparar" },
-                { name: "Planes y Precios", path: "/planes" },
                 { name: "Blog", path: "/blog" },
                 { name: "¿Cómo verificamos?", path: "/verificacion" }
               ].map((item) => (
