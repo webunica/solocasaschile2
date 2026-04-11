@@ -81,23 +81,33 @@ export default function VerificacionPage() {
            </div>
         </section>
 
-        {/* Estados de Confianza */}
-        <section className="bg-brand-indigo rounded-[3.5rem] p-10 md:p-20 text-white overflow-hidden relative">
-           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-teal/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
+        {/* Estados de Confianza — Rediseño Claro */}
+        <section className="bg-white rounded-[3.5rem] p-10 md:p-20 border border-border/40 shadow-2xl shadow-brand-indigo/5 overflow-hidden relative">
+           <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-teal/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
            
            <div className="relative z-10 space-y-12">
              <div className="space-y-4 text-center">
-                <h2 className="text-3xl md:text-5xl font-heading font-black tracking-tighter">Estados de <span className="text-brand-teal">Confianza</span></h2>
-                <p className="text-white/60 font-medium text-lg max-w-2xl mx-auto">Identifica el nivel de auditoría de cada perfil mediante nuestros sellos visibles.</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-teal">Sustento de Auditoría</p>
+                <h2 className="text-3xl md:text-5xl font-heading font-black tracking-tighter text-brand-indigo">
+                  Estados de <span className="text-brand-teal italic">Confianza</span>
+                </h2>
+                <p className="text-muted-foreground font-medium text-lg max-w-2xl mx-auto">
+                  Identifica el nivel de auditoría de cada perfil mediante nuestros sellos visibles.
+                </p>
              </div>
-
+             
              <div className="grid gap-6">
                 {statuses.map((s, idx) => (
-                  <div key={idx} className="flex flex-col md:flex-row md:items-center gap-6 p-8 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group">
-                    <div className={cn("px-6 py-3 rounded-full font-black text-[11px] uppercase tracking-widest border shrink-0 text-center", s.color)}>
+                  <div key={idx} className="flex flex-col md:flex-row md:items-center gap-6 p-8 rounded-[2rem] bg-slate-50/50 border border-slate-200/60 hover:bg-white hover:border-brand-teal/30 hover:shadow-xl hover:shadow-brand-teal/5 transition-all group">
+                    <div className={cn(
+                      "px-6 py-3 rounded-full font-black text-[11px] uppercase tracking-widest border shrink-0 text-center min-w-[240px]", 
+                      s.color
+                    )}>
                       {s.label}
                     </div>
-                    <p className="text-white/80 font-medium group-hover:text-white transition-colors">{s.desc}</p>
+                    <p className="text-brand-indigo/80 font-medium leading-relaxed">
+                      {s.desc}
+                    </p>
                   </div>
                 ))}
              </div>
