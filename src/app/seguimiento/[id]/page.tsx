@@ -88,7 +88,7 @@ export default async function ClientPortalPage({ params }: { params: Promise<{ i
           <div className="grid md:grid-cols-2 gap-8 items-end">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight leading-tight">
+                <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight leading-tight text-white">
                   {project.nombre}
                 </h1>
                 <ProjectHealthBadge salud={project.salud} />
@@ -143,8 +143,8 @@ export default async function ClientPortalPage({ params }: { params: Promise<{ i
                <Clock className="w-8 h-8 text-brand-teal" />
              </div>
              <div className="flex-1 text-center sm:text-left">
-               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-brand-teal/60">Estado Actual: {nextStage?.nombre || 'Finalizado'}</p>
-               <h2 className="text-xl font-heading font-black text-foreground mt-1">
+               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Estado Actual: {nextStage?.nombre || 'Finalizado'}</p>
+               <h2 className="text-xl font-heading font-black text-brand-indigo mt-1">
                  {nextStage ? `Trabajando en: ${nextStage.nombre}` : '¡Obra Terminada! ✅'}
                </h2>
                <p className="text-sm text-muted-foreground font-medium mt-1">
