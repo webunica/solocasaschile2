@@ -92,8 +92,9 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
                   <div className="space-y-1">
                     {[
                       { name: "Sobre Nosotros", href: "/nosotros", icon: Users },
+                      { name: "Seguimiento de Obra", href: "/seguimiento-de-obras", icon: Zap },
+                      { name: "Portal Proveedores", href: "/portal-proveedores", icon: Building2 },
                       { name: "¿Cómo verificamos?", href: "/verificacion", icon: ShieldCheck },
-                      { name: "Preguntas Frecuentes", href: "/#faq", icon: MessageSquare },
                     ].map((item) => (
                       <Link
                         key={item.name}
@@ -111,22 +112,22 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
           </div>
 
           <div className="space-y-8">
-            <div className="space-y-6">
-               <h3 className="text-lg font-black font-heading tracking-tight text-brand-indigo">Ecosistema</h3>
+             <div className="space-y-6">
+               <h3 className="text-lg font-black font-heading tracking-tight text-brand-indigo">Ecosistema B2B</h3>
                <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-4 space-y-3">
                   <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-emerald-600" />
-                    <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">Proveedores</span>
+                    <Building2 className="w-4 h-4 text-emerald-600" />
+                    <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">Constru</span>
                   </div>
                   <p className="text-[10px] text-emerald-800 font-medium leading-relaxed italic">
-                    Contacta directamente con especialistas en materiales y servicios para tu obra.
+                    Digitaliza tu catálogo y gestiona cotizaciones con cientos de constructoras.
                   </p>
                   <Link 
-                    href="https://constru.solocasaschile.com" 
-                    className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:gap-2 transition-all"
+                    href="/portal-proveedores" 
+                    className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:gap-2 transition-all font-bold"
                     onClick={onClose}
                   >
-                    Acceder al Directorio <ChevronRight className="w-3 h-3" />
+                    Detalles del Sistema <ChevronRight className="w-3 h-3 shadowed" />
                   </Link>
                </div>
             </div>
