@@ -8,6 +8,14 @@ import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Search } from "luc
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger,
+  DialogDescription
+} from "@/components/ui/dialog";
 
 const SLIDES = [
   {
@@ -37,14 +45,16 @@ const SLIDES = [
 
 export function SeguimientoPromo() {
   const [current, setCurrent] = useState(0);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
 
   // Auto-slide every 8 seconds
   useEffect(() => {
+    if (isZoomOpen) return; // Pause auto-slide when zoom is open
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % SLIDES.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isZoomOpen]);
 
   const slide = SLIDES[current];
 
@@ -58,55 +68,89 @@ export function SeguimientoPromo() {
           
           {/* Visual Presentation - Carousel Frame */}
           <div className="w-full lg:w-1/2 relative">
-             <div className="relative h-[500px] w-full rounded-[3rem] border border-border/40 shadow-2xl overflow-hidden group">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={current}
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.8, ease: "circOut" }}
-                    className="absolute inset-0"
-                  >
-                    <Image 
-                      src={slide.image}
-                      alt={slide.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/60 via-transparent to-transparent opacity-60" />
-                  </motion.div>
-                </AnimatePresence>
+             <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
+               <DialogTrigger asChild>
+                  <div className="relative h-[500px] w-full rounded-[3rem] border border-border/40 shadow-2xl overflow-hidden group cursor-zoom-in">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={current}
+                        initial={{ opacity: 0, scale: 1.1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.8, ease: "circOut" }}
+                        className="absolute inset-0"
+                      >
+                        <Image 
+                          src={slide.image}
+                          alt={slide.title}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/60 via-transparent to-transparent opacity-60" />
+                        
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 z-20">
+                           <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center">
+                             <Search className="w-8 h-8 text-white" />
+                           </div>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
 
-                {/* Navigation Arrows */}
-                <div className="absolute bottom-8 right-8 flex gap-3 z-30">
-                  <button 
-                    onClick={() => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)}
-                    className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-brand-indigo transition-all"
-                  >
-                    <ChevronLeft className="w-6 h-6" />
-                  </button>
-                  <button 
-                    onClick={() => setCurrent((prev) => (prev + 1) % SLIDES.length)}
-                    className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-brand-indigo transition-all"
-                  >
-                    <ChevronRight className="w-6 h-6" />
-                  </button>
-                </div>
+                    {/* Navigation Arrows */}
+                    <div className="absolute bottom-8 right-8 flex gap-3 z-30 pointer-events-auto">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
+                        }}
+                        className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-brand-indigo transition-all"
+                      >
+                        <ChevronLeft className="w-6 h-6" />
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrent((prev) => (prev + 1) % SLIDES.length);
+                        }}
+                        className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-brand-indigo transition-all"
+                      >
+                        <ChevronRight className="w-6 h-6" />
+                      </button>
+                    </div>
 
-                {/* Progress Indicators */}
-                <div className="absolute bottom-8 left-8 flex gap-2 z-30">
-                   {SLIDES.map((_, i) => (
-                     <div 
-                      key={i} 
-                      className={cn(
-                        "h-1.5 rounded-full transition-all duration-500",
-                        i === current ? "w-8 bg-brand-teal" : "w-2 bg-white/30"
-                      )}
-                     />
-                   ))}
-                </div>
-             </div>
+                    {/* Progress Indicators */}
+                    <div className="absolute bottom-8 left-8 flex gap-2 z-30">
+                       {SLIDES.map((_, i) => (
+                         <div 
+                          key={i} 
+                          className={cn(
+                            "h-1.5 rounded-full transition-all duration-500",
+                            i === current ? "w-8 bg-brand-teal" : "w-2 bg-white/30"
+                          )}
+                         />
+                       ))}
+                    </div>
+                  </div>
+               </DialogTrigger>
+               <DialogContent className="max-w-[95vw] sm:max-w-7xl h-[90vh] p-0 border-none bg-transparent shadow-none selection:bg-transparent">
+                  <DialogHeader className="sr-only">
+                    <DialogTitle>{slide.title}</DialogTitle>
+                    <DialogDescription>Vista ampliada del sistema</DialogDescription>
+                  </DialogHeader>
+                  <div className="relative w-full h-full flex items-center justify-center">
+                     <div className="relative w-full h-full animate-in zoom-in-95 duration-300">
+                        <Image 
+                          src={slide.image} 
+                          alt={slide.title} 
+                          fill 
+                          className="object-contain"
+                          quality={100}
+                        />
+                     </div>
+                  </div>
+               </DialogContent>
+             </Dialog>
           </div>
 
           {/* Text Content */}
