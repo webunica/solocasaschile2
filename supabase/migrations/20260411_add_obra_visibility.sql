@@ -3,8 +3,8 @@ ALTER TABLE obra_projects ADD COLUMN IF NOT EXISTS visible_en_perfil BOOLEAN DEF
 ALTER TABLE obra_projects ADD COLUMN IF NOT EXISTS thumbnail_url TEXT;
 
 -- Permisos para que el público vea los proyectos destacados
-CREATE POLICY "Lectura pública de proyectos destacados" ON obra_projects
-  FOR SELECT USING (visible_en_perfil = true);
+CREATE POLICY "Lectura pública de proyectos" ON obra_projects
+  FOR SELECT USING (true);
 
 -- Comentario para documentación
 COMMENT ON COLUMN obra_projects.visible_en_perfil IS 'Si es true, el proyecto se muestra en el perfil público de la constructora.';

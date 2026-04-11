@@ -632,7 +632,6 @@ export async function getPublicProjectsByConstructoraId(constructoraId: string) 
       .from('obra_projects')
       .select('id, nombre, region, comuna, estado, porcentaje_avance, thumbnail_url, tipo_construccion, created_at')
       .eq('constructora_id', constructoraId)
-      .eq('visible_en_perfil', true)
       .order('created_at', { ascending: false });
 
     if (error) {
