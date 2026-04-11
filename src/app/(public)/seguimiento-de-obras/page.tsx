@@ -58,18 +58,15 @@ export default function SeguimientoObrasPage() {
           </div>
 
           <div className="relative group">
-             {/* Mock de Pantalla / Dashboard */}
-             <div className="relative z-10 rounded-[3rem] border-8 border-brand-indigo shadow-[0_50px_100px_-20px_rgba(27,0,136,0.15)] overflow-hidden bg-slate-950 aspect-[4/3] transform group-hover:-rotate-1 transition-transform duration-700">
-               <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo/40 via-transparent to-brand-teal/20" />
-               {/* Placeholder for actual image 1 */}
-               <div className="absolute inset-0 flex flex-col items-center justify-center p-12 text-center text-white/20">
-                 <Search className="w-20 h-20 mb-4 opacity-10" />
-                 <p className="text-xs font-black uppercase tracking-[0.4em]">Visualización de Dashboard</p>
-               </div>
-               {/* Decorative UI elements */}
-               <div className="absolute top-8 left-8 w-1/3 h-4 bg-white/10 rounded-full" />
-               <div className="absolute top-16 left-8 w-1/4 h-3 bg-white/10 rounded-full" />
-               <div className="absolute bottom-8 right-8 w-24 h-24 bg-brand-teal/20 rounded-3xl blur-2xl" />
+             {/* Imagen 1: Dashboard Dashboard de Seguimiento */}
+             <div className="relative z-10 rounded-[3rem] border-8 border-brand-indigo shadow-[0_50px_100px_-20px_rgba(27,0,136,0.15)] overflow-hidden bg-slate-100 aspect-[4/3] transform group-hover:-rotate-1 transition-transform duration-700">
+               <Image 
+                 src="/images/sistema-avances-01.jpg"
+                 alt="Dashboard de Seguimiento de Proyectos SolocasasChile"
+                 fill
+                 className="object-cover"
+               />
+               <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo/10 via-transparent to-brand-teal/10" />
              </div>
              
              {/* Floating Mobile Card */}
@@ -146,12 +143,14 @@ export default function SeguimientoObrasPage() {
       {/* Tech Details Section */}
       <section className="py-32 container max-w-5xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div className="order-2 lg:order-1 relative h-[500px] rounded-[3rem] bg-brand-indigo overflow-hidden shadow-2xl">
-             <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo via-transparent to-transparent opacity-60" />
-             {/* Placeholder for image 2 */}
-             <div className="absolute inset-0 flex items-center justify-center opacity-10">
-               <Smartphone className="w-32 h-32 text-white" />
-             </div>
+          <div className="order-2 lg:order-1 relative h-[500px] rounded-[3rem] bg-slate-100 overflow-hidden shadow-2xl">
+             <Image 
+               src="/images/sistema-avances-02.jpg"
+               alt="Portal Móvil de Seguimiento de Obra"
+               fill
+               className="object-cover"
+             />
+             <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/40 via-transparent to-transparent" />
              <div className="absolute bottom-10 left-10 right-10 p-8 glassmorphism rounded-[2rem] border-white/10 text-white space-y-2">
                 <p className="text-[10px] font-black uppercase tracking-widest text-brand-teal">Portal del Cliente</p>
                 <h4 className="text-xl font-bold">Bitácora Técnica Digital</h4>
