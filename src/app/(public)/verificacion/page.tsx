@@ -61,20 +61,23 @@ export default function VerificacionPage() {
           </p>
         </div>
 
-        {/* Sectores de Verificación */}
+        {/* Sectores de Verificación — Mensaje de Transparencia */}
         <section className="mb-24">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-             {criteria.map((item, idx) => (
-               <div key={idx} className="p-8 rounded-[2.5rem] bg-white border border-border/40 shadow-sm space-y-4 hover:shadow-xl hover:border-brand-teal/30 transition-all group">
-                 <div className="w-12 h-12 rounded-2xl bg-brand-teal/10 flex items-center justify-center text-brand-teal group-hover:bg-brand-teal group-hover:text-white transition-all">
-                   <item.icon className="w-6 h-6" />
-                 </div>
-                 <h3 className="text-xl font-black font-heading text-brand-indigo">{item.title}</h3>
-                 <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-70">
-                   {item.desc}
-                 </p>
+           <div className="p-12 md:p-20 rounded-[3.5rem] bg-white border border-border/40 shadow-sm text-center space-y-6 relative overflow-hidden">
+             {/* Decoración de fondo */}
+             <div className="absolute top-0 left-0 w-32 h-32 bg-brand-teal/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+             
+             <div className="max-w-3xl mx-auto space-y-6">
+               <div className="w-16 h-16 rounded-3xl bg-brand-indigo/5 flex items-center justify-center mx-auto text-brand-indigo">
+                 <ShieldCheck className="w-8 h-8" />
                </div>
-             ))}
+               <h2 className="text-2xl md:text-3xl font-heading font-black text-brand-indigo tracking-tight">
+                 Transparencia en <span className="text-brand-teal">Evolución</span>
+               </h2>
+               <p className="text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
+                 Estamos trabajando con las constructoras para realizar este proceso más transparente y con más opciones de verificación. Muy pronto podrás ver un desglose detallado de cada criterio de auditoría directamente en los perfiles.
+               </p>
+             </div>
            </div>
         </section>
 
