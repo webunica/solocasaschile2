@@ -181,7 +181,15 @@ export function HeroSection() {
                     <select
                       className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
                       value={selectedRegion}
-                      onChange={(e) => setSelectedRegion(e.target.value)}
+                      onChange={(e) => {
+                        const region = e.target.value;
+                        setSelectedRegion(region);
+                        if (region) {
+                          router.push(`/catalogo?region=${region}`);
+                        } else {
+                          router.push(`/catalogo`);
+                        }
+                      }}
                     >
                       <option value="">¿En qué región buscas?</option>
                       <option value="arica">Arica y Parinacota</option>
@@ -225,9 +233,9 @@ export function HeroSection() {
 
                     return (
                       <li key={type}>
-                        <Link href={href} className="group flex items-center gap-3 text-[11px] md:text-xs font-black text-[#1b0088] tracking-wider hover:translate-x-1 transition-transform">
-                          <div className="w-6 h-6 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
-                            <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                        <Link href={href} className="group flex items-center gap-4 text-base font-black text-[#1b0088] tracking-wider hover:translate-x-1 transition-transform">
+                          <div className="w-8 h-8 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
+                            <ShieldCheck className="w-5 h-5 text-white" />
                           </div>
                           <span className="opacity-80 group-hover:opacity-100 group-hover:text-primary transition-all underline decoration-brand-teal/30 underline-offset-4 decoration-2">
                             {type}
@@ -237,9 +245,9 @@ export function HeroSection() {
                     );
                   })}
                   {/* Item 8: Pronto casas rodantes */}
-                  <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-brand-indigo/60 tracking-wider">
-                    <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200/50 shadow-sm">
-                      <Zap className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
+                   <li className="flex items-center gap-4 text-base font-black text-brand-indigo/60 tracking-wider">
+                    <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200/50 shadow-sm">
+                      <Zap className="w-5 h-5 text-amber-500 animate-pulse" />
                     </div>
                     <span className="italic text-brand-indigo/80">¡Pronto casas rodantes!</span>
                   </li>
