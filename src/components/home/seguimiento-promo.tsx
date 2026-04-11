@@ -92,6 +92,13 @@ export function SeguimientoPromo() {
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
+              
+              <Link href="/seguimiento/e356c78f-9374-4a71-ab07-52254530c6b3" className="group flex items-center gap-2 text-sm font-black uppercase tracking-widest text-brand-indigo hover:text-brand-teal transition-colors">
+                Ver un ejemplo real
+                <div className="w-8 h-8 rounded-full bg-brand-indigo/5 flex items-center justify-center group-hover:bg-brand-teal/10 transition-colors">
+                   <Search className="w-4 h-4" />
+                </div>
+              </Link>
             </div>
           </div>
 
