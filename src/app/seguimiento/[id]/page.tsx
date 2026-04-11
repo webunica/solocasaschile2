@@ -162,7 +162,7 @@ export default async function ClientPortalPage({ params }: { params: Promise<{ i
           <div className="p-8 rounded-[2.5rem] bg-brand-indigo text-white flex items-center justify-between group cursor-pointer hover:bg-brand-indigo/90 transition-colors">
             <div className="space-y-1">
               <p className="text-[10px] font-black uppercase tracking-widest text-white/50 underline transition-all group-hover:text-white">Presupuesto y Pagos</p>
-              <p className="font-bold text-lg">Estado Financiero</p>
+              <p className="font-bold text-lg">¡Próximamente disponible!</p>
             </div>
             <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
               <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
