@@ -27,8 +27,6 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function ClientPortalPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) redirect("/login");
 
   const project = await getObraProjectForClient(id);
   if (!project) notFound();
@@ -81,7 +79,7 @@ export default async function ClientPortalPage({ params }: { params: Promise<{ i
               <button className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-colors">
                 <Share2 className="w-3 h-3" /> Compartir
               </button>
-              <Link href="/dashboard/obras" className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <Link href="/" className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                 <ArrowLeft className="w-5 h-5" />
               </Link>
             </div>

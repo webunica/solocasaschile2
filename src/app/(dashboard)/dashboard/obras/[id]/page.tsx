@@ -287,7 +287,7 @@ export default async function ObraDetailPage({ params }: { params: Promise<{ id:
             <p className="text-[10px] font-black uppercase tracking-widest text-brand-teal/70">Portal del Cliente</p>
             <p className="text-xs text-muted-foreground font-medium">Comparte este enlace con tu cliente para que vea el avance de su proyecto.</p>
             <Link
-              href={`/dashboard/obras/cliente/${id}`}
+              href={`/seguimiento/${id}`}
               target="_blank"
               className="flex items-center gap-2 text-xs font-black text-brand-teal hover:underline"
             >
