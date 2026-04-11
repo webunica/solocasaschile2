@@ -237,11 +237,11 @@ export function HeroSection() {
                     );
                   })}
                   {/* Item 8: Pronto casas rodantes */}
-                  <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-slate-400 tracking-wider">
-                    <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
-                      <Zap className="w-3.5 h-3.5 text-slate-300" />
+                  <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-brand-indigo/60 tracking-wider">
+                    <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200/50 shadow-sm">
+                      <Zap className="w-3.5 h-3.5 text-amber-500 animate-pulse" />
                     </div>
-                    <span className="opacity-60 italic">¡Pronto casas rodantes!</span>
+                    <span className="italic text-brand-indigo/80">¡Pronto casas rodantes!</span>
                   </li>
                 </ul>
               </h1>
