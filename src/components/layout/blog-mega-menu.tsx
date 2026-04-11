@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ChevronRight, ArrowRight, Search, Sparkles, BookOpen, Users, Compass, Megaphone, ShieldCheck, MessageSquare } from "lucide-react";
+import { ChevronRight, ArrowRight, Search, Sparkles, BookOpen, Users, Compass, Megaphone, ShieldCheck, MessageSquare, Building2, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/types/blog";
 
