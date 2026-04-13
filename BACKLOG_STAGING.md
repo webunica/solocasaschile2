@@ -147,7 +147,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 ### P1-04 Testing base (unit + integration + e2e)
 - Estado: IN_PROGRESS
 - Tareas:
-1. Unit tests para pagos (HECHO), leads (HECHO), utilidades.
+1. Unit tests para pagos (HECHO), leads (HECHO), utilidades (HECHO).
 2. Integration tests para endpoints API criticos.
 3. E2E para registro/login/lead/checkout/dashboard.
 - Criterio de aceptacion: suite automatizada ejecutable en CI.
@@ -157,7 +157,8 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 3. Primera suite unitaria agregada en `src/lib/security/admin-guard.test.ts` para `checkRateLimit` y `resolveAdminRole`.
 4. Suite de pruebas unitarias completada para lógica de pagos (`flow.test.ts` y `uf.test.ts`).
 5. Pruebas de captura de leads asíncronas (`submitLead`) añadidas cubriendo base de datos y correos Resend.
-6. Validacion actual: `npm run test` OK (15 tests pasando), `typecheck` OK, `lint:app` OK.
+6. Pruebas de utilidades genéricas añadidas (`utils.test.ts`, `regions.test.ts`).
+7. Validacion actual: `npm run test` OK (27 tests pasando), `typecheck` OK, `lint:app` OK.
 
 ### P1-05 Observabilidad operativa
 - Estado: TODO
