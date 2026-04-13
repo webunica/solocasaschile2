@@ -8,6 +8,44 @@ export const metadata = {
   title: "Verificación de Sellos | Admin",
 };
 
+type SelloRef = {
+  id: string;
+  slug: string;
+  nombre: string;
+  descripcion?: string | null;
+  tipo?: string | null;
+} | null;
+
+type ConstructoraPendienteRef = {
+  id: string;
+  nombre: string;
+  slug: string;
+  email: string | null;
+} | null;
+
+type ConstructoraHistorialRef = {
+  id: string;
+  nombre: string;
+} | null;
+
+type SolicitudPendiente = {
+  id: string;
+  estado: string;
+  evidencia_url: string | null;
+  created_at: string;
+  constructora: ConstructoraPendienteRef;
+  sello: SelloRef;
+};
+
+type HistorialSello = {
+  id: string;
+  estado: string;
+  comentario_admin?: string | null;
+  otorgado_at: string | null;
+  constructora: ConstructoraHistorialRef;
+  sello: SelloRef;
+};
+
 async function getSolicitudesPendientes() {
   const supabase = await createClient();
   const { data } = await supabase
@@ -22,7 +60,7 @@ async function getSolicitudesPendientes() {
     `)
     .eq("estado", "pendiente")
     .order("created_at", { ascending: true });
-  return data || [];
+  return (data || []) as SolicitudPendiente[];
 }
 
 async function getHistorial() {
@@ -40,7 +78,7 @@ async function getHistorial() {
     .in("estado", ["aprobado", "rechazado"])
     .order("otorgado_at", { ascending: false })
     .limit(30);
-  return data || [];
+  return (data || []) as HistorialSello[];
 }
 
 export default async function AdminSellosPage() {
@@ -97,7 +135,7 @@ export default async function AdminSellosPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {pendientes.map((s: any) => (
+            {pendientes.map((s) => (
               <div key={s.id} className="bg-card border border-amber-500/20 rounded-[2rem] p-6 flex flex-col md:flex-row md:items-start gap-6">
                 {/* Seal info */}
                 <div className="flex items-start gap-4 flex-1">
@@ -155,7 +193,7 @@ export default async function AdminSellosPage() {
                 </tr>
               </thead>
               <tbody>
-                {historial.map((s: any) => (
+                {historial.map((s) => (
                   <tr key={s.id} className="border-b border-border/20 hover:bg-muted/10 transition-colors">
                     <td className="p-4 font-bold">{s.constructora?.nombre}</td>
                     <td className="p-4 text-muted-foreground">{s.sello?.nombre}</td>

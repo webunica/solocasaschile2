@@ -7,9 +7,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Menu, X, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard, User, ChevronDown } from "lucide-react";
+import { Menu, Home, Library, ArrowLeftRight, Building2, LayoutGrid, CreditCard, User, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { MegaMenu } from "./mega-menu";
+import type { MegaMenuAds } from "./mega-menu";
 import { BlogMegaMenu } from "./blog-mega-menu";
 import { BlogPost } from "@/types/blog";
 
@@ -21,7 +22,12 @@ const NAV_LINKS = [
   { href: "/planes", label: "Precios", icon: CreditCard },
 ];
 
-export function Header({ megaMenuAds, latestBlogPosts }: { megaMenuAds?: any; latestBlogPosts?: BlogPost[] }) {
+type HeaderProps = {
+  megaMenuAds?: MegaMenuAds;
+  latestBlogPosts?: BlogPost[];
+};
+
+export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
   const { scrollY } = useScroll();
   const [isOpen, setIsOpen] = useState(false);
   const [showMegaMenu, setShowMegaMenu] = useState(false);

@@ -1,15 +1,21 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import { EmailBulkForm } from "@/components/dashboard/admin/email-bulk-form";
 import { 
-  Building2, History, Send, 
-  CheckCircle2, Clock, Mail
+  History, CheckCircle2, Clock, Mail
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+type ComunicacionHistorialItem = {
+  id: string;
+  asunto: string;
+  mensaje: string;
+  created_at: string;
+  audiencia_plan: string;
+  total_destinatarios: number;
+};
+
 export default async function AdminComunicacionesPage() {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
   
   // Get all constructoras for selection
   const { data: constructoras } = await supabase
@@ -23,6 +29,8 @@ export default async function AdminComunicacionesPage() {
     .select('*')
     .order('created_at', { ascending: false })
     .limit(5);
+
+  const typedHistory = (history ?? []) as ComunicacionHistorialItem[];
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -42,7 +50,7 @@ export default async function AdminComunicacionesPage() {
         </div>
 
         <div className="grid gap-4">
-           {history && history.length > 0 ? history.map((item: any) => (
+           {typedHistory.length > 0 ? typedHistory.map((item) => (
              <div key={item.id} className="bg-card/40 border border-border/40 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 group hover:border-primary/20 transition-all">
                 <div className="flex items-start gap-4 flex-1">
                    <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center shrink-0">

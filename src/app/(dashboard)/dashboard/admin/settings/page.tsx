@@ -3,15 +3,36 @@ import { redirect } from "next/navigation";
 import { 
   Megaphone, 
   Settings2, 
-  Globe, 
   Layout, 
-  Database,
-  ShieldCheck,
-  Palette
+  ShieldCheck
 } from "lucide-react";
 import { AnnouncementSettings } from "@/components/dashboard/admin/announcement-settings";
 import { MegaMenuSettings } from "@/components/dashboard/admin/mega-menu-settings";
-import { getModelosByConstructora } from "@/lib/supabase/services";
+
+type AnnouncementBarSettings = {
+  active: boolean;
+  text: string;
+  link: string;
+  buttonText: string;
+  theme: string;
+};
+
+type SiteSettingRow<TValue> = {
+  value: TValue;
+};
+
+type ConstructoraOptionRow = {
+  id: string;
+  nombre: string;
+};
+
+type ModeloOptionRow = {
+  id: string;
+  nombre: string;
+  constructora: {
+    nombre?: string | null;
+  } | null;
+};
 
 export default async function AdminSettingsPage() {
   const supabase = await createClient();
@@ -37,7 +58,7 @@ export default async function AdminSettingsPage() {
     .eq('key', 'announcement_bar')
     .maybeSingle();
 
-  const currentSettings = setting?.value || {
+  const currentSettings: AnnouncementBarSettings = (setting as SiteSettingRow<AnnouncementBarSettings> | null)?.value || {
     active: false,
     text: "¡Anuncio de ejemplo! Edítame en el panel.",
     link: "",
@@ -61,11 +82,11 @@ export default async function AdminSettingsPage() {
     .select(`id, nombre, constructora:constructoras (nombre)`)
     .order('nombre', { ascending: true });
 
-  const constructoras = (constructorasData || []).map((c: any) => ({ id: c.id, nombre: c.nombre }));
-  const modelos = (modelosData || []).map((m: any) => ({ 
+  const constructoras = ((constructorasData || []) as ConstructoraOptionRow[]).map((c) => ({ id: c.id, nombre: c.nombre }));
+  const modelos = ((modelosData || []) as ModeloOptionRow[]).map((m) => ({ 
     id: m.id, 
     nombre: m.nombre, 
-    constructora_nombre: (m.constructora as any)?.nombre || 'Desconocida' 
+    constructora_nombre: m.constructora?.nombre || 'Desconocida' 
   }));
 
   return (

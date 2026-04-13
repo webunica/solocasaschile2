@@ -2,15 +2,26 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { 
   Building2, Mail, MapPin, Search, 
-  ShieldCheck, ShieldAlert, Globe, Star,
-  CheckCircle2, XCircle, MoreVertical
+  ShieldAlert, Globe, CheckCircle2, MoreVertical
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import { ConstructoraAdminControls } from "@/components/dashboard/admin/constructora-controls";
+
+type ConstructoraAdminRow = {
+  id: string;
+  slug: string;
+  nombre: string;
+  logo_url: string | null;
+  plan: "gratis" | "pro" | "premium";
+  verificada: boolean;
+  email: string | null;
+  direccion: string | null;
+  sitio_web: string | null;
+  score_confianza: number;
+};
 
 export default async function AdminConstructorasPage() {
   const supabase = await createClient();
@@ -25,6 +36,8 @@ export default async function AdminConstructorasPage() {
     .from('constructoras')
     .select('*')
     .order('created_at', { ascending: false });
+
+  const typedConstructoras = (constructoras ?? []) as ConstructoraAdminRow[];
 
   if (error) {
     return (
@@ -53,7 +66,7 @@ export default async function AdminConstructorasPage() {
       </div>
 
       <div className="grid gap-4">
-        {constructoras?.map((cons: any) => (
+        {typedConstructoras.map((cons) => (
           <div key={cons.id} className="bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/40 transition-all group p-5 flex flex-col md:flex-row items-center gap-6">
             <div className="w-16 h-16 rounded-2xl bg-muted/30 border border-border/10 flex items-center justify-center p-3 overflow-hidden relative group-hover:scale-105 transition-transform">
                {cons.logo_url ? (
@@ -102,7 +115,7 @@ export default async function AdminConstructorasPage() {
           </div>
         ))}
 
-        {(!constructoras || constructoras.length === 0) && (
+        {typedConstructoras.length === 0 && (
           <div className="py-20 text-center space-y-4 border-2 border-dashed border-border/30 rounded-3xl">
              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto opacity-20">
                 <Building2 className="w-8 h-8" />

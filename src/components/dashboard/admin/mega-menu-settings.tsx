@@ -13,15 +13,40 @@ import {
   SelectValue 
 } from "@/components/ui/select"
 
+type MegaMenuSettingsValue = {
+  featuredConstructoraId?: string;
+  featured_constructora_id?: string;
+  featuredModeloId?: string;
+  featured_modelo_id?: string;
+};
+
+type ConstructoraOption = {
+  id: string;
+  nombre: string;
+};
+
+type ModeloOption = {
+  id: string;
+  nombre: string;
+  constructora_nombre?: string | null;
+};
+
+type MegaMenuSettingsProps = {
+  initialSettings?: MegaMenuSettingsValue | null;
+  constructoras: ConstructoraOption[];
+  modelos: ModeloOption[];
+};
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return "No se pudo guardar la configuración.";
+}
+
 export function MegaMenuSettings({ 
   initialSettings, 
   constructoras, 
   modelos 
-}: { 
-  initialSettings: any, 
-  constructoras: any[], 
-  modelos: any[] 
-}) {
+}: MegaMenuSettingsProps) {
   const [settings, setSettings] = useState({
     featuredConstructoraId: initialSettings?.featuredConstructoraId || initialSettings?.featured_constructora_id || '',
     featuredModeloId: initialSettings?.featuredModeloId || initialSettings?.featured_modelo_id || ''
@@ -38,8 +63,8 @@ export function MegaMenuSettings({
       await updateSiteSettings('mega_menu_ads', settings)
       setSuccess(true)
       setTimeout(() => setSuccess(false), 3000)
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      setError(getErrorMessage(err))
     } finally {
       setLoading(false)
     }
@@ -67,7 +92,7 @@ export function MegaMenuSettings({
               <Label className="text-sm font-bold opacity-80">Constructora Destacada</Label>
               <Select 
                 value={settings.featuredConstructoraId} 
-                onValueChange={(v) => setSettings({...settings, featuredConstructoraId: v})}
+                onValueChange={(v) => setSettings({...settings, featuredConstructoraId: v ?? ''})}
               >
                 <SelectTrigger className="h-12 bg-background border-border/40 rounded-xl font-medium">
                   <SelectValue placeholder="Selecciona una constructora" />
@@ -94,7 +119,7 @@ export function MegaMenuSettings({
               <Label className="text-sm font-bold opacity-80">Modelo Destacado</Label>
               <Select 
                 value={settings.featuredModeloId} 
-                onValueChange={(v) => setSettings({...settings, featuredModeloId: v})}
+                onValueChange={(v) => setSettings({...settings, featuredModeloId: v ?? ''})}
               >
                 <SelectTrigger className="h-12 bg-background border-border/40 rounded-xl font-medium">
                   <SelectValue placeholder="Selecciona un modelo" />

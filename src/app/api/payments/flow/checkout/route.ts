@@ -20,6 +20,13 @@ const PLAN_PRICES_UF = {
   }
 } as const;
 
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return String(error);
+}
+
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -73,11 +80,12 @@ export async function POST(req: NextRequest) {
         order: flowResult.flowOrder 
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = getErrorMessage(error);
     console.error('[FLOW-CHECKOUT] Detailed Error:', error);
     return NextResponse.json({ 
-      error: error.message.includes('Flow Payment Create Failed') 
-        ? `Error de comunicación con Flow: ${error.message}` 
+      error: message.includes('Flow Payment Create Failed') 
+        ? `Error de comunicación con Flow: ${message}` 
         : 'Ocurrió un error al procesar el pago. Intenta de nuevo.' 
     }, { status: 500 });
   }

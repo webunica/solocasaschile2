@@ -1,11 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { 
-  CreditCard, 
   CheckCircle2, 
   XCircle, 
   AlertCircle, 
-  Search,
-  ArrowUpRight,
   TrendingUp,
   Clock
 } from "lucide-react";
@@ -13,6 +10,22 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+
+type PagoStatus = "paid" | "rejected" | "canceled" | "pending";
+
+type PagoRow = {
+  id: string;
+  created_at: string;
+  status: PagoStatus;
+  amount: number | string;
+  plan: string;
+  billing_cycle: "yearly" | "monthly" | string;
+  flow_order: string | number;
+  constructoras: {
+    nombre?: string | null;
+    logo_url?: string | null;
+  } | null;
+};
 
 export default async function AdminPagosPage() {
   const supabase = await createClient();
@@ -29,16 +42,16 @@ export default async function AdminPagosPage() {
     `)
     .order('created_at', { ascending: false });
 
-  const pagos = data as any[] | null;
+  const pagos = (data ?? []) as PagoRow[];
 
   if (error) {
     console.error('Error fetching payments:', error);
   }
 
   // 2. Estadísticas Rápidas
-  const totalIngresos = pagos?.filter((p: any) => p.status === 'paid').reduce((sum: number, p: any) => sum + Number(p.amount), 0) || 0;
-  const pagosExitosos = pagos?.filter((p: any) => p.status === 'paid').length || 0;
-  const pagosFallidos = pagos?.filter((p: any) => p.status === 'rejected').length || 0;
+  const totalIngresos = pagos.filter((p) => p.status === 'paid').reduce((sum, p) => sum + Number(p.amount), 0);
+  const pagosExitosos = pagos.filter((p) => p.status === 'paid').length;
+  const pagosFallidos = pagos.filter((p) => p.status === 'rejected').length;
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -81,7 +94,7 @@ export default async function AdminPagosPage() {
            <CardHeader className="pb-2">
               <CardDescription className="font-bold uppercase tracking-wider text-[10px]">Tasa de Conversión</CardDescription>
               <CardTitle className="text-3xl font-black text-emerald-600">
-                {pagos?.length ? Math.round((pagosExitosos / pagos.length) * 100) : 0}%
+                {pagos.length ? Math.round((pagosExitosos / pagos.length) * 100) : 0}%
               </CardTitle>
            </CardHeader>
            <CardContent>
@@ -115,7 +128,7 @@ export default async function AdminPagosPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {pagos && pagos.length > 0 ? (
+              {pagos.length > 0 ? (
                 pagos.map((p) => (
                   <tr key={p.id} className="hover:bg-slate-50/30 transition-colors group">
                     <td className="p-4 text-sm font-semibold text-slate-500">

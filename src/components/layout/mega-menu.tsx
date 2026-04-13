@@ -40,7 +40,34 @@ const CATEGORIAS_ESPECIALES = [
   { name: "Entrega Inmediata", href: "/catalogo?filtro=entrega-inmediata" },
 ];
 
-export function MegaMenu({ ads, onClose }: { ads?: any; onClose?: () => void }) {
+type MegaMenuConstructoraAd = {
+  nombre?: string | null;
+  slug?: string | null;
+  image?: string | null;
+  logo_url?: string | null;
+  descripcion?: string | null;
+};
+
+type MegaMenuModeloAd = {
+  nombre?: string | null;
+  slug?: string | null;
+  imagenes_urls?: string[] | null;
+  precio_desde_uf?: number | null;
+  superficie_m2?: number | null;
+  dormitorios?: number | null;
+};
+
+export type MegaMenuAds = {
+  constructora?: MegaMenuConstructoraAd | null;
+  modelo?: MegaMenuModeloAd | null;
+} | null;
+
+type MegaMenuProps = {
+  ads?: MegaMenuAds;
+  onClose?: () => void;
+};
+
+export function MegaMenu({ ads, onClose }: MegaMenuProps) {
   const featuredConstructora = ads?.constructora;
   const featuredModelo = ads?.modelo;
 
