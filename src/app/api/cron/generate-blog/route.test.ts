@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
+import {  describe, expect, it, vi, beforeEach, afterEach , Mock } from 'vitest';
 import { GET } from './route';
 import { openai } from '@/lib/openai';
 import { createClient } from '@supabase/supabase-js';
@@ -45,11 +45,11 @@ describe('Cron Blog Generation API endpoint', () => {
   });
 
   it('debe completar todo el pipeline asincrónico (OpenAI + Storage) si la autorización es válida (HTTP 200)', async () => {
-    (openai.chat.completions.create as unknown as vi.Mock).mockResolvedValue({
+    (openai.chat.completions.create as unknown as Mock).mockResolvedValue({
       choices: [{ message: { content: JSON.stringify({ title: 'Test', slug: 'test-slug', category: 'test' }) } }]
     });
 
-    (openai.images.generate as unknown as vi.Mock).mockResolvedValue({
+    (openai.images.generate as unknown as Mock).mockResolvedValue({
       data: [{ url: 'http://mock.img.com/test.png' }]
     });
 
@@ -66,7 +66,7 @@ describe('Cron Blog Generation API endpoint', () => {
       insert: vi.fn().mockResolvedValue({ error: null })
     };
 
-    (createClient as unknown as vi.Mock).mockReturnValue({
+    (createClient as unknown as Mock).mockReturnValue({
       storage: { from: vi.fn().mockReturnValue(mockStorage) },
       from: vi.fn().mockReturnValue(mockDb)
     });
@@ -96,7 +96,7 @@ describe('Cron Blog Generation API endpoint', () => {
   });
 
   it('debe capturar internamente y retornar un error HTTP 500 si falla OpenAI de forma irrecuperable', async () => {
-    (openai.chat.completions.create as unknown as vi.Mock).mockRejectedValue(new Error('OpenAi API out of credits'));
+    (openai.chat.completions.create as unknown as Mock).mockRejectedValue(new Error('OpenAi API out of credits'));
 
     const req = new Request('http://localhost/api/cron/generate-blog', {
       headers: { authorization: 'Bearer SECRET_CRON' }

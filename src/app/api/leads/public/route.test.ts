@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
+import {  describe, expect, it, vi, beforeEach, afterEach , Mock } from 'vitest';
 import { POST } from './route';
 import { createClient } from '@supabase/supabase-js';
 import * as adminGuard from '@/lib/security/admin-guard';
@@ -20,7 +20,7 @@ describe('Public Leads API Endpoint Integration', () => {
     process.env = { ...originalEnv };
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://test-supabase-url';
     process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-key';
-    (adminGuard.checkRateLimit as unknown as vi.Mock).mockReturnValue({ ok: true, retryAfterSeconds: 0 });
+    (adminGuard.checkRateLimit as unknown as Mock).mockReturnValue({ ok: true, retryAfterSeconds: 0 });
   });
 
   afterEach(() => {
@@ -42,7 +42,7 @@ describe('Public Leads API Endpoint Integration', () => {
   });
 
   it('debe proteger contra requests secuenciales limitados por Rate Limiter (HTTP 429)', async () => {
-    (adminGuard.checkRateLimit as unknown as vi.Mock).mockReturnValue({ ok: false, retryAfterSeconds: 60 });
+    (adminGuard.checkRateLimit as unknown as Mock).mockReturnValue({ ok: false, retryAfterSeconds: 60 });
     
     const req = new Request('http://localhost/api/leads/public', {
       method: 'POST',
@@ -79,7 +79,7 @@ describe('Public Leads API Endpoint Integration', () => {
 
   it('debe inicializar el cliente en modo administrativo y asegurar persistencia', async () => {
     const mockInsert = vi.fn().mockResolvedValue({ error: null });
-    (createClient as unknown as vi.Mock).mockReturnValue({
+    (createClient as unknown as Mock).mockReturnValue({
       from: vi.fn().mockReturnValue({ insert: mockInsert })
     });
 

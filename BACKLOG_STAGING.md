@@ -162,12 +162,18 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 8. Validacion actual: `npm run test` OK (36 tests pasando), `typecheck` OK, `lint:app` OK.
 
 ### P1-05 Observabilidad operativa
-- Estado: TODO
+- Estado: IN_PROGRESS
 - Tareas:
-1. Instrumentar errores (Sentry o equivalente).
+1. Instrumentar errores (Sentry o equivalente) (HECHO).
 2. Log estructurado en APIs.
 3. Alertas para 5xx, fallos de pago, cron fallido.
 - Criterio de aceptacion: dashboard minimo de salud disponible.
+- Avance actual:
+1. Plataforma base instalada con `npm install @sentry/nextjs`.
+2. Archivos de inicialización agregados (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`, `instrumentation.ts`).
+3. Sentry enlazado exitosamente en la configuración nativa `next.config.ts`.
+4. El typecheck compila y las APIs funcionan bajo Sentry.
+
 
 ### P1-06 Performance y accesibilidad
 - Estado: TODO

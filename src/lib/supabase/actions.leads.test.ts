@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import {  describe, expect, it, vi, beforeEach , Mock } from 'vitest';
 import { submitLead } from './actions';
 import { createClient } from '@/lib/supabase/server';
 import { resend } from '@/lib/resend';
@@ -29,7 +29,7 @@ describe('actions > submitLead', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (createClient as unknown as vi.Mock).mockResolvedValue(mockSupabaseClient);
+    (createClient as unknown as Mock).mockResolvedValue(mockSupabaseClient);
   });
 
   const validLeadData = {
@@ -57,7 +57,7 @@ describe('actions > submitLead', () => {
     mockSupabaseQuery.insert.mockResolvedValue({ error: null });
 
     // Y qué responde resend
-    (resend.emails.send as unknown as vi.Mock).mockResolvedValue({ data: { id: 'test-email-id' } });
+    (resend.emails.send as unknown as Mock).mockResolvedValue({ data: { id: 'test-email-id' } });
 
     const result = await submitLead(validLeadData);
 
@@ -82,7 +82,7 @@ describe('actions > submitLead', () => {
     // 4. Debe enviar 3 correos (Cliente, Constructora, Plataforma/Log)
     expect(resend.emails.send).toHaveBeenCalledTimes(3);
     
-    const sendCalls = (resend.emails.send as unknown as vi.Mock).mock.calls;
+    const sendCalls = (resend.emails.send as unknown as Mock).mock.calls;
     // Email 1 al cliente
     expect(sendCalls[0][0].to).toEqual([validLeadData.email_cliente]);
     // Email 2 a la constructora (ventas@constructorasur.cl)
@@ -115,7 +115,7 @@ describe('actions > submitLead', () => {
     mockSupabaseQuery.insert.mockResolvedValue({ error: null });
 
     // Forzamos error en correos
-    (resend.emails.send as unknown as vi.Mock).mockRejectedValue(new Error('Resend Auth'));
+    (resend.emails.send as unknown as Mock).mockRejectedValue(new Error('Resend Auth'));
 
     const result = await submitLead(validLeadData);
 
