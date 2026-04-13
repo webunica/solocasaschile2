@@ -148,7 +148,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 - Estado: IN_PROGRESS
 - Tareas:
 1. Unit tests para pagos (HECHO), leads (HECHO), utilidades (HECHO).
-2. Integration tests para endpoints API criticos.
+2. Integration tests para endpoints API criticos (HECHO).
 3. E2E para registro/login/lead/checkout/dashboard.
 - Criterio de aceptacion: suite automatizada ejecutable en CI.
 - Avance actual:
@@ -158,7 +158,8 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 4. Suite de pruebas unitarias completada para lógica de pagos (`flow.test.ts` y `uf.test.ts`).
 5. Pruebas de captura de leads asíncronas (`submitLead`) añadidas cubriendo base de datos y correos Resend.
 6. Pruebas de utilidades genéricas añadidas (`utils.test.ts`, `regions.test.ts`).
-7. Validacion actual: `npm run test` OK (27 tests pasando), `typecheck` OK, `lint:app` OK.
+7. Pruebas de integración sobre endpoints críticos (Leads Public Route y Cron Generate Blog) simulando NextRequest, NextResponse, validaciones de seguridad nativas e inserciones mockeadas finalizado.
+8. Validacion actual: `npm run test` OK (36 tests pasando), `typecheck` OK, `lint:app` OK.
 
 ### P1-05 Observabilidad operativa
 - Estado: TODO

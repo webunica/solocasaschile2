@@ -10,7 +10,7 @@ const PublicLeadSchema = z.object({
   mensaje: z.string().min(5).max(2000),
   modelo_id: z.string().uuid().nullable().optional(),
   constructora_id: z.string().uuid().nullable().optional(),
-  website: z.string().max(0).optional(), // Honeypot
+  website: z.string().optional(), // Honeypot
 });
 
 export async function POST(req: Request) {
