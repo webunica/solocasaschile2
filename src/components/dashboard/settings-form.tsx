@@ -163,7 +163,7 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
     }
 
     const expectedDv = 11 - (sum % 11);
-    let dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
+    const dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
 
     return dvChar === dv;
   }

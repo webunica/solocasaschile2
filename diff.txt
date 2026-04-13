@@ -1,0 +1,3563 @@
+﻿diff --git a/BACKLOG_STAGING.md b/BACKLOG_STAGING.md
+index d587036..ca76285 100644
+--- a/BACKLOG_STAGING.md
++++ b/BACKLOG_STAGING.md
+@@ -125,6 +125,9 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
+ 10. Validacion actual: `typecheck` OK, `lint:app` OK (sin errores; warnings actuales: 333).
+ 11. Paginas admin tipadas sin `any` explicito en `src/app/(dashboard)/dashboard/admin/comunicaciones/page.tsx`, `src/app/(dashboard)/dashboard/admin/constructoras/page.tsx`, `src/app/(dashboard)/dashboard/admin/settings/page.tsx`, `src/app/(dashboard)/dashboard/admin/pagos/page.tsx` y `src/app/(dashboard)/dashboard/admin/sellos/page.tsx`.
+ 12. Validacion actualizada tras limpieza admin: `typecheck` OK, `lint:app` OK (sin errores; warnings actuales: 305).
++13. Dashboard y catalogo avanzados sin `any` explicito en `src/app/(dashboard)/dashboard/catalog/page.tsx`, `src/app/(dashboard)/dashboard/catalog/new/page.tsx`, `src/app/(dashboard)/dashboard/page.tsx` y `src/app/(dashboard)/dashboard/settings/facturacion/page.tsx`.
++14. Validacion actualizada tras nuevo barrido: `typecheck` OK, `lint:app` OK (sin errores; warnings actuales: 294).
++15. Pendiente principal del bloque `catalog/dashboard`: `src/app/(dashboard)/dashboard/catalog/[id]/edit-form.tsx` mantiene deuda de tipos explicitos.
+ 
+ ### P1-03 Build reproducible y pipeline base
+ - Estado: DONE
+@@ -142,12 +145,17 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
+ ## Sprint 2 - Calidad de producto (P1, semana 3-5)
+ 
+ ### P1-04 Testing base (unit + integration + e2e)
+-- Estado: TODO
++- Estado: IN_PROGRESS
+ - Tareas:
+ 1. Unit tests para pagos, leads, utilidades.
+ 2. Integration tests para endpoints API criticos.
+ 3. E2E para registro/login/lead/checkout/dashboard.
+ - Criterio de aceptacion: suite automatizada ejecutable en CI.
++- Avance actual:
++1. `vitest` agregado como base de testing y scripts `test` / `test:watch` incorporados en `package.json`.
++2. Configuracion inicial creada en `vitest.config.ts`.
++3. Primera suite unitaria agregada en `src/lib/security/admin-guard.test.ts` para `checkRateLimit` y `resolveAdminRole`.
++4. Validacion actual: `npm run test` OK (4 tests), `typecheck` OK, `lint:app` OK.
+ 
+ ### P1-05 Observabilidad operativa
+ - Estado: TODO
+diff --git "a/Contrase\303\261a VPS.txt" "b/Contrase\303\261a VPS.txt"
+deleted file mode 100644
+index 6f0ba8d..0000000
+--- "a/Contrase\303\261a VPS.txt"	
++++ /dev/null
+@@ -1 +0,0 @@
+-Contrase├▒a VPS: l+6,boQ#IBLW'X?HnI9T
+\ No newline at end of file
+diff --git a/package-lock.json b/package-lock.json
+index 4e1260d..5b981e1 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -56,7 +56,8 @@
+         "prettier": "^3.8.1",
+         "prettier-plugin-tailwindcss": "^0.7.2",
+         "tailwindcss": "^4",
+-        "typescript": "^5"
++        "typescript": "^5",
++        "vitest": "^4.1.4"
+       }
+     },
+     "node_modules/@alloc/quick-lru": {
+@@ -738,32 +739,10 @@
+         "@noble/ciphers": "^1.0.0"
+       }
+     },
+-    "node_modules/@emnapi/core": {
+-      "version": "1.9.1",
+-      "resolved": "https://registry.npmjs.org/@emnapi/core/-/core-1.9.1.tgz",
+-      "integrity": "sha512-mukuNALVsoix/w1BJwFzwXBN/dHeejQtuVzcDsfOEsdpCumXb/E9j8w11h5S54tT1xhifGfbbSm/ICrObRb3KA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "optional": true,
+-      "dependencies": {
+-        "@emnapi/wasi-threads": "1.2.0",
+-        "tslib": "^2.4.0"
+-      }
+-    },
+-    "node_modules/@emnapi/runtime": {
+-      "version": "1.9.1",
+-      "resolved": "https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.9.1.tgz",
+-      "integrity": "sha512-VYi5+ZVLhpgK4hQ0TAjiQiZ6ol0oe4mBx7mVv7IflsiEp0OWoVsp/+f9Vc1hOhE0TtkORVrI1GvzyreqpgWtkA==",
+-      "license": "MIT",
+-      "optional": true,
+-      "dependencies": {
+-        "tslib": "^2.4.0"
+-      }
+-    },
+     "node_modules/@emnapi/wasi-threads": {
+-      "version": "1.2.0",
+-      "resolved": "https://registry.npmjs.org/@emnapi/wasi-threads/-/wasi-threads-1.2.0.tgz",
+-      "integrity": "sha512-N10dEJNSsUx41Z6pZsXU8FjPjpBEplgH24sfkmITrBED1/U2Esum9F3lfLrMjKHHjmi557zQn7kR9R+XWXu5Rg==",
++      "version": "1.2.1",
++      "resolved": "https://registry.npmjs.org/@emnapi/wasi-threads/-/wasi-threads-1.2.1.tgz",
++      "integrity": "sha512-uTII7OYF+/Mes/MrcIOYp5yOtSMLBWSIoLPpcgwipoiKbli6k322tcoFsxoIIxPDqW01SQGAgko4EzZi2BNv2w==",
+       "dev": true,
+       "license": "MIT",
+       "optional": true,
+@@ -2163,6 +2142,16 @@
+       "integrity": "sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==",
+       "license": "MIT"
+     },
++    "node_modules/@oxc-project/types": {
++      "version": "0.124.0",
++      "resolved": "https://registry.npmjs.org/@oxc-project/types/-/types-0.124.0.tgz",
++      "integrity": "sha512-VBFWMTBvHxS11Z5Lvlr3IWgrwhMTXV+Md+EQF0Xf60+wAdsGFTBx7X7K/hP4pi8N7dcm1RvcHwDxZ16Qx8keUg==",
++      "dev": true,
++      "license": "MIT",
++      "funding": {
++        "url": "https://github.com/sponsors/Boshen"
++      }
++    },
+     "node_modules/@radix-ui/primitive": {
+       "version": "1.1.3",
+       "resolved": "https://registry.npmjs.org/@radix-ui/primitive/-/primitive-1.1.3.tgz",
+@@ -2803,6 +2792,289 @@
+       "integrity": "sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==",
+       "license": "MIT"
+     },
++    "node_modules/@rolldown/binding-android-arm64": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-android-arm64/-/binding-android-arm64-1.0.0-rc.15.tgz",
++      "integrity": "sha512-YYe6aWruPZDtHNpwu7+qAHEMbQ/yRl6atqb/AhznLTnD3UY99Q1jE7ihLSahNWkF4EqRPVC4SiR4O0UkLK02tA==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "android"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-darwin-arm64": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-darwin-arm64/-/binding-darwin-arm64-1.0.0-rc.15.tgz",
++      "integrity": "sha512-oArR/ig8wNTPYsXL+Mzhs0oxhxfuHRfG7Ikw7jXsw8mYOtk71W0OkF2VEVh699pdmzjPQsTjlD1JIOoHkLP1Fg==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-darwin-x64": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-darwin-x64/-/binding-darwin-x64-1.0.0-rc.15.tgz",
++      "integrity": "sha512-YzeVqOqjPYvUbJSWJ4EDL8ahbmsIXQpgL3JVipmN+MX0XnXMeWomLN3Fb+nwCmP/jfyqte5I3XRSm7OfQrbyxw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-freebsd-x64": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-freebsd-x64/-/binding-freebsd-x64-1.0.0-rc.15.tgz",
++      "integrity": "sha512-9Erhx956jeQ0nNTyif1+QWAXDRD38ZNjr//bSHrt6wDwB+QkAfl2q6Mn1k6OBPerznjRmbM10lgRb1Pli4xZPw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "freebsd"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-arm-gnueabihf": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-1.0.0-rc.15.tgz",
++      "integrity": "sha512-cVwk0w8QbZJGTnP/AHQBs5yNwmpgGYStL88t4UIaqcvYJWBfS0s3oqVLZPwsPU6M0zlW4GqjP0Zq5MnAGwFeGA==",
++      "cpu": [
++        "arm"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-arm64-gnu": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.0.0-rc.15.tgz",
++      "integrity": "sha512-eBZ/u8iAK9SoHGanqe/jrPnY0JvBN6iXbVOsbO38mbz+ZJsaobExAm1Iu+rxa4S1l2FjG0qEZn4Rc6X8n+9M+w==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-arm64-musl": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.0.0-rc.15.tgz",
++      "integrity": "sha512-ZvRYMGrAklV9PEkgt4LQM6MjQX2P58HPAuecwYObY2DhS2t35R0I810bKi0wmaYORt6m/2Sm+Z+nFgb0WhXNcQ==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-ppc64-gnu": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-1.0.0-rc.15.tgz",
++      "integrity": "sha512-VDpgGBzgfg5hLg+uBpCLoFG5kVvEyafmfxGUV0UHLcL5irxAK7PKNeC2MwClgk6ZAiNhmo9FLhRYgvMmedLtnQ==",
++      "cpu": [
++        "ppc64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-s390x-gnu": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-1.0.0-rc.15.tgz",
++      "integrity": "sha512-y1uXY3qQWCzcPgRJATPSOUP4tCemh4uBdY7e3EZbVwCJTY3gLJWnQABgeUetvED+bt1FQ01OeZwvhLS2bpNrAQ==",
++      "cpu": [
++        "s390x"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-x64-gnu": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.0.0-rc.15.tgz",
++      "integrity": "sha512-023bTPBod7J3Y/4fzAN6QtpkSABR0rigtrwaP+qSEabUh5zf6ELr9Nc7GujaROuPY3uwdSIXWrvhn1KxOvurWA==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-linux-x64-musl": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-linux-x64-musl/-/binding-linux-x64-musl-1.0.0-rc.15.tgz",
++      "integrity": "sha512-witB2O0/hU4CgfOOKUoeFgQ4GktPi1eEbAhaLAIpgD6+ZnhcPkUtPsoKKHRzmOoWPZue46IThdSgdo4XneOLYw==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-openharmony-arm64": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-openharmony-arm64/-/binding-openharmony-arm64-1.0.0-rc.15.tgz",
++      "integrity": "sha512-UCL68NJ0Ud5zRipXZE9dF5PmirzJE4E4BCIOOssEnM7wLDsxjc6Qb0sGDxTNRTP53I6MZpygyCpY8Aa8sPfKPg==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "openharmony"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-wasm32-wasi": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-wasm32-wasi/-/binding-wasm32-wasi-1.0.0-rc.15.tgz",
++      "integrity": "sha512-ApLruZq/ig+nhaE7OJm4lDjayUnOHVUa77zGeqnqZ9pn0ovdVbbNPerVibLXDmWeUZXjIYIT8V3xkT58Rm9u5Q==",
++      "cpu": [
++        "wasm32"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "@emnapi/core": "1.9.2",
++        "@emnapi/runtime": "1.9.2",
++        "@napi-rs/wasm-runtime": "^1.1.3"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      }
++    },
++    "node_modules/@rolldown/binding-wasm32-wasi/node_modules/@napi-rs/wasm-runtime": {
++      "version": "1.1.3",
++      "resolved": "https://registry.npmjs.org/@napi-rs/wasm-runtime/-/wasm-runtime-1.1.3.tgz",
++      "integrity": "sha512-xK9sGVbJWYb08+mTJt3/YV24WxvxpXcXtP6B172paPZ+Ts69Re9dAr7lKwJoeIx8OoeuimEiRZ7umkiUVClmmQ==",
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "dependencies": {
++        "@tybys/wasm-util": "^0.10.1"
++      },
++      "funding": {
++        "type": "github",
++        "url": "https://github.com/sponsors/Brooooooklyn"
++      },
++      "peerDependencies": {
++        "@emnapi/core": "^1.7.1",
++        "@emnapi/runtime": "^1.7.1"
++      }
++    },
++    "node_modules/@rolldown/binding-win32-arm64-msvc": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.0.0-rc.15.tgz",
++      "integrity": "sha512-KmoUoU7HnN+Si5YWJigfTws1jz1bKBYDQKdbLspz0UaqjjFkddHsqorgiW1mxcAj88lYUE6NC/zJNwT+SloqtA==",
++      "cpu": [
++        "arm64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/binding-win32-x64-msvc": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.0.0-rc.15.tgz",
++      "integrity": "sha512-3P2A8L+x75qavWLe/Dll3EYBJLQmtkJN8rfh+U/eR3MqMgL/h98PhYI+JFfXuDPgPeCB7iZAKiqii5vqOvnA0g==",
++      "cpu": [
++        "x64"
++      ],
++      "dev": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      }
++    },
++    "node_modules/@rolldown/pluginutils": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.0-rc.15.tgz",
++      "integrity": "sha512-UromN0peaE53IaBRe9W7CjrZgXl90fqGpK+mIZbA3qSTeYqg3pqpROBdIPvOG3F5ereDHNwoHBI2e50n1BDr1g==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/@rtsao/scc": {
+       "version": "1.1.0",
+       "resolved": "https://registry.npmjs.org/@rtsao/scc/-/scc-1.1.0.tgz",
+@@ -2834,6 +3106,13 @@
+       "integrity": "sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ==",
+       "license": "MIT"
+     },
++    "node_modules/@standard-schema/spec": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/@standard-schema/spec/-/spec-1.1.0.tgz",
++      "integrity": "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/@standard-schema/utils": {
+       "version": "0.3.0",
+       "resolved": "https://registry.npmjs.org/@standard-schema/utils/-/utils-0.3.0.tgz",
+@@ -3337,6 +3616,17 @@
+       "dev": true,
+       "license": "MIT"
+     },
++    "node_modules/@types/chai": {
++      "version": "5.2.3",
++      "resolved": "https://registry.npmjs.org/@types/chai/-/chai-5.2.3.tgz",
++      "integrity": "sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/deep-eql": "*",
++        "assertion-error": "^2.0.1"
++      }
++    },
+     "node_modules/@types/debug": {
+       "version": "4.1.13",
+       "resolved": "https://registry.npmjs.org/@types/debug/-/debug-4.1.13.tgz",
+@@ -3346,6 +3636,13 @@
+         "@types/ms": "*"
+       }
+     },
++    "node_modules/@types/deep-eql": {
++      "version": "4.0.2",
++      "resolved": "https://registry.npmjs.org/@types/deep-eql/-/deep-eql-4.0.2.tgz",
++      "integrity": "sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/@types/estree": {
+       "version": "1.0.8",
+       "resolved": "https://registry.npmjs.org/@types/estree/-/estree-1.0.8.tgz",
+@@ -4027,6 +4324,119 @@
+         "win32"
+       ]
+     },
++    "node_modules/@vitest/expect": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/expect/-/expect-4.1.4.tgz",
++      "integrity": "sha512-iPBpra+VDuXmBFI3FMKHSFXp3Gx5HfmSCE8X67Dn+bwephCnQCaB7qWK2ldHa+8ncN8hJU8VTMcxjPpyMkUjww==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@standard-schema/spec": "^1.1.0",
++        "@types/chai": "^5.2.2",
++        "@vitest/spy": "4.1.4",
++        "@vitest/utils": "4.1.4",
++        "chai": "^6.2.2",
++        "tinyrainbow": "^3.1.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      }
++    },
++    "node_modules/@vitest/mocker": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.4.tgz",
++      "integrity": "sha512-R9HTZBhW6yCSGbGQnDnH3QHfJxokKN4KB+Yvk9Q1le7eQNYwiCyKxmLmurSpFy6BzJanSLuEUDrD+j97Q+ZLPg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@vitest/spy": "4.1.4",
++        "estree-walker": "^3.0.3",
++        "magic-string": "^0.30.21"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      },
++      "peerDependencies": {
++        "msw": "^2.4.9",
++        "vite": "^6.0.0 || ^7.0.0 || ^8.0.0"
++      },
++      "peerDependenciesMeta": {
++        "msw": {
++          "optional": true
++        },
++        "vite": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/@vitest/pretty-format": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.4.tgz",
++      "integrity": "sha512-ddmDHU0gjEUyEVLxtZa7xamrpIefdEETu3nZjWtHeZX4QxqJ7tRxSteHVXJOcr8jhiLoGAhkK4WJ3WqBpjx42A==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "tinyrainbow": "^3.1.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      }
++    },
++    "node_modules/@vitest/runner": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/runner/-/runner-4.1.4.tgz",
++      "integrity": "sha512-xTp7VZ5aXP5ZJrn15UtJUWlx6qXLnGtF6jNxHepdPHpMfz/aVPx+htHtgcAL2mDXJgKhpoo2e9/hVJsIeFbytQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@vitest/utils": "4.1.4",
++        "pathe": "^2.0.3"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      }
++    },
++    "node_modules/@vitest/snapshot": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.4.tgz",
++      "integrity": "sha512-MCjCFgaS8aZz+m5nTcEcgk/xhWv0rEH4Yl53PPlMXOZ1/Ka2VcZU6CJ+MgYCZbcJvzGhQRjVrGQNZqkGPttIKw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@vitest/pretty-format": "4.1.4",
++        "@vitest/utils": "4.1.4",
++        "magic-string": "^0.30.21",
++        "pathe": "^2.0.3"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      }
++    },
++    "node_modules/@vitest/spy": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/spy/-/spy-4.1.4.tgz",
++      "integrity": "sha512-XxNdAsKW7C+FLydqFJLb5KhJtl3PGCMmYwFRfhvIgxJvLSXhhVI1zM8f1qD3Zg7RCjTSzDVyct6sghs9UEgBEQ==",
++      "dev": true,
++      "license": "MIT",
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      }
++    },
++    "node_modules/@vitest/utils": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/@vitest/utils/-/utils-4.1.4.tgz",
++      "integrity": "sha512-13QMT+eysM5uVGa1rG4kegGYNp6cnQcsTc67ELFbhNLQO+vgsygtYJx2khvdt4gVQqSSpC/KT5FZZxUpP3Oatw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@vitest/pretty-format": "4.1.4",
++        "convert-source-map": "^2.0.0",
++        "tinyrainbow": "^3.1.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      }
++    },
+     "node_modules/accepts": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz",
+@@ -4344,6 +4754,16 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/assertion-error": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/assertion-error/-/assertion-error-2.0.1.tgz",
++      "integrity": "sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12"
++      }
++    },
+     "node_modules/ast-types": {
+       "version": "0.16.1",
+       "resolved": "https://registry.npmjs.org/ast-types/-/ast-types-0.16.1.tgz",
+@@ -4641,6 +5061,16 @@
+         "url": "https://github.com/sponsors/wooorm"
+       }
+     },
++    "node_modules/chai": {
++      "version": "6.2.2",
++      "resolved": "https://registry.npmjs.org/chai/-/chai-6.2.2.tgz",
++      "integrity": "sha512-NUPRluOfOiTKBKvWPtSD4PhFvWCqOi0BGStNWs57X9js7XGTprSmFoz5F0tWhR4WPjNeR9jXqdC7/UpSJTnlRg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      }
++    },
+     "node_modules/chalk": {
+       "version": "4.1.2",
+       "resolved": "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz",
+@@ -5512,6 +5942,13 @@
+         "node": ">= 0.4"
+       }
+     },
++    "node_modules/es-module-lexer": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-2.0.0.tgz",
++      "integrity": "sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/es-object-atoms": {
+       "version": "1.1.1",
+       "resolved": "https://registry.npmjs.org/es-object-atoms/-/es-object-atoms-1.1.1.tgz",
+@@ -6044,6 +6481,16 @@
+         "url": "https://opencollective.com/unified"
+       }
+     },
++    "node_modules/estree-walker": {
++      "version": "3.0.3",
++      "resolved": "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz",
++      "integrity": "sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@types/estree": "^1.0.0"
++      }
++    },
+     "node_modules/esutils": {
+       "version": "2.0.3",
+       "resolved": "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz",
+@@ -6110,6 +6557,16 @@
+         "url": "https://github.com/sindresorhus/execa?sponsor=1"
+       }
+     },
++    "node_modules/expect-type": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/expect-type/-/expect-type-1.3.0.tgz",
++      "integrity": "sha512-knvyeauYhqjOYvQ66MznSMs83wmHrCycNEN6Ao+2AeYEfxUIkuiVxdEa1qlGEPK+We3n0THiDciYSsCcgW/DoA==",
++      "dev": true,
++      "license": "Apache-2.0",
++      "engines": {
++        "node": ">=12.0.0"
++      }
++    },
+     "node_modules/express": {
+       "version": "5.2.1",
+       "resolved": "https://registry.npmjs.org/express/-/express-5.2.1.tgz",
+@@ -6476,6 +6933,21 @@
+         "node": ">=14.14"
+       }
+     },
++    "node_modules/fsevents": {
++      "version": "2.3.3",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
++      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
++      "dev": true,
++      "hasInstallScript": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
++      }
++    },
+     "node_modules/function-bind": {
+       "version": "1.1.2",
+       "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+@@ -9371,6 +9843,7 @@
+       "resolved": "https://registry.npmjs.org/next/-/next-16.2.1.tgz",
+       "integrity": "sha512-VaChzNL7o9rbfdt60HUj8tev4m6d7iC1igAy157526+cJlXOQu5LzsBXNT+xaJnTP/k+utSX5vMv7m0G+zKH+Q==",
+       "license": "MIT",
++      "peer": true,
+       "dependencies": {
+         "@next/env": "16.2.1",
+         "@swc/helpers": "0.5.15",
+@@ -9678,6 +10151,17 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/obug": {
++      "version": "2.1.1",
++      "resolved": "https://registry.npmjs.org/obug/-/obug-2.1.1.tgz",
++      "integrity": "sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==",
++      "dev": true,
++      "funding": [
++        "https://github.com/sponsors/sxzz",
++        "https://opencollective.com/debug"
++      ],
++      "license": "MIT"
++    },
+     "node_modules/on-finished": {
+       "version": "2.4.1",
+       "resolved": "https://registry.npmjs.org/on-finished/-/on-finished-2.4.1.tgz",
+@@ -9978,6 +10462,13 @@
+       "integrity": "sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==",
+       "license": "MIT"
+     },
++    "node_modules/pathe": {
++      "version": "2.0.3",
++      "resolved": "https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz",
++      "integrity": "sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/pdf-parse": {
+       "version": "2.4.5",
+       "resolved": "https://registry.npmjs.org/pdf-parse/-/pdf-parse-2.4.5.tgz",
+@@ -10748,6 +11239,40 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/rolldown": {
++      "version": "1.0.0-rc.15",
++      "resolved": "https://registry.npmjs.org/rolldown/-/rolldown-1.0.0-rc.15.tgz",
++      "integrity": "sha512-Ff31guA5zT6WjnGp0SXw76X6hzGRk/OQq2hE+1lcDe+lJdHSgnSX6nK3erbONHyCbpSj9a9E+uX/OvytZoWp2g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@oxc-project/types": "=0.124.0",
++        "@rolldown/pluginutils": "1.0.0-rc.15"
++      },
++      "bin": {
++        "rolldown": "bin/cli.mjs"
++      },
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      },
++      "optionalDependencies": {
++        "@rolldown/binding-android-arm64": "1.0.0-rc.15",
++        "@rolldown/binding-darwin-arm64": "1.0.0-rc.15",
++        "@rolldown/binding-darwin-x64": "1.0.0-rc.15",
++        "@rolldown/binding-freebsd-x64": "1.0.0-rc.15",
++        "@rolldown/binding-linux-arm-gnueabihf": "1.0.0-rc.15",
++        "@rolldown/binding-linux-arm64-gnu": "1.0.0-rc.15",
++        "@rolldown/binding-linux-arm64-musl": "1.0.0-rc.15",
++        "@rolldown/binding-linux-ppc64-gnu": "1.0.0-rc.15",
++        "@rolldown/binding-linux-s390x-gnu": "1.0.0-rc.15",
++        "@rolldown/binding-linux-x64-gnu": "1.0.0-rc.15",
++        "@rolldown/binding-linux-x64-musl": "1.0.0-rc.15",
++        "@rolldown/binding-openharmony-arm64": "1.0.0-rc.15",
++        "@rolldown/binding-wasm32-wasi": "1.0.0-rc.15",
++        "@rolldown/binding-win32-arm64-msvc": "1.0.0-rc.15",
++        "@rolldown/binding-win32-x64-msvc": "1.0.0-rc.15"
++      }
++    },
+     "node_modules/router": {
+       "version": "2.2.0",
+       "resolved": "https://registry.npmjs.org/router/-/router-2.2.0.tgz",
+@@ -11232,6 +11757,13 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/siginfo": {
++      "version": "2.0.0",
++      "resolved": "https://registry.npmjs.org/siginfo/-/siginfo-2.0.0.tgz",
++      "integrity": "sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==",
++      "dev": true,
++      "license": "ISC"
++    },
+     "node_modules/signal-exit": {
+       "version": "4.1.0",
+       "resolved": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
+@@ -11295,6 +11827,13 @@
+       "dev": true,
+       "license": "MIT"
+     },
++    "node_modules/stackback": {
++      "version": "0.0.2",
++      "resolved": "https://registry.npmjs.org/stackback/-/stackback-0.0.2.tgz",
++      "integrity": "sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/standardwebhooks": {
+       "version": "1.0.0",
+       "resolved": "https://registry.npmjs.org/standardwebhooks/-/standardwebhooks-1.0.0.tgz",
+@@ -11314,6 +11853,13 @@
+         "node": ">= 0.8"
+       }
+     },
++    "node_modules/std-env": {
++      "version": "4.0.0",
++      "resolved": "https://registry.npmjs.org/std-env/-/std-env-4.0.0.tgz",
++      "integrity": "sha512-zUMPtQ/HBY3/50VbpkupYHbRroTRZJPRLvreamgErJVys0ceuzMkD44J/QjqhHjOzK42GQ3QZIeFG1OYfOtKqQ==",
++      "dev": true,
++      "license": "MIT"
++    },
+     "node_modules/stdin-discarder": {
+       "version": "0.2.2",
+       "resolved": "https://registry.npmjs.org/stdin-discarder/-/stdin-discarder-0.2.2.tgz",
+@@ -11713,6 +12259,23 @@
+       "integrity": "sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==",
+       "license": "MIT"
+     },
++    "node_modules/tinybench": {
++      "version": "2.9.0",
++      "resolved": "https://registry.npmjs.org/tinybench/-/tinybench-2.9.0.tgz",
++      "integrity": "sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/tinyexec": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.1.1.tgz",
++      "integrity": "sha512-VKS/ZaQhhkKFMANmAOhhXVoIfBXblQxGX1myCQ2faQrfmobMftXeJPcZGp0gS07ocvGJWDLZGyOZDadDBqYIJg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      }
++    },
+     "node_modules/tinyglobby": {
+       "version": "0.2.15",
+       "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.15.tgz",
+@@ -11762,6 +12325,16 @@
+         "url": "https://github.com/sponsors/jonschlinkert"
+       }
+     },
++    "node_modules/tinyrainbow": {
++      "version": "3.1.0",
++      "resolved": "https://registry.npmjs.org/tinyrainbow/-/tinyrainbow-3.1.0.tgz",
++      "integrity": "sha512-Bf+ILmBgretUrdJxzXM0SgXLZ3XfiaUuOj/IKQHuTXip+05Xn+uyEYdVg0kYDipTBcLrCVyUzAPz7QmArb0mmw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=14.0.0"
++      }
++    },
+     "node_modules/tldts": {
+       "version": "7.0.27",
+       "resolved": "https://registry.npmjs.org/tldts/-/tldts-7.0.27.tgz",
+@@ -12399,6 +12972,200 @@
+         "url": "https://opencollective.com/unified"
+       }
+     },
++    "node_modules/vite": {
++      "version": "8.0.8",
++      "resolved": "https://registry.npmjs.org/vite/-/vite-8.0.8.tgz",
++      "integrity": "sha512-dbU7/iLVa8KZALJyLOBOQ88nOXtNG8vxKuOT4I2mD+Ya70KPceF4IAmDsmU0h1Qsn5bPrvsY9HJstCRh3hG6Uw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "lightningcss": "^1.32.0",
++        "picomatch": "^4.0.4",
++        "postcss": "^8.5.8",
++        "rolldown": "1.0.0-rc.15",
++        "tinyglobby": "^0.2.15"
++      },
++      "bin": {
++        "vite": "bin/vite.js"
++      },
++      "engines": {
++        "node": "^20.19.0 || >=22.12.0"
++      },
++      "funding": {
++        "url": "https://github.com/vitejs/vite?sponsor=1"
++      },
++      "optionalDependencies": {
++        "fsevents": "~2.3.3"
++      },
++      "peerDependencies": {
++        "@types/node": "^20.19.0 || >=22.12.0",
++        "@vitejs/devtools": "^0.1.0",
++        "esbuild": "^0.27.0 || ^0.28.0",
++        "jiti": ">=1.21.0",
++        "less": "^4.0.0",
++        "sass": "^1.70.0",
++        "sass-embedded": "^1.70.0",
++        "stylus": ">=0.54.8",
++        "sugarss": "^5.0.0",
++        "terser": "^5.16.0",
++        "tsx": "^4.8.1",
++        "yaml": "^2.4.2"
++      },
++      "peerDependenciesMeta": {
++        "@types/node": {
++          "optional": true
++        },
++        "@vitejs/devtools": {
++          "optional": true
++        },
++        "esbuild": {
++          "optional": true
++        },
++        "jiti": {
++          "optional": true
++        },
++        "less": {
++          "optional": true
++        },
++        "sass": {
++          "optional": true
++        },
++        "sass-embedded": {
++          "optional": true
++        },
++        "stylus": {
++          "optional": true
++        },
++        "sugarss": {
++          "optional": true
++        },
++        "terser": {
++          "optional": true
++        },
++        "tsx": {
++          "optional": true
++        },
++        "yaml": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/vite/node_modules/picomatch": {
++      "version": "4.0.4",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz",
++      "integrity": "sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/jonschlinkert"
++      }
++    },
++    "node_modules/vitest": {
++      "version": "4.1.4",
++      "resolved": "https://registry.npmjs.org/vitest/-/vitest-4.1.4.tgz",
++      "integrity": "sha512-tFuJqTxKb8AvfyqMfnavXdzfy3h3sWZRWwfluGbkeR7n0HUev+FmNgZ8SDrRBTVrVCjgH5cA21qGbCffMNtWvg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@vitest/expect": "4.1.4",
++        "@vitest/mocker": "4.1.4",
++        "@vitest/pretty-format": "4.1.4",
++        "@vitest/runner": "4.1.4",
++        "@vitest/snapshot": "4.1.4",
++        "@vitest/spy": "4.1.4",
++        "@vitest/utils": "4.1.4",
++        "es-module-lexer": "^2.0.0",
++        "expect-type": "^1.3.0",
++        "magic-string": "^0.30.21",
++        "obug": "^2.1.1",
++        "pathe": "^2.0.3",
++        "picomatch": "^4.0.3",
++        "std-env": "^4.0.0-rc.1",
++        "tinybench": "^2.9.0",
++        "tinyexec": "^1.0.2",
++        "tinyglobby": "^0.2.15",
++        "tinyrainbow": "^3.1.0",
++        "vite": "^6.0.0 || ^7.0.0 || ^8.0.0",
++        "why-is-node-running": "^2.3.0"
++      },
++      "bin": {
++        "vitest": "vitest.mjs"
++      },
++      "engines": {
++        "node": "^20.0.0 || ^22.0.0 || >=24.0.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/vitest"
++      },
++      "peerDependencies": {
++        "@edge-runtime/vm": "*",
++        "@opentelemetry/api": "^1.9.0",
++        "@types/node": "^20.0.0 || ^22.0.0 || >=24.0.0",
++        "@vitest/browser-playwright": "4.1.4",
++        "@vitest/browser-preview": "4.1.4",
++        "@vitest/browser-webdriverio": "4.1.4",
++        "@vitest/coverage-istanbul": "4.1.4",
++        "@vitest/coverage-v8": "4.1.4",
++        "@vitest/ui": "4.1.4",
++        "happy-dom": "*",
++        "jsdom": "*",
++        "vite": "^6.0.0 || ^7.0.0 || ^8.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@edge-runtime/vm": {
++          "optional": true
++        },
++        "@opentelemetry/api": {
++          "optional": true
++        },
++        "@types/node": {
++          "optional": true
++        },
++        "@vitest/browser-playwright": {
++          "optional": true
++        },
++        "@vitest/browser-preview": {
++          "optional": true
++        },
++        "@vitest/browser-webdriverio": {
++          "optional": true
++        },
++        "@vitest/coverage-istanbul": {
++          "optional": true
++        },
++        "@vitest/coverage-v8": {
++          "optional": true
++        },
++        "@vitest/ui": {
++          "optional": true
++        },
++        "happy-dom": {
++          "optional": true
++        },
++        "jsdom": {
++          "optional": true
++        },
++        "vite": {
++          "optional": false
++        }
++      }
++    },
++    "node_modules/vitest/node_modules/picomatch": {
++      "version": "4.0.4",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz",
++      "integrity": "sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/jonschlinkert"
++      }
++    },
+     "node_modules/web-streams-polyfill": {
+       "version": "3.3.3",
+       "resolved": "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-3.3.3.tgz",
+@@ -12512,6 +13279,23 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/why-is-node-running": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/why-is-node-running/-/why-is-node-running-2.3.0.tgz",
++      "integrity": "sha512-hUrmaWBdVDcxvYqnyh09zunKzROWjbZTiNy8dBEjkS7ehEDQibXJ7XvlmtbwuTclUiIyN+CyXQD4Vmko8fNm8w==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "siginfo": "^2.0.0",
++        "stackback": "0.0.2"
++      },
++      "bin": {
++        "why-is-node-running": "cli.js"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
+     "node_modules/word-wrap": {
+       "version": "1.2.5",
+       "resolved": "https://registry.npmjs.org/word-wrap/-/word-wrap-1.2.5.tgz",
+diff --git a/package.json b/package.json
+index e4e4de9..71b7b00 100644
+--- a/package.json
++++ b/package.json
+@@ -6,6 +6,8 @@
+     "dev": "next dev",
+     "build": "next build",
+     "start": "next start",
++    "test": "vitest run",
++    "test:watch": "vitest",
+     "typecheck": "tsc --noEmit",
+     "lint": "npm run lint:app",
+     "lint:app": "eslint src scripts",
+@@ -64,6 +66,7 @@
+     "prettier": "^3.8.1",
+     "prettier-plugin-tailwindcss": "^0.7.2",
+     "tailwindcss": "^4",
+-    "typescript": "^5"
++    "typescript": "^5",
++    "vitest": "^4.1.4"
+   }
+ }
+diff --git a/recursos/sunshine-clouds-sky-morning-background-blue-white-pastel-heaven-soft-focus-lens-flare-sunlight-abstract-blurred-cyan-gradient-peaceful-nature-open-view-out-windows-beautif.jpg b/recursos/sunshine-clouds-sky-morning-background-blue-white-pastel-heaven-soft-focus-lens-flare-sunlight-abstract-blurred-cyan-gradient-peaceful-nature-open-view-out-windows-beautif.jpg
+deleted file mode 100644
+index d44fede..0000000
+Binary files a/recursos/sunshine-clouds-sky-morning-background-blue-white-pastel-heaven-soft-focus-lens-flare-sunlight-abstract-blurred-cyan-gradient-peaceful-nature-open-view-out-windows-beautif.jpg and /dev/null differ
+diff --git a/recursos/vibrant-night-sky-with-stars-nebula-galaxy.jpg b/recursos/vibrant-night-sky-with-stars-nebula-galaxy.jpg
+deleted file mode 100644
+index 595f72a..0000000
+Binary files a/recursos/vibrant-night-sky-with-stars-nebula-galaxy.jpg and /dev/null differ
+diff --git a/recursos/vibrant-night-sky-with-stars-nebula-galaxy.webp b/recursos/vibrant-night-sky-with-stars-nebula-galaxy.webp
+deleted file mode 100644
+index be08dc3..0000000
+Binary files a/recursos/vibrant-night-sky-with-stars-nebula-galaxy.webp and /dev/null differ
+diff --git a/src/app/(dashboard)/dashboard/catalog/new/page.tsx b/src/app/(dashboard)/dashboard/catalog/new/page.tsx
+index 19b5683..a6340ca 100644
+--- a/src/app/(dashboard)/dashboard/catalog/new/page.tsx
++++ b/src/app/(dashboard)/dashboard/catalog/new/page.tsx
+@@ -198,11 +198,14 @@ export default function NewModelPage() {
+   const [planoFile, setPlanoFile] = useState<File | null>(null);
+   const [planoPreview, setPlanoPreview] = useState<string | null>(null);
+   const planoInputRef = useRef<HTMLInputElement>(null);
+-  const [planLimits, setPlanLimits] = useState<any>(null);
++  const [planLimits, setPlanLimits] = useState<ReturnType<typeof getPlanLimits> | null>(null);
+   const [plan, setPlan] = useState<string>("gratis");
+   const [modelName, setModelName] = useState("");
+   const [modelDesc, setModelDesc] = useState("");
+ 
++  const getErrorMessage = (error: unknown) =>
++    error instanceof Error ? error.message : "Ocurri├â┬│ un error inesperado.";
++
+   useEffect(() => {
+     async function loadPlan() {
+       const supabase = createClient();
+@@ -280,8 +283,8 @@ export default function NewModelPage() {
+           if (uploadError) throw uploadError;
+           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
+           plano_url = publicUrl;
+-        } catch (e: any) {
+-           throw new Error("Error al subir plano: " + e.message);
++        } catch (e: unknown) {
++           throw new Error("Error al subir plano: " + getErrorMessage(e));
+         }
+       }
+ 
+@@ -343,8 +346,8 @@ export default function NewModelPage() {
+       if (result?.error) throw new Error(result.error);
+       setSuccess(true);
+       setTimeout(() => router.push('/dashboard/catalog'), 2000);
+-    } catch (err: any) {
+-      setError(err.message || "Ocurri├│ un error inesperado.");
++    } catch (err: unknown) {
++      setError(getErrorMessage(err));
+       setLoading(false);
+     }
+   };
+diff --git a/src/app/(dashboard)/dashboard/catalog/page.tsx b/src/app/(dashboard)/dashboard/catalog/page.tsx
+index 4426a75..30b29c0 100644
+--- a/src/app/(dashboard)/dashboard/catalog/page.tsx
++++ b/src/app/(dashboard)/dashboard/catalog/page.tsx
+@@ -13,24 +13,30 @@ import Link from "next/link";
+ import { cn } from "@/lib/utils";
+ import { getPlanLimits } from "@/lib/constants/plans";
+ import { createClient } from "@/lib/supabase/server";
++import type { ModelWithConstructora } from "@/lib/supabase/services";
++
++type DashboardConstructora = {
++  plan?: string | null;
++  role?: string | null;
++};
+ 
+ export default async function CatalogManagementPage() {
+   const supabase = await createClient();
+   const { data: { user } } = await supabase.auth.getUser();
+ 
+-  let modelos: any[] = [];
+-  let constructora: any = null;
+-  let errorMsg = null;
++  let modelos: ModelWithConstructora[] = [];
++  let constructora: DashboardConstructora | null = null;
++  let errorMsg: string | null = null;
+ 
+   try {
+     modelos = await getModelosByConstructora();
+     if (user) {
+       const { data } = await supabase.from('constructoras').select('plan, role').eq('id', user.id).single();
+-      constructora = data;
++      constructora = (data as DashboardConstructora | null) ?? null;
+     }
+-  } catch (err: any) {
++  } catch (err: unknown) {
+     console.error("CRITICAL DASHBOARD ERROR:", err);
+-    errorMsg = err.message || "Error al conectar con la base de datos";
++    errorMsg = err instanceof Error ? err.message : "Error al conectar con la base de datos";
+   }
+ 
+   const isSuperAdmin = constructora?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
+@@ -110,7 +116,7 @@ export default async function CatalogManagementPage() {
+ 
+         <CardContent className="p-0">
+           <div className="divide-y divide-border/20">
+-            {modelos.length > 0 ? modelos.map((modelo: any) => (
++            {modelos.length > 0 ? modelos.map((modelo) => (
+               <div key={modelo.id} className="p-8 hover:bg-primary/[0.01] transition-all flex flex-col md:grid md:grid-cols-[120px_1fr_220px] items-center gap-8 group border-l-4 border-l-transparent hover:border-l-primary/40">
+                 {/* Image */}
+                 <div className="relative w-28 h-28 rounded-3xl overflow-hidden border border-border/40 shrink-0 shadow-xl group-hover:scale-105 transition-transform duration-700 bg-muted/20">
+diff --git a/src/app/(dashboard)/dashboard/page.tsx b/src/app/(dashboard)/dashboard/page.tsx
+index bb8940d..a92c561 100644
+--- a/src/app/(dashboard)/dashboard/page.tsx
++++ b/src/app/(dashboard)/dashboard/page.tsx
+@@ -10,6 +10,17 @@ import { Badge } from "@/components/ui/badge";
+ import { buttonVariants } from "@/components/ui/button";
+ import { cn } from "@/lib/utils";
+ 
++type DashboardLead = {
++  id: string;
++  nombre_cliente: string;
++  email_cliente?: string | null;
++  estado: string;
++  created_at: string;
++  modelo?: {
++    nombre?: string | null;
++  } | null;
++};
++
+ // Helper for relative dates (simple version for Phase 3)
+ const formatRelative = (dateStr: string) => {
+   const date = new Date(dateStr);
+@@ -189,7 +200,7 @@ export default async function DashboardPage() {
+              </CardHeader>
+              <CardContent className="p-0">
+                 <div className="divide-y divide-border/20">
+-                   {recentLeads.length > 0 ? recentLeads.map((lead: any) => (
++                   {recentLeads.length > 0 ? (recentLeads as DashboardLead[]).map((lead) => (
+                       <div key={lead.id} className="flex items-center justify-between p-8 hover:bg-primary/[0.02] transition-all group border-l-4 border-l-transparent hover:border-l-primary">
+                          <div className="flex items-center gap-6">
+                             <div className="w-16 h-16 rounded-[1.5rem] bg-muted/40 border border-border/40 flex items-center justify-center text-foreground/40 font-black uppercase text-lg group-hover:bg-brand-indigo group-hover:text-white group-hover:border-transparent transition-all duration-700 shadow-inner">
+diff --git a/src/app/(dashboard)/dashboard/settings/facturacion/page.tsx b/src/app/(dashboard)/dashboard/settings/facturacion/page.tsx
+index 69850ef..cbff175 100644
+--- a/src/app/(dashboard)/dashboard/settings/facturacion/page.tsx
++++ b/src/app/(dashboard)/dashboard/settings/facturacion/page.tsx
+@@ -17,6 +17,22 @@ import { es } from "date-fns/locale";
+ import Link from "next/link";
+ import { redirect } from "next/navigation";
+ 
++type FacturacionProfile = {
++  plan?: string | null;
++  plan_cycle?: string | null;
++  plan_status?: string | null;
++  next_billing_date?: string | null;
++  verificada?: boolean | null;
++};
++
++type FacturacionPago = {
++  id: string;
++  created_at: string;
++  plan: string;
++  amount: number | string;
++  status: string;
++};
++
+ export default async function FacturacionPage() {
+   const supabase = await createClient();
+   const { data: { user } } = await supabase.auth.getUser();
+@@ -36,6 +52,9 @@ export default async function FacturacionPage() {
+     .eq('constructora_id', user.id)
+     .order('created_at', { ascending: false });
+ 
++  const typedProfile = profile as FacturacionProfile | null;
++  const typedPagos = (pagos ?? []) as FacturacionPago[];
++
+   const getStatusBadge = (status: string) => {
+     switch (status) {
+       case 'paid':
+@@ -74,8 +93,8 @@ export default async function FacturacionPage() {
+              <CardHeader className="relative z-10">
+                 <CardDescription className="font-extrabold uppercase text-[10px] tracking-[0.2em] text-brand-indigo opacity-60">Suscripci├│n Actual</CardDescription>
+                 <CardTitle className="text-4xl font-black text-slate-800 uppercase flex items-center gap-2">
+-                  {profile?.plan} 
+-                  {profile?.verificada && <ShieldCheck className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />}
++                  {typedProfile?.plan} 
++                  {typedProfile?.verificada && <ShieldCheck className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />}
+                 </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6 relative z-10 pt-4">
+@@ -84,7 +103,7 @@ export default async function FacturacionPage() {
+                    <div>
+                       <p className="text-[10px] font-black uppercase text-brand-indigo/60 tracking-widest">Pr├│ximo Cobro</p>
+                       <p className="font-black text-slate-700">
+-                        {profile?.next_billing_date ? format(new Date(profile.next_billing_date), "dd MMMM yyyy", { locale: es }) : 'N/A'}
++                        {typedProfile?.next_billing_date ? format(new Date(typedProfile.next_billing_date), "dd MMMM yyyy", { locale: es }) : 'N/A'}
+                       </p>
+                    </div>
+                 </div>
+@@ -93,13 +112,13 @@ export default async function FacturacionPage() {
+                    <div className="flex justify-between items-center text-sm">
+                       <span className="text-slate-400 font-bold">Estado:</span>
+                       <span className="text-emerald-500 font-black flex items-center gap-1 capitalize">
+-                        <CheckCircle2 className="w-4 h-4" /> {profile?.plan_status || 'Inactivo'}
++                        <CheckCircle2 className="w-4 h-4" /> {typedProfile?.plan_status || 'Inactivo'}
+                       </span>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                       <span className="text-slate-400 font-bold">Ciclo:</span>
+                       <span className="text-slate-700 font-black uppercase">
+-                        {profile?.plan_cycle === 'yearly' ? 'Facturaci├│n Anual' : 'Facturaci├│n Mensual'}
++                        {typedProfile?.plan_cycle === 'yearly' ? 'Facturaci├│n Anual' : 'Facturaci├│n Mensual'}
+                       </span>
+                    </div>
+                 </div>
+@@ -128,8 +147,8 @@ export default async function FacturacionPage() {
+                        </tr>
+                     </thead>
+                     <tbody className="divide-y divide-slate-50">
+-                       {pagos && (pagos as any[]).length > 0 ? (
+-                         (pagos as any[]).map((p: any) => (
++                       {typedPagos.length > 0 ? (
++                         typedPagos.map((p) => (
+                            <tr key={p.id} className="group hover:bg-slate-50/50 transition-colors">
+                               <td className="py-4 text-xs font-bold text-slate-500">
+                                 {format(new Date(p.created_at), "dd MMM, yyyy", { locale: es })}
+diff --git a/src/app/(dashboard)/dashboard/success/page.tsx b/src/app/(dashboard)/dashboard/success/page.tsx
+index a4e3df2..8fa4bc7 100644
+--- a/src/app/(dashboard)/dashboard/success/page.tsx
++++ b/src/app/(dashboard)/dashboard/success/page.tsx
+@@ -11,6 +11,24 @@ import { createClient } from "@/lib/supabase/client";
+ export default function PaymentSuccessPage() {
+   const [status, setStatus] = useState<'processing' | 'active' | 'error'>('processing');
+   const [constructora, setConstructora] = useState<any>(null);
++
++  function launchConfetti() {
++    const duration = 3 * 1000;
++    const animationEnd = Date.now() + duration;
++    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
++
++    function randomInRange(min: number, max: number) {
++      return Math.random() * (max - min) + min;
++    }
++
++    const interval: ReturnType<typeof setInterval> = setInterval(() => {
++      const timeLeft = animationEnd - Date.now();
++      if (timeLeft <= 0) return clearInterval(interval);
++      const particleCount = 50 * (timeLeft / duration);
++      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
++      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
++    }, 250);
++  }
+   
+   useEffect(() => {
+     const supabase = createClient();
+@@ -41,24 +59,6 @@ export default function PaymentSuccessPage() {
+     return () => {};
+   }, []);
+ 
+-  const launchConfetti = () => {
+-    const duration = 3 * 1000;
+-    const animationEnd = Date.now() + duration;
+-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+-
+-    function randomInRange(min: number, max: number) {
+-      return Math.random() * (max - min) + min;
+-    }
+-
+-    const interval: any = setInterval(function() {
+-      const timeLeft = animationEnd - Date.now();
+-      if (timeLeft <= 0) return clearInterval(interval);
+-      const particleCount = 50 * (timeLeft / duration);
+-      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+-      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+-    }, 250);
+-  };
+-
+   return (
+     <div className="min-h-[80vh] flex items-center justify-center p-6 bg-background">
+       <AnimatePresence mode="wait">
+diff --git a/src/app/(public)/planes/page.tsx b/src/app/(public)/planes/page.tsx
+deleted file mode 100644
+index a48d593..0000000
+--- a/src/app/(public)/planes/page.tsx
++++ /dev/null
+@@ -1,530 +0,0 @@
+-"use client";
+-
+-import { useState, useTransition, useEffect } from "react";
+-import type { Metadata } from "next";
+-import Link from "next/link";
+-import { useRouter } from "next/navigation";
+-import { Badge } from "@/components/ui/badge";
+-import { buttonVariants, Button } from "@/components/ui/button";
+-import { cn } from "@/lib/utils";
+-import {
+-  CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
+-  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles, Loader2, Info
+-} from "lucide-react";
+-import { PromotionCountdown } from "@/components/ui/promotion-countdown";
+-import { motion, AnimatePresence } from "framer-motion";
+-import { toast } from "sonner";
+-import { createClient } from "@/lib/supabase/client";
+-import { 
+-  Tooltip,
+-  TooltipContent,
+-  TooltipProvider,
+-  TooltipTrigger,
+-} from "@/components/ui/tooltip";
+-
+-const PLANES = [
+-  {
+-    id: "premium",
+-    nombre: "Premium",
+-    precioMensual: "2.9",
+-    precioAnualEquiv: "1.45",
+-    precioAnualTotal: "17.4",
+-    precioOriginal: "2.9",
+-    descuento: "50% OFF ANUAL",
+-    icon: Crown,
+-    color: "text-amber-500",
+-    bgIcon: "bg-amber-500/10",
+-    borderClass: "border-amber-500/50 shadow-2xl shadow-amber-500/10 scale-105",
+-    gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
+-    badge: "OFERTA LANZAMIENTO",
+-    badgeClass: "bg-red-500 text-white border-red-600 animate-pulse",
+-    features: [
+-      { texto: "Modelos ilimitados (Escalabilidad total)", ok: true },
+-      { texto: "20 fotos por modelo + video tour", ok: true },
+-      { texto: "Perfil premium con video corporativo", ok: true },
+-      { texto: "CRM + anal├¡ticas completas de mercado", ok: true },
+-      { texto: "Testimonios ilimitados (Social Proof)", ok: true },
+-      { texto: "Certificaciones ilimitadas", ok: true },
+-      { texto: "Galer├¡a ilimitada de proyectos", ok: true },
+-      { texto: "Badge Premium Ô¡É posicionamiento VIP", ok: true },
+-      { texto: "Posici├│n #1 destacada en cat├ílogo", ok: true },
+-      { texto: "Soporte dedicado 24/7 por WhatsApp", ok: true },
+-    ],
+-    cta: "Dominar el Mercado",
+-    ctaHref: "/register?plan=premium",
+-    ctaClass: "bg-brand-indigo text-white hover:opacity-90 shadow-lg shadow-primary/20",
+-    ctaVariant: "default" as const,
+-  },
+-  {
+-    id: "pro",
+-    nombre: "Pro",
+-    precioMensual: "1.9",
+-    precioAnualEquiv: "0.95",
+-    precioAnualTotal: "11.4",
+-    precioOriginal: "1.9",
+-    descuento: "50% OFF ANUAL",
+-    icon: Zap,
+-    color: "text-brand-teal",
+-    bgIcon: "bg-brand-teal/10",
+-    borderClass: "border-brand-teal/40 shadow-2xl shadow-brand-teal/10",
+-    gradientClass: "from-brand-teal/5 to-transparent",
+-    badge: "S├ÜPER PROMO",
+-    badgeClass: "bg-brand-teal text-white border-brand-teal/30",
+-    features: [
+-      { texto: "15 modelos publicados", ok: true },
+-      { texto: "10 fotos por modelo", ok: true },
+-      { texto: "Perfil completo de constructora", ok: true },
+-      { texto: "CRM de leads avanzado", ok: true },
+-      { texto: "Hasta 5 testimonios verificados", ok: true },
+-      { texto: "5 certificaciones de calidad", ok: true },
+-      { texto: "10 proyectos en galer├¡a", ok: true },
+-      { texto: "Badge Constructora Verificada Ô£ô", ok: true },
+-      { texto: "Posici├│n prioritaria en cat├ílogo", ok: true },
+-      { texto: "Soporte por email prioritario", ok: true },
+-    ],
+-    cta: "Empezar a Escalar",
+-    ctaHref: "/register?plan=pro",
+-    ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white",
+-    ctaVariant: "default" as const,
+-  },
+-  {
+-    id: "gratis",
+-    nombre: "Gratis",
+-    precioMensual: "0",
+-    precioAnualEquiv: "0",
+-    periodo: "por 4 meses",
+-    icon: Building2,
+-    color: "text-muted-foreground",
+-    bgIcon: "bg-muted/60",
+-    borderClass: "border-border/60",
+-    gradientClass: "",
+-    features: [
+-      { texto: "3 modelos publicados", ok: true },
+-      { texto: "3 fotos por modelo", ok: true },
+-      { texto: "Perfil b├ísico de constructora", ok: true },
+-      { texto: "Recepci├│n de leads / cotizaciones", ok: true },
+-      { texto: "Testimonios y certificaciones", ok: false },
+-      { texto: "Galer├¡a de proyectos terminados", ok: false },
+-      { texto: "Badge Constructora Verificada Ô£ô", ok: false },
+-      { texto: "Posici├│n prioritaria en cat├ílogo", ok: false },
+-      { texto: "Estad├¡sticas y anal├¡ticas", ok: false },
+-      { texto: "Soporte dedicado", ok: false },
+-    ],
+-    cta: "Probar Plataforma",
+-    ctaHref: "/register",
+-    ctaClass: "border-border text-foreground hover:bg-muted font-medium opacity-80",
+-    ctaVariant: "outline" as const,
+-  },
+-];
+-
+-const FAQS = [
+-  {
+-    q: "┬┐Por qu├® el plan Gratis dura 4 meses?",
+-    a: "Queremos que pruebes la potencia de la plataforma sin riesgos. 4 meses es tiempo suficiente para recibir tus primeros leads y cerrar ventas antes de decidir escalar a un plan Pro.",
+-  },
+-  {
+-    q: "┬┐C├│mo funciona el descuento anual?",
+-    a: "Al elegir el pago anual, obtienes un 50% de descuento directo sobre el valor mensual. Es nuestra forma de premiar a las constructoras que se comprometen con su crecimiento a largo plazo.",
+-  },
+-  {
+-    q: "┬┐En qu├® moneda se cobra?",
+-    a: "Los planes Pro y Premium se cobran en UF (Unidad de Fomento chilena). El valor exacto en pesos se calcula al momento de la facturaci├│n seg├║n el valor diario de la UF.",
+-  },
+-  {
+-    q: "┬┐Qu├® pasa con mis leads si termina mi periodo gratis?",
+-    a: "Tus leads son tuyos. Siempre tendr├ís acceso al historial de prospectos, incluso si decides no renovar o bajar de plan.",
+-  },
+-  {
+-    q: "┬┐Hay contrato de permanencia?",
+-    a: "El plan mensual no tiene permanencia. El plan anual se paga por adelantado y te garantiza el precio promocional durante los 12 meses de servicio.",
+-  },
+-];
+-
+-export default function PlanesPage() {
+-  const [isYearly, setIsYearly] = useState(true);
+-  const [ufValue, setUfValue] = useState<number | null>(null);
+-  const [isPending, startTransition] = useTransition();
+-  const router = useRouter();
+-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+-  const isStatusPending = searchParams?.get('status') === 'pending';
+-
+-  // Fetch current UF for price estimation
+-  useEffect(() => {
+-    fetch('/api/market/uf')
+-      .then(res => res.json())
+-      .then(data => setUfValue(data.uf))
+-      .catch(() => console.warn("No se pudo cargar el valor de la UF para el resumen."));
+-  }, []);
+-
+-  const formatPriceCLP = (uf: string) => {
+-    if (!ufValue) return null;
+-    const clp = Math.round(parseFloat(uf) * ufValue);
+-    return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(clp);
+-  };
+-
+-  const handlePurchase = async (planId: string, billing: 'monthly' | 'yearly') => {
+-    if (planId === 'gratis') {
+-      router.push(`/register?plan=${planId}`);
+-      return;
+-    }
+-
+-    startTransition(async () => {
+-      try {
+-        const supabase = createClient();
+-        const { data: { session } } = await supabase.auth.getSession();
+-
+-        if (!session) {
+-          router.push(`/register?plan=${planId}&billing=${billing}`);
+-          return;
+-        }
+-
+-        console.log("Iniciando checkout para:", { planId, billing });
+-        const response = await fetch('/api/payments/flow/checkout', {
+-          method: 'POST',
+-          headers: { 'Content-Type': 'application/json' },
+-          body: JSON.stringify({ plan: planId, billing })
+-        });
+-
+-        console.log("Respuesta recibida de la API:", response.status);
+-        const data = await response.json();
+-        console.log("Datos de Flow:", data);
+-
+-        if (data.url) {
+-          window.location.href = data.url;
+-        } else {
+-          toast.error(data.error || "Error al iniciar el pago.");
+-        }
+-      } catch (error) {
+-        toast.error("Ocurri├│ un error inesperado. Intenta de nuevo.");
+-      }
+-    });
+-  };
+-
+-  return (
+-    <div className="min-h-screen bg-background pb-32">
+-      {/* Loading Overlay */}
+-      {isPending && (
+-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center flex-col gap-4">
+-           <div className="w-16 h-16 rounded-full border-4 border-brand-indigo/20 border-t-brand-indigo animate-spin" />
+-           <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Iniciando pago seguro con Flow...</p>
+-        </div>
+-      )}
+-
+-      {/* ÔöÇÔöÇ Hero ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+-      <section className="relative pt-44 pb-10 text-center overflow-hidden border-b border-border/40">
+-        {/* Pending Status Alert */}
+-        {isStatusPending && (
+-          <div className="container max-w-4xl mx-auto px-4 mb-10">
+-            <motion.div 
+-              initial={{ opacity: 0, y: -20 }}
+-              animate={{ opacity: 1, y: 0 }}
+-              className="bg-brand-indigo/10 border border-brand-indigo/30 p-5 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl shadow-brand-indigo/5"
+-            >
+-              <div className="flex items-center gap-4 text-left">
+-                <div className="w-12 h-12 rounded-2xl bg-brand-indigo flex items-center justify-center shadow-lg shadow-brand-indigo/20">
+-                  <Zap className="w-6 h-6 text-white animate-pulse" />
+-                </div>
+-                <div>
+-                  <h3 className="font-black text-slate-900 uppercase tracking-tighter">┬íCasi listo para publicar!</h3>
+-                  <p className="text-sm text-slate-500 font-medium leading-tight">Solo falta completar tu pago para activar tu plan y empezar a recibir leads.</p>
+-                </div>
+-              </div>
+-              <Button 
+-                onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}
+-                className="rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] px-8 h-12 border-none shadow-xl shadow-slate-200"
+-              >
+-                Elegir y Pagar Ahora
+-              </Button>
+-            </motion.div>
+-          </div>
+-        )}
+-
+-        <div className="absolute inset-0 bg-gradient-to-b from-primary/4 via-transparent to-transparent pointer-events-none" />
+-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-teal/8 rounded-full blur-[100px] pointer-events-none" />
+-        <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10 space-y-6">
+-          <Badge className="bg-primary/10 text-primary border-primary/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
+-            Para Constructoras de Chile
+-          </Badge>
+-          <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
+-            Elige el plan <span className="gradient-text">correcto</span>
+-          </h1>
+-          <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
+-            Mejora el posicionamiento de tu constructora y recibe leads reales directamente en tu panel de control.
+-          </p>
+-
+-          <div className="pt-4 flex flex-col items-center gap-12">
+-            
+-            <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
+-
+-            {/* Toggle Billing and Discount Badge closer to the plans */}
+-            <div className="flex flex-col items-center gap-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+-              <div className="flex items-center gap-4 bg-muted/30 p-1.5 rounded-[2rem] border border-border/40 backdrop-blur-md shadow-inner">
+-                <button 
+-                  onClick={() => setIsYearly(false)}
+-                  className={cn(
+-                    "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all",
+-                    !isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
+-                  )}
+-                >
+-                  Mensual
+-                </button>
+-                <button 
+-                  onClick={() => setIsYearly(true)}
+-                  className={cn(
+-                    "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all relative",
+-                    isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
+-                  )}
+-                >
+-                  Anual
+-                  <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse shadow-lg shadow-red-500/20">
+-                    -50%
+-                  </span>
+-                </button>
+-              </div>
+-
+-              <div className="flex flex-col md:flex-row items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
+-                <div className="flex items-center gap-3">
+-                  <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
+-                  {isYearly ? "Est├ís ahorrando un 50% con el pago anual" : "Ahorra un 50% cambiando al pago anual"}
+-                </div>
+-                {isYearly && (
+-                  <div className="flex items-center gap-2 border-l border-brand-indigo/20 pl-4 ml-1">
+-                    <Timer className="w-4 h-4 text-brand-indigo/60" />
+-                    <span className="text-[10px] text-muted-foreground">Termina en:</span>
+-                    <PromotionCountdown variant="compact" />
+-                  </div>
+-                )}
+-              </div>
+-            </div>
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* ÔöÇÔöÇ Pricing grid ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+-      <section className="container max-w-6xl mx-auto px-4 md:px-8 py-12">
+-        <div className="grid md:grid-cols-3 gap-8 items-start">
+-          {PLANES.map((plan) => {
+-            const Icon = plan.icon;
+-            const currentPrice = isYearly && plan.id !== 'gratis' ? plan.precioAnualEquiv : plan.precioMensual;
+-            const originalPrice = plan.id !== 'gratis' ? plan.precioMensual : null;
+-            const periodText = plan.id === 'gratis' ? (plan.periodo || 'por 4 meses') : (isYearly ? "UF / mes equiv." : "UF / mes");
+-
+-            return (
+-              <div
+-                key={plan.id}
+-                className={cn(
+-                  "relative bg-card/60 backdrop-blur-xl border rounded-[3rem] overflow-hidden flex flex-col gap-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl",
+-                  plan.borderClass
+-                )}
+-              >
+-                {/* Subtle gradient background */}
+-                {plan.gradientClass && (
+-                  <div className={cn("absolute inset-0 bg-gradient-to-br pointer-events-none", plan.gradientClass)} />
+-                )}
+-
+-                {/* Popular badge */}
+-                {plan.badge && (
+-                  <div className="absolute -top-px left-1/2 -translate-x-1/2">
+-                    <Badge className={cn("rounded-none rounded-b-xl font-black text-sm uppercase tracking-widest px-5 py-1.5 border-x border-b", plan.badgeClass)}>
+-                      {plan.badge}
+-                    </Badge>
+-                  </div>
+-                )}
+-
+-                                <div className="p-10 pt-12 flex flex-col gap-8 relative z-10 flex-1">
+-                  {/* Header */}
+-                  <div className="space-y-4">
+-                    <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", plan.bgIcon)}>
+-                      <Icon className={cn("w-6 h-6", plan.color)} />
+-                    </div>
+-                    <div>
+-                      <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
+-                      <div className="flex flex-col gap-1 mt-2">
+-                         <div className="flex items-baseline gap-2">
+-                           {isYearly && originalPrice && (
+-                             <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
+-                               {originalPrice}
+-                             </span>
+-                           )}
+-                           <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
+-                           <div className="flex flex-col">
+-                              <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
+-                              {isYearly && plan.id !== 'gratis' && (
+-                                <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual</span>
+-                              )}
+-                           </div>
+-                           {isYearly && plan.id !== 'gratis' && (
+-                             <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
+-                               50% OFF
+-                             </Badge>
+-                           )}
+-                         </div>
+-                         
+-                         {/* Equivalent in CLP */}
+-                         {plan.id !== 'gratis' && ufValue && (
+-                           <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-xs bg-emerald-50 w-fit px-3 py-1 rounded-full border border-emerald-100 shadow-sm animate-in fade-in slide-in-from-left-2 duration-700">
+-                             <TooltipProvider>
+-                               <Tooltip>
+-                                 <TooltipTrigger className="flex items-center gap-1">
+-                                   ~ {formatPriceCLP(currentPrice)} <Info className="w-3 h-3 opacity-50" />
+-                                 </TooltipTrigger>
+-                                 <TooltipContent className="bg-slate-900 text-white border-none rounded-xl p-3 text-[10px] font-bold">
+-                                   Precio estimado basado en UF actual: ${ufValue.toLocaleString('es-CL')}
+-                                 </TooltipContent>
+-                               </Tooltip>
+-                             </TooltipProvider>
+-                           </div>
+-                         )}
+-                      </div>
+-                    </div>
+-                  </div>
+-
+-                  {/* Features */}
+-                  <ul className="space-y-3 flex-1">
+-                    {plan.features.map((feat) => (
+-                      <li
+-                        key={feat.texto}
+-                        className={cn("flex items-center gap-3 text-sm font-medium", !feat.ok && "opacity-35")}
+-                      >
+-                        {feat.ok
+-                          ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+-                          : <X className="w-4 h-4 text-muted-foreground shrink-0" />
+-                        }
+-                        {feat.texto}
+-                      </li>
+-                    ))}
+-                  </ul>
+-
+-                  {/* CTA */}
+-                  {plan.id === 'gratis' ? (
+-                    <Link
+-                      href={`${plan.ctaHref}`}
+-                      className={cn(
+-                        buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
+-                        "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2 opacity-80",
+-                        plan.ctaClass
+-                      )}
+-                    >
+-                      {plan.cta} <ArrowRight className="w-4 h-4" />
+-                    </Link>
+-                  ) : (
+-                    <Button
+-                      onClick={() => handlePurchase(plan.id, isYearly ? 'yearly' : 'monthly')}
+-                      disabled={isPending}
+-                      className={cn(
+-                        "w-full rounded-2xl h-14 font-extrabold uppercase tracking-widest gap-2 transition-all hover:scale-[1.02] active:scale-95",
+-                        plan.ctaClass
+-                      )}
+-                    >
+-                      {isPending ? (
+-                        <Loader2 className="w-4 h-4 animate-spin" />
+-                      ) : (
+-                        <>
+-                          {isYearly ? "Pagar con 50% DCTO" : "Pagar Plan Ahora"} <ArrowRight className="w-4 h-4" />
+-                        </>
+-                      )}
+-                    </Button>
+-                  )}
+-                </div>
+-              </div>
+-            );
+-          })}
+-        </div>
+-
+-        {/* Trust note */}
+-        <p className="text-center text-sm text-muted-foreground font-medium mt-12 opacity-60">
+-          Sin permanencia en planes mensuales ┬À Los precios en UF se actualizan diariamente ┬À Plan Gratis limitado a 4 meses por constructora.
+-        </p>
+-      </section>
+-
+-      {/* ÔöÇÔöÇ Social proof ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+-      <section className="border-y border-border/40 bg-muted/20 py-16">
+-        <div className="container max-w-5xl mx-auto px-4 md:px-8 text-center space-y-10">
+-          <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
+-          <div className="grid md:grid-cols-3 gap-6">
+-            {[
+-              { quote: "Contratamos el plan anual pro con el 50% y la inversi├│n se pag├│ sola en las primeras semanas.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro Anual" },
+-              { quote: "Como super-admin, valoro que el badge verificado sea gratis si te comprometes con el a├▒o.", name: "Andrea Flores", company: "Constructora Biob├¡o", plan: "Premium Anual" },
+-              { quote: "Los 4 meses gratis nos permitieron probar la herramienta y recibir leads reales sin costo.", name: "Felipe Torres", company: "SIP Chile", plan: "Periodo Prueba" },
+-            ].map((t) => (
+-              <div key={t.name} className="bg-card/60 border border-border/40 rounded-[2rem] p-8 text-left space-y-4">
+-                <div className="flex gap-0.5">
+-                  {[...Array(5)].map((_, i) => (
+-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+-                  ))}
+-                </div>
+-                <p className="text-sm font-medium text-muted-foreground leading-relaxed">"{t.quote}"</p>
+-                <div>
+-                  <p className="font-black text-sm text-foreground">{t.name}</p>
+-                  <p className="text-sm text-muted-foreground font-medium">{t.company} ┬À {t.plan}</p>
+-                </div>
+-              </div>
+-            ))}
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* ÔöÇÔöÇ FAQ ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+-      <section className="container max-w-3xl mx-auto px-4 md:px-8 py-24 space-y-6">
+-        <div className="text-center space-y-3 mb-12">
+-          <h2 className="text-4xl font-heading font-black tracking-tighter">Preguntas frecuentes</h2>
+-          <p className="text-muted-foreground font-medium">Todo lo que necesitas saber sobre los nuevos planes.</p>
+-        </div>
+-        <div className="space-y-4">
+-          {FAQS.map((faq) => (
+-            <details
+-              key={faq.q}
+-              className="group bg-card/60 border border-border/40 rounded-2xl px-6 py-5 cursor-pointer open:border-primary/20 transition-all"
+-            >
+-              <summary className="flex items-center justify-between font-black text-sm list-none gap-4">
+-                {faq.q}
+-                <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0 group-open:rotate-180 transition-transform" />
+-              </summary>
+-              <p className="pt-4 text-sm text-muted-foreground font-medium leading-relaxed border-t border-border/40 mt-4">
+-                {faq.a}
+-              </p>
+-            </details>
+-          ))}
+-        </div>
+-        <p className="text-center text-sm text-muted-foreground font-medium pt-8">
+-          ┬┐M├ís dudas? Escr├¡benos a{" "}
+-          <a href="mailto:contacto@solocasaschile.com" className="text-primary font-bold hover:underline underline-offset-4">
+-            contacto@solocasaschile.com
+-          </a>
+-        </p>
+-      </section>
+-
+-      {/* ÔöÇÔöÇ Final CTA ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+-      <section className="container max-w-4xl mx-auto px-4 md:px-8">
+-        <div className="bg-brand-indigo rounded-[3rem] p-16 text-center text-white space-y-8 relative overflow-hidden">
+-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-10 mix-blend-overlay" />
+-          <div className="relative z-10 space-y-6">
+-            <Badge className="bg-white/20 text-white border-white/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
+-              Comienza hoy
+-            </Badge>
+-            <h2 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
+-              Aprovecha el 50% DCTO<br />y domina tu zona
+-            </h2>
+-            <p className="text-white/80 font-medium text-lg max-w-md mx-auto">
+-              ├Ünete a las constructoras que ya est├ín recibiendo leads reales cada semana.
+-            </p>
+-            <Button
+-              disabled={isPending}
+-              onClick={() => handlePurchase('pro', 'yearly')}
+-              className={cn(
+-                "bg-white text-brand-indigo hover:bg-white/95 font-black uppercase tracking-widest rounded-2xl h-14 px-10 gap-2 shadow-2xl transition-all hover:scale-105 active:scale-95"
+-              )}
+-            >
+-              {isPending ? (
+-                <Loader2 className="w-5 h-5 animate-spin" />
+-              ) : (
+-                <>Comenzar con 50% DCTO <ArrowRight className="w-4 h-4" /></>
+-              )}
+-            </Button>
+-          </div>
+-        </div>
+-      </section>
+-
+-    </div>
+-  );
+-}
+diff --git a/src/app/api/obras/[id]/files/route.ts b/src/app/api/obras/[id]/files/route.ts
+index 35b45ae..09de76c 100644
+--- a/src/app/api/obras/[id]/files/route.ts
++++ b/src/app/api/obras/[id]/files/route.ts
+@@ -26,6 +26,19 @@ export async function POST(
+ 
+   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 });
+ 
++  if (stageId) {
++    const { data: stage } = await supabase
++      .from("obra_stages")
++      .select("id")
++      .eq("id", stageId)
++      .eq("project_id", projectId)
++      .maybeSingle();
++
++    if (!stage) {
++      return NextResponse.json({ error: "Stage not found for this project" }, { status: 404 });
++    }
++  }
++
+   // Upload to Supabase Storage
+   const path = `${projectId}/${stageId || "general"}/${Date.now()}-${file.name}`;
+   const { error: uploadError } = await supabase.storage
+diff --git a/src/app/api/obras/[id]/stages/[stageId]/route.ts b/src/app/api/obras/[id]/stages/[stageId]/route.ts
+index a32f0a4..d17ba89 100644
+--- a/src/app/api/obras/[id]/stages/[stageId]/route.ts
++++ b/src/app/api/obras/[id]/stages/[stageId]/route.ts
+@@ -21,6 +21,17 @@ export async function PATCH(
+ 
+   if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
+ 
++  const { data: stage } = await supabase
++    .from("obra_stages")
++    .select("id")
++    .eq("id", stageId)
++    .eq("project_id", projectId)
++    .maybeSingle();
++
++  if (!stage) {
++    return NextResponse.json({ error: "Stage not found for this project" }, { status: 404 });
++  }
++
+   const dto: UpdateObraStageDTO = await req.json();
+   const success = await updateObraStage(stageId, dto);
+ 
+diff --git a/src/app/api/obras/[id]/stages/route.ts b/src/app/api/obras/[id]/stages/route.ts
+index a103a25..ec7dd3c 100644
+--- a/src/app/api/obras/[id]/stages/route.ts
++++ b/src/app/api/obras/[id]/stages/route.ts
+@@ -3,10 +3,29 @@ import { createClient } from "@/lib/supabase/server";
+ import { applyStageTemplate, getObraStages } from "@/lib/supabase/obra-services";
+ 
+ export async function GET(
+-  req: NextRequest,
++  _req: NextRequest,
+   { params }: { params: Promise<{ id: string }> }
+ ) {
+   const { id: projectId } = await params;
++  const supabase = await createClient();
++  const {
++    data: { user },
++  } = await supabase.auth.getUser();
++
++  if (!user) {
++    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
++  }
++
++  const { data: project } = await supabase
++    .from("obra_projects")
++    .select("id")
++    .eq("id", projectId)
++    .maybeSingle();
++
++  if (!project) {
++    return NextResponse.json({ error: "Project not found" }, { status: 404 });
++  }
++
+   const stages = await getObraStages(projectId);
+   return NextResponse.json({ stages });
+ }
+@@ -17,7 +36,9 @@ export async function POST(
+ ) {
+   const { id: projectId } = await params;
+   const supabase = await createClient();
+-  const { data: { user } } = await supabase.auth.getUser();
++  const {
++    data: { user },
++  } = await supabase.auth.getUser();
+ 
+   if (!user) {
+     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+@@ -26,57 +47,54 @@ export async function POST(
+   try {
+     const { templateId } = await req.json();
+ 
+-    // 1. Validar que el proyecto existe
+     const { data: projects } = await supabase
+-      .from('obra_projects')
+-      .select('id, fecha_inicio_estimada')
+-      .eq('id', projectId)
++      .from("obra_projects")
++      .select("id, fecha_inicio_estimada")
++      .eq("id", projectId)
+       .limit(1);
+-    
+-    const project = projects?.[0];
+ 
++    const project = projects?.[0];
+     if (!project) {
+       return NextResponse.json({ error: "Project not found" }, { status: 404 });
+     }
+ 
+-    // 2. Buscar el ID de la plantilla por defecto si no se envi├│ una
+     let finalTemplateId = templateId;
+-    if (!templateId || templateId === 'default') {
+-      const { data: defaultTemplates, error: tError } = await supabase
+-        .from('obra_stage_templates')
+-        .select('id')
+-        .eq('is_default', true)
++    if (!templateId || templateId === "default") {
++      const { data: defaultTemplates, error: templateError } = await supabase
++        .from("obra_stage_templates")
++        .select("id")
++        .eq("is_default", true)
+         .limit(1);
+-      
+-      const defaultT = defaultTemplates?.[0];
+ 
+-      if (tError) {
+-        console.error("ÔØî [api/obras/stages] Error al buscar plantilla:", tError.message);
+-        return NextResponse.json({ error: "Error database: " + tError.message }, { status: 500 });
++      const defaultTemplate = defaultTemplates?.[0];
++
++      if (templateError) {
++        return NextResponse.json(
++          { error: "Error loading stage template" },
++          { status: 500 }
++        );
+       }
+ 
+-      if (!defaultT) {
+-        console.warn("ÔÜá´©Å [api/obras/stages] No se encontr├│ plantilla por defecto en obra_stage_templates");
+-        return NextResponse.json({ error: "No default template found. Run SQL seed." }, { status: 404 });
++      if (!defaultTemplate) {
++        return NextResponse.json(
++          { error: "No default template found. Run SQL seed." },
++          { status: 404 }
++        );
+       }
+-      finalTemplateId = defaultT.id;
++
++      finalTemplateId = defaultTemplate.id;
+     }
+ 
+-    // 3. Aplicar la plantilla
+     try {
+       await applyStageTemplate(projectId, finalTemplateId, project.fecha_inicio_estimada || undefined);
+-    } catch (applyErr: any) {
+-      console.error("ÔØî [api/obras/stages] Error en applyStageTemplate:", applyErr.message);
+-      return NextResponse.json({ error: applyErr.message }, { status: 500 });
++    } catch (applyError: unknown) {
++      const message = applyError instanceof Error ? applyError.message : "Error applying template";
++      return NextResponse.json({ error: message }, { status: 500 });
+     }
+ 
+-    return NextResponse.json({ success: true, message: "Plantilla aplicada con ├®xito" });
+-
+-  } catch (error: any) {
+-    console.error("ÔØî [api/obras/stages] POST Critical Error:", error.message);
+-    return NextResponse.json({ 
+-      error: error.message || "Error interno del servidor",
+-      details: error.toString() 
+-    }, { status: 500 });
++    return NextResponse.json({ success: true, message: "Template applied successfully" });
++  } catch (error: unknown) {
++    const message = error instanceof Error ? error.message : "Internal server error";
++    return NextResponse.json({ error: message }, { status: 500 });
+   }
+ }
+diff --git a/src/app/api/payments/flow/confirm/route.ts b/src/app/api/payments/flow/confirm/route.ts
+index 88205b4..10ea29b 100644
+--- a/src/app/api/payments/flow/confirm/route.ts
++++ b/src/app/api/payments/flow/confirm/route.ts
+@@ -49,7 +49,8 @@ export async function POST(req: NextRequest) {
+       3: 'rejected',
+       4: 'canceled'
+     };
+-    const dbStatus = statusMap[statusResult.status] || 'pending';
++    const statusCode = typeof statusResult.status === 'number' ? statusResult.status : 1;
++    const dbStatus = statusMap[statusCode] || 'pending';
+ 
+     // 2. Comprobar si ya procesamos este pago como 'paid' para evitar re-procesos
+     const { data: existingPayment } = await supabase
+@@ -199,7 +200,7 @@ export async function POST(req: NextRequest) {
+ 
+     return NextResponse.json({ message: 'Webhook recibido.' });
+ 
+-  } catch (error: any) {
++  } catch (error: unknown) {
+     console.error('Webhook Error:', error);
+     return NextResponse.json({ error: 'Ocurri├│ un error al procesar el webhook.' }, { status: 500 });
+   }
+diff --git a/src/app/seguimiento/[id]/page.tsx b/src/app/seguimiento/[id]/page.tsx
+deleted file mode 100644
+index ee7cb52..0000000
+--- a/src/app/seguimiento/[id]/page.tsx
++++ /dev/null
+@@ -1,325 +0,0 @@
+-import type { Metadata } from "next";
+-import { notFound, redirect } from "next/navigation";
+-import Link from "next/link";
+-import Image from "next/image";
+-import { createClient } from "@/lib/supabase/server";
+-import { getObraProjectForClient } from "@/lib/supabase/obra-services";
+-import { ProjectTimeline } from "@/components/obras/project-timeline";
+-import { ProjectHealthBadge } from "@/components/obras/health-badge";
+-import { ProjectSpecsClient } from "@/components/obras/project-specs-client";
+-import { cn } from "@/lib/utils";
+-import {
+-  Calendar, MapPin, CheckCircle2, Clock, FileText,
+-  Image as ImageIcon, ChevronRight, HardHat, ArrowLeft,
+-  Download, Share2, Info, User
+-} from "lucide-react";
+-import type { ObraStage, ObraStageFile } from "@/types/obra";
+-
+-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+-  const { id } = await params;
+-  const project = await getObraProjectForClient(id);
+-  return {
+-    title: project ? `${project.nombre} | Portal de Seguimiento` : "Portal de Seguimiento",
+-    description: "Sigue el avance de tu proyecto de construcci├│n en tiempo real.",
+-  };
+-}
+-
+-export default async function ClientPortalPage({ params }: { params: Promise<{ id: string }> }) {
+-  const { id } = await params;
+-  const supabase = await createClient();
+-
+-  const project = await getObraProjectForClient(id);
+-  if (!project) notFound();
+-
+-  const stages = (project.stages ?? []) as ObraStage[];
+-  
+-  // Consolidar todos los archivos y generar URLs p├║blicas reales
+-  const allFiles = stages.flatMap(s => (s.files ?? []) as ObraStageFile[]).map(file => {
+-    const { data: { publicUrl } } = supabase.storage.from('obra-files').getPublicUrl(file.storage_path);
+-    return { ...file, publicUrl };
+-  });
+-
+-  const recentPhotos = allFiles.filter(f => f.tipo === 'foto').reverse().slice(0, 8);
+-  const docs = allFiles.filter(f => f.tipo !== 'foto');
+-
+-  const nextStage = stages.find(s => s.estado !== 'completada' && s.estado !== 'cancelada');
+-  const completedCount = stages.filter(s => s.estado === 'completada').length;
+-
+-  const diasRestantes = project.fecha_termino_estimada
+-    ? Math.ceil((new Date(project.fecha_termino_estimada).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+-    : null;
+-
+-  return (
+-    <div className="min-h-screen bg-slate-50/50">
+-      {/* Header del portal Premium */}
+-      <div className="bg-[#1a1a1a] text-white relative overflow-hidden">
+-        {/* Decoraci├│n de fondo */}
+-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brand-indigo/10 to-transparent pointer-events-none" />
+-        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-teal/5 rounded-full blur-3xl pointer-events-none" />
+-
+-        <div className="max-w-5xl mx-auto px-6 py-10 relative z-10 space-y-8">
+-          <div className="flex items-center justify-between">
+-            <div className="flex items-center gap-4">
+-              <div className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center">
+-                <HardHat className="w-6 h-6 text-brand-teal" />
+-              </div>
+-              <div>
+-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Portal de Seguimiento</p>
+-                <div className="flex items-center gap-2">
+-                  <p className="text-sm font-bold text-white/90">
+-                    {project.constructora?.nombre ?? "SolocasasChile"}
+-                  </p>
+-                  <span className="w-1 h-1 rounded-full bg-white/20" />
+-                  <span className="text-[10px] font-black uppercase tracking-widest text-brand-teal">Verificada</span>
+-                </div>
+-              </div>
+-            </div>
+-            
+-            <div className="flex items-center gap-3">
+-              <button className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-colors">
+-                <Share2 className="w-3 h-3" /> Compartir
+-              </button>
+-              <Link href="/" className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+-                <ArrowLeft className="w-5 h-5" />
+-              </Link>
+-            </div>
+-          </div>
+-
+-          <div className="grid md:grid-cols-2 gap-8 items-end">
+-            <div className="space-y-4">
+-              <div className="flex items-center gap-3">
+-                <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight leading-tight text-white">
+-                  {project.nombre}
+-                </h1>
+-                <ProjectHealthBadge salud={project.salud} />
+-              </div>
+-              
+-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50 font-medium">
+-                {project.region && (
+-                  <span className="flex items-center gap-2">
+-                    <MapPin className="w-4 h-4 text-brand-teal/70" />
+-                    {project.region}{project.comuna ? `, ${project.comuna}` : ''}
+-                  </span>
+-                )}
+-                {project.fecha_termino_estimada && (
+-                  <span className="flex items-center gap-2">
+-                    <Calendar className="w-4 h-4 text-brand-teal/70" />
+-                    Entrega est.: {new Date(project.fecha_termino_estimada).toLocaleDateString('es-CL', { day: 'numeric', month: 'short', year: 'numeric' })}
+-                  </span>
+-                )}
+-              </div>
+-            </div>
+-
+-            {/* Barra de avance circular / lineal */}
+-            <div className="space-y-4 bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-[2rem]">
+-              <div className="flex justify-between items-end">
+-                <div>
+-                  <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">Avance del Proyecto</p>
+-                  <span className="text-4xl font-black text-white">{project.porcentaje_avance}%</span>
+-                </div>
+-                <div className="text-right">
+-                  <p className="text-xl font-black text-brand-teal">{completedCount}/{stages.length}</p>
+-                  <p className="text-[9px] font-black text-white/30 uppercase tracking-tighter">Etapas Completadas</p>
+-                </div>
+-              </div>
+-              <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden">
+-                <div
+-                  className="h-full rounded-full bg-gradient-to-r from-brand-teal to-brand-indigo transition-all duration-1000 ease-out"
+-                  style={{ width: `${project.porcentaje_avance}%` }}
+-                />
+-              </div>
+-            </div>
+-          </div>
+-        </div>
+-      </div>
+-
+-      {/* Contenido principal */}
+-      <div className="max-w-5xl mx-auto px-6 py-12 space-y-12">
+-
+-        {/* Info y Pr├│ximo Hito */}
+-        <div className="grid md:grid-cols-3 gap-8">
+-          <div className="md:col-span-2 flex flex-col sm:flex-row items-center gap-6 p-8 rounded-[2.5rem] bg-white border border-border/40 shadow-sm shadow-brand-indigo/5">
+-             <div className="w-16 h-16 rounded-3xl bg-brand-teal/10 flex items-center justify-center shrink-0">
+-               <Clock className="w-8 h-8 text-brand-teal" />
+-             </div>
+-             <div className="flex-1 text-center sm:text-left">
+-               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Estado Actual: {nextStage?.nombre || 'Finalizado'}</p>
+-               <h2 className="text-xl font-heading font-black text-brand-indigo mt-1">
+-                 {nextStage ? `Trabajando en: ${nextStage.nombre}` : '┬íObra Terminada! Ô£à'}
+-               </h2>
+-               <p className="text-sm text-muted-foreground font-medium mt-1">
+-                 {nextStage?.descripcion || 'Hemos completado satisfactoriamente todas las etapas del proyecto.'}
+-               </p>
+-             </div>
+-             {diasRestantes !== null && diasRestantes > 0 && (
+-               <div className="px-6 py-3 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+-                 <p className="text-2xl font-black text-brand-indigo">{diasRestantes}</p>
+-                 <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">d├¡as para entrega</p>
+-               </div>
+-             )}
+-          </div>
+-
+-          <div className="p-8 rounded-[2.5rem] bg-brand-indigo text-white flex items-center justify-between group cursor-pointer hover:bg-brand-indigo/90 transition-colors">
+-            <div className="space-y-1">
+-              <p className="text-[10px] font-black uppercase tracking-widest text-white/50 underline transition-all group-hover:text-white">Presupuesto y Pagos</p>
+-              <p className="font-bold text-lg">Estado Financiero</p>
+-            </div>
+-            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
+-              <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
+-            </div>
+-          </div>
+-        </div>
+-
+-        {/* Timeline vs Specs */}
+-        <div className="grid lg:grid-cols-12 gap-10">
+-          {/* Timeline principal */}
+-          <div className="lg:col-span-7 space-y-6">
+-            <div className="flex items-center justify-between px-2">
+-              <h2 className="font-heading font-black text-2xl tracking-tight">Cronograma de Obra</h2>
+-              <div className="flex items-center gap-3">
+-                <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+-                  <CheckCircle2 className="w-3.5 h-3.5" /> Completada
+-                </span>
+-                <span className="flex items-center gap-1.5 text-xs font-bold text-brand-indigo">
+-                  <Clock className="w-3.5 h-3.5" /> En curso
+-                </span>
+-              </div>
+-            </div>
+-            
+-            <div className="p-10 rounded-[2.5rem] bg-white border border-border/40 shadow-sm relative overflow-hidden">
+-              {/* Marca de agua decorativa */}
+-              <HardHat className="absolute -bottom-10 -right-10 w-48 h-48 text-slate-50 -rotate-12 pointer-events-none" />
+-              
+-              <div className="relative z-10">
+-                {stages.length > 0 ? (
+-                  <ProjectTimeline stages={stages} />
+-                ) : (
+-                  <div className="py-20 text-center space-y-4">
+-                    <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto">
+-                      <Clock className="w-8 h-8 text-slate-200" />
+-                    </div>
+-                    <p className="text-sm text-muted-foreground font-medium">Cargando l├¡nea de tiempo del proyecto...</p>
+-                  </div>
+-                )}
+-              </div>
+-            </div>
+-          </div>
+-
+-          {/* Especificaciones */}
+-          <div className="lg:col-span-5">
+-            <ProjectSpecsClient specs={project.specs || []} />
+-          </div>
+-        </div>
+-
+-        {/* Galer├¡a de Fotos - Evidencia Real */}
+-        <div>
+-          <div className="flex items-center justify-between mb-8 px-2">
+-            <div>
+-              <h2 className="font-heading font-black text-2xl tracking-tight">Evidencia Fotogr├ífica</h2>
+-              <p className="text-sm text-muted-foreground font-medium">Registro visual del avance directo en terreno.</p>
+-            </div>
+-            <button className="text-xs font-black uppercase tracking-widest text-brand-indigo hover:underline">Ver todas</button>
+-          </div>
+-
+-          {recentPhotos.length > 0 ? (
+-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+-              {recentPhotos.map((f, i) => (
+-                <div 
+-                  key={f.id} 
+-                  className={cn(
+-                    "aspect-square rounded-[2rem] bg-slate-100 overflow-hidden border border-border/20 group relative cursor-zoom-in",
+-                    i === 0 && "md:col-span-2 md:row-span-2 aspect-auto"
+-                  )}
+-                >
+-                  <Image 
+-                    src={f.publicUrl || ""}
+-                    alt={f.nombre || "Foto de obra"}
+-                    fill
+-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+-                  />
+-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+-                    <p className="text-[10px] font-black text-white/70 uppercase tracking-widest">{f.nombre}</p>
+-                    <p className="text-xs text-white font-bold">{new Date(f.created_at || '').toLocaleDateString('es-CL')}</p>
+-                  </div>
+-                </div>
+-              ))}
+-            </div>
+-          ) : (
+-            <div className="p-16 rounded-[2.5rem] bg-white border border-dashed border-slate-200 text-center space-y-4">
+-              <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto">
+-                <ImageIcon className="w-8 h-8 text-slate-200" />
+-              </div>
+-              <div>
+-                <p className="text-sm font-bold text-slate-500">Todav├¡a no hay fotos publicadas</p>
+-                <p className="text-xs text-slate-400 font-medium">Tu constructora subir├í fotos del avance pronto.</p>
+-              </div>
+-            </div>
+-          )}
+-        </div>
+-
+-        {/* Documentos y Soporte */}
+-        <div className="grid md:grid-cols-2 gap-8">
+-          <div className="p-10 rounded-[2.5rem] bg-white border border-border/40 shadow-sm space-y-6">
+-            <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3">
+-              <FileText className="w-6 h-6 text-brand-indigo" /> Documentaci├│n
+-            </h2>
+-             {docs.length > 0 ? (
+-               <div className="divide-y divide-border/10">
+-                 {docs.map(f => (
+-                   <div key={f.id} className="py-4 flex items-center gap-4 group cursor-pointer">
+-                     <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-brand-indigo/5 transition-colors">
+-                       <FileText className="w-5 h-5 text-slate-400 group-hover:text-brand-indigo" />
+-                     </div>
+-                     <div className="flex-1 min-w-0">
+-                       <p className="text-sm font-bold text-foreground truncate">{f.nombre}</p>
+-                       <p className="text-[10px] text-muted-foreground font-medium">{new Date(f.created_at || '').toLocaleDateString()}</p>
+-                     </div>
+-                     <Download className="w-4 h-4 text-muted-foreground/30 group-hover:text-brand-indigo transition-colors" />
+-                   </div>
+-                 ))}
+-               </div>
+-             ) : (
+-               <p className="text-sm text-muted-foreground italic font-medium">No se han compartido documentos t├®cnicos todav├¡a.</p>
+-             )}
+-          </div>
+-
+-          <div className="p-10 rounded-[2.5rem] bg-brand-teal/5 border border-brand-teal/20 space-y-6">
+-            <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3 text-brand-teal-dark">
+-              <Info className="w-6 h-6" /> Ayuda y Soporte
+-            </h2>
+-            <div className="space-y-4">
+-              <p className="text-sm text-brand-teal-dark/70 font-medium leading-relaxed">
+-                ┬┐Tienes dudas sobre los tiempos o materiales de tu proyecto? Contacta directamente al encargado de obra asignado por tu constructora.
+-              </p>
+-              <div className="bg-white p-5 rounded-3xl border border-brand-teal/10 space-y-3">
+-                <div className="flex items-center gap-3">
+-                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
+-                    <User className="w-5 h-5 text-slate-400" />
+-                  </div>
+-                  <div>
+-                    <p className="text-sm font-black">{project.ejecutivo_responsable || 'Encargado de Obra'}</p>
+-                    <p className="text-[10px] font-black uppercase text-brand-teal tracking-widest">Responsable Asignado</p>
+-                  </div>
+-                </div>
+-                <button className="w-full py-3 bg-brand-teal text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-brand-teal/20 hover:scale-[1.02] transition-transform">
+-                  Contactar por WhatsApp
+-                </button>
+-              </div>
+-            </div>
+-          </div>
+-        </div>
+-
+-        {/* Branding Footer */}
+-        <div className="text-center py-12 border-t border-border/10 space-y-4">
+-          <div className="flex items-center justify-center gap-2 opacity-30 grayscale">
+-            <HardHat className="w-5 h-5" />
+-            <p className="text-xs font-black uppercase tracking-[0.3em] font-heading">SolocasasChile</p>
+-          </div>
+-          <p className="text-[10px] text-muted-foreground/40 font-medium max-w-xl mx-auto leading-relaxed">
+-            Este portal es una herramienta diagn├│stica de transparencia proporcionada por SolocasasChile para mejorar la confianza entre constructoras y clientes finales. La informaci├│n aqu├¡ presentada es responsabilidad directa de la constructora ejecutante.
+-          </p>
+-        </div>
+-      </div>
+-    </div>
+-  );
+-}
+diff --git a/src/components/dashboard/settings-form.tsx b/src/components/dashboard/settings-form.tsx
+index d33379a..ad9ab6b 100644
+--- a/src/components/dashboard/settings-form.tsx
++++ b/src/components/dashboard/settings-form.tsx
+@@ -163,7 +163,7 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
+     }
+ 
+     const expectedDv = 11 - (sum % 11);
+-    let dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
++    const dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
+ 
+     return dvChar === dv;
+   }
+diff --git a/src/components/layout/blog-mega-menu.tsx b/src/components/layout/blog-mega-menu.tsx
+index eb7fecd..710b05e 100644
+--- a/src/components/layout/blog-mega-menu.tsx
++++ b/src/components/layout/blog-mega-menu.tsx
+@@ -1,155 +1,55 @@
+ "use client";
+ 
+ import Link from "next/link";
+-import Image from "next/image";
+ import { motion } from "framer-motion";
+-import { ChevronRight, ArrowRight, Search, Sparkles, BookOpen, Users, Compass, Megaphone, ShieldCheck, MessageSquare } from "lucide-react";
+-import { Badge } from "@/components/ui/badge";
+-import { BlogPost } from "@/types/blog";
++import type { BlogPost } from "@/types/blog";
+ 
+-interface BlogMegaMenuProps {
++type BlogMegaMenuProps = {
+   posts: BlogPost[];
+-  onClose: () => void;
+-}
++  onClose?: () => void;
++};
+ 
+ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
++  const featured = posts.slice(0, 2);
++
+   return (
+     <motion.div
+-      initial={{ opacity: 0, y: 10, scale: 0.98 }}
++      onClick={onClose}
++      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+       animate={{ opacity: 1, y: 0, scale: 1 }}
+-      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+-      transition={{ duration: 0.2, ease: "easeOut" }}
+-      className="absolute top-full left-0 w-full bg-white border border-border/40 shadow-2xl rounded-3xl mt-4 overflow-hidden z-[100] p-6 md:p-12"
+-      onMouseLeave={onClose}
++      exit={{ opacity: 0, y: 8, scale: 0.98 }}
++      transition={{ duration: 0.2 }}
++      className="mt-4 w-full rounded-3xl border border-border/40 bg-background p-6 shadow-2xl"
+     >
+-      <div className="max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-12">
+-        
+-        {/* LADO IZQUIERDO: Recursos y Art├¡culos (6 columnas) */}
+-        <div className="md:col-span-7 space-y-8 text-left">
+-          <div className="flex items-center justify-between">
+-             <h3 className="text-2xl font-black font-heading tracking-tight text-brand-indigo italic">Recursos y <span className="text-brand-teal">Art├¡culos</span></h3>
+-             <Link 
+-               href="/blog" 
+-               className="text-xs font-black uppercase tracking-widest text-[#1b0088]/60 hover:text-brand-teal transition-all flex items-center gap-2 group"
+-               onClick={onClose}
+-             >
+-                Ver Todo
+-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+-             </Link>
+-          </div>
+-
+-          <div className="space-y-8">
+-            {posts.length > 0 ? (
+-              posts.map((post) => (
+-                <Link 
+-                  key={post.id} 
+-                  href={`/blog/${post.slug}`}
+-                  className="group flex gap-6 items-center"
+-                  onClick={onClose}
+-                >
+-                  <div className="relative w-48 h-32 rounded-2xl overflow-hidden shrink-0 border border-border/40 shadow-sm group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-500">
+-                    {post.cover_image_url ? (
+-                      <Image 
+-                        src={post.cover_image_url} 
+-                        alt={post.title}
+-                        fill
+-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+-                      />
+-                    ) : (
+-                      <div className="absolute inset-0 bg-brand-indigo/5 flex items-center justify-center p-4">
+-                        <Image src="/images/logo-vertical.png" alt="SoloCasas" width={60} height={40} className="opacity-10" />
+-                      </div>
+-                    )}
+-                  </div>
+-                  
+-                  <div className="space-y-2">
+-                    <Badge variant="secondary" className="bg-brand-indigo/5 text-brand-indigo border-none text-[10px] font-black uppercase tracking-tighter px-3 py-0.5">
+-                      {post.category || "Educaci├│n"}
+-                    </Badge>
+-                    <h4 className="text-lg font-black font-heading leading-tight group-hover:text-brand-teal transition-colors line-clamp-2">
+-                      {post.title}
+-                    </h4>
+-                    <p className="text-xs text-muted-foreground font-medium line-clamp-2 opacity-60">
+-                      {post.excerpt}
+-                    </p>
+-                  </div>
+-                </Link>
+-              ))
+-            ) : (
+-              <div className="py-10 text-center bg-slate-50 rounded-2xl border border-dashed border-border/60">
+-                <p className="text-sm font-bold text-muted-foreground">Pr├│ximamente m├ís gu├¡as expertas...</p>
+-              </div>
+-            )}
+-          </div>
+-        </div>
+-
+-        {/* LADO DERECHO: Impacto y Recursos (5 columnas) */}
+-        <div className="md:col-span-5 grid grid-cols-2 gap-8 border-l border-border/10 pl-12 items-start">
+-          <div className="space-y-6">
+-                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo/40 mb-4 px-4 flex items-center gap-2">
+-                    <Sparkles className="w-3 h-3 text-brand-teal" /> Informaci├│n Corporativa
+-                  </h4>
+-                  <div className="space-y-1">
+-                    {[
+-                      { name: "Sobre Nosotros", href: "/nosotros", icon: Users },
+-                      { name: "┬┐C├│mo verificamos?", href: "/verificacion", icon: ShieldCheck },
+-                      { name: "Preguntas Frecuentes", href: "/#faq", icon: MessageSquare },
+-                    ].map((item) => (
+-                      <Link
+-                        key={item.name}
+-                        href={item.href}
+-                        className="flex items-center gap-3 p-4 rounded-2xl hover:bg-brand-indigo/5 transition-all group"
+-                        onClick={onClose}
+-                      >
+-                        <div className="w-8 h-8 rounded-xl bg-brand-indigo/5 flex items-center justify-center text-brand-indigo group-hover:bg-brand-indigo group-hover:text-white transition-all">
+-                          <item.icon className="w-4 h-4" />
+-                        </div>
+-                        <span className="text-xs font-bold text-slate-600 group-hover:text-brand-indigo transition-colors">{item.name}</span>
+-                      </Link>
+-                    ))}
+-                  </div>
+-          </div>
+-
+-          <div className="space-y-8">
+-            <div className="space-y-6">
+-               <h3 className="text-lg font-black font-heading tracking-tight text-brand-indigo">Ecosistema</h3>
+-               <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-4 space-y-3">
+-                  <div className="flex items-center gap-2">
+-                    <Users className="w-4 h-4 text-emerald-600" />
+-                    <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">Proveedores</span>
+-                  </div>
+-                  <p className="text-[10px] text-emerald-800 font-medium leading-relaxed italic">
+-                    Contacta directamente con especialistas en materiales y servicios para tu obra.
+-                  </p>
+-                  <Link 
+-                    href="https://constru.solocasaschile.com" 
+-                    className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:gap-2 transition-all"
+-                    onClick={onClose}
+-                  >
+-                    Acceder al Directorio <ChevronRight className="w-3 h-3" />
+-                  </Link>
+-               </div>
+-            </div>
+-
+-            <div className="space-y-4">
+-              <div className="flex items-center gap-2">
+-                <span className="text-xs font-black text-brand-teal">┬íNuevo!</span>
+-                <span className="text-lg">­ƒÄë</span>
+-              </div>
+-              <Link 
+-                href="/premium-access"
+-                className="block w-full py-4 bg-brand-teal text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-brand-indigo hover:shadow-xl hover:-translate-y-0.5 transition-all text-center shadow-lg shadow-brand-teal/20"
+-                onClick={onClose}
+-              >
+-                An├ílisis de Mercado
+-              </Link>
+-            </div>
+-          </div>
+-        </div>
+-      </div>
+-
+-      <div className="mt-12 pt-6 border-t border-border/10 flex items-center justify-center">
+-         <p className="text-[10px] text-muted-foreground font-bold tracking-[0.3em] uppercase opacity-40">Gu├¡a Definitiva para la Vivienda Industrializada en Chile 2026</p>
++      <div className="grid gap-4 md:grid-cols-2">
++        {featured.length ? (
++          featured.map((post) => (
++            <Link
++              key={post.id}
++              href={`/blog/${post.slug}`}
++              className="rounded-2xl border border-border/40 p-4 transition-colors hover:bg-muted/30"
++            >
++              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
++                Recurso
++              </p>
++              <p className="mt-2 text-base font-semibold text-foreground">
++                {post.title}
++              </p>
++            </Link>
++          ))
++        ) : (
++          <Link
++            href="/blog"
++            className="rounded-2xl border border-border/40 p-4 transition-colors hover:bg-muted/30"
++          >
++            <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
++              Recursos
++            </p>
++            <p className="mt-2 text-base font-semibold text-foreground">
++              Ver articulos y guias
++            </p>
++          </Link>
++        )}
+       </div>
+     </motion.div>
+   );
+diff --git a/src/components/layout/footer.tsx b/src/components/layout/footer.tsx
+index d3e0195..1898e2c 100644
+--- a/src/components/layout/footer.tsx
++++ b/src/components/layout/footer.tsx
+@@ -1,147 +1,23 @@
+-
+ import Link from "next/link";
+-import Image from "next/image";
+-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+-import { FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+ 
+ export function Footer() {
+-  const currentYear = new Date().getFullYear();
++  const year = new Date().getFullYear();
+ 
+   return (
+-    <footer className="bg-[#2B09BD] text-white pt-20 pb-10 relative overflow-hidden">
+-      <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
+-          {/* Brand Col */}
+-          <div className="space-y-6 lg:pr-4">
+-            <Link href="/" className="inline-block group">
+-              <Image
+-                src="/images/logo-vertical.png"
+-                alt="SolocasasChile"
+-                width={160}
+-                height={120}
+-                className="h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
+-                style={{ filter: "brightness(0) invert(1)" }}
+-              />
++    <footer className="border-t border-border/40 bg-background">
++      <div className="container mx-auto max-w-7xl px-6 py-10 text-sm text-muted-foreground">
++        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
++          <p>SolocasasChile {year}. Todos los derechos reservados.</p>
++          <div className="flex items-center gap-4">
++            <Link href="/terminos" className="hover:text-foreground">
++              Terminos
++            </Link>
++            <Link href="/catalogo" className="hover:text-foreground">
++              Catalogo
++            </Link>
++            <Link href="/constructoras" className="hover:text-foreground">
++              Constructoras
+             </Link>
+-            
+-            <p className="text-[14px] leading-relaxed text-white/80 font-normal">
+-              La plataforma l├¡der en comparaci├│n de modelos de casas y proyectos inmobiliarios en Chile. <strong>SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.</strong>
+-            </p>
+-            
+-            <div className="flex items-center gap-3 pt-2">
+-              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+-                <FaInstagram className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+-              </Link>
+-              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+-                <FaFacebookF className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+-              </Link>
+-              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+-                <FaLinkedinIn className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+-              </Link>
+-            </div>
+-          </div>
+-
+-          {/* Explorar Col */}
+-          <div className="space-y-6 lg:pl-8">
+-            <div className="flex items-center gap-4">
+-              <h4 className="text-[16px] font-bold tracking-wide text-white">Explorar</h4>
+-              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+-            </div>
+-            <ul className="space-y-4 text-[14px] text-white/80 font-medium">
+-              {[
+-                { name: "Inicio", path: "/" },
+-                { name: "Cat├ílogo", path: "/catalogo" },
+-                { name: "Constructoras", path: "/constructoras" },
+-                { name: "Comparador", path: "/comparar" },
+-                { name: "Planes y Precios", path: "/planes" },
+-                { name: "Blog", path: "/blog" },
+-                { name: "┬┐C├│mo verificamos?", path: "/verificacion" }
+-              ].map((item) => (
+-                <li key={item.name}>
+-                  <Link href={item.path} className="hover:text-[#00FFD1] transition-colors">{item.name}</Link>
+-                </li>
+-              ))}
+-            </ul>
+-          </div>
+-
+-          {/* Contacto Col */}
+-          <div className="space-y-6">
+-            <div className="flex items-center gap-4">
+-              <h4 className="text-[16px] font-bold tracking-wide text-white">Contacto</h4>
+-              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+-            </div>
+-            <ul className="space-y-5">
+-              <li className="flex items-center gap-4">
+-                <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
+-                  <Mail className="w-4 h-4 text-[#00FFD1]" />
+-                </div>
+-                <div className="flex flex-col">
+-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Email</p>
+-                  <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.com</p>
+-                </div>
+-              </li>
+-              <li className="flex items-center gap-4">
+-                <a href="https://wa.me/56964130601" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+-                  <div className="w-9 h-9 rounded-lg bg-[#421FD8] group-hover:bg-[#00FFD1] shrink-0 flex items-center justify-center transition-colors">
+-                    <FaWhatsapp className="w-4 h-4 text-[#00FFD1] group-hover:text-[#2B09BD] transition-colors" />
+-                  </div>
+-                  <div>
+-                    <p className="text-[10px] font-bold text-[#00FFD1] uppercase tracking-[0.1em] mb-0.5">WhatsApp Ventas</p>
+-                    <p className="text-[13px] text-white/90 font-medium tracking-wide group-hover:text-[#00FFD1] transition-colors">+56 9 6413 0601</p>
+-                  </div>
+-                </a>
+-              </li>
+-              <li className="flex items-center gap-4 opacity-70">
+-                <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
+-                  <Phone className="w-4 h-4 text-[#00FFD1]" />
+-                </div>
+-                <div>
+-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Soporte</p>
+-                  <p className="text-[13px] text-white/90 font-medium tracking-wide">+56 9 6619 8752</p>
+-                </div>
+-              </li>
+-              <li className="flex items-center gap-4">
+-                <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
+-                  <MapPin className="w-4 h-4 text-[#00FFD1]" />
+-                </div>
+-                <div>
+-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Ubicaci├│n</p>
+-                  <p className="text-[13px] text-white/90 font-medium tracking-wide">Santiago, Chile</p>
+-                </div>
+-              </li>
+-            </ul>
+-          </div>
+-
+-          {/* Suscr├¡bete Col */}
+-          <div className="space-y-6 lg:pl-4">
+-            <div className="flex items-center gap-4">
+-              <h4 className="text-[16px] font-bold tracking-wide text-white">Suscr├¡bete</h4>
+-              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+-            </div>
+-            <p className="text-[13px] text-white/80 leading-relaxed font-medium">
+-              Recibe las mejores ofertas y nuevos modelos directamente en tu correo.
+-            </p>
+-            <div className="relative mt-2">
+-              <input 
+-                type="email" 
+-                placeholder="tu@email.com..." 
+-                className="w-full h-11 bg-[#421FD8] border-none rounded-lg pl-4 pr-12 text-[13px] outline-none placeholder:text-white/40 focus:ring-1 focus:ring-[#00FFD1] transition-all font-medium text-white"
+-              />
+-              <button className="absolute right-1 top-1 bottom-1 w-9 bg-[#00FFD1] rounded-[6px] flex items-center justify-center text-[#2B09BD] hover:bg-white transition-colors">
+-                <ArrowRight className="w-4 h-4 font-bold" />
+-              </button>
+-            </div>
+-          </div>
+-
+-        </div>
+-
+-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+-          <p className="text-[12px] text-white/50 font-medium tracking-wide">
+-            ┬® {currentYear} solocasaschile.com. Todos los derechos reservados. Desarrollado por <a href="https://webunica.cl" target="_blank" rel="noopener noreferrer" className="text-[#00FFD1] hover:text-white transition-colors font-bold">Webunica Chile</a>.
+-          </p>
+-          <div className="flex items-center gap-6 text-[12px] text-white/50 font-medium tracking-wide">
+-            <Link href="/terminos" className="hover:text-white transition-colors">T├®rminos y Condiciones</Link>
+-            <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
+           </div>
+         </div>
+       </div>
+diff --git a/src/lib/payments/flow.ts b/src/lib/payments/flow.ts
+index 549b069..ebddc18 100644
+--- a/src/lib/payments/flow.ts
++++ b/src/lib/payments/flow.ts
+@@ -18,11 +18,33 @@ export interface FlowPaymentResponse {
+   flowOrder: number;
+ }
+ 
++interface FlowStatusResponse {
++  status?: number;
++  flowOrder?: number;
++  commerceOrder?: string;
++  amount?: number;
++  payer?: string;
++  optional?: {
++    constructoraId?: string;
++    plan?: string;
++    billing?: 'monthly' | 'yearly' | string;
++    [key: string]: string | undefined;
++  };
++  paymentData?: unknown;
++}
++
++type FlowSignableValue = string | number | boolean | null | undefined;
++type FlowParams = Record<string, FlowSignableValue>;
++
++function isAbortError(error: unknown): error is DOMException {
++  return error instanceof DOMException && error.name === "AbortError";
++}
++
+ export class FlowService {
+   /**
+    * Genera la firma requerida por Flow
+    */
+-  private static generateSignature(params: Record<string, any>): string {
++  private static generateSignature(params: FlowParams): string {
+     const keys = Object.keys(params).sort();
+     let stringToSign = '';
+     
+@@ -52,7 +74,7 @@ export class FlowService {
+     externalId: string; // El ID de la constructora
+     optional?: Record<string, string>;
+   }): Promise<FlowPaymentResponse> {
+-    const flowParams: Record<string, any> = {
++    const flowParams: FlowParams = {
+       apiKey: FLOW_CONFIG.apiKey,
+       subject: String(params.subject).substring(0, 50), // Evitar caracteres extra├▒os y l├¡mite de Flow
+       currency: 'CLP',
+@@ -93,12 +115,12 @@ export class FlowService {
+         throw new Error(`Flow Payment Create Failed: ${response.statusText} (${errorText})`);
+       }
+ 
+-      const data = await response.json();
++      const data = (await response.json()) as FlowPaymentResponse;
+       console.log('[FLOW] Pago Creado con ├ëxito:', data);
+       return data;
+-    } catch (error: any) {
++    } catch (error: unknown) {
+       clearTimeout(timeoutId);
+-      if (error.name === 'AbortError') throw new Error('El servicio de Flow no respondi├│ a tiempo. Intenta de nuevo.');
++      if (isAbortError(error)) throw new Error('El servicio de Flow no respondi├│ a tiempo. Intenta de nuevo.');
+       throw error;
+     }
+   }
+@@ -106,8 +128,8 @@ export class FlowService {
+   /**
+    * Obtiene el estado de un pago usando el token recibido en el webhook
+    */
+-  static async getPaymentStatus(token: string) {
+-    const params: Record<string, any> = {
++  static async getPaymentStatus(token: string): Promise<FlowStatusResponse> {
++    const params: FlowParams = {
+       apiKey: FLOW_CONFIG.apiKey,
+       token
+     };
+@@ -130,8 +152,8 @@ export class FlowService {
+           throw new Error(`Flow getStatus failed: ${response.statusText}`);
+       }
+ 
+-      return response.json();
+-    } catch (error: any) {
++      return (await response.json()) as FlowStatusResponse;
++    } catch (error: unknown) {
+       clearTimeout(timeoutId);
+       throw error;
+     }
+diff --git a/src/lib/payments/uf.ts b/src/lib/payments/uf.ts
+index 980146e..cedd1ab 100644
+--- a/src/lib/payments/uf.ts
++++ b/src/lib/payments/uf.ts
+@@ -6,6 +6,10 @@
+ 
+ const FALLBACK_UF = 38500; // Valor seguro por si falla la API
+ 
++interface UfApiResponse {
++  serie?: Array<{ valor?: number }>;
++}
++
+ export async function getUfValue(): Promise<number> {
+   const controller = new AbortController();
+   const timeoutId = setTimeout(() => controller.abort(), 6000); // 6 segundos de gracia
+@@ -23,7 +27,7 @@ export async function getUfValue(): Promise<number> {
+       return FALLBACK_UF;
+     }
+ 
+-    const data = await response.json();
++    const data = (await response.json()) as UfApiResponse;
+     const valor = data.serie?.[0]?.valor;
+ 
+     if (!valor || typeof valor !== 'number') {
+@@ -32,9 +36,9 @@ export async function getUfValue(): Promise<number> {
+     }
+ 
+     return valor;
+-  } catch (error: any) {
++  } catch (error: unknown) {
+     clearTimeout(timeoutId);
+-    if (error.name === 'AbortError') {
++    if (error instanceof DOMException && error.name === 'AbortError') {
+       console.error('UF_TIMEOUT: La API de UF tard├│ demasiado, usando fallback.');
+     } else {
+       console.error('UF_FETCH_ERROR:', error);
+diff --git a/src/lib/services/suppliers.ts b/src/lib/services/suppliers.ts
+index 6eb6122..c19b89a 100644
+--- a/src/lib/services/suppliers.ts
++++ b/src/lib/services/suppliers.ts
+@@ -16,6 +16,27 @@ const CATEGORY_SEARCH_TERMS: Record<string, string> = {
+   'materiales-premium':        'Materiales construcci├│n premium alta eficiencia',
+ };
+ 
++interface SerpApiCoordinates {
++  latitude?: number;
++  longitude?: number;
++}
++
++interface SerpApiLocalResult {
++  title?: string;
++  address?: string;
++  phone?: string;
++  website?: string;
++  rating?: number | string;
++  place_id?: string;
++  gps_coordinates?: SerpApiCoordinates;
++  [key: string]: unknown;
++}
++
++interface SerpApiMapsResponse {
++  error?: string;
++  local_results?: SerpApiLocalResult[];
++}
++
+ export async function searchSuppliersInGoogle(query: string) {
+   // Aceptar ambos nombres posibles de la variable
+   const apiKey = process.env.SERPAPI_KEY || process.env.SERPAPI_API_KEY;
+@@ -33,7 +54,7 @@ export async function searchSuppliersInGoogle(query: string) {
+     throw new Error(`SerpApi HTTP ${response.status}: ${errorBody}`);
+   }
+   
+-  const data = await response.json();
++  const data = (await response.json()) as SerpApiMapsResponse;
+ 
+   if (data.error) {
+     throw new Error(`SerpApi Error: ${data.error}`);
+@@ -61,14 +82,19 @@ export async function syncSuppliersForCategory(
+   
+   if (!results.length) return { count: 0, query };
+ 
+-  const suppliersToInsert = results.map((res: any) => ({
+-    name: res.title,
++  const suppliersToInsert = results.map((res) => ({
++    name: res.title ?? "Proveedor sin nombre",
+     category_id: categoryId,
+     region_slug: regionSlug,
+     address: res.address || null,
+     phone: res.phone || null,
+     website: res.website || null,
+-    google_rating: res.rating ? parseFloat(res.rating) : null,
++    google_rating:
++      typeof res.rating === "number"
++        ? res.rating
++        : typeof res.rating === "string"
++          ? parseFloat(res.rating)
++          : null,
+     google_place_id: res.place_id || null,
+     latitude: res.gps_coordinates?.latitude || null,
+     longitude: res.gps_coordinates?.longitude || null,
+diff --git a/src/lib/supabase/actions.ts b/src/lib/supabase/actions.ts
+index 6608c5d..3a41951 100644
+--- a/src/lib/supabase/actions.ts
++++ b/src/lib/supabase/actions.ts
+@@ -8,6 +8,18 @@ import { getPlanLimits } from '../constants/plans'
+ import { resend } from '@/lib/resend'
+ import { recalcularSellosAutomaticos } from '@/lib/services/sellos'
+ 
++type GenericRecord = Record<string, unknown>;
++type EmailRow = { email: string | null };
++type ModelPayload = GenericRecord & {
++  nombre: string;
++  imagenes_urls?: string[];
++  slug?: string;
++};
++
++function getErrorMessage(err: unknown, fallback: string): string {
++  return err instanceof Error ? err.message : fallback;
++}
++
+ export async function login(formData: FormData) {
+   const supabase = await createClient()
+ 
+@@ -107,7 +119,7 @@ export async function register(formData: FormData) {
+     // Ensure unique slug if based on email placeholder
+     const slug = `${baseSlug}-${authData.user.id.slice(0, 5)}`
+ 
+-    const constructoraPayload: any = {
++    const constructoraPayload: GenericRecord = {
+       id: authData.user.id,
+       nombre: companyName,
+       slug,
+@@ -190,9 +202,9 @@ export async function register(formData: FormData) {
+     revalidateTag('constructoras', 'max')
+     return { redirectTo: `/bienvenida?plan=${plan}` }
+ 
+-  } catch (err: any) {
++  } catch (err: unknown) {
+     console.error('[register] Unexpected error:', err)
+-    return { error: err?.message || 'Error inesperado en el servidor. Intenta de nuevo.' }
++    return { error: getErrorMessage(err, 'Error inesperado en el servidor. Intenta de nuevo.') }
+   }
+ }
+ 
+@@ -207,8 +219,8 @@ export async function resendConfirmation(email: string) {
+     })
+     if (error) return { error: error.message }
+     return { success: true }
+-  } catch (err: any) {
+-    return { error: err?.message || 'Error al reenviar el correo.' }
++  } catch (err: unknown) {
++    return { error: getErrorMessage(err, 'Error al reenviar el correo.') }
+   }
+ }
+ 
+@@ -239,7 +251,7 @@ export async function updateSettings(formData: FormData) {
+ 
+   const isPaidPlan = initialPlan === 'pro' || initialPlan === 'premium';
+ 
+-  const data: any = {
++  const data: GenericRecord = {
+     nombre: formData.get('nombre') as string,
+     razon_social: formData.get('razon_social') as string,
+     email: formData.get('email') as string,
+@@ -284,7 +296,7 @@ export async function updateSettings(formData: FormData) {
+   return { success: true }
+ }
+ 
+-export async function createModel(data: any) {
++export async function createModel(data: ModelPayload) {
+   const supabase = await createClient()
+   const { data: { user } } = await supabase.auth.getUser()
+   if (!user) return { error: 'No autenticado' }
+@@ -337,7 +349,7 @@ export async function createModel(data: any) {
+   return { success: true }
+ }
+ 
+-export async function updateModel(id: string, data: any) {
++export async function updateModel(id: string, data: ModelPayload) {
+   const supabase = await createClient()
+   const { data: { user } } = await supabase.auth.getUser()
+   if (!user) return { error: 'No autenticado' }
+@@ -441,7 +453,7 @@ export async function adminUpdateConstructora(formData: FormData) {
+   const id = formData.get('id') as string
+   if (!id) return { error: "ID de constructora no proporcionado." }
+ 
+-  const data: any = {
++  const data: GenericRecord = {
+     nombre: formData.get('nombre') as string,
+     razon_social: formData.get('razon_social') as string,
+     descripcion: formData.get('descripcion') as string,
+@@ -525,7 +537,7 @@ export async function toggleFeaturedModelo(id: string, featured: boolean) {
+   revalidateTag('featured', 'max')
+ }
+ 
+-export async function updateSiteSettings(key: string, value: any) {
++export async function updateSiteSettings(key: string, value: unknown) {
+   const supabase = await createClient()
+   const { data: { user } } = await supabase.auth.getUser()
+   
+@@ -589,7 +601,7 @@ export async function sendBulkEmail(formData: FormData) {
+         .not('email', 'is', null)
+       
+       if (fetchError) throw fetchError
+-      emails = (dests as any[] || []).map(d => d.email).filter(Boolean)
++      emails = ((dests as EmailRow[] | null) || []).map(d => d.email).filter(Boolean) as string[]
+     } else {
+       let query = supabase.from('constructoras').select('email').not('email', 'is', null)
+       if (audiencia !== 'todos') {
+@@ -597,7 +609,7 @@ export async function sendBulkEmail(formData: FormData) {
+       }
+       const { data: dests, error: fetchError } = await query
+       if (fetchError) throw fetchError
+-      emails = (dests as any[] || []).map(d => d.email).filter(Boolean)
++      emails = ((dests as EmailRow[] | null) || []).map(d => d.email).filter(Boolean) as string[]
+     }
+     
+     if (emails.length === 0) {
+@@ -640,9 +652,9 @@ export async function sendBulkEmail(formData: FormData) {
+ 
+     return { success: true, count: emails.length }
+ 
+-  } catch (err: any) {
++  } catch (err: unknown) {
+     console.error('[sendBulkEmail] Error:', err)
+-    return { error: err.message || "Error al enviar los correos masivos." }
++    return { error: getErrorMessage(err, "Error al enviar los correos masivos.") }
+   }
+ }
+ 
+@@ -837,9 +849,9 @@ export async function aprobarSello(formData: FormData) {
+     console.log("[Admin] Sello aprobado exitosamente");
+     return { success: true };
+ 
+-  } catch (err: any) {
++  } catch (err: unknown) {
+     console.error("[Admin] Excepci├│n en aprobarSello:", err);
+-    return { success: false, error: err.message || "Error desconocido" };
++    return { success: false, error: getErrorMessage(err, "Error desconocido") };
+   }
+ }
+ 
+@@ -883,9 +895,9 @@ export async function rechazarSello(formData: FormData) {
+     console.log("[Admin] Sello rechazado exitosamente");
+     return { success: true };
+ 
+-  } catch (err: any) {
++  } catch (err: unknown) {
+     console.error("[Admin] Excepci├│n en rechazarSello:", err);
+-    return { success: false, error: err.message || "Error desconocido" };
++    return { success: false, error: getErrorMessage(err, "Error desconocido") };
+   }
+ }
+ 
+@@ -922,7 +934,7 @@ const TestimonioSchema = z.object({
+ 
+ const TestimoniosArraySchema = z.array(TestimonioSchema);
+ 
+-export async function updateTestimonios(testimoniosRaw: any[]) {
++export async function updateTestimonios(testimoniosRaw: unknown[]) {
+   const supabase = await createClient()
+   const { data: { user } } = await supabase.auth.getUser()
+   if (!user) return { success: false, error: 'No autenticado' }
+diff --git a/src/lib/supabase/client-services.ts b/src/lib/supabase/client-services.ts
+deleted file mode 100644
+index 4a6b2d5..0000000
+--- a/src/lib/supabase/client-services.ts
++++ /dev/null
+@@ -1,8 +0,0 @@
+-"use client";
+-
+-import { createClient } from "@/lib/supabase/client";
+-
+-export async function createLead(leadData: any) {
+-  const supabase = createClient();
+-  return await supabase.from('leads').insert([leadData]);
+-}
+diff --git a/src/lib/supabase/client.ts b/src/lib/supabase/client.ts
+index 0fd51b9..b53a626 100644
+--- a/src/lib/supabase/client.ts
++++ b/src/lib/supabase/client.ts
+@@ -1,13 +1,15 @@
+ import { createBrowserClient } from '@supabase/ssr'
+ import { mockSupabaseClient } from './mock-client'
+ 
++type BrowserSupabaseClient = ReturnType<typeof createBrowserClient>;
++
+ export function createClient() {
+   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+ 
+   if (!url || !key) {
+     console.warn("Supabase credentials missing on Client. Check .env or Vercel Settings.");
+-    return mockSupabaseClient as any;
++    return mockSupabaseClient as unknown as BrowserSupabaseClient;
+   }
+ 
+   return createBrowserClient(url, key)
+diff --git a/src/lib/supabase/mock-client.ts b/src/lib/supabase/mock-client.ts
+index d361022..ff90afc 100644
+--- a/src/lib/supabase/mock-client.ts
++++ b/src/lib/supabase/mock-client.ts
+@@ -1,4 +1,31 @@
+-export const mockSupabaseChain: any = {
++type MockSupabaseResult = {
++  data: null;
++  error: { message: string; code: string };
++  count: number;
++};
++
++type MockResolver = (result: MockSupabaseResult) => unknown;
++
++type MockSupabaseChain = {
++  select: () => MockSupabaseChain;
++  eq: () => MockSupabaseChain;
++  order: () => MockSupabaseChain;
++  limit: () => MockSupabaseChain;
++  single: () => MockSupabaseChain;
++  maybeSingle: () => MockSupabaseChain;
++  contains: () => MockSupabaseChain;
++  gte: () => MockSupabaseChain;
++  lte: () => MockSupabaseChain;
++  insert: () => MockSupabaseChain;
++  update: () => MockSupabaseChain;
++  delete: () => MockSupabaseChain;
++  in: () => MockSupabaseChain;
++  then: (resolve: MockResolver) => unknown;
++};
++
++type AuthPayload = { email: string };
++
++export const mockSupabaseChain: MockSupabaseChain = {
+   select: () => mockSupabaseChain,
+   eq: () => mockSupabaseChain,
+   order: () => mockSupabaseChain,
+@@ -12,45 +39,58 @@ export const mockSupabaseChain: any = {
+   update: () => mockSupabaseChain,
+   delete: () => mockSupabaseChain,
+   in: () => mockSupabaseChain,
+-  then: (resolve: any) => resolve({ 
+-    data: null, 
+-    error: { message: "[Modo Demo] Los datos no se persistir├ín hasta que conectes Supabase correctamente.", code: "demo" }, 
+-    count: 0 
+-  })
++  then: (resolve: MockResolver) =>
++    resolve({
++      data: null,
++      error: {
++        message:
++          "[Demo mode] Data will not persist until Supabase is configured.",
++        code: "demo",
++      },
++      count: 0,
++    }),
+ };
+ 
+-export const mockStorageChain: any = {
+-  upload: async () => ({ data: { path: 'mock-path' }, error: null }),
+-  getPublicUrl: () => ({ data: { publicUrl: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1000' } }),
++export const mockStorageChain = {
++  upload: async () => ({ data: { path: "mock-path" }, error: null }),
++  getPublicUrl: () => ({
++    data: {
++      publicUrl:
++        "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1000",
++    },
++  }),
+ };
+ 
+ export const mockSupabaseClient = {
+   from: () => mockSupabaseChain,
+   storage: {
+-    from: () => mockStorageChain
++    from: () => mockStorageChain,
+   },
+   auth: {
+-    getUser: async () => ({ 
+-      data: { 
+-        user: { 
+-          id: '00000000-0000-0000-0000-000000000000', 
+-          email: 'demo@solocasaschile.com',
+-          user_metadata: { nombre: 'Demo Admin' }
+-        } 
+-      }, 
+-      error: null 
++    getUser: async () => ({
++      data: {
++        user: {
++          id: "00000000-0000-0000-0000-000000000000",
++          email: "demo@solocasaschile.com",
++          user_metadata: { nombre: "Demo Admin" },
++        },
++      },
++      error: null,
+     }),
+-    signInWithPassword: async ({ email }: any) => ({ 
+-        data: { 
+-          user: { id: '00000000-0000-0000-0000-000000000000', email }, 
+-          session: { access_token: 'mock-token' } 
+-        }, 
+-        error: null 
++    signInWithPassword: async ({ email }: AuthPayload) => ({
++      data: {
++        user: { id: "00000000-0000-0000-0000-000000000000", email },
++        session: { access_token: "mock-token" },
++      },
++      error: null,
+     }),
+-    signUp: async ({ email }: any) => ({ 
+-      data: { user: { id: '00000000-0000-0000-0000-000000000000', email }, session: null }, 
+-      error: null 
++    signUp: async ({ email }: AuthPayload) => ({
++      data: {
++        user: { id: "00000000-0000-0000-0000-000000000000", email },
++        session: null,
++      },
++      error: null,
+     }),
+-    signOut: async () => ({ error: null })
+-  }
++    signOut: async () => ({ error: null }),
++  },
+ };
+diff --git a/src/lib/supabase/obra-services.ts b/src/lib/supabase/obra-services.ts
+index 8e58f5a..a6cd874 100644
+--- a/src/lib/supabase/obra-services.ts
++++ b/src/lib/supabase/obra-services.ts
+@@ -18,6 +18,31 @@ import type {
+   ObraStageTemplateItem,
+ } from '@/types/obra';
+ 
++interface ObraSpecSortable {
++  orden: number;
++  [key: string]: unknown;
++}
++
++interface ModeloObraMetadata {
++  constructora_id?: string;
++  superficie_m2?: number | null;
++  dormitorios?: number | null;
++  banos?: number | null;
++  construccion?: Record<string, unknown> | null;
++  aislacion?: Record<string, unknown> | null;
++  terminaciones?: Record<string, unknown> | null;
++  instalaciones?: Record<string, unknown> | null;
++}
++
++interface ObraSpecInsert {
++  project_id: string;
++  categoria: string;
++  elemento: string;
++  valor: string;
++  estado: 'pendiente';
++  orden: number;
++}
++
+ // ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+ // HELPERS INTERNOS
+ // ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+@@ -156,7 +181,7 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
+ 
+   // Ordenar especificaciones por orden
+   if (data.specs) {
+-    data.specs = (data.specs as any[]).sort((a, b) => a.orden - b.orden);
++    data.specs = (data.specs as ObraSpecSortable[]).sort((a, b) => a.orden - b.orden);
+   }
+ 
+   return data as ObraProject;
+@@ -280,7 +305,7 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
+   let finalConstructoraId = constructora.id;
+   const isSuperAdmin = constructora.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
+ 
+-  let modelData: any = null;
++  let modelData: ModeloObraMetadata | null = null;
+   if (dto.modelo_id) {
+     const { data: mData } = await supabase.from('modelos').select('*').eq('id', dto.modelo_id).maybeSingle();
+     modelData = mData;
+@@ -322,8 +347,8 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
+ 
+   // Si trae metadata del modelo, generar las especificaciones (checklist)
+   if (modelData) {
+-    const specsToInsert: any[] = [];
+-    const pushCategory = (catName: string, catData: any) => {
++    const specsToInsert: ObraSpecInsert[] = [];
++    const pushCategory = (catName: string, catData: Record<string, unknown> | null | undefined) => {
+       if (!catData) return;
+       Object.entries(catData).forEach(([key, value]) => {
+         const k = key.toLowerCase();
+@@ -399,9 +424,9 @@ export async function updateObraStage(
+ 
+   // Sanitizar: Convertir strings vac├¡os a null para evitar errores de tipo fecha en Postgres
+   const sanitizedDto = Object.entries(dto).reduce((acc, [key, value]) => {
+-    acc[key as keyof UpdateObraStageDTO] = value === "" ? null : value;
++    (acc as Record<string, unknown>)[key] = value === "" ? null : value;
+     return acc;
+-  }, {} as any);
++  }, {} as Partial<UpdateObraStageDTO>);
+ 
+   const { error } = await supabase
+     .from('obra_stages')
+diff --git a/src/lib/supabase/server.ts b/src/lib/supabase/server.ts
+index d336aaf..437d0db 100644
+--- a/src/lib/supabase/server.ts
++++ b/src/lib/supabase/server.ts
+@@ -2,6 +2,13 @@ import { createServerClient } from '@supabase/ssr'
+ import { cookies } from 'next/headers'
+ import { mockSupabaseClient } from './mock-client'
+ 
++type ServerSupabaseClient = ReturnType<typeof createServerClient>;
++type CookieSetPayload = {
++  name: string;
++  value: string;
++  options?: Record<string, unknown>;
++};
++
+ export async function createClient() {
+   const cookieStore = await cookies()
+   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+@@ -9,7 +16,7 @@ export async function createClient() {
+ 
+   if (!url || !key) {
+     console.warn("Supabase credentials missing on Server. Check .env or Vercel Settings.");
+-    return mockSupabaseClient as any;
++    return mockSupabaseClient as unknown as ServerSupabaseClient;
+   }
+ 
+   // Dominio compartido para que la sesi├│n funcione en app. y constru.
+@@ -26,7 +33,7 @@ export async function createClient() {
+       getAll() {
+         return cookieStore.getAll()
+       },
+-      setAll(cookiesToSet: any[]) {
++      setAll(cookiesToSet: CookieSetPayload[]) {
+         try {
+           cookiesToSet.forEach(({ name, value, options }) =>
+             cookieStore.set(name, value, {
+@@ -52,7 +59,7 @@ export async function createPublicClient() {
+ 
+   if (!url || !key) {
+     console.warn("Supabase credentials missing for Public client.");
+-    return mockSupabaseClient as any;
++    return mockSupabaseClient as unknown as ServerSupabaseClient;
+   }
+ 
+   // Usamos createServerClient pero pasando un storage vac├¡o para evitar el uso de cookies
+diff --git a/src/lib/supabase/services.ts b/src/lib/supabase/services.ts
+index 839e48e..12d5ef6 100644
+--- a/src/lib/supabase/services.ts
++++ b/src/lib/supabase/services.ts
+@@ -36,12 +36,12 @@ export type ModelWithConstructora = {
+   codigo_modelo?: string | null;
+   uso?: string | null;
+   recintos?: string[] | null;
+-  construccion?: any;
+-  aislacion?: any;
+-  terminaciones?: any;
+-  instalaciones?: any;
+-  logistica?: any;
+-  soporte?: any;
++  construccion?: Record<string, unknown> | null;
++  aislacion?: Record<string, unknown> | null;
++  terminaciones?: Record<string, unknown> | null;
++  instalaciones?: Record<string, unknown> | null;
++  logistica?: Record<string, unknown> | null;
++  soporte?: Record<string, unknown> | null;
+   is_featured?: boolean;
+   featured_order?: number;
+   constructora: {
+@@ -57,10 +57,36 @@ export type ModelWithConstructora = {
+     seo_title?: string | null;
+     seo_description?: string | null;
+     seo_keywords?: string[] | null;
+-    testimonios?: any[] | null;
++    testimonios?: Array<Record<string, unknown>> | null;
+   };
+ };
+ 
++type LeadInsertDTO = {
++  constructora_id?: string;
++  modelo_id?: string;
++  nombre_cliente?: string;
++  email_cliente?: string;
++  telefono_cliente?: string;
++  region_cliente?: string;
++  mensaje?: string;
++  estado?: string;
++  [key: string]: unknown;
++};
++
++type RawConstructoraRow = Partial<ModelWithConstructora["constructora"]> & {
++  id?: string;
++  logo_url?: string | null;
++  score_confianza?: number | null;
++  regiones?: string[];
++};
++
++type RawModelRow = Partial<ModelWithConstructora> & {
++  constructora?: RawConstructoraRow | null;
++  constructora_id?: string;
++  imagenes_urls?: string[];
++  precio_desde_uf?: number;
++};
++
+ /** Obtiene los ├║ltimos posts para el mega menu (con cach├®) */
+ export async function getLatestBlogPosts(limit = 2) {
+   return unstable_cache(
+@@ -259,7 +285,7 @@ export async function getModelosFiltered(filters: {
+       const { data: dbData } = await query
+ 
+       // 2. Map DB data
+-      const allDbData = (dbData as any[] || []).map(m => ({
++      const allDbData = (dbData ?? []).map((m: RawModelRow) => ({
+         ...m,
+         imagenes_urls: m.imagenes_urls || [],
+         precio_desde_uf: m.precio_desde_uf || 0,
+@@ -367,7 +393,7 @@ export async function getModelosByConstructora() {
+   return (data as ModelWithConstructora[]) || []
+ }
+ 
+-export async function createLead(leadData: any) {
++export async function createLead(leadData: LeadInsertDTO) {
+   const supabase = await createPublicClient()
+   return await supabase.from('leads').insert([leadData]).select()
+ }
+@@ -381,7 +407,7 @@ export async function getModelsByIds(ids: string[]) {
+     .select(`*, constructora:constructoras (*)`)
+     .in('id', dbIds)
+ 
+-  const mappedDbData = (dbData as any[] || []).map(m => ({
++  const mappedDbData = (dbData ?? []).map((m: RawModelRow) => ({
+     ...m,
+     imagenes_urls: m.imagenes_urls || [],
+     precio_desde_uf: m.precio_desde_uf || 0,
+diff --git a/tsconfig.json b/tsconfig.json
+index 06aaa18..3a6d61b 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -1,7 +1,11 @@
+ {
+   "compilerOptions": {
+     "target": "ES2017",
+-    "lib": ["dom", "dom.iterable", "esnext"],
++    "lib": [
++      "dom",
++      "dom.iterable",
++      "esnext"
++    ],
+     "allowJs": true,
+     "skipLibCheck": true,
+     "strict": true,
+@@ -19,7 +23,9 @@
+       }
+     ],
+     "paths": {
+-      "@/*": ["./src/*"]
++      "@/*": [
++        "./src/*"
++      ]
+     }
+   },
+   "include": [
+@@ -27,8 +33,11 @@
+     "**/*.ts",
+     "**/*.tsx",
+     ".next/types/**/*.ts",
+-    ".next/dev/types/**/*.ts",
+-    "**/*.mts"
++    "**/*.mts",
++    ".next/dev/types/**/*.ts"
+   ],
+-  "exclude": ["node_modules", "supabase"]
++  "exclude": [
++    "node_modules",
++    "supabase"
++  ]
+ }

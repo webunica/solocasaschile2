@@ -102,7 +102,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 4. `npm run lint:app` y `npm run lint:repo` ejecutan sin errores (solo warnings pendientes de P1-02+).
 
 ### P1-02 Reducir deuda de tipos (`any`)
-- Estado: IN_PROGRESS
+- Estado: DONE
 - Scope prioritario:
 1. `src/lib/supabase/actions.ts`
 2. `src/lib/supabase/services.ts`
@@ -125,6 +125,9 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 10. Validacion actual: `typecheck` OK, `lint:app` OK (sin errores; warnings actuales: 333).
 11. Paginas admin tipadas sin `any` explicito en `src/app/(dashboard)/dashboard/admin/comunicaciones/page.tsx`, `src/app/(dashboard)/dashboard/admin/constructoras/page.tsx`, `src/app/(dashboard)/dashboard/admin/settings/page.tsx`, `src/app/(dashboard)/dashboard/admin/pagos/page.tsx` y `src/app/(dashboard)/dashboard/admin/sellos/page.tsx`.
 12. Validacion actualizada tras limpieza admin: `typecheck` OK, `lint:app` OK (sin errores; warnings actuales: 305).
+13. Dashboard y catalogo avanzados sin `any` explicito en `src/app/(dashboard)/dashboard/catalog/page.tsx`, `src/app/(dashboard)/dashboard/catalog/new/page.tsx`, `src/app/(dashboard)/dashboard/page.tsx` y `src/app/(dashboard)/dashboard/settings/facturacion/page.tsx`.
+14. Formularios de edición (`edit-form.tsx`) e interfaces de Modelos (`ModeloExtendido`) fuertemente tipadas en todos los campos, sin `any` pendientes en la rama de catálogo.
+15. Validación completamente en verde para el cierre del ticket: `npx tsc --noEmit` OK (0 errores), `npm run lint:app` OK (0 errores; 287 warnings residuales).
 
 ### P1-03 Build reproducible y pipeline base
 - Estado: DONE
@@ -142,12 +145,17 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 ## Sprint 2 - Calidad de producto (P1, semana 3-5)
 
 ### P1-04 Testing base (unit + integration + e2e)
-- Estado: TODO
+- Estado: IN_PROGRESS
 - Tareas:
 1. Unit tests para pagos, leads, utilidades.
 2. Integration tests para endpoints API criticos.
 3. E2E para registro/login/lead/checkout/dashboard.
 - Criterio de aceptacion: suite automatizada ejecutable en CI.
+- Avance actual:
+1. `vitest` agregado como base de testing y scripts `test` / `test:watch` incorporados en `package.json`.
+2. Configuracion inicial creada en `vitest.config.ts`.
+3. Primera suite unitaria agregada en `src/lib/security/admin-guard.test.ts` para `checkRateLimit` y `resolveAdminRole`.
+4. Validacion actual: `npm run test` OK (4 tests), `typecheck` OK, `lint:app` OK.
 
 ### P1-05 Observabilidad operativa
 - Estado: TODO

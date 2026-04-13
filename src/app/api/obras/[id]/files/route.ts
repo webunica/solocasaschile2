@@ -26,6 +26,19 @@ export async function POST(
 
   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 });
 
+  if (stageId) {
+    const { data: stage } = await supabase
+      .from("obra_stages")
+      .select("id")
+      .eq("id", stageId)
+      .eq("project_id", projectId)
+      .maybeSingle();
+
+    if (!stage) {
+      return NextResponse.json({ error: "Stage not found for this project" }, { status: 404 });
+    }
+  }
+
   // Upload to Supabase Storage
   const path = `${projectId}/${stageId || "general"}/${Date.now()}-${file.name}`;
   const { error: uploadError } = await supabase.storage

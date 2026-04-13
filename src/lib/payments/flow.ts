@@ -18,11 +18,33 @@ export interface FlowPaymentResponse {
   flowOrder: number;
 }
 
+interface FlowStatusResponse {
+  status?: number;
+  flowOrder?: number;
+  commerceOrder?: string;
+  amount?: number;
+  payer?: string;
+  optional?: {
+    constructoraId?: string;
+    plan?: string;
+    billing?: 'monthly' | 'yearly' | string;
+    [key: string]: string | undefined;
+  };
+  paymentData?: unknown;
+}
+
+type FlowSignableValue = string | number | boolean | null | undefined;
+type FlowParams = Record<string, FlowSignableValue>;
+
+function isAbortError(error: unknown): error is DOMException {
+  return error instanceof DOMException && error.name === "AbortError";
+}
+
 export class FlowService {
   /**
    * Genera la firma requerida por Flow
    */
-  private static generateSignature(params: Record<string, any>): string {
+  private static generateSignature(params: FlowParams): string {
     const keys = Object.keys(params).sort();
     let stringToSign = '';
     
@@ -52,7 +74,7 @@ export class FlowService {
     externalId: string; // El ID de la constructora
     optional?: Record<string, string>;
   }): Promise<FlowPaymentResponse> {
-    const flowParams: Record<string, any> = {
+    const flowParams: FlowParams = {
       apiKey: FLOW_CONFIG.apiKey,
       subject: String(params.subject).substring(0, 50), // Evitar caracteres extraños y límite de Flow
       currency: 'CLP',
@@ -93,12 +115,12 @@ export class FlowService {
         throw new Error(`Flow Payment Create Failed: ${response.statusText} (${errorText})`);
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as FlowPaymentResponse;
       console.log('[FLOW] Pago Creado con Éxito:', data);
       return data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       clearTimeout(timeoutId);
-      if (error.name === 'AbortError') throw new Error('El servicio de Flow no respondió a tiempo. Intenta de nuevo.');
+      if (isAbortError(error)) throw new Error('El servicio de Flow no respondió a tiempo. Intenta de nuevo.');
       throw error;
     }
   }
@@ -106,8 +128,8 @@ export class FlowService {
   /**
    * Obtiene el estado de un pago usando el token recibido en el webhook
    */
-  static async getPaymentStatus(token: string) {
-    const params: Record<string, any> = {
+  static async getPaymentStatus(token: string): Promise<FlowStatusResponse> {
+    const params: FlowParams = {
       apiKey: FLOW_CONFIG.apiKey,
       token
     };
@@ -130,8 +152,8 @@ export class FlowService {
           throw new Error(`Flow getStatus failed: ${response.statusText}`);
       }
 
-      return response.json();
-    } catch (error: any) {
+      return (await response.json()) as FlowStatusResponse;
+    } catch (error: unknown) {
       clearTimeout(timeoutId);
       throw error;
     }

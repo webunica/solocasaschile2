@@ -49,7 +49,8 @@ export async function POST(req: NextRequest) {
       3: 'rejected',
       4: 'canceled'
     };
-    const dbStatus = statusMap[statusResult.status] || 'pending';
+    const statusCode = typeof statusResult.status === 'number' ? statusResult.status : 1;
+    const dbStatus = statusMap[statusCode] || 'pending';
 
     // 2. Comprobar si ya procesamos este pago como 'paid' para evitar re-procesos
     const { data: existingPayment } = await supabase
@@ -199,7 +200,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ message: 'Webhook recibido.' });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Webhook Error:', error);
     return NextResponse.json({ error: 'Ocurrió un error al procesar el webhook.' }, { status: 500 });
   }

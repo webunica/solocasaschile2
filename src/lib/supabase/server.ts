@@ -2,6 +2,13 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { mockSupabaseClient } from './mock-client'
 
+type ServerSupabaseClient = ReturnType<typeof createServerClient>;
+type CookieSetPayload = {
+  name: string;
+  value: string;
+  options?: Record<string, unknown>;
+};
+
 export async function createClient() {
   const cookieStore = await cookies()
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -9,7 +16,7 @@ export async function createClient() {
 
   if (!url || !key) {
     console.warn("Supabase credentials missing on Server. Check .env or Vercel Settings.");
-    return mockSupabaseClient as any;
+    return mockSupabaseClient as unknown as ServerSupabaseClient;
   }
 
   // Dominio compartido para que la sesión funcione en app. y constru.
@@ -26,7 +33,7 @@ export async function createClient() {
       getAll() {
         return cookieStore.getAll()
       },
-      setAll(cookiesToSet: any[]) {
+      setAll(cookiesToSet: CookieSetPayload[]) {
         try {
           cookiesToSet.forEach(({ name, value, options }) =>
             cookieStore.set(name, value, {
@@ -52,7 +59,7 @@ export async function createPublicClient() {
 
   if (!url || !key) {
     console.warn("Supabase credentials missing for Public client.");
-    return mockSupabaseClient as any;
+    return mockSupabaseClient as unknown as ServerSupabaseClient;
   }
 
   // Usamos createServerClient pero pasando un storage vacío para evitar el uso de cookies

@@ -198,10 +198,13 @@ export default function NewModelPage() {
   const [planoFile, setPlanoFile] = useState<File | null>(null);
   const [planoPreview, setPlanoPreview] = useState<string | null>(null);
   const planoInputRef = useRef<HTMLInputElement>(null);
-  const [planLimits, setPlanLimits] = useState<any>(null);
+  const [planLimits, setPlanLimits] = useState<ReturnType<typeof getPlanLimits> | null>(null);
   const [plan, setPlan] = useState<string>("gratis");
   const [modelName, setModelName] = useState("");
   const [modelDesc, setModelDesc] = useState("");
+
+  const getErrorMessage = (error: unknown) =>
+    error instanceof Error ? error.message : "OcurriÃ³ un error inesperado.";
 
   useEffect(() => {
     async function loadPlan() {
@@ -280,8 +283,8 @@ export default function NewModelPage() {
           if (uploadError) throw uploadError;
           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
           plano_url = publicUrl;
-        } catch (e: any) {
-           throw new Error("Error al subir plano: " + e.message);
+        } catch (e: unknown) {
+           throw new Error("Error al subir plano: " + getErrorMessage(e));
         }
       }
 
@@ -343,8 +346,8 @@ export default function NewModelPage() {
       if (result?.error) throw new Error(result.error);
       setSuccess(true);
       setTimeout(() => router.push('/dashboard/catalog'), 2000);
-    } catch (err: any) {
-      setError(err.message || "Ocurrió un error inesperado.");
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
       setLoading(false);
     }
   };

@@ -10,6 +10,17 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+type DashboardLead = {
+  id: string;
+  nombre_cliente: string;
+  email_cliente?: string | null;
+  estado: string;
+  created_at: string;
+  modelo?: {
+    nombre?: string | null;
+  } | null;
+};
+
 // Helper for relative dates (simple version for Phase 3)
 const formatRelative = (dateStr: string) => {
   const date = new Date(dateStr);
@@ -189,7 +200,7 @@ export default async function DashboardPage() {
              </CardHeader>
              <CardContent className="p-0">
                 <div className="divide-y divide-border/20">
-                   {recentLeads.length > 0 ? recentLeads.map((lead: any) => (
+                   {recentLeads.length > 0 ? (recentLeads as DashboardLead[]).map((lead) => (
                       <div key={lead.id} className="flex items-center justify-between p-8 hover:bg-primary/[0.02] transition-all group border-l-4 border-l-transparent hover:border-l-primary">
                          <div className="flex items-center gap-6">
                             <div className="w-16 h-16 rounded-[1.5rem] bg-muted/40 border border-border/40 flex items-center justify-center text-foreground/40 font-black uppercase text-lg group-hover:bg-brand-indigo group-hover:text-white group-hover:border-transparent transition-all duration-700 shadow-inner">

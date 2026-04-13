@@ -21,6 +21,17 @@ export async function PATCH(
 
   if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
 
+  const { data: stage } = await supabase
+    .from("obra_stages")
+    .select("id")
+    .eq("id", stageId)
+    .eq("project_id", projectId)
+    .maybeSingle();
+
+  if (!stage) {
+    return NextResponse.json({ error: "Stage not found for this project" }, { status: 404 });
+  }
+
   const dto: UpdateObraStageDTO = await req.json();
   const success = await updateObraStage(stageId, dto);
 

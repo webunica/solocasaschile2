@@ -36,12 +36,12 @@ export type ModelWithConstructora = {
   codigo_modelo?: string | null;
   uso?: string | null;
   recintos?: string[] | null;
-  construccion?: any;
-  aislacion?: any;
-  terminaciones?: any;
-  instalaciones?: any;
-  logistica?: any;
-  soporte?: any;
+  construccion?: Record<string, unknown> | null;
+  aislacion?: Record<string, unknown> | null;
+  terminaciones?: Record<string, unknown> | null;
+  instalaciones?: Record<string, unknown> | null;
+  logistica?: Record<string, unknown> | null;
+  soporte?: Record<string, unknown> | null;
   is_featured?: boolean;
   featured_order?: number;
   constructora: {
@@ -57,8 +57,34 @@ export type ModelWithConstructora = {
     seo_title?: string | null;
     seo_description?: string | null;
     seo_keywords?: string[] | null;
-    testimonios?: any[] | null;
+    testimonios?: Array<Record<string, unknown>> | null;
   };
+};
+
+type LeadInsertDTO = {
+  constructora_id?: string;
+  modelo_id?: string;
+  nombre_cliente?: string;
+  email_cliente?: string;
+  telefono_cliente?: string;
+  region_cliente?: string;
+  mensaje?: string;
+  estado?: string;
+  [key: string]: unknown;
+};
+
+type RawConstructoraRow = Partial<ModelWithConstructora["constructora"]> & {
+  id?: string;
+  logo_url?: string | null;
+  score_confianza?: number | null;
+  regiones?: string[];
+};
+
+type RawModelRow = Partial<ModelWithConstructora> & {
+  constructora?: RawConstructoraRow | null;
+  constructora_id?: string;
+  imagenes_urls?: string[];
+  precio_desde_uf?: number;
 };
 
 /** Obtiene los últimos posts para el mega menu (con caché) */
@@ -259,7 +285,7 @@ export async function getModelosFiltered(filters: {
       const { data: dbData } = await query
 
       // 2. Map DB data
-      const allDbData = (dbData as any[] || []).map(m => ({
+      const allDbData = (dbData ?? []).map((m: RawModelRow) => ({
         ...m,
         imagenes_urls: m.imagenes_urls || [],
         precio_desde_uf: m.precio_desde_uf || 0,
@@ -367,7 +393,7 @@ export async function getModelosByConstructora() {
   return (data as ModelWithConstructora[]) || []
 }
 
-export async function createLead(leadData: any) {
+export async function createLead(leadData: LeadInsertDTO) {
   const supabase = await createPublicClient()
   return await supabase.from('leads').insert([leadData]).select()
 }
@@ -381,7 +407,7 @@ export async function getModelsByIds(ids: string[]) {
     .select(`*, constructora:constructoras (*)`)
     .in('id', dbIds)
 
-  const mappedDbData = (dbData as any[] || []).map(m => ({
+  const mappedDbData = (dbData ?? []).map((m: RawModelRow) => ({
     ...m,
     imagenes_urls: m.imagenes_urls || [],
     precio_desde_uf: m.precio_desde_uf || 0,

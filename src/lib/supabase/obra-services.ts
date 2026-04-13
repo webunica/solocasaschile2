@@ -18,6 +18,31 @@ import type {
   ObraStageTemplateItem,
 } from '@/types/obra';
 
+interface ObraSpecSortable {
+  orden: number;
+  [key: string]: unknown;
+}
+
+interface ModeloObraMetadata {
+  constructora_id?: string;
+  superficie_m2?: number | null;
+  dormitorios?: number | null;
+  banos?: number | null;
+  construccion?: Record<string, unknown> | null;
+  aislacion?: Record<string, unknown> | null;
+  terminaciones?: Record<string, unknown> | null;
+  instalaciones?: Record<string, unknown> | null;
+}
+
+interface ObraSpecInsert {
+  project_id: string;
+  categoria: string;
+  elemento: string;
+  valor: string;
+  estado: 'pendiente';
+  orden: number;
+}
+
 // ──────────────────────────────────────────────
 // HELPERS INTERNOS
 // ──────────────────────────────────────────────
@@ -156,7 +181,7 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
 
   // Ordenar especificaciones por orden
   if (data.specs) {
-    data.specs = (data.specs as any[]).sort((a, b) => a.orden - b.orden);
+    data.specs = (data.specs as ObraSpecSortable[]).sort((a, b) => a.orden - b.orden);
   }
 
   return data as ObraProject;
@@ -280,7 +305,7 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
   let finalConstructoraId = constructora.id;
   const isSuperAdmin = constructora.role === 'superadmin' || user.app_metadata?.is_superadmin === true;
 
-  let modelData: any = null;
+  let modelData: ModeloObraMetadata | null = null;
   if (dto.modelo_id) {
     const { data: mData } = await supabase.from('modelos').select('*').eq('id', dto.modelo_id).maybeSingle();
     modelData = mData;
@@ -322,8 +347,8 @@ export async function createObraProject(dto: CreateObraProjectDTO): Promise<Obra
 
   // Si trae metadata del modelo, generar las especificaciones (checklist)
   if (modelData) {
-    const specsToInsert: any[] = [];
-    const pushCategory = (catName: string, catData: any) => {
+    const specsToInsert: ObraSpecInsert[] = [];
+    const pushCategory = (catName: string, catData: Record<string, unknown> | null | undefined) => {
       if (!catData) return;
       Object.entries(catData).forEach(([key, value]) => {
         const k = key.toLowerCase();
@@ -399,9 +424,9 @@ export async function updateObraStage(
 
   // Sanitizar: Convertir strings vacíos a null para evitar errores de tipo fecha en Postgres
   const sanitizedDto = Object.entries(dto).reduce((acc, [key, value]) => {
-    acc[key as keyof UpdateObraStageDTO] = value === "" ? null : value;
+    (acc as Record<string, unknown>)[key] = value === "" ? null : value;
     return acc;
-  }, {} as any);
+  }, {} as Partial<UpdateObraStageDTO>);
 
   const { error } = await supabase
     .from('obra_stages')

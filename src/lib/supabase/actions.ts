@@ -8,6 +8,18 @@ import { getPlanLimits } from '../constants/plans'
 import { resend } from '@/lib/resend'
 import { recalcularSellosAutomaticos } from '@/lib/services/sellos'
 
+type GenericRecord = Record<string, unknown>;
+type EmailRow = { email: string | null };
+type ModelPayload = GenericRecord & {
+  nombre: string;
+  imagenes_urls?: string[];
+  slug?: string;
+};
+
+function getErrorMessage(err: unknown, fallback: string): string {
+  return err instanceof Error ? err.message : fallback;
+}
+
 export async function login(formData: FormData) {
   const supabase = await createClient()
 
@@ -107,7 +119,7 @@ export async function register(formData: FormData) {
     // Ensure unique slug if based on email placeholder
     const slug = `${baseSlug}-${authData.user.id.slice(0, 5)}`
 
-    const constructoraPayload: any = {
+    const constructoraPayload: GenericRecord = {
       id: authData.user.id,
       nombre: companyName,
       slug,
@@ -190,9 +202,9 @@ export async function register(formData: FormData) {
     revalidateTag('constructoras', 'max')
     return { redirectTo: `/bienvenida?plan=${plan}` }
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('[register] Unexpected error:', err)
-    return { error: err?.message || 'Error inesperado en el servidor. Intenta de nuevo.' }
+    return { error: getErrorMessage(err, 'Error inesperado en el servidor. Intenta de nuevo.') }
   }
 }
 
@@ -207,8 +219,8 @@ export async function resendConfirmation(email: string) {
     })
     if (error) return { error: error.message }
     return { success: true }
-  } catch (err: any) {
-    return { error: err?.message || 'Error al reenviar el correo.' }
+  } catch (err: unknown) {
+    return { error: getErrorMessage(err, 'Error al reenviar el correo.') }
   }
 }
 
@@ -239,7 +251,7 @@ export async function updateSettings(formData: FormData) {
 
   const isPaidPlan = initialPlan === 'pro' || initialPlan === 'premium';
 
-  const data: any = {
+  const data: GenericRecord = {
     nombre: formData.get('nombre') as string,
     razon_social: formData.get('razon_social') as string,
     email: formData.get('email') as string,
@@ -284,7 +296,7 @@ export async function updateSettings(formData: FormData) {
   return { success: true }
 }
 
-export async function createModel(data: any) {
+export async function createModel(data: ModelPayload) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
@@ -337,7 +349,7 @@ export async function createModel(data: any) {
   return { success: true }
 }
 
-export async function updateModel(id: string, data: any) {
+export async function updateModel(id: string, data: ModelPayload) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
@@ -441,7 +453,7 @@ export async function adminUpdateConstructora(formData: FormData) {
   const id = formData.get('id') as string
   if (!id) return { error: "ID de constructora no proporcionado." }
 
-  const data: any = {
+  const data: GenericRecord = {
     nombre: formData.get('nombre') as string,
     razon_social: formData.get('razon_social') as string,
     descripcion: formData.get('descripcion') as string,
@@ -525,7 +537,7 @@ export async function toggleFeaturedModelo(id: string, featured: boolean) {
   revalidateTag('featured', 'max')
 }
 
-export async function updateSiteSettings(key: string, value: any) {
+export async function updateSiteSettings(key: string, value: unknown) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   
@@ -589,7 +601,7 @@ export async function sendBulkEmail(formData: FormData) {
         .not('email', 'is', null)
       
       if (fetchError) throw fetchError
-      emails = (dests as any[] || []).map(d => d.email).filter(Boolean)
+      emails = ((dests as EmailRow[] | null) || []).map(d => d.email).filter(Boolean) as string[]
     } else {
       let query = supabase.from('constructoras').select('email').not('email', 'is', null)
       if (audiencia !== 'todos') {
@@ -597,7 +609,7 @@ export async function sendBulkEmail(formData: FormData) {
       }
       const { data: dests, error: fetchError } = await query
       if (fetchError) throw fetchError
-      emails = (dests as any[] || []).map(d => d.email).filter(Boolean)
+      emails = ((dests as EmailRow[] | null) || []).map(d => d.email).filter(Boolean) as string[]
     }
     
     if (emails.length === 0) {
@@ -640,9 +652,9 @@ export async function sendBulkEmail(formData: FormData) {
 
     return { success: true, count: emails.length }
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('[sendBulkEmail] Error:', err)
-    return { error: err.message || "Error al enviar los correos masivos." }
+    return { error: getErrorMessage(err, "Error al enviar los correos masivos.") }
   }
 }
 
@@ -837,9 +849,9 @@ export async function aprobarSello(formData: FormData) {
     console.log("[Admin] Sello aprobado exitosamente");
     return { success: true };
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[Admin] Excepción en aprobarSello:", err);
-    return { success: false, error: err.message || "Error desconocido" };
+    return { success: false, error: getErrorMessage(err, "Error desconocido") };
   }
 }
 
@@ -883,9 +895,9 @@ export async function rechazarSello(formData: FormData) {
     console.log("[Admin] Sello rechazado exitosamente");
     return { success: true };
 
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[Admin] Excepción en rechazarSello:", err);
-    return { success: false, error: err.message || "Error desconocido" };
+    return { success: false, error: getErrorMessage(err, "Error desconocido") };
   }
 }
 
@@ -922,7 +934,7 @@ const TestimonioSchema = z.object({
 
 const TestimoniosArraySchema = z.array(TestimonioSchema);
 
-export async function updateTestimonios(testimoniosRaw: any[]) {
+export async function updateTestimonios(testimoniosRaw: unknown[]) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'No autenticado' }
