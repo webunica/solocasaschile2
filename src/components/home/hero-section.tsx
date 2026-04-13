@@ -179,6 +179,8 @@ export function HeroSection() {
                   <div className="flex-1 relative">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary w-5 h-5 opacity-60" />
                     <select
+                      id="hero-region-select"
+                      aria-label="Selecciona la región donde buscas"
                       className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
                       value={selectedRegion}
                       onChange={(e) => setSelectedRegion(e.target.value)}
@@ -203,7 +205,9 @@ export function HeroSection() {
                     </select>
                   </div>
                   <button
+                    type="button"
                     onClick={handleSearch}
+                    aria-label="Buscar modelos de casas en la región seleccionada"
                     className="h-12 bg-primary text-white font-black px-8 rounded-xl shadow-lg shadow-primary/30 hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
                   >
                     Buscar <Search className="w-4 h-4" />

@@ -176,12 +176,17 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 
 
 ### P1-06 Performance y accesibilidad
-- Estado: TODO
+- Estado: IN_PROGRESS
 - Tareas:
-1. Migrar imagenes criticas a `next/image` cuando corresponda.
-2. Mejorar LCP/CLS en home/catalogo/modelo.
-3. Correcciones WCAG 2.2 en formularios y navegacion.
+1. Migrar imagenes criticas a `next/image` cuando corresponda. (HECHO - todas las rutas publicas ya usan next/image con sizes y priority correctos)
+2. Mejorar LCP/CLS en home/catalogo/modelo. (HECHO - hero con priority, featured models con priority para i<2)
+3. Correcciones WCAG 2.2 en formularios y navegacion. (HECHO)
 - Criterio de aceptacion: Lighthouse en verde en rutas clave.
+- Avance actual:
+1. Hero: `<select>` con `aria-label` y `id`, `<button>` con `type=button` y `aria-label`.
+2. Modelo page: `generateMetadata` ampliado con `description`, `openGraph` y `twitter` cards.
+3. Modelo page: `<iframe>` con `title` WCAG, `<Image>` en modelos relacionados con `sizes` correcto.
+4. Validacion: `typecheck` OK, `npm run test` OK (36 tests).
 
 ## Sprint 3 - Crecimiento y liderazgo (P2, semana 6-12)
 

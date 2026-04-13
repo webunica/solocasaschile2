@@ -34,7 +34,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const modelo = await getModelBySlug(slug);
   if (!modelo) return { title: "Modelo no encontrado" };
-  return { title: `${modelo.nombre} | SolocasasChile` };
+  const imagenPrincipal = modelo.imagenes_urls?.[0];
+  const descripcion = modelo.descripcion
+    ? modelo.descripcion.slice(0, 155)
+    : `Casa ${modelo.tipo || 'prefabricada'} de ${modelo.superficie_m2} m², ${modelo.dormitorios} dormitorios y ${modelo.banos} baños. Desde ${modelo.precio_desde_uf} UF.`;
+  return {
+    title: `${modelo.nombre} | SolocasasChile`,
+    description: descripcion,
+    openGraph: {
+      title: `${modelo.nombre} | SolocasasChile`,
+      description: descripcion,
+      url: `https://solocasaschile.com/modelo/${slug}`,
+      images: imagenPrincipal ? [{ url: imagenPrincipal, width: 1200, height: 630, alt: modelo.nombre }] : [],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${modelo.nombre} | SolocasasChile`,
+      description: descripcion,
+      images: imagenPrincipal ? [imagenPrincipal] : [],
+    },
+  };
 }
 
 export default async function ModeloPage({ params }: PageProps) {
@@ -49,7 +69,7 @@ export default async function ModeloPage({ params }: PageProps) {
   const precio = modelo.precio_desde_uf || 0;
   const imagenes = modelo.imagenes_urls || [];
   const relatedModels = await getModelsByConstructoraId(constructora.id);
-  const otherModels = relatedModels.filter((m: any) => m.id !== modelo.id).slice(0, 3);
+  const otherModels = relatedModels.filter((m: { id: string }) => m.id !== modelo.id).slice(0, 3);
   const hasOtherModels = otherModels.length > 0;
   
   const sellos = await getSellosDeConstructora(constructora.id);
@@ -254,7 +274,12 @@ export default async function ModeloPage({ params }: PageProps) {
                  <div className="space-y-10">
                     <h2 className="text-3xl font-heading font-black tracking-tight">Tour Virtual</h2>
                     <div className="relative aspect-video rounded-[3rem] overflow-hidden border-8 border-card shadow-2xl">
-                       <iframe src={getYoutubeEmbedUrl(modelo.video_url)!} className="absolute inset-0 w-full h-full" allowFullScreen />
+                       <iframe
+                          src={getYoutubeEmbedUrl(modelo.video_url)!}
+                          title={`Tour virtual: ${modelo.nombre}`}
+                          className="absolute inset-0 w-full h-full"
+                          allowFullScreen
+                        />
                     </div>
                  </div>
                )}
@@ -358,7 +383,7 @@ export default async function ModeloPage({ params }: PageProps) {
                  {otherModels.map((m: any) => (
                   <Link key={m.id} href={`/modelo/${m.slug}`} className="group space-y-4">
                      <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-indigo/5">
-                        <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} className="object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />
                      </div>
                      <div className="space-y-1">
                         <h4 className="text-sm font-black tracking-tight group-hover:text-brand-indigo transition-colors">{m.nombre}</h4>
