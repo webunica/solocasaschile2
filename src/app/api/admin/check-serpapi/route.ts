@@ -1,53 +1,83 @@
 import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { checkRateLimit, resolveAdminRole } from "@/lib/security/admin-guard";
 
-export async function GET() {
-  const serpApiKey = process.env.SERPAPI_KEY;
-  const serpApiKeyAlt = process.env.SERPAPI_API_KEY;
+export async function GET(request: Request) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const keyInUse = serpApiKey || serpApiKeyAlt || null;
-  const keyName = serpApiKey ? 'SERPAPI_KEY' : serpApiKeyAlt ? 'SERPAPI_API_KEY' : 'NINGUNA';
-
-  if (!keyInUse) {
-    return NextResponse.json({
-      status: "error",
-      message: "No se encontró ninguna SerpApi key",
-      checked: ["SERPAPI_KEY", "SERPAPI_API_KEY"],
-    }, { status: 500 });
+  if (!user) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
   }
 
-  // Test de conexión real a SerpApi
+  const role = await resolveAdminRole(supabase, user);
+  if (!role.isAdmin) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+  }
+
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const limit = checkRateLimit({
+    key: `admin-check-serpapi:${user.id}:${ip}`,
+    limit: 20,
+    windowMs: 60_000,
+  });
+
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: "Demasiadas solicitudes. Intenta nuevamente en unos segundos." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } }
+    );
+  }
+
+  const serpApiKey = process.env.SERPAPI_KEY;
+  const serpApiKeyAlt = process.env.SERPAPI_API_KEY;
+  const keyInUse = serpApiKey || serpApiKeyAlt || null;
+
+  if (!keyInUse) {
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "No se encontró configuración de SerpApi",
+      },
+      { status: 500 }
+    );
+  }
+
   try {
     const testQuery = "Ferretería en Santiago, Chile";
     const url = `https://serpapi.com/search.json?engine=google_maps&q=${encodeURIComponent(testQuery)}&type=search&api_key=${keyInUse}&hl=es&gl=cl`;
-    
+
     const response = await fetch(url);
     const data = await response.json();
 
     if (data.error) {
-      return NextResponse.json({
-        status: "api_error",
-        keyName,
-        keyPreview: `${keyInUse.slice(0, 6)}...${keyInUse.slice(-4)}`,
-        serpApiError: data.error,
-      }, { status: 400 });
+      return NextResponse.json(
+        {
+          status: "api_error",
+          serpApiError: data.error,
+        },
+        { status: 400 }
+      );
     }
 
     const resultCount = data.local_results?.length || 0;
-
     return NextResponse.json({
       status: "ok",
-      keyName,
-      keyPreview: `${keyInUse.slice(0, 6)}...${keyInUse.slice(-4)}`,
+      configured: true,
       testQuery,
       resultsFound: resultCount,
       sampleResult: data.local_results?.[0]?.title || "N/A",
     });
-
-  } catch (err: any) {
-    return NextResponse.json({
-      status: "fetch_error",
-      keyName,
-      error: err.message,
-    }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al validar SerpApi";
+    return NextResponse.json(
+      {
+        status: "fetch_error",
+        error: message,
+      },
+      { status: 500 }
+    );
   }
 }

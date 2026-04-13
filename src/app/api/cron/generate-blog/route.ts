@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { openai } from "@/lib/openai";
 import { createClient } from "@supabase/supabase-js";
-import { BlogPost } from "@/types/blog";
 
 // Cron configuration (Vercel)
 export const dynamic = "force-dynamic";
@@ -18,16 +17,13 @@ const BLOG_TOPICS = [
 ];
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const secretParam = searchParams.get('secret');
   const authHeader = req.headers.get('authorization');
   
-  // Check for auth (Vercel Cron Secret or Manual Secret Param)
   const cronSecret = process.env.CRON_SECRET;
-  const isAuthorized = 
-    process.env.NODE_ENV === 'development' || 
-    authHeader === `Bearer ${cronSecret}` || 
-    (cronSecret && secretParam === cronSecret);
+  if (!cronSecret) {
+    return NextResponse.json({ success: false, error: "CRON_SECRET no está configurado" }, { status: 500 });
+  }
+  const isAuthorized = authHeader === `Bearer ${cronSecret}`;
 
   if (!isAuthorized) {
     return new NextResponse('Unauthorized', { status: 401 });
@@ -141,20 +137,23 @@ export async function GET(req: Request) {
             .update({ social_hook_fired: true })
             .eq('slug', postData.slug);
         }
-      } catch (err: any) {
-        webhookStatus = `error_${err.message}`;
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "unknown_error";
+        webhookStatus = `error_${message}`;
       }
     }
 
     return NextResponse.json({ 
       success: true, 
       slug: postData.slug,
-      webhook_status: webhookStatus,
-      env_check: process.env.MAKE_WEBHOOK_URL ? "defined" : "undefined"
+      webhook_status: webhookStatus
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Cron Generation Error:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "No se pudo generar el contenido en este momento." },
+      { status: 500 }
+    );
   }
 }

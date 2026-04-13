@@ -20,6 +20,65 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Security workflow (staging)
+
+All development must happen in `staging`. Do not push direct production changes to `main`.
+
+### Secret scanning
+
+This repository includes local and CI secret scanning:
+
+1. Install git hooks (one-time per clone):
+```bash
+npm run hooks:install
+```
+
+2. Scan current repository files:
+```bash
+npm run secrets:scan
+```
+
+3. Run the same scanner before commit (the pre-commit hook checks staged files automatically):
+```bash
+npm run secrets:scan:staged
+```
+
+### Secret handling policy
+
+1. Never commit credentials, tokens, API keys, passwords, or private URLs.
+2. Keep secrets only in environment managers (`.env.local`, Vercel env vars, Supabase secrets).
+3. Commit only placeholders in templates (for example `tu_api_key`).
+4. If a secret is exposed, rotate it immediately and remove it from Git history.
+
+## Quality commands
+
+```bash
+# Product-surface lint (default)
+npm run lint
+
+# Same as lint, explicit
+npm run lint:app
+
+# Full repository lint (informative, broader and stricter)
+npm run lint:repo
+
+# Type safety validation
+npm run typecheck
+
+# Production build validation
+npm run build
+```
+
+## CI pipeline (staging)
+
+`staging` now runs `.github/workflows/ci-staging.yml` with:
+
+1. `npm ci`
+2. cache cleanup of `.next`
+3. `npm run lint:app`
+4. `npm run typecheck`
+5. `npm run build`
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

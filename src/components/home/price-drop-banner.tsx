@@ -6,7 +6,6 @@ import { TrendingDown, Bell, Send, CheckCircle2, Loader2, Sparkles } from "lucid
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { createLead } from "@/lib/supabase/client-services";
 import { toast } from "sonner";
 
 export function PriceDropBanner() {
@@ -19,20 +18,24 @@ export function PriceDropBanner() {
     setLoading(true);
 
     try {
-      const { error } = await createLead({
+      const response = await fetch("/api/leads/public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
         modelo_id: null,
         constructora_id: null,
         nombre_cliente: "Suscripción General Precios",
         email_cliente: email,
-        telefono_cliente: "",
+        telefono_cliente: "N/A",
         mensaje: "[ALERTA PRECIO HOME] Suscripción general para alertas de baja de precio desde el home.",
+      }),
       });
-
-      if (error) throw error;
+      const result = await response.json();
+      if (!response.ok) throw new Error(result?.error || "No se pudo registrar tu suscripción");
 
       setSuccess(true);
       toast.success("¡Suscripción exitosa! Te avisaremos de las mejores ofertas.");
-    } catch (err) {
+    } catch {
       toast.error("Error al registrar tu suscripción.");
     } finally {
       setLoading(false);
