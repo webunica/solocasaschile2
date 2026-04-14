@@ -230,7 +230,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 7. Validacion actual: `typecheck` OK, `lint:app` OK (0 errores; 0 warnings), `build` OK, `test` OK (36 tests), `security:check` OK y `secrets:scan` OK.
 
 ### P2-02 Gobierno de datos y migraciones
-- Estado: IN_PROGRESS
+- Estado: DONE
 - Tareas:
 1. Estandarizar migraciones idempotentes.
 2. Definir estrategia de rollback.
@@ -242,7 +242,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 
 3. Confirmado en Supabase: existen `idx_blog_posts_published_created_at` y `idx_blog_posts_published_slug`.
 4. Migracion `supabase/migrations/20260414_public_obra_showcase.sql` preparada para showcase publico de obras por constructora.
-5. Pendiente operacional: ejecutar `20260414_public_obra_showcase.sql` en Supabase y validar con proyectos `visible_en_perfil = true`.
+5. Migracion `20260414_public_obra_showcase.sql` aplicada y validada en Supabase: columnas `thumbnail_url`/`visible_en_perfil` creadas y policy `public_read_visible_profile_projects` limita lectura publica a `visible_en_perfil = true`.
 
 ### P2-03 Operacion de release
 - Estado: IN_PROGRESS
