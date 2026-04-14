@@ -59,14 +59,14 @@ export default function SeguimientoObrasPage() {
 
           <div className="relative group">
              {/* Imagen 1: Dashboard Dashboard de Seguimiento */}
-             <div className="relative z-10 rounded-[3rem] border-8 border-brand-indigo shadow-[0_50px_100px_-20px_rgba(27,0,136,0.15)] overflow-hidden bg-slate-100 aspect-[4/3] transform group-hover:-rotate-1 transition-transform duration-700">
+             <div className="relative z-10 aspect-[4/3] bg-transparent">
                <Image 
                  src="/images/sistema-avances-01.jpg"
                  alt="Dashboard de Seguimiento de Proyectos SolocasasChile"
                  fill
-                 className="object-cover"
+                 sizes="(max-width: 1024px) 100vw, 50vw"
+                 className="object-contain"
                />
-               <div className="absolute inset-0 bg-gradient-to-br from-brand-indigo/10 via-transparent to-brand-teal/10" />
              </div>
              
              {/* Floating Mobile Card */}
@@ -143,15 +143,16 @@ export default function SeguimientoObrasPage() {
       {/* Tech Details Section */}
       <section className="py-32 container max-w-5xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div className="order-2 lg:order-1 relative h-[500px] rounded-[3rem] bg-slate-100 overflow-hidden shadow-2xl">
+          <div className="order-2 lg:order-1 relative min-h-[360px] sm:min-h-[500px] bg-transparent">
              <Image 
                src="/images/sistema-avances-02.jpg"
                alt="Portal Móvil de Seguimiento de Obra"
                fill
-               className="object-cover"
+               sizes="(max-width: 1024px) 100vw, 50vw"
+               className="object-contain"
              />
-             <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/40 via-transparent to-transparent" />
-             <div className="absolute bottom-10 left-10 right-10 p-8 glassmorphism rounded-[2rem] border-white/10 text-white space-y-2">
+             <div className="hidden" />
+             <div className="hidden">
                 <p className="text-[10px] font-black uppercase tracking-widest text-brand-teal">Portal del Cliente</p>
                 <h4 className="text-xl font-bold">Bitácora Técnica Digital</h4>
                 <p className="text-xs text-white/70 font-medium">Acceso seguro y transparente para el propietario y la constructora.</p>

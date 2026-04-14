@@ -37,7 +37,6 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
   const headerY = useTransform(scrollY, [0, 50], [20, 10]);
   const headerWidth = useTransform(scrollY, [0, 50], ["98%", "94%"]);
   const headerRadius = useTransform(scrollY, [0, 50], ["1.5rem", "4rem"]);
-  const headerOpacity = useTransform(scrollY, [0, 50], [0.95, 1]);
 
   return (
     <motion.header 
@@ -45,7 +44,6 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
         top: headerY,
         width: headerWidth,
         borderRadius: headerRadius,
-        opacity: headerOpacity,
         marginTop: 'var(--announcement-height, 0px)'
       }}
       initial={{ y: -100, opacity: 0 }}

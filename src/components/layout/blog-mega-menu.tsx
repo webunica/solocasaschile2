@@ -36,7 +36,7 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.98 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="mt-4 w-full overflow-hidden rounded-3xl border border-border/40 bg-white/95 p-6 shadow-2xl backdrop-blur-3xl md:p-12"
+      className="mt-4 w-full overflow-hidden rounded-3xl border border-border/40 bg-white p-6 shadow-2xl md:p-12"
     >
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12">
         <div className="space-y-8 text-left md:col-span-7">

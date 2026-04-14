@@ -82,7 +82,7 @@ export function SeguimientoPromo() {
                   <button
                     type="button"
                     aria-label="Ampliar imagen de promoción"
-                    className="group relative h-[360px] w-full cursor-zoom-in overflow-hidden rounded-[2rem] border border-border/40 shadow-2xl sm:h-[500px] sm:rounded-[3rem]"
+                    className="group relative h-[360px] w-full cursor-zoom-in bg-transparent sm:h-[500px]"
                   >
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -98,9 +98,8 @@ export function SeguimientoPromo() {
                           alt={slide.title}
                           fill
                           sizes="(max-width: 1024px) 100vw, 50vw"
-                          className="object-cover"
+                          className="object-contain"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/70 via-transparent to-transparent opacity-70" />
                         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
                           <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white backdrop-blur-md">
                             <Search className="h-8 w-8" aria-hidden="true" />
@@ -146,7 +145,7 @@ export function SeguimientoPromo() {
                 type="button"
                 onClick={goToPrevious}
                 aria-label="Ver promocion anterior"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-brand-indigo/90 text-white shadow-lg shadow-brand-indigo/20 backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
               >
                 <ChevronLeft className="h-6 w-6" aria-hidden="true" />
               </button>
@@ -154,7 +153,7 @@ export function SeguimientoPromo() {
                 type="button"
                 onClick={goToNext}
                 aria-label="Ver siguiente promocion"
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-brand-indigo/90 text-white shadow-lg shadow-brand-indigo/20 backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
               >
                 <ChevronRight className="h-6 w-6" aria-hidden="true" />
               </button>
