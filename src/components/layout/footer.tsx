@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowRight, Hash } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
-import { cn } from "@/lib/utils";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
