@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function PortalProveedoresPage() {
   return (
-    <main className="min-h-screen bg-background pt-32 pb-20 overflow-hidden">
+    <main className="min-h-screen bg-background pt-44 pb-20 overflow-hidden">
       {/* Hero Section */}
       <section className="container max-w-7xl mx-auto px-6 relative mb-20">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-indigo/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
