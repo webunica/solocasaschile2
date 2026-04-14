@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { TrackingCodeSearch } from "@/components/obras/tracking-code-search";
+
+const EXAMPLE_TRACKING_ID = "e356c78f-9374-4a71-ab07-52254530c6b3";
 
 export const metadata: Metadata = {
   title: "Seguimiento de Obra en Tiempo Real: Transparencia y Control | SolocasasChile",
@@ -44,13 +47,14 @@ export default function SeguimientoObrasPage() {
               Eliminamos la incertidumbre en la construcción. Nuestra plataforma permite monitorear cada hito, visualizar evidencias y certificar la calidad de tu proyecto desde la palma de tu mano.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/demo" className={cn(buttonVariants({ size: "lg" }), "bg-brand-indigo text-white font-black rounded-2xl h-14 px-8 shadow-xl shadow-brand-indigo/20")}>
-                PROBAR PORTAL DEMO
+              <Link href={`/seguimiento/${EXAMPLE_TRACKING_ID}`} className={cn(buttonVariants({ size: "lg" }), "bg-brand-indigo text-white font-black rounded-2xl h-14 px-8 shadow-xl shadow-brand-indigo/20")}>
+                VER EJEMPLO
               </Link>
               <Link href="/constructoras" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "border-border rounded-2xl h-14 px-8 font-bold")}>
                 VER CONSTRUCTORAS VALIDADAS
               </Link>
             </div>
+            <TrackingCodeSearch />
           </div>
 
           <div className="relative group">
