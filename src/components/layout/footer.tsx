@@ -3,13 +3,30 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, ArrowRight, Hash } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 
+const EXPLORE_LINKS = [
+  { name: "Inicio", path: "/" },
+  { name: "Catalogo", path: "/catalogo" },
+  { name: "Constructoras", path: "/constructoras" },
+  { name: "Comparador", path: "/comparar" },
+  { name: "Planes y Precios", path: "/planes" },
+];
+
+const RESOURCE_LINKS = [
+  { name: "Blog", path: "/blog" },
+  { name: "Sobre Nosotros", path: "/nosotros" },
+  { name: "Seguimiento de Obra", path: "/seguimiento-de-obras" },
+  { name: "Portal Proveedores", path: "/portal-proveedores" },
+  { name: "Como verificamos", path: "/verificacion" },
+  { name: "Analisis de Mercado", path: "/premium-access" },
+];
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-[#2B09BD] text-white pt-20 pb-10 relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-20">
           
           {/* Brand Col */}
           <div className="space-y-6 lg:pr-4">
@@ -51,14 +68,22 @@ export function Footer() {
               <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
             </div>
             <ul className="space-y-4 text-[14px] text-white/80 font-medium">
-              {[
-                { name: "Inicio", path: "/" },
-                { name: "Catálogo", path: "/catalogo" },
-                { name: "Constructoras", path: "/constructoras" },
-                { name: "Comparador", path: "/comparar" },
-                { name: "Planes y Precios", path: "/planes" },
-                { name: "Blog", path: "/blog" }
-              ].map((item) => (
+              {EXPLORE_LINKS.map((item) => (
+                <li key={item.name}>
+                  <Link href={item.path} className="hover:text-[#00FFD1] transition-colors">{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Recursos Col */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <p className="text-[16px] font-bold tracking-wide text-white">Recursos</p>
+              <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
+            </div>
+            <ul className="space-y-4 text-[14px] text-white/80 font-medium">
+              {RESOURCE_LINKS.map((item) => (
                 <li key={item.name}>
                   <Link href={item.path} className="hover:text-[#00FFD1] transition-colors">{item.name}</Link>
                 </li>
