@@ -19,7 +19,7 @@ describe('Public Leads API Endpoint Integration', () => {
     vi.clearAllMocks();
     process.env = { ...originalEnv };
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://test-supabase-url';
-    process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-service-key';
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'placeholder_service_role_key';
     (adminGuard.checkRateLimit as unknown as Mock).mockReturnValue({ ok: true, retryAfterSeconds: 0 });
   });
 

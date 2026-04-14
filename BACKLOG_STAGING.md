@@ -13,7 +13,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 ## Sprint 0 - Contencion y seguridad (P0, inmediato)
 
 ### P0-01 Rotacion total de secretos
-- Estado: TODO
+- Estado: READY_FOR_MANUAL_EXECUTION
 - Impacto: Critico
 - Tareas:
 1. Rotar credenciales VPS.
@@ -21,6 +21,11 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 3. Rotar `SERPAPI_KEY`, `FLOW_API_KEY`, `FLOW_SECRET_KEY`, `RESEND_API_KEY`, `OPENAI_API_KEY`.
 4. Actualizar variables en Vercel/Supabase y validar servicio.
 - Criterio de aceptacion: credenciales anteriores invalidadas y servicios operativos.
+- Avance actual:
+1. Runbook operacional detallado en `SECURITY_ROTATION_CHECKLIST.md`.
+2. Orden de ejecucion definido: VPS, Supabase, Flow, mensajeria/contenido, `CRON_SECRET`.
+3. Matriz de validacion por sistema agregada.
+4. Pendiente manual: rotar credenciales en paneles externos y registrar evidencia.
 
 ### P0-02 Limpieza de secretos en historial
 - Estado: IN_PROGRESS
@@ -35,6 +40,9 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 2. Hook local `pre-commit` agregado en `.githooks/pre-commit`.
 3. Workflow CI agregado en `.github/workflows/security-secrets.yml`.
 4. Historial saneado y force-push ejecutado en `main` y `staging`.
+5. Validacion local actual: `npm run secrets:scan` OK y `npm run security:check` OK.
+6. Check de regresion actualizado para validar el honeypot real de leads sin exigir implementacion especifica debilitante.
+7. Pendiente: confirmar ejecucion verde del workflow remoto `Security - Secret Scan` en GitHub.
 
 ### P0-03 Endurecer endpoints admin
 - Estado: DONE
@@ -99,7 +107,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 1. `lint:app` y `lint:repo` agregados en `package.json`.
 2. `eslint.config.mjs` actualizado con ignores de contexto no productivo.
 3. Baseline de reglas de deuda histÃ³rica ajustado temporalmente a `warning` para mantener el lint bloqueante sin frenar entregas.
-4. `npm run lint:app` y `npm run lint:repo` ejecutan sin errores (solo warnings pendientes de P1-02+).
+4. `npm run lint:app` ejecuta limpio en `staging`: 0 errores y 0 warnings.
 
 ### P1-02 Reducir deuda de tipos (`any`)
 - Estado: DONE
@@ -128,6 +136,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 13. Dashboard y catalogo avanzados sin `any` explicito en `src/app/(dashboard)/dashboard/catalog/page.tsx`, `src/app/(dashboard)/dashboard/catalog/new/page.tsx`, `src/app/(dashboard)/dashboard/page.tsx` y `src/app/(dashboard)/dashboard/settings/facturacion/page.tsx`.
 14. Formularios de edición (`edit-form.tsx`) e interfaces de Modelos (`ModeloExtendido`) fuertemente tipadas en todos los campos, sin `any` pendientes en la rama de catálogo.
 15. Validación completamente en verde para el cierre del ticket: `npx tsc --noEmit` OK (0 errores), `npm run lint:app` OK (0 errores; 287 warnings residuales).
+16. Cierre extendido de deuda de tipos y reglas de lint en paginas publicas, dashboard, componentes compartidos y flujos criticos: `typecheck` OK y `lint:app` OK con 0 errores y 0 warnings.
 
 ### P1-03 Build reproducible y pipeline base
 - Estado: DONE
@@ -141,6 +150,14 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 2. Workflow CI agregado en `.github/workflows/ci-staging.yml` con `npm ci` + `lint:app` + `typecheck` + `build`.
 3. Limpieza de `.next` incorporada en CI antes de validar.
 4. ValidaciÃ³n local: `typecheck` OK y `build` OK (en ejecuciÃ³n limpia).
+
+5. Ruido de build por `Dynamic server usage` en mega menu reducido: `getConstructoraById` ahora usa cliente publico sin cookies dentro de `getMegaMenuAds`.
+6. Ruido de build por inicializacion de Resend/Flow eliminado: Resend ahora es lazy y Flow solo emite debug con `FLOW_DEBUG=true`.
+7. Dashboard principal ajustado para remover warnings de pureza/imports: timestamp calculado en servicio y consumo deterministico en render.
+8. Banner promocional y skeleton del sidebar simplificados para remover estado de montaje innecesario y ancho aleatorio en render.
+9. Componentes de prueba social/dynamic urgency ajustados para derivar contador sin `setState` sincronico en effect; auth error handler ahora inicializa estado desde hash sin cascada de render.
+10. Limpieza adicional de deuda de lint: imports muertos, previews con `next/image` en formularios de catalogo/admin y contador de warnings reducido a 118 sin errores.
+11. Cierre de ruido de lint restante en rutas publicas, dashboard y componentes compartidos: `npm run lint:app` OK con 0 errores y 0 warnings.
 
 ## Sprint 2 - Calidad de producto (P1, semana 3-5)
 
@@ -165,14 +182,19 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 - Estado: IN_PROGRESS
 - Tareas:
 1. Instrumentar errores (Sentry o equivalente) (HECHO).
-2. Log estructurado en APIs.
-3. Alertas para 5xx, fallos de pago, cron fallido.
+2. Log estructurado en APIs. (HECHO en rutas criticas)
+3. Alertas para 5xx, fallos de pago, cron fallido. (DOCUMENTADO)
 - Criterio de aceptacion: dashboard minimo de salud disponible.
 - Avance actual:
 1. Plataforma base instalada con `npm install @sentry/nextjs`.
 2. Archivos de inicialización agregados (`sentry.client.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`, `instrumentation.ts`).
 3. Sentry enlazado exitosamente en la configuración nativa `next.config.ts`.
 4. El typecheck compila y las APIs funcionan bajo Sentry.
+5. Helper de logging estructurado agregado en `src/lib/observability-logger.ts` sin registrar tokens ni PII.
+6. Logs JSON agregados en leads publicos, cron de blog, checkout Flow y webhook Flow.
+7. Runbook y reglas minimas de alerta documentadas en `docs/OBSERVABILITY.md`.
+8. Pendiente operacional: configurar dashboard/alertas reales en Vercel/Sentry y registrar evidencia.
+9. Validacion actual: `typecheck` OK, `lint:app` OK (0 errores; 0 warnings), `test` OK (36 tests), `security:check` OK, `secrets:scan` OK y `build` OK.
 
 
 ### P1-06 Performance y accesibilidad
@@ -191,28 +213,46 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 ## Sprint 3 - Crecimiento y liderazgo (P2, semana 6-12)
 
 ### P2-01 SEO tecnico avanzado
-- Estado: TODO
+- Estado: DONE
 - Tareas:
 1. Revisar metadatos por plantilla de pagina.
 2. Fortalecer schema.org por modelo/constructora/blog.
 3. Control estricto de canonical/noindex en rutas internas.
 - Criterio de aceptacion: cobertura SEO tecnica sin errores criticos.
+- Avance actual:
+1. `src/app/sitemap.ts` agregado con rutas canonicas estaticas, modelos, constructoras y posts publicados.
+2. `src/app/robots.ts` reforzado para bloquear `/dashboard`, `/api`, `/login`, `/register` y `/auth`.
+3. Layouts privados de auth/dashboard marcados con `robots: { index: false, follow: false }`.
+4. Blog posts enriquecidos con `BlogPosting` JSON-LD, Open Graph `article`, Twitter card y canonical dinamico.
+5. Canonicals agregados en `/blog`, `/catalogo`, `/constructoras`, `/comparar`, `/privacidad`, `/terminos` y `/modelo/[slug]`.
+6. `src/components/seo/structured-data.tsx` ampliado con helper `buildItemListJsonLd` para listados y listados en catalogo/constructoras indexados.
+7. Validacion actual: `typecheck` OK, `lint:app` OK (0 errores; 0 warnings), `build` OK, `test` OK (36 tests), `security:check` OK y `secrets:scan` OK.
 
 ### P2-02 Gobierno de datos y migraciones
-- Estado: TODO
+- Estado: IN_PROGRESS
 - Tareas:
 1. Estandarizar migraciones idempotentes.
 2. Definir estrategia de rollback.
 3. Documentar contratos de datos entre frontend/API/DB.
 - Criterio de aceptacion: migraciones repetibles en ambientes.
+- Avance actual:
+1. Documento de gobierno de datos creado en `docs/DATA_GOVERNANCE.md`.
+2. Migracion `supabase/migrations/20260413_p2_data_governance.sql` preparada con indices y comentarios para blog/sitemap/contratos clave.
+3. Pendiente operacional: ejecutar migraciones pendientes en Supabase y validar con `EXPLAIN (ANALYZE, BUFFERS)` en queries calientes.
 
 ### P2-03 Operacion de release
-- Estado: TODO
+- Estado: IN_PROGRESS
 - Tareas:
 1. Checklist de release desde `staging`.
 2. Smoke tests post-deploy.
 3. Politica de hotfix y manejo de incidentes.
 - Criterio de aceptacion: proceso de release documentado y ensayado.
+- Avance actual:
+1. Checklist formal creado en `docs/RELEASE_PROCESS.md`.
+2. Script `npm run release:check` agregado para validar secrets, lint, typecheck, tests y build.
+3. README actualizado para enlazar proceso de release y gobierno de datos.
+4. Ensayo local ejecutado: `npm run release:check` OK (`secrets:scan`, `lint:app`, `typecheck`, `test` con 36 tests y `build`).
+5. Pendiente: ensayar release real desde `staging` y registrar resultado remoto.
 
 ## Orden recomendado de ejecucion
 

@@ -13,6 +13,7 @@ import {
 import type { Metadata } from "next";
 import { ShareActions } from "@/components/ui/share-actions";
 import { SellosGrid } from "@/components/constructora/sellos-grid";
+import type { Testimonio } from "@/components/dashboard/testimonios-manager";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -75,6 +76,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
   // getConstructoraBySlug is wrapped in React.cache() — deduplicates if called again in this request
   const modelos = await getModelsByConstructoraId(constructora.id);
   const sellos = await getSellosDeConstructora(constructora.id);
+  const testimonios = (constructora.testimonios as Testimonio[] | null) || [];
 
   // Fallbacks for data from DB
   const logo = constructora.logo_url || '/placeholder.png';
@@ -190,7 +192,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
               </div>
               
               <div className="grid sm:grid-cols-2 gap-6">
-                {modelos.map((modelo: any) => (
+                {modelos.map((modelo) => (
                   <Link key={modelo.id} href={`/modelo/${modelo.slug}`} className="group">
                     <div className="bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-primary/40 transition-all hover:shadow-lg h-full flex flex-col">
                       <div className="relative h-44 w-full bg-muted flex items-center justify-center">
@@ -225,14 +227,14 @@ export default async function ConstructoraPage({ params }: PageProps) {
             </section>
 
             {/* Testimonios Section */}
-            {constructora.testimonios && (constructora.testimonios as any[]).length > 0 && (
+            {testimonios.length > 0 && (
               <section className="space-y-8 pt-8">
                 <div className="space-y-2">
                   <h2 className="text-3xl font-heading font-black tracking-tighter italic">Testimonios de Clientes</h2>
                   <p className="text-muted-foreground font-medium">Lo que dicen quienes ya construyeron con {constructora.nombre}</p>
                 </div>
                 <div className="grid gap-6">
-                  {(constructora.testimonios as any[]).map((t: any, i: number) => (
+                  {testimonios.map((t, i) => (
                     <div key={i} className="bg-card border border-border/40 rounded-[2.5rem] p-10 space-y-6 relative group hover:border-brand-indigo/30 transition-all shadow-sm overflow-hidden">
                        <Quote className="absolute -top-4 -right-4 w-32 h-32 opacity-[0.03] rotate-12 transition-transform group-hover:rotate-0 duration-700" />
                        <div className="flex gap-1">
@@ -240,7 +242,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
                             <Star key={starI} className={cn("w-5 h-5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
                           ))}
                        </div>
-                       <p className="text-xl md:text-2xl font-medium italic leading-relaxed text-foreground tracking-tight">"{t.texto}"</p>
+                       <p className="text-xl md:text-2xl font-medium italic leading-relaxed text-foreground tracking-tight">&ldquo;{t.texto}&rdquo;</p>
                        <div className="flex items-center gap-4 pt-4">
                           <div className="w-14 h-14 rounded-2xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo text-xl">
                              {t.nombre.charAt(0)}
@@ -253,7 +255,7 @@ export default async function ConstructoraPage({ params }: PageProps) {
                                   <>
                                     <span className="w-1 h-1 rounded-full bg-muted-foreground/20" />
                                     <Badge variant="outline" className="text-[9px] font-black uppercase tracking-widest text-brand-indigo border-brand-indigo/20 px-3">
-                                      {modelos.find((m: any) => m.id === t.modelo_id)?.nombre || 'Modelo específico'}
+                                      {modelos.find((m) => m.id === t.modelo_id)?.nombre || 'Modelo específico'}
                                     </Badge>
                                   </>
                                 )}

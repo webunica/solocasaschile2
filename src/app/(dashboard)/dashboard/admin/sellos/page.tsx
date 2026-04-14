@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
-import { ShieldCheck, BadgeCheck, Clock, CheckCircle2, XCircle, Building2 } from "lucide-react";
+import { BadgeCheck, Clock, CheckCircle2, XCircle, Building2 } from "lucide-react";
 import { SelloActionButtons } from "@/components/dashboard/admin/sello-action-buttons";
 
 export const metadata = {

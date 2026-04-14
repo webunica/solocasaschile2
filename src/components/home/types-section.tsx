@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
 import {
@@ -34,14 +34,17 @@ export function TypesSection() {
   const desktopVisible = 4;
   const maxIndex = isMobile ? totalItems - 1 : totalItems - desktopVisible;
   
-  const next = () => setIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
+  const next = useCallback(() => {
+    setIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
+  }, [maxIndex]);
+
   const prev = () => setIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
 
   // Auto-slide 
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, [maxIndex, index]); 
+  }, [next]); 
 
   // Mobile Carousel Logic: Central Card with side peeking
   // On mobile we want card width to be ~80% and 10% on each side to peek.
@@ -144,7 +147,7 @@ export function TypesSection() {
               }
             }}
           >
-            {CONSTRUCTION_SYSTEMS.map((type: any, i: number) => (
+            {CONSTRUCTION_SYSTEMS.map((type, i) => (
               <motion.div 
                 key={type.id} 
                 initial={{ opacity: 0, y: 30 }}

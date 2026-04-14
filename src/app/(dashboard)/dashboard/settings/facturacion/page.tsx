@@ -3,10 +3,8 @@ import {
   CreditCard, 
   CheckCircle2, 
   XCircle, 
-  AlertCircle, 
   Calendar,
   Zap,
-  ArrowRight,
   ShieldCheck,
   FileText
 } from "lucide-react";

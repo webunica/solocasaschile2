@@ -13,6 +13,22 @@ import Link from "next/link";
 import type { ObraProjectPrioridad } from "@/types/obra";
 import { REGIONES_CHILE } from "@/config/regions";
 
+interface ModeloOption {
+  id: string;
+  nombre: string;
+  tipo?: string | null;
+  superficie_m2?: number | null;
+  dormitorios?: number | null;
+  banos?: number | null;
+  construccion?: Record<string, unknown> | null;
+  terminaciones?: Record<string, unknown> | null;
+  aislacion?: Record<string, unknown> | null;
+  instalaciones?: Record<string, unknown> | null;
+  constructora?: { nombre?: string | null } | null;
+}
+
+const MODEL_SPEC_KEYS = ["construccion", "terminaciones", "aislacion", "instalaciones"] as const;
+
 export default function NuevoProyectoPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -37,8 +53,8 @@ export default function NuevoProyectoPage() {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const [modelos, setModelos] = useState<any[]>([]);
-  const [selectedModel, setSelectedModel] = useState<any | null>(null);
+  const [modelos, setModelos] = useState<ModeloOption[]>([]);
+  const [selectedModel, setSelectedModel] = useState<ModeloOption | null>(null);
 
   useEffect(() => {
     const fetchModelos = async () => {
@@ -233,7 +249,7 @@ export default function NuevoProyectoPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 text-sm">
-              {['construccion', 'terminaciones', 'aislacion', 'instalaciones'].map((cat) => {
+              {MODEL_SPEC_KEYS.map((cat) => {
                 const data = selectedModel[cat];
                 if (!data) return null;
                 // Filtrar notas, planos y urls

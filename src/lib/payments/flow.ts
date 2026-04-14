@@ -9,8 +9,10 @@ const FLOW_CONFIG = {
   appUrl: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 };
 
-// Log settings on load (masked)
-console.info(`[FLOW-CONFIG] Env: ${process.env.FLOW_ENV || 'sandbox'}, Base: ${FLOW_CONFIG.baseUrl}, App: ${FLOW_CONFIG.appUrl}`);
+function debugFlow(event: string, fields: Record<string, unknown> = {}) {
+  if (process.env.FLOW_DEBUG !== 'true') return;
+  console.info(JSON.stringify({ level: 'debug', event, component: 'flow', ...fields }));
+}
 
 export interface FlowPaymentResponse {
   url: string;
@@ -56,7 +58,9 @@ export class FlowService {
       }
     }
     
-    console.debug(`[FLOW-SIGN] String: ${stringToSign}`);
+    debugFlow('flow_signature_generated', {
+      signedKeys: keys.filter(key => key !== 's' && !key.startsWith('optional[')),
+    });
     
     return crypto
       .createHmac('sha256', FLOW_CONFIG.secretKey)
@@ -86,9 +90,12 @@ export class FlowService {
       urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`
     };
 
-    console.log('[FLOW] Generando pago:', flowParams);
+    debugFlow('flow_payment_create_started', {
+      amount: flowParams.amount,
+      subject: flowParams.subject,
+      hasEmail: Boolean(flowParams.email),
+    });
     flowParams.s = this.generateSignature(flowParams);
-    console.log('[FLOW] Firma generada:', flowParams.s);
 
     const formData = new URLSearchParams();
     for (const key in flowParams) {
@@ -96,7 +103,9 @@ export class FlowService {
     }
 
     const apiUrl = `${FLOW_CONFIG.baseUrl}/payment/create`;
-    console.log(`[FLOW] Solicitando a: ${apiUrl}`);
+    debugFlow('flow_payment_create_request', {
+      baseUrl: FLOW_CONFIG.baseUrl,
+    });
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos para Flow
@@ -116,7 +125,10 @@ export class FlowService {
       }
 
       const data = (await response.json()) as FlowPaymentResponse;
-      console.log('[FLOW] Pago Creado con Éxito:', data);
+      debugFlow('flow_payment_create_completed', {
+        flowOrder: data.flowOrder,
+        hasToken: Boolean(data.token),
+      });
       return data;
     } catch (error: unknown) {
       clearTimeout(timeoutId);

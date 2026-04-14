@@ -1,7 +1,7 @@
 import { 
   Box, Layers, Hammer, Key, Zap, 
   ArrowRight, TreePine, 
-  Users, CheckCircle2 
+  Users
 } from "lucide-react";
 
 export const CONSTRUCTION_SYSTEMS = [

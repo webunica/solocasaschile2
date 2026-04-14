@@ -2,6 +2,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Acceso Constructor | SolocasasChile",
+  robots: {
+    index: false,
+    follow: false,
+  },
   description: "Ingresa a tu panel de administración corporativo para gestionar tus modelos de casas y prospectos.",
 };
 

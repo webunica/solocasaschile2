@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { FlowService } from '@/lib/payments/flow';
 import { getUfValue } from '@/lib/payments/uf';
+import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-logger';
 import { z } from 'zod';
 
 const CheckoutSchema = z.object({
@@ -28,16 +29,22 @@ function getErrorMessage(error: unknown): string {
 }
 
 export async function POST(req: NextRequest) {
+  const route = '/api/payments/flow/checkout';
+  const requestId = getRequestId(req);
+  const start = Date.now();
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
+    logWarn('flow_checkout_unauthorized', route, requestId, {
+      ms: Date.now() - start,
+    });
     return NextResponse.json({ error: 'Debes iniciar sesión para realizar un pago.' }, { status: 401 });
   }
 
   // Verificar configuración antes de seguir
   if (!process.env.FLOW_API_KEY || !process.env.FLOW_SECRET_KEY) {
-    console.error('FLOW_CONFIG_ERROR: Falta API Key o Secret Key de Flow en las variables de entorno.');
+    logError('flow_checkout_config_missing', route, requestId, new Error('missing_flow_env'));
     return NextResponse.json({ 
       error: 'La pasarela de pago no está configurada correctamente. Contacta a soporte.' 
     }, { status: 500 });
@@ -48,6 +55,9 @@ export async function POST(req: NextRequest) {
     const validation = CheckoutSchema.safeParse(body);
     
     if (!validation.success) {
+      logWarn('flow_checkout_validation_failed', route, requestId, {
+        ms: Date.now() - start,
+      });
       return NextResponse.json({ error: 'Datos de suscripción no válidos.', details: validation.error.format() }, { status: 400 });
     }
 
@@ -75,6 +85,14 @@ export async function POST(req: NextRequest) {
     });
 
     // 2. Devolvemos la URL de redirección
+    logInfo('flow_checkout_created', route, requestId, {
+      plan,
+      billing,
+      flowOrder: String(flowResult.flowOrder),
+      amountClp,
+      ms: Date.now() - start,
+    });
+
     return NextResponse.json({ 
         url: `${flowResult.url}?token=${flowResult.token}`,
         order: flowResult.flowOrder 
@@ -82,7 +100,9 @@ export async function POST(req: NextRequest) {
 
   } catch (error: unknown) {
     const message = getErrorMessage(error);
-    console.error('[FLOW-CHECKOUT] Detailed Error:', error);
+    logError('flow_checkout_failed', route, requestId, error, {
+      ms: Date.now() - start,
+    });
     return NextResponse.json({ 
       error: message.includes('Flow Payment Create Failed') 
         ? `Error de comunicación con Flow: ${message}` 

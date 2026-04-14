@@ -3,11 +3,21 @@
 import { cn } from "@/lib/utils";
 import { 
   Square, Bed, Bath, Clock, ShieldCheck, Zap, 
-  Construction, Ruler, Home, Wind, Droplets, HardHat
+  Construction, Ruler, Home, Wind, Droplets
 } from "lucide-react";
 
 interface FichaTecnicaCompletaProps {
-  modelo: any;
+  modelo: {
+    superficie_m2?: number | null;
+    dormitorios?: number | null;
+    banos?: number | null;
+    tiempo_entrega?: string | null;
+    garantia_anos?: number | null;
+    postventa?: boolean | null;
+    construccion?: Record<string, string | null | undefined> | null;
+    terminaciones?: Record<string, string | null | undefined> | null;
+    instalaciones?: Record<string, string | null | undefined> | null;
+  };
   className?: string;
 }
 

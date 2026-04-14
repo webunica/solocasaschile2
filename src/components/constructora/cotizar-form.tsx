@@ -1,16 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
-  CheckCircle2, Loader2, Send, 
-  User, Mail, Phone, MapPin, MessageSquare,
-  Lock, Clock, Zap
+  CheckCircle2, Loader2, 
+  MessageSquare, Lock, Clock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { createClient } from "@/lib/supabase/client";
 
 interface Props {
   modeloId: string;
@@ -59,17 +55,21 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
     };
 
     try {
-      const supabase = createClient();
-      const { error: insertError } = await supabase
-        .from("leads")
-        .insert([leadData]);
+      const response = await fetch("/api/leads/public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(leadData),
+      });
+      const result = await response.json();
 
-      if (insertError) throw insertError;
+      if (!response.ok) {
+        throw new Error(result?.error || "No se pudo enviar la cotizacion.");
+      }
 
       setSuccess(true);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Lead submission error:", err);
-      setError(err.message || "No se pudo enviar la cotización. Revisa tu conexión e intenta de nuevo.");
+      setError("No pudimos enviar la cotizacion. Intenta nuevamente en unos minutos.");
     } finally {
       setLoading(false);
     }
@@ -180,6 +180,12 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
           >
             {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : "Solicitar cotización gratuita"}
           </Button>
+
+          {error && (
+            <p className="text-sm font-bold text-white bg-red-500/30 border border-red-200/30 rounded-2xl px-4 py-3">
+              {error}
+            </p>
+          )}
 
           <p className="text-[10px] text-center text-white/40 font-bold uppercase tracking-widest flex items-center justify-center gap-2">
             <Lock className="w-3.5 h-3.5" /> Tus datos están 100% protegidos. Respuesta garantizada.

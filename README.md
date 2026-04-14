@@ -67,7 +67,14 @@ npm run typecheck
 
 # Production build validation
 npm run build
+
+# Full pre-release gate from staging
+npm run release:check
 ```
+
+## Release process
+
+Use `docs/RELEASE_PROCESS.md` before promoting `staging` to production. Data contracts and migration rules live in `docs/DATA_GOVERNANCE.md`.
 
 ## CI pipeline (staging)
 

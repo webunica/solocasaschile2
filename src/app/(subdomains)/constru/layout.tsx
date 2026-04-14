@@ -1,5 +1,6 @@
 import { ConstruHeader } from "@/components/constru/constru-header";
 import { Metadata } from "next";
+import type { CSSProperties } from "react";
 
 export const metadata: Metadata = {
   title: "Constru | Catálogo de Materiales y Proveedores",
@@ -22,7 +23,7 @@ export default function ConstruLayout({
         '--brand-teal': '28 96% 56%',
         '--ring': '28 96% 56%',
         '--radius-lg': '1.5rem',
-      } as any}
+      } as CSSProperties}
     >
       <ConstruHeader />
       <main className="flex-1 bg-slate-50 dark:bg-slate-950 bg-grid-pattern overflow-x-hidden">

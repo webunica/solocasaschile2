@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { 
   Search, Globe, Tag, Image as ImageIcon, 
-  CheckCircle2, XCircle, AlertCircle, 
+  CheckCircle2, XCircle, 
   TrendingUp, Eye, X 
 } from "lucide-react";
 
@@ -326,7 +325,7 @@ export function SEOPanel({
           </div>
         )}
         <p className="text-[10px] text-muted-foreground opacity-50">
-          La primera keyword es la "principal" y se usa para calcular el score. Presiona Enter o el botón para agregar.
+          La primera keyword es la &quot;principal&quot; y se usa para calcular el score. Presiona Enter o el botón para agregar.
         </p>
       </div>
 

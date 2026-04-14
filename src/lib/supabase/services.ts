@@ -1,8 +1,7 @@
 import { cache } from 'react'
-import { unstable_cache, revalidateTag } from 'next/cache'
+import { unstable_cache } from 'next/cache'
 import { createClient, createPublicClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
-import { REGIONES_CHILE } from '@/config/regions'
 import { getRegionDisplayName } from '@/lib/regions'
 
 export type ModelWithConstructora = {
@@ -160,6 +159,7 @@ export async function getDashboardStats() {
     leadsCount: leadsCount || 0,
     recentLeads: recentLeads || [],
     totalViews: (leadsCount || 0) * 22 + (modelsCount || 0) * 45,
+    generatedAtMs: Date.now(),
   }
 }
 
@@ -641,7 +641,7 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
 }
 
 async function getConstructoraById(id: string) {
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   const { data } = await supabase
     .from('constructoras')
     .select('*')

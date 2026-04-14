@@ -24,7 +24,8 @@ const TIPOS_MATERIALES = [
   { name: "Casas Metalcom", href: "/catalogo?tipo=metalcom" },
 ];
 
-const TIPOS_ESTILO = [
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _TIPOS_ESTILO = [
   { name: "Casas Modulares", href: "/catalogo?tipo=modular" },
   { name: "Casas Container", href: "/catalogo?tipo=container" },
   { name: "Casas Prefabricadas", href: "/catalogo?tipo=prefabricada" },
@@ -117,9 +118,11 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
             </div>
           </Link>
           <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
+            {/* eslint-disable react/no-unescaped-entities */}
             <p className="text-[11px] text-muted-foreground leading-relaxed italic">
               "Fomentamos la construcción sustentable con tecnología SIP de última generación."
             </p>
+            {/* eslint-enable react/no-unescaped-entities */}
           </div>
         </div>
 

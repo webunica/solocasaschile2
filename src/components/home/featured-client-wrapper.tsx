@@ -9,7 +9,15 @@ import { Star, ShieldCheck, CheckCircle2, Clock, ArrowRight } from "lucide-react
 import Link from "next/link";
 
 interface Props {
-  items: any[];
+  items: Array<{
+    id: string;
+    nombre: string;
+    slug: string;
+    logo_url?: string | null;
+    plan?: string | null;
+    score_confianza?: number | null;
+    verificada?: boolean | null;
+  }>;
 }
 
 export function FeaturedClientWrapper({ items }: Props) {
@@ -83,7 +91,7 @@ export function FeaturedClientWrapper({ items }: Props) {
                          <span className={cn(
                            "font-black text-brand-indigo",
                            isFeatured ? "text-5xl" : "text-4xl"
-                         )}>{builder.score_confianza}</span>
+                         )}>{builder.score_confianza ?? 0}</span>
                          <span className="text-xs font-bold opacity-30 tracking-widest">/100</span>
                       </div>
                    </div>

@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { 
-  Search, MapPin, Package, ArrowRight, 
+  Search, MapPin, Package, 
   Phone, Globe, Star, ExternalLink,
   LayoutGrid, List, Loader2, Heart
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { REGIONES_CHILE } from "@/config/regions";
 import { slugifyRegion } from "@/lib/regions";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,7 +55,7 @@ export function SuppliersDirectory({
   const [loading, setLoading] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set(initialFavoriteIds));
   const [togglingId, setTogglingId] = useState<string | null>(null);
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   // Fetch suppliers when filter changes
   useEffect(() => {
@@ -73,7 +72,7 @@ export function SuppliersDirectory({
       setLoading(false);
     };
     fetchSuppliers();
-  }, [selectedRegion, selectedCategory, showFavorites]);
+  }, [selectedRegion, selectedCategory, showFavorites, supabase]);
 
   // Fetch all favorites when tab is opened
   useEffect(() => {
@@ -87,7 +86,7 @@ export function SuppliersDirectory({
       
       if (!favRows?.length) { setFavoriteSuppliers([]); setLoading(false); return; }
 
-      const ids = favRows.map((f: any) => f.supplier_id);
+      const ids = favRows.map((f: { supplier_id: string }) => f.supplier_id);
       const { data } = await supabase
         .from('material_suppliers')
         .select('*')
@@ -97,7 +96,7 @@ export function SuppliersDirectory({
       setLoading(false);
     };
     fetchFavorites();
-  }, [showFavorites]);
+  }, [showFavorites, supabase, userId]);
 
   const toggleFavorite = async (supplier: Supplier) => {
     setTogglingId(supplier.id);

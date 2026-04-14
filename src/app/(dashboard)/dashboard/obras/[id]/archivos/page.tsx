@@ -4,8 +4,6 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getObraProject, getObraFiles } from "@/lib/supabase/obra-services";
 import { FileUploadZone } from "@/components/obras/file-upload-zone";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { ArrowLeft, FolderOpen } from "lucide-react";
 import type { ObraStage } from "@/types/obra";
 

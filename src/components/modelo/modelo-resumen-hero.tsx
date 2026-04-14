@@ -4,7 +4,13 @@ import { Square, Bed, Bath, Clock, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ModeloResumenHeroProps {
-  modelo: any;
+  modelo: {
+    superficie_m2?: number | null;
+    dormitorios?: number | null;
+    banos?: number | null;
+    tiempo_entrega?: string | null;
+    aislacion?: { calificacion_energetica?: string | null } | null;
+  };
   className?: string;
 }
 

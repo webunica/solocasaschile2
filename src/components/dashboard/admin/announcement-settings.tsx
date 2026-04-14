@@ -16,8 +16,16 @@ import {
 } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 
-export function AnnouncementSettings({ initialSettings }: { initialSettings: any }) {
-  const [settings, setSettings] = useState(initialSettings)
+interface AnnouncementBarSettings {
+  active: boolean
+  text: string
+  link?: string
+  buttonText?: string
+  theme?: string
+}
+
+export function AnnouncementSettings({ initialSettings }: { initialSettings: AnnouncementBarSettings }) {
+  const [settings, setSettings] = useState<AnnouncementBarSettings>(initialSettings)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -30,8 +38,8 @@ export function AnnouncementSettings({ initialSettings }: { initialSettings: any
       await updateSiteSettings('announcement_bar', settings)
       setSuccess(true)
       setTimeout(() => setSuccess(false), 3000)
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al guardar la configuracion')
     } finally {
       setLoading(false)
     }
@@ -104,7 +112,7 @@ export function AnnouncementSettings({ initialSettings }: { initialSettings: any
             <Label className="text-xs font-black uppercase tracking-widest opacity-60 ml-1">Tema Visual</Label>
             <Select 
               value={settings.theme} 
-              onValueChange={(v: string) => setSettings({...settings, theme: v})}
+              onValueChange={(v) => setSettings({...settings, theme: v || "brand"})}
             >
               <SelectTrigger className="h-12 bg-background border-border/40 rounded-xl font-bold">
                 <SelectValue placeholder="Selecciona un tema" />

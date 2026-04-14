@@ -3,8 +3,7 @@
 // Desacoplada: independiente del layout del dashboard,
 // lista para reutilizarse en subdominio avance.solocasaschile.com
 // ============================================================
-import { unstable_cache } from 'next/cache';
-import { createClient, createPublicClient } from './server';
+import { createClient } from './server';
 import type {
   ObraProject,
   ObraStage,
@@ -12,7 +11,6 @@ import type {
   ObraIncident,
   ObraStageTemplate,
   ObraKPIs,
-  ObraProjectSummary,
   CreateObraProjectDTO,
   UpdateObraStageDTO,
   ObraStageTemplateItem,
@@ -559,7 +557,6 @@ export async function uploadObraFile(
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
 
-  const ext = file.name.split('.').pop();
   const path = `${projectId}/${stageId ?? 'general'}/${Date.now()}-${file.name}`;
 
   const { error: uploadError } = await supabase.storage

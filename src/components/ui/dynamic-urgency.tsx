@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { incrementModelView } from '@/lib/supabase/actions';
@@ -13,14 +13,13 @@ interface DynamicUrgencyProps {
 }
 
 export function DynamicUrgency({ className, variant = 'full', modeloId, initialCount = 0 }: DynamicUrgencyProps) {
-  const [count, setCount] = useState<number>(initialCount);
+  const count = initialCount + 1;
   const incremented = useRef(false);
 
   useEffect(() => {
     if (!incremented.current) {
       incremented.current = true;
       // Incrementa optimísticamente en la UI
-      setCount(prev => prev + 1);
       // Registra en DB real
       incrementModelView(modeloId);
     }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
 import { checkRateLimit } from "@/lib/security/admin-guard";
+import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
 
 const PublicLeadSchema = z.object({
   nombre_cliente: z.string().min(2).max(120),
@@ -14,10 +15,15 @@ const PublicLeadSchema = z.object({
 });
 
 export async function POST(req: Request) {
+  const route = "/api/leads/public";
+  const requestId = getRequestId(req);
+  const start = Date.now();
+
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!supabaseUrl || !serviceRoleKey) {
+      logError("leads_public_config_missing", route, requestId, new Error("missing_supabase_server_env"));
       return NextResponse.json(
         { error: "Servicio temporalmente no disponible." },
         { status: 500 }
@@ -32,6 +38,10 @@ export async function POST(req: Request) {
     });
 
     if (!limit.ok) {
+      logWarn("leads_public_rate_limited", route, requestId, {
+        retryAfterSeconds: limit.retryAfterSeconds,
+        ms: Date.now() - start,
+      });
       return NextResponse.json(
         { error: "Demasiados intentos. Espera un momento antes de reenviar." },
         { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } }
@@ -42,6 +52,9 @@ export async function POST(req: Request) {
     const parsed = PublicLeadSchema.safeParse(body);
 
     if (!parsed.success) {
+      logWarn("leads_public_validation_failed", route, requestId, {
+        ms: Date.now() - start,
+      });
       return NextResponse.json(
         { error: "Datos inválidos para enviar la consulta." },
         { status: 400 }
@@ -50,6 +63,9 @@ export async function POST(req: Request) {
 
     if (parsed.data.website && parsed.data.website.trim() !== "") {
       // Respuesta silenciosa para bots
+      logWarn("leads_public_honeypot_triggered", route, requestId, {
+        ms: Date.now() - start,
+      });
       return NextResponse.json({ ok: true });
     }
 
@@ -69,17 +85,27 @@ export async function POST(req: Request) {
     ]);
 
     if (error) {
-      console.error("[public.leads] insert_error", { code: error.code, message: error.message });
+      logError("leads_public_insert_failed", route, requestId, error, {
+        code: error.code,
+        ms: Date.now() - start,
+      });
       return NextResponse.json(
         { error: "No pudimos procesar tu solicitud en este momento." },
         { status: 500 }
       );
     }
 
+    logInfo("leads_public_inserted", route, requestId, {
+      hasModeloId: Boolean(parsed.data.modelo_id),
+      hasConstructoraId: Boolean(parsed.data.constructora_id),
+      ms: Date.now() - start,
+    });
+
     return NextResponse.json({ ok: true });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "internal_error";
-    console.error("[public.leads] unexpected_error", { message });
+    logError("leads_public_unexpected_error", route, requestId, error, {
+      ms: Date.now() - start,
+    });
     return NextResponse.json(
       { error: "No pudimos procesar tu solicitud en este momento." },
       { status: 500 }

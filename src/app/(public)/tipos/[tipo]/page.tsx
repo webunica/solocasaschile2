@@ -2,7 +2,6 @@ import { getModelosFiltered } from "@/lib/supabase/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CatalogoGrid } from "@/components/catalogo/catalogo-grid";
 import { 

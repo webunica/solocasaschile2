@@ -1,0 +1,70 @@
+# Release desde staging
+
+El objetivo es promover cambios desde `staging` a produccion con validacion repetible y rollback claro.
+
+## Regla base
+
+Nunca se trabaja directo sobre `main`. Todo cambio entra a `staging`, se valida ahi y luego se promueve mediante release controlada.
+
+## Checklist pre-release
+
+1. Confirmar rama:
+   ```bash
+   git branch --show-current
+   ```
+2. Confirmar arbol limpio:
+   ```bash
+   git status --short
+   ```
+3. Ejecutar controles:
+   ```bash
+   npm run secrets:scan
+   npm run lint:app
+   npm run typecheck
+   npm run test
+   npm run build
+   ```
+4. Revisar migraciones pendientes:
+   ```bash
+   ls supabase/migrations
+   ```
+5. Confirmar variables requeridas en ambiente staging/production:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `FLOW_API_KEY`
+   - `FLOW_SECRET_KEY`
+   - `CRON_SECRET`
+   - `RESEND_API_KEY`
+   - `SENTRY_DSN`
+   - `NEXT_PUBLIC_GA_ID`
+
+## Smoke tests post-deploy
+
+1. Home carga sin errores.
+2. `/catalogo` lista modelos y filtros basicos.
+3. `/constructoras` lista empresas.
+4. `/modelo/[slug]` carga metadata, imagenes y CTA.
+5. `/blog` y `/blog/[slug]` cargan posts publicados.
+6. `/sitemap.xml` devuelve URLs canonicas.
+7. `/robots.txt` referencia el sitemap y bloquea areas privadas.
+8. Lead publico crea registro solo via endpoint server-side.
+9. Dashboard redirige usuarios sin sesion a `/login`.
+10. Cron blog rechaza requests sin `Authorization: Bearer`.
+
+## Rollback
+
+1. Si falla solo frontend, revertir el deployment desde Vercel al ultimo release verde.
+2. Si falla una migracion, ejecutar rollback SQL documentado para esa migracion.
+3. Si hay exposicion de secretos, pausar promotion, rotar credenciales y ejecutar `npm run secrets:scan`.
+4. Si fallan pagos, congelar promotion y validar Flow checkout/confirm antes de reintentar.
+
+## Criterio de release listo
+
+Un release esta listo cuando:
+
+1. `lint:app`, `typecheck`, `test`, `build` estan verdes.
+2. Secret scan no reporta hallazgos.
+3. Migraciones aplicables estan ejecutadas o explicitamente postergadas con riesgo aceptado.
+4. Smoke tests post-deploy estan completos.
+5. Hay rollback identificado antes de promover a produccion.

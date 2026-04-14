@@ -9,6 +9,7 @@ import { BlogPost } from "@/types/blog";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
+  alternates: { canonical: "https://solocasaschile.com/blog" },
   title: "Blog | SoloCasasChile - Guía Expertas en Casas Prefabricadas",
   description: "Consejos, comparativas y guías para elegir tu casa prefabricada ideal en Chile.",
 };

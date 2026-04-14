@@ -14,7 +14,7 @@ export function StatsSection() {
             { label: "Constructoras", val: "+226", icon: Building2 },
             { label: "Modelos Activos", val: "+5.000", icon: TrendingUp },
             { label: "Plataforma Pro", val: "Auditadas", icon: ShieldCheck },
-          ].map((stat, i) => (
+          ].map((stat) => (
             <div 
               key={stat.label} 
               className="p-8 md:p-12 lg:p-16 flex flex-col gap-8 group transition-all duration-700 bg-background hover:bg-muted/30 border-r border-b border-border/20"

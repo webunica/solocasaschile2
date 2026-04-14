@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, ShieldCheck, ArrowRight, Home, Loader2, RefreshCcw } from "lucide-react";
+import { CheckCircle2, ShieldCheck, ArrowRight, Home, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import confetti from "canvas-confetti";
 import { createClient } from "@/lib/supabase/client";
 
 export default function PaymentSuccessPage() {
   const [status, setStatus] = useState<'processing' | 'active' | 'error'>('processing');
-  const [constructora, setConstructora] = useState<any>(null);
+  const [constructora, setConstructora] = useState<{ nombre?: string | null; plan?: string | null } | null>(null);
 
   function launchConfetti() {
     const duration = 3 * 1000;
@@ -37,7 +37,7 @@ export default function PaymentSuccessPage() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
 
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('constructoras')
         .select('plan, plan_status, nombre')
         .eq('id', session.user.id)

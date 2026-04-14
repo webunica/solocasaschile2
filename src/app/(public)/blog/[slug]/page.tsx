@@ -4,13 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft, Calendar, User, Share2, ArrowRight } from "lucide-react";
+import { ArrowLeft, Calendar, User, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ShareActions } from "@/components/ui/share-actions";
 import { BlogPost } from "@/types/blog";
+import { buildBlogPostingJsonLd } from "@/components/seo/structured-data";
+
+const baseUrl = "https://solocasaschile.com";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +37,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | Blog SoloCasasChile`,
     description: post.excerpt,
+    alternates: { canonical: `${baseUrl}/blog/${slug}` },
     openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `${baseUrl}/blog/${slug}`,
+      type: "article",
+      images: post.cover_image_url ? [post.cover_image_url] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
       images: post.cover_image_url ? [post.cover_image_url] : [],
@@ -49,6 +61,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="min-h-screen pt-44 pb-20 bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildBlogPostingJsonLd(post)),
+        }}
+      />
       {/* Header Info */}
       <div className="container px-6 max-w-4xl mx-auto space-y-8">
         <Link 

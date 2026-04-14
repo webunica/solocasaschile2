@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
-  Star, Bed, Bath, Square, ArrowRight, Plus, SearchX, ArrowLeftRight
+  Star, Bed, Bath, Square, ArrowRight, ArrowLeftRight
 } from "lucide-react";
 import type { ModelWithConstructora } from "@/lib/supabase/services";
 

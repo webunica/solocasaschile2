@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
 import { REGIONES_CHILE } from "@/config/regions";
 import { cn } from "@/lib/utils";
 

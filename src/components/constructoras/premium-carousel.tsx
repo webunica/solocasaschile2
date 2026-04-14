@@ -3,13 +3,32 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShieldCheck, Star, ArrowRight } from "lucide-react";
+import { Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { getVerificationStatus, getStatusColor } from "@/lib/utils/trust";
 
-export function PremiumCarousel({ constructoras }: { constructoras: any[] }) {
+interface PremiumConstructora {
+  id: string;
+  nombre: string;
+  slug: string;
+  logo_url?: string | null;
+  descripcion?: string | null;
+  plan?: string | null;
+  score_confianza?: number | null;
+  verificada?: boolean | null;
+}
+
+function getTrustInput(constructora: PremiumConstructora) {
+  return {
+    verificada: constructora.verificada ?? false,
+    score_confianza: constructora.score_confianza ?? 0,
+    plan: constructora.plan ?? "gratis",
+  };
+}
+
+export function PremiumCarousel({ constructoras }: { constructoras: PremiumConstructora[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,7 +60,7 @@ export function PremiumCarousel({ constructoras }: { constructoras: any[] }) {
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8 max-w-[100vw] will-change-scroll"
       >
         {constructoras.map((c) => {
-          const status = getVerificationStatus(c);
+          const status = getVerificationStatus(getTrustInput(c));
           return (
             <Link
               key={c.id}

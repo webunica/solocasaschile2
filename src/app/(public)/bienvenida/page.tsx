@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  CheckCircle2, ArrowRight, LayoutDashboard, UserCircle,
+  CheckCircle2, LayoutDashboard, UserCircle,
   Home, Calendar, BookOpen, Star, Zap, Crown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";

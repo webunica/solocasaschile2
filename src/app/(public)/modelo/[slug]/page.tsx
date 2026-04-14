@@ -3,19 +3,19 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { CotizarForm } from "@/components/constructora/cotizar-form";
+import { Button } from "@/components/ui/button";
 import { CotizarModal } from "@/components/modelo/cotizar-modal";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn, getYoutubeEmbedUrl } from "@/lib/utils";
 import { SellosGrid } from "@/components/constructora/sellos-grid";
-import { Bed, Bath, Square, Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Video, Building2, Package, TrendingUp } from "lucide-react";
+import { Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Building2, TrendingUp } from "lucide-react";
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
 import { ModeloPlano } from "@/components/modelo/modelo-plano";
-import { buildModelJsonLd, buildBreadcrumbJsonLd, StructuredData } from "@/components/seo/structured-data";
+import { buildModelJsonLd, StructuredData } from "@/components/seo/structured-data";
 import type { Metadata } from "next";
+import type { Testimonio } from "@/components/dashboard/testimonios-manager";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -41,6 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${modelo.nombre} | SolocasasChile`,
     description: descripcion,
+    alternates: { canonical: `https://solocasaschile.com/modelo/${slug}` },
     openGraph: {
       title: `${modelo.nombre} | SolocasasChile`,
       description: descripcion,
@@ -71,6 +72,8 @@ export default async function ModeloPage({ params }: PageProps) {
   const relatedModels = await getModelsByConstructoraId(constructora.id);
   const otherModels = relatedModels.filter((m: { id: string }) => m.id !== modelo.id).slice(0, 3);
   const hasOtherModels = otherModels.length > 0;
+  const construccion = modelo.construccion;
+  const planoUrl = typeof construccion?.plano_url === "string" ? construccion.plano_url : null;
   
   const sellos = await getSellosDeConstructora(constructora.id);
   const maxSellosTotales = 2;
@@ -228,7 +231,7 @@ export default async function ModeloPage({ params }: PageProps) {
 
                 {/* Testimonios del Modelo (Social Proof) */}
                 {(() => {
-                  const testimonios = constructora.testimonios as any[] || [];
+                  const testimonios = (constructora.testimonios as Testimonio[] | null) || [];
                   // Show testimonials for this specific model OR general ones
                   const modelTestimonios = testimonios.filter(t => t.modelo_id === modelo.id || t.modelo_id === 'general' || !t.modelo_id);
                   
@@ -243,14 +246,14 @@ export default async function ModeloPage({ params }: PageProps) {
                        
                        <div className="relative">
                           <div className="flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
-                             {modelTestimonios.map((t: any, i: number) => (
+                             {modelTestimonios.map((t, i) => (
                                <div key={i} className="min-w-[280px] md:min-w-[320px] bg-card border border-border/40 rounded-[2rem] p-6 space-y-4 shadow-sm hover:shadow-lg transition-all duration-300 group snap-center">
                                   <div className="flex gap-1">
                                      {[...Array(5)].map((_, starI) => (
                                        <Star key={starI} className={cn("w-3.5 h-3.5", t.estrellas > starI ? "fill-amber-400 text-amber-400" : "text-muted-foreground/20")} />
                                      ))}
                                   </div>
-                                  <p className="text-sm md:text-base font-medium italic leading-relaxed text-foreground/90 line-clamp-4">"{t.texto}"</p>
+                                  <p className="text-sm md:text-base font-medium italic leading-relaxed text-foreground/90 line-clamp-4">&ldquo;{t.texto}&rdquo;</p>
                                   <div className="pt-2 flex items-center gap-3">
                                      <div className="w-10 h-10 rounded-xl bg-brand-indigo/10 flex items-center justify-center font-black text-brand-indigo text-sm">
                                         {t.nombre.charAt(0)}
@@ -268,7 +271,7 @@ export default async function ModeloPage({ params }: PageProps) {
                   );
                 })()}
 
-               <ModeloPlano planoUrl={(modelo as any).construccion?.plano_url} recintos={(modelo as any).recintos} superficie={modelo.superficie_m2} />
+               <ModeloPlano planoUrl={planoUrl} recintos={modelo.recintos} superficie={modelo.superficie_m2} />
                
                {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
                  <div className="space-y-10">
@@ -380,7 +383,7 @@ export default async function ModeloPage({ params }: PageProps) {
                  <Link href={`/constructora/${constructora.slug}`} className="text-xs font-black uppercase tracking-widest text-brand-indigo hover:underline">Ver catálogo completo →</Link>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                 {otherModels.map((m: any) => (
+                 {otherModels.map((m) => (
                   <Link key={m.id} href={`/modelo/${m.slug}`} className="group space-y-4">
                      <div className="relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl shadow-brand-indigo/5">
                         <Image src={m.imagenes_urls?.[0] || '/placeholder.png'} fill alt={m.nombre} sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-700" />

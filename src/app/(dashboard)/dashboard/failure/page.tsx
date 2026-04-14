@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { XCircle, AlertCircle, RefreshCcw, Home, MessageSquare } from "lucide-react";
+import { XCircle, AlertCircle, RefreshCcw, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "next/navigation";
 

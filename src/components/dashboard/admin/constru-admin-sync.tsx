@@ -43,8 +43,9 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
       } else {
         throw new Error(data.error || "Error desconocido");
       }
-    } catch (err: any) {
-      toast.error(`Error: ${err.message}`);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Error desconocido";
+      toast.error(`Error: ${message}`);
     } finally {
       setSyncingAll(false);
     }
@@ -81,8 +82,9 @@ export function ConstruAdminSync({ categories }: { categories: Category[] }) {
       } else {
         throw new Error(data.error || "Error desconocido");
       }
-    } catch (error: any) {
-      toast.error(`Error: ${error.message}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Error desconocido";
+      toast.error(`Error: ${message}`);
     } finally {
       setLoading(null);
     }

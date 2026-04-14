@@ -21,7 +21,7 @@ describe('Cron Blog Generation API endpoint', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env = { ...originalEnv };
-    process.env.CRON_SECRET = 'SECRET_CRON';
+    process.env.CRON_SECRET = 'placeholder_cron_secret';
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://test';
     process.env.SUPABASE_SERVICE_ROLE_KEY = 'test';
   });
@@ -72,7 +72,7 @@ describe('Cron Blog Generation API endpoint', () => {
     });
 
     const req = new Request('http://localhost/api/cron/generate-blog', {
-      headers: { authorization: 'Bearer SECRET_CRON' }
+      headers: { authorization: 'Bearer placeholder_cron_secret' }
     });
 
     const res = await GET(req) as NextResponse;
@@ -99,7 +99,7 @@ describe('Cron Blog Generation API endpoint', () => {
     (openai.chat.completions.create as unknown as Mock).mockRejectedValue(new Error('OpenAi API out of credits'));
 
     const req = new Request('http://localhost/api/cron/generate-blog', {
-      headers: { authorization: 'Bearer SECRET_CRON' }
+      headers: { authorization: 'Bearer placeholder_cron_secret' }
     });
 
     const res = await GET(req) as NextResponse;

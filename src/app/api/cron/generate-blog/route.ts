@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { openai } from "@/lib/openai";
 import { createClient } from "@supabase/supabase-js";
+import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
 
 // Cron configuration (Vercel)
 export const dynamic = "force-dynamic";
@@ -17,15 +18,22 @@ const BLOG_TOPICS = [
 ];
 
 export async function GET(req: Request) {
+  const route = "/api/cron/generate-blog";
+  const requestId = getRequestId(req);
+  const start = Date.now();
   const authHeader = req.headers.get('authorization');
   
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) {
+    logError("cron_generate_blog_config_missing", route, requestId, new Error("missing_cron_secret"));
     return NextResponse.json({ success: false, error: "CRON_SECRET no está configurado" }, { status: 500 });
   }
   const isAuthorized = authHeader === `Bearer ${cronSecret}`;
 
   if (!isAuthorized) {
+    logWarn("cron_generate_blog_unauthorized", route, requestId, {
+      ms: Date.now() - start,
+    });
     return new NextResponse('Unauthorized', { status: 401 });
   }
 
@@ -37,6 +45,9 @@ export async function GET(req: Request) {
 
     // 1. Pick a topic
     const topic = BLOG_TOPICS[Math.floor(Math.random() * BLOG_TOPICS.length)];
+    logInfo("cron_generate_blog_started", route, requestId, {
+      topicIndex: BLOG_TOPICS.indexOf(topic),
+    });
     
     // 2. Generate Content with OpenAI
     const completion = await openai.chat.completions.create({
@@ -138,10 +149,19 @@ export async function GET(req: Request) {
             .eq('slug', postData.slug);
         }
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : "unknown_error";
-        webhookStatus = `error_${message}`;
+        logError("cron_generate_blog_webhook_failed", route, requestId, err, {
+          slug: typeof postData.slug === "string" ? postData.slug : "unknown",
+          ms: Date.now() - start,
+        });
+        webhookStatus = "error";
       }
     }
+
+    logInfo("cron_generate_blog_completed", route, requestId, {
+      slug: typeof postData.slug === "string" ? postData.slug : "unknown",
+      webhookStatus,
+      ms: Date.now() - start,
+    });
 
     return NextResponse.json({ 
       success: true, 
@@ -150,7 +170,9 @@ export async function GET(req: Request) {
     });
 
   } catch (error: unknown) {
-    console.error("Cron Generation Error:", error);
+    logError("cron_generate_blog_failed", route, requestId, error, {
+      ms: Date.now() - start,
+    });
     return NextResponse.json(
       { success: false, error: "No se pudo generar el contenido en este momento." },
       { status: 500 }

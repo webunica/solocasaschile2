@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import type { ObraStage, ObraStageEstado, UpdateObraStageDTO } from "@/types/obra";
+import Image from "next/image";
+import type { ObraStage, ObraStageEstado, ObraStageFile, UpdateObraStageDTO } from "@/types/obra";
 import { StageStatusBadge } from "@/components/obras/stage-status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronUp, Save, Loader2, AlertTriangle, Plus, Layers, Camera, Image as ImageIcon, Eye, EyeOff, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Save, Loader2, AlertTriangle, Plus, Layers, Camera, Eye, EyeOff } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/client";
 
@@ -21,7 +22,7 @@ function StagePhotos({
 }: { 
   stageId: string; 
   projectId: string; 
-  initialFiles: any[] 
+  initialFiles: ObraStageFile[] 
 }) {
   const [files, setFiles] = useState(initialFiles || []);
   const [uploading, setUploading] = useState(false);
@@ -74,17 +75,19 @@ function StagePhotos({
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
-        {files.map((file: any) => {
+        {files.map((file) => {
           // Generar URL pública o firmada
           const { data } = supabase.storage.from('obra-files').getPublicUrl(file.storage_path);
           const imageUrl = data.publicUrl;
 
           return (
             <div key={file.id} className="group relative aspect-square rounded-2xl bg-slate-100 overflow-hidden border border-border/40 shadow-sm">
-              <img 
+              <Image 
                 src={imageUrl} 
                 alt={file.nombre}
-                className="w-full h-full object-cover"
+                fill
+                unoptimized
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <button className="p-1.5 rounded-lg bg-white/20 text-white hover:bg-white/40 transition-colors">
@@ -274,7 +277,7 @@ function StageRow({
           <StagePhotos 
             stageId={stage.id} 
             projectId={projectId} 
-            initialFiles={(stage as any).files || []} 
+            initialFiles={stage.files || []} 
           />
 
           {/* Retraso */}

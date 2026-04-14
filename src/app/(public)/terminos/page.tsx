@@ -1,10 +1,14 @@
 import { Metadata } from "next";
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Términos y Condiciones | SolocasasChile.com",
   description: "Descubre y compara casas prefabricadas, SIP, modulares y llave en mano en Chile. Más de 200 modelos de las mejores constructoras del país.",
+  alternates: {
+    canonical: "/terminos",
+  },
 };
 
 export default function TerminosPage() {

@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { CONSTRUCTORAS } from "@/lib/mock-data";
 import { InformativeListClient } from "@/components/constructoras/informative-list-client";
 import { PremiumCarousel } from "@/components/constructoras/premium-carousel";
+import { StructuredData, buildItemListJsonLd } from "@/components/seo/structured-data";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,19 @@ export default async function ConstructorasPage() {
 
   return (
     <div className="min-h-screen bg-background pb-24 pt-44">
+      {sorted.length > 0 && (
+        <StructuredData 
+          type="ItemList" 
+          data={buildItemListJsonLd(
+            sorted.map(c => ({
+              name: c.nombre,
+              url: `https://solocasaschile.com/constructora/${c.slug || c.id}`,
+              image: c.logo_url || undefined,
+              description: c.descripcion || undefined
+            }))
+          )} 
+        />
+      )}
       {/* Header / Hero Section */}
       <section className="relative overflow-hidden border-b border-border/40 bg-card/10 pb-20 pt-12">
         {/* Background Decor */}

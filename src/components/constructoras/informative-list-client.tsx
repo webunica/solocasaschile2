@@ -10,7 +10,27 @@ import { getVerificationStatus, getStatusColor } from "@/lib/utils/trust";
 
 const ITEMS_PER_PAGE = 20;
 
-export function InformativeListClient({ constructoras }: { constructoras: any[] }) {
+interface ConstructoraListItem {
+  id: string;
+  nombre: string;
+  regiones?: string[] | null;
+  telefono?: string | null;
+  email?: string | null;
+  sitio_web?: string | null;
+  plan?: string | null;
+  verificada?: boolean | null;
+  score_confianza?: number | null;
+}
+
+function getTrustInput(constructora: ConstructoraListItem) {
+  return {
+    verificada: constructora.verificada ?? false,
+    score_confianza: constructora.score_confianza ?? 0,
+    plan: constructora.plan ?? "gratis",
+  };
+}
+
+export function InformativeListClient({ constructoras }: { constructoras: ConstructoraListItem[] }) {
   const [regionFilter, setRegionFilter] = useState<string>("todas");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -174,9 +194,9 @@ export function InformativeListClient({ constructoras }: { constructoras: any[] 
                         <span className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate">{c.nombre}</span>
                         <div className={cn(
                           "inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-tighter border w-fit mt-1",
-                          getStatusColor(getVerificationStatus(c))
+                          getStatusColor(getVerificationStatus(getTrustInput(c)))
                         )}>
-                          {getVerificationStatus(c)}
+                          {getVerificationStatus(getTrustInput(c))}
                         </div>
                       </div>
                     </div>

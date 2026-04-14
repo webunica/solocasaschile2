@@ -12,10 +12,10 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
-  ArrowLeft, Calendar, MapPin, HardHat, User, FileText,
+  ArrowLeft, Calendar, MapPin, User,
   Image as ImageIcon, Settings, ChevronRight, Clock, CheckSquare
 } from "lucide-react";
-import type { ObraStage } from "@/types/obra";
+import type { ObraProjectSpec, ObraStage, ObraStageFile } from "@/types/obra";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -44,7 +44,8 @@ export default async function ObraDetailPage({ params }: { params: Promise<{ id:
 
   const stages = (project.stages ?? []) as ObraStage[];
   const nextStage = stages.find(s => s.estado !== 'completada' && s.estado !== 'cancelada');
-  const recentFiles = (project.files ?? []).filter((f: any) => f.tipo === 'foto').slice(0, 4);
+  const specs = project.specs ?? [];
+  const recentFiles = (project.files ?? []).filter((f: ObraStageFile) => f.tipo === 'foto').slice(0, 4);
 
   return (
     <div className="space-y-8">
@@ -189,7 +190,7 @@ export default async function ObraDetailPage({ params }: { params: Promise<{ id:
           </div>
 
           {/* Especificaciones / Checklists de Materiales */}
-          {((project as any).specs?.length > 0) && (
+          {specs.length > 0 && (
             <div className="p-6 rounded-[2rem] bg-white border border-border/40 shadow-sm space-y-4">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-2xl bg-brand-teal/10 flex items-center justify-center shrink-0">
@@ -201,7 +202,7 @@ export default async function ObraDetailPage({ params }: { params: Promise<{ id:
                 </div>
               </div>
               
-              <ProjectSpecsList initialSpecs={(project as any).specs} projectId={id} />
+              <ProjectSpecsList initialSpecs={specs as ObraProjectSpec[]} projectId={id} />
             </div>
           )}
 
@@ -242,7 +243,7 @@ export default async function ObraDetailPage({ params }: { params: Promise<{ id:
                 </Link>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {recentFiles.map((f: any) => (
+                {recentFiles.map((f) => (
                   <div key={f.id} className="aspect-square rounded-2xl bg-slate-100 overflow-hidden flex items-center justify-center">
                     <ImageIcon className="w-6 h-6 text-slate-300" />
                   </div>

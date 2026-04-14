@@ -1,11 +1,18 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Building2, Plus, Trash2, ShieldCheck, Award, AlertCircle } from "lucide-react";
+import { Plus, Trash2, ShieldCheck, Award } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+
+interface Certificacion {
+  id: string;
+  nombre: string;
+  institucion?: string | null;
+  anio_obtencion?: number | null;
+}
 
 export default async function CertificacionesPage() {
   const supabase = await createClient();
@@ -62,7 +69,7 @@ export default async function CertificacionesPage() {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {certificaciones?.map((cert: any) => (
+        {(certificaciones as Certificacion[] | null)?.map((cert) => (
           <Card key={cert.id} className="rounded-3xl border-border/40 bg-card/40 backdrop-blur-xl relative group overflow-hidden">
              <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button variant="ghost" size="icon" className="h-9 w-9 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white">

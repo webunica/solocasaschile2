@@ -2,17 +2,17 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, Loader2, CheckCircle2, 
-  X, Home, Video, ArrowLeft, Star,
-  ShieldCheck, Zap, ChevronDown,
-  Building2, Thermometer, Paintbrush, Plug, Truck, Award, Search, Save, Eye
+  X, Home, Video, Star,
+  Zap, ChevronDown,
+  Building2, Thermometer, Paintbrush, Truck, Search, Save, Eye
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { updateModel } from "@/lib/supabase/actions";
@@ -670,7 +670,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: Partial<Modelo
               <div className="grid grid-cols-2 gap-2">
                 {previews.map((src, i) => (
                   <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border">
-                    <img src={src} className="w-full h-full object-cover" />
+                    <Image src={src} alt={`Imagen del modelo ${i + 1}`} fill unoptimized className="object-cover" />
                     <button type="button" onClick={() => removeImageWithAutoSave(i)} className="absolute top-1 right-1 w-6 h-6 bg-black/60 rounded-full flex items-center justify-center text-white">
                       <X className="w-3 h-3" />
                     </button>
@@ -694,7 +694,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: Partial<Modelo
                   </>
                 ) : (
                   <div className="relative aspect-video">
-                    <img src={planoPreview} className="w-full h-full object-cover" />
+                    <Image src={planoPreview} alt="Plano de distribucion del modelo" fill unoptimized className="object-cover" />
                     <button type="button" onClick={removePlanoWithAutoSave} className="absolute top-2 right-2 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors">
                       <X className="w-4 h-4" />
                     </button>

@@ -44,7 +44,8 @@ const checks = [
     file: "src/app/api/leads/public/route.ts",
     patterns: [
       /PublicLeadSchema/,
-      /website:\s*z\.string\(\)\.max\(0\)/,
+      /website:\s*z\.string\(\)\.optional\(\)/,
+      /parsed\.data\.website\s*&&\s*parsed\.data\.website\.trim\(\)\s*!==\s*""/,
       /checkRateLimit/,
       /status:\s*429/,
       /SUPABASE_SERVICE_ROLE_KEY/,

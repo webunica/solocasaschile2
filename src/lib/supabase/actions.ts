@@ -490,6 +490,7 @@ export async function adminUpdateConstructora(formData: FormData) {
 }
 
 export async function deleteModelo(id: string, _formData?: FormData) {
+  void _formData
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('No autenticado')
@@ -720,7 +721,7 @@ export async function submitLead(data: {
             <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e2e8f0;">
               <p style="margin: 0 0 10px 0; font-weight: bold; color: #0b9e86;">Resumen de tu solicitud:</p>
               <p style="margin: 5px 0;"><strong>Modelo:</strong> ${data.modelo_nombre}</p>
-              <p style="margin: 5px 0;"><strong>Constructora:</strong> ${data.constructora_nombre}</p>
+              <p style="margin: 5px 0;"><strong>Constructora:</strong> ${constructoraNombreReal}</p>
             </div>
 
             <p>Si tienes cualquier otra duda, puedes responder a este correo.</p>

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { 
-  Mail, Users, Send, CheckCircle2, 
-  AlertCircle, Smartphone, Eye, History,
-  Loader2, ArrowRight, Search, Check, AlertTriangle
+  Mail, Send, CheckCircle2, 
+  Loader2, Search, Check
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,7 +92,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
       } else {
         toast.error(result.error || "Algo salió mal en el envío.");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error en el envío:", error);
       toast.error("Error inesperado.");
     } finally {
@@ -285,7 +285,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
            <div className="w-full h-full bg-white rounded-[2.2rem] overflow-hidden flex flex-col border border-slate-200">
               <div className="bg-white p-5 text-center border-b-[3px] border-brand-teal flex justify-center items-center">
                  {/* Simulate Logo */}
-                 <img src="/images/logo.png" alt="Logo" className="h-5 w-auto object-contain opacity-90" />
+                 <Image src="/images/logo.png" alt="Logo" width={92} height={24} className="h-5 w-auto object-contain opacity-90" />
               </div>
               <div className="flex-1 p-5 overflow-y-auto whitespace-pre-line text-[11px] text-slate-700 leading-relaxed font-medium">
                  {asunto && <div className="font-black text-slate-900 border-b border-slate-100 pb-3 mb-3 text-[13px] leading-tight">{asunto}</div>}

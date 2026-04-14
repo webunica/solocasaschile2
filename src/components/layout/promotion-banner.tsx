@@ -2,18 +2,12 @@
 
 import Link from "next/link";
 import { Sparkles, ArrowRight, X } from "lucide-react";
-import { useState, useEffect } from "react";
-import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export function PromotionBanner() {
   const [isVisible, setIsVisible] = useState(true);
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted || !isVisible) return null;
+  if (!isVisible) return null;
 
   return (
     <div className="bg-brand-indigo text-white py-3 px-4 relative overflow-hidden group">

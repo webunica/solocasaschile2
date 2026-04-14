@@ -1,6 +1,6 @@
 import { getDashboardStats } from "@/lib/supabase/services";
 import { 
-  Users, Home, Store, ArrowUpRight, 
+  Users, Home,
   MessageSquare, LayoutGrid, BarChart2, AlertCircle,
   Calendar
 } from "lucide-react";
@@ -22,9 +22,9 @@ type DashboardLead = {
 };
 
 // Helper for relative dates (simple version for Phase 3)
-const formatRelative = (dateStr: string) => {
+const formatRelative = (dateStr: string, nowMs: number) => {
   const date = new Date(dateStr);
-  const diff = Date.now() - date.getTime();
+  const diff = nowMs - date.getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
   if (hours < 1) return "Reciente";
   if (hours < 24) return `Hace ${hours}h`;
@@ -42,8 +42,12 @@ export default async function DashboardPage() {
     isVerified = false,
     plan = 'gratis',
     planStatus = 'active',
-    nextBillingDate
+    nextBillingDate,
+    generatedAtMs
   } = await getDashboardStats();
+  const nextBillingDaysRemaining = nextBillingDate
+    ? Math.ceil((new Date(nextBillingDate).getTime() - generatedAtMs) / (1000 * 60 * 60 * 24))
+    : null;
 
   const STATS = [
     { 
@@ -160,7 +164,7 @@ export default async function DashboardPage() {
 
        {/* Stats Grid */}
        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {STATS.map((stat, i) => (
+          {STATS.map((stat) => (
             <Card key={stat.title} className="group relative rounded-[2.5rem] border-border/40 shadow-sm hover:shadow-2xl hover:shadow-primary/5 transition-all overflow-hidden bg-card/40 backdrop-blur-sm">
               <div className="p-8">
                  <div className="flex items-center justify-between mb-8">
@@ -224,7 +228,7 @@ export default async function DashboardPage() {
                             )}>
                                {lead.estado}
                             </Badge>
-                            <span className="text-[9px] text-muted-foreground font-bold tracking-widest uppercase opacity-40 italic">{formatRelative(lead.created_at)}</span>
+                             <span className="text-[9px] text-muted-foreground font-bold tracking-widest uppercase opacity-40 italic">{formatRelative(lead.created_at, generatedAtMs)}</span>
                          </div>
                       </div>
                    )) : (
@@ -246,9 +250,9 @@ export default async function DashboardPage() {
                    <CardHeader className="p-10 pb-6 relative z-10">
                       <div className="flex items-center gap-3 mb-6">
                          <Badge className="bg-white/20 text-white border-none font-black tracking-widest text-[8px] uppercase px-3">Plan Gratuito</Badge>
-                         {nextBillingDate && (
+                         {nextBillingDaysRemaining !== null && (
                            <Badge variant="outline" className="text-white border-white/40 font-black tracking-widest text-[8px] uppercase px-3 bg-white/10 backdrop-blur-md italic animate-pulse">
-                              {Math.ceil((new Date(nextBillingDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24))} días restantes
+                              {nextBillingDaysRemaining} días restantes
                            </Badge>
                          )}
                       </div>

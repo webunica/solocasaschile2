@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://solocasaschile.com/comparar" },
   title: "Comparador de Modelos | SolocasasChile",
   description: "Compara hasta 3 modelos de casas prefabricadas lado a lado. Precios, specs, constructora y score de confianza.",
 };

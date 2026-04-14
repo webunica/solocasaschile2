@@ -9,8 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { 
   Select,
   SelectContent,
@@ -20,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-interface Testimonio {
+export interface Testimonio {
   nombre: string;
   texto: string;
   cargo: string;
@@ -28,9 +27,14 @@ interface Testimonio {
   modelo_id?: string;
 }
 
+interface ModelOption {
+  id: string;
+  nombre: string;
+}
+
 interface TestimoniosManagerProps {
   initialTestimonios: Testimonio[];
-  models: any[];
+  models: ModelOption[];
 }
 
 export function TestimoniosManager({ initialTestimonios, models }: TestimoniosManagerProps) {
@@ -47,9 +51,11 @@ export function TestimoniosManager({ initialTestimonios, models }: TestimoniosMa
   };
 
   const updateTestimonio = (index: number, field: keyof Testimonio, value: string | number) => {
-    const newTestimonios = [...testimonios];
-    (newTestimonios[index] as any)[field] = value;
-    setTestimonios(newTestimonios);
+    setTestimonios((current) =>
+      current.map((testimonio, currentIndex) =>
+        currentIndex === index ? { ...testimonio, [field]: value } : testimonio
+      )
+    );
   };
 
   const handleSave = async () => {

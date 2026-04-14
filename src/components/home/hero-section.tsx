@@ -2,33 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { Building2, ShieldCheck, Globe, ArrowRight, Search, MapPin, Phone, Home, Zap } from "lucide-react";
+import { ShieldCheck, Search, MapPin, Phone, Home, Zap } from "lucide-react";
 import Link from "next/link";
-import { HeroLeadForm } from "./hero-lead-form";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-
-const SLIDER_IMAGES = [
-  "/images/slider/m_001.jpg",
-  "/images/slider/m_002.jpg",
-  "/images/slider/m_003.jpg",
-  "/images/slider/m_004.jpg",
-  "/images/slider/m_005.jpg",
-  "/images/slider/m_006.jpg",
-  "/images/slider/m_007.jpg",
-  "/images/slider/m_008.jpg",
-  "/images/slider/m_009.jpg",
-];
 
 const CONSTRUCTION_TYPES = [
   "PREFABRICADAS",
@@ -52,19 +29,28 @@ function TypewriterLoop() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    if (subIndex === TYPEWRITER_TEXTS[index].length + 1 && !isDeleting) {
-      const timeout = setTimeout(() => setIsDeleting(true), 1500);
-      return () => clearTimeout(timeout);
-    }
-    if (subIndex === 0 && isDeleting) {
-      setIsDeleting(false);
-      setIndex((prev) => (prev + 1) % TYPEWRITER_TEXTS.length);
-      return;
-    }
+    const currentText = TYPEWRITER_TEXTS[index];
+    const delay = subIndex === currentText.length && !isDeleting ? 1500 : isDeleting ? 30 : 60;
 
     const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
-    }, isDeleting ? 30 : 60);
+      if (!isDeleting && subIndex < currentText.length) {
+        setSubIndex((prev) => prev + 1);
+        return;
+      }
+
+      if (!isDeleting) {
+        setIsDeleting(true);
+        return;
+      }
+
+      if (subIndex > 0) {
+        setSubIndex((prev) => prev - 1);
+        return;
+      }
+
+      setIsDeleting(false);
+      setIndex((prev) => (prev + 1) % TYPEWRITER_TEXTS.length);
+    }, delay);
 
     return () => clearTimeout(timeout);
   }, [subIndex, index, isDeleting]);
@@ -78,8 +64,6 @@ function TypewriterLoop() {
 }
 
 export function HeroSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [typeIndex, setTypeIndex] = useState(0);
   const [selectedRegion, setSelectedRegion] = useState("");
   const router = useRouter();
@@ -93,16 +77,11 @@ export function HeroSection() {
   };
 
   useEffect(() => {
-    const sliderTimer = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % SLIDER_IMAGES.length);
-    }, 4500);
-
     const typeTimer = setInterval(() => {
       setTypeIndex((prev) => (prev + 1) % CONSTRUCTION_TYPES.length);
     }, 3000);
 
     return () => {
-      clearInterval(sliderTimer);
       clearInterval(typeTimer);
     };
   }, []);
@@ -193,7 +172,7 @@ export function HeroSection() {
                       <option value="coquimbo">Coquimbo</option>
                       <option value="valparaiso">Valparaíso</option>
                       <option value="metropolitana">Región Metropolitana</option>
-                      <option value="ohiggins">O'Higgins</option>
+                      <option value="ohiggins">O&apos;Higgins</option>
                       <option value="maule">Maule</option>
                       <option value="nuble">Ñuble</option>
                       <option value="biobio">Biobío</option>
