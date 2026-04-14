@@ -104,7 +104,7 @@ export function Footer() {
                 </div>
                 <div className="flex flex-col">
                   <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Email</p>
-                  <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.cl</p>
+                  <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.com</p>
                 </div>
               </li>
               <li className="flex items-center gap-4">
