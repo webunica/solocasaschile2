@@ -15,7 +15,7 @@ export function PromotionBanner() {
       
       <div className="container max-w-7xl mx-auto flex items-center justify-center gap-4 text-center relative z-10">
         <div className="hidden sm:flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
-           <Sparkles className="w-3 h-3 text-amber-300 fill-amber-300" />
+           <Sparkles className="w-3 h-3 text-amber-300 fill-amber-300" aria-hidden="true" />
            Promo Lanzamiento
         </div>
         
@@ -27,14 +27,16 @@ export function PromotionBanner() {
           href="/planes" 
           className="flex items-center gap-2 bg-white text-brand-indigo px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-amber-300 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
         >
-          Ver Oferta <ArrowRight className="w-3 h-3" />
+          Ver Oferta <ArrowRight className="w-3 h-3" aria-hidden="true" />
         </Link>
 
         <button 
+          type="button"
           onClick={() => setIsVisible(false)}
-          className="absolute right-0 sm:right-4 p-1 opacity-40 hover:opacity-100 transition-opacity"
+          aria-label="Cerrar promocion"
+          className="absolute right-0 sm:right-4 p-1 opacity-80 hover:opacity-100 transition-opacity"
         >
-          <X className="w-4 h-4" />
+          <X className="w-4 h-4" aria-hidden="true" />
         </button>
       </div>
     </div>

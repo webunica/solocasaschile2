@@ -49,14 +49,24 @@ export function LatestPosts() {
           </div>
           
           <div className="flex items-center gap-4">
-            <button onClick={prev} className="w-12 h-12 rounded-full border border-brand-indigo/10 flex items-center justify-center hover:bg-brand-indigo hover:text-white transition-all">
-              <ChevronLeft className="w-6 h-6" />
+            <button
+              type="button"
+              onClick={prev}
+              aria-label="Ver articulo anterior"
+              className="w-12 h-12 rounded-full border border-brand-indigo/10 flex items-center justify-center hover:bg-brand-indigo hover:text-white transition-all"
+            >
+              <ChevronLeft className="w-6 h-6" aria-hidden="true" />
             </button>
-            <button onClick={next} className="w-12 h-12 rounded-full border border-brand-indigo/10 flex items-center justify-center hover:bg-brand-indigo hover:text-white transition-all">
-              <ChevronRight className="w-6 h-6" />
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Ver siguiente articulo"
+              className="w-12 h-12 rounded-full border border-brand-indigo/10 flex items-center justify-center hover:bg-brand-indigo hover:text-white transition-all"
+            >
+              <ChevronRight className="w-6 h-6" aria-hidden="true" />
             </button>
             <Link href="/blog" className="ml-4 font-black uppercase tracking-widest text-xs text-brand-indigo hover:text-brand-teal transition-colors flex items-center gap-2">
-              Ver Todo <ArrowRight className="w-4 h-4" />
+              Ver Todo <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
@@ -87,7 +97,7 @@ export function LatestPosts() {
                   <div className="p-8 space-y-4">
                     <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                       <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3 text-brand-teal" />
+                        <Calendar className="w-3 h-3 text-brand-teal" aria-hidden="true" />
                         {format(new Date(post.created_at), "dd MMM yyyy", { locale: es })}
                       </span>
                     </div>

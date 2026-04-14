@@ -15,7 +15,7 @@ export function Footer() {
           <div className="space-y-6 lg:pr-4">
             <Link href="/" className="inline-flex items-center gap-3">
               <div className="w-11 h-11 bg-[#00FFD1] rounded-[10px] flex items-center justify-center text-[#2B09BD] shadow-[0_0_20px_rgba(0,255,209,0.3)] shrink-0">
-                <Hash className="w-6 h-6 stroke-[3]" />
+                <Hash className="w-6 h-6 stroke-[3]" aria-hidden="true" />
               </div>
               <div className="flex flex-col -gap-1">
                 <span className="font-heading font-black text-[22px] leading-none tracking-tight text-white mb-0.5">
@@ -33,13 +33,13 @@ export function Footer() {
             
             <div className="flex items-center gap-3 pt-2">
               <Link href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
-                <FaInstagram className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+                <FaInstagram className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" aria-hidden="true" />
               </Link>
               <Link href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
-                <FaFacebookF className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+                <FaFacebookF className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" aria-hidden="true" />
               </Link>
               <Link href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
-                <FaLinkedinIn className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
+                <FaLinkedinIn className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -47,7 +47,7 @@ export function Footer() {
           {/* Explorar Col */}
           <div className="space-y-6 lg:pl-8">
             <div className="flex items-center gap-4">
-              <h4 className="text-[16px] font-bold tracking-wide text-white">Explorar</h4>
+              <p className="text-[16px] font-bold tracking-wide text-white">Explorar</p>
               <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
             </div>
             <ul className="space-y-4 text-[14px] text-white/80 font-medium">
@@ -69,13 +69,13 @@ export function Footer() {
           {/* Contacto Col */}
           <div className="space-y-6">
             <div className="flex items-center gap-4">
-              <h4 className="text-[16px] font-bold tracking-wide text-white">Contacto</h4>
+              <p className="text-[16px] font-bold tracking-wide text-white">Contacto</p>
               <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
             </div>
             <ul className="space-y-5">
               <li className="flex items-center gap-4">
                 <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
-                  <Mail className="w-4 h-4 text-[#00FFD1]" />
+                  <Mail className="w-4 h-4 text-[#00FFD1]" aria-hidden="true" />
                 </div>
                 <div className="flex flex-col">
                   <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Email</p>
@@ -85,7 +85,7 @@ export function Footer() {
               <li className="flex items-center gap-4">
                 <a href="https://wa.me/56964130601" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                   <div className="w-9 h-9 rounded-lg bg-[#421FD8] group-hover:bg-[#00FFD1] shrink-0 flex items-center justify-center transition-colors">
-                    <FaWhatsapp className="w-4 h-4 text-[#00FFD1] group-hover:text-[#2B09BD] transition-colors" />
+                    <FaWhatsapp className="w-4 h-4 text-[#00FFD1] group-hover:text-[#2B09BD] transition-colors" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-[10px] font-bold text-[#00FFD1] uppercase tracking-[0.1em] mb-0.5">WhatsApp Ventas</p>
@@ -95,7 +95,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-4 opacity-70">
                 <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
-                  <Phone className="w-4 h-4 text-[#00FFD1]" />
+                  <Phone className="w-4 h-4 text-[#00FFD1]" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Soporte</p>
@@ -104,7 +104,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-4">
                 <div className="w-9 h-9 rounded-lg bg-[#421FD8] shrink-0 flex items-center justify-center">
-                  <MapPin className="w-4 h-4 text-[#00FFD1]" />
+                  <MapPin className="w-4 h-4 text-[#00FFD1]" aria-hidden="true" />
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Ubicación</p>
@@ -117,7 +117,7 @@ export function Footer() {
           {/* Suscríbete Col */}
           <div className="space-y-6 lg:pl-4">
             <div className="flex items-center gap-4">
-              <h4 className="text-[16px] font-bold tracking-wide text-white">Suscríbete</h4>
+              <p className="text-[16px] font-bold tracking-wide text-white">Suscríbete</p>
               <div className="h-[2px] w-8 bg-[#00FFD1]"></div>
             </div>
             <p className="text-[13px] text-white/80 leading-relaxed font-medium">
@@ -125,12 +125,13 @@ export function Footer() {
             </p>
             <div className="relative mt-2">
               <input 
+                aria-label="Correo para recibir novedades"
                 type="email" 
                 placeholder="tu@email.com..." 
                 className="w-full h-11 bg-[#421FD8] border-none rounded-lg pl-4 pr-12 text-[13px] outline-none placeholder:text-white/40 focus:ring-1 focus:ring-[#00FFD1] transition-all font-medium text-white"
               />
-              <button aria-label="Suscribirse al boletín de noticias" className="absolute right-1 top-1 bottom-1 w-9 bg-[#00FFD1] rounded-[6px] flex items-center justify-center text-[#2B09BD] hover:bg-white transition-colors">
-                <ArrowRight className="w-4 h-4 font-bold" />
+              <button type="button" aria-label="Suscribirse al boletín de noticias" className="absolute right-1 top-1 bottom-1 w-9 bg-[#00FFD1] rounded-[6px] flex items-center justify-center text-[#2B09BD] hover:bg-white transition-colors">
+                <ArrowRight className="w-4 h-4 font-bold" aria-hidden="true" />
               </button>
             </div>
           </div>

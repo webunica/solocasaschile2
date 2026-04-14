@@ -112,8 +112,8 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 text-left">
                 <div className="bg-white/90 backdrop-blur-sm w-fit px-2 py-0.5 rounded text-[9px] font-black text-primary mb-2 uppercase tracking-tighter shadow-sm">Premium Partner</div>
-                <h4 className="text-white font-black text-lg leading-tight uppercase tracking-tight">{cName}</h4>
-                <p className="text-white/70 text-[10px] line-clamp-1 mt-1 font-medium italic">{cDesc}</p>
+                <p className="text-white font-black text-lg leading-tight uppercase tracking-tight">{cName}</p>
+                <p className="text-white/90 text-[10px] line-clamp-1 mt-1 font-medium italic">{cDesc}</p>
               </div>
             </div>
           </Link>
@@ -131,7 +131,7 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
           {/* Regiones */}
           <div className="space-y-6">
             <div className="flex items-center gap-2 text-[#1b0088] font-black text-[13px] uppercase tracking-widest border-b border-primary/10 pb-2">
-              <MapPin className="w-3.5 h-3.5 text-primary" />
+              <MapPin className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
               Regiones
             </div>
             <ul className="space-y-3">
@@ -144,7 +144,7 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
                     }`}
                   >
                     {item.name}
-                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -154,7 +154,7 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
           {/* Construcciones */}
           <div className="space-y-6">
             <div className="flex items-center gap-2 text-[#1b0088] font-black text-[13px] uppercase tracking-widest border-b border-primary/10 pb-2">
-              <Building2 className="w-3.5 h-3.5 text-primary" />
+              <Building2 className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
               Materiales
             </div>
             <ul className="space-y-3">
@@ -165,7 +165,7 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
                     className="group flex items-center justify-between text-[13px] font-bold text-slate-600 hover:text-[#1b0088] transition-colors"
                   >
                     {item.name}
-                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -175,7 +175,7 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
           {/* Estilos / Especiales */}
           <div className="space-y-6">
             <div className="flex items-center gap-2 text-[#1b0088] font-black text-[13px] uppercase tracking-widest border-b border-primary/10 pb-2">
-              <Star className="w-3.5 h-3.5 text-primary" />
+              <Star className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
               Especiales
             </div>
             <ul className="space-y-3">
@@ -186,7 +186,7 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
                     className="group flex items-center justify-between text-[13px] font-bold text-slate-600 hover:text-[#1b0088] transition-colors"
                   >
                     {item.name}
-                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                    <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -211,9 +211,9 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
               <div className="absolute top-3 right-3 bg-orange-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg border border-white/20 uppercase tracking-tighter animate-bounce">Destacado</div>
             </div>
             <div className="p-4 bg-white text-left">
-              <h4 className="text-[#1b0088] font-black text-sm uppercase tracking-tight leading-tight group-hover:text-primary transition-colors">{mName}</h4>
+              <p className="text-[#1b0088] font-black text-sm uppercase tracking-tight leading-tight group-hover:text-primary transition-colors">{mName}</p>
               <div className="flex items-center gap-3 mt-2 text-[10px] font-bold text-muted-foreground">
-                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {mSize}m²</span>
+                <span className="flex items-center gap-1"><MapPin className="w-3 h-3" aria-hidden="true" /> {mSize}m²</span>
                 <span className="flex items-center gap-1 font-black text-primary border-l border-border/40 pl-3">{mDorms} Dormitorios</span>
               </div>
               <div className="mt-4 flex items-center justify-between border-t border-border/10 pt-3">
@@ -222,14 +222,14 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
                   <span className="text-primary font-black text-lg leading-none">{mPrice.toLocaleString()} UF</span>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
                 </div>
               </div>
             </div>
           </Link>
-          <button className="w-full py-3 px-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+          <button type="button" className="w-full py-3 px-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
             Ver Oferta de la Semana
-            <Zap className="w-3.5 h-3.5" />
+            <Zap className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -239,20 +239,20 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-3 group cursor-pointer">
             <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-[#1b0088] group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-              <Zap className="w-5 h-5" />
+              <Zap className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
               <p className="text-[11px] font-black text-[#1b0088] uppercase leading-none tracking-tight">Entrega Rápida</p>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Modelos en Stock</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">Modelos en Stock</p>
             </div>
           </div>
           <div className="flex items-center gap-3 group cursor-pointer border-l border-border/10 pl-8">
             <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-[#1b0088] group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-              <Building2 className="w-5 h-5" />
+              <Building2 className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
               <p className="text-[11px] font-black text-[#1b0088] uppercase leading-none tracking-tight">Garantía Estructural</p>
-              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 opacity-60">Hasta 10 años</p>
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">Hasta 10 años</p>
             </div>
           </div>
         </div>

@@ -103,7 +103,7 @@ export function SeguimientoPromo() {
                         <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/70 via-transparent to-transparent opacity-70" />
                         <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
                           <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white backdrop-blur-md">
-                            <Search className="h-8 w-8" />
+                            <Search className="h-8 w-8" aria-hidden="true" />
                           </div>
                         </div>
                       </motion.div>
@@ -148,7 +148,7 @@ export function SeguimientoPromo() {
                 aria-label="Ver promocion anterior"
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
               >
-                <ChevronLeft className="h-6 w-6" />
+                <ChevronLeft className="h-6 w-6" aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -156,7 +156,7 @@ export function SeguimientoPromo() {
                 aria-label="Ver siguiente promocion"
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
               >
-                <ChevronRight className="h-6 w-6" />
+                <ChevronRight className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -199,6 +199,7 @@ export function SeguimientoPromo() {
                         )}
                       >
                         <CheckCircle2
+                          aria-hidden="true"
                           className={cn(
                             "h-4 w-4",
                             slide.id === "tracking" ? "text-brand-teal" : slide.accent,
@@ -217,7 +218,7 @@ export function SeguimientoPromo() {
                       className="h-14 w-full rounded-2xl bg-brand-indigo px-8 font-black uppercase text-white shadow-xl shadow-brand-indigo/20 transition-transform hover:scale-105 sm:w-auto"
                     >
                       {slide.cta}
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                     </Button>
                   </Link>
                 </div>

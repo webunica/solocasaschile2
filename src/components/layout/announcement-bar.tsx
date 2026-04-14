@@ -63,7 +63,7 @@ export function AnnouncementBar() {
 
       <div className="flex items-center gap-3 relative z-10 w-full max-w-7xl mx-auto justify-center">
         <div className="hidden md:flex w-8 h-8 rounded-full bg-white/20 items-center justify-center backdrop-blur-sm shrink-0">
-           <Megaphone className="w-4 h-4" />
+           <Megaphone className="w-4 h-4" aria-hidden="true" />
         </div>
         
         <p className="text-[11px] md:text-sm font-bold tracking-tight text-center truncate pr-8 md:pr-0">
@@ -76,17 +76,18 @@ export function AnnouncementBar() {
             className="hidden md:flex items-center gap-1.5 bg-white text-primary px-3 py-1 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-black/10 shrink-0"
           >
             {settings.buttonText || 'Ver más'}
-            <ArrowRight className="w-3 h-3" />
+            <ArrowRight className="w-3 h-3" aria-hidden="true" />
           </Link>
         )}
       </div>
 
       <button 
+        type="button"
         onClick={() => setIsVisible(false)}
         className="absolute right-2 md:right-4 w-8 h-8 flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-all shrink-0 z-20"
         aria-label="Cerrar anuncio"
       >
-        <X className="w-4 h-4" />
+        <X className="w-4 h-4" aria-hidden="true" />
       </button>
     </div>
   )

@@ -41,16 +41,16 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12">
         <div className="space-y-8 text-left md:col-span-7">
           <div className="flex items-center justify-between gap-4">
-            <h3 className="font-heading text-2xl font-black italic tracking-tight text-brand-indigo">
+            <p className="font-heading text-2xl font-black italic tracking-tight text-brand-indigo">
               Recursos y <span className="text-brand-teal">Articulos</span>
-            </h3>
+            </p>
             <Link
               href="/blog"
               onClick={onClose}
               className="group flex items-center gap-2 text-xs font-black uppercase tracking-widest text-brand-indigo/60 transition-all hover:text-brand-teal"
             >
               Ver Todo
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
           </div>
 
@@ -92,9 +92,9 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
                     >
                       {post.category || "Educacion"}
                     </Badge>
-                    <h4 className="line-clamp-2 font-heading text-lg font-black leading-tight transition-colors group-hover:text-brand-teal">
+                    <p className="line-clamp-2 font-heading text-lg font-black leading-tight transition-colors group-hover:text-brand-teal">
                       {post.title}
-                    </h4>
+                    </p>
                     <p className="line-clamp-2 text-xs font-medium text-muted-foreground opacity-70">
                       {post.excerpt}
                     </p>
@@ -113,10 +113,10 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
 
         <div className="grid gap-8 border-border/10 md:col-span-5 md:grid-cols-2 md:border-l md:pl-12">
           <div className="space-y-6">
-            <h4 className="mb-4 flex items-center gap-2 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo/40">
-              <Sparkles className="h-3 w-3 text-brand-teal" />
+            <p className="mb-4 flex items-center gap-2 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo">
+              <Sparkles className="h-3 w-3 text-brand-teal" aria-hidden="true" />
               Informacion Corporativa
-            </h4>
+            </p>
             <div className="space-y-1">
               {CORPORATE_LINKS.map((item) => (
                 <Link
@@ -126,7 +126,7 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
                   className="group flex items-center gap-3 rounded-2xl p-4 transition-all hover:bg-brand-indigo/5"
                 >
                   <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-indigo/5 text-brand-indigo transition-all group-hover:bg-brand-indigo group-hover:text-white">
-                    <item.icon className="h-4 w-4" />
+                    <item.icon className="h-4 w-4" aria-hidden="true" />
                   </div>
                   <span className="text-xs font-bold text-slate-600 transition-colors group-hover:text-brand-indigo">
                     {item.name}
@@ -138,12 +138,12 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
 
           <div className="space-y-8">
             <div className="space-y-6">
-              <h3 className="font-heading text-lg font-black tracking-tight text-brand-indigo">
+              <p className="font-heading text-lg font-black tracking-tight text-brand-indigo">
                 Ecosistema B2B
-              </h3>
+              </p>
               <div className="space-y-3 rounded-2xl border border-emerald-500/10 bg-emerald-500/5 p-4">
                 <div className="flex items-center gap-2">
-                  <Building2 className="h-4 w-4 text-emerald-600" />
+                  <Building2 className="h-4 w-4 text-emerald-600" aria-hidden="true" />
                   <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">
                     Constru
                   </span>
@@ -156,7 +156,7 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
                   onClick={onClose}
                   className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 transition-all hover:gap-2"
                 >
-                  Detalles del sistema <ChevronRight className="h-3 w-3" />
+                  Detalles del sistema <ChevronRight className="h-3 w-3" aria-hidden="true" />
                 </Link>
               </div>
             </div>
@@ -176,7 +176,7 @@ export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
       </div>
 
       <div className="mt-12 flex items-center justify-center border-t border-border/10 pt-6">
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground opacity-40">
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground">
           Guia definitiva para la vivienda industrializada en Chile 2026
         </p>
       </div>

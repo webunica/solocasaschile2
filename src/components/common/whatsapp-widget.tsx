@@ -74,18 +74,20 @@ export function WhatsAppWidget() {
             {/* Header */}
             <div className="bg-brand-indigo p-6 text-white relative">
               <button 
+                type="button"
                 onClick={() => setIsOpen(false)}
+                aria-label="Cerrar chat de WhatsApp"
                 className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
               >
-                <X className="w-3 h-3" />
+                <X className="w-3 h-3" aria-hidden="true" />
               </button>
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md">
-                   <MessageCircle className="w-5 h-5 fill-white" />
+                   <MessageCircle className="w-5 h-5 fill-white" aria-hidden="true" />
                 </div>
                 <div>
                    <h3 className="font-heading font-black text-lg tracking-tighter text-brand-teal">¡Hola! 👋</h3>
-                   <p className="text-white/70 text-[9px] font-black uppercase tracking-widest leading-none">Soporte SolocasasChile</p>
+                   <p className="text-white/90 text-[9px] font-black uppercase tracking-widest leading-none">Soporte SolocasasChile</p>
                 </div>
               </div>
               <p className="text-[13px] font-medium leading-tight opacity-90">
@@ -100,39 +102,42 @@ export function WhatsAppWidget() {
               {step === 1 ? (
                 <div className="grid grid-cols-1 gap-3">
                    <button 
+                     type="button"
                      onClick={() => handleStart("casa")}
                      className="group flex items-center gap-3 p-4 rounded-xl border border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
                    >
                       <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                         <Home className="w-4 h-4 text-primary" />
+                         <Home className="w-4 h-4 text-primary" aria-hidden="true" />
                       </div>
                       <div className="flex-1">
                          <p className="text-[11px] font-black uppercase tracking-widest text-foreground">Busco una casa</p>
-                         <p className="text-[9px] font-bold text-muted-foreground opacity-60 italic">Modelos y precios</p>
+                         <p className="text-[9px] font-bold text-muted-foreground italic">Modelos y precios</p>
                       </div>
-                      <ChevronRight className="w-3 h-3 opacity-20 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                    </button>
 
                    <button 
+                     type="button"
                      onClick={() => handleStart("constructora")}
                      className="group flex items-center gap-3 p-4 rounded-xl border border-primary/5 bg-primary/5 hover:border-primary/20 transition-all text-left"
                    >
                       <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                         <Building2 className="w-4 h-4 text-primary" />
+                         <Building2 className="w-4 h-4 text-primary" aria-hidden="true" />
                       </div>
                       <div className="flex-1">
                          <p className="text-[11px] font-black uppercase tracking-widest text-foreground">Soy Constructora</p>
-                         <p className="text-[9px] font-bold text-muted-foreground opacity-60 italic">Gestionar catálogo</p>
+                         <p className="text-[9px] font-bold text-muted-foreground italic">Gestionar catálogo</p>
                       </div>
-                      <ChevronRight className="w-3 h-3 opacity-20 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-3 h-3 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                    </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-3">
                    <div className="space-y-3">
                       <div className="relative group">
-                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <User className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" aria-hidden="true" />
                          <Input 
+                           aria-label="Nombre completo"
                            placeholder="Nombre completo" 
                            value={formData.name}
                            onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -141,8 +146,9 @@ export function WhatsAppWidget() {
                          />
                       </div>
                       <div className="relative group">
-                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" aria-hidden="true" />
                          <Input 
+                           aria-label="Email"
                            type="email"
                            placeholder="Tu Email" 
                            value={formData.email}
@@ -152,8 +158,9 @@ export function WhatsAppWidget() {
                          />
                       </div>
                       <div className="relative group">
-                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                         <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground group-focus-within:text-primary transition-colors" aria-hidden="true" />
                          <Input 
+                           aria-label="Telefono"
                            type="tel"
                            placeholder="Teléfono (Opcional)" 
                            value={formData.phone}
@@ -167,7 +174,7 @@ export function WhatsAppWidget() {
                      type="submit" 
                      className="w-full h-11 bg-brand-indigo rounded-lg font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
                    >
-                     INICIAR CHAT <Send className="ml-2 w-3 h-3" />
+                     INICIAR CHAT <Send className="ml-2 w-3 h-3" aria-hidden="true" />
                    </Button>
 
                    <button 
@@ -203,6 +210,9 @@ export function WhatsAppWidget() {
         </AnimatePresence>
 
         <motion.button
+          type="button"
+          aria-label={isOpen ? "Cerrar chat de WhatsApp" : "Abrir chat de WhatsApp"}
+          aria-expanded={isOpen}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
@@ -218,11 +228,11 @@ export function WhatsAppWidget() {
           <AnimatePresence mode="wait">
              {isOpen ? (
                <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <X className="w-6 h-6" />
+                  <X className="w-6 h-6" aria-hidden="true" />
                </motion.div>
              ) : (
                <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <MessageCircle className="w-7 h-7 fill-white" />
+                  <MessageCircle className="w-7 h-7 fill-white" aria-hidden="true" />
                </motion.div>
              )}
           </AnimatePresence>

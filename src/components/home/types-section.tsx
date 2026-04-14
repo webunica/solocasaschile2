@@ -108,20 +108,24 @@ export function TypesSection() {
 
                 <div className="flex gap-2">
                   <Button 
+                    type="button"
+                    aria-label="Ver sistema constructivo anterior"
                     onClick={prev} 
                     variant="outline" 
                     size="icon" 
                     className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10 bg-white shadow-sm"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-5 h-5" aria-hidden="true" />
                   </Button>
                   <Button 
+                    type="button"
+                    aria-label="Ver siguiente sistema constructivo"
                     onClick={next} 
                     variant="outline" 
                     size="icon" 
                     className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10 bg-white shadow-sm"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-5 h-5" aria-hidden="true" />
                   </Button>
                 </div>
              </div>
@@ -160,10 +164,10 @@ export function TypesSection() {
                 }}
                 className={cn(
                   "flex-none p-2 md:p-4 group transition-all duration-500",
-                  isMobile && index !== i ? "opacity-40 scale-90 grayscale blur-[2px]" : "opacity-100 scale-100"
+                  isMobile && index !== i ? "opacity-75 scale-95 grayscale" : "opacity-100 scale-100"
                 )}
               >
-                <Link href={type.link} className="block h-full outline-none">
+                <Link href={type.link} className="block h-full rounded-[3rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-indigo focus-visible:ring-offset-4">
                   <div className={cn(
                     "h-full p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border/40 bg-gradient-to-br transition-all duration-500",
                     "hover:shadow-[0_40px_80px_-20px_rgba(27,0,136,0.12)] hover:-translate-y-2 relative overflow-hidden flex flex-col justify-between min-h-[420px] md:min-h-[480px]",
@@ -178,7 +182,7 @@ export function TypesSection() {
                         type.accent,
                         type.accent === "bg-brand-indigo" ? "shadow-brand-indigo/30" : "shadow-brand-teal/30"
                       )}>
-                        {type.icon}
+                        <span aria-hidden="true">{type.icon}</span>
                       </div>
                       
                       <div className="space-y-3 md:space-y-4">
@@ -191,7 +195,7 @@ export function TypesSection() {
 
                     <div className="flex items-center text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-8 md:mt-12 group-hover:gap-4 transition-all">
                       Explorar Modelos 
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" aria-hidden="true" />
                     </div>
                   </div>
                 </Link>

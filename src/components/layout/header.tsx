@@ -124,7 +124,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
                   >
                     {link.label}
                     {(link.label === "Catálogo" || link.label === "Recursos") && (
-                      <ChevronDown className={cn(
+                      <ChevronDown aria-hidden="true" className={cn(
                         "w-4 h-4 transition-transform duration-300",
                         isActiveMegaMenu && "rotate-180"
                       )} />
@@ -149,7 +149,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
                     "flex items-center gap-2 text-[15px] font-bold text-[#1b0088] hover:opacity-80 transition-all px-4 py-2"
                   )}
                 >
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4" aria-hidden="true" />
                   Acceder
                 </Link>
             </div>
@@ -167,8 +167,8 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
             {/* Hamburger Menu (Mobile/Tablet Only) */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <button aria-label="Abrir menú de navegación" className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-primary/5 border border-primary/10 text-primary active:scale-90 transition-all">
-                   <Menu className="w-6 h-6" />
+                <button type="button" aria-label="Abrir menú de navegación" className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-primary/5 border border-primary/10 text-primary active:scale-90 transition-all">
+                   <Menu className="w-6 h-6" aria-hidden="true" />
                 </button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[300px] border-r border-border/40 bg-background/95 backdrop-blur-xl p-0">
@@ -186,7 +186,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
                      onClick={() => setIsOpen(false)}
                      className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 text-foreground font-bold text-[15px] tracking-tight hover:bg-primary hover:text-white transition-all group"
                    >
-                     <Home className="w-5 h-5 opacity-40 group-hover:opacity-100" /> Inicio
+                     <Home className="w-5 h-5 opacity-60 group-hover:opacity-100" aria-hidden="true" /> Inicio
                    </Link>
                    
                    <div className="h-px bg-border/40 my-2" />
@@ -198,7 +198,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
                        onClick={() => setIsOpen(false)}
                        className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-[#1b0088] font-bold text-[15px] tracking-tight transition-all group"
                      >
-                       <link.icon className="w-5 h-5 opacity-40 group-hover:opacity-100" /> {link.label}
+                       <link.icon className="w-5 h-5 opacity-60 group-hover:opacity-100" aria-hidden="true" /> {link.label}
                      </Link>
                    ))}
 
@@ -209,7 +209,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
                      onClick={() => setIsOpen(false)}
                      className="flex items-center gap-4 p-4 rounded-2xl hover:bg-muted/50 text-muted-foreground hover:text-foreground font-bold text-[15px] tracking-tight transition-all"
                    >
-                     <CreditCard className="w-5 h-5 opacity-40" /> Mi Cuenta
+                     <CreditCard className="w-5 h-5 opacity-60" aria-hidden="true" /> Mi Cuenta
                    </Link>
                 </div>
 
