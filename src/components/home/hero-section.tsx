@@ -135,8 +135,8 @@ export function HeroSection() {
               </div>
 
               {/* Headline */}
-              <h1 className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
-                <div className="flex flex-col gap-0 items-center lg:items-start w-full">
+              <div className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
+                <h1 className="flex flex-col gap-0 items-center lg:items-start w-full">
                   <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase [text-shadow:0_1px_8px_rgba(255,255,255,0.9)]">
                     CASAS
                   </span>
@@ -152,7 +152,7 @@ export function HeroSection() {
                       {CONSTRUCTION_TYPES[typeIndex]}
                     </motion.span>
                   </AnimatePresence>
-                </div>
+                </h1>
 
                 <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md mx-auto lg:mx-0 bg-white/20 backdrop-blur-md p-2 rounded-2xl border border-white/40 shadow-xl mt-6">
                   <div className="flex-1 relative">
@@ -222,12 +222,12 @@ export function HeroSection() {
                   {/* Item 8: Pronto casas rodantes */}
                   <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-slate-400 tracking-wider">
                     <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
-                      <Zap className="w-3.5 h-3.5 text-slate-300" />
+                      <Zap className="w-3.5 h-3.5 text-slate-500" />
                     </div>
-                    <span className="opacity-60 italic">¡Pronto casas rodantes!</span>
+                    <span className="text-slate-600 italic font-medium">¡Pronto casas rodantes!</span>
                   </li>
                 </ul>
-              </h1>
+              </div>
 
               {/* Typewriter replaced CTA and Stats */}
               <div className="space-y-6 w-full">
