@@ -167,7 +167,7 @@ export function Header({ megaMenuAds, latestBlogPosts }: HeaderProps) {
             {/* Hamburger Menu (Mobile/Tablet Only) */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <button className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-primary/5 border border-primary/10 text-primary active:scale-90 transition-all">
+                <button aria-label="Abrir menú de navegación" className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-primary/5 border border-primary/10 text-primary active:scale-90 transition-all">
                    <Menu className="w-6 h-6" />
                 </button>
               </SheetTrigger>

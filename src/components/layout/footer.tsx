@@ -32,13 +32,13 @@ export function Footer() {
             </p>
             
             <div className="flex items-center gap-3 pt-2">
-              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+              <Link href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
                 <FaInstagram className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
               </Link>
-              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+              <Link href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
                 <FaFacebookF className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
               </Link>
-              <Link href="#" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
+              <Link href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full bg-[#421FD8] flex items-center justify-center hover:bg-[#00FFD1] hover:text-[#2B09BD] transition-colors group">
                 <FaLinkedinIn className="w-4 h-4 text-white group-hover:text-[#2B09BD] transition-colors" />
               </Link>
             </div>
@@ -78,7 +78,7 @@ export function Footer() {
                   <Mail className="w-4 h-4 text-[#00FFD1]" />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Email</p>
+                  <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Email</p>
                   <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.cl</p>
                 </div>
               </li>
@@ -98,7 +98,7 @@ export function Footer() {
                   <Phone className="w-4 h-4 text-[#00FFD1]" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Soporte</p>
+                  <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Soporte</p>
                   <p className="text-[13px] text-white/90 font-medium tracking-wide">+56 9 6619 8752</p>
                 </div>
               </li>
@@ -107,7 +107,7 @@ export function Footer() {
                   <MapPin className="w-4 h-4 text-[#00FFD1]" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Ubicación</p>
+                  <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.1em] mb-0.5">Ubicación</p>
                   <p className="text-[13px] text-white/90 font-medium tracking-wide">Santiago, Chile</p>
                 </div>
               </li>
@@ -129,7 +129,7 @@ export function Footer() {
                 placeholder="tu@email.com..." 
                 className="w-full h-11 bg-[#421FD8] border-none rounded-lg pl-4 pr-12 text-[13px] outline-none placeholder:text-white/40 focus:ring-1 focus:ring-[#00FFD1] transition-all font-medium text-white"
               />
-              <button className="absolute right-1 top-1 bottom-1 w-9 bg-[#00FFD1] rounded-[6px] flex items-center justify-center text-[#2B09BD] hover:bg-white transition-colors">
+              <button aria-label="Suscribirse al boletín de noticias" className="absolute right-1 top-1 bottom-1 w-9 bg-[#00FFD1] rounded-[6px] flex items-center justify-center text-[#2B09BD] hover:bg-white transition-colors">
                 <ArrowRight className="w-4 h-4 font-bold" />
               </button>
             </div>
@@ -138,10 +138,10 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[12px] text-white/50 font-medium tracking-wide">
+          <p className="text-[12px] text-white/70 font-medium tracking-wide">
             © {currentYear} solocasaschile.cl. Todos los derechos reservados.
           </p>
-          <div className="flex items-center gap-6 text-[12px] text-white/50 font-medium tracking-wide">
+          <div className="flex items-center gap-6 text-[12px] text-white/70 font-medium tracking-wide">
             <Link href="/terminos" className="hover:text-white transition-colors">Términos y Condiciones</Link>
             <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
           </div>

@@ -44,11 +44,11 @@ export default function SeguimientoObrasPage() {
               Eliminamos la incertidumbre en la construcción. Nuestra plataforma permite monitorear cada hito, visualizar evidencias y certificar la calidad de tu proyecto desde la palma de tu mano.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-brand-indigo text-white font-black rounded-2xl h-14 px-8 shadow-xl shadow-brand-indigo/20">
-                PROBAR PORTAL DEMO
+              <Button asChild size="lg" className="bg-brand-indigo text-white font-black rounded-2xl h-14 px-8 shadow-xl shadow-brand-indigo/20">
+                <Link href="/demo">PROBAR PORTAL DEMO</Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-border rounded-2xl h-14 px-8 font-bold">
-                VER CONSTRUCTORAS VALIDADAS
+              <Button asChild size="lg" variant="outline" className="border-border rounded-2xl h-14 px-8 font-bold">
+                <Link href="/constructoras">VER CONSTRUCTORAS VALIDADAS</Link>
               </Button>
             </div>
           </div>
@@ -176,8 +176,8 @@ export default function SeguimientoObrasPage() {
                 </div>
               ))}
             </div>
-            <Button size="lg" className="w-full sm:w-auto bg-brand-teal text-brand-indigo font-black rounded-2xl h-14 px-8 mt-4">
-               SOLICITAR DEMO DEL SISTEMA
+            <Button asChild size="lg" className="w-full sm:w-auto bg-brand-teal text-brand-indigo font-black rounded-2xl h-14 px-8 mt-4">
+               <Link href="/demo">SOLICITAR DEMO DEL SISTEMA</Link>
             </Button>
           </div>
         </div>

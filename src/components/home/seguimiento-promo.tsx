@@ -81,6 +81,7 @@ export function SeguimientoPromo() {
                 render={
                   <button
                     type="button"
+                    aria-label="Ampliar imagen de promoción"
                     className="group relative h-[360px] w-full cursor-zoom-in overflow-hidden rounded-[2rem] border border-border/40 shadow-2xl sm:h-[500px] sm:rounded-[3rem]"
                   >
                     <AnimatePresence mode="wait">
