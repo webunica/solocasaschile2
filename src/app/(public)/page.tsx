@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { HeroSection } from "@/components/home/hero-section";
+import { TrackingControlSection } from "@/components/home/tracking-control-section";
 import { FeaturedModelsSection } from "@/components/home/featured-models";
 import { PriceDropBanner } from "@/components/home/price-drop-banner";
 import { SeoContent } from "@/components/home/seo-content";
@@ -35,6 +36,9 @@ export default function Home() {
 
       {/* A: Attention (Hero) */}
       <HeroSection />
+
+      {/* Trust through traceability */}
+      <TrackingControlSection />
 
       {/* Model Selection (Desire) */}
       <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando modelos destacados...</div>}>
