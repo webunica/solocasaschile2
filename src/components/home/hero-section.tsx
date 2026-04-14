@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+const HERO_BACKGROUND_IMAGE = "/images/bg/casas-prefabricas-hero-home.jpg";
+
 const CONSTRUCTION_TYPES = [
   "PREFABRICADAS",
   "PANEL SIP",
@@ -94,7 +96,7 @@ export function HeroSection() {
         {/* Mobile/Tablet Background */}
         <div className="block lg:hidden absolute inset-0">
           <Image
-            src="/images/bg/hero-main.jpg"
+            src={HERO_BACKGROUND_IMAGE}
             alt="Casa prefabricada en Chile"
             fill
             className="object-cover object-center"
@@ -106,7 +108,7 @@ export function HeroSection() {
         {/* Desktop Background */}
         <div className="hidden lg:block absolute inset-0">
           <Image
-            src="/images/bg/hero-main.jpg"
+            src={HERO_BACKGROUND_IMAGE}
             alt="Casa moderna prefabricada"
             fill
             className="object-cover object-center"
