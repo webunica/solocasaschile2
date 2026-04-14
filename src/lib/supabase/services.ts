@@ -86,6 +86,18 @@ type RawModelRow = Partial<ModelWithConstructora> & {
   precio_desde_uf?: number;
 };
 
+export type PublicConstructoraProject = {
+  id: string;
+  nombre: string;
+  region: string | null;
+  comuna: string | null;
+  estado: string;
+  porcentaje_avance: number;
+  thumbnail_url: string | null;
+  tipo_construccion: string | null;
+  created_at: string;
+};
+
 /** Obtiene los últimos posts para el mega menu (con caché) */
 export async function getLatestBlogPosts(limit = 2) {
   return unstable_cache(
@@ -648,4 +660,30 @@ async function getConstructoraById(id: string) {
     .eq('id', id)
     .maybeSingle();
   return data;
+}
+
+/** Proyectos publicos marcados para mostrarse en el perfil de una constructora. */
+export async function getPublicProjectsByConstructoraId(
+  constructoraId: string,
+): Promise<PublicConstructoraProject[]> {
+  try {
+    const supabase = await createPublicClient();
+    const { data, error } = await supabase
+      .from('obra_projects')
+      .select('id, nombre, region, comuna, estado, porcentaje_avance, thumbnail_url, tipo_construccion, created_at')
+      .eq('constructora_id', constructoraId)
+      .eq('visible_en_perfil', true)
+      .order('created_at', { ascending: false })
+      .limit(6);
+
+    if (error) {
+      console.error("Error fetching public constructora projects:", error);
+      return [];
+    }
+
+    return (data ?? []) as PublicConstructoraProject[];
+  } catch (error) {
+    console.error("Unexpected error fetching public constructora projects:", error);
+    return [];
+  }
 }
