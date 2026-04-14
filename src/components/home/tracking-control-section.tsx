@@ -8,13 +8,14 @@ export function TrackingControlSection() {
   return (
     <section
       aria-labelledby="tracking-control-title"
-      className="relative overflow-clip bg-background"
+      className="relative isolate overflow-clip bg-background"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-indigo/10 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-40 bg-gradient-to-b from-background to-transparent lg:block" />
 
-      <div className="container mx-auto grid max-w-7xl gap-14 px-5 py-24 md:px-12 lg:min-h-[118vh] lg:grid-cols-[0.86fr_1.14fr] lg:gap-20 lg:py-32">
-        <div className="flex items-start">
-          <div className="max-w-xl space-y-8 lg:sticky lg:top-40 lg:pt-10">
+      <div className="container relative mx-auto grid max-w-7xl gap-14 px-5 py-24 md:px-12 lg:min-h-[130vh] lg:grid-cols-[0.82fr_1.18fr] lg:gap-12 lg:py-0">
+        <div className="relative z-20 flex items-start lg:py-32">
+          <div className="max-w-xl space-y-8 lg:sticky lg:top-40 lg:pt-16">
             <p className="text-[11px] font-black uppercase tracking-[0.36em] text-brand-teal">
               solocasaschile
             </p>
@@ -56,8 +57,8 @@ export function TrackingControlSection() {
         </div>
 
         <div className="relative min-h-[440px] lg:min-h-0">
-          <div className="lg:sticky lg:top-28">
-            <div className="relative h-[440px] overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-[0_60px_120px_-60px_rgba(27,0,136,0.36)] md:h-[620px] lg:h-[calc(100vh-8rem)]">
+          <div className="lg:sticky lg:top-20 lg:-mr-[8vw] lg:h-screen lg:pt-10">
+            <div className="relative z-0 h-[440px] overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-[0_60px_120px_-60px_rgba(27,0,136,0.36)] md:h-[620px] lg:h-[calc(100vh-5rem)] lg:rounded-none lg:border-y-0 lg:border-r-0">
               <Image
                 src="/images/home/seguimiento-proyecto.jpg"
                 alt="Panel de seguimiento de proyecto de construcción"
@@ -65,8 +66,8 @@ export function TrackingControlSection() {
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover object-center transition-transform duration-700 ease-out motion-safe:hover:scale-[1.015]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/20 via-transparent to-white/10" />
-              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/35 via-background/5 to-transparent lg:from-background/55" />
+              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background/35 to-transparent" />
             </div>
           </div>
         </div>
