@@ -112,7 +112,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative flex items-center pt-[120px] md:pt-[150px] pb-10 md:pb-16 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[70vh]">
+    <section className="relative z-10 flex items-center pt-[120px] md:pt-[150px] pb-10 md:pb-16 overflow-x-clip w-full hero-bg-custom min-h-auto md:min-h-[70vh]">
 
       {/* ── Background images ── */}
       <div className="absolute inset-0 z-0">
