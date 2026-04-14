@@ -76,7 +76,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 2. Cron acepta solo `Authorization: Bearer <CRON_SECRET>`.
 
 ### P0-05 Reforzar entrada de leads publicos
-- Estado: IN_PROGRESS
+- Estado: DONE
 - Impacto: Critico
 - Scope:
 1. `src/components/home/hero-lead-form.tsx`
@@ -92,7 +92,8 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 2. `hero-lead-form`, `price-drop-banner` y `price-notify` migrados a backend seguro.
 3. Endpoint público de leads actualizado para usar `SUPABASE_SERVICE_ROLE_KEY`.
 4. Migración preparada para endurecer RLS: `supabase/migrations/20260413_harden_leads_insert_rls.sql`.
-5. Pendiente operacional: ejecutar migración en Supabase para aplicar el cambio de política.
+
+5. Confirmado en Supabase: `public_insert_leads`/`public_create_leads` ya no aparecen y `authenticated_insert_leads` queda con rol `authenticated`.
 
 ## Sprint 1 - Estabilidad tecnica (P1, semana 1-2)
 
@@ -238,7 +239,10 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 - Avance actual:
 1. Documento de gobierno de datos creado en `docs/DATA_GOVERNANCE.md`.
 2. Migracion `supabase/migrations/20260413_p2_data_governance.sql` preparada con indices y comentarios para blog/sitemap/contratos clave.
-3. Pendiente operacional: ejecutar migraciones pendientes en Supabase y validar con `EXPLAIN (ANALYZE, BUFFERS)` en queries calientes.
+
+3. Confirmado en Supabase: existen `idx_blog_posts_published_created_at` y `idx_blog_posts_published_slug`.
+4. Migracion `supabase/migrations/20260414_public_obra_showcase.sql` preparada para showcase publico de obras por constructora.
+5. Pendiente operacional: ejecutar `20260414_public_obra_showcase.sql` en Supabase y validar con proyectos `visible_en_perfil = true`.
 
 ### P2-03 Operacion de release
 - Estado: IN_PROGRESS
