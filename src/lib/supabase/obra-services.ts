@@ -150,12 +150,16 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
     .select(`
       *,
       constructora:constructoras(nombre, logo_url),
-      stages:obra_stages!inner(
+      stages:obra_stages(
         id, nombre, descripcion, orden, estado, porcentaje_avance,
         fecha_inicio_estimada, fecha_termino_estimada,
         fecha_inicio_real, fecha_termino_real,
-        responsable, observaciones, visible_cliente,
-        files:obra_stage_files(*)
+        responsable, observaciones, tiene_retraso, motivo_retraso,
+        visible_cliente, created_at, updated_at,
+        files:obra_stage_files(
+          id, project_id, stage_id, nombre, tipo, storage_path,
+          visible_cliente, subido_por, created_at
+        )
       ),
       specs:obra_project_specs(*)
     `)
@@ -175,6 +179,28 @@ export async function getObraProjectForClient(id: string): Promise<ObraProject |
         ...s,
         files: (s.files ?? []).filter((f: ObraStageFile) => f.visible_cliente),
       }));
+  }
+
+  const visibleFiles = ((data.stages ?? []) as ObraStage[]).flatMap(stage => stage.files ?? []);
+  if (visibleFiles.length > 0) {
+    const signedUrls = await Promise.all(
+      visibleFiles.map(async file => {
+        const { data: signedData } = await supabase.storage
+          .from('obra-files')
+          .createSignedUrl(file.storage_path, 60 * 30);
+
+        return [file.id, signedData?.signedUrl ?? null] as const;
+      }),
+    );
+    const urlByFileId = new Map(signedUrls);
+
+    data.stages = ((data.stages ?? []) as ObraStage[]).map(stage => ({
+      ...stage,
+      files: (stage.files ?? []).map(file => ({
+        ...file,
+        url: urlByFileId.get(file.id) ?? undefined,
+      })),
+    }));
   }
 
   // Ordenar especificaciones por orden
