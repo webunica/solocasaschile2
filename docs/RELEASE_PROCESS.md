@@ -68,3 +68,14 @@ Un release esta listo cuando:
 3. Migraciones aplicables estan ejecutadas o explicitamente postergadas con riesgo aceptado.
 4. Smoke tests post-deploy estan completos.
 5. Hay rollback identificado antes de promover a produccion.
+
+## Registro de releases
+
+### 2026-04-14 - staging a main
+
+1. Rama de release: `codex/release-staging-to-main`.
+2. Pull request: `#3` (`Release: merge staging into main`).
+3. Commit promovido a `main`: `ca4a49e`.
+4. Validacion local previa: `npm run release:check` OK.
+5. Resultado: `origin/main` quedo alineado con `origin/staging`.
+6. Nota: la lectura automatica de checks remotos desde el conector GitHub devolvio `403`; confirmar visualmente en GitHub/Vercel si se requiere evidencia externa.

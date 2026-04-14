@@ -245,7 +245,7 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 5. Migracion `20260414_public_obra_showcase.sql` aplicada y validada en Supabase: columnas `thumbnail_url`/`visible_en_perfil` creadas y policy `public_read_visible_profile_projects` limita lectura publica a `visible_en_perfil = true`.
 
 ### P2-03 Operacion de release
-- Estado: IN_PROGRESS
+- Estado: DONE
 - Tareas:
 1. Checklist de release desde `staging`.
 2. Smoke tests post-deploy.
@@ -256,7 +256,10 @@ Regla operativa: no implementar ni mergear cambios directos en `main`/produccion
 2. Script `npm run release:check` agregado para validar secrets, lint, typecheck, tests y build.
 3. README actualizado para enlazar proceso de release y gobierno de datos.
 4. Ensayo local ejecutado: `npm run release:check` OK (`secrets:scan`, `lint:app`, `typecheck`, `test` con 36 tests y `build`).
-5. Pendiente: ensayar release real desde `staging` y registrar resultado remoto.
+5. Release real ejecutado el 2026-04-14 desde `staging` hacia `main` mediante PR #3 (`Release: merge staging into main`).
+6. Commit de produccion resultante: `ca4a49e` (`release: merge staging into main`).
+7. Validacion final local antes de promover: `npm run release:check` OK (`secrets:scan`, `lint:app`, `typecheck`, `test` con 36 tests y `build`).
+8. Pendiente operativo no bloqueante: confirmar estado remoto de checks en GitHub/Vercel cuando el panel lo permita.
 
 ## Orden recomendado de ejecucion
 
