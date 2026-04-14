@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Sparkles, Target, Heart, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Sparkles, Target, ShieldCheck, CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

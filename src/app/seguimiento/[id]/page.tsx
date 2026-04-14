@@ -1,128 +1,158 @@
 import type { Metadata } from "next";
-import { notFound, redirect } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/server";
-import { getObraProjectForClient } from "@/lib/supabase/obra-services";
-import { ProjectTimeline } from "@/components/obras/project-timeline";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+  AlertCircle,
+  ArrowLeft,
+  Calendar,
+  CheckCircle2,
+  ChevronRight,
+  Clock,
+  Download,
+  FileText,
+  HardHat,
+  Image as ImageIcon,
+  Info,
+  MapPin,
+  User,
+} from "lucide-react";
+
 import { ProjectHealthBadge } from "@/components/obras/health-badge";
 import { ProjectSpecsClient } from "@/components/obras/project-specs-client";
+import { ProjectTimeline } from "@/components/obras/project-timeline";
+import { getObraProjectForClient } from "@/lib/supabase/obra-services";
 import { cn } from "@/lib/utils";
-import {
-  Calendar, MapPin, CheckCircle2, Clock, FileText,
-  Image as ImageIcon, ChevronRight, HardHat, ArrowLeft,
-  Download, Share2, Info, User
-} from "lucide-react";
 import type { ObraStage, ObraStageFile } from "@/types/obra";
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const project = await getObraProjectForClient(id);
-  return {
-    title: project ? `${project.nombre} | Portal de Seguimiento` : "Portal de Seguimiento",
-    description: "Sigue el avance de tu proyecto de construcción en tiempo real.",
-  };
+type SeguimientoPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+function formatDate(date: string | null | undefined, options?: Intl.DateTimeFormatOptions) {
+  if (!date) return null;
+  return new Intl.DateTimeFormat("es-CL", options).format(new Date(date));
 }
 
-export default async function ClientPortalPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const supabase = await createClient();
+function getRemainingDays(date: string | null) {
+  if (!date) return null;
+  return Math.ceil((new Date(date).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+}
 
+export const metadata: Metadata = {
+  title: "Portal de seguimiento | SolocasasChile",
+  description: "Revisa el avance, hitos y evidencias visibles de tu proyecto.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
+export default async function ClientPortalPage({ params }: SeguimientoPageProps) {
+  const { id } = await params;
   const project = await getObraProjectForClient(id);
+
   if (!project) notFound();
 
   const stages = (project.stages ?? []) as ObraStage[];
-  
-  // Consolidar todos los archivos y generar URLs públicas reales
-  const allFiles = stages.flatMap(s => (s.files ?? []) as ObraStageFile[]).map(file => {
-    const { data: { publicUrl } } = supabase.storage.from('obra-files').getPublicUrl(file.storage_path);
-    return { ...file, publicUrl };
+  const allFiles = stages.flatMap(stage => (stage.files ?? []) as ObraStageFile[]);
+  const recentPhotos = allFiles
+    .filter(file => file.tipo === "foto" && file.url)
+    .reverse()
+    .slice(0, 8);
+  const docs = allFiles.filter(file => file.tipo !== "foto" && file.url);
+  const nextStage = stages.find(stage => stage.estado !== "completada" && stage.estado !== "cancelada");
+  const completedCount = stages.filter(stage => stage.estado === "completada").length;
+  const remainingDays = getRemainingDays(project.fecha_termino_estimada);
+  const deliveryDate = formatDate(project.fecha_termino_estimada, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   });
 
-  const recentPhotos = allFiles.filter(f => f.tipo === 'foto').reverse().slice(0, 8);
-  const docs = allFiles.filter(f => f.tipo !== 'foto');
-
-  const nextStage = stages.find(s => s.estado !== 'completada' && s.estado !== 'cancelada');
-  const completedCount = stages.filter(s => s.estado === 'completada').length;
-
-  const diasRestantes = project.fecha_termino_estimada
-    ? Math.ceil((new Date(project.fecha_termino_estimada).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-    : null;
-
   return (
-    <div className="min-h-screen bg-slate-50/50">
-      {/* Header del portal Premium */}
-      <div className="bg-[#1a1a1a] text-white relative overflow-hidden">
-        {/* Decoración de fondo */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brand-indigo/10 to-transparent pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-teal/5 rounded-full blur-3xl pointer-events-none" />
+    <main className="min-h-screen bg-slate-50/50">
+      <section className="relative overflow-hidden bg-[#1a1a1a] text-white">
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-brand-indigo/10 to-transparent" />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-brand-teal/5 blur-3xl" />
 
-        <div className="max-w-5xl mx-auto px-6 py-10 relative z-10 space-y-8">
-          <div className="flex items-center justify-between">
+        <div className="relative z-10 mx-auto max-w-5xl space-y-8 px-6 py-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center">
-                <HardHat className="w-6 h-6 text-brand-teal" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
+                <HardHat className="h-6 w-6 text-brand-teal" />
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Portal de Seguimiento</p>
-                <div className="flex items-center gap-2">
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">
+                  Portal de seguimiento
+                </p>
+                <div className="flex flex-wrap items-center gap-2">
                   <p className="text-sm font-bold text-white/90">
                     {project.constructora?.nombre ?? "SolocasasChile"}
                   </p>
-                  <span className="w-1 h-1 rounded-full bg-white/20" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-brand-teal">Verificada</span>
+                  <span className="h-1 w-1 rounded-full bg-white/20" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-brand-teal">
+                    Acceso protegido
+                  </span>
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3">
-              <button className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-colors">
-                <Share2 className="w-3 h-3" /> Compartir
-              </button>
-              <Link href="/" className="p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                <ArrowLeft className="w-5 h-5" />
+              <Link
+                href="/seguimiento-de-obras"
+                aria-label="Volver a seguimiento de obras"
+                className="rounded-xl border border-white/10 bg-white/5 p-2 transition-colors hover:bg-white/10"
+              >
+                <ArrowLeft className="h-5 w-5" />
               </Link>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-end">
+          <div className="grid items-end gap-8 md:grid-cols-2">
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight leading-tight text-white">
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="font-heading text-3xl font-black leading-tight tracking-tight text-white md:text-4xl">
                   {project.nombre}
                 </h1>
                 <ProjectHealthBadge salud={project.salud} />
               </div>
-              
-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/50 font-medium">
+
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-white/50">
                 {project.region && (
                   <span className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-brand-teal/70" />
-                    {project.region}{project.comuna ? `, ${project.comuna}` : ''}
+                    <MapPin className="h-4 w-4 text-brand-teal/70" />
+                    {project.region}
+                    {project.comuna ? `, ${project.comuna}` : ""}
                   </span>
                 )}
-                {project.fecha_termino_estimada && (
+                {deliveryDate && (
                   <span className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-brand-teal/70" />
-                    Entrega est.: {new Date(project.fecha_termino_estimada).toLocaleDateString('es-CL', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    <Calendar className="h-4 w-4 text-brand-teal/70" />
+                    Entrega est.: {deliveryDate}
                   </span>
                 )}
               </div>
             </div>
 
-            {/* Barra de avance circular / lineal */}
-            <div className="space-y-4 bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-[2rem]">
-              <div className="flex justify-between items-end">
+            <div className="space-y-4 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
+              <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-[10px] font-black text-white/40 uppercase tracking-widest">Avance del Proyecto</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-white/40">
+                    Avance del proyecto
+                  </p>
                   <span className="text-4xl font-black text-white">{project.porcentaje_avance}%</span>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl font-black text-brand-teal">{completedCount}/{stages.length}</p>
-                  <p className="text-[9px] font-black text-white/30 uppercase tracking-tighter">Etapas Completadas</p>
+                  <p className="text-xl font-black text-brand-teal">
+                    {completedCount}/{stages.length}
+                  </p>
+                  <p className="text-[9px] font-black uppercase tracking-tighter text-white/30">
+                    Etapas completadas
+                  </p>
                 </div>
               </div>
-              <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-2.5 w-full overflow-hidden rounded-full bg-white/10">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-brand-teal to-brand-indigo transition-all duration-1000 ease-out"
                   style={{ width: `${project.porcentaje_avance}%` }}
@@ -131,195 +161,213 @@ export default async function ClientPortalPage({ params }: { params: Promise<{ i
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Contenido principal */}
-      <div className="max-w-5xl mx-auto px-6 py-12 space-y-12">
-
-        {/* Info y Próximo Hito */}
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 flex flex-col sm:flex-row items-center gap-6 p-8 rounded-[2.5rem] bg-white border border-border/40 shadow-sm shadow-brand-indigo/5">
-             <div className="w-16 h-16 rounded-3xl bg-brand-teal/10 flex items-center justify-center shrink-0">
-               <Clock className="w-8 h-8 text-brand-teal" />
-             </div>
-             <div className="flex-1 text-center sm:text-left">
-               <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Estado Actual: {nextStage?.nombre || 'Finalizado'}</p>
-               <h2 className="text-xl font-heading font-black text-brand-indigo mt-1">
-                 {nextStage ? `Trabajando en: ${nextStage.nombre}` : '¡Obra Terminada! ✅'}
-               </h2>
-               <p className="text-sm text-muted-foreground font-medium mt-1">
-                 {nextStage?.descripcion || 'Hemos completado satisfactoriamente todas las etapas del proyecto.'}
-               </p>
-             </div>
-             {diasRestantes !== null && diasRestantes > 0 && (
-               <div className="px-6 py-3 bg-slate-50 rounded-2xl border border-slate-100 text-center">
-                 <p className="text-2xl font-black text-brand-indigo">{diasRestantes}</p>
-                 <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">días para entrega</p>
-               </div>
-             )}
+      <div className="mx-auto max-w-5xl space-y-12 px-6 py-12">
+        <section className="grid gap-8 md:grid-cols-3">
+          <div className="flex flex-col items-center gap-6 rounded-[2.5rem] border border-border/40 bg-white p-8 text-center shadow-sm shadow-brand-indigo/5 sm:flex-row sm:text-left md:col-span-2">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl bg-brand-teal/10">
+              <Clock className="h-8 w-8 text-brand-teal" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">
+                Estado actual: {nextStage?.nombre ?? "Finalizado"}
+              </p>
+              <h2 className="mt-1 font-heading text-xl font-black text-brand-indigo">
+                {nextStage ? `Trabajando en: ${nextStage.nombre}` : "Obra terminada"}
+              </h2>
+              <p className="mt-1 text-sm font-medium text-muted-foreground">
+                {nextStage?.descripcion ?? "Todas las etapas visibles del proyecto se encuentran completadas."}
+              </p>
+            </div>
+            {remainingDays !== null && remainingDays > 0 && (
+              <div className="rounded-2xl border border-slate-100 bg-slate-50 px-6 py-3 text-center">
+                <p className="text-2xl font-black text-brand-indigo">{remainingDays}</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">
+                  dias para entrega
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="p-8 rounded-[2.5rem] bg-brand-indigo text-white flex items-center justify-between group cursor-pointer hover:bg-brand-indigo/90 transition-colors">
+          <div className="group flex items-center justify-between rounded-[2.5rem] bg-brand-indigo p-8 text-white transition-colors hover:bg-brand-indigo/90">
             <div className="space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-widest text-white/50 underline transition-all group-hover:text-white">Presupuesto y Pagos</p>
-              <p className="font-bold text-lg">¡Próximamente disponible!</p>
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/50 underline transition-all group-hover:text-white">
+                Presupuesto y pagos
+              </p>
+              <p className="text-lg font-bold">Proximamente disponible</p>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
-              <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
+              <ChevronRight className="h-6 w-6 text-white transition-transform group-hover:translate-x-1" />
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Timeline vs Specs */}
-        <div className="grid lg:grid-cols-12 gap-10">
-          {/* Timeline principal */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="flex items-center justify-between px-2">
-              <h2 className="font-heading font-black text-2xl tracking-tight">Cronograma de Obra</h2>
+        <section className="grid gap-10 lg:grid-cols-12">
+          <div className="space-y-6 lg:col-span-7">
+            <div className="flex flex-col gap-3 px-2 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="font-heading text-2xl font-black tracking-tight">Cronograma de obra</h2>
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Completada
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  Completada
                 </span>
                 <span className="flex items-center gap-1.5 text-xs font-bold text-brand-indigo">
-                  <Clock className="w-3.5 h-3.5" /> En curso
+                  <Clock className="h-3.5 w-3.5" />
+                  En curso
                 </span>
               </div>
             </div>
-            
-            <div className="p-10 rounded-[2.5rem] bg-white border border-border/40 shadow-sm relative overflow-hidden">
-              {/* Marca de agua decorativa */}
-              <HardHat className="absolute -bottom-10 -right-10 w-48 h-48 text-slate-50 -rotate-12 pointer-events-none" />
-              
+
+            <div className="relative overflow-hidden rounded-[2.5rem] border border-border/40 bg-white p-10 shadow-sm">
+              <HardHat className="pointer-events-none absolute -bottom-10 -right-10 h-48 w-48 -rotate-12 text-slate-50" />
               <div className="relative z-10">
                 {stages.length > 0 ? (
                   <ProjectTimeline stages={stages} />
                 ) : (
-                  <div className="py-20 text-center space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto">
-                      <Clock className="w-8 h-8 text-slate-200" />
+                  <div className="space-y-4 py-20 text-center">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
+                      <Clock className="h-8 w-8 text-slate-200" />
                     </div>
-                    <p className="text-sm text-muted-foreground font-medium">Cargando línea de tiempo del proyecto...</p>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      La constructora todavia no ha publicado etapas visibles.
+                    </p>
                   </div>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Especificaciones */}
           <div className="lg:col-span-5">
-            <ProjectSpecsClient specs={project.specs || []} />
+            <ProjectSpecsClient specs={project.specs ?? []} />
           </div>
-        </div>
+        </section>
 
-        {/* Galería de Fotos - Evidencia Real */}
-        <div>
-          <div className="flex items-center justify-between mb-8 px-2">
-            <div>
-              <h2 className="font-heading font-black text-2xl tracking-tight">Evidencia Fotográfica</h2>
-              <p className="text-sm text-muted-foreground font-medium">Registro visual del avance directo en terreno.</p>
-            </div>
-            <button className="text-xs font-black uppercase tracking-widest text-brand-indigo hover:underline">Ver todas</button>
+        <section>
+          <div className="mb-8 px-2">
+            <h2 className="font-heading text-2xl font-black tracking-tight">Evidencia fotografica</h2>
+            <p className="text-sm font-medium text-muted-foreground">
+              Registro visual del avance directo en terreno.
+            </p>
           </div>
 
           {recentPhotos.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {recentPhotos.map((f, i) => (
-                <div 
-                  key={f.id} 
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              {recentPhotos.map((file, index) => (
+                <div
+                  key={file.id}
                   className={cn(
-                    "aspect-square rounded-[2rem] bg-slate-100 overflow-hidden border border-border/20 group relative cursor-zoom-in",
-                    i === 0 && "md:col-span-2 md:row-span-2 aspect-auto"
+                    "group relative aspect-square overflow-hidden rounded-[2rem] border border-border/20 bg-slate-100",
+                    index === 0 && "md:col-span-2 md:row-span-2 md:aspect-auto",
                   )}
                 >
-                  <Image 
-                    src={f.publicUrl || ""}
-                    alt={f.nombre || "Foto de obra"}
+                  <Image
+                    src={file.url ?? ""}
+                    alt={file.nombre || "Foto de obra"}
                     fill
+                    sizes={index === 0 ? "(min-width: 768px) 50vw, 50vw" : "(min-width: 768px) 25vw, 50vw"}
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
-                    <p className="text-[10px] font-black text-white/70 uppercase tracking-widest">{f.nombre}</p>
-                    <p className="text-xs text-white font-bold">{new Date(f.created_at || '').toLocaleDateString('es-CL')}</p>
+                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-6 opacity-0 transition-opacity group-hover:opacity-100">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/70">
+                      {file.nombre}
+                    </p>
+                    <p className="text-xs font-bold text-white">{formatDate(file.created_at)}</p>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="p-16 rounded-[2.5rem] bg-white border border-dashed border-slate-200 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto">
-                <ImageIcon className="w-8 h-8 text-slate-200" />
+            <div className="space-y-4 rounded-[2.5rem] border border-dashed border-slate-200 bg-white p-16 text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
+                <ImageIcon className="h-8 w-8 text-slate-200" />
               </div>
               <div>
-                <p className="text-sm font-bold text-slate-500">Todavía no hay fotos publicadas</p>
-                <p className="text-xs text-slate-400 font-medium">Tu constructora subirá fotos del avance pronto.</p>
+                <p className="text-sm font-bold text-slate-500">Todavia no hay fotos publicadas</p>
+                <p className="text-xs font-medium text-slate-400">
+                  Tu constructora subira fotos del avance pronto.
+                </p>
               </div>
             </div>
           )}
-        </div>
+        </section>
 
-        {/* Documentos y Soporte */}
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="p-10 rounded-[2.5rem] bg-white border border-border/40 shadow-sm space-y-6">
-            <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3">
-              <FileText className="w-6 h-6 text-brand-indigo" /> Documentación
+        <section className="grid gap-8 md:grid-cols-2">
+          <div className="space-y-6 rounded-[2.5rem] border border-border/40 bg-white p-10 shadow-sm">
+            <h2 className="flex items-center gap-3 font-heading text-xl font-black tracking-tight">
+              <FileText className="h-6 w-6 text-brand-indigo" />
+              Documentacion
             </h2>
-             {docs.length > 0 ? (
-               <div className="divide-y divide-border/10">
-                 {docs.map(f => (
-                   <div key={f.id} className="py-4 flex items-center gap-4 group cursor-pointer">
-                     <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center shrink-0 group-hover:bg-brand-indigo/5 transition-colors">
-                       <FileText className="w-5 h-5 text-slate-400 group-hover:text-brand-indigo" />
-                     </div>
-                     <div className="flex-1 min-w-0">
-                       <p className="text-sm font-bold text-foreground truncate">{f.nombre}</p>
-                       <p className="text-[10px] text-muted-foreground font-medium">{new Date(f.created_at || '').toLocaleDateString()}</p>
-                     </div>
-                     <Download className="w-4 h-4 text-muted-foreground/30 group-hover:text-brand-indigo transition-colors" />
-                   </div>
-                 ))}
-               </div>
-             ) : (
-               <p className="text-sm text-muted-foreground italic font-medium">No se han compartido documentos técnicos todavía.</p>
-             )}
+            {docs.length > 0 ? (
+              <div className="divide-y divide-border/10">
+                {docs.map(file => (
+                  <a
+                    key={file.id}
+                    href={file.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group flex items-center gap-4 py-4"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-50 transition-colors group-hover:bg-brand-indigo/5">
+                      <FileText className="h-5 w-5 text-slate-400 transition-colors group-hover:text-brand-indigo" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-foreground">{file.nombre}</p>
+                      <p className="text-[10px] font-medium text-muted-foreground">
+                        {formatDate(file.created_at)}
+                      </p>
+                    </div>
+                    <Download className="h-4 w-4 text-muted-foreground/30 transition-colors group-hover:text-brand-indigo" />
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm font-medium italic text-muted-foreground">
+                No se han compartido documentos tecnicos todavia.
+              </p>
+            )}
           </div>
 
-          <div className="p-10 rounded-[2.5rem] bg-brand-teal/5 border border-brand-teal/20 space-y-6">
-            <h2 className="font-heading font-black text-xl tracking-tight flex items-center gap-3 text-brand-teal-dark">
-              <Info className="w-6 h-6" /> Ayuda y Soporte
+          <div className="space-y-6 rounded-[2.5rem] border border-brand-teal/20 bg-brand-teal/5 p-10">
+            <h2 className="flex items-center gap-3 font-heading text-xl font-black tracking-tight text-brand-teal-dark">
+              <Info className="h-6 w-6" />
+              Ayuda y soporte
             </h2>
             <div className="space-y-4">
-              <p className="text-sm text-brand-teal-dark/70 font-medium leading-relaxed">
-                ¿Tienes dudas sobre los tiempos o materiales de tu proyecto? Contacta directamente al encargado de obra asignado por tu constructora.
+              <p className="text-sm font-medium leading-relaxed text-brand-teal-dark/70">
+                Para dudas sobre tiempos, materiales o hitos, contacta directamente al encargado asignado por tu constructora.
               </p>
-              <div className="bg-white p-5 rounded-3xl border border-brand-teal/10 space-y-3">
+              <div className="space-y-3 rounded-3xl border border-brand-teal/10 bg-white p-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
-                    <User className="w-5 h-5 text-slate-400" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100">
+                    <User className="h-5 w-5 text-slate-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-black">{project.ejecutivo_responsable || 'Encargado de Obra'}</p>
-                    <p className="text-[10px] font-black uppercase text-brand-teal tracking-widest">Responsable Asignado</p>
+                    <p className="text-sm font-black">{project.ejecutivo_responsable ?? "Encargado de obra"}</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-brand-teal">
+                      Responsable asignado
+                    </p>
                   </div>
                 </div>
-                <button className="w-full py-3 bg-brand-teal text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-brand-teal/20 hover:scale-[1.02] transition-transform">
-                  Contactar por WhatsApp
-                </button>
+                <div className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4 text-xs font-medium leading-relaxed text-slate-500">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" />
+                  La informacion visible depende de lo publicado por la constructora en tu portal.
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Branding Footer */}
-        <div className="text-center py-12 border-t border-border/10 space-y-4">
+        <footer className="space-y-4 border-t border-border/10 py-12 text-center">
           <div className="flex items-center justify-center gap-2 opacity-30 grayscale">
-            <HardHat className="w-5 h-5" />
-            <p className="text-xs font-black uppercase tracking-[0.3em] font-heading">SolocasasChile</p>
+            <HardHat className="h-5 w-5" />
+            <p className="font-heading text-xs font-black uppercase tracking-[0.3em]">SolocasasChile</p>
           </div>
-          <p className="text-[10px] text-muted-foreground/40 font-medium max-w-xl mx-auto leading-relaxed">
-            Este portal es una herramienta diagnóstica de transparencia proporcionada por SolocasasChile para mejorar la confianza entre constructoras y clientes finales. La información aquí presentada es responsabilidad directa de la constructora ejecutante.
+          <p className="mx-auto max-w-xl text-[10px] font-medium leading-relaxed text-muted-foreground/40">
+            Este portal es una herramienta de transparencia para mejorar la confianza entre constructoras y clientes finales. La informacion presentada es responsabilidad directa de la constructora ejecutante.
           </p>
-        </div>
+        </footer>
       </div>
-    </div>
+    </main>
   );
 }

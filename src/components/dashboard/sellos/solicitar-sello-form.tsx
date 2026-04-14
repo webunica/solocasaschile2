@@ -1,18 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { solicitarSello } from "@/lib/supabase/actions";
 import { Link as LinkIcon, Loader2, UploadCloud, ChevronRight, X } from "lucide-react";
 
-export function SolicitarSelloForm({ sello }: { sello: any }) {
+interface SelloSolicitud {
+  id: string;
+}
+
+export function SolicitarSelloForm({ sello }: { sello: SelloSolicitud }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!url) {
       alert("Por favor, ingresa el enlace a tus documentos.");
@@ -27,8 +32,9 @@ export function SolicitarSelloForm({ sello }: { sello: any }) {
       await solicitarSello(formData);
       router.refresh();
       setIsOpen(false);
-    } catch (err: any) {
-      alert("Error al enviar solicitud: " + err.message);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Error desconocido";
+      alert("Error al enviar solicitud: " + message);
     } finally {
       setLoading(false);
     }

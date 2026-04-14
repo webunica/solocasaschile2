@@ -2,33 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { Building2, ShieldCheck, Globe, ArrowRight, Search, MapPin, Phone, Home, Zap } from "lucide-react";
+import { ShieldCheck, Search, MapPin, Phone, Home, Zap } from "lucide-react";
 import Link from "next/link";
-import { HeroLeadForm } from "./hero-lead-form";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-
-const SLIDER_IMAGES = [
-  "/images/slider/m_001.jpg",
-  "/images/slider/m_002.jpg",
-  "/images/slider/m_003.jpg",
-  "/images/slider/m_004.jpg",
-  "/images/slider/m_005.jpg",
-  "/images/slider/m_006.jpg",
-  "/images/slider/m_007.jpg",
-  "/images/slider/m_008.jpg",
-  "/images/slider/m_009.jpg",
-];
 
 const CONSTRUCTION_TYPES = [
   "PREFABRICADAS",
@@ -52,19 +29,28 @@ function TypewriterLoop() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    if (subIndex === TYPEWRITER_TEXTS[index].length + 1 && !isDeleting) {
-      const timeout = setTimeout(() => setIsDeleting(true), 1500);
-      return () => clearTimeout(timeout);
-    }
-    if (subIndex === 0 && isDeleting) {
-      setIsDeleting(false);
-      setIndex((prev) => (prev + 1) % TYPEWRITER_TEXTS.length);
-      return;
-    }
+    const currentText = TYPEWRITER_TEXTS[index];
+    const delay = subIndex === currentText.length && !isDeleting ? 1500 : isDeleting ? 30 : 60;
 
     const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + (isDeleting ? -1 : 1));
-    }, isDeleting ? 30 : 60);
+      if (!isDeleting && subIndex < currentText.length) {
+        setSubIndex((prev) => prev + 1);
+        return;
+      }
+
+      if (!isDeleting) {
+        setIsDeleting(true);
+        return;
+      }
+
+      if (subIndex > 0) {
+        setSubIndex((prev) => prev - 1);
+        return;
+      }
+
+      setIsDeleting(false);
+      setIndex((prev) => (prev + 1) % TYPEWRITER_TEXTS.length);
+    }, delay);
 
     return () => clearTimeout(timeout);
   }, [subIndex, index, isDeleting]);
@@ -78,8 +64,6 @@ function TypewriterLoop() {
 }
 
 export function HeroSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [typeIndex, setTypeIndex] = useState(0);
   const [selectedRegion, setSelectedRegion] = useState("");
   const router = useRouter();
@@ -93,16 +77,11 @@ export function HeroSection() {
   };
 
   useEffect(() => {
-    const sliderTimer = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % SLIDER_IMAGES.length);
-    }, 4500);
-
     const typeTimer = setInterval(() => {
       setTypeIndex((prev) => (prev + 1) % CONSTRUCTION_TYPES.length);
     }, 3000);
 
     return () => {
-      clearInterval(sliderTimer);
       clearInterval(typeTimer);
     };
   }, []);
@@ -179,17 +158,11 @@ export function HeroSection() {
                   <div className="flex-1 relative">
                     <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary w-5 h-5 opacity-60" />
                     <select
+                      id="hero-region-select"
+                      aria-label="Selecciona la región donde buscas"
                       className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
                       value={selectedRegion}
-                      onChange={(e) => {
-                        const region = e.target.value;
-                        setSelectedRegion(region);
-                        if (region) {
-                          router.push(`/catalogo?region=${region}`);
-                        } else {
-                          router.push(`/catalogo`);
-                        }
-                      }}
+                      onChange={(e) => setSelectedRegion(e.target.value)}
                     >
                       <option value="">¿En qué región buscas?</option>
                       <option value="arica">Arica y Parinacota</option>
@@ -199,7 +172,7 @@ export function HeroSection() {
                       <option value="coquimbo">Coquimbo</option>
                       <option value="valparaiso">Valparaíso</option>
                       <option value="metropolitana">Región Metropolitana</option>
-                      <option value="ohiggins">O'Higgins</option>
+                      <option value="ohiggins">O&apos;Higgins</option>
                       <option value="maule">Maule</option>
                       <option value="nuble">Ñuble</option>
                       <option value="biobio">Biobío</option>
@@ -211,7 +184,9 @@ export function HeroSection() {
                     </select>
                   </div>
                   <button
+                    type="button"
                     onClick={handleSearch}
+                    aria-label="Buscar modelos de casas en la región seleccionada"
                     className="h-12 bg-primary text-white font-black px-8 rounded-xl shadow-lg shadow-primary/30 hover:bg-[#1b0088] transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
                   >
                     Buscar <Search className="w-4 h-4" />
@@ -233,9 +208,9 @@ export function HeroSection() {
 
                     return (
                       <li key={type}>
-                        <Link href={href} className="group flex items-center gap-4 text-base font-black text-[#1b0088] tracking-wider hover:translate-x-1 transition-transform">
-                          <div className="w-8 h-8 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
-                            <ShieldCheck className="w-5 h-5 text-white" />
+                        <Link href={href} className="group flex items-center gap-3 text-[11px] md:text-xs font-black text-[#1b0088] tracking-wider hover:translate-x-1 transition-transform">
+                          <div className="w-6 h-6 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
+                            <ShieldCheck className="w-3.5 h-3.5 text-white" />
                           </div>
                           <span className="opacity-80 group-hover:opacity-100 group-hover:text-primary transition-all underline decoration-brand-teal/30 underline-offset-4 decoration-2">
                             {type}
@@ -245,11 +220,11 @@ export function HeroSection() {
                     );
                   })}
                   {/* Item 8: Pronto casas rodantes */}
-                   <li className="flex items-center gap-4 text-base font-black text-brand-indigo/60 tracking-wider">
-                    <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 border border-amber-200/50 shadow-sm">
-                      <Zap className="w-5 h-5 text-amber-500 animate-pulse" />
+                  <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-slate-400 tracking-wider">
+                    <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
+                      <Zap className="w-3.5 h-3.5 text-slate-300" />
                     </div>
-                    <span className="italic text-brand-indigo/80">¡Pronto casas rodantes!</span>
+                    <span className="opacity-60 italic">¡Pronto casas rodantes!</span>
                   </li>
                 </ul>
               </h1>

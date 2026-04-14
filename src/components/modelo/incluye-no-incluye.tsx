@@ -6,7 +6,15 @@ import { CotizarModal } from "./cotizar-modal";
 import { Button } from "../ui/button";
 
 interface IncluyeNoIncluyeProps {
-  modelo: any;
+  modelo: {
+    id: string;
+    nombre: string;
+    constructora_id: string;
+    constructoras?: { nombre?: string | null } | null;
+    construccion?: { fundacion?: string | null } | null;
+    terminaciones?: { pisos?: string | null; cocina?: string | null; bano_principal?: string | null } | null;
+    logistica?: { que_incluye?: string | null; que_no_incluye?: string | null } | null;
+  };
   className?: string;
   isSidebar?: boolean;
 }
@@ -44,7 +52,7 @@ export function IncluyeNoIncluye({ modelo, className, isSidebar }: IncluyeNoIncl
     dynamicExcludes = dynamicExcludes.filter(e => !e.includes("Artefactos"));
   }
 
-  const parseList = (text: string) => {
+  const parseList = (text?: string | null) => {
     if (!text) return null;
     return text.split('\n').filter(line => line.trim().length > 0);
   };
@@ -157,7 +165,7 @@ export function IncluyeNoIncluye({ modelo, className, isSidebar }: IncluyeNoIncl
             modeloId={modelo.id}
             modeloNombre={modelo.nombre}
             constructoraId={modelo.constructora_id}
-            constructoraNombre={modelo.constructoras?.nombre}
+            constructoraNombre={modelo.constructoras?.nombre || ""}
             trigger={
                 <Button size="lg" variant="secondary" className="px-12 h-16 text-xs font-black uppercase tracking-widest shadow-xl shadow-brand-teal/20">
                     Consultar Factibilidad <ArrowRight className="w-4 h-4 ml-2" />

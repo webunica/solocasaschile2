@@ -16,6 +16,27 @@ const CATEGORY_SEARCH_TERMS: Record<string, string> = {
   'materiales-premium':        'Materiales construcción premium alta eficiencia',
 };
 
+interface SerpApiCoordinates {
+  latitude?: number;
+  longitude?: number;
+}
+
+interface SerpApiLocalResult {
+  title?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  rating?: number | string;
+  place_id?: string;
+  gps_coordinates?: SerpApiCoordinates;
+  [key: string]: unknown;
+}
+
+interface SerpApiMapsResponse {
+  error?: string;
+  local_results?: SerpApiLocalResult[];
+}
+
 export async function searchSuppliersInGoogle(query: string) {
   // Aceptar ambos nombres posibles de la variable
   const apiKey = process.env.SERPAPI_KEY || process.env.SERPAPI_API_KEY;
@@ -33,7 +54,7 @@ export async function searchSuppliersInGoogle(query: string) {
     throw new Error(`SerpApi HTTP ${response.status}: ${errorBody}`);
   }
   
-  const data = await response.json();
+  const data = (await response.json()) as SerpApiMapsResponse;
 
   if (data.error) {
     throw new Error(`SerpApi Error: ${data.error}`);
@@ -61,14 +82,19 @@ export async function syncSuppliersForCategory(
   
   if (!results.length) return { count: 0, query };
 
-  const suppliersToInsert = results.map((res: any) => ({
-    name: res.title,
+  const suppliersToInsert = results.map((res) => ({
+    name: res.title ?? "Proveedor sin nombre",
     category_id: categoryId,
     region_slug: regionSlug,
     address: res.address || null,
     phone: res.phone || null,
     website: res.website || null,
-    google_rating: res.rating ? parseFloat(res.rating) : null,
+    google_rating:
+      typeof res.rating === "number"
+        ? res.rating
+        : typeof res.rating === "string"
+          ? parseFloat(res.rating)
+          : null,
     google_place_id: res.place_id || null,
     latitude: res.gps_coordinates?.latitude || null,
     longitude: res.gps_coordinates?.longitude || null,

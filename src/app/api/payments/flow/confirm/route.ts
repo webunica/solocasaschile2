@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { FlowService } from '@/lib/payments/flow';
 import { resend } from '@/lib/resend';
+import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-logger';
 import { z } from 'zod';
 
 const WebhookSchema = z.object({
@@ -12,18 +13,25 @@ const WebhookSchema = z.object({
  * Recibe la confirmación de pago de Flow (Webhook)
  */
 export async function POST(req: NextRequest) {
+  const route = '/api/payments/flow/confirm';
+  const requestId = getRequestId(req);
+  const start = Date.now();
+
   try {
     const formData = await req.formData();
     const tokenRaw = formData.get('token');
 
     const validation = WebhookSchema.safeParse({ token: tokenRaw });
     if (!validation.success) {
+      logWarn('flow_webhook_validation_failed', route, requestId, {
+        ms: Date.now() - start,
+      });
       return NextResponse.json({ error: validation.error.format() }, { status: 400 });
     }
 
     const { token } = validation.data;
 
-    console.info(`[FLOW-WEBHOOK] Procesando confirmación para token: ${token}`);
+    logInfo('flow_webhook_started', route, requestId);
 
     // 1. Validar el estado real del pago llamando a la API de Flow
     const statusResult = await FlowService.getPaymentStatus(token);
@@ -36,7 +44,10 @@ export async function POST(req: NextRequest) {
     const amount = statusResult.amount;
 
     if (!constructoraId) {
-      console.error('Webhook Error: constructoraId not found in statusResult.optional');
+      logError('flow_webhook_missing_constructora', route, requestId, new Error('missing_constructora_id'), {
+        flowOrder: flowOrder ? String(flowOrder) : undefined,
+        ms: Date.now() - start,
+      });
       return NextResponse.json({ error: 'ID de constructora no encontrado en los parámetros del pago' }, { status: 400 });
     }
 
@@ -49,7 +60,8 @@ export async function POST(req: NextRequest) {
       3: 'rejected',
       4: 'canceled'
     };
-    const dbStatus = statusMap[statusResult.status] || 'pending';
+    const statusCode = typeof statusResult.status === 'number' ? statusResult.status : 1;
+    const dbStatus = statusMap[statusCode] || 'pending';
 
     // 2. Comprobar si ya procesamos este pago como 'paid' para evitar re-procesos
     const { data: existingPayment } = await supabase
@@ -59,7 +71,10 @@ export async function POST(req: NextRequest) {
       .maybeSingle();
 
     if (existingPayment?.status === 'paid' && dbStatus === 'paid') {
-      console.info(`[FLOW-WEBHOOK] El pago ${flowOrder} ya fue procesado como Pagado. Ignorando.`);
+      logInfo('flow_webhook_duplicate_paid_ignored', route, requestId, {
+        flowOrder: String(flowOrder),
+        ms: Date.now() - start,
+      });
       return NextResponse.json({ message: 'Pago ya procesado anteriormente.' });
     }
 
@@ -78,7 +93,11 @@ export async function POST(req: NextRequest) {
       }, { onConflict: 'flow_order' });
 
     if (paymentError) {
-      console.error('Webhook Error (Record Payment):', paymentError);
+      logError('flow_webhook_payment_record_failed', route, requestId, paymentError, {
+        flowOrder: String(flowOrder),
+        status: dbStatus,
+        ms: Date.now() - start,
+      });
       // No bloqueamos el flujo principal si solo falla el registro histórico, 
       // pero es importante loguearlo.
     }
@@ -110,7 +129,10 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (dbError) {
-        console.error('Webhook Error (Database Update):', dbError);
+        logError('flow_webhook_plan_activation_failed', route, requestId, dbError, {
+          flowOrder: String(flowOrder),
+          ms: Date.now() - start,
+        });
         return NextResponse.json({ error: 'Error al activar plan' }, { status: 500 });
       }
 
@@ -157,14 +179,29 @@ export async function POST(req: NextRequest) {
             </div>
           `
         });
-      } catch (e) { console.error('Email error:', e); }
+      } catch (e) {
+        logError('flow_webhook_paid_email_failed', route, requestId, e, {
+          flowOrder: String(flowOrder),
+          ms: Date.now() - start,
+        });
+      }
+
+      logInfo('flow_webhook_paid_completed', route, requestId, {
+        flowOrder: String(flowOrder),
+        plan,
+        billing,
+        ms: Date.now() - start,
+      });
 
       return NextResponse.json({ message: 'Pago procesado y plan activado.' });
     }
 
     // --- CASO B: PAGO RECHAZADO (Estado 3) ---
     if (statusResult.status === 3) {
-      console.warn(`[FLOW] Pago rechazado para constructora ${constructoraId}`);
+      logWarn('flow_webhook_payment_rejected', route, requestId, {
+        flowOrder: String(flowOrder),
+        ms: Date.now() - start,
+      });
       
       try {
         await resend.emails.send({
@@ -186,21 +223,37 @@ export async function POST(req: NextRequest) {
             </div>
           `
         });
-      } catch (e) { console.error('Email error:', e); }
+      } catch (e) {
+        logError('flow_webhook_rejected_email_failed', route, requestId, e, {
+          flowOrder: String(flowOrder),
+          ms: Date.now() - start,
+        });
+      }
 
       return NextResponse.json({ message: 'Pago rechazado, notificación enviada.' });
     }
 
     // --- CASO C: PAGO ANULADO (Estado 4) ---
     if (statusResult.status === 4) {
-      console.info(`[FLOW] Pago anulado por el usuario: ${constructoraId}`);
+      logInfo('flow_webhook_payment_canceled', route, requestId, {
+        flowOrder: String(flowOrder),
+        ms: Date.now() - start,
+      });
       return NextResponse.json({ message: 'Pago anulado por el usuario.' });
     }
 
+    logInfo('flow_webhook_received', route, requestId, {
+      flowOrder: String(flowOrder),
+      status: dbStatus,
+      ms: Date.now() - start,
+    });
+
     return NextResponse.json({ message: 'Webhook recibido.' });
 
-  } catch (error: any) {
-    console.error('Webhook Error:', error);
+  } catch (error: unknown) {
+    logError('flow_webhook_failed', route, requestId, error, {
+      ms: Date.now() - start,
+    });
     return NextResponse.json({ error: 'Ocurrió un error al procesar el webhook.' }, { status: 500 });
   }
 }

@@ -3,10 +3,8 @@ import {
   CreditCard, 
   CheckCircle2, 
   XCircle, 
-  AlertCircle, 
   Calendar,
   Zap,
-  ArrowRight,
   ShieldCheck,
   FileText
 } from "lucide-react";
@@ -16,6 +14,22 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+
+type FacturacionProfile = {
+  plan?: string | null;
+  plan_cycle?: string | null;
+  plan_status?: string | null;
+  next_billing_date?: string | null;
+  verificada?: boolean | null;
+};
+
+type FacturacionPago = {
+  id: string;
+  created_at: string;
+  plan: string;
+  amount: number | string;
+  status: string;
+};
 
 export default async function FacturacionPage() {
   const supabase = await createClient();
@@ -35,6 +49,9 @@ export default async function FacturacionPage() {
     .select('*')
     .eq('constructora_id', user.id)
     .order('created_at', { ascending: false });
+
+  const typedProfile = profile as FacturacionProfile | null;
+  const typedPagos = (pagos ?? []) as FacturacionPago[];
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -74,8 +91,8 @@ export default async function FacturacionPage() {
              <CardHeader className="relative z-10">
                 <CardDescription className="font-extrabold uppercase text-[10px] tracking-[0.2em] text-brand-indigo opacity-60">Suscripción Actual</CardDescription>
                 <CardTitle className="text-4xl font-black text-slate-800 uppercase flex items-center gap-2">
-                  {profile?.plan} 
-                  {profile?.verificada && <ShieldCheck className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />}
+                  {typedProfile?.plan} 
+                  {typedProfile?.verificada && <ShieldCheck className="w-6 h-6 text-emerald-500 fill-emerald-500/10" />}
                 </CardTitle>
              </CardHeader>
              <CardContent className="space-y-6 relative z-10 pt-4">
@@ -84,7 +101,7 @@ export default async function FacturacionPage() {
                    <div>
                       <p className="text-[10px] font-black uppercase text-brand-indigo/60 tracking-widest">Próximo Cobro</p>
                       <p className="font-black text-slate-700">
-                        {profile?.next_billing_date ? format(new Date(profile.next_billing_date), "dd MMMM yyyy", { locale: es }) : 'N/A'}
+                        {typedProfile?.next_billing_date ? format(new Date(typedProfile.next_billing_date), "dd MMMM yyyy", { locale: es }) : 'N/A'}
                       </p>
                    </div>
                 </div>
@@ -93,13 +110,13 @@ export default async function FacturacionPage() {
                    <div className="flex justify-between items-center text-sm">
                       <span className="text-slate-400 font-bold">Estado:</span>
                       <span className="text-emerald-500 font-black flex items-center gap-1 capitalize">
-                        <CheckCircle2 className="w-4 h-4" /> {profile?.plan_status || 'Inactivo'}
+                        <CheckCircle2 className="w-4 h-4" /> {typedProfile?.plan_status || 'Inactivo'}
                       </span>
                    </div>
                    <div className="flex justify-between items-center text-sm">
                       <span className="text-slate-400 font-bold">Ciclo:</span>
                       <span className="text-slate-700 font-black uppercase">
-                        {profile?.plan_cycle === 'yearly' ? 'Facturación Anual' : 'Facturación Mensual'}
+                        {typedProfile?.plan_cycle === 'yearly' ? 'Facturación Anual' : 'Facturación Mensual'}
                       </span>
                    </div>
                 </div>
@@ -128,8 +145,8 @@ export default async function FacturacionPage() {
                        </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-50">
-                       {pagos && (pagos as any[]).length > 0 ? (
-                         (pagos as any[]).map((p: any) => (
+                       {typedPagos.length > 0 ? (
+                         typedPagos.map((p) => (
                            <tr key={p.id} className="group hover:bg-slate-50/50 transition-colors">
                               <td className="py-4 text-xs font-bold text-slate-500">
                                 {format(new Date(p.created_at), "dd MMM, yyyy", { locale: es })}

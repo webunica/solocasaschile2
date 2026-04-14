@@ -1,165 +1,169 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, Search } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
-  DialogDescription
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 const SLIDES = [
   {
     id: "tracking",
-    badge: "Transparencia Total",
+    badge: "Transparencia total",
     title: "Construye con confianza y control total.",
-    subtitle: "Usa nuestro nuevo sistema de Seguimiento de Obra para ver el avance real, fotos de bitácora y cumplimiento de hitos.",
+    subtitle:
+      "Usa el seguimiento de obra para ver avances reales, fotos de bitacora y cumplimiento de hitos.",
     image: "/images/promo-tracking.jpg",
     link: "/seguimiento-de-obras",
-    exampleLink: "/seguimiento/e356c78f-9374-4a71-ab07-52254530c6b3",
-    features: ["Fotos reales 24/7", "Línea de tiempo interactiva", "Control de plazos críticos"],
+    cta: "Explorar seguimiento",
+    features: ["Fotos reales", "Linea de tiempo", "Control de plazos"],
     accent: "text-brand-teal",
-    bgBadge: "bg-brand-teal/10 text-brand-teal"
+    badgeClass: "bg-brand-teal/10 text-brand-teal",
   },
   {
     id: "constru",
-    badge: "Solución B2B",
-    title: "Conecta tu obra con los mejores proveedores.",
-    subtitle: "Digitaliza tu catálogo y gestiona cotizaciones directamente con las constructoras más importantes del país.",
+    badge: "Ecosistema B2B",
+    title: "Conecta tu obra con mejores proveedores.",
+    subtitle:
+      "Digitaliza tu catalogo y gestiona cotizaciones directamente con constructoras y proveedores.",
     image: "/images/promo-constru.jpg",
     link: "/portal-proveedores",
-    features: ["Catálogo digital dinámico", "Gestión de cotizaciones", "Analítica de mercado"],
+    cta: "Explorar portal B2B",
+    features: ["Catalogo digital", "Cotizaciones", "Analitica de mercado"],
     accent: "text-brand-indigo",
-    bgBadge: "bg-brand-indigo/10 text-brand-indigo"
-  }
-];
+    badgeClass: "bg-brand-indigo/10 text-brand-indigo",
+  },
+] as const;
 
 export function SeguimientoPromo() {
   const [current, setCurrent] = useState(0);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
-
-  // Auto-slide every 8 seconds
-  useEffect(() => {
-    if (isZoomOpen) return; // Pause auto-slide when zoom is open
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % SLIDES.length);
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [isZoomOpen]);
-
   const slide = SLIDES[current];
 
+  useEffect(() => {
+    if (isZoomOpen) return;
+
+    const timer = window.setInterval(() => {
+      setCurrent((prev) => (prev + 1) % SLIDES.length);
+    }, 8000);
+
+    return () => window.clearInterval(timer);
+  }, [isZoomOpen]);
+
+  const goToPrevious = () => {
+    setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
+  };
+
+  const goToNext = () => {
+    setCurrent((prev) => (prev + 1) % SLIDES.length);
+  };
+
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-brand-indigo/5 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-      
-      <div className="container px-6 md:px-12 max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-          
-          {/* Visual Presentation - Carousel Frame */}
-          <div className="w-full lg:w-1/2 relative">
-             <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
-               <DialogTrigger 
-                 render={
-                  <div className="relative h-[500px] w-full rounded-[3rem] border border-border/40 shadow-2xl overflow-hidden group cursor-zoom-in">
+    <section className="relative overflow-hidden bg-background py-24">
+      <div className="pointer-events-none absolute left-0 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-indigo/5 blur-[120px]" />
+
+      <div className="container relative z-10 mx-auto max-w-7xl px-6 md:px-12">
+        <div className="flex flex-col items-center gap-16 lg:flex-row lg:gap-24">
+          <div className="relative w-full lg:w-1/2">
+            <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
+              <DialogTrigger
+                render={
+                  <button
+                    type="button"
+                    className="group relative h-[360px] w-full cursor-zoom-in overflow-hidden rounded-[2rem] border border-border/40 shadow-2xl sm:h-[500px] sm:rounded-[3rem]"
+                  >
                     <AnimatePresence mode="wait">
                       <motion.div
-                        key={current}
-                        initial={{ opacity: 0, scale: 1.1 }}
+                        key={slide.id}
+                        initial={{ opacity: 0, scale: 1.08 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.8, ease: "circOut" }}
+                        exit={{ opacity: 0, scale: 0.96 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
                         className="absolute inset-0"
                       >
-                        <Image 
+                        <Image
                           src={slide.image}
                           alt={slide.title}
                           fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
                           className="object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/60 via-transparent to-transparent opacity-60" />
-                        
-                        {/* Hover Overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 z-20">
-                           <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center">
-                             <Search className="w-8 h-8 text-white" />
-                           </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-brand-indigo/70 via-transparent to-transparent opacity-70" />
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                          <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white backdrop-blur-md">
+                            <Search className="h-8 w-8" />
+                          </div>
                         </div>
                       </motion.div>
                     </AnimatePresence>
 
-                    {/* Navigation Arrows */}
-                    <div className="absolute bottom-8 right-8 flex gap-3 z-30 pointer-events-auto">
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-                        }}
-                        className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-brand-indigo transition-all"
-                      >
-                        <ChevronLeft className="w-6 h-6" />
-                      </button>
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrent((prev) => (prev + 1) % SLIDES.length);
-                        }}
-                        className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-brand-indigo transition-all"
-                      >
-                        <ChevronRight className="w-6 h-6" />
-                      </button>
-                    </div>
-
-                    {/* Progress Indicators */}
-                    <div className="absolute bottom-8 left-8 flex gap-2 z-30">
-                       {SLIDES.map((_, i) => (
-                         <div 
-                          key={i} 
+                    <div className="absolute bottom-8 left-8 z-30 flex gap-2">
+                      {SLIDES.map((item, index) => (
+                        <span
+                          key={item.id}
                           className={cn(
                             "h-1.5 rounded-full transition-all duration-500",
-                            i === current ? "w-8 bg-brand-teal" : "w-2 bg-white/30"
+                            index === current ? "w-8 bg-brand-teal" : "w-2 bg-white/30",
                           )}
-                         />
-                       ))}
-                    </div>
-                  </div>
-                 }
-               />
-               <DialogContent className="max-w-[95vw] sm:max-w-7xl h-[90vh] p-0 border-none bg-transparent shadow-none selection:bg-transparent">
-                  <DialogHeader className="sr-only">
-                    <DialogTitle>{slide.title}</DialogTitle>
-                    <DialogDescription>Vista ampliada del sistema</DialogDescription>
-                  </DialogHeader>
-                  <div className="relative w-full h-full flex items-center justify-center">
-                     <div className="relative w-full h-full animate-in zoom-in-95 duration-300">
-                        <Image 
-                          src={slide.image} 
-                          alt={slide.title} 
-                          fill 
-                          className="object-contain"
-                          quality={100}
                         />
-                     </div>
-                  </div>
-               </DialogContent>
-             </Dialog>
+                      ))}
+                    </div>
+                  </button>
+                }
+              />
+              <DialogContent className="h-[90vh] max-w-[95vw] border-none bg-transparent p-0 shadow-none sm:max-w-7xl">
+                <DialogHeader className="sr-only">
+                  <DialogTitle>{slide.title}</DialogTitle>
+                  <DialogDescription>Vista ampliada del sistema</DialogDescription>
+                </DialogHeader>
+                <div className="relative h-full w-full">
+                  <Image
+                    src={slide.image}
+                    alt={slide.title}
+                    fill
+                    sizes="95vw"
+                    quality={100}
+                    className="object-contain"
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <div className="absolute bottom-8 right-8 z-30 flex gap-3">
+              <button
+                type="button"
+                onClick={goToPrevious}
+                aria-label="Ver promocion anterior"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                type="button"
+                onClick={goToNext}
+                aria-label="Ver siguiente promocion"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white hover:text-brand-indigo"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </div>
           </div>
 
-          {/* Text Content */}
-          <div className="w-full lg:w-1/2 space-y-8 text-left">
+          <div className="w-full space-y-8 text-left lg:w-1/2">
             <AnimatePresence mode="wait">
               <motion.div
-                key={current}
+                key={slide.id}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -167,55 +171,58 @@ export function SeguimientoPromo() {
                 className="space-y-8"
               >
                 <div className="space-y-4">
-                  <Badge className={cn("border-none px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em]", slide.bgBadge)}>
+                  <Badge
+                    className={cn(
+                      "h-auto rounded-full border-none px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em]",
+                      slide.badgeClass,
+                    )}
+                  >
                     {slide.badge}
                   </Badge>
-                  <h2 className={cn("text-[clamp(1.5rem,5vw,3.5rem)] font-heading font-black leading-[1.1] tracking-tighter text-brand-indigo")}>
-                    {slide.title.split('.').map((part, i) => (
-                      <span key={i} className={cn(i === 1 && slide.accent)}>
-                        {part}{i === 0 && '.'}
-                        <br />
-                      </span>
-                    ))}
+                  <h2 className="font-heading text-[clamp(2rem,5vw,3.5rem)] font-black leading-[1.05] tracking-tighter text-brand-indigo">
+                    {slide.title}
                   </h2>
                 </div>
-                
-                <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-xl opacity-80">
+
+                <p className="max-w-xl text-xl font-medium leading-relaxed text-muted-foreground opacity-80">
                   {slide.subtitle}
                 </p>
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-                  {slide.features.map((text, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm font-bold text-brand-indigo">
-                      <div className={cn("w-6 h-6 rounded-full flex items-center justify-center shrink-0", slide.id === 'tracking' ? "bg-brand-teal/20" : "bg-brand-indigo/10")}>
-                        <CheckCircle2 className={cn("w-4 h-4", slide.id === 'tracking' ? "text-brand-teal" : "text-brand-indigo")} />
+                <ul className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+                  {slide.features.map((text) => (
+                    <li key={text} className="flex items-center gap-3 text-sm font-bold text-brand-indigo">
+                      <div
+                        className={cn(
+                          "flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
+                          slide.id === "tracking" ? "bg-brand-teal/20" : "bg-brand-indigo/10",
+                        )}
+                      >
+                        <CheckCircle2
+                          className={cn(
+                            "h-4 w-4",
+                            slide.id === "tracking" ? "text-brand-teal" : slide.accent,
+                          )}
+                        />
                       </div>
                       {text}
                     </li>
                   ))}
                 </ul>
 
-                <div className="pt-4 flex flex-col sm:flex-row items-center gap-6">
-                  <Link href={slide.link} className="w-full sm:w-auto">
-                    <Button size="lg" className="w-full bg-brand-indigo text-white font-black rounded-2xl h-14 px-8 shadow-xl shadow-brand-indigo/20 hover:scale-105 transition-transform group">
-                      EXPLORAR {slide.id === 'tracking' ? 'SEGUIMIENTO' : 'PORTAL B2B'}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                <div className="pt-4">
+                  <Link href={slide.link} className="inline-flex w-full sm:w-auto">
+                    <Button
+                      size="lg"
+                      className="h-14 w-full rounded-2xl bg-brand-indigo px-8 font-black uppercase text-white shadow-xl shadow-brand-indigo/20 transition-transform hover:scale-105 sm:w-auto"
+                    >
+                      {slide.cta}
+                      <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
-                  
-                  {slide.exampleLink && (
-                    <Link href={slide.exampleLink} className="group flex items-center gap-2 text-sm font-black uppercase tracking-widest text-brand-indigo hover:text-brand-teal transition-colors">
-                      Ver un ejemplo real
-                      <div className="w-8 h-8 rounded-full bg-brand-indigo/5 flex items-center justify-center group-hover:bg-brand-teal/10 transition-colors">
-                         <Search className="w-4 h-4" />
-                      </div>
-                    </Link>
-                  )}
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
-
         </div>
       </div>
     </section>

@@ -155,9 +155,9 @@ export function ComparadorTable({ modelos }: Props) {
       // Support nested keys like "constructora.score_confianza"
       if (typeof row.key === 'string' && row.key.includes('.')) {
          const keys = row.key.split('.');
-         let val: any = m;
+         let val: unknown = m;
          for (const k of keys) {
-            val = val?.[k as keyof typeof val];
+            val = typeof val === "object" && val !== null ? (val as Record<string, unknown>)[k] : undefined;
          }
          return typeof val === "number" ? val : undefined;
       }

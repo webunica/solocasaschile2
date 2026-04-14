@@ -134,8 +134,11 @@ export interface ModeloExtendido extends ModeloSEO {
   slug: string;
   tipo: string;
   codigo_modelo?: string | null;
-  uso?: UsoModelo | null;
+  uso?: string | null;
   disponible: boolean;
+  contacto_email?: string | null;
+  is_featured?: boolean | null;
+  featured_order?: number | null;
 
   // Medidas y distribución
   superficie_m2: number;

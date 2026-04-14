@@ -24,7 +24,8 @@ const TIPOS_MATERIALES = [
   { name: "Casas Metalcom", href: "/catalogo?tipo=metalcom" },
 ];
 
-const TIPOS_ESTILO = [
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _TIPOS_ESTILO = [
   { name: "Casas Modulares", href: "/catalogo?tipo=modular" },
   { name: "Casas Container", href: "/catalogo?tipo=container" },
   { name: "Casas Prefabricadas", href: "/catalogo?tipo=prefabricada" },
@@ -40,7 +41,34 @@ const CATEGORIAS_ESPECIALES = [
   { name: "Entrega Inmediata", href: "/catalogo?filtro=entrega-inmediata" },
 ];
 
-export function MegaMenu({ ads, onClose }: { ads?: any; onClose?: () => void }) {
+type MegaMenuConstructoraAd = {
+  nombre?: string | null;
+  slug?: string | null;
+  image?: string | null;
+  logo_url?: string | null;
+  descripcion?: string | null;
+};
+
+type MegaMenuModeloAd = {
+  nombre?: string | null;
+  slug?: string | null;
+  imagenes_urls?: string[] | null;
+  precio_desde_uf?: number | null;
+  superficie_m2?: number | null;
+  dormitorios?: number | null;
+};
+
+export type MegaMenuAds = {
+  constructora?: MegaMenuConstructoraAd | null;
+  modelo?: MegaMenuModeloAd | null;
+} | null;
+
+type MegaMenuProps = {
+  ads?: MegaMenuAds;
+  onClose?: () => void;
+};
+
+export function MegaMenu({ ads, onClose }: MegaMenuProps) {
   const featuredConstructora = ads?.constructora;
   const featuredModelo = ads?.modelo;
 
@@ -90,9 +118,11 @@ export function MegaMenu({ ads, onClose }: { ads?: any; onClose?: () => void }) 
             </div>
           </Link>
           <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
+            {/* eslint-disable react/no-unescaped-entities */}
             <p className="text-[11px] text-muted-foreground leading-relaxed italic">
               "Fomentamos la construcción sustentable con tecnología SIP de última generación."
             </p>
+            {/* eslint-enable react/no-unescaped-entities */}
           </div>
         </div>
 

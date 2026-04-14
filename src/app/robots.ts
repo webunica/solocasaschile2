@@ -6,9 +6,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/dashboard/', '/api/'],
+        disallow: ['/dashboard/', '/api/', '/login', '/register', '/auth/'],
       },
     ],
     sitemap: 'https://solocasaschile.com/sitemap.xml',
+    host: 'https://solocasaschile.com',
   }
 }

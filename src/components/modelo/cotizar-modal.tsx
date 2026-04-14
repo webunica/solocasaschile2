@@ -6,7 +6,6 @@ import {
   Dialog, 
   DialogContent, 
   DialogHeader, 
-  DialogTitle, 
   DialogDescription,
   DialogTrigger 
 } from "@/components/ui/dialog";
@@ -23,11 +22,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { 
   Send, User, Mail, Phone, 
   MessageSquare, Loader2, Lock, Zap, 
-  CheckCircle2, MapPin, LandPlot 
+  CheckCircle2, MapPin
 } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
 import { submitLead } from "@/lib/supabase/actions";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const REGIONES = [
@@ -76,7 +73,7 @@ export function CotizarModal({
     setError(null);
 
     const formData = new FormData(e.currentTarget);
-    const leadData = {
+    const leadData: Parameters<typeof submitLead>[0] = {
       nombre_cliente: formData.get("name") as string,
       email_cliente: formData.get("email") as string,
       telefono_cliente: formData.get("phone") as string,
@@ -88,7 +85,7 @@ export function CotizarModal({
     };
 
     try {
-      const { error: submitError, success: submitSuccess } = await submitLead(leadData as any);
+      const { error: submitError } = await submitLead(leadData);
 
       if (submitError) throw new Error(submitError);
       
@@ -97,7 +94,7 @@ export function CotizarModal({
         setOpen(false);
         setSuccess(false);
       }, 3000);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Lead submission error:", err);
       setError("Hubo un problema al enviar tu consulta.");
     } finally {
@@ -238,6 +235,12 @@ export function CotizarModal({
                    />
                 </div>
               </div>
+
+              {error ? (
+                <p className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-xs font-bold text-red-600">
+                  {error}
+                </p>
+              ) : null}
 
               <Button 
                 type="submit" 

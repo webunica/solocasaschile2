@@ -1,7 +1,6 @@
 
 import Link from "next/link";
-import Image from "next/image";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Hash } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 
 export function Footer() {
@@ -11,21 +10,25 @@ export function Footer() {
     <footer className="bg-[#2B09BD] text-white pt-20 pb-10 relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
+          
           {/* Brand Col */}
           <div className="space-y-6 lg:pr-4">
-            <Link href="/" className="inline-block group">
-              <Image
-                src="/images/logo-vertical.png"
-                alt="SolocasasChile"
-                width={160}
-                height={120}
-                className="h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
-                style={{ filter: "brightness(0) invert(1)" }}
-              />
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="w-11 h-11 bg-[#00FFD1] rounded-[10px] flex items-center justify-center text-[#2B09BD] shadow-[0_0_20px_rgba(0,255,209,0.3)] shrink-0">
+                <Hash className="w-6 h-6 stroke-[3]" />
+              </div>
+              <div className="flex flex-col -gap-1">
+                <span className="font-heading font-black text-[22px] leading-none tracking-tight text-white mb-0.5">
+                  solocasas
+                </span>
+                <span className="font-heading font-black text-[18px] leading-none tracking-tight text-[#00FFD1]">
+                  chile.com
+                </span>
+              </div>
             </Link>
             
             <p className="text-[14px] leading-relaxed text-white/80 font-normal">
-              La plataforma líder en comparación de modelos de casas y proyectos inmobiliarios en Chile. <strong>SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.</strong>
+              La plataforma líder en comparación de modelos de casas y proyectos inmobiliarios en Chile. Encuentra tu hogar ideal con transparencia y datos reales.
             </p>
             
             <div className="flex items-center gap-3 pt-2">
@@ -52,10 +55,9 @@ export function Footer() {
                 { name: "Inicio", path: "/" },
                 { name: "Catálogo", path: "/catalogo" },
                 { name: "Constructoras", path: "/constructoras" },
-                { name: "Seguimiento de Obra", path: "/seguimiento-de-obras" },
                 { name: "Comparador", path: "/comparar" },
-                { name: "Blog", path: "/blog" },
-                { name: "¿Cómo verificamos?", path: "/verificacion" }
+                { name: "Planes y Precios", path: "/planes" },
+                { name: "Blog", path: "/blog" }
               ].map((item) => (
                 <li key={item.name}>
                   <Link href={item.path} className="hover:text-[#00FFD1] transition-colors">{item.name}</Link>
@@ -77,7 +79,7 @@ export function Footer() {
                 </div>
                 <div className="flex flex-col">
                   <p className="text-[10px] font-bold text-white/50 uppercase tracking-[0.1em] mb-0.5">Email</p>
-                  <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.com</p>
+                  <p className="text-[13px] text-white/90 font-medium tracking-wide">contacto@solocasaschile.cl</p>
                 </div>
               </li>
               <li className="flex items-center gap-4">
@@ -137,7 +139,7 @@ export function Footer() {
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[12px] text-white/50 font-medium tracking-wide">
-            © {currentYear} solocasaschile.com. Todos los derechos reservados. Desarrollado por <a href="https://webunica.cl" target="_blank" rel="noopener noreferrer" className="text-[#00FFD1] hover:text-white transition-colors font-bold">Webunica Chile</a>.
+            © {currentYear} solocasaschile.cl. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-6 text-[12px] text-white/50 font-medium tracking-wide">
             <Link href="/terminos" className="hover:text-white transition-colors">Términos y Condiciones</Link>

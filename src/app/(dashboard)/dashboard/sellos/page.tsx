@@ -1,17 +1,31 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getSellosDeConstructora } from "@/lib/supabase/services";
 import { SellosGrid } from "@/components/constructora/sellos-grid";
 import { ShieldCheck, BadgeCheck, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { solicitarSello } from "@/lib/supabase/actions";
 import { SolicitarSelloForm } from "@/components/dashboard/sellos/solicitar-sello-form";
 import Link from "next/link";
 
 export const metadata = {
   title: "Mis Sellos de Confianza | Dashboard",
 };
+
+interface SelloCatalogo {
+  id: string;
+  slug: string;
+  nombre: string;
+  descripcion: string;
+  tipo: "automatico" | "manual";
+  icono_url?: string | null;
+}
+
+interface ConstructoraSello {
+  id: string;
+  sello_id: string;
+  estado: "aprobado" | "pendiente" | "rechazado";
+  comentario_admin?: string | null;
+  sello: SelloCatalogo | null;
+}
 
 async function getAllSellos() {
   const supabase = await createClient();
@@ -44,12 +58,14 @@ export default async function SellosDashboardPage() {
     getMisSellos(user.id),
   ]);
 
-  const aprobados = misSellos.filter((s: any) => s.estado === "aprobado");
-  const pendientes = misSellos.filter((s: any) => s.estado === "pendiente");
-  const rechazados = misSellos.filter((s: any) => s.estado === "rechazado");
+  const catalogoTyped = catalogo as SelloCatalogo[];
+  const misSellosTyped = misSellos as ConstructoraSello[];
+  const aprobados = misSellosTyped.filter((s) => s.estado === "aprobado");
+  const pendientes = misSellosTyped.filter((s) => s.estado === "pendiente");
+  const rechazados = misSellosTyped.filter((s) => s.estado === "rechazado");
 
-  const aprobadosIds = new Set(aprobados.map((s: any) => s.sello_id));
-  const pendientesIds = new Set(pendientes.map((s: any) => s.sello_id));
+  const aprobadosIds = new Set(aprobados.map((s) => s.sello_id));
+  const pendientesIds = new Set(pendientes.map((s) => s.sello_id));
 
   return (
     <div className="space-y-12 py-8">
@@ -75,7 +91,7 @@ export default async function SellosDashboardPage() {
           <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">En Revisión</span>
         </div>
         <div className="bg-card border border-border/40 rounded-[2rem] p-6 flex flex-col items-center justify-center gap-2 text-center">
-          <span className="text-4xl font-black text-foreground/30">{catalogo.length - aprobados.length}</span>
+          <span className="text-4xl font-black text-foreground/30">{catalogoTyped.length - aprobados.length}</span>
           <span className="text-xs font-black uppercase tracking-widest text-muted-foreground">Disponibles</span>
         </div>
       </div>
@@ -84,7 +100,7 @@ export default async function SellosDashboardPage() {
       {aprobados.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl font-black tracking-tight">Mis sellos activos</h2>
-          <SellosGrid sellos={aprobados as any} />
+          <SellosGrid sellos={aprobados} />
         </section>
       )}
 
@@ -92,7 +108,7 @@ export default async function SellosDashboardPage() {
       <section className="space-y-6">
         <h2 className="text-xl font-black tracking-tight">Todos los sellos disponibles</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {catalogo.map((sello: any) => {
+          {catalogoTyped.map((sello) => {
             const isAprobado = aprobadosIds.has(sello.id);
             const isPendiente = pendientesIds.has(sello.id);
             const isManual = sello.tipo === "manual";
@@ -176,7 +192,7 @@ export default async function SellosDashboardPage() {
             <XCircle className="w-5 h-5" /> Solicitudes rechazadas
           </h2>
           <div className="space-y-3">
-            {rechazados.map((s: any) => (
+            {rechazados.map((s) => (
               <div key={s.id} className="bg-destructive/5 border border-destructive/20 rounded-2xl p-5 space-y-1">
                 <p className="font-black text-sm">{s.sello?.nombre}</p>
                 {s.comentario_admin && (

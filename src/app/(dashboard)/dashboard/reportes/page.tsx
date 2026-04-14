@@ -1,8 +1,8 @@
 import { getDashboardStats } from "@/lib/supabase/services";
 import { 
-  BarChart3, TrendingUp, Users, Eye, 
+  TrendingUp, Users, Eye, 
   ArrowUpRight, ArrowDownRight, Calendar,
-  Download, Filter, Share2, MousePointer2
+  Download, Share2, MousePointer2
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,12 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 export const dynamic = 'force-dynamic';
+
+interface RecentLeadReportItem {
+  nombre?: string | null;
+  nombre_cliente?: string | null;
+  modelo?: { nombre?: string | null } | null;
+}
 
 export default async function ReportesPage() {
   const stats = await getDashboardStats();
@@ -142,13 +148,13 @@ export default async function ReportesPage() {
            </CardHeader>
            <CardContent className="p-0 flex-1 overflow-y-auto">
               <div className="divide-y divide-border/40">
-                 {stats.recentLeads.length > 0 ? stats.recentLeads.map((lead: any, i: number) => (
+                 {stats.recentLeads.length > 0 ? (stats.recentLeads as RecentLeadReportItem[]).map((lead, i) => (
                    <div key={i} className="p-8 hover:bg-muted/30 transition-all flex items-start gap-4">
                       <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                          <Users className="w-5 h-5 text-primary" />
                       </div>
                       <div className="space-y-1">
-                         <p className="text-sm font-black tracking-tight leading-none">{lead.nombre}</p>
+                         <p className="text-sm font-black tracking-tight leading-none">{lead.nombre || lead.nombre_cliente || "Lead"}</p>
                          <p className="text-xs text-muted-foreground font-medium italic opacity-70">Cotizó el modelo <span className="text-foreground font-bold not-italic">{lead.modelo?.nombre || 'General'}</span></p>
                          <p className="text-[9px] text-muted-foreground/50 font-black uppercase tracking-tighter pt-1">Hace {i + 1} horas</p>
                       </div>

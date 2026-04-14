@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { adminUpdateConstructora } from "@/lib/supabase/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,16 +10,33 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { 
-  Building2, Phone, Globe, MapPin, 
+  Building2, MapPin, 
   Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
-  Search, ShieldCheck
+  ShieldCheck
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
 import { RegionesSelector } from "@/components/dashboard/regiones-selector";
 
 interface Props {
-  initialData: any;
+  initialData: {
+    id: string;
+    slug?: string | null;
+    nombre?: string | null;
+    razon_social?: string | null;
+    rut?: string | null;
+    sitio_web?: string | null;
+    descripcion?: string | null;
+    telefono?: string | null;
+    direccion?: string | null;
+    video_url?: string | null;
+    regiones?: string[] | null;
+    logo_url?: string | null;
+    image_url?: string | null;
+    seo_title?: string | null;
+    seo_description?: string | null;
+    seo_keywords?: string[] | null;
+  };
 }
 
 export function AdminEditForm({ initialData }: Props) {
@@ -31,6 +49,8 @@ export function AdminEditForm({ initialData }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const logoSrc = logoPreview || initialData.logo_url || null;
+  const imageSrc = imagePreview || initialData.image_url || null;
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
@@ -241,8 +261,8 @@ export function AdminEditForm({ initialData }: Props) {
                       onClick={() => logoInputRef.current?.click()}
                       className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer"
                     >
-                      {logoPreview || initialData?.logo_url ? (
-                         <img src={logoPreview || initialData.logo_url} className="w-full h-full object-contain p-2" />
+                      {logoSrc ? (
+                         <Image src={logoSrc} alt={`Logo de ${initialData?.nombre || "constructora"}`} fill unoptimized className="object-contain p-2" />
                       ) : (
                          <Building2 className="w-8 h-8 opacity-20" />
                       )}
@@ -259,8 +279,8 @@ export function AdminEditForm({ initialData }: Props) {
                       onClick={() => imageInputRef.current?.click()}
                       className="w-full h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer"
                     >
-                      {imagePreview || initialData?.image_url ? (
-                         <img src={imagePreview || initialData.image_url} className="w-full h-full object-cover" />
+                      {imageSrc ? (
+                         <Image src={imageSrc} alt={`Banner de ${initialData?.nombre || "constructora"}`} fill unoptimized className="object-cover" />
                       ) : (
                          <ImageIcon className="w-6 h-6 opacity-20" />
                       )}

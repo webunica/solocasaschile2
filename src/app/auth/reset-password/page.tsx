@@ -7,9 +7,8 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Loader2, Lock, CheckCircle2, ShieldCheck, EyeOff, Eye } from "lucide-react";
+import { Loader2, CheckCircle2, ShieldCheck, EyeOff, Eye } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 export default function ResetPasswordPage() {
   const router = useRouter();

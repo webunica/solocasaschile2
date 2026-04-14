@@ -6,6 +6,10 @@
 
 const FALLBACK_UF = 38500; // Valor seguro por si falla la API
 
+interface UfApiResponse {
+  serie?: Array<{ valor?: number }>;
+}
+
 export async function getUfValue(): Promise<number> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 6000); // 6 segundos de gracia
@@ -23,7 +27,7 @@ export async function getUfValue(): Promise<number> {
       return FALLBACK_UF;
     }
 
-    const data = await response.json();
+    const data = (await response.json()) as UfApiResponse;
     const valor = data.serie?.[0]?.valor;
 
     if (!valor || typeof valor !== 'number') {
@@ -32,9 +36,9 @@ export async function getUfValue(): Promise<number> {
     }
 
     return valor;
-  } catch (error: any) {
+  } catch (error: unknown) {
     clearTimeout(timeoutId);
-    if (error.name === 'AbortError') {
+    if (error instanceof DOMException && error.name === 'AbortError') {
       console.error('UF_TIMEOUT: La API de UF tardó demasiado, usando fallback.');
     } else {
       console.error('UF_FETCH_ERROR:', error);

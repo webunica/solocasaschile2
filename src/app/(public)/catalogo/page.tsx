@@ -7,16 +7,20 @@ import { CatalogoControls } from "@/components/catalogo/catalogo-controls";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Metadata } from "next";
-import { REGIONES_CHILE } from "@/config/regions";
 import { getRegionDisplayName } from "@/lib/regions";
 import type { TipoModelo } from "@/lib/mock-data";
 import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
+import { StructuredData, buildItemListJsonLd } from "@/components/seo/structured-data";
+
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Catálogo de Modelos | SolocasasChile",
   description: "Explora y compara más de 1.500 modelos de casas prefabricadas, SIP, container y llave en mano en Chile.",
+  alternates: {
+    canonical: "/catalogo",
+  },
 };
 
 interface PageProps {
@@ -48,6 +52,19 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background pt-40">
+      {modelos.length > 0 && (
+        <StructuredData 
+          type="ItemList" 
+          data={buildItemListJsonLd(
+            modelos.map(m => ({
+              name: m.nombre,
+              url: `https://solocasaschile.com/modelo/${m.slug}`,
+              image: m.imagenes_urls?.[0],
+              description: m.descripcion || m.tipo || undefined
+            }))
+          )} 
+        />
+      )}
       <div className="border-b bg-card/40 backdrop-blur-xl">
         <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { notFound, redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 import { AdminEditForm } from "@/components/dashboard/admin/constructora-edit-form";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import Link from "next/link";

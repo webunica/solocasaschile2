@@ -7,9 +7,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Loader2, AlertCircle, ShieldCheck, CheckCircle2, LayoutGrid } from "lucide-react";
+import { ArrowRight, Loader2, AlertCircle, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { login } from "@/lib/supabase/actions";
-import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);

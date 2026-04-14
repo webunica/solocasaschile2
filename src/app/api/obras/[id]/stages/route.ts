@@ -3,10 +3,29 @@ import { createClient } from "@/lib/supabase/server";
 import { applyStageTemplate, getObraStages } from "@/lib/supabase/obra-services";
 
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id: projectId } = await params;
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { data: project } = await supabase
+    .from("obra_projects")
+    .select("id")
+    .eq("id", projectId)
+    .maybeSingle();
+
+  if (!project) {
+    return NextResponse.json({ error: "Project not found" }, { status: 404 });
+  }
+
   const stages = await getObraStages(projectId);
   return NextResponse.json({ stages });
 }
@@ -17,7 +36,9 @@ export async function POST(
 ) {
   const { id: projectId } = await params;
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -26,57 +47,54 @@ export async function POST(
   try {
     const { templateId } = await req.json();
 
-    // 1. Validar que el proyecto existe
     const { data: projects } = await supabase
-      .from('obra_projects')
-      .select('id, fecha_inicio_estimada')
-      .eq('id', projectId)
+      .from("obra_projects")
+      .select("id, fecha_inicio_estimada")
+      .eq("id", projectId)
       .limit(1);
-    
-    const project = projects?.[0];
 
+    const project = projects?.[0];
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
 
-    // 2. Buscar el ID de la plantilla por defecto si no se envió una
     let finalTemplateId = templateId;
-    if (!templateId || templateId === 'default') {
-      const { data: defaultTemplates, error: tError } = await supabase
-        .from('obra_stage_templates')
-        .select('id')
-        .eq('is_default', true)
+    if (!templateId || templateId === "default") {
+      const { data: defaultTemplates, error: templateError } = await supabase
+        .from("obra_stage_templates")
+        .select("id")
+        .eq("is_default", true)
         .limit(1);
-      
-      const defaultT = defaultTemplates?.[0];
 
-      if (tError) {
-        console.error("❌ [api/obras/stages] Error al buscar plantilla:", tError.message);
-        return NextResponse.json({ error: "Error database: " + tError.message }, { status: 500 });
+      const defaultTemplate = defaultTemplates?.[0];
+
+      if (templateError) {
+        return NextResponse.json(
+          { error: "Error loading stage template" },
+          { status: 500 }
+        );
       }
 
-      if (!defaultT) {
-        console.warn("⚠️ [api/obras/stages] No se encontró plantilla por defecto en obra_stage_templates");
-        return NextResponse.json({ error: "No default template found. Run SQL seed." }, { status: 404 });
+      if (!defaultTemplate) {
+        return NextResponse.json(
+          { error: "No default template found. Run SQL seed." },
+          { status: 404 }
+        );
       }
-      finalTemplateId = defaultT.id;
+
+      finalTemplateId = defaultTemplate.id;
     }
 
-    // 3. Aplicar la plantilla
     try {
       await applyStageTemplate(projectId, finalTemplateId, project.fecha_inicio_estimada || undefined);
-    } catch (applyErr: any) {
-      console.error("❌ [api/obras/stages] Error en applyStageTemplate:", applyErr.message);
-      return NextResponse.json({ error: applyErr.message }, { status: 500 });
+    } catch (applyError: unknown) {
+      const message = applyError instanceof Error ? applyError.message : "Error applying template";
+      return NextResponse.json({ error: message }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, message: "Plantilla aplicada con éxito" });
-
-  } catch (error: any) {
-    console.error("❌ [api/obras/stages] POST Critical Error:", error.message);
-    return NextResponse.json({ 
-      error: error.message || "Error interno del servidor",
-      details: error.toString() 
-    }, { status: 500 });
+    return NextResponse.json({ success: true, message: "Template applied successfully" });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

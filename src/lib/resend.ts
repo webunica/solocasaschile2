@@ -1,9 +1,27 @@
-import { Resend } from 'resend';
+import { Resend, type CreateEmailOptions, type CreateEmailRequestOptions } from 'resend';
 
-const resendApiKey = process.env.RESEND_API_KEY;
+let resendClient: Resend | null = null;
+let resendClientKey: string | null = null;
 
-if (!resendApiKey && process.env.NODE_ENV === 'production') {
-  console.warn('RESEND_API_KEY is not defined in production environment');
+function getResendClient() {
+  const resendApiKey = process.env.RESEND_API_KEY;
+
+  if (!resendApiKey) {
+    throw new Error('RESEND_API_KEY is not configured');
+  }
+
+  if (!resendClient || resendClientKey !== resendApiKey) {
+    resendClient = new Resend(resendApiKey);
+    resendClientKey = resendApiKey;
+  }
+
+  return resendClient;
 }
 
-export const resend = new Resend(resendApiKey || 're_placeholder_key_for_development');
+export const resend = {
+  emails: {
+    send(payload: CreateEmailOptions, options?: CreateEmailRequestOptions) {
+      return getResendClient().emails.send(payload, options);
+    },
+  },
+};

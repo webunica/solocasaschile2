@@ -3,18 +3,18 @@
 import { useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { 
   Users, MessageSquare, Clock, CheckCircle2, 
   Download, Search, Phone, Mail, MessageCircle,
-  ExternalLink, ArrowRight, Filter, MoreHorizontal
+  ArrowRight
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { updateLeadStatus } from "@/lib/supabase/actions";
 import { Button, buttonVariants } from "@/components/ui/button";
 
-type Lead = {
+export type Lead = {
   id: string;
   nombre_cliente: string;
   email_cliente: string;
@@ -33,7 +33,7 @@ const STATUS_CONFIG: Record<string, {
   gradient: string;
   next: string; 
   nextLabel: string;
-  icon: any;
+  icon: LucideIcon;
 }> = {
   nuevo: { 
     label: "Nuevo Lead", 
@@ -310,7 +310,7 @@ export function LeadsCRM({ initialLeads }: Props) {
                     {lead.mensaje && (
                        <div className="mt-8 pt-6 border-t border-border/40">
                           <p className="text-sm font-medium text-muted-foreground italic leading-relaxed">
-                            "{lead.mensaje}"
+                            &ldquo;{lead.mensaje}&rdquo;
                           </p>
                        </div>
                     )}

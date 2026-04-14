@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getObraKPIs } from "@/lib/supabase/obra-services";
 import type { ObraKPIs } from "@/types/obra";
 import { HardHat, CheckCircle2, AlertTriangle, TrendingUp, Clock } from "lucide-react";

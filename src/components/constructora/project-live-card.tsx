@@ -1,114 +1,111 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { MapPin, Clock, CheckCircle2, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CheckCircle2, Home, MapPin } from "lucide-react";
+import type { PublicConstructoraProject } from "@/lib/supabase/services";
 
-interface ProjectLiveCardProps {
-  project: {
-    id: string;
-    nombre: string;
-    region: string;
-    comuna: string;
-    estado: string;
-    porcentaje_avance: number;
-    thumbnail_url: string | null;
-    tipo_construccion: string | null;
-  };
-}
+type ProjectLiveCardProps = {
+  project: PublicConstructoraProject;
+};
+
+const STATUS_STYLES: Record<string, string> = {
+  planificacion: "bg-blue-500",
+  en_curso: "bg-amber-500",
+  pausado: "bg-slate-400",
+  completado: "bg-emerald-500",
+  cancelado: "bg-red-500",
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  planificacion: "En planificacion",
+  en_curso: "En ejecucion",
+  pausado: "Obra pausada",
+  completado: "Obra terminada",
+  cancelado: "Cancelado",
+};
 
 export function ProjectLiveCard({ project }: ProjectLiveCardProps) {
-  const isCompleted = project.estado === 'completado' || project.porcentaje_avance === 100;
-  
-  const statusColors: Record<string, string> = {
-    planificacion: "bg-blue-500",
-    en_curso: "bg-amber-500",
-    pausado: "bg-slate-400",
-    completado: "bg-emerald-500",
-    cancelado: "bg-red-500",
-  };
-
-  const statusLabels: Record<string, string> = {
-    planificacion: "En Planificación",
-    en_curso: "En Ejecución",
-    pausado: "Obra Pausada",
-    completado: "Obra Terminada",
-    cancelado: "Cancelado",
-  };
+  const progress = Math.max(0, Math.min(100, project.porcentaje_avance ?? 0));
+  const isCompleted = project.estado === "completado" || progress === 100;
+  const location = [project.comuna, project.region].filter(Boolean).join(", ");
 
   return (
-    <Link 
-      href={`/seguimiento/${project.id}`} 
-      className="group relative bg-card border border-border/40 rounded-[2rem] overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 flex flex-col h-full"
-    >
-      {/* Image / Thumbnail Container */}
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-border/40 bg-card transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
       <div className="relative h-48 w-full overflow-hidden bg-muted">
         {project.thumbnail_url ? (
-          <Image 
-            src={project.thumbnail_url} 
-            alt={project.nombre} 
-            fill 
+          <Image
+            src={project.thumbnail_url}
+            alt={project.nombre}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center opacity-20 gap-2">
-            <Home className="w-10 h-10" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Sin registro visual</span>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-20">
+            <Home className="h-10 w-10" />
+            <span className="text-[10px] font-black uppercase tracking-widest">
+              Sin registro visual
+            </span>
           </div>
         )}
-        
-        {/* Overlays */}
+
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        <div className="absolute top-4 left-4">
-          <Badge className={cn(
-            "rounded-full px-3 py-1 text-[9px] font-black uppercase tracking-widest border-none shadow-lg",
-            statusColors[project.estado] || "bg-primary"
-          )}>
-            {statusLabels[project.estado] || project.estado}
+
+        <div className="absolute left-4 top-4">
+          <Badge
+            className={cn(
+              "rounded-full border-none px-3 py-1 text-[9px] font-black uppercase tracking-widest shadow-lg",
+              STATUS_STYLES[project.estado] || "bg-primary",
+            )}
+          >
+            {STATUS_LABELS[project.estado] || project.estado}
           </Badge>
         </div>
 
         <div className="absolute bottom-4 left-4 right-4">
-          <div className="flex items-center gap-2 text-white/90 text-[10px] font-bold uppercase tracking-widest mb-1">
-             <MapPin className="w-3.5 h-3.5 text-primary" /> {project.comuna}, {project.region}
-          </div>
-          <h3 className="text-white font-black text-lg leading-tight tracking-tight line-clamp-1">
+          {location && (
+            <div className="mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/90">
+              <MapPin className="h-3.5 w-3.5 text-primary" />
+              {location}
+            </div>
+          )}
+          <h3 className="line-clamp-1 text-lg font-black leading-tight tracking-tight text-white">
             {project.nombre}
           </h3>
         </div>
       </div>
 
-      {/* Progress Section */}
-      <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
+      <div className="flex flex-1 flex-col justify-between space-y-4 p-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-            <span>Avance de Obra</span>
+            <span>Avance de obra</span>
             <span className={cn(isCompleted ? "text-emerald-500" : "text-primary")}>
-              {project.porcentaje_avance}%
+              {progress}%
             </span>
           </div>
-          <Progress 
-            value={project.porcentaje_avance} 
-            className="h-2 rounded-full bg-muted shadow-inner" 
-            indicatorClassName={cn(isCompleted ? "bg-emerald-500" : "bg-primary")}
-          />
+          <div className="h-2 overflow-hidden rounded-full bg-muted shadow-inner">
+            <div
+              className={cn("h-full rounded-full", isCompleted ? "bg-emerald-500" : "bg-primary")}
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-border/40">
-           <div className="flex items-center gap-2">
-              <div className={cn(
-                "w-2 h-2 rounded-full",
-                isCompleted ? "bg-emerald-500" : "bg-primary animate-pulse"
-              )} />
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
-                {isCompleted ? "Proyecto Entregado" : "Actualizado hoy"}
-              </span>
-           </div>
-           {isCompleted && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+        <div className="flex items-center justify-between border-t border-border/40 pt-2">
+          <div className="flex items-center gap-2">
+            <div
+              className={cn(
+                "h-2 w-2 rounded-full",
+                isCompleted ? "bg-emerald-500" : "animate-pulse bg-primary",
+              )}
+            />
+            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
+              {isCompleted ? "Proyecto entregado" : "Obra en seguimiento"}
+            </span>
+          </div>
+          {isCompleted && <CheckCircle2 className="h-4 w-4 text-emerald-500" />}
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

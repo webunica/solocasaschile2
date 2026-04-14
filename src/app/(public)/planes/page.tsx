@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useTransition, useEffect } from "react";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -9,10 +8,10 @@ import { buttonVariants, Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, Users, TrendingUp, Shield, ChevronDown, Timer, Percent, Sparkles, Loader2, Info
+  Star, ChevronDown, Timer, Sparkles, Loader2, Info
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { 
@@ -194,7 +193,7 @@ export default function PlanesPage() {
         } else {
           toast.error(data.error || "Error al iniciar el pago.");
         }
-      } catch (error) {
+      } catch {
         toast.error("Ocurrió un error inesperado. Intenta de nuevo.");
       }
     });
@@ -453,7 +452,7 @@ export default function PlanesPage() {
                     <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-sm font-medium text-muted-foreground leading-relaxed">"{t.quote}"</p>
+                <p className="text-sm font-medium text-muted-foreground leading-relaxed">&quot;{t.quote}&quot;</p>
                 <div>
                   <p className="font-black text-sm text-foreground">{t.name}</p>
                   <p className="text-sm text-muted-foreground font-medium">{t.company} · {t.plan}</p>

@@ -9,8 +9,10 @@ const FLOW_CONFIG = {
   appUrl: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 };
 
-// Log settings on load (masked)
-console.info(`[FLOW-CONFIG] Env: ${process.env.FLOW_ENV || 'sandbox'}, Base: ${FLOW_CONFIG.baseUrl}, App: ${FLOW_CONFIG.appUrl}`);
+function debugFlow(event: string, fields: Record<string, unknown> = {}) {
+  if (process.env.FLOW_DEBUG !== 'true') return;
+  console.info(JSON.stringify({ level: 'debug', event, component: 'flow', ...fields }));
+}
 
 export interface FlowPaymentResponse {
   url: string;
@@ -18,11 +20,33 @@ export interface FlowPaymentResponse {
   flowOrder: number;
 }
 
+interface FlowStatusResponse {
+  status?: number;
+  flowOrder?: number;
+  commerceOrder?: string;
+  amount?: number;
+  payer?: string;
+  optional?: {
+    constructoraId?: string;
+    plan?: string;
+    billing?: 'monthly' | 'yearly' | string;
+    [key: string]: string | undefined;
+  };
+  paymentData?: unknown;
+}
+
+type FlowSignableValue = string | number | boolean | null | undefined;
+type FlowParams = Record<string, FlowSignableValue>;
+
+function isAbortError(error: unknown): error is DOMException {
+  return error instanceof DOMException && error.name === "AbortError";
+}
+
 export class FlowService {
   /**
    * Genera la firma requerida por Flow
    */
-  private static generateSignature(params: Record<string, any>): string {
+  private static generateSignature(params: FlowParams): string {
     const keys = Object.keys(params).sort();
     let stringToSign = '';
     
@@ -34,7 +58,9 @@ export class FlowService {
       }
     }
     
-    console.debug(`[FLOW-SIGN] String: ${stringToSign}`);
+    debugFlow('flow_signature_generated', {
+      signedKeys: keys.filter(key => key !== 's' && !key.startsWith('optional[')),
+    });
     
     return crypto
       .createHmac('sha256', FLOW_CONFIG.secretKey)
@@ -52,7 +78,7 @@ export class FlowService {
     externalId: string; // El ID de la constructora
     optional?: Record<string, string>;
   }): Promise<FlowPaymentResponse> {
-    const flowParams: Record<string, any> = {
+    const flowParams: FlowParams = {
       apiKey: FLOW_CONFIG.apiKey,
       subject: String(params.subject).substring(0, 50), // Evitar caracteres extraños y límite de Flow
       currency: 'CLP',
@@ -64,9 +90,12 @@ export class FlowService {
       urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`
     };
 
-    console.log('[FLOW] Generando pago:', flowParams);
+    debugFlow('flow_payment_create_started', {
+      amount: flowParams.amount,
+      subject: flowParams.subject,
+      hasEmail: Boolean(flowParams.email),
+    });
     flowParams.s = this.generateSignature(flowParams);
-    console.log('[FLOW] Firma generada:', flowParams.s);
 
     const formData = new URLSearchParams();
     for (const key in flowParams) {
@@ -74,7 +103,9 @@ export class FlowService {
     }
 
     const apiUrl = `${FLOW_CONFIG.baseUrl}/payment/create`;
-    console.log(`[FLOW] Solicitando a: ${apiUrl}`);
+    debugFlow('flow_payment_create_request', {
+      baseUrl: FLOW_CONFIG.baseUrl,
+    });
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos para Flow
@@ -93,12 +124,15 @@ export class FlowService {
         throw new Error(`Flow Payment Create Failed: ${response.statusText} (${errorText})`);
       }
 
-      const data = await response.json();
-      console.log('[FLOW] Pago Creado con Éxito:', data);
+      const data = (await response.json()) as FlowPaymentResponse;
+      debugFlow('flow_payment_create_completed', {
+        flowOrder: data.flowOrder,
+        hasToken: Boolean(data.token),
+      });
       return data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       clearTimeout(timeoutId);
-      if (error.name === 'AbortError') throw new Error('El servicio de Flow no respondió a tiempo. Intenta de nuevo.');
+      if (isAbortError(error)) throw new Error('El servicio de Flow no respondió a tiempo. Intenta de nuevo.');
       throw error;
     }
   }
@@ -106,8 +140,8 @@ export class FlowService {
   /**
    * Obtiene el estado de un pago usando el token recibido en el webhook
    */
-  static async getPaymentStatus(token: string) {
-    const params: Record<string, any> = {
+  static async getPaymentStatus(token: string): Promise<FlowStatusResponse> {
+    const params: FlowParams = {
       apiKey: FLOW_CONFIG.apiKey,
       token
     };
@@ -130,8 +164,8 @@ export class FlowService {
           throw new Error(`Flow getStatus failed: ${response.statusText}`);
       }
 
-      return response.json();
-    } catch (error: any) {
+      return (await response.json()) as FlowStatusResponse;
+    } catch (error: unknown) {
       clearTimeout(timeoutId);
       throw error;
     }

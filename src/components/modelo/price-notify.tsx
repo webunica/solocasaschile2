@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Bell, CheckCircle2, Loader2, Mail, Send, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { createLead } from "@/lib/supabase/client-services"; 
 import { toast } from "sonner";
 
 interface Props {
@@ -26,16 +25,20 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
     setLoading(true);
 
     try {
-      const { error } = await createLead({
+      const response = await fetch("/api/leads/public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
         modelo_id: /^[0-9a-fA-F-]{36}$/.test(modeloId) ? modeloId : null,
         constructora_id: /^[0-9a-fA-F-]{36}$/.test(constructoraId) ? constructoraId : null,
         nombre_cliente: "Interesado en Descuento",
         email_cliente: email,
-        telefono_cliente: "",
+        telefono_cliente: "N/A",
         mensaje: `[ALERTA PRECIO] Suscripción para alerta de baja de precio de ${modeloNombre}. Precio actual: ${currentPrice} UF`,
+      }),
       });
-
-      if (error) throw error;
+      const result = await response.json();
+      if (!response.ok) throw new Error(result?.error || "No se pudo registrar la alerta");
 
       setSuccess(true);
       toast.success("¡Perfecto! Te avisaremos apenas el precio baje.");
@@ -44,7 +47,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
         setSuccess(false);
         setEmail("");
       }, 3000);
-    } catch (err) {
+    } catch {
       toast.error("Hubo un error al registrar tu suscripción.");
     } finally {
       setLoading(false);

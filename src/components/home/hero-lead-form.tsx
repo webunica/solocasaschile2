@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Send, CheckCircle2, User, Mail, 
   Phone, MessageSquare, Loader2, Lock, Zap 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { createClient } from "@/lib/supabase/client";
 
 export function HeroLeadForm() {
   const [loading, setLoading] = useState(false);
@@ -27,19 +25,23 @@ export function HeroLeadForm() {
       email_cliente: formData.get("email") as string,
       telefono_cliente: formData.get("phone") as string,
       mensaje: formData.get("message") as string,
+      website: (formData.get("website") as string) || "",
     };
 
     try {
-      const supabase = createClient();
-      const { error: insertError } = await supabase
-        .from("leads")
-        .insert([leadData]);
-
-      if (insertError) throw insertError;
+      const response = await fetch("/api/leads/public", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(leadData),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result?.error || "No se pudo enviar la consulta");
+      }
 
       setSuccess(true);
       (e.target as HTMLFormElement).reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Lead submission error:", err);
       setError("Hubo un problema al enviar tu consulta. Por favor, intenta de nuevo.");
     } finally {
@@ -101,6 +103,13 @@ export function HeroLeadForm() {
           </div>
         </div>
       </div>
+      <Input
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="hidden"
+        aria-hidden="true"
+      />
 
       <div className="space-y-1">
         <label className="form-label">Email</label>

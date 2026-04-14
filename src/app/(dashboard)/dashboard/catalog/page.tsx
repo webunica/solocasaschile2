@@ -4,7 +4,7 @@ import {
   Plus, Search, Edit2, Trash2, 
   Eye, LayoutGrid, List, Filter, Home, Star
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,24 +13,30 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { getPlanLimits } from "@/lib/constants/plans";
 import { createClient } from "@/lib/supabase/server";
+import type { ModelWithConstructora } from "@/lib/supabase/services";
+
+type DashboardConstructora = {
+  plan?: string | null;
+  role?: string | null;
+};
 
 export default async function CatalogManagementPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  let modelos: any[] = [];
-  let constructora: any = null;
-  let errorMsg = null;
+  let modelos: ModelWithConstructora[] = [];
+  let constructora: DashboardConstructora | null = null;
+  let errorMsg: string | null = null;
 
   try {
     modelos = await getModelosByConstructora();
     if (user) {
       const { data } = await supabase.from('constructoras').select('plan, role').eq('id', user.id).single();
-      constructora = data;
+      constructora = (data as DashboardConstructora | null) ?? null;
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("CRITICAL DASHBOARD ERROR:", err);
-    errorMsg = err.message || "Error al conectar con la base de datos";
+    errorMsg = err instanceof Error ? err.message : "Error al conectar con la base de datos";
   }
 
   const isSuperAdmin = constructora?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
@@ -110,7 +116,7 @@ export default async function CatalogManagementPage() {
 
         <CardContent className="p-0">
           <div className="divide-y divide-border/20">
-            {modelos.length > 0 ? modelos.map((modelo: any) => (
+            {modelos.length > 0 ? modelos.map((modelo) => (
               <div key={modelo.id} className="p-8 hover:bg-primary/[0.01] transition-all flex flex-col md:grid md:grid-cols-[120px_1fr_220px] items-center gap-8 group border-l-4 border-l-transparent hover:border-l-primary/40">
                 {/* Image */}
                 <div className="relative w-28 h-28 rounded-3xl overflow-hidden border border-border/40 shrink-0 shadow-xl group-hover:scale-105 transition-transform duration-700 bg-muted/20">

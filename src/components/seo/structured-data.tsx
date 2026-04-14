@@ -2,7 +2,7 @@ import React from 'react';
 
 interface StructuredDataProps {
   type: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
@@ -43,9 +43,9 @@ export function buildModelJsonLd(modelo: {
     sitio_web?: string | null;
     logo_url?: string | null;
   } | null;
-}) {
+  }) {
   const baseUrl = 'https://solocasaschile.com';
-  const amenities: any[] = [];
+  const amenities: Array<Record<string, string>> = [];
 
   // Add terminaciones as amenity features
   if (modelo.terminaciones) {
@@ -58,7 +58,7 @@ export function buildModelJsonLd(modelo: {
       climatizacion: 'Climatización',
     };
     for (const [k, label] of Object.entries(labels)) {
-      const val = (modelo.terminaciones as any)[k];
+      const val = modelo.terminaciones[k];
       if (val) {
         amenities.push({
           "@type": "LocationFeatureSpecification",
@@ -87,7 +87,7 @@ export function buildModelJsonLd(modelo: {
     });
   }
 
-  const jsonLd: Record<string, any> = {
+  const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "House",
     "name": modelo.nombre,
@@ -194,6 +194,67 @@ export function buildFAQJsonLd(faqs: { question: string; answer: string }[]) {
         "text": faq.answer,
       },
     })),
+  };
+}
+
+/** Helper: builds BlogPosting JSON-LD for editorial pages */
+export function buildBlogPostingJsonLd(post: {
+  title: string;
+  excerpt?: string | null;
+  slug: string;
+  cover_image_url?: string | null;
+  created_at: string;
+  category?: string | null;
+}) {
+  const baseUrl = "https://solocasaschile.com";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt || undefined,
+    "image": post.cover_image_url || undefined,
+    "datePublished": post.created_at,
+    "dateModified": post.created_at,
+    "articleSection": post.category || "Casas prefabricadas",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${post.slug}`,
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "SolocasasChile",
+      "url": baseUrl,
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "SolocasasChile",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${baseUrl}/images/logo.png`,
+      },
+    },
+  };
+}
+
+/** Helper: builds an ItemList JSON-LD for collection pages (like catalog or directory) */
+export function buildItemListJsonLd(items: { name: string; url: string; image?: string; description?: string }[], typeName: string = "ItemList") {
+  return {
+    "@context": "https://schema.org",
+    "@type": typeName,
+    "itemListElement": items.map((item, index) => {
+      const listItem: Record<string, unknown> = {
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.name,
+        "url": item.url,
+      };
+      
+      if (item.image) listItem.image = item.image;
+      if (item.description) listItem.description = item.description;
+
+      return listItem;
+    }),
   };
 }
 

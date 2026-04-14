@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { updateSettings } from "@/lib/supabase/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,23 +10,59 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { 
-  Building2, Phone, Globe, MapPin, 
+  Building2, MapPin,
   Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
-  Search, Tag, X, Plus, Trash2, Star, MessageSquare
+  Search, Plus, Trash2, Star, MessageSquare
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
 import { RegionesSelector } from "@/components/dashboard/regiones-selector";
 import { cn } from "@/lib/utils";
 
-interface Props {
-  initialData: any;
-  userEmail: string | undefined;
-  models: any[];
+interface Testimonio {
+  nombre: string;
+  texto: string;
+  cargo: string;
+  estrellas: number;
+  modelo_id?: string;
 }
 
-function TestimoniosSelector({ name, initialValue = [], models }: { name: string; initialValue?: any[]; models: any[] }) {
-  const [testimonios, setTestimonios] = useState<any[]>(initialValue || []);
+interface ModelOption {
+  id: string;
+  nombre: string;
+}
+
+interface ConstructoraSettings {
+  nombre?: string | null;
+  razon_social?: string | null;
+  rut?: string | null;
+  sitio_web?: string | null;
+  email?: string | null;
+  plan?: string | null;
+  video_url?: string | null;
+  descripcion?: string | null;
+  telefono?: string | null;
+  direccion?: string | null;
+  especialidad_principal?: string | null;
+  anio_inicio?: number | string | null;
+  regiones?: string[] | null;
+  testimonios?: Testimonio[] | null;
+  logo_url?: string | null;
+  image_url?: string | null;
+  slug?: string | null;
+  seo_title?: string | null;
+  seo_description?: string | null;
+  seo_keywords?: string[] | null;
+}
+
+interface Props {
+  initialData: ConstructoraSettings | null;
+  userEmail: string | undefined;
+  models: ModelOption[];
+}
+
+function TestimoniosSelector({ name, initialValue = [], models }: { name: string; initialValue?: Testimonio[]; models: ModelOption[] }) {
+  const [testimonios, setTestimonios] = useState<Testimonio[]>(initialValue || []);
 
   const addTestimonio = () => {
     setTestimonios([...testimonios, { nombre: "", texto: "", cargo: "", estrellas: 5, modelo_id: "general" }]);
@@ -35,10 +72,12 @@ function TestimoniosSelector({ name, initialValue = [], models }: { name: string
     setTestimonios(testimonios.filter((_, i) => i !== index));
   };
 
-  const updateTestimonio = (index: number, field: string, value: any) => {
-    const newTestimonios = [...testimonios];
-    newTestimonios[index][field] = value;
-    setTestimonios(newTestimonios);
+  const updateTestimonio = (index: number, field: keyof Testimonio, value: string | number) => {
+    setTestimonios((current) =>
+      current.map((testimonio, currentIndex) =>
+        currentIndex === index ? { ...testimonio, [field]: value } : testimonio
+      )
+    );
   };
 
   return (
@@ -143,6 +182,8 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const logoSrc = logoPreview || initialData?.logo_url || null;
+  const imageSrc = imagePreview || initialData?.image_url || null;
 
   function validateRut(rut: string) {
     if (!rut) return true; // Optional field in some contexts, but if provided, validate it
@@ -163,7 +204,7 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
     }
 
     const expectedDv = 11 - (sum % 11);
-    let dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
+    const dvChar = expectedDv === 11 ? "0" : expectedDv === 10 ? "K" : expectedDv.toString();
 
     return dvChar === dv;
   }
@@ -468,8 +509,8 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
                       onClick={() => logoInputRef.current?.click()}
                       className="w-32 h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
                     >
-                      {logoPreview || initialData?.logo_url ? (
-                         <img src={logoPreview || initialData.logo_url} className="w-full h-full object-contain p-2" alt="Logo preview" />
+                      {logoSrc ? (
+                         <Image src={logoSrc} alt="Logo preview" fill sizes="128px" className="object-contain p-2" unoptimized />
                       ) : (
                          <span className="text-muted-foreground text-[10px] font-bold text-center p-4 text-balance">Subir Logo</span>
                       )}
@@ -498,8 +539,8 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
                       onClick={() => imageInputRef.current?.click()}
                       className="w-full h-32 rounded-3xl bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden relative group cursor-pointer hover:border-primary/40 transition-colors"
                     >
-                      {imagePreview || initialData?.image_url ? (
-                         <img src={imagePreview || initialData.image_url} className="w-full h-full object-cover" alt="Cover preview" />
+                      {imageSrc ? (
+                         <Image src={imageSrc} alt="Cover preview" fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover" unoptimized />
                       ) : (
                          <div className="flex flex-col items-center gap-2">
                             <ImageIcon className="w-6 h-6 text-muted-foreground opacity-40" />

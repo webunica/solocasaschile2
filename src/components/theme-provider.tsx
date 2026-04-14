@@ -9,19 +9,22 @@ type ThemeProviderState = {
   setTheme: (theme: Theme) => void;
 };
 
+interface ThemeProviderProps {
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+  storageKey?: string;
+  attribute?: string;
+  enableSystem?: boolean;
+  disableTransitionOnChange?: boolean;
+}
+
 const ThemeProviderContext = React.createContext<ThemeProviderState | null>(null);
 
 export function ThemeProvider({
   children,
   defaultTheme = "light",
   storageKey = "solocasas-theme",
-  ...props
-}: {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
-  [key: string]: any;
-}) {
+}: ThemeProviderProps) {
   const [theme, setThemeState] = React.useState<Theme>(defaultTheme);
 
   React.useEffect(() => {
@@ -39,7 +42,7 @@ export function ThemeProvider({
   }), [theme, storageKey]);
 
   return (
-    <ThemeProviderContext.Provider value={value} {...props}>
+    <ThemeProviderContext.Provider value={value}>
       {children}
     </ThemeProviderContext.Provider>
   );

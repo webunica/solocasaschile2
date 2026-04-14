@@ -99,7 +99,7 @@ export default async function ConstruHomePage() {
     supabase.from('supplier_favorites').select('supplier_id').eq('user_id', user.id),
   ]);
 
-  const favoriteIds = (userFavorites || []).map((f: any) => f.supplier_id);
+  const favoriteIds = (userFavorites || []).map((f: { supplier_id: string }) => f.supplier_id);
 
   return (
     <div className="container mx-auto px-4 py-12">

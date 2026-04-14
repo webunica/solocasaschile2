@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { ObraProjectSpec } from "@/types/obra";
-import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CheckCircle2, CircleDashed, Clock, PackageOpen, AlertCircle } from "lucide-react";
+import { CheckCircle2, CircleDashed, Clock, PackageOpen } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -22,13 +21,13 @@ const ESTADO_LABELS: Record<string, string> = {
   finalizado: "Finalizado"
 };
 
-export function ProjectSpecsList({ initialSpecs, projectId }: { initialSpecs: ObraProjectSpec[], projectId: string }) {
+export function ProjectSpecsList({ initialSpecs }: { initialSpecs: ObraProjectSpec[], projectId: string }) {
   const [specs, setSpecs] = useState<ObraProjectSpec[]>(initialSpecs);
   const supabase = createClient();
 
   const handleUpdateEstado = async (id: string, newEstado: string) => {
     // Optimistic update
-    setSpecs(prev => prev.map(s => s.id === id ? { ...s, estado: newEstado as any } : s));
+    setSpecs(prev => prev.map(s => s.id === id ? { ...s, estado: newEstado as ObraProjectSpec["estado"] } : s));
 
     const { error } = await supabase
       .from('obra_project_specs')

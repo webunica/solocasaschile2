@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Zap, CalendarCheck, MapPin, Building2, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { incrementModelView } from '@/lib/supabase/actions';
@@ -10,19 +10,21 @@ import { es } from 'date-fns/locale';
 interface PruebaSocialProps {
   modeloId: string;
   initialCount?: number;
-  constructora: any;
+  constructora?: {
+    proyectos_entregados?: number | null;
+    cobertura?: string | null;
+  } | null;
   updatedAt?: string;
   className?: string;
 }
 
 export function PruebaSocial({ modeloId, initialCount = 0, constructora, updatedAt, className }: PruebaSocialProps) {
-  const [count, setCount] = useState<number>(initialCount);
+  const count = initialCount + 1;
   const incremented = useRef(false);
 
   useEffect(() => {
     if (!incremented.current) {
       incremented.current = true;
-      setCount(prev => prev + 1);
       incrementModelView(modeloId);
     }
   }, [modeloId]);

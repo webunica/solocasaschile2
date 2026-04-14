@@ -10,10 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Loader2, AlertCircle,
-  Eye, EyeOff, ShieldCheck, Mail, RefreshCw, Crown, Zap, Building2,
+  Eye, EyeOff, Mail, RefreshCw, Crown, Zap, Building2,
 } from "lucide-react";
 import { register, resendConfirmation } from "@/lib/supabase/actions";
-import { cn } from "@/lib/utils";
 
 const PLAN_META = {
   premium: { 
@@ -138,10 +137,8 @@ function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const rawPlan = searchParams.get("plan") || "gratis";
-  const billing: 'monthly' | 'yearly' = (searchParams.get("billing") === 'monthly' ? 'monthly' : 'yearly');
   const plan: PlanKey = (rawPlan in PLAN_META ? rawPlan : "gratis") as PlanKey;
   const planMeta = PLAN_META[plan];
-  const currentPrice = planMeta.prices[billing as keyof typeof planMeta.prices] || "0";
 
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);

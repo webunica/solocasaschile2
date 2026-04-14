@@ -9,10 +9,6 @@ import {
   FileText, 
   CheckCircle2, 
   ArrowRight, 
-  Smartphone, 
-  Lock,
-  Search,
-  HardHat
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -196,7 +192,7 @@ export default function SeguimientoObrasPage() {
               <span className="text-brand-teal">Tranquilidad?</span>
             </h2>
             <p className="text-xl text-white/70 font-medium max-w-2xl mx-auto relative z-10 font-bold">
-              Busca el sello de "Seguimiento Online" en las fichas técnicas de nuestras constructoras asociadas.
+              Busca el sello de &quot;Seguimiento Online&quot; en las fichas técnicas de nuestras constructoras asociadas.
             </p>
             <Link href="/constructoras" className="inline-flex items-center gap-2 bg-white text-brand-indigo font-black px-10 py-5 rounded-[2rem] text-lg relative z-10 hover:scale-105 transition-transform active:scale-95">
               EXPLORAR CONSTRUCTORAS <ArrowRight className="w-5 h-5" />

@@ -7,6 +7,10 @@ import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Dashboard | SolocasasChile",
+  robots: {
+    index: false,
+    follow: false,
+  },
   description: "Administra tu constructora, modelos y prospectos desde el panel central de SolocasasChile.",
 };
 

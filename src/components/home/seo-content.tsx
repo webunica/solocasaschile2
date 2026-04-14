@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Info, ArrowRight } from "lucide-react";
@@ -160,7 +159,7 @@ export function SeoContent() {
              <div className="grid md:grid-cols-2 gap-10">
                 <div className="glass p-10 rounded-[3rem] border-border/40 relative">
                    <Info className="absolute top-10 right-10 w-5 h-5 opacity-20" />
-                   <p className="text-lg font-medium italic mb-8 leading-relaxed">"Elegimos una casa SIP para nuestro retiro. La eficiencia energética en Santiago es impresionante, mantiene la temperatura todo el año."</p>
+                   <p className="text-lg font-medium italic mb-8 leading-relaxed">&ldquo;Elegimos una casa SIP para nuestro retiro. La eficiencia energética en Santiago es impresionante, mantiene la temperatura todo el año.&rdquo;</p>
                    <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-muted" />
                       <div>
@@ -171,7 +170,7 @@ export function SeoContent() {
                 </div>
                 <div className="glass p-10 rounded-[3rem] border-border/40 relative">
                    <Info className="absolute top-10 right-10 w-5 h-5 opacity-20" />
-                   <p className="text-lg font-medium italic mb-8 leading-relaxed">"Me sorprendió la adaptabilidad del espacio y el costo. Fue mucho más asequible de lo esperado para un diseño tan moderno."</p>
+                   <p className="text-lg font-medium italic mb-8 leading-relaxed">&ldquo;Me sorprendió la adaptabilidad del espacio y el costo. Fue mucho más asequible de lo esperado para un diseño tan moderno.&rdquo;</p>
                    <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-muted" />
                       <div>

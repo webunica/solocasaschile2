@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -198,10 +199,13 @@ export default function NewModelPage() {
   const [planoFile, setPlanoFile] = useState<File | null>(null);
   const [planoPreview, setPlanoPreview] = useState<string | null>(null);
   const planoInputRef = useRef<HTMLInputElement>(null);
-  const [planLimits, setPlanLimits] = useState<any>(null);
+  const [planLimits, setPlanLimits] = useState<ReturnType<typeof getPlanLimits> | null>(null);
   const [plan, setPlan] = useState<string>("gratis");
   const [modelName, setModelName] = useState("");
   const [modelDesc, setModelDesc] = useState("");
+
+  const getErrorMessage = (error: unknown) =>
+    error instanceof Error ? error.message : "OcurriÃ³ un error inesperado.";
 
   useEffect(() => {
     async function loadPlan() {
@@ -280,8 +284,8 @@ export default function NewModelPage() {
           if (uploadError) throw uploadError;
           const { data: { publicUrl } } = supabase.storage.from('model_images').getPublicUrl(filePath);
           plano_url = publicUrl;
-        } catch (e: any) {
-           throw new Error("Error al subir plano: " + e.message);
+        } catch (e: unknown) {
+           throw new Error("Error al subir plano: " + getErrorMessage(e));
         }
       }
 
@@ -343,8 +347,8 @@ export default function NewModelPage() {
       if (result?.error) throw new Error(result.error);
       setSuccess(true);
       setTimeout(() => router.push('/dashboard/catalog'), 2000);
-    } catch (err: any) {
-      setError(err.message || "Ocurrió un error inesperado.");
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
       setLoading(false);
     }
   };
@@ -768,7 +772,7 @@ export default function NewModelPage() {
                     <div className="grid grid-cols-2 gap-2 p-4 w-full h-full">
                       {previews.map((src, i) => (
                         <div key={i} className="relative rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                          <img src={src} alt="" className="w-full h-full object-cover" />
+                          <Image src={src} alt="" fill unoptimized className="object-cover" />
                           <button type="button" onClick={ev => { ev.stopPropagation(); removeImage(i); }}
                             className="absolute top-2 right-2 w-7 h-7 bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white hover:bg-black transition-colors"
                           >
@@ -804,7 +808,7 @@ export default function NewModelPage() {
                     </>
                   ) : (
                     <div className="relative aspect-video w-full">
-                      <img src={planoPreview} className="w-full h-full object-cover" />
+                      <Image src={planoPreview} alt="Plano de distribucion del modelo" fill unoptimized className="object-cover" />
                       <button type="button" onClick={removePlano} className="absolute top-2 right-2 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors">
                         <X className="w-4 h-4" />
                       </button>

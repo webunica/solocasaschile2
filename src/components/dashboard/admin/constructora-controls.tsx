@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { 
-  CheckCircle2, XCircle, Star, ShieldCheck, 
-  Trash2, Loader2, Save
+  XCircle, Star, ShieldCheck, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
@@ -13,8 +12,22 @@ import {
 } from "@/lib/supabase/actions";
 import { toast } from "sonner";
 
+type ConstructoraPlan = "gratis" | "pro" | "premium";
+
+type ConstructoraAdmin = {
+  id: string;
+  verificada: boolean;
+  plan: ConstructoraPlan;
+  score_confianza: number;
+};
+
 interface Props {
-  constructora: any;
+  constructora: ConstructoraAdmin;
+}
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return "Ocurrió un error inesperado.";
 }
 
 export function ConstructoraAdminControls({ constructora }: Props) {
@@ -25,35 +38,35 @@ export function ConstructoraAdminControls({ constructora }: Props) {
     try {
       await toggleVerification(constructora.id, !constructora.verificada);
       toast.success(constructora.verificada ? "Verificación removida" : "Constructora verificada con éxito");
-    } catch (err: any) {
-      toast.error(err.message);
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
   };
 
-  const onChangePlan = async (plan: string) => {
+  const onChangePlan = async (plan: ConstructoraPlan) => {
     setLoading(true);
     try {
       await updateConstructoraPlan(constructora.id, plan);
       toast.success(`Plan actualizado a ${plan.toUpperCase()}`);
-    } catch (err: any) {
-      toast.error(err.message);
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
   };
 
   const onUpdateScore = async () => {
-    const newScore = prompt("Introduce el nuevo Score de Confianza (0-100):", constructora.score_confianza);
+    const newScore = prompt("Introduce el nuevo Score de Confianza (0-100):", String(constructora.score_confianza));
     if (!newScore) return;
     
     setLoading(true);
     try {
       await updateConstructoraScore(constructora.id, parseInt(newScore));
       toast.success("Score actualizado correctamente");
-    } catch (err: any) {
-      toast.error(err.message);
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -75,7 +88,7 @@ export function ConstructoraAdminControls({ constructora }: Props) {
       </Button>
 
       <div className="flex items-center gap-1 bg-muted/50 p-1 rounded-xl border border-border/50">
-        {['gratis', 'pro', 'premium'].map((p) => (
+        {(["gratis", "pro", "premium"] as const).map((p) => (
           <Button
             key={p}
             size="sm"

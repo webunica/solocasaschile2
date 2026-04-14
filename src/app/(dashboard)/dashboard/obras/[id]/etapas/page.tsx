@@ -4,8 +4,6 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getObraProject } from "@/lib/supabase/obra-services";
 import { StagesManager } from "@/components/obras/stages-manager";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { ArrowLeft, Layers } from "lucide-react";
 import type { ObraStage } from "@/types/obra";
 

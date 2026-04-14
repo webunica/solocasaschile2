@@ -5,6 +5,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacidad de Datos | SolocasasChile",
   description: "Conoce cómo protegemos y gestionamos tus datos personales en SolocasasChile.",
+  alternates: {
+    canonical: "/privacidad",
+  },
 };
 
 export default function PrivacidadPage() {

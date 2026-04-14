@@ -2,15 +2,12 @@
 
 import { motion } from "framer-motion";
 import { 
-  Building2, Search, MapPin, 
-  Menu, X, Bell, User,
-  LayoutDashboard, ShoppingCart, 
-  Truck, Settings, LogOut
+  Menu, X, Bell,
+  LayoutDashboard
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 export function ConstruHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

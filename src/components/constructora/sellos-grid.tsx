@@ -1,4 +1,4 @@
-import { ShieldCheck, Zap, Image, Building2, Clock, Calendar, CheckCircle2, BadgeCheck } from "lucide-react";
+import { ShieldCheck, Zap, Image as ImageIcon, Building2, Clock, Calendar, CheckCircle2, BadgeCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Sello {
@@ -36,7 +36,7 @@ const SELLO_META: Record<string, { icon: React.ReactNode; color: string; bg: str
     bg: "bg-emerald-100 border-emerald-300",
   },
   "fotos-reales": {
-    icon: <Image className="w-4 h-4" />,
+    icon: <ImageIcon className="w-4 h-4" />,
     color: "text-sky-800",
     bg: "bg-sky-100 border-sky-300",
   },

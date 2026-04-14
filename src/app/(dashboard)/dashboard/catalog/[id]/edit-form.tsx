@@ -2,17 +2,17 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, Loader2, CheckCircle2, 
-  X, Home, Video, ArrowLeft, Star,
-  ShieldCheck, Zap, ChevronDown,
-  Building2, Thermometer, Paintbrush, Plug, Truck, Award, Search, Save, Eye
+  X, Home, Video, Star,
+  Zap, ChevronDown,
+  Building2, Thermometer, Paintbrush, Truck, Search, Save, Eye
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { updateModel } from "@/lib/supabase/actions";
@@ -96,20 +96,20 @@ function Field({ id, label, hint, children }: { id?: string; label: string; hint
 }
 
 function FieldInput({ id, name, placeholder = "", type = "text", required = false, defaultValue, className }: {
-  id: string; name: string; placeholder?: string; type?: string; required?: boolean; defaultValue?: any; className?: string;
+  id: string; name: string; placeholder?: string; type?: string; required?: boolean; defaultValue?: string | number | null; className?: string;
 }) {
   return (
     <Input
-      id={id} name={name} type={type} placeholder={placeholder} required={required} defaultValue={defaultValue}
+      id={id} name={name} type={type} placeholder={placeholder} required={required} defaultValue={defaultValue ?? undefined}
       className={cn("h-12 rounded-2xl bg-background/50 border-border/40 focus:border-primary/40 font-medium", className)}
     />
   );
 }
 
-function FieldTextarea({ id, name, placeholder, rows = 3, defaultValue }: { id: string; name: string; placeholder: string; rows?: number; defaultValue?: any }) {
+function FieldTextarea({ id, name, placeholder, rows = 3, defaultValue }: { id: string; name: string; placeholder: string; rows?: number; defaultValue?: string | number | null }) {
   return (
     <Textarea
-      id={id} name={name} placeholder={placeholder} rows={rows} defaultValue={defaultValue}
+      id={id} name={name} placeholder={placeholder} rows={rows} defaultValue={defaultValue ?? undefined}
       className="rounded-2xl bg-background/50 border-border/40 focus:border-primary/40 text-sm p-4 resize-none leading-relaxed"
     />
   );
@@ -195,7 +195,7 @@ function RecintosSelector({ name, initialValue = [], onChange }: { name: string;
 // Main Component
 // ─────────────────────────────────────────────
 
-export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAdmin?: boolean }) {
+export function EditModelForm({ modelo, isSuperAdmin }: { modelo: Partial<ModeloExtendido> & { id: string, slug?: string }, isSuperAdmin?: boolean }) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -211,7 +211,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
   const [planoFile, setPlanoFile] = useState<File | null>(null);
   const [planoPreview, setPlanoPreview] = useState<string | null>(modelo.construccion?.plano_url || null);
   const [plan, setPlan] = useState<string>("gratis");
-  const [planLimits, setPlanLimits] = useState<any>(null);
+  const [planLimits, setPlanLimits] = useState<ReturnType<typeof getPlanLimits> | null>(null);
   const planoInputRef = useRef<HTMLInputElement>(null);
   
   // Real-time SEO Preview track
@@ -338,7 +338,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
       const recintosRaw = formData.get('recintos') as string;
       const recintos = recintosRaw ? JSON.parse(recintosRaw) : (modelo.recintos || []);
 
-      const updateData: any = {
+      const updateData: Record<string, unknown> & { nombre: string } = {
         nombre: formData.get('nombre') as string,
         tipo: formData.get('tipo') as string,
         superficie_m2: Number(formData.get('superficie_m2')),
@@ -392,9 +392,9 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
         setSuccess(true);
         setTimeout(() => router.push('/dashboard/catalog'), 2000);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("DEBUG: Error en submitHandler:", err);
-      setError(err.message || "Error al actualizar");
+      setError(err instanceof Error ? err.message : "Error al actualizar");
     } finally {
       setIsAutoSaving(false);
       if (!isAuto) setLoading(false);
@@ -478,7 +478,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
               <Input
                 id="contacto_email" name="contacto_email" type="email"
                 placeholder="email@ejemplo.com"
-                defaultValue={modelo.contacto_email}
+                defaultValue={modelo.contacto_email ?? undefined}
                 className="h-12 rounded-2xl bg-background/50 border-border/40 font-medium"
               />
             </Field>
@@ -497,7 +497,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
               <Field id="descripcion" label="Relato de Venta">
                 <Textarea
                   id="descripcion" name="descripcion"
-                  defaultValue={modelo.descripcion}
+                  defaultValue={modelo.descripcion ?? undefined}
                   onChange={e => setModelDesc(e.target.value)}
                   className="min-h-[140px] rounded-2xl bg-background/50 border-border/40 text-sm p-4 resize-none leading-relaxed"
                 />
@@ -670,7 +670,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
               <div className="grid grid-cols-2 gap-2">
                 {previews.map((src, i) => (
                   <div key={i} className="relative aspect-square rounded-2xl overflow-hidden border">
-                    <img src={src} className="w-full h-full object-cover" />
+                    <Image src={src} alt={`Imagen del modelo ${i + 1}`} fill unoptimized className="object-cover" />
                     <button type="button" onClick={() => removeImageWithAutoSave(i)} className="absolute top-1 right-1 w-6 h-6 bg-black/60 rounded-full flex items-center justify-center text-white">
                       <X className="w-3 h-3" />
                     </button>
@@ -694,7 +694,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
                   </>
                 ) : (
                   <div className="relative aspect-video">
-                    <img src={planoPreview} className="w-full h-full object-cover" />
+                    <Image src={planoPreview} alt="Plano de distribucion del modelo" fill unoptimized className="object-cover" />
                     <button type="button" onClick={removePlanoWithAutoSave} className="absolute top-2 right-2 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500 transition-colors">
                       <X className="w-4 h-4" />
                     </button>
@@ -759,7 +759,7 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: any, isSuperAd
               initialKeywords={modelo.seo_keywords || []}
               initialOgImage={modelo.seo_og_image || ""}
               modelName={modelName}
-              modelDescription={modelDesc}
+              modelDescription={modelDesc ?? ""}
               modelSlug={modelo.slug}
             />
           ) : (

@@ -13,7 +13,6 @@ import {
   SidebarMenu, SidebarMenuItem, SidebarMenuButton,
   SidebarGroup, SidebarGroupLabel, SidebarGroupContent
 } from "@/components/ui/sidebar";
-import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/supabase/actions";
 

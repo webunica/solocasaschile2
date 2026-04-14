@@ -1,8 +1,7 @@
 import { cache } from 'react'
-import { unstable_cache, revalidateTag } from 'next/cache'
+import { unstable_cache } from 'next/cache'
 import { createClient, createPublicClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
-import { REGIONES_CHILE } from '@/config/regions'
 import { getRegionDisplayName } from '@/lib/regions'
 
 export type ModelWithConstructora = {
@@ -36,12 +35,12 @@ export type ModelWithConstructora = {
   codigo_modelo?: string | null;
   uso?: string | null;
   recintos?: string[] | null;
-  construccion?: any;
-  aislacion?: any;
-  terminaciones?: any;
-  instalaciones?: any;
-  logistica?: any;
-  soporte?: any;
+  construccion?: Record<string, unknown> | null;
+  aislacion?: Record<string, unknown> | null;
+  terminaciones?: Record<string, unknown> | null;
+  instalaciones?: Record<string, unknown> | null;
+  logistica?: Record<string, unknown> | null;
+  soporte?: Record<string, unknown> | null;
   is_featured?: boolean;
   featured_order?: number;
   constructora: {
@@ -57,8 +56,46 @@ export type ModelWithConstructora = {
     seo_title?: string | null;
     seo_description?: string | null;
     seo_keywords?: string[] | null;
-    testimonios?: any[] | null;
+    testimonios?: Array<Record<string, unknown>> | null;
   };
+};
+
+type LeadInsertDTO = {
+  constructora_id?: string;
+  modelo_id?: string;
+  nombre_cliente?: string;
+  email_cliente?: string;
+  telefono_cliente?: string;
+  region_cliente?: string;
+  mensaje?: string;
+  estado?: string;
+  [key: string]: unknown;
+};
+
+type RawConstructoraRow = Partial<ModelWithConstructora["constructora"]> & {
+  id?: string;
+  logo_url?: string | null;
+  score_confianza?: number | null;
+  regiones?: string[];
+};
+
+type RawModelRow = Partial<ModelWithConstructora> & {
+  constructora?: RawConstructoraRow | null;
+  constructora_id?: string;
+  imagenes_urls?: string[];
+  precio_desde_uf?: number;
+};
+
+export type PublicConstructoraProject = {
+  id: string;
+  nombre: string;
+  region: string | null;
+  comuna: string | null;
+  estado: string;
+  porcentaje_avance: number;
+  thumbnail_url: string | null;
+  tipo_construccion: string | null;
+  created_at: string;
 };
 
 /** Obtiene los últimos posts para el mega menu (con caché) */
@@ -134,6 +171,7 @@ export async function getDashboardStats() {
     leadsCount: leadsCount || 0,
     recentLeads: recentLeads || [],
     totalViews: (leadsCount || 0) * 22 + (modelsCount || 0) * 45,
+    generatedAtMs: Date.now(),
   }
 }
 
@@ -259,7 +297,7 @@ export async function getModelosFiltered(filters: {
       const { data: dbData } = await query
 
       // 2. Map DB data
-      const allDbData = (dbData as any[] || []).map(m => ({
+      const allDbData = (dbData ?? []).map((m: RawModelRow) => ({
         ...m,
         imagenes_urls: m.imagenes_urls || [],
         precio_desde_uf: m.precio_desde_uf || 0,
@@ -367,7 +405,7 @@ export async function getModelosByConstructora() {
   return (data as ModelWithConstructora[]) || []
 }
 
-export async function createLead(leadData: any) {
+export async function createLead(leadData: LeadInsertDTO) {
   const supabase = await createPublicClient()
   return await supabase.from('leads').insert([leadData]).select()
 }
@@ -381,7 +419,7 @@ export async function getModelsByIds(ids: string[]) {
     .select(`*, constructora:constructoras (*)`)
     .in('id', dbIds)
 
-  const mappedDbData = (dbData as any[] || []).map(m => ({
+  const mappedDbData = (dbData ?? []).map((m: RawModelRow) => ({
     ...m,
     imagenes_urls: m.imagenes_urls || [],
     precio_desde_uf: m.precio_desde_uf || 0,
@@ -615,7 +653,7 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
 }
 
 async function getConstructoraById(id: string) {
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   const { data } = await supabase
     .from('constructoras')
     .select('*')
@@ -624,23 +662,28 @@ async function getConstructoraById(id: string) {
   return data;
 }
 
-/** Obtiene proyectos públicos para mostrar en el portafolio de la constructora */
-export async function getPublicProjectsByConstructoraId(constructoraId: string) {
+/** Proyectos publicos marcados para mostrarse en el perfil de una constructora. */
+export async function getPublicProjectsByConstructoraId(
+  constructoraId: string,
+): Promise<PublicConstructoraProject[]> {
   try {
     const supabase = await createPublicClient();
     const { data, error } = await supabase
       .from('obra_projects')
       .select('id, nombre, region, comuna, estado, porcentaje_avance, thumbnail_url, tipo_construccion, created_at')
       .eq('constructora_id', constructoraId)
-      .order('created_at', { ascending: false });
+      .eq('visible_en_perfil', true)
+      .order('created_at', { ascending: false })
+      .limit(6);
 
     if (error) {
-      console.error("Error fetching public projects:", error);
+      console.error("Error fetching public constructora projects:", error);
       return [];
     }
-    return data || [];
+
+    return (data ?? []) as PublicConstructoraProject[];
   } catch (error) {
-    console.error("Unexpected error fetching public projects:", error);
+    console.error("Unexpected error fetching public constructora projects:", error);
     return [];
   }
 }

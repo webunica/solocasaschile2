@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell, Search, User, ChevronDown } from "lucide-react";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { Bell, Search, ChevronDown } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ interface Props {
 }
 
 export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Props) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
 
   useEffect(() => {
     async function loadUser() {

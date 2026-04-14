@@ -1,156 +1,184 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronRight, ArrowRight, Search, Sparkles, BookOpen, Users, Compass, Megaphone, ShieldCheck, MessageSquare, Building2, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  ChevronRight,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Zap,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { BlogPost } from "@/types/blog";
+import type { BlogPost } from "@/types/blog";
 
-interface BlogMegaMenuProps {
+type BlogMegaMenuProps = {
   posts: BlogPost[];
-  onClose: () => void;
-}
+  onClose?: () => void;
+};
+
+const CORPORATE_LINKS = [
+  { name: "Sobre Nosotros", href: "/nosotros", icon: Users },
+  { name: "Seguimiento de Obra", href: "/seguimiento-de-obras", icon: Zap },
+  { name: "Portal Proveedores", href: "/portal-proveedores", icon: Building2 },
+  { name: "Como verificamos", href: "/verificacion", icon: ShieldCheck },
+];
 
 export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {
+  const featuredPosts = posts.slice(0, 2);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 10, scale: 0.98 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute top-full left-0 w-full bg-white border border-border/40 shadow-2xl rounded-3xl mt-4 overflow-hidden z-[100] p-6 md:p-12"
-      onMouseLeave={onClose}
+      className="mt-4 w-full overflow-hidden rounded-3xl border border-border/40 bg-white/95 p-6 shadow-2xl backdrop-blur-3xl md:p-12"
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-12 gap-12">
-        
-        {/* LADO IZQUIERDO: Recursos y Artículos (6 columnas) */}
-        <div className="md:col-span-7 space-y-8 text-left">
-          <div className="flex items-center justify-between">
-             <h3 className="text-2xl font-black font-heading tracking-tight text-brand-indigo italic">Recursos y <span className="text-brand-teal">Artículos</span></h3>
-             <Link 
-               href="/blog" 
-               className="text-xs font-black uppercase tracking-widest text-[#1b0088]/60 hover:text-brand-teal transition-all flex items-center gap-2 group"
-               onClick={onClose}
-             >
-                Ver Todo
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-             </Link>
+      <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-12">
+        <div className="space-y-8 text-left md:col-span-7">
+          <div className="flex items-center justify-between gap-4">
+            <h3 className="font-heading text-2xl font-black italic tracking-tight text-brand-indigo">
+              Recursos y <span className="text-brand-teal">Articulos</span>
+            </h3>
+            <Link
+              href="/blog"
+              onClick={onClose}
+              className="group flex items-center gap-2 text-xs font-black uppercase tracking-widest text-brand-indigo/60 transition-all hover:text-brand-teal"
+            >
+              Ver Todo
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
           <div className="space-y-8">
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <Link 
-                  key={post.id} 
+            {featuredPosts.length ? (
+              featuredPosts.map((post) => (
+                <Link
+                  key={post.id}
                   href={`/blog/${post.slug}`}
-                  className="group flex gap-6 items-center"
                   onClick={onClose}
+                  className="group flex items-center gap-6"
                 >
-                  <div className="relative w-48 h-32 rounded-2xl overflow-hidden shrink-0 border border-border/40 shadow-sm group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-500">
+                  <div className="relative h-28 w-40 shrink-0 overflow-hidden rounded-2xl border border-border/40 shadow-sm transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-xl sm:h-32 sm:w-48">
                     {post.cover_image_url ? (
-                      <Image 
-                        src={post.cover_image_url} 
+                      <Image
+                        src={post.cover_image_url}
                         alt={post.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 640px) 10rem, 12rem"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-brand-indigo/5 flex items-center justify-center p-4">
-                        <Image src="/images/logo-vertical.png" alt="SoloCasas" width={60} height={40} className="opacity-10" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-brand-indigo/5 p-4">
+                        <Image
+                          src="/images/logo-vertical.png"
+                          alt=""
+                          width={60}
+                          height={40}
+                          className="opacity-10"
+                        />
                       </div>
                     )}
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Badge variant="secondary" className="bg-brand-indigo/5 text-brand-indigo border-none text-[10px] font-black uppercase tracking-tighter px-3 py-0.5">
-                      {post.category || "Educación"}
+
+                  <div className="min-w-0 space-y-2">
+                    <Badge
+                      variant="secondary"
+                      className="h-auto rounded-full border-none bg-brand-indigo/5 px-3 py-0.5 text-[10px] font-black uppercase tracking-normal text-brand-indigo"
+                    >
+                      {post.category || "Educacion"}
                     </Badge>
-                    <h4 className="text-lg font-black font-heading leading-tight group-hover:text-brand-teal transition-colors line-clamp-2">
+                    <h4 className="line-clamp-2 font-heading text-lg font-black leading-tight transition-colors group-hover:text-brand-teal">
                       {post.title}
                     </h4>
-                    <p className="text-xs text-muted-foreground font-medium line-clamp-2 opacity-60">
+                    <p className="line-clamp-2 text-xs font-medium text-muted-foreground opacity-70">
                       {post.excerpt}
                     </p>
                   </div>
                 </Link>
               ))
             ) : (
-              <div className="py-10 text-center bg-slate-50 rounded-2xl border border-dashed border-border/60">
-                <p className="text-sm font-bold text-muted-foreground">Próximamente más guías expertas...</p>
+              <div className="rounded-2xl border border-dashed border-border/60 bg-slate-50 py-10 text-center">
+                <p className="text-sm font-bold text-muted-foreground">
+                  Proximamente mas guias expertas.
+                </p>
               </div>
             )}
           </div>
         </div>
 
-        {/* LADO DERECHO: Impacto y Recursos (5 columnas) */}
-        <div className="md:col-span-5 grid grid-cols-2 gap-8 border-l border-border/10 pl-12 items-start">
+        <div className="grid gap-8 border-border/10 md:col-span-5 md:grid-cols-2 md:border-l md:pl-12">
           <div className="space-y-6">
-                  <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo/40 mb-4 px-4 flex items-center gap-2">
-                    <Sparkles className="w-3 h-3 text-brand-teal" /> Información Corporativa
-                  </h4>
-                  <div className="space-y-1">
-                    {[
-                      { name: "Sobre Nosotros", href: "/nosotros", icon: Users },
-                      { name: "Seguimiento de Obra", href: "/seguimiento-de-obras", icon: Zap },
-                      { name: "Portal Proveedores", href: "/portal-proveedores", icon: Building2 },
-                      { name: "¿Cómo verificamos?", href: "/verificacion", icon: ShieldCheck },
-                    ].map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="flex items-center gap-3 p-4 rounded-2xl hover:bg-brand-indigo/5 transition-all group"
-                        onClick={onClose}
-                      >
-                        <div className="w-8 h-8 rounded-xl bg-brand-indigo/5 flex items-center justify-center text-brand-indigo group-hover:bg-brand-indigo group-hover:text-white transition-all">
-                          <item.icon className="w-4 h-4" />
-                        </div>
-                        <span className="text-xs font-bold text-slate-600 group-hover:text-brand-indigo transition-colors">{item.name}</span>
-                      </Link>
-                    ))}
+            <h4 className="mb-4 flex items-center gap-2 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-brand-indigo/40">
+              <Sparkles className="h-3 w-3 text-brand-teal" />
+              Informacion Corporativa
+            </h4>
+            <div className="space-y-1">
+              {CORPORATE_LINKS.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={onClose}
+                  className="group flex items-center gap-3 rounded-2xl p-4 transition-all hover:bg-brand-indigo/5"
+                >
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-indigo/5 text-brand-indigo transition-all group-hover:bg-brand-indigo group-hover:text-white">
+                    <item.icon className="h-4 w-4" />
                   </div>
+                  <span className="text-xs font-bold text-slate-600 transition-colors group-hover:text-brand-indigo">
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
 
           <div className="space-y-8">
-             <div className="space-y-6">
-               <h3 className="text-lg font-black font-heading tracking-tight text-brand-indigo">Ecosistema B2B</h3>
-               <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-4 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-emerald-600" />
-                    <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">Constru</span>
-                  </div>
-                  <p className="text-[10px] text-emerald-800 font-medium leading-relaxed italic">
-                    Digitaliza tu catálogo y gestiona cotizaciones con cientos de constructoras.
-                  </p>
-                  <Link 
-                    href="/portal-proveedores" 
-                    className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 hover:gap-2 transition-all font-bold"
-                    onClick={onClose}
-                  >
-                    Detalles del Sistema <ChevronRight className="w-3 h-3 shadowed" />
-                  </Link>
-               </div>
+            <div className="space-y-6">
+              <h3 className="font-heading text-lg font-black tracking-tight text-brand-indigo">
+                Ecosistema B2B
+              </h3>
+              <div className="space-y-3 rounded-2xl border border-emerald-500/10 bg-emerald-500/5 p-4">
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-4 w-4 text-emerald-600" />
+                  <span className="text-[11px] font-black uppercase tracking-widest text-emerald-700">
+                    Constru
+                  </span>
+                </div>
+                <p className="text-[10px] font-medium italic leading-relaxed text-emerald-800">
+                  Digitaliza tu catalogo y gestiona cotizaciones con cientos de constructoras.
+                </p>
+                <Link
+                  href="/portal-proveedores"
+                  onClick={onClose}
+                  className="flex items-center text-[10px] font-black uppercase tracking-widest text-emerald-700 transition-all hover:gap-2"
+                >
+                  Detalles del sistema <ChevronRight className="h-3 w-3" />
+                </Link>
+              </div>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-brand-teal">¡Nuevo!</span>
-                <span className="text-lg">🎉</span>
-              </div>
-              <Link 
+              <span className="text-xs font-black text-brand-teal">Nuevo</span>
+              <Link
                 href="/premium-access"
-                className="block w-full py-4 bg-brand-teal text-white text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-brand-indigo hover:shadow-xl hover:-translate-y-0.5 transition-all text-center shadow-lg shadow-brand-teal/20"
                 onClick={onClose}
+                className="block w-full rounded-2xl bg-brand-teal py-4 text-center text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-brand-teal/20 transition-all hover:-translate-y-0.5 hover:bg-brand-indigo hover:shadow-xl"
               >
-                Análisis de Mercado
+                Analisis de Mercado
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-12 pt-6 border-t border-border/10 flex items-center justify-center">
-         <p className="text-[10px] text-muted-foreground font-bold tracking-[0.3em] uppercase opacity-40">Guía Definitiva para la Vivienda Industrializada en Chile 2026</p>
+      <div className="mt-12 flex items-center justify-center border-t border-border/10 pt-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground opacity-40">
+          Guia definitiva para la vivienda industrializada en Chile 2026
+        </p>
       </div>
     </motion.div>
   );
