@@ -142,7 +142,7 @@ export function HeroSection() {
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/65" />
         </div>
 
         {/* Desktop Background */}
@@ -165,7 +165,7 @@ export function HeroSection() {
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/58 via-black/28 to-black/10" />
         </div>
       </div>
 
