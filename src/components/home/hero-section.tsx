@@ -89,6 +89,14 @@ export function HeroSection() {
     }
   };
 
+  const handleRegionChange = (region: string) => {
+    setSelectedRegion(region);
+
+    if (region) {
+      router.push(`/catalogo?region=${region}`);
+    }
+  };
+
   useEffect(() => {
     const typeTimer = setInterval(() => {
       setTypeIndex((prev) => (prev + 1) % CONSTRUCTION_TYPES.length);
@@ -201,7 +209,7 @@ export function HeroSection() {
                       aria-label="Selecciona la región donde buscas"
                       className="w-full h-12 pl-12 pr-4 bg-white text-slate-800 rounded-xl font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/50 shadow-sm cursor-pointer"
                       value={selectedRegion}
-                      onChange={(e) => setSelectedRegion(e.target.value)}
+                      onChange={(e) => handleRegionChange(e.target.value)}
                     >
                       <option value="">¿En qué región buscas?</option>
                       <option value="arica">Arica y Parinacota</option>
