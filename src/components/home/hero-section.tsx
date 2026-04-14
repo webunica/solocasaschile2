@@ -72,7 +72,7 @@ function TypewriterLoop() {
   }, [subIndex, index, isDeleting]);
 
   return (
-    <div className="text-base md:text-xl font-black text-[#5340a1] uppercase tracking-[0.15em] mt-8 h-8 flex flex-row items-center justify-center lg:justify-start w-full drop-shadow-sm">
+    <div className="mt-8 flex h-8 w-full flex-row items-center justify-center text-[18px] font-black uppercase tracking-[0.15em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)] md:text-[22px] lg:justify-start">
       {TYPEWRITER_TEXTS[index].substring(0, subIndex)}
       <span className="animate-pulse bg-brand-teal ml-1 w-2.5 h-6 opacity-80 inline-block" />
     </div>
@@ -261,11 +261,11 @@ export function HeroSection() {
 
                     return (
                       <li key={type}>
-                        <Link href={href} className="group flex items-center gap-3 text-[11px] md:text-xs font-black text-[#1b0088] tracking-wider hover:translate-x-1 transition-transform">
+                        <Link href={href} className="group flex items-center gap-3 text-[13px] md:text-sm font-black text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] hover:translate-x-1 transition-transform">
                           <div className="w-6 h-6 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
                             <ShieldCheck className="w-3.5 h-3.5 text-white" />
                           </div>
-                          <span className="opacity-80 group-hover:opacity-100 group-hover:text-primary transition-all underline decoration-brand-teal/30 underline-offset-4 decoration-2">
+                          <span className="opacity-95 group-hover:opacity-100 group-hover:text-brand-teal transition-all underline decoration-brand-teal/50 underline-offset-4 decoration-2">
                             {type}
                           </span>
                         </Link>
@@ -273,11 +273,11 @@ export function HeroSection() {
                     );
                   })}
                   {/* Item 8: Pronto casas rodantes */}
-                  <li className="flex items-center gap-3 text-[11px] md:text-xs font-black text-slate-400 tracking-wider">
-                    <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
-                      <Zap className="w-3.5 h-3.5 text-slate-500" />
+                  <li className="flex items-center gap-3 text-[13px] md:text-sm font-black text-white/85 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+                    <div className="w-6 h-6 rounded-full bg-white/90 flex items-center justify-center shrink-0 border border-white/50">
+                      <Zap className="w-3.5 h-3.5 text-brand-indigo" />
                     </div>
-                    <span className="text-slate-600 italic font-medium">¡Pronto casas rodantes!</span>
+                    <span className="italic font-medium text-white/85">¡Pronto casas rodantes!</span>
                   </li>
                 </ul>
               </div>
@@ -287,9 +287,9 @@ export function HeroSection() {
                 <TypewriterLoop />
                 
                 {/* Blindaje de Identidad */}
-                <div className="pt-4 border-t border-brand-indigo/10 lg:max-w-md mx-auto lg:mx-0">
-                  <p className="text-[10px] md:text-[11px] font-bold text-brand-indigo/60 uppercase tracking-widest leading-relaxed">
-                    <span className="text-brand-indigo font-black">Nota de Independencia:</span> SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.
+                <div className="pt-4 border-t border-white/25 lg:max-w-md mx-auto lg:mx-0">
+                  <p className="text-xs md:text-[13px] font-bold text-white/82 uppercase tracking-widest leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+                    <span className="text-brand-teal font-black">Nota de Independencia:</span> SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.
                   </p>
                 </div>
               </div>
