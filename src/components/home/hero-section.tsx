@@ -18,6 +18,11 @@ const HERO_BACKGROUND_IMAGES = [
   },
 ] as const;
 
+const HERO_MOBILE_BACKGROUND = {
+  src: "/images/bg/casas-prefabricas-hero-home-mobile.jpg",
+  alt: "Casa prefabricada optimizada para vista mobile",
+} as const;
+
 const CONSTRUCTION_TYPES = [
   "PREFABRICADAS",
   "PANEL SIP",
@@ -120,7 +125,7 @@ export function HeroSection() {
         <div className="block lg:hidden absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div
-              key={`mobile-${currentHeroBackground.src}`}
+              key={`mobile-${HERO_MOBILE_BACKGROUND.src}`}
               initial={{ opacity: 0, scale: 1.03 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.02 }}
@@ -128,11 +133,12 @@ export function HeroSection() {
               className="absolute inset-0"
             >
               <Image
-                src={currentHeroBackground.src}
-                alt={currentHeroBackground.alt}
+                src={HERO_MOBILE_BACKGROUND.src}
+                alt={HERO_MOBILE_BACKGROUND.alt}
                 fill
                 className="object-cover object-center"
-                priority={heroImageIndex === 0}
+                sizes="100vw"
+                priority
               />
             </motion.div>
           </AnimatePresence>
