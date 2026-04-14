@@ -7,7 +7,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-const HERO_BACKGROUND_IMAGE = "/images/bg/casas-prefabricas-hero-home.jpg";
+const HERO_BACKGROUND_IMAGES = [
+  {
+    src: "/images/bg/casas-prefabricas-hero-home.jpg",
+    alt: "Casa prefabricada en Chile",
+  },
+  {
+    src: "/images/bg/casas-prefabricas-hero-home-2.jpg",
+    alt: "Casa moderna prefabricada",
+  },
+] as const;
 
 const CONSTRUCTION_TYPES = [
   "PREFABRICADAS",
@@ -67,8 +76,10 @@ function TypewriterLoop() {
 
 export function HeroSection() {
   const [typeIndex, setTypeIndex] = useState(0);
+  const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [selectedRegion, setSelectedRegion] = useState("");
   const router = useRouter();
+  const currentHeroBackground = HERO_BACKGROUND_IMAGES[heroImageIndex] ?? HERO_BACKGROUND_IMAGES[0];
 
   const handleSearch = () => {
     if (selectedRegion) {
@@ -82,9 +93,13 @@ export function HeroSection() {
     const typeTimer = setInterval(() => {
       setTypeIndex((prev) => (prev + 1) % CONSTRUCTION_TYPES.length);
     }, 3000);
+    const imageTimer = setInterval(() => {
+      setHeroImageIndex((prev) => (prev + 1) % HERO_BACKGROUND_IMAGES.length);
+    }, 7000);
 
     return () => {
       clearInterval(typeTimer);
+      clearInterval(imageTimer);
     };
   }, []);
 
@@ -95,25 +110,47 @@ export function HeroSection() {
       <div className="absolute inset-0 z-0">
         {/* Mobile/Tablet Background */}
         <div className="block lg:hidden absolute inset-0">
-          <Image
-            src={HERO_BACKGROUND_IMAGE}
-            alt="Casa prefabricada en Chile"
-            fill
-            className="object-cover object-center"
-            priority
-          />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`mobile-${currentHeroBackground.src}`}
+              initial={{ opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 1.4, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={currentHeroBackground.src}
+                alt={currentHeroBackground.alt}
+                fill
+                className="object-cover object-center"
+                priority={heroImageIndex === 0}
+              />
+            </motion.div>
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-b from-background/88 via-background/72 to-background/96" />
         </div>
 
         {/* Desktop Background */}
         <div className="hidden lg:block absolute inset-0">
-          <Image
-            src={HERO_BACKGROUND_IMAGE}
-            alt="Casa moderna prefabricada"
-            fill
-            className="object-cover object-center"
-            priority
-          />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`desktop-${currentHeroBackground.src}`}
+              initial={{ opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.02 }}
+              transition={{ duration: 1.4, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={currentHeroBackground.src}
+                alt={currentHeroBackground.alt}
+                fill
+                className="object-cover object-center"
+                priority={heroImageIndex === 0}
+              />
+            </motion.div>
+          </AnimatePresence>
           <div className="absolute inset-0 bg-gradient-to-r from-background/92 via-background/60 to-background/10" />
         </div>
       </div>
