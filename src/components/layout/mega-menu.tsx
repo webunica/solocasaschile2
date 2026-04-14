@@ -101,20 +101,20 @@ export function MegaMenu({ ads, onClose }: MegaMenuProps) {
             <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping" />
             Constructora Destacada
           </div>
-          <Link href={`/constructoras/${cSlug}`} className="group block relative overflow-hidden rounded-2xl border border-border/60 hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
-            <div className="aspect-[4/3] relative">
+          <Link href={`/constructoras/${cSlug}`} className="group block relative overflow-hidden rounded-2xl border border-border/60 bg-white hover:border-primary/50 transition-all shadow-sm hover:shadow-xl">
+            <div className="aspect-[4/3] relative bg-white p-6">
                <Image 
                 src={cImage} 
                 alt={cName} 
                 fill 
-                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                sizes="(max-width: 768px) 100vw, 25vw"
+                className="object-contain p-5 transition-transform duration-700 group-hover:scale-105" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 text-left">
-                <div className="bg-white/90 backdrop-blur-sm w-fit px-2 py-0.5 rounded text-[9px] font-black text-primary mb-2 uppercase tracking-tighter shadow-sm">Premium Partner</div>
-                <p className="text-white font-black text-lg leading-tight uppercase tracking-tight">{cName}</p>
-                <p className="text-white/90 text-[10px] line-clamp-1 mt-1 font-medium italic">{cDesc}</p>
-              </div>
+              <div className="absolute left-3 top-3 bg-primary/10 backdrop-blur-sm w-fit px-2 py-0.5 rounded text-[9px] font-black text-primary uppercase tracking-tighter shadow-sm">Premium Partner</div>
+            </div>
+            <div className="border-t border-border/10 bg-white p-4 text-left">
+              <p className="text-primary font-black text-sm leading-tight uppercase tracking-tight">{cName}</p>
+              <p className="text-muted-foreground text-[10px] line-clamp-2 mt-1 font-medium italic">{cDesc}</p>
             </div>
           </Link>
           <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
