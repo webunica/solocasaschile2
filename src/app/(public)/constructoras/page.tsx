@@ -52,7 +52,7 @@ export default async function ConstructorasPage() {
   const asociadas = sorted.filter(c => c.plan !== "informativo");
 
   return (
-    <div className="min-h-screen bg-background pb-24 pt-44">
+    <div className="min-h-screen bg-background pb-24 pt-32">
       {sorted.length > 0 && (
         <StructuredData 
           type="ItemList" 
@@ -81,7 +81,7 @@ export default async function ConstructorasPage() {
 
         <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12 space-y-10">
           <div className="space-y-6">
-            <Badge variant="outline" className="bg-brand-indigo text-white border-none px-6 py-1.5 rounded-full text-[9px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
+            <Badge variant="outline" className="brand-gradient text-white border-none px-6 py-1.5 rounded-full text-[9px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
               Directorio Verificado
             </Badge>
             <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
@@ -127,7 +127,7 @@ export default async function ConstructorasPage() {
           <section className="space-y-12" aria-labelledby="section-destacadas-heading">
              <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                   <div className="w-10 h-10 rounded-2xl bg-brand-indigo flex items-center justify-center text-white shadow-lg shadow-primary/20" aria-hidden="true">
+                   <div className="w-10 h-10 rounded-2xl brand-gradient flex items-center justify-center text-white shadow-lg shadow-primary/20" aria-hidden="true">
                       <Building2 className="w-5 h-5" />
                    </div>
                    <h2 id="section-destacadas-heading" className="text-3xl font-heading font-black tracking-tight text-foreground">

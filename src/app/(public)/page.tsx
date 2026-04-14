@@ -35,19 +35,16 @@ export default function Home() {
       {/* A: Attention (Hero) */}
       <HeroSection />
 
-      {/* Trust & Authority (Early Social Proof) */}
-      <TrustSection />
-
-      {/* Concept Identification (Categorization) */}
-      <TypesSection />
+      {/* Model Selection (Desire) */}
+      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando modelos destacados...</div>}>
+         <FeaturedModelsSection />
+      </Suspense>
 
       {/* Retention (Price Drop Alert) */}
       <PriceDropBanner />
 
-      {/* Model Selection (The Product) */}
-      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando modelos destacados...</div>}>
-         <FeaturedModelsSection />
-      </Suspense>
+      {/* Concept Identification (Categorization) */}
+      <TypesSection />
 
       {/* Flow & Education (How It Works) */}
       <HowItWorks />
@@ -56,6 +53,9 @@ export default function Home() {
       <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando directorio de empresas...</div>}>
          <FeaturedConstructorsSection />
       </Suspense>
+
+      {/* Trust & Authority (Social Proof) - kept from staging */}
+      <TrustSection />
 
       {/* SEO Authority & FAQ (Semantic Weight) */}
       <SeoContent />
