@@ -142,7 +142,6 @@ export function HeroSection() {
               />
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/65" />
         </div>
 
         {/* Desktop Background */}
@@ -182,7 +181,7 @@ export function HeroSection() {
               className="space-y-5 md:space-y-12 flex flex-col items-center lg:items-start text-center lg:text-left"
             >
               {/* Top Text */}
-              <div className="text-brand-indigo font-black uppercase tracking-tight text-sm md:text-base pt-6 md:pt-10 leading-tight">
+              <div className="text-brand-indigo font-black uppercase tracking-tight text-sm md:text-base pt-6 md:pt-10 leading-tight lg:text-white lg:drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)]">
                 Cientos de modelos de casas<br />
                 Prefabricadas en un solo lugar
               </div>
