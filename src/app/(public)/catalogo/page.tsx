@@ -4,13 +4,15 @@ import { FeaturedSlider } from "@/components/catalogo/featured-slider";
 import { CatalogoFilters } from "@/components/catalogo/catalogo-filters";
 import { CatalogoEmpty } from "@/components/catalogo/catalogo-empty";
 import { CatalogoControls } from "@/components/catalogo/catalogo-controls";
+import Link from "next/link";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Metadata } from "next";
 import { getRegionDisplayName } from "@/lib/regions";
 import type { TipoModelo } from "@/lib/mock-data";
 import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
-import { StructuredData, buildItemListJsonLd } from "@/components/seo/structured-data";
+import { StructuredData, buildBreadcrumbJsonLd, buildItemListJsonLd } from "@/components/seo/structured-data";
+import { ChevronRight, Home } from "lucide-react";
 
 
 export const dynamic = "force-dynamic";
@@ -43,6 +45,18 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
 
   // Resolve region display name for slider label using the shared utility
   const regionLabel = getRegionDisplayName(regionFilter);
+  const tipoLabel = tipoFilter
+    ? tipoFilter
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ")
+    : null;
+  const breadcrumbItems = [
+    { name: "Inicio", url: "https://solocasaschile.com" },
+    { name: "Catalogo", url: "https://solocasaschile.com/catalogo" },
+    ...(regionLabel ? [{ name: regionLabel, url: `https://solocasaschile.com/catalogo?region=${regionFilter}` }] : []),
+    ...(tipoLabel ? [{ name: tipoLabel, url: `https://solocasaschile.com/catalogo?tipo=${tipoFilter}` }] : []),
+  ];
 
   // Real fetch from Supabase
   const [modelos, featuredModels] = await Promise.all([
@@ -65,8 +79,52 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
           )} 
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbJsonLd(breadcrumbItems)) }}
+      />
       <div className="border-b bg-card/40 backdrop-blur-xl">
-        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16">
+        <div className="container max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-14">
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <ol className="flex flex-wrap items-center gap-2 text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+              <li>
+                <Link href="/" className="inline-flex items-center gap-2 transition-colors hover:text-brand-indigo">
+                  <Home className="h-3.5 w-3.5" aria-hidden="true" />
+                  Inicio
+                </Link>
+              </li>
+              <li aria-hidden="true">
+                <ChevronRight className="h-3.5 w-3.5 opacity-40" />
+              </li>
+              <li>
+                <Link href="/catalogo" className="transition-colors hover:text-brand-indigo">
+                  Catalogo
+                </Link>
+              </li>
+              {regionLabel && (
+                <>
+                  <li aria-hidden="true">
+                    <ChevronRight className="h-3.5 w-3.5 opacity-40" />
+                  </li>
+                  <li>
+                    <Link href={`/catalogo?region=${regionFilter}`} className="transition-colors hover:text-brand-indigo">
+                      {regionLabel}
+                    </Link>
+                  </li>
+                </>
+              )}
+              {tipoLabel && (
+                <>
+                  <li aria-hidden="true">
+                    <ChevronRight className="h-3.5 w-3.5 opacity-40" />
+                  </li>
+                  <li className="text-brand-indigo" aria-current="page">
+                    {tipoLabel}
+                  </li>
+                </>
+              )}
+            </ol>
+          </nav>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div className="space-y-3">
                <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-foreground">
