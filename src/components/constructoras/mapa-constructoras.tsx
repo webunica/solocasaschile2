@@ -198,7 +198,7 @@ export function MapaConstructoras({ constructoras }: Props) {
                     {c.plan === "premium" && (
                       <Badge className="bg-amber-500/10 text-amber-600 border-none text-[9px] uppercase tracking-widest font-black">Premium</Badge>
                     )}
-                    {c.plan === "pro" && (
+                    {(c.plan === "avanza" || c.plan === "pro") && (
                       <Badge className="bg-blue-500/10 text-blue-600 border-none text-[9px] uppercase tracking-widest font-black">Pro</Badge>
                     )}
                     <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-60 transition-opacity" />

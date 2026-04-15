@@ -15,6 +15,14 @@ import {
 import { register, resendConfirmation } from "@/lib/supabase/actions";
 
 const PLAN_META = {
+  prueba: { 
+    label: "Prueba", icon: Building2, color: "text-brand-indigo", bg: "bg-brand-indigo/10", border: "border-brand-indigo/20", isPaid: false,
+    prices: { monthly: "0", yearly: "0" }, original: "0"
+  },
+  avanza: { 
+    label: "Avanza", icon: Zap, color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true,
+    prices: { monthly: "25000", yearly: "25000" }, original: "25000"
+  },
   premium: { 
     label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true,
     prices: { monthly: "2.9", yearly: "1.45" }, original: "2.9" 
@@ -224,7 +232,7 @@ function RegisterForm() {
           </Link>
           <div className="text-center md:text-left space-y-2">
             <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo leading-[0.9]">
-              {planMeta.isPaid ? "Registro Directo" : "Únete a la plataforma"}
+              {planMeta.isPaid ? "Registro Directo" : "Prueba 30 dias"}
             </h1>
             <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm">
               Solo necesitas tu correo para comenzar.

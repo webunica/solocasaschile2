@@ -127,13 +127,17 @@ export async function register(formData: FormData) {
       telefono: phone,
       rut: rut,
       plan,
-      plan_status: plan === 'gratis' ? 'active' : 'pending',
+      plan_status: plan === 'gratis' || plan === 'prueba' ? 'active' : 'pending',
       verificada: false,
       score_confianza: 50,
     }
 
-    // El plan gratuito dura 4 meses
-    if (plan === 'gratis') {
+    // El plan de prueba dura 30 dias; el legado gratis mantiene 4 meses.
+    if (plan === 'prueba') {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 30);
+      constructoraPayload.next_billing_date = expirationDate.toISOString();
+    } else if (plan === 'gratis') {
       const expirationDate = new Date();
       expirationDate.setMonth(expirationDate.getMonth() + 4);
       constructoraPayload.next_billing_date = expirationDate.toISOString();
@@ -249,7 +253,7 @@ export async function updateSettings(formData: FormData) {
   const { data: currentConst } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
   const initialPlan = currentConst?.plan || 'gratis';
 
-  const isPaidPlan = initialPlan === 'pro' || initialPlan === 'premium';
+  const isPaidPlan = initialPlan === 'avanza' || initialPlan === 'pro' || initialPlan === 'premium';
 
   const data: GenericRecord = {
     nombre: formData.get('nombre') as string,

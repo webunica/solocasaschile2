@@ -364,7 +364,7 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
                    <p className="text-[10px] text-muted-foreground italic">Este email recibirá todas las cotizaciones por defecto.</p>
                 </div>
             
-            {(initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
+            {(initialData?.plan === 'avanza' || initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
               <div className="space-y-4 pt-4 border-t border-border/40">
                 <div className="flex items-center gap-2">
                    <Video className="w-5 h-5 text-red-500" />
@@ -573,7 +573,7 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
         </Card>
 
         {/* SEO Card — Pro/Premium only */}
-        {(initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
+        {(initialData?.plan === 'avanza' || initialData?.plan === 'pro' || initialData?.plan === 'premium') && (
           <Card className="rounded-3xl border-border/40 shadow-xl overflow-hidden">
             <CardContent className="p-8 space-y-6">
               <div className="flex items-center gap-3">

@@ -42,7 +42,7 @@ export default async function ConstructorasPage() {
 
   const combined = [...mockMapped, ...(dbConstructoras || [])];
 
-  const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2, informativo: 3 };
+  const planOrder: Record<string, number> = { premium: 0, avanza: 1, pro: 2, prueba: 3, gratis: 4, informativo: 5 };
   const sorted = combined.sort((a, b) => {
     const diff = (planOrder[a.plan] ?? 4) - (planOrder[b.plan] ?? 4);
     if (diff !== 0) return diff;

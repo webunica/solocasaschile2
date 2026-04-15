@@ -357,7 +357,7 @@ export async function getModelosFiltered(filters: {
       const uniqueMocks = filteredMocks.filter(m => !dbSlugs.has(m.slug))
       const allData = [...mappedDbData, ...uniqueMocks]
       
-      const planOrder: Record<string, number> = { premium: 0, pro: 1, gratis: 2 }
+      const planOrder: Record<string, number> = { premium: 0, avanza: 1, pro: 2, prueba: 3, gratis: 4 }
       const sorted = allData.sort((a, b) => {
         if (a.id === 'm0') return -1
         if (b.id === 'm0') return 1
@@ -613,7 +613,7 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
         })
 
         const filtered = unique.filter(m => 
-          m.is_featured === true || m.constructora?.plan === 'premium'
+          m.is_featured === true || m.constructora?.plan === 'premium' || m.constructora?.plan === 'avanza'
         )
 
         const regional = regionDisp 

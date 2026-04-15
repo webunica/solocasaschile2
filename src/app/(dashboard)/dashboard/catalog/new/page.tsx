@@ -221,7 +221,7 @@ export default function NewModelPage() {
     loadPlan();
   }, []);
 
-  const isPaidPlan = plan === 'pro' || plan === 'premium';
+  const isPaidPlan = plan === 'avanza' || plan === 'pro' || plan === 'premium';
 
   const handleImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     const maxPhotos = planLimits?.maxPhotos || 3;

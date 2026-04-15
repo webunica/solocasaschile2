@@ -135,7 +135,7 @@ export default async function DashboardPage() {
                 <Badge className={cn(
                   "rounded-full px-4 py-1 text-[10px] font-black uppercase tracking-widest border-none shadow-sm",
                   plan === 'premium' ? "bg-amber-500 text-white" : 
-                  plan === 'pro' ? "bg-brand-indigo text-white" : "bg-slate-200 text-slate-600"
+                  plan === 'avanza' || plan === 'pro' ? "bg-brand-indigo text-white" : "bg-slate-200 text-slate-600"
                 )}>
                   Plan {plan}
                 </Badge>

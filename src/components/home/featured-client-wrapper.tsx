@@ -109,7 +109,7 @@ export function FeaturedClientWrapper({ items }: Props) {
                       <Badge variant="outline" className="border-border/60 text-muted-foreground font-black text-[9px] uppercase tracking-widest px-4 py-1.5 rounded-full group-hover:border-primary group-hover:text-primary transition-colors">
                         <CheckCircle2 className="w-3 h-3 mr-2" /> Certificada
                       </Badge>
-                      {(builder.plan === 'premium' || builder.plan === 'pro') && (
+                      {(builder.plan === 'premium' || builder.plan === 'avanza' || builder.plan === 'pro') && (
                         <Badge variant="outline" className="border-border/60 text-muted-foreground font-black text-[9px] uppercase tracking-widest px-4 py-1.5 rounded-full">
                            <Clock className="w-3 h-3 mr-2" /> Respuesta Rápida
                         </Badge>

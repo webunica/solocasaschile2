@@ -6,7 +6,7 @@ import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-lo
 import { z } from 'zod';
 
 const CheckoutSchema = z.object({
-  plan: z.enum(['pro', 'premium']),
+  plan: z.enum(['avanza', 'pro', 'premium']),
   billing: z.enum(['monthly', 'yearly'])
 });
 
@@ -20,6 +20,15 @@ const PLAN_PRICES_UF = {
     yearly: 1.45 * 12,
   }
 } as const;
+
+const PLAN_PRICES_CLP_NET = {
+  avanza: {
+    monthly: 25000,
+    yearly: 25000 * 12,
+  },
+} as const;
+
+const IVA_RATE = 0.19;
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) {
@@ -64,9 +73,12 @@ export async function POST(req: NextRequest) {
     const { plan, billing } = validation.data;
 
     // 0. Obtener valor dinámico de la UF
-    const valorUfActual = await getUfValue();
-    const ufAmount = PLAN_PRICES_UF[plan as keyof typeof PLAN_PRICES_UF][billing === 'yearly' ? 'yearly' : 'monthly'];
-    const amountClp = Math.round(ufAmount * valorUfActual);
+    const billingKey = billing === 'yearly' ? 'yearly' : 'monthly';
+    const isClpPlan = plan in PLAN_PRICES_CLP_NET;
+    const valorUfActual = isClpPlan ? null : await getUfValue();
+    const amountClp = isClpPlan
+      ? Math.round(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey] * (1 + IVA_RATE))
+      : Math.round(PLAN_PRICES_UF[plan as keyof typeof PLAN_PRICES_UF][billingKey] * valorUfActual!);
 
     const subject = `SoloCasasChile ${plan.toUpperCase()} ${billing === 'yearly' ? 'Anual' : 'Mensual'}`;
 
@@ -80,7 +92,9 @@ export async function POST(req: NextRequest) {
         'optional[constructoraId]': user.id,
         'optional[plan]': plan,
         'optional[billing]': billing,
-        'optional[uf_valor_usado]': String(valorUfActual)
+        'optional[uf_valor_usado]': valorUfActual ? String(valorUfActual) : '',
+        'optional[precio_neto_clp]': isClpPlan ? String(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey]) : '',
+        'optional[iva_rate]': isClpPlan ? String(IVA_RATE) : ''
       }
     });
 

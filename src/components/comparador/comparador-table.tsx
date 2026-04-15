@@ -83,7 +83,7 @@ const ROWS: Row[] = [
            <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-[9px] uppercase tracking-widest px-2 py-0 border-none">
              <Star className="w-2.5 h-2.5 mr-1 fill-current" /> Premium
            </Badge>
-         ) : m.constructora?.plan === "pro" ? (
+         ) : m.constructora?.plan === "avanza" || m.constructora?.plan === "pro" ? (
            <Badge className="bg-blue-500/10 text-blue-600 border-none text-[9px] uppercase tracking-widest px-2 py-0">
              Pro
            </Badge>

@@ -1,4 +1,16 @@
 export const PLAN_LIMITS = {
+  prueba: {
+    maxModels: 3,
+    maxPhotos: 3,
+    features: {
+      testimonials: false,
+      certifications: false,
+      gallery: false,
+      verifiedBadge: false,
+      priorityPosition: false,
+      analytics: false,
+    }
+  },
   gratis: {
     maxModels: 3,
     maxPhotos: 3,
@@ -13,6 +25,18 @@ export const PLAN_LIMITS = {
   },
   pro: {
     maxModels: 15,
+    maxPhotos: 10,
+    features: {
+      testimonials: true,
+      certifications: true,
+      gallery: true,
+      verifiedBadge: true,
+      priorityPosition: true,
+      analytics: true,
+    }
+  },
+  avanza: {
+    maxModels: 10,
     maxPhotos: 10,
     features: {
       testimonials: true,

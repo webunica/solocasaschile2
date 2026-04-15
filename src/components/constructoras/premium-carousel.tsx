@@ -80,8 +80,10 @@ export function PremiumCarousel({ constructoras }: { constructoras: PremiumConst
                 <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 font-black text-[9px] uppercase tracking-widest">
                   <Star className="w-2.5 h-2.5 mr-1 fill-current" /> Premium
                 </Badge>
-              ) : c.plan === "pro" ? (
-                <Badge className="bg-blue-500/10 text-blue-600 border-none font-black text-[9px] uppercase tracking-widest">Pro</Badge>
+              ) : c.plan === "avanza" || c.plan === "pro" ? (
+                <Badge className="bg-blue-500/10 text-blue-600 border-none font-black text-[9px] uppercase tracking-widest">
+                  {c.plan === "avanza" ? "Avanza" : "Pro"}
+                </Badge>
               ) : null}
             </div>
 

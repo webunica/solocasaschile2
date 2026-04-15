@@ -12,6 +12,8 @@ import {
 import { cn } from "@/lib/utils";
 
 const PLAN_META = {
+  avanza:  { label: "Avanza",  icon: Zap,   color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true },
+  prueba:  { label: "Prueba",  icon: Star,  color: "text-brand-indigo", bg: "bg-brand-indigo/10", border: "border-brand-indigo/20", isPaid: false },
   premium: { label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true },
   pro:     { label: "Pro",     icon: Zap,   color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true },
   gratis:  { label: "Gratis",  icon: Star,  color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false },
@@ -20,7 +22,7 @@ type PlanKey = keyof typeof PLAN_META;
 
 const FREE_STEPS = [
   { icon: UserCircle, title: "Completa los datos de tu empresa", desc: "Agrega logo, descripción y contacto para impresionar a tus futuros clientes." },
-  { icon: Home, title: "Sube tu primer modelo de casa", desc: "Publica hasta 3 modelos en el plan Gratis con fotos y especificaciones técnicas." },
+  { icon: Home, title: "Sube tu primer modelo de casa", desc: "Publica tus primeros modelos durante la prueba de 30 dias." },
   { icon: BookOpen, title: "Revisa los leads que lleguen", desc: "Cada solicitud de cotización llega directo a tu panel. Responde y convierte." },
 ];
 
