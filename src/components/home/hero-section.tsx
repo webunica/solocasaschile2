@@ -189,7 +189,7 @@ export function HeroSection() {
               {/* Headline */}
               <div className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
                 <h1 className="flex flex-col gap-0 items-center lg:items-start w-full">
-                  <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">
+                  <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-[#dca24e] uppercase">
                     CASAS
                   </span>
                   <AnimatePresence mode="wait">
