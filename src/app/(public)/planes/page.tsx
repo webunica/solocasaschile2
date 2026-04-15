@@ -1,529 +1,406 @@
-"use client";
-
-import { useState, useTransition, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants, Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import {
-  CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, ChevronDown, Timer, Sparkles, Loader2, Info
-} from "lucide-react";
-import { PromotionCountdown } from "@/components/ui/promotion-countdown";
-import { motion } from "framer-motion";
-import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ArrowRight, Building2, CheckCircle2, Crown, MessageCircle, ShieldCheck, Sparkles, Star, Zap } from "lucide-react";
 
-const PLANES = [
-  {
-    id: "premium",
-    nombre: "Premium",
-    precioMensual: "2.9",
-    precioAnualEquiv: "1.45",
-    precioAnualTotal: "17.4",
-    precioOriginal: "2.9",
-    descuento: "50% OFF ANUAL",
-    icon: Crown,
-    color: "text-amber-500",
-    bgIcon: "bg-amber-500/10",
-    borderClass: "border-amber-500/50 shadow-2xl shadow-amber-500/10 scale-105",
-    gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
-    badge: "OFERTA LANZAMIENTO",
-    badgeClass: "bg-red-500 text-white border-red-600 animate-pulse",
-    features: [
-      { texto: "Acceso a constru.solocasaschile.com", ok: true },
-      { texto: "Sistema de Seguimiento de Obras", ok: true },
-      { texto: "Modelos ilimitados (Escalabilidad total)", ok: true },
-      { texto: "20 fotos por modelo + video tour", ok: true },
-      { texto: "Perfil premium con video corporativo", ok: true },
-      { texto: "CRM + analíticas completas de mercado", ok: true },
-      { texto: "Testimonios ilimitados (Social Proof)", ok: true },
-      { texto: "Certificaciones ilimitadas", ok: true },
-      { texto: "Galería ilimitada de proyectos", ok: true },
-      { texto: "Badge Premium ⭐ posicionamiento VIP", ok: true },
-    ],
-    cta: "Dominar el Mercado",
-    ctaHref: "/register?plan=premium",
-    ctaClass: "bg-brand-indigo text-white hover:opacity-90 shadow-lg shadow-primary/20",
-    ctaVariant: "default" as const,
-  },
-  {
-    id: "pro",
-    nombre: "Pro",
-    precioMensual: "1.9",
-    precioAnualEquiv: "0.95",
-    precioAnualTotal: "11.4",
-    precioOriginal: "1.9",
-    descuento: "50% OFF ANUAL",
-    icon: Zap,
-    color: "text-brand-teal",
-    bgIcon: "bg-brand-teal/10",
-    borderClass: "border-brand-teal/40 shadow-2xl shadow-brand-teal/10",
-    gradientClass: "from-brand-teal/5 to-transparent",
-    badge: "SÚPER PROMO",
-    badgeClass: "bg-brand-teal text-white border-brand-teal/30",
-    features: [
-      { texto: "15 modelos publicados", ok: true },
-      { texto: "10 fotos por modelo", ok: true },
-      { texto: "Perfil completo de constructora", ok: true },
-      { texto: "CRM de leads avanzado", ok: true },
-      { texto: "Hasta 5 testimonios verificados", ok: true },
-      { texto: "5 certificaciones de calidad", ok: true },
-      { texto: "10 proyectos en galería", ok: true },
-      { texto: "Badge Constructora Verificada ✓", ok: true },
-      { texto: "Sistema de Seguimiento de Obras", ok: false },
-      { texto: "Soporte por email prioritario", ok: true },
-    ],
-    cta: "Empezar a Escalar",
-    ctaHref: "/register?plan=pro",
-    ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white",
-    ctaVariant: "default" as const,
-  },
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const WHATSAPP_URL =
+  "https://wa.me/56964130601?text=Hola%20SolocasasChile%2C%20quiero%20conocer%20los%20planes%20para%20mi%20constructora.";
+
+const plans = [
   {
     id: "gratis",
-    nombre: "Gratis",
-    precioMensual: "0",
-    precioAnualEquiv: "0",
-    periodo: "por 4 meses",
+    name: "Plan gratis",
+    badge: "Entrada simple",
+    price: "$0",
+    suffix: "Solicitalo aqui",
+    description:
+      "Para constructoras que quieren aparecer en la plataforma, validar demanda y comenzar sin riesgo.",
     icon: Building2,
-    color: "text-muted-foreground",
-    bgIcon: "bg-muted/60",
-    borderClass: "border-border/60",
-    gradientClass: "",
+    cta: "Solicitalo aqui",
+    href: "/register?plan=gratis",
+    secondaryCta: "Hablar por WhatsApp",
+    secondaryHref: WHATSAPP_URL,
+    cardClass: "border-border/60 bg-white",
+    iconClass: "bg-slate-100 text-brand-indigo",
     features: [
-      { texto: "3 modelos publicados", ok: true },
-      { texto: "3 fotos por modelo", ok: true },
-      { texto: "Perfil básico de constructora", ok: true },
-      { texto: "Recepción de leads / cotizaciones", ok: true },
-      { texto: "Testimonios y certificaciones", ok: false },
-      { texto: "Galería de proyectos terminados", ok: false },
-      { texto: "Badge Constructora Verificada ✓", ok: false },
-      { texto: "Posición prioritaria en catálogo", ok: false },
-      { texto: "Estadísticas y analíticas", ok: false },
-      { texto: "Soporte dedicado", ok: false },
+      "Perfil de empresa en SolocasasChile",
+      "Publicacion de 1 a 2 modelos",
+      "Boton directo a WhatsApp",
+      "Sello visible: Empresa en evaluacion",
+      "Ideal para probar la plataforma antes de invertir",
     ],
-    cta: "Probar Plataforma",
-    ctaHref: "/register",
-    ctaClass: "border-border text-foreground hover:bg-muted font-medium opacity-80",
-    ctaVariant: "outline" as const,
+  },
+  {
+    id: "fundadores",
+    name: "Plan Fundadores",
+    badge: "Mas recomendado",
+    price: "$25.000",
+    suffix: "+ IVA / mes",
+    description:
+      "La opcion principal para constructoras que quieren entrar temprano, publicar mejor y recibir apoyo inicial.",
+    icon: Zap,
+    cta: "Unirme como fundador",
+    href: "/register?plan=fundadores",
+    secondaryCta: "Resolver dudas",
+    secondaryHref: WHATSAPP_URL,
+    featured: true,
+    cardClass: "border-brand-teal/50 bg-white shadow-2xl shadow-brand-teal/10 md:-translate-y-4",
+    iconClass: "bg-brand-teal/10 text-brand-teal",
+    features: [
+      "Hasta 10 modelos publicados",
+      "Ficha destacada dentro del catalogo",
+      "Aparicion prioritaria en listados",
+      "Formulario de cotizacion",
+      "Landing SEO propia de la empresa",
+      "Estadisticas basicas",
+      "Configuracion inicial asistida",
+      "Primeros 2 meses a precio fundador",
+    ],
+  },
+  {
+    id: "destacado",
+    name: "Plan Destacado",
+    badge: "Visibilidad premium",
+    price: "$49.990",
+    suffix: "+ IVA / mes",
+    description:
+      "Para empresas que ya estan listas para aumentar presencia y tomar posiciones de mayor visibilidad.",
+    icon: Crown,
+    cta: "Solicitar destacado",
+    href: "/register?plan=destacado",
+    secondaryCta: "Cotizar por WhatsApp",
+    secondaryHref: WHATSAPP_URL,
+    cardClass: "border-brand-indigo/20 bg-white",
+    iconClass: "bg-brand-indigo/10 text-brand-indigo",
+    features: [
+      "Mayor exposicion dentro del ecosistema",
+      "Ubicaciones destacadas segun disponibilidad",
+      "Mas modelos y presencia editorial",
+      "Prioridad en oportunidades comerciales",
+      "Pensado para una segunda etapa de crecimiento",
+    ],
   },
 ];
 
-const FAQS = [
+const comparisons = [
+  ["Perfil de empresa", "Incluido", "Incluido", "Incluido"],
+  ["Modelos publicados", "1 a 2", "Hasta 10", "Mayor capacidad"],
+  ["WhatsApp directo", "Incluido", "Incluido", "Incluido"],
+  ["Formulario de cotizacion", "Basico", "Incluido", "Incluido"],
+  ["Landing SEO propia", "No incluido", "Incluido", "Incluido"],
+  ["Prioridad en listados", "No incluido", "Incluido", "Alta visibilidad"],
+  ["Onboarding asistido", "No incluido", "Incluido", "Incluido"],
+];
+
+const faqs = [
   {
-    q: "¿Por qué el plan Gratis dura 4 meses?",
-    a: "Queremos que pruebes la potencia de la plataforma sin riesgos. 4 meses es tiempo suficiente para recibir tus primeros leads y cerrar ventas antes de decidir escalar a un plan Pro.",
+    q: "Por que existe un plan gratis?",
+    a: "Porque SolocasasChile esta en etapa de crecimiento y necesitamos que constructoras reales entren con baja friccion. El objetivo es poblar la plataforma, validar oferta y construir confianza.",
   },
   {
-    q: "¿Cómo funciona el descuento anual?",
-    a: "Al elegir el pago anual, obtienes un 50% de descuento directo sobre el valor mensual. Es nuestra forma de premiar a las constructoras que se comprometen con su crecimiento a largo plazo.",
+    q: "El Plan Fundadores mantiene el precio para siempre?",
+    a: "El precio fundador aplica para esta etapa inicial y los primeros cupos. La idea es premiar a las empresas que entran temprano antes de que la plataforma suba precios con mas trafico y casos de exito.",
   },
   {
-    q: "¿En qué moneda se cobra?",
-    a: "Los planes Pro y Premium se cobran en UF (Unidad de Fomento chilena). El valor exacto en pesos se calcula al momento de la facturación según el valor diario de la UF.",
+    q: "Los valores incluyen IVA?",
+    a: "No. Todos los valores pagados se muestran mas IVA.",
   },
   {
-    q: "¿Qué pasa con mis leads si termina mi periodo gratis?",
-    a: "Tus leads son tuyos. Siempre tendrás acceso al historial de prospectos, incluso si decides no renovar o bajar de plan.",
+    q: "Hay permanencia obligatoria?",
+    a: "La entrada debe ser simple. La recomendacion comercial es trabajar sin permanencia larga al inicio y enfocar la conversion en demostrar valor durante los primeros meses.",
   },
   {
-    q: "¿Hay contrato de permanencia?",
-    a: "El plan mensual no tiene permanencia. El plan anual se paga por adelantado y te garantiza el precio promocional durante los 12 meses de servicio.",
+    q: "Puedo partir gratis y luego pasar a Fundadores?",
+    a: "Si. El plan gratis permite comenzar con presencia basica. Cuando la empresa quiera mas modelos, prioridad y apoyo de carga, puede pasar al Plan Fundadores.",
   },
 ];
 
 export default function PlanesPage() {
-  const [isYearly, setIsYearly] = useState(true);
-  const [ufValue, setUfValue] = useState<number | null>(null);
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  const isStatusPending = searchParams?.get('status') === 'pending';
-
-  // Fetch current UF for price estimation
-  useEffect(() => {
-    fetch('/api/market/uf')
-      .then(res => res.json())
-      .then(data => setUfValue(data.uf))
-      .catch(() => console.warn("No se pudo cargar el valor de la UF para el resumen."));
-  }, []);
-
-  const formatPriceCLP = (uf: string) => {
-    if (!ufValue) return null;
-    const clp = Math.round(parseFloat(uf) * ufValue);
-    return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(clp);
-  };
-
-  const handlePurchase = async (planId: string, billing: 'monthly' | 'yearly') => {
-    if (planId === 'gratis') {
-      router.push(`/register?plan=${planId}`);
-      return;
-    }
-
-    startTransition(async () => {
-      try {
-        const supabase = createClient();
-        const { data: { session } } = await supabase.auth.getSession();
-
-        if (!session) {
-          router.push(`/register?plan=${planId}&billing=${billing}`);
-          return;
-        }
-
-        console.log("Iniciando checkout para:", { planId, billing });
-        const response = await fetch('/api/payments/flow/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan: planId, billing })
-        });
-
-        console.log("Respuesta recibida de la API:", response.status);
-        const data = await response.json();
-        console.log("Datos de Flow:", data);
-
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          toast.error(data.error || "Error al iniciar el pago.");
-        }
-      } catch {
-        toast.error("Ocurrió un error inesperado. Intenta de nuevo.");
-      }
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-background pb-32">
-      {/* Loading Overlay */}
-      {isPending && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center flex-col gap-4">
-           <div className="w-16 h-16 rounded-full border-4 border-brand-indigo/20 border-t-brand-indigo animate-spin" />
-           <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Iniciando pago seguro con Flow...</p>
-        </div>
-      )}
-
-      {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="relative pt-44 pb-10 text-center overflow-hidden border-b border-border/40">
-        {/* Pending Status Alert */}
-        {isStatusPending && (
-          <div className="container max-w-4xl mx-auto px-4 mb-10">
-            <motion.div 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-brand-indigo/10 border border-brand-indigo/30 p-5 rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl shadow-brand-indigo/5"
-            >
-              <div className="flex items-center gap-4 text-left">
-                <div className="w-12 h-12 rounded-2xl bg-brand-indigo flex items-center justify-center shadow-lg shadow-brand-indigo/20">
-                  <Zap className="w-6 h-6 text-white animate-pulse" />
-                </div>
-                <div>
-                  <h3 className="font-black text-slate-900 uppercase tracking-tighter">¡Casi listo para publicar!</h3>
-                  <p className="text-sm text-slate-500 font-medium leading-tight">Solo falta completar tu pago para activar tu plan y empezar a recibir leads.</p>
-                </div>
-              </div>
-              <Button 
-                onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })}
-                className="rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] px-8 h-12 border-none shadow-xl shadow-slate-200"
+    <main className="min-h-screen bg-[#fbfbf9] text-slate-950">
+      <section className="relative overflow-hidden border-b border-slate-200/70 bg-white pt-36 pb-20 md:pt-44 md:pb-24">
+        <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-brand-teal/10 to-transparent" />
+        <div className="container relative mx-auto grid max-w-6xl gap-12 px-4 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+          <div className="space-y-7">
+            <Badge className="border-brand-teal/30 bg-brand-teal/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.24em] text-brand-indigo">
+              Constructoras fundadoras
+            </Badge>
+            <div className="space-y-5">
+              <h1 className="max-w-3xl text-5xl font-black leading-[0.94] tracking-tight text-brand-indigo md:text-7xl">
+                Entra temprano. Publica simple. Valida demanda real.
+              </h1>
+              <p className="max-w-2xl text-lg font-medium leading-relaxed text-slate-600 md:text-xl">
+                Planes pensados para constructoras chilenas que quieren aparecer en una plataforma sectorial,
+                recibir oportunidades comerciales y crecer con bajo riesgo inicial.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/register?plan=fundadores"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-14 rounded-lg bg-brand-indigo px-7 font-black uppercase tracking-widest text-white hover:bg-brand-indigo/90"
+                )}
               >
-                Elegir y Pagar Ahora
-              </Button>
-            </motion.div>
+                Unirme como fundador
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href={WHATSAPP_URL}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "h-14 rounded-lg border-brand-indigo/20 px-7 font-black uppercase tracking-widest text-brand-indigo"
+                )}
+              >
+                Hablar con ventas
+              </Link>
+            </div>
           </div>
-        )}
 
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/4 via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-teal/8 rounded-full blur-[100px] pointer-events-none" />
-        <div className="container max-w-4xl mx-auto px-4 md:px-8 relative z-10 space-y-6">
-          <Badge className="bg-primary/10 text-primary border-primary/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
-            Para Constructoras de Chile
-          </Badge>
-          <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
-            Elige el plan <span className="gradient-text">correcto</span>
-          </h1>
-          <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-            Mejora el posicionamiento de tu constructora y recibe leads reales directamente en tu panel de control.
-          </p>
-
-          <div className="pt-4 flex flex-col items-center gap-12">
-            
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
-
-            {/* Toggle Billing and Discount Badge closer to the plans */}
-            <div className="flex flex-col items-center gap-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-              <div className="flex items-center gap-4 bg-muted/30 p-1.5 rounded-[2rem] border border-border/40 backdrop-blur-md shadow-inner">
-                <button 
-                  onClick={() => setIsYearly(false)}
-                  className={cn(
-                    "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all",
-                    !isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  Mensual
-                </button>
-                <button 
-                  onClick={() => setIsYearly(true)}
-                  className={cn(
-                    "px-8 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all relative",
-                    isYearly ? "bg-white text-brand-indigo shadow-xl" : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  Anual
-                  <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse shadow-lg shadow-red-500/20">
-                    -50%
-                  </span>
-                </button>
+          <aside className="rounded-lg border border-brand-teal/20 bg-brand-teal/10 p-6 shadow-xl shadow-brand-teal/5">
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white text-brand-teal shadow-sm">
+                <Sparkles className="h-6 w-6" />
               </div>
+              <div className="space-y-2">
+                <p className="text-sm font-black uppercase tracking-[0.22em] text-brand-indigo">
+                  Oferta de etapa inicial
+                </p>
+                <h2 className="text-2xl font-black tracking-tight text-brand-indigo">
+                  Plan Fundadores desde $25.000 + IVA/mes
+                </h2>
+                <p className="text-sm font-semibold leading-relaxed text-slate-600">
+                  Primeros 2 meses a precio fundador, configuracion asistida y prioridad para empresas que
+                  entren durante la etapa de captacion.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
 
-              <div className="flex flex-col md:flex-row items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
-                <div className="flex items-center gap-3">
-                  <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
-                  {isYearly ? "Estás ahorrando un 50% con el pago anual" : "Ahorra un 50% cambiando al pago anual"}
-                </div>
-                {isYearly && (
-                  <div className="flex items-center gap-2 border-l border-brand-indigo/20 pl-4 ml-1">
-                    <Timer className="w-4 h-4 text-brand-indigo/60" />
-                    <span className="text-[10px] text-muted-foreground">Termina en:</span>
-                    <PromotionCountdown variant="compact" />
+      <section className="container mx-auto max-w-6xl px-4 py-16 md:px-8 md:py-24">
+        <div className="mb-12 grid gap-5 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <div>
+            <Badge className="mb-4 border-brand-indigo/15 bg-white text-brand-indigo">
+              Valores + IVA
+            </Badge>
+            <h2 className="text-4xl font-black tracking-tight text-brand-indigo md:text-5xl">
+              El Plan Fundadores es el foco comercial.
+            </h2>
+          </div>
+          <p className="text-base font-medium leading-relaxed text-slate-600 md:text-lg">
+            El gratis elimina la barrera de entrada, Fundadores convierte a las primeras empresas pagadas y
+            Destacado queda como una opcion premium secundaria para quienes quieren mayor visibilidad.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
+          {plans.map((plan) => {
+            const Icon = plan.icon;
+
+            return (
+              <article
+                key={plan.id}
+                className={cn(
+                  "relative flex h-full flex-col rounded-lg border p-7 transition-transform duration-300 hover:-translate-y-1",
+                  plan.cardClass
+                )}
+              >
+                {plan.featured && (
+                  <div className="absolute -top-4 left-7">
+                    <Badge className="border-brand-teal bg-brand-teal px-4 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-brand-indigo shadow-lg shadow-brand-teal/20">
+                      Hero comercial
+                    </Badge>
                   </div>
                 )}
+                <div className="mb-7 flex items-start justify-between gap-4">
+                  <div className="space-y-3">
+                    <Badge className="border-slate-200 bg-slate-50 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
+                      {plan.badge}
+                    </Badge>
+                    <h3 className="text-2xl font-black tracking-tight text-brand-indigo">{plan.name}</h3>
+                  </div>
+                  <div className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-lg", plan.iconClass)}>
+                    <Icon className="h-6 w-6" />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-4xl font-black tracking-tight text-slate-950">{plan.price}</span>
+                    <p className="mt-1 text-xs font-black uppercase tracking-[0.18em] text-slate-500">
+                      {plan.suffix}
+                    </p>
+                  </div>
+                  <p className="min-h-20 text-sm font-medium leading-relaxed text-slate-600">
+                    {plan.description}
+                  </p>
+                </div>
+
+                <ul className="mt-7 flex-1 space-y-3">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex gap-3 text-sm font-semibold leading-relaxed text-slate-700">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 space-y-3">
+                  <Link
+                    href={plan.href}
+                    className={cn(
+                      buttonVariants({ size: "lg" }),
+                      "h-13 w-full rounded-lg font-black uppercase tracking-widest",
+                      plan.featured
+                        ? "bg-brand-indigo text-white hover:bg-brand-indigo/90"
+                        : "bg-slate-950 text-white hover:bg-slate-800"
+                    )}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href={plan.secondaryHref}
+                    className={cn(
+                      buttonVariants({ variant: "ghost", size: "sm" }),
+                      "w-full rounded-lg font-black uppercase tracking-widest text-brand-indigo"
+                    )}
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    {plan.secondaryCta}
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <p className="mt-8 text-center text-sm font-semibold text-slate-500">
+          Todos los valores pagados son mas IVA. La activacion final se confirma con el equipo comercial.
+        </p>
+      </section>
+
+      <section className="border-y border-slate-200/70 bg-white py-16 md:py-20">
+        <div className="container mx-auto max-w-6xl px-4 md:px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+            <div className="space-y-4">
+              <Badge className="border-brand-teal/30 bg-brand-teal/10 text-brand-indigo">
+                Comparacion rapida
+              </Badge>
+              <h2 className="text-3xl font-black tracking-tight text-brand-indigo md:text-4xl">
+                Simple de entender, facil de vender.
+              </h2>
+              <p className="text-sm font-medium leading-relaxed text-slate-600">
+                La arquitectura evita sobrecargar la decision: una entrada gratis, una oferta fundadora clara
+                y una opcion premium que no roba protagonismo.
+              </p>
+            </div>
+
+            <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+              <div className="grid grid-cols-4 bg-slate-50 text-xs font-black uppercase tracking-[0.16em] text-slate-500">
+                <div className="p-4">Beneficio</div>
+                <div className="p-4">Gratis</div>
+                <div className="bg-brand-teal/10 p-4 text-brand-indigo">Fundadores</div>
+                <div className="p-4">Destacado</div>
               </div>
+              {comparisons.map(([benefit, free, founders, featured]) => (
+                <div key={benefit} className="grid grid-cols-4 border-t border-slate-100 text-sm font-semibold text-slate-700">
+                  <div className="p-4 text-brand-indigo">{benefit}</div>
+                  <div className="p-4">{free}</div>
+                  <div className="bg-brand-teal/5 p-4 font-black text-brand-indigo">{founders}</div>
+                  <div className="p-4">{featured}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Pricing grid ────────────────────────────────────── */}
-      <section className="container max-w-6xl mx-auto px-4 md:px-8 py-12">
-        <div className="grid md:grid-cols-3 gap-8 items-start">
-          {PLANES.map((plan) => {
-            const Icon = plan.icon;
-            const currentPrice = isYearly && plan.id !== 'gratis' ? plan.precioAnualEquiv : plan.precioMensual;
-            const originalPrice = plan.id !== 'gratis' ? plan.precioMensual : null;
-            const periodText = plan.id === 'gratis' ? (plan.periodo || 'por 4 meses') : (isYearly ? "UF / mes equiv." : "UF / mes");
+      <section className="container mx-auto grid max-w-6xl gap-6 px-4 py-16 md:grid-cols-3 md:px-8 md:py-20">
+        {[
+          {
+            icon: ShieldCheck,
+            title: "Menos riesgo percibido",
+            copy: "La constructora no parte comprando una promesa cara. Primero entra, publica y valida.",
+          },
+          {
+            icon: Star,
+            title: "Mas oferta real",
+            copy: "El plan gratis ayuda a poblar la plataforma con empresas y modelos reales desde el inicio.",
+          },
+          {
+            icon: Sparkles,
+            title: "Mejor momento comercial",
+            copy: "Fundadores se siente como oportunidad temprana, no como gasto incierto.",
+          },
+        ].map((item) => {
+          const Icon = item.icon;
 
-            return (
-              <div
-                key={plan.id}
-                className={cn(
-                  "relative bg-card/60 backdrop-blur-xl border rounded-[3rem] overflow-hidden flex flex-col gap-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl",
-                  plan.borderClass
-                )}
-              >
-                {/* Subtle gradient background */}
-                {plan.gradientClass && (
-                  <div className={cn("absolute inset-0 bg-gradient-to-br pointer-events-none", plan.gradientClass)} />
-                )}
-
-                {/* Popular badge */}
-                {plan.badge && (
-                  <div className="absolute -top-px left-1/2 -translate-x-1/2">
-                    <Badge className={cn("rounded-none rounded-b-xl font-black text-sm uppercase tracking-widest px-5 py-1.5 border-x border-b", plan.badgeClass)}>
-                      {plan.badge}
-                    </Badge>
-                  </div>
-                )}
-
-                                <div className="p-10 pt-12 flex flex-col gap-8 relative z-10 flex-1">
-                  {/* Header */}
-                  <div className="space-y-4">
-                    <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", plan.bgIcon)}>
-                      <Icon className={cn("w-6 h-6", plan.color)} />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
-                      <div className="flex flex-col gap-1 mt-2">
-                         <div className="flex items-baseline gap-2">
-                           {isYearly && originalPrice && (
-                             <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
-                               {originalPrice}
-                             </span>
-                           )}
-                           <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
-                           <div className="flex flex-col">
-                              <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
-                              {isYearly && plan.id !== 'gratis' && (
-                                <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual</span>
-                              )}
-                           </div>
-                           {isYearly && plan.id !== 'gratis' && (
-                             <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
-                               50% OFF
-                             </Badge>
-                           )}
-                         </div>
-                         
-                         {/* Equivalent in CLP */}
-                         {plan.id !== 'gratis' && ufValue && (
-                           <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-xs bg-emerald-50 w-fit px-3 py-1 rounded-full border border-emerald-100 shadow-sm animate-in fade-in slide-in-from-left-2 duration-700">
-                             <TooltipProvider>
-                               <Tooltip>
-                                 <TooltipTrigger className="flex items-center gap-1">
-                                   ~ {formatPriceCLP(currentPrice)} <Info className="w-3 h-3 opacity-50" />
-                                 </TooltipTrigger>
-                                 <TooltipContent className="bg-slate-900 text-white border-none rounded-xl p-3 text-[10px] font-bold">
-                                   Precio estimado basado en UF actual: ${ufValue.toLocaleString('es-CL')}
-                                 </TooltipContent>
-                               </Tooltip>
-                             </TooltipProvider>
-                           </div>
-                         )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="space-y-3 flex-1">
-                    {plan.features.map((feat) => (
-                      <li
-                        key={feat.texto}
-                        className={cn("flex items-center gap-3 text-sm font-medium", !feat.ok && "opacity-35")}
-                      >
-                        {feat.ok
-                          ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                          : <X className="w-4 h-4 text-muted-foreground shrink-0" />
-                        }
-                        {feat.texto}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  {plan.id === 'gratis' ? (
-                    <Link
-                      href={`${plan.ctaHref}`}
-                      className={cn(
-                        buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
-                        "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2 opacity-80",
-                        plan.ctaClass
-                      )}
-                    >
-                      {plan.cta} <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  ) : (
-                    <Button
-                      onClick={() => handlePurchase(plan.id, isYearly ? 'yearly' : 'monthly')}
-                      disabled={isPending}
-                      className={cn(
-                        "w-full rounded-2xl h-14 font-extrabold uppercase tracking-widest gap-2 transition-all hover:scale-[1.02] active:scale-95",
-                        plan.ctaClass
-                      )}
-                    >
-                      {isPending ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <>
-                          {isYearly ? "Pagar con 50% DCTO" : "Pagar Plan Ahora"} <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </Button>
-                  )}
-                </div>
+          return (
+            <div key={item.title} className="rounded-lg border border-slate-200 bg-white p-7">
+              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-teal/10 text-brand-teal">
+                <Icon className="h-5 w-5" />
               </div>
-            );
-          })}
-        </div>
-
-        {/* Trust note */}
-        <p className="text-center text-sm text-muted-foreground font-medium mt-12 opacity-60">
-          Sin permanencia en planes mensuales · Los precios en UF se actualizan diariamente · Plan Gratis limitado a 4 meses por constructora.
-        </p>
+              <h3 className="text-xl font-black tracking-tight text-brand-indigo">{item.title}</h3>
+              <p className="mt-3 text-sm font-medium leading-relaxed text-slate-600">{item.copy}</p>
+            </div>
+          );
+        })}
       </section>
 
-      {/* ── Social proof ──────────────────────────────────── */}
-      <section className="border-y border-border/40 bg-muted/20 py-16">
-        <div className="container max-w-5xl mx-auto px-4 md:px-8 text-center space-y-10">
-          <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { quote: "Contratamos el plan anual pro con el 50% y la inversión se pagó sola en las primeras semanas.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro Anual" },
-              { quote: "Como super-admin, valoro que el badge verificado sea gratis si te comprometes con el año.", name: "Andrea Flores", company: "Constructora Biobío", plan: "Premium Anual" },
-              { quote: "Los 4 meses gratis nos permitieron probar la herramienta y recibir leads reales sin costo.", name: "Felipe Torres", company: "SIP Chile", plan: "Periodo Prueba" },
-            ].map((t) => (
-              <div key={t.name} className="bg-card/60 border border-border/40 rounded-[2rem] p-8 text-left space-y-4">
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-sm font-medium text-muted-foreground leading-relaxed">&quot;{t.quote}&quot;</p>
-                <div>
-                  <p className="font-black text-sm text-foreground">{t.name}</p>
-                  <p className="text-sm text-muted-foreground font-medium">{t.company} · {t.plan}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAQ ───────────────────────────────────────────── */}
-      <section className="container max-w-3xl mx-auto px-4 md:px-8 py-24 space-y-6">
-        <div className="text-center space-y-3 mb-12">
-          <h2 className="text-4xl font-heading font-black tracking-tighter">Preguntas frecuentes</h2>
-          <p className="text-muted-foreground font-medium">Todo lo que necesitas saber sobre los nuevos planes.</p>
+      <section className="container mx-auto max-w-3xl px-4 pb-20 md:px-8 md:pb-28">
+        <div className="mb-10 text-center">
+          <h2 className="text-4xl font-black tracking-tight text-brand-indigo">Preguntas frecuentes</h2>
+          <p className="mt-3 text-sm font-medium text-slate-600">
+            Respuestas pensadas para reducir objeciones antes de hablar con ventas.
+          </p>
         </div>
         <div className="space-y-4">
-          {FAQS.map((faq) => (
-            <details
-              key={faq.q}
-              className="group bg-card/60 border border-border/40 rounded-2xl px-6 py-5 cursor-pointer open:border-primary/20 transition-all"
-            >
-              <summary className="flex items-center justify-between font-black text-sm list-none gap-4">
+          {faqs.map((faq) => (
+            <details key={faq.q} className="group rounded-lg border border-slate-200 bg-white p-6">
+              <summary className="cursor-pointer list-none text-base font-black text-brand-indigo">
                 {faq.q}
-                <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0 group-open:rotate-180 transition-transform" />
               </summary>
-              <p className="pt-4 text-sm text-muted-foreground font-medium leading-relaxed border-t border-border/40 mt-4">
+              <p className="mt-4 border-t border-slate-100 pt-4 text-sm font-medium leading-relaxed text-slate-600">
                 {faq.a}
               </p>
             </details>
           ))}
         </div>
-        <p className="text-center text-sm text-muted-foreground font-medium pt-8">
-          ¿Más dudas? Escríbenos a{" "}
-          <a href="mailto:contacto@solocasaschile.com" className="text-primary font-bold hover:underline underline-offset-4">
-            contacto@solocasaschile.com
-          </a>
-        </p>
       </section>
 
-      {/* ── Final CTA ─────────────────────────────────────── */}
-      <section className="container max-w-4xl mx-auto px-4 md:px-8">
-        <div className="bg-brand-indigo rounded-[3rem] p-16 text-center text-white space-y-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-10 mix-blend-overlay" />
-          <div className="relative z-10 space-y-6">
-            <Badge className="bg-white/20 text-white border-white/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
-              Comienza hoy
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
-              Aprovecha el 50% DCTO<br />y domina tu zona
-            </h2>
-            <p className="text-white/80 font-medium text-lg max-w-md mx-auto">
-              Únete a las constructoras que ya están recibiendo leads reales cada semana.
-            </p>
-            <Button
-              disabled={isPending}
-              onClick={() => handlePurchase('pro', 'yearly')}
+      <section className="container mx-auto max-w-5xl px-4 pb-24 md:px-8">
+        <div className="rounded-lg bg-brand-indigo p-8 text-white md:p-12">
+          <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div className="space-y-3">
+              <Badge className="border-white/20 bg-white/10 text-white">
+                Cupos fundadores
+              </Badge>
+              <h2 className="text-3xl font-black tracking-tight md:text-4xl">
+                Unite como empresa fundadora desde $25.000 + IVA/mes
+              </h2>
+              <p className="max-w-2xl text-sm font-medium leading-relaxed text-white/75">
+                Configuracion asistida, publicacion inicial y una propuesta facil de justificar para validar
+                SolocasasChile como canal comercial.
+              </p>
+            </div>
+            <Link
+              href="/register?plan=fundadores"
               className={cn(
-                "bg-white text-brand-indigo hover:bg-white/95 font-black uppercase tracking-widest rounded-2xl h-14 px-10 gap-2 shadow-2xl transition-all hover:scale-105 active:scale-95"
+                buttonVariants({ size: "lg" }),
+                "h-14 rounded-lg bg-white px-7 font-black uppercase tracking-widest text-brand-indigo hover:bg-white/90"
               )}
             >
-              {isPending ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>Comenzar con 50% DCTO <ArrowRight className="w-4 h-4" /></>
-              )}
-            </Button>
+              Empezar ahora
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
-
-    </div>
+    </main>
   );
 }
