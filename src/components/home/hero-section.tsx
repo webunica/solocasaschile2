@@ -72,7 +72,7 @@ function TypewriterLoop() {
   }, [subIndex, index, isDeleting]);
 
   return (
-    <div className="mt-8 flex h-8 w-full flex-row items-center justify-center text-[18px] font-black uppercase tracking-[0.15em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)] md:text-[22px] lg:justify-start">
+    <div className="mt-8 flex h-8 w-full flex-row items-center justify-center text-[18px] font-black uppercase tracking-[0.15em] text-white md:text-[22px] lg:justify-start">
       {TYPEWRITER_TEXTS[index].substring(0, subIndex)}
       <span className="animate-pulse bg-brand-teal ml-1 w-2.5 h-6 opacity-80 inline-block" />
     </div>
@@ -181,7 +181,7 @@ export function HeroSection() {
               className="space-y-5 md:space-y-12 flex flex-col items-center lg:items-start text-center lg:text-left"
             >
               {/* Top Text */}
-              <div className="text-brand-indigo font-black uppercase tracking-tight text-sm md:text-base pt-6 md:pt-10 leading-tight lg:text-white lg:drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)]">
+              <div className="text-brand-indigo font-black uppercase tracking-tight text-sm md:text-base pt-6 md:pt-10 leading-tight lg:text-white">
                 Cientos de modelos de casas<br />
                 Prefabricadas en un solo lugar
               </div>
@@ -189,7 +189,7 @@ export function HeroSection() {
               {/* Headline */}
               <div className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
                 <h1 className="flex flex-col gap-0 items-center lg:items-start w-full">
-                  <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase [text-shadow:0_1px_8px_rgba(255,255,255,0.9)]">
+                  <span className="text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-brand-indigo uppercase">
                     CASAS
                   </span>
                   <AnimatePresence mode="wait">
@@ -199,7 +199,7 @@ export function HeroSection() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 8 }}
                       transition={{ duration: 0.35 }}
-                      className="text-brand-teal text-[clamp(2rem,8vw,64px)] font-black tracking-[-0.05em] leading-none uppercase [text-shadow:0_2px_16px_rgba(0,0,0,0.6),0_0_8px_rgba(0,0,0,0.4)]"
+                      className="text-brand-teal text-[clamp(2rem,8vw,64px)] font-black tracking-[-0.05em] leading-none uppercase"
                     >
                       {CONSTRUCTION_TYPES[typeIndex]}
                     </motion.span>
@@ -260,7 +260,7 @@ export function HeroSection() {
 
                     return (
                       <li key={type}>
-                        <Link href={href} className="group flex items-center gap-3 text-[13px] md:text-sm font-black text-white tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)] hover:translate-x-1 transition-transform">
+                        <Link href={href} className="group flex items-center gap-3 text-[13px] md:text-sm font-black text-white tracking-wider hover:translate-x-1 transition-transform">
                           <div className="w-6 h-6 rounded-full bg-brand-teal flex items-center justify-center shrink-0 shadow-lg shadow-brand-teal/20 group-hover:scale-110 transition-transform">
                             <ShieldCheck className="w-3.5 h-3.5 text-white" />
                           </div>
@@ -272,7 +272,7 @@ export function HeroSection() {
                     );
                   })}
                   {/* Item 8: Pronto casas rodantes */}
-                  <li className="flex items-center gap-3 text-[13px] md:text-sm font-black text-white/85 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+                  <li className="flex items-center gap-3 text-[13px] md:text-sm font-black text-white/85 tracking-wider">
                     <div className="w-6 h-6 rounded-full bg-white/90 flex items-center justify-center shrink-0 border border-white/50">
                       <Zap className="w-3.5 h-3.5 text-brand-indigo" />
                     </div>
@@ -287,7 +287,7 @@ export function HeroSection() {
                 
                 {/* Blindaje de Identidad */}
                 <div className="pt-4 border-t border-white/25 lg:max-w-md mx-auto lg:mx-0">
-                  <p className="text-xs md:text-[13px] font-bold text-white/82 uppercase tracking-widest leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+                  <p className="text-xs md:text-[13px] font-bold text-white/82 uppercase tracking-widest leading-relaxed">
                     <span className="text-brand-teal font-black">Nota de Independencia:</span> SolocasasChile es un comparador independiente de modelos y constructoras. No somos una constructora ni vendemos directamente viviendas.
                   </p>
                 </div>
