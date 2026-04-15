@@ -189,7 +189,7 @@ export function HeroSection() {
               {/* Headline */}
               <div className="flex flex-col gap-2 md:gap-5 items-center lg:items-start w-full">
                 <h1 className="flex flex-col gap-0 items-center lg:items-start w-full">
-                  <span className="bg-gradient-to-r from-[#b76a1e] to-[#dca24e] bg-clip-text text-[clamp(2rem,8vw,3.75rem)] font-black tracking-[-0.05em] leading-none text-transparent uppercase">
+                  <span className="bg-gradient-to-r from-[#dca24e] to-[#b76a1e] bg-clip-text text-[clamp(2.25rem,8vw,4rem)] font-black tracking-[-0.05em] leading-none text-transparent uppercase">
                     CASAS
                   </span>
                   <AnimatePresence mode="wait">
