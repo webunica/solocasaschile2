@@ -1,15 +1,7 @@
 import Link from "next/link";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { getMegaMenuAds, getLatestBlogPosts } from "@/lib/supabase/services";
 import { Crown, CheckCircle2, Zap, ArrowRight, ShieldCheck, TrendingUp, BarChart3, Star } from "lucide-react";
 
-export default async function PremiumAccessPage() {
-  const [megaMenuAds, latestBlogPosts] = await Promise.all([
-    getMegaMenuAds(),
-    getLatestBlogPosts(2)
-  ]);
-
+export default function PremiumAccessPage() {
   const benefits = [
     { title: "Tutoriales Exclusivos", desc: "Aprende paso a paso cómo optimizar tus procesos constructivos con expertos.", icon: Zap },
     { title: "Casos de Éxito Reales", desc: "Análisis profundos de obras terminadas, costos y lecciones aprendidas.", icon: ShieldCheck },
@@ -20,8 +12,6 @@ export default async function PremiumAccessPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
-      <Header megaMenuAds={megaMenuAds} latestBlogPosts={latestBlogPosts} />
-      
       <main className="flex-1 pt-44 pb-20">
         <div className="container px-6 md:px-12 max-w-7xl mx-auto">
           
@@ -96,7 +86,6 @@ export default async function PremiumAccessPage() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }
