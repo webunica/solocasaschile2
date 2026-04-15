@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "Conoce el proceso de auditoria y los criterios de confianza para constructoras en Chile.",
 };
 
-const criteria = [
+const currentCriteria = [
   {
     title: "Identidad legal",
     icon: FileCheck,
@@ -35,6 +35,9 @@ const criteria = [
     icon: CheckCircle2,
     desc: "Comprobamos oficinas, telefonos activos y correos corporativos.",
   },
+] as const;
+
+const upcomingCriteria = [
   {
     title: "Cobertura regional",
     icon: MapPin,
@@ -50,7 +53,7 @@ const criteria = [
     icon: Search,
     desc: "Analisis de antecedentes comerciales y comportamiento de cumplimiento en proyectos previos.",
   },
-];
+] as const;
 
 const statuses = [
   {
@@ -117,9 +120,18 @@ export default function VerificacionPage() {
           </div>
         </section>
 
-        <section className="mb-24">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {criteria.map((item) => (
+        <section className="mb-24 space-y-12">
+          <div className="space-y-3 text-center">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-teal">
+              Criterios vigentes
+            </p>
+            <h2 className="font-heading text-3xl font-black tracking-tighter text-brand-indigo md:text-4xl">
+              Validacion actual
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {currentCriteria.map((item) => (
               <div
                 key={item.title}
                 className="group space-y-4 rounded-[2.5rem] border border-border/40 bg-white p-8 shadow-sm transition-all hover:border-brand-teal/30 hover:shadow-xl"
@@ -133,6 +145,42 @@ export default function VerificacionPage() {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="space-y-6 pt-8">
+            <div className="space-y-3 text-center">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-teal">
+                Segundo semestre 2026
+              </p>
+              <h2 className="font-heading text-3xl font-black tracking-tighter text-brand-indigo md:text-4xl">
+                Proximos criterios de auditoria
+              </h2>
+              <p className="mx-auto max-w-2xl text-sm font-medium leading-relaxed text-muted-foreground">
+                Estos criterios se incorporaran durante el segundo semestre de 2026 como parte de la evolucion del sistema de verificacion.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {upcomingCriteria.map((item) => (
+                <div
+                  key={item.title}
+                  className="group space-y-4 rounded-[2.5rem] border border-dashed border-brand-indigo/20 bg-slate-50/70 p-8 shadow-sm transition-all hover:border-brand-teal/30 hover:bg-white hover:shadow-xl"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-indigo/5 text-brand-indigo transition-all group-hover:bg-brand-teal group-hover:text-white">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <div className="space-y-2">
+                    <span className="inline-flex rounded-full bg-brand-teal/10 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-brand-teal">
+                      Segundo semestre 2026
+                    </span>
+                    <h3 className="font-heading text-xl font-black text-brand-indigo">{item.title}</h3>
+                  </div>
+                  <p className="text-sm font-medium leading-relaxed text-muted-foreground opacity-70">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
