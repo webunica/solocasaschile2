@@ -35,23 +35,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const modelo = await getModelBySlug(slug);
   if (!modelo) return { title: "Modelo no encontrado" };
   const imagenPrincipal = modelo.imagenes_urls?.[0];
+  const tipoLabel = TIPO_LABELS[modelo.tipo] || 'Prefabricada';
   const descripcion = modelo.descripcion
     ? modelo.descripcion.slice(0, 155)
-    : `Casa ${modelo.tipo || 'prefabricada'} de ${modelo.superficie_m2} m², ${modelo.dormitorios} dormitorios y ${modelo.banos} baños. Desde ${modelo.precio_desde_uf} UF.`;
+    : `Casa ${tipoLabel} de ${modelo.superficie_m2}m², ${modelo.dormitorios} dormitorios y ${modelo.banos} baños. Desde ${modelo.precio_desde_uf} UF. Constructora verificada en Chile.`;
+
+  const pageTitle = `${modelo.nombre} | Casa ${tipoLabel} en Chile | SolocasasChile`;
+
   return {
-    title: `${modelo.nombre} | SolocasasChile`,
+    title: pageTitle,
     description: descripcion,
+    keywords: [
+      modelo.nombre,
+      `casa ${tipoLabel.toLowerCase()} chile`,
+      `casas ${tipoLabel.toLowerCase()}s chile`,
+      `casa ${tipoLabel.toLowerCase()} ${modelo.superficie_m2}m2`,
+      'casas prefabricadas chile',
+      modelo.constructora?.nombre || '',
+    ].filter(Boolean),
     alternates: { canonical: `https://solocasaschile.com/modelo/${slug}` },
     openGraph: {
-      title: `${modelo.nombre} | SolocasasChile`,
+      title: pageTitle,
       description: descripcion,
       url: `https://solocasaschile.com/modelo/${slug}`,
-      images: imagenPrincipal ? [{ url: imagenPrincipal, width: 1200, height: 630, alt: modelo.nombre }] : [],
+      images: imagenPrincipal ? [{ url: imagenPrincipal, width: 1200, height: 630, alt: `${modelo.nombre} — Casa ${tipoLabel} Chile` }] : [],
       type: 'website',
+      locale: 'es_CL',
+      siteName: 'SolocasasChile',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${modelo.nombre} | SolocasasChile`,
+      site: '@solocasaschile',
+      title: pageTitle,
       description: descripcion,
       images: imagenPrincipal ? [imagenPrincipal] : [],
     },
@@ -81,6 +96,28 @@ export default async function ModeloPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background relative pt-16 md:pt-24 font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildFAQJsonLd([
+            {
+              question: `¿Cuánto cuesta el modelo ${modelo.nombre}?`,
+              answer: modelo.precio_desde_uf > 0 
+                ? `El precio referencial del modelo ${modelo.nombre} comienza desde las ${modelo.precio_desde_uf} UF en Chile. Este valor puede variar según la región de instalación y las terminaciones elegidas.`
+                : `Para conocer el precio actualizado del modelo ${modelo.nombre}, puedes solicitar una cotización directa a ${constructora.nombre} a través de nuestro portal.`
+            },
+            {
+              question: `¿Qué dimensiones tiene la casa ${modelo.nombre}?`,
+              answer: `El modelo ${modelo.nombre} cuenta con una superficie de ${modelo.superficie_m2} m², distribuidos en ${modelo.dormitorios} dormitorios y ${modelo.banos} baños. Es un diseño de tipo ${TIPO_LABELS[modelo.tipo] || 'prefabricada'}.`
+            },
+            {
+              question: `¿Quién construye el modelo ${modelo.nombre}?`,
+              answer: `Este modelo es diseñado y construido por ${constructora.nombre}, una empresa verificada en SolocasasChile con cobertura en ${constructora.regiones?.join(', ') || 'diversas regiones de Chile'}.`
+            }
+          ])),
+        }}
+      />
+      
       <StructuredData
         type="House"
         data={buildModelJsonLd({

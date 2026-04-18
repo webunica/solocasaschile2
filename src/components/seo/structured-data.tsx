@@ -89,9 +89,14 @@ export function buildModelJsonLd(modelo: {
 
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
-    "@type": "House",
+    "@type": ["House", "Product"],
     "name": modelo.nombre,
-    "description": modelo.descripcion || undefined,
+    "sku": `SCCH-${modelo.slug.substring(0, 8).toUpperCase()}`,
+    "brand": {
+      "@type": "Brand",
+      "name": modelo.constructora?.nombre || "SolocasasChile"
+    },
+    "description": modelo.descripcion || `Casa ${modelo.tipo} de alta eficiencia en Chile.`,
     "url": `${baseUrl}/modelo/${modelo.slug}`,
     "image": modelo.imagenes_urls?.[0] || undefined,
     "numberOfRooms": modelo.dormitorios || undefined,
@@ -102,12 +107,14 @@ export function buildModelJsonLd(modelo: {
       ? { "@type": "QuantitativeValue", "value": modelo.superficie_m2, "unitCode": "MTK" }
       : undefined,
     "numberOfFloors": modelo.pisos || 1,
-    "leaseLength": modelo.tiempo_entrega ? { "@type": "QuantitativeValue", "value": modelo.tiempo_entrega } : undefined,
     "offers": {
       "@type": "Offer",
       "priceCurrency": "CLF",
-      "price": modelo.precio_desde_uf,
+      "price": modelo.precio_desde_uf || 0,
+      "priceValidUntil": "2026-12-31",
+      "url": `${baseUrl}/modelo/${modelo.slug}`,
       "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition",
       "seller": modelo.constructora
         ? {
             "@type": "Organization",

@@ -18,8 +18,17 @@ import { ChevronRight, Home } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Catálogo de Modelos | SolocasasChile",
-  description: "Explora y compara más de 1.500 modelos de casas prefabricadas, SIP, container y llave en mano en Chile.",
+  title: "Catálogo de Casas Prefabricadas, SIP y Modulares en Chile | SolocasasChile",
+  description: "Compara más de 1.500 modelos de casas prefabricadas, SIP, modulares y container en Chile. Filtra por región, precio y número de dormitorios. Constructoras verificadas.",
+  keywords: [
+    "casas prefabricadas chile",
+    "catalogo casas prefabricadas",
+    "casas sip chile precios",
+    "casas modulares chile",
+    "casas container chile",
+    "comprar casa prefabricada",
+    "constructoras casas prefabricadas",
+  ],
   alternates: {
     canonical: "/catalogo",
   },
@@ -66,6 +75,13 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-background pt-40">
+      {/* Canonical dinámico: si hay filtro de tipo, apunta a la landing dedicada */}
+      {tipoFilter && (
+        <link
+          rel="canonical"
+          href={`https://solocasaschile.com/tipos/${tipoFilter}`}
+        />
+      )}
       {modelos.length > 0 && (
         <StructuredData 
           type="ItemList" 
@@ -128,10 +144,11 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div className="space-y-3">
                <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-foreground">
-                 Catálogo <span className="gradient-text">Pro</span>
+                 Casas <span className="gradient-text">Prefabricadas</span>
+                 <span className="block text-3xl md:text-4xl text-muted-foreground font-medium tracking-tight mt-2">SIP · Modulares · Container · Chile</span>
                </h1>
                <p className="text-muted-foreground font-medium text-lg max-w-md">
-                 Explora {modelos.length} modelos auditados listos para construir en Chile.
+                 Compara {modelos.length} modelos verificados listos para construir en Chile.
                </p>
             </div>
             

@@ -12,8 +12,16 @@ import { StructuredData, buildItemListJsonLd } from "@/components/seo/structured
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Directorio de Constructoras | SolocasasChile",
-  description: "Encuentra las mejores empresas constructoras de casas prefabricadas, SIP y modulares en Chile. Revisa su score de confianza.",
+  title: "Directorio de Constructoras de Casas Prefabricadas en Chile | SolocasasChile",
+  description: "Compara las mejores constructoras de casas prefabricadas, SIP y modulares en Chile. Score de confianza, proyectos verificados y cobertura regional.",
+  keywords: [
+    "constructoras casas prefabricadas chile",
+    "mejores constructoras casas sip",
+    "empresas casas modulares chile",
+    "directorio constructoras chile",
+    "constructoras verificadas chile",
+  ],
+  alternates: { canonical: "https://solocasaschile.com/constructoras" },
 };
 
 export default async function ConstructorasPage() {

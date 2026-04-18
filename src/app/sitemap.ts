@@ -27,12 +27,22 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/nosotros`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "monthly", priority: 0.55 },
   { url: `${SITE_URL}/privacidad`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "yearly", priority: 0.2 },
   { url: `${SITE_URL}/terminos`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "yearly", priority: 0.2 },
-  { url: `${SITE_URL}/tipos/prefabricada`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
-  { url: `${SITE_URL}/tipos/sip`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
-  { url: `${SITE_URL}/tipos/container`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.65 },
-  { url: `${SITE_URL}/tipos/modular`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.65 },
-  { url: `${SITE_URL}/tipos/llave-en-mano`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.65 },
-  { url: `${SITE_URL}/tipos/steel-framing`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.6 },
+  // Landings por tipo de sistema constructivo — indexadas individualmente
+  { url: `${SITE_URL}/tipos/prefabricada`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.85 },
+  { url: `${SITE_URL}/tipos/sip`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.85 },
+  { url: `${SITE_URL}/tipos/modular`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/tipos/container`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/tipos/llave-en-mano`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/tipos/steel-framing`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
+  { url: `${SITE_URL}/tipos/madera`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
+  // Landings regionales — capturan keywords de cola media con alta intención
+  { url: `${SITE_URL}/region/metropolitana`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/region/valparaiso`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/region/biobio`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/region/araucania`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/region/los-lagos`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/ohiggins`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/maule`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
 ];
 
 function uniqueUrls(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {

@@ -2,9 +2,9 @@ import { Suspense } from "react";
 import { HeroSection } from "@/components/home/hero-section";
 import { FeaturedModelsSection } from "@/components/home/featured-models";
 import { PriceDropBanner } from "@/components/home/price-drop-banner";
-import { SeoContent } from "@/components/home/seo-content";
+import { SeoContent, HOME_FAQS } from "@/components/home/seo-content";
 import dynamic from "next/dynamic";
-import { buildWebSiteJsonLd, buildOrganizationJsonLd } from "@/components/seo/structured-data";
+import { buildWebSiteJsonLd, buildOrganizationJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
 
 // Lazy loading below-the-fold components
 const TypesSection = dynamic(() => import("@/components/home/types-section").then(m => m.TypesSection), { ssr: true });
@@ -21,6 +21,7 @@ export const revalidate = 3600;
 export default function Home() {
   const websiteJsonLd = buildWebSiteJsonLd();
   const orgJsonLd = buildOrganizationJsonLd();
+  const faqJsonLd = buildFAQJsonLd(HOME_FAQS);
 
   return (
     <main className="flex flex-col">
@@ -31,6 +32,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* A: Attention (Hero) */}

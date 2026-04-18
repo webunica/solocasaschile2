@@ -10,8 +10,15 @@ import { BlogPost } from "@/types/blog";
 export const dynamic = "force-dynamic";
 export const metadata = {
   alternates: { canonical: "https://solocasaschile.com/blog" },
-  title: "Blog | SoloCasasChile - Guía Expertas en Casas Prefabricadas",
-  description: "Consejos, comparativas y guías para elegir tu casa prefabricada ideal en Chile.",
+  title: "Blog de Casas Prefabricadas en Chile 2026 | Guías, Precios y Comparativas | SolocasasChile",
+  description: "Guías expertas, comparativas de precios y consejos técnicos sobre casas prefabricadas, SIP y modulares en Chile. Todo lo que necesitas saber antes de construir en 2026.",
+  keywords: [
+    "guía casas prefabricadas chile",
+    "precio casas sip 2026",
+    "comparativa casas modulares",
+    "construir casa prefabricada chile",
+    "blog casas prefabricadas",
+  ],
 };
 
 async function getPosts() {
