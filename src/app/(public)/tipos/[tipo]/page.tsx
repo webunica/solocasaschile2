@@ -11,6 +11,7 @@ import {
 import type { Metadata } from "next";
 import { SYSTEM_DETAILS as TIPO_INFO } from "@/config/construction-systems";
 import { buildFAQJsonLd, buildBreadcrumbJsonLd } from "@/components/seo/structured-data";
+import { SystemsComparison } from "@/components/seo/systems-comparison";
 
 interface PageProps {
   params: Promise<{ tipo: string }>;
