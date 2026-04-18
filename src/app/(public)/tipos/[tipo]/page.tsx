@@ -290,40 +290,41 @@ export default async function TipoPage({ params }: PageProps) {
       </section>
 
       {/* Editorial SEO Section — contenido real, no placeholders */}
-      <section className="bg-slate-50 dark:bg-slate-900/50 py-20 mt-4" aria-labelledby={`section-info-${tipo}`}>
+      <section className="bg-white dark:bg-slate-950 py-20 border-t border-border/40" aria-labelledby={`section-info-${tipo}`}>
          <div className="container max-w-4xl mx-auto px-4 md:px-8 space-y-16">
 
            {/* Intro editorial */}
            {editorial?.intro && (
-             <div className="space-y-4 max-w-3xl">
-               <h2 id={`section-info-${tipo}`} className="text-3xl font-heading font-bold tracking-tight">
-                 ¿Qué son las {info.title} en Chile?
+             <div className="space-y-6 max-w-3xl">
+               <h2 id={`section-info-${tipo}`} className="text-4xl md:text-5xl font-heading font-black tracking-tighter text-slate-900 dark:text-white leading-[1.1]">
+                 ¿Qué son las {info.title}<br />
+                 <span className="text-primary italic">en Chile?</span>
                </h2>
-               <p className="text-muted-foreground leading-relaxed text-lg">
+               <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg font-medium">
                  {editorial.intro.replace(/\*\*/g, '')}
                </p>
              </div>
            )}
 
            {/* Specs grid */}
-           <div className="grid sm:grid-cols-2 gap-8">
-             <div className="space-y-3">
-               <div className="p-3 bg-primary/10 text-primary w-fit rounded-xl">
+           <div className="grid sm:grid-cols-2 gap-12">
+             <div className="space-y-4">
+               <div className="p-3.5 bg-brand-teal/10 text-brand-teal w-fit rounded-2xl shadow-sm">
                  <Thermometer className="w-6 h-6" />
                </div>
-               <h4 className="font-bold text-lg">Aislamiento y Climatización</h4>
-               <p className="text-sm text-muted-foreground leading-relaxed">
+               <h4 className="font-black text-xl tracking-tight text-slate-900 dark:text-white">Aislamiento y Climatización</h4>
+               <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                  {tipo === 'sip'
                    ? 'El sistema SIP es el líder en eficiencia térmica para Chile. Su núcleo de EPS de alta densidad elimina los puentes térmicos típicos de otros sistemas, logrando calificación energética A o A+ en la mayoría de las regiones.'
-                   : `El sistema ${info.title} ofrece características térmicas adaptadas al clima chileno. Dependiendo de la región, puede complementarse con aislación adicional para cumplir los estándares de la NCh1079.`}
+                   : `El sistema ${info.title} ofrece características térmicas adaptadas al clima chileno. Dependiendo de la región, puede complementarse con aislación adicional para cumplir los estándares estatales.`}
                </p>
              </div>
-             <div className="space-y-3">
-               <div className="p-3 bg-primary/10 text-primary w-fit rounded-xl">
+             <div className="space-y-4">
+               <div className="p-3.5 bg-brand-indigo/10 text-brand-indigo w-fit rounded-2xl shadow-sm">
                  <Clock className="w-6 h-6" />
                </div>
-               <h4 className="font-bold text-lg">Tiempos de Construcción</h4>
-               <p className="text-sm text-muted-foreground leading-relaxed">
+               <h4 className="font-black text-xl tracking-tight text-slate-900 dark:text-white">Tiempos de Construcción</h4>
+               <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
                  {info.specs.find(s => s.label.toLowerCase().includes('tiempo') || s.label.toLowerCase().includes('montaje'))
                    ? `Tiempo de montaje en terreno: ${info.specs.find(s => s.label.toLowerCase().includes('tiempo') || s.label.toLowerCase().includes('montaje'))?.value}. A esto se suman los tiempos de tramitación municipal y terminaciones.`
                    : `Las ${info.title} permiten reducir significativamente los tiempos comparado con la construcción tradicional, gracias a la prefabricación en planta bajo condiciones controladas.`}
