@@ -9,7 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
-  Star, Bed, Bath, Square, ArrowRight, ArrowLeftRight
+  Star, Bed, Bath, Square, ArrowRight, ArrowLeftRight, Zap, ShieldCheck, CheckCircle2
 } from "lucide-react";
 import type { ModelWithConstructora } from "@/lib/supabase/services";
 
@@ -73,6 +73,24 @@ export function CatalogoGrid({ modelos }: Props) {
                    <Badge className={cn("border-none backdrop-blur-md px-3 py-1 font-bold tracking-widest uppercase", TIPO_COLORS[modelo.tipo])}>
                      {TIPO_LABELS[modelo.tipo] || modelo.tipo}
                    </Badge>
+                   
+                   {modelo.constructora?.verificada && (
+                     <Badge className="bg-emerald-500/20 text-emerald-400 border-none backdrop-blur-md px-3 py-1 font-bold text-[8px] uppercase tracking-widest flex items-center gap-1">
+                        <CheckCircle2 className="w-2.5 h-2.5" /> Certificada
+                     </Badge>
+                   )}
+
+                   {modelo.garantia_anos && modelo.garantia_anos >= 10 && (
+                     <Badge className="bg-blue-500/20 text-blue-400 border-none backdrop-blur-md px-3 py-1 font-bold text-[8px] uppercase tracking-widest flex items-center gap-1">
+                        <ShieldCheck className="w-2.5 h-2.5" /> Garantía {modelo.garantia_anos}a
+                     </Badge>
+                   )}
+
+                   {(modelo.tiempo_entrega?.toLowerCase().includes('30') || modelo.tiempo_entrega?.toLowerCase().includes('60')) && (
+                     <Badge className="bg-amber-500/20 text-amber-400 border-none backdrop-blur-md px-3 py-1 font-bold text-[8px] uppercase tracking-widest flex items-center gap-1">
+                        <Zap className="w-2.5 h-2.5" /> Montaje Rápido
+                     </Badge>
+                   )}
                 </div>
 
                 {modelo.constructora?.plan === "premium" && (
