@@ -33,7 +33,11 @@ const TIPO_EXTRA_KEYWORDS: Record<string, string[]> = {
   ],
   container: [
     "casas container precio chile", "casas container 2 pisos", "casa contenedor chile",
-    "construir con containers chile",
+    "construir con containers chile", "precio container habitable chile",
+  ],
+  "tiny-house": [
+    "tiny house chile precio", "donde comprar tiny house chile", "tiny house con ruedas chile",
+    "tiny house llave en mano", "modelos tiny house 2026", "mini casas prefabricadas",
   ],
 };
 
@@ -128,6 +132,15 @@ const TIPO_EDITORIAL: Record<string, {
       { q: "¿Cuántos contenedores necesito para una casa en Chile?", a: "Un contenedor de 40 pies tiene aproximadamente 30m² de superficie habitable. Para una casa de 2 dormitorios necesitas al menos 2 contenedores de 40 pies o 4 de 20 pies, dependiendo del diseño. La mayoría de los proyectos combina contenedores horizontales con volúmenes adicionales" },
     ],
     normativa: "Las casas container en Chile están sujetas a la OGUC y requieren que el contenedor tenga certificación de aptitud estructural emitida por profesional competente. Se recomienda siempre trabajar con constructoras que gestionen la documentación técnica completa.",
+  },
+  "tiny-house": {
+    intro: "Las **Tiny Houses en Chile** han pasado de ser una curiosidad a una solución real de vivienda eficiente y minimalista. Con superficies que varían entre los 15 y 45 m², estas pequeñas casas optimizan cada centímetro mediante diseño inteligente. Son ideales para segundas viviendas en el litoral o la montaña, o como primera vivienda para personas que buscan reducir su huella ecológica y de mantenimiento.",
+    faqs: [
+      { q: "¿Cuánto cuesta una Tiny House en Chile en 2026?", a: "El precio de una Tiny House en Chile parte desde las 450 UF para modelos básicos de 15m² hasta las 1.200 UF para modelos premium de 40m² con equipamiento completo. El valor por m² es superior a una tradicional debido a la alta densidad de diseño e instalaciones en espacios reducidos." },
+      { q: "¿Se puede vivir legalmente en una Tiny House en Chile?", a: "Sí, siempre que cumpla con la normativa local. Si la Tiny House está fijada al terreno con cimientos, requiere permiso de edificación municipal (OGUC). Si es una Tiny House sobre ruedas, se rige por la normativa de vehículos recreativos o casas rodantes, lo que permite mayor movilidad pero restricciones en servicios básicos fijos." },
+      { q: "¿Cómo se calientan las Tiny Houses en el sur de Chile?", a: "Debido a su pequeño volumen, una Tiny House requiere muy poca energía para calefaccionarse. Los sistemas más usados en Chile son las estufas a pellet de baja potencia, paneles calefactores eléctricos o aire acondicionado inverter. Una buena aislación térmica es crítica para evitar condensaciones." },
+    ],
+    normativa: "Si la Tiny House se proyecta como vivienda definitiva, debe cumplir con los estándares de altura mínima y superficie habitable de la OGUC. Los modelos llave en mano suelen venir con la carpeta técnica lista para tramitación municipal.",
   },
 };
 
@@ -315,6 +328,11 @@ export default async function TipoPage({ params }: PageProps) {
                    : `Las ${info.title} permiten reducir significativamente los tiempos comparado con la construcción tradicional, gracias a la prefabricación en planta bajo condiciones controladas.`}
                </p>
              </div>
+           </div>
+
+           {/* Tabla Comparativa de Sistemas */}
+           <div className="py-12 border-t border-border/40">
+             <SystemsComparison />
            </div>
 
           {/* FAQ visible */}

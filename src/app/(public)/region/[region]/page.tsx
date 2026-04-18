@@ -23,19 +23,64 @@ interface RegionInfo {
 }
 
 const REGIONES: Record<string, RegionInfo> = {
-  "metropolitana": {
-    nombre: "Región Metropolitana",
-    supabaseNombre: "Metropolitana",
-    slug: "metropolitana",
-    capital: "Santiago",
-    clima: "Mediterráneo semiárido",
-    recomendacion: "Prefabricada o SIP",
-    intro: "La Región Metropolitana de Santiago concentra la mayor demanda de casas prefabricadas en Chile. Su clima mediterráneo moderado permite usar prácticamente cualquier sistema constructivo sin costos extra de aislación. Las constructoras que operan en la RM ofrecen desde modelos urbanos compactos hasta viviendas de dos pisos para terrenos en condominios.",
+  "arica": {
+    nombre: "Región de Arica y Parinacota",
+    supabaseNombre: "Arica y Parinacota",
+    slug: "arica",
+    capital: "Arica",
+    clima: "Desértico costero / Altiplánico",
+    recomendacion: "Modular o Metalcom",
+    intro: "La puerta norte de Chile presenta desafíos de alta radiación UV y aridez. Las casas prefabricadas en Arica deben priorizar la protección térmica del techo y materiales que no se degraden con el sol extremo y la salinidad costera.",
     faqs: [
-      { q: "¿Cuánto cuesta una casa prefabricada en la Región Metropolitana?", a: "El precio de una casa prefabricada en la Región Metropolitana varía entre 700 y 2.500 UF dependiendo del sistema constructivo (SIP, modular o panelizado) y la superficie. El valor del terreno es el principal factor de costo en la RM, generalmente superior al de regiones." },
-      { q: "¿Se puede construir una casa prefabricada en Santiago?", a: "Sí. En la Región Metropolitana puedes construir casa prefabricada en cualquier comunas que tenga zonificación habitacional. Debes tramitar el permiso de edificación en la DOM de tu municipio (Maipú, Puente Alto, Melipilla, etc.) y cumplir con las exigencias del plano regulador comunal." },
-      { q: "¿Qué constructoras de casas prefabricadas cubren la Región Metropolitana?", a: "SolocasasChile tiene listadas varias constructoras que operan en la Región Metropolitana. Puedes filtrar por región en nuestro catálogo para comparar precios y modelos disponibles en Santiago y comunas aledañas." },
+      { q: "¿Qué casa es mejor para el calor de Arica?", a: "Se recomiendan sistemas con alta inercia térmica o aislación reflectiva. El Metalcom con recubrimiento adecuado es ideal para evitar la corrosión salina cerca de la costa." },
+      { q: "¿Hay constructoras en Arica?", a: "Sí, contamos con proveedores que despachan kits y ofrecen montaje en la XV región y zonas altiplánicas como Putre." }
     ],
+  },
+  "tarapaca": {
+    nombre: "Región de Tarapacá",
+    supabaseNombre: "Tarapacá",
+    slug: "tarapaca",
+    capital: "Iquique",
+    clima: "Desértico",
+    recomendacion: "Modular o Container",
+    intro: "En Tarapacá, la rapidez de montaje es clave para el sector minero y habitacional. Iquique y Alto Hospicio ven un auge en casas de containers y sistemas modulares por su adaptabilidad al terreno arenoso.",
+    faqs: [
+      { q: "¿Precio de casa prefabricada en Iquique?", a: "Los precios parten desde las 10 UF/m2 para kits básicos. El montaje en Alto Hospicio puede tener costos adicionales por nivelación de terreno." }
+    ],
+  },
+  "antofagasta": {
+    nombre: "Región de Antofagasta",
+    supabaseNombre: "Antofagasta",
+    slug: "antofagasta",
+    capital: "Antofagasta",
+    clima: "Desértico absoluto / Desértico costero",
+    recomendacion: "Steel Framing o Hormigón Celular",
+    intro: "La capital minera de Chile requiere viviendas robustas. Con oscilaciones térmicas día/noche en Calama y San Pedro de Atacama, el hormigón celular y el Steel Framing son las opciones más estables.",
+    faqs: [
+      { q: "¿Construyen en Calama?", a: "Sí, nuestras constructoras asociadas tienen soluciones para la altura y el frío nocturno del desierto interior." }
+    ],
+  },
+  "atacama": {
+    nombre: "Región de Atacama",
+    supabaseNombre: "Atacama",
+    slug: "atacama",
+    capital: "Copiapó",
+    clima: "Desértico transicional",
+    recomendacion: "SIP o Metalcom",
+    intro: "Copiapó y Vallenar presentan un clima seco ideal para la conservación de estructuras de metal. Las Tiny Houses son tendencia en los valles interiores de Atacama por su bajo impacto ambiental.",
+    faqs: []
+  },
+  "coquimbo": {
+    nombre: "Región de Coquimbo",
+    supabaseNombre: "Coquimbo",
+    slug: "coquimbo",
+    capital: "La Serena",
+    clima: "Mediterráneo transicional",
+    recomendacion: "Prefabricada panelizada o SIP",
+    intro: "La Serena, Coquimbo y el Valle del Elqui buscan estética y eficiencia. Las casas prefabricadas de madera tratada y SIP son las favoritas para segundas viviendas y turismo rural.",
+    faqs: [
+      { q: "¿Buscas casa en el Valle del Elqui?", a: "Recomendamos sistemas modulares de rápido montaje para minimizar la intervención en el paisaje natural del valle." }
+    ]
   },
   "valparaiso": {
     nombre: "Región de Valparaíso",
@@ -46,10 +91,50 @@ const REGIONES: Record<string, RegionInfo> = {
     recomendacion: "Panel SIP o Steel Framing",
     intro: "La Región de Valparaíso tiene un clima mediterráneo costero con alta humedad en el litoral y temperaturas más extremas en el interior (Quillota, Los Andes). Las casas prefabricadas SIP son ideales por su resistencia a la humedad, mientras que los sistemas de Steel Framing galvanizado ofrecen durabilidad extra frente a la salitre costera.",
     faqs: [
-      { q: "¿Qué sistema constructivo es mejor para la costa de Valparaíso?", a: "Para zonas costeras de Valparaíso como Viña del Mar, Concón o Quintero, se recomienda el sistema SIP con OSB tratado o el Steel Framing galvanizado, ya que ambos resisten la humedad y la salitre mejor que los paneles de madera sin tratamiento." },
-      { q: "¿Cuánto cuesta construir una casa en la Región de Valparaíso?", a: "El precio de una casa prefabricada en Valparaíso varía entre 650 y 2.300 UF según el sistema y superficie. Los costos de mano de obra son ligeramente menores que en la RM, lo que puede hacer más conveniente construir en ciudades como Quillota, San Felipe o Los Andes." },
-      { q: "¿Se puede construir casa prefabricada en zonas de quema de Valparaíso?", a: "Sí, pero con restricciones adicionales. Muchas comunas de Valparaíso exigen materiales con mayor resistencia al fuego (REI 60 o superior). Los sistemas SIP con revestimiento de fibrocemento y los muros de hormigón prefabricado son los más recomendados en zonas de riesgo de incendio." },
+      { q: "¿Qué sistema es mejor para la costa?", a: "Para Viña del Mar o Concón, se recomienda SIP con OSB tratado o Steel Framing, ya que resisten la salinidad mejor que la madera sin tratar." },
     ],
+  },
+  "metropolitana": {
+    nombre: "Región Metropolitana",
+    supabaseNombre: "Metropolitana",
+    slug: "metropolitana",
+    capital: "Santiago",
+    clima: "Mediterráneo semiárido",
+    recomendacion: "Cualquier sistema (SIP el más eficiente)",
+    intro: "La Región Metropolitana concentra la mayor demanda de Chile. Su clima moderado permite usar cualquier sistema, siendo el SIP el preferido para quienes buscan ahorro energético real en invierno y verano.",
+    faqs: [
+      { q: "¿Permisos en Santiago?", a: "Todas las constructoras en SolocasasChile ayudan con la carpeta técnica para la DOM de tu comuna en Santiago." },
+    ],
+  },
+  "ohiggins": {
+    nombre: "Región de O'Higgins",
+    supabaseNombre: "O'Higgins",
+    slug: "ohiggins",
+    capital: "Rancagua",
+    clima: "Mediterráneo interior",
+    recomendacion: "Prefabricada o SIP",
+    intro: "Rancagua y San Fernando tienen gran disponibilidad de parcelas de agrado. Las casas prefabricadas tipo campo con techos altos son las más solicitadas en la VI región.",
+    faqs: []
+  },
+  "maule": {
+    nombre: "Región del Maule",
+    supabaseNombre: "Maule",
+    slug: "maule",
+    capital: "Talca",
+    clima: "Mediterráneo húmedo",
+    recomendacion: "Madera o SIP",
+    intro: "El corazón agrícola de Chile. En Talca y Linares, la madera es el material noble por excelencia, evolucionando hacia paneles SIP para cumplir con las nuevas exigencias térmicas regionales.",
+    faqs: []
+  },
+  "nuble": {
+    nombre: "Región de Ñuble",
+    supabaseNombre: "Ñuble",
+    slug: "nuble",
+    capital: "Chillán",
+    clima: "Mediterráneo húmedo",
+    recomendacion: "SIP o Metalcom",
+    intro: "La región de Ñuble, con centro en Chillán, demanda viviendas que soporten inviernos fríos y veranos calurosos. El panel SIP es la solución más equilibrada para el centro-sur de Chile.",
+    faqs: []
   },
   "biobio": {
     nombre: "Región del Biobío",
@@ -57,12 +142,10 @@ const REGIONES: Record<string, RegionInfo> = {
     slug: "biobio",
     capital: "Concepción",
     clima: "Templado lluvioso",
-    recomendacion: "Panel SIP",
-    intro: "La Región del Biobío concentra una importante industria maderera que abastece a numerosas constructoras de casas prefabricadas en Chile. Su clima templado lluvioso (800-1.500 mm/año en la zona costera) hace imprescindible una buena aislación térmica e impermeabilización. El panel SIP es el sistema más adoptado en Concepción, Chillán y Los Ángeles por su alta performance en climas húmedos.",
+    recomendacion: "Panel SIP (impermeable)",
+    intro: "Concepción y alrededores requieren protección contra la lluvia constante. El sistema SIP con membrana hidrófuga de alto tráfico es vital para asegurar la vida útil de la casa en el Biobío.",
     faqs: [
-      { q: "¿Es el Biobío una buena región para casas prefabricadas?", a: "Sí. El Biobío es una de las regiones con mayor oferta de constructoras de casas prefabricadas en Chile, gracias a la disponibilidad local de madera y mano de obra capacitada. Los precios tienden a ser entre un 10-20% más bajos que en la Región Metropolitana." },
-      { q: "¿Qué hacer si la zona tiene alta sismicidad como en Concepción?", a: "Todos los sistemas constructivos certificados en SolocasasChile cumplen con la NCh433, la norma chilena de diseño sísmico. El Panel SIP y el Steel Framing han demostrado excelente comportamiento sísmico en terremotos anteriores en la zona del Biobío." },
-      { q: "¿Cuánto demora tramitar el permiso de edificación en el Biobío?", a: "En municipios como Concepción, Chillán o Los Ángeles el plazo promedio es de 30 a 60 días hábiles. Las constructoras verificadas en SolocasasChile conocen los requisitos locales y te acompañan en la tramitación." },
+      { q: "¿Resisten sismos?", a: "Nuestros sistemas cumplen la NCh433 de diseño sísmico, vital para la zona de Concepción." },
     ],
   },
   "araucania": {
@@ -71,51 +154,53 @@ const REGIONES: Record<string, RegionInfo> = {
     slug: "araucania",
     capital: "Temuco",
     clima: "Templado lluvioso frío",
-    recomendacion: "Panel SIP (alta aislación)",
-    intro: "La Araucanía es la región donde el Panel SIP demuestra todo su potencial. Con inviernos fríos y lluviosos en Temuco, Villarrica y Pucón, y zonas cordilleranas con nevazones frecuentes, el sistema SIP de paneles gruesos (EPS 100 o 150mm) puede reducir el consumo de calefacción hasta un 60%. El mercado de casas prefabricadas en La Araucanía es muy activo, incluyendo cabañas y casas de segunda vivienda en zonas lacustres.",
-    faqs: [
-      { q: "¿Qué tipo de casa prefabricada es mejor para el clima de La Araucanía?", a: "Para La Araucanía se recomienda el sistema Panel SIP con paneles de al menos 100mm de EPS (idealmente 150mm en zonas cordilleranas) y cubierta de alta pendiente para evacuar la nieve. La ventilación controlada es fundamental para evitar condiciones de humedad en interiores." },
-      { q: "¿Cuánto cuesta una casa prefabricada en Temuco o Villarrica?", a: "El precio en La Araucanía varía entre 800 y 2.800 UF. Las cabañas para zonas lacustres (Villarrica, Pucón, Coñaripe) suelen estar en el rango de 500 a 1.500 UF. El sistema SIP tiene un costo base entre 18-25 UF/m² en la región." },
-      { q: "¿Se pueden construir casas prefabricadas en terrenos rurales de La Araucanía?", a: "Sí, con algunos requisitos adicionales. Los terrenos rurales (fuera del radio urbano) deben acreditar acceso a agua potable y sistema de tratamiento de aguas servidas (fosa séptica o biodepuradora). Muchas constructoras en La Araucanía tienen experiencia en proyectos rurales." },
-    ],
+    recomendacion: "SIP (Aislación extrema)",
+    intro: "En Temuco, Pucón y Villarrica, el frío y la humedad son constantes. La Araucanía es el reino del Panel SIP en Chile, ofreciendo el mejor retorno de inversión en calefacción.",
+    faqs: []
+  },
+  "los-rios": {
+    nombre: "Región de Los Ríos",
+    supabaseNombre: "Los Ríos",
+    slug: "los-rios",
+    capital: "Valdivia",
+    clima: "Oceánico muy lluvioso",
+    recomendacion: "SIP o Madera impregnada",
+    intro: "Valdivia es la zona más lluviosa de Chile. Aquí la construcción prefabricada debe incluir sellos de silicona industrial y sobre-cimientos altos para evitar el contacto directo con la humedad del suelo.",
+    faqs: []
   },
   "los-lagos": {
     nombre: "Región de Los Lagos",
     supabaseNombre: "Los Lagos",
     slug: "los-lagos",
     capital: "Puerto Montt",
-    clima: "Templado oceánico lluvioso",
-    recomendacion: "Panel SIP (ultra aislación)",
-    intro: "La Región de Los Lagos tiene el clima más desafiante de Chile para la construcción: altos índices de lluvia (2.000-4.000 mm/año), vientos fuertes y temperaturas bajas. Las casas prefabricadas SIP con paneles de alta densidad y revestimiento exterior impermeable (fibrocemento, OSB tratado o madera nativa) son la solución más adoptada en Puerto Montt, Castro y Coyhaique.",
-    faqs: [
-      { q: "¿Qué aislación necesita una casa en Los Lagos?", a: "En Los Lagos se recomienda un mínimo de EPS 100mm en muros perimetrales y 150mm en cubierta. Los especialistas en SolocasasChile recomiendan además barreras de vapor en el interior de los paneles y ventilación controlada (VMC) para evitar condensaciones en climas tan húmedos." },
-      { q: "¿Es más cara la construcción prefabricada en Los Lagos?", a: "Sí, ligeramente. El traslado de materiales y el acabado exterior más robusto requerido por el clima pueden encarecer el proyecto entre un 15-25% respecto a la RM. Sin embargo, la eficiencia energética que se logra con el sistema SIP reduce significativamente los costos operacionales de por vida." },
-      { q: "¿Puede una casa prefabricada resistir los vientos de Los Lagos?", a: "Sí. Las casas SIP y de Steel Framing están diseñadas para resistir vientos de hasta 150 km/h cuando se instalan correctamente con anclajes al terreno según la NCh432 (carga de nieve y viento). Es fundamental contratar constructoras con experiencia en la zona." },
-    ],
+    clima: "Oceánico lluvioso",
+    recomendacion: "SIP (100mm mínimo)",
+    intro: "Puerto Montt y Chiloé exigen resistencia al viento y la lluvia. Las casas SIP con paneles de alta densidad son la norma para asegurar confort en la X región.",
+    faqs: []
   },
-  "ohiggins": {
-    nombre: "Región de O'Higgins",
-    supabaseNombre: "O'Higgins",
-    slug: "ohiggins",
-    capital: "Rancagua",
-    clima: "Mediterráneo semiárido interior",
-    recomendacion: "Prefabricada o Modular",
-    intro: "La Región de O'Higgins tiene un clima mediterráneo semiárido similar pero más cálido que la RM, con veranos secos y calurosos e inviernos moderados. Rancagua, San Fernando y Santa Cruz son los principales mercados de casas prefabricadas en la región, con buena disponibilidad de terrenos urbanos y rurales a precios más accesibles que Santiago.",
+  "aysen": {
+    nombre: "Región de Aysén",
+    supabaseNombre: "Aysén",
+    slug: "aysen",
+    capital: "Coyhaique",
+    clima: "Frío oceánico / Estepárico frío",
+    recomendacion: "SIP de 150mm o Modular",
+    intro: "Coyhaique y la Patagonia requieren aislación nivel experto. Aquí recomendamos paneles SIP de 150mm o sistemas modulares que llegan terminados de fábrica para evitar demoras por mal clima en obra.",
     faqs: [
-      { q: "¿Cuánto cuesta una casa prefabricada en Rancagua o San Fernando?", a: "En O'Higgins el precio de casas prefabricadas oscila entre 600 y 2.000 UF. Los terrenos son más económicos que en la RM, lo que hace a esta región muy atractiva para proyectos de primera vivienda. Las constructoras con cobertura en O'Higgins suelen operar también desde Santiago." },
-    ],
+      { q: "¿Llegan a la Carretera Austral?", a: "Sí, coordinamos logística de barcaza y camión para entregar kits en zonas remotas de Aysén." }
+    ]
   },
-  "maule": {
-    nombre: "Región del Maule",
-    supabaseNombre: "Maule",
-    slug: "maule",
-    capital: "Talca",
-    clima: "Mediterráneo húmedo de transición",
-    recomendacion: "Prefabricada o SIP",
-    intro: "La Región del Maule, con sus ciudades de Talca, Curicó, Linares y Cauquenes, representa un mercado creciente para casas prefabricadas. Su clima de transición entre el mediterráneo de Santiago y el templado del sur permite usar sistemas de aislación media, siendo el panel SIP y la prefabricada estándar las opciones más competitivas.",
+  "magallanes": {
+    nombre: "Región de Magallanes",
+    supabaseNombre: "Magallanes",
+    slug: "magallanes",
+    capital: "Punta Arenas",
+    clima: "Frío estepárico con vientos",
+    recomendacion: "SIP alta densidad / Steel Framing",
+    intro: "El extremo sur de Chile demanda casas capaces de soportar vientos de 120km/h y temperaturas bajo cero. El sistema de Punta Arenas debe priorizar la aislación de la loza de fundación y ventanas termopanel premium.",
     faqs: [
-      { q: "¿Hay constructoras de casas prefabricadas en el Maule?", a: "Sí. Varias constructoras con sede en Talca, Curicó o Santiago cubren la Región del Maule. En SolocasasChile puedes filtrar por región para ver el catálogo disponible en el Maule." },
-    ],
+      { q: "¿Resisten el viento de Magallanes?", a: "Nuestras estructuras están calculadas para las cargas de viento extremas de la XII región según normativa NCh432." }
+    ]
   },
 };
 

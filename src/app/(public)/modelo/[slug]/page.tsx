@@ -13,7 +13,7 @@ import { Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Building2, Tre
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
 import { ModeloPlano } from "@/components/modelo/modelo-plano";
-import { buildModelJsonLd, StructuredData } from "@/components/seo/structured-data";
+import { buildModelJsonLd, buildFAQJsonLd, StructuredData } from "@/components/seo/structured-data";
 import type { Metadata } from "next";
 import type { Testimonio } from "@/components/dashboard/testimonios-manager";
 

@@ -67,6 +67,15 @@ export const CONSTRUCTION_SYSTEMS = [
     color: "from-brand-teal/20 to-brand-teal/5",
     accent: "bg-brand-teal",
     link: "/tipos/hormigon"
+  },
+  {
+    id: "tiny-house",
+    title: "Tiny House",
+    description: "Viviendas minimalistas y eficientes, diseñadas para un estilo de vida consciente y móvil.",
+    icon: <Home className="w-8 h-8" />,
+    color: "from-brand-teal/20 to-brand-teal/5",
+    accent: "bg-brand-teal",
+    link: "/tipos/tiny-house"
   }
 ];
 
@@ -185,6 +194,18 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Integración", value: "Comunitaria" }
     ],
     image: "https://images.unsplash.com/photo-1448630360428-65ff2c0257ef?q=80&w=2070"
+  },
+  "tiny-house": {
+    title: "Tiny Houses",
+    description: "La revolución del minimalismo: casas pequeñas, ultra eficientes y con un diseño inteligente.",
+    icon: <Home className="w-10 h-10 text-brand-teal" />,
+    benefits: ["Bajo costo de mantenimiento", "Alta eficiencia energética", "Estilo de vida simplificado"],
+    specs: [
+        { label: "Movilidad", value: "Opcional (Ruedas)" },
+        { label: "Precio base", value: "450-1.200 UF" },
+        { label: "Tiempo entrega", value: "30-60 días" }
+    ],
+    image: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=2000"
   }
 };
 

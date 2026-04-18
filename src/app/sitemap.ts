@@ -31,18 +31,29 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/tipos/prefabricada`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.85 },
   { url: `${SITE_URL}/tipos/sip`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.85 },
   { url: `${SITE_URL}/tipos/modular`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/tipos/tiny-house`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
   { url: `${SITE_URL}/tipos/container`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/tipos/llave-en-mano`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/tipos/steel-framing`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
   { url: `${SITE_URL}/tipos/madera`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
-  // Landings regionales — capturan keywords de cola media con alta intención
-  { url: `${SITE_URL}/region/metropolitana`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  
+  // Landings regionales — Cobertura total de las 16 regiones de Chile
+  { url: `${SITE_URL}/region/arica`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/tarapaca`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/antofagasta`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/atacama`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/coquimbo`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/region/valparaiso`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
-  { url: `${SITE_URL}/region/biobio`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
-  { url: `${SITE_URL}/region/araucania`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
-  { url: `${SITE_URL}/region/los-lagos`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/metropolitana`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.85 },
   { url: `${SITE_URL}/region/ohiggins`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/region/maule`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/nuble`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/biobio`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/region/araucania`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.80 },
+  { url: `${SITE_URL}/region/los-rios`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/los-lagos`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
+  { url: `${SITE_URL}/region/aysen`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
+  { url: `${SITE_URL}/region/magallanes`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
 ];
 
 function uniqueUrls(entries: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
