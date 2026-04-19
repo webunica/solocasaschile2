@@ -169,11 +169,11 @@ export function HeroSection() {
       </div>
 
       {/* ── Content ── */}
-      <div className="container relative z-10 max-w-7xl mx-auto px-5 md:px-12 flex flex-col items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-8 lg:gap-8 items-center lg:items-start w-full">
+      <div className="container relative z-10 max-w-5xl mx-auto px-5 md:px-12 flex flex-col items-center">
+        <div className="flex flex-col items-center w-full">
 
-          {/* Left column */}
-          <div className="flex flex-col gap-6 md:gap-10">
+          {/* Main content centered */}
+          <div className="flex flex-col gap-6 md:gap-10 w-full">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -297,48 +297,7 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Circular Animation Area */}
-          <div className="hidden lg:flex flex-col h-full items-center justify-center w-full min-h-[400px]">
-            <div className="relative w-[340px] h-[340px] flex items-center justify-center">
-              {/* Spinning Dashed Track */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-                className="absolute inset-0 rounded-full border-[2px] border-dashed border-primary/30"
-              />
-
-              {/* Center Logo */}
-              <div className="bg-white/90 backdrop-blur-sm p-4 rounded-full shadow-2xl z-10 border border-white/50 w-48 h-48 flex items-center justify-center">
-                <Image src="/images/busqueda.png" alt="Búsqueda" width={150} height={150} className="w-full h-auto object-contain drop-shadow-md" unoptimized />
-              </div>
-
-              {/* Orbiting Icons */}
-              {[
-                { icon: Search, color: "text-blue-600", bg: "bg-blue-50" },
-                { icon: MapPin, color: "text-teal-600", bg: "bg-teal-50" },
-                { icon: Home, color: "text-[#1b0088]", bg: "bg-indigo-50" },
-                { icon: Phone, color: "text-purple-600", bg: "bg-purple-50" }
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute inset-0 pointer-events-none"
-                  initial={{ rotate: i * 90 }}
-                  animate={{ rotate: 360 + (i * 90) }}
-                  transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-                >
-                  <motion.div
-                    className={`absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 ${item.bg} rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-white flex items-center justify-center ${item.color} pointer-events-auto hover:scale-110 transition-transform cursor-help`}
-                    initial={{ rotate: -(i * 90) }}
-                    animate={{ rotate: -(360 + (i * 90)) }}
-                    transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-                  >
-                    <item.icon className="w-7 h-7" />
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
+          {/* Right column removed - Animation removed */}
         </div>
       </div>
     </section>
