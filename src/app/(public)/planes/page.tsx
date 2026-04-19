@@ -384,12 +384,12 @@ export default function PlanesPage() {
                   </ul>
 
                   {/* CTA */}
-                  {plan.id === 'gratis' ? (
+                  {plan.id === 'gratis' || plan.id === 'premium' ? (
                     <Link
                       href={`${plan.ctaHref}`}
                       className={cn(
                         buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
-                        "w-full rounded-2xl h-14 font-bold uppercase tracking-widest gap-2 opacity-80",
+                        "w-full rounded-2xl h-14 font-extrabold uppercase tracking-widest gap-2 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-slate-200",
                         plan.ctaClass
                       )}
                     >
@@ -408,7 +408,7 @@ export default function PlanesPage() {
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         <>
-                          {isYearly ? "Pagar con 50% DCTO" : "Pagar Plan Ahora"} <ArrowRight className="w-4 h-4" />
+                          ¡Compra ahora! <ArrowRight className="w-4 h-4" />
                         </>
                       )}
                     </Button>
