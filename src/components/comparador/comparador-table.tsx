@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, Star, Minus, Info } from "lucide-react";
+import { CheckCircle2, Star, Minus, Info, Zap, ShieldCheck, Thermometer } from "lucide-react";
 import type { ModelWithConstructora } from "@/lib/supabase/services";
 
 interface Props {
@@ -69,29 +69,37 @@ const ROWS: Row[] = [
     ) 
   },
   {
-    label: "Constructora Oficial",
-    key: "constructora.nombre",
+    label: "Eficiencia Energética",
+    key: "aislacion",
+    render: (m) => {
+      const ee = (m.aislacion as any)?.calificacion_energetica || "B";
+      return (
+        <div className="flex flex-col items-center gap-1.5">
+           <Badge className={cn(
+             "font-black text-xs px-3 py-1 rounded-lg border-none",
+             ee.startsWith('A') ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-200 text-slate-600"
+           )}>
+             Clase {ee}
+           </Badge>
+           <span className="text-[9px] font-bold uppercase tracking-widest opacity-40">NCh1079 Chile</span>
+        </div>
+      );
+    }
+  },
+  {
+    label: "Tiempo Estimado",
+    key: "tiempo_entrega",
     render: (m) => (
-      <div className="flex flex-col items-center gap-2">
-         <Link
-           href={`/constructora/${m.constructora?.slug}`}
-           className="text-primary font-black hover:opacity-80 transition-opacity tracking-tight"
-         >
-           {m.constructora?.nombre}
-         </Link>
-         {m.constructora?.plan === "premium" ? (
-           <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-[9px] uppercase tracking-widest px-2 py-0 border-none">
-             <Star className="w-2.5 h-2.5 mr-1 fill-current" /> Premium
-           </Badge>
-         ) : m.constructora?.plan === "avanza" || m.constructora?.plan === "pro" ? (
-           <Badge className="bg-blue-500/10 text-blue-600 border-none text-[9px] uppercase tracking-widest px-2 py-0">
-             Pro
-           </Badge>
-         ) : (
-           <Badge variant="secondary" className="text-[9px] uppercase tracking-widest px-2 py-0">Verificada</Badge>
-         )}
+      <div className="flex flex-col items-center">
+         <div className="flex items-center gap-1.5 text-foreground">
+            <Zap className="w-3 h-3 text-amber-500" />
+            <span className="font-bold text-sm">
+                {m.tiempo_entrega || "60-90 días"}
+            </span>
+         </div>
+         <span className="text-[9px] font-bold uppercase tracking-widest opacity-40 italic">Montaje Terreno</span>
       </div>
-    ),
+    )
   },
   {
     label: "Score Confianza (S/C)",
@@ -247,7 +255,7 @@ export function ComparadorTable({ modelos }: Props) {
           {/* CTA row */}
           <tr className="bg-muted/30">
             <td className="px-8 py-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
-              Avance
+              Acción
             </td>
             {modelos.map((m) => (
               <td key={m.id} className="px-8 py-8 text-center border-l border-border/20">
@@ -255,7 +263,7 @@ export function ComparadorTable({ modelos }: Props) {
                   href={`/modelo/${m.slug}`}
                   className={cn(buttonVariants({ size: "lg" }), "w-full max-w-[200px] rounded-2xl font-bold uppercase tracking-widest bg-brand-indigo shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all text-white hover:text-white")}
                 >
-                  Continuar
+                  Ver Ficha
                 </Link>
               </td>
             ))}
