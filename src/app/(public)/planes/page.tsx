@@ -364,7 +364,6 @@ export default function PlanesPage() {
                            )}
                          </div>
                       </div>
-                      </div>
                     </div>
                   </div>
 
