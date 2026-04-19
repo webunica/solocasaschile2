@@ -25,18 +25,18 @@ const PLANES = [
   {
     id: "premium",
     nombre: "Premium",
-    precioMensual: "2.9",
-    precioAnualEquiv: "1.45",
-    precioAnualTotal: "17.4",
-    precioOriginal: "2.9",
-    descuento: "50% OFF ANUAL",
+    precioMensual: "Consultar",
+    precioAnualEquiv: "A pedido",
+    precioAnualTotal: "0",
+    precioOriginal: "0",
+    descuento: "SOPORTE VIP",
     icon: Crown,
     color: "text-amber-500",
     bgIcon: "bg-amber-500/10",
     borderClass: "border-amber-500/50 shadow-2xl shadow-amber-500/10 scale-105",
     gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
-    badge: "OFERTA LANZAMIENTO",
-    badgeClass: "bg-red-500 text-white border-red-600 animate-pulse",
+    badge: "SOLO POR INVITACIÓN",
+    badgeClass: "bg-slate-900 text-white border-slate-800",
     features: [
       { texto: "Acceso a constru.solocasaschile.com", ok: true },
       { texto: "Sistema de Seguimiento de Obras", ok: true },
@@ -49,25 +49,25 @@ const PLANES = [
       { texto: "Galería ilimitada de proyectos", ok: true },
       { texto: "Badge Premium 💎 posicionamiento VIP", ok: true },
     ],
-    cta: "Dominar el Mercado",
-    ctaHref: "/register?plan=premium",
-    ctaClass: "bg-brand-indigo text-white hover:opacity-90 shadow-lg shadow-primary/20",
+    cta: "Consultar Habilitación",
+    ctaHref: "https://wa.me/56964130601?text=Hola%20SolocasasChile%2C%20quiero%20consultar%20por%20la%20habilitación%20del%20Plan%20Premium%20para%20mi%20constructora.",
+    ctaClass: "bg-slate-900 text-white hover:opacity-90 shadow-lg shadow-primary/20",
     ctaVariant: "default" as const,
   },
   {
     id: "pro",
     nombre: "Pro",
-    precioMensual: "1.9",
-    precioAnualEquiv: "0.95",
-    precioAnualTotal: "11.4",
-    precioOriginal: "1.9",
-    descuento: "50% OFF ANUAL",
+    precioMensual: "0.6",
+    precioAnualEquiv: "0.48",
+    precioAnualTotal: "5.76",
+    precioOriginal: "0.6",
+    descuento: "20% OFF ANUAL",
     icon: Zap,
     color: "text-brand-teal",
     bgIcon: "bg-brand-teal/10",
     borderClass: "border-brand-teal/40 shadow-2xl shadow-brand-teal/10",
     gradientClass: "from-brand-teal/5 to-transparent",
-    badge: "SÚPER PROMO",
+    badge: "MÁS POPULAR",
     badgeClass: "bg-brand-teal text-white border-brand-teal/30",
     features: [
       { texto: "15 modelos publicados", ok: true },
@@ -78,10 +78,10 @@ const PLANES = [
       { texto: "5 certificaciones de calidad", ok: true },
       { texto: "10 proyectos en galería", ok: true },
       { texto: "Badge Constructora Verificada ✓", ok: true },
-      { texto: "Sistema de Seguimiento de Obras", ok: false },
+      { texto: "Sistema de Seguimiento de Obras", ok: true },
       { texto: "Soporte por email prioritario", ok: true },
     ],
-    cta: "Empezar a Escalar",
+    cta: "Empezar Ahora",
     ctaHref: "/register?plan=pro",
     ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white",
     ctaVariant: "default" as const,
@@ -123,7 +123,7 @@ const FAQS = [
   },
   {
     q: "¿Cómo funciona el descuento anual?",
-    a: "Al elegir el pago anual, obtienes un 50% de descuento directo sobre el valor mensual. Es nuestra forma de premiar a las constructoras que se comprometen con su crecimiento a largo plazo.",
+    a: "Al elegir el pago anual en el Plan Pro, obtienes un 20% de descuento directo sobre el valor mensual. Es nuestra forma de premiar a las constructoras que se comprometen con su crecimiento a largo plazo.",
   },
   {
     q: "¿En qué moneda se cobra?",
@@ -281,7 +281,7 @@ export default function PlanesPage() {
                 >
                   Anual
                   <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse shadow-lg shadow-red-500/20">
-                    -50%
+                    DESC.
                   </span>
                 </button>
               </div>
@@ -289,7 +289,7 @@ export default function PlanesPage() {
               <div className="flex flex-col md:flex-row items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
                 <div className="flex items-center gap-3">
                   <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
-                  {isYearly ? "Estás ahorrando un 50% con el pago anual" : "Ahorra un 50% cambiando al pago anual"}
+                  {isYearly ? "Estás ahorrando con el pago anual" : "Ahorra activando el pago anual"}
                 </div>
                 {isYearly && (
                   <div className="flex items-center gap-2 border-l border-brand-indigo/20 pl-4 ml-1">
@@ -522,7 +522,7 @@ export default function PlanesPage() {
               {isPending ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
-                <>Comenzar con 50% DCTO <ArrowRight className="w-4 h-4" /></>
+                <>Comenzar ahora <ArrowRight className="w-4 h-4" /></>
               )}
             </Button>
           </div>
