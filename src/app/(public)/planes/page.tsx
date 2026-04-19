@@ -25,8 +25,8 @@ const PLANES = [
   {
     id: "premium",
     nombre: "Premium",
-    precioMensual: "Consultar",
-    precioAnualEquiv: "A pedido",
+    precioMensual: "",
+    precioAnualEquiv: "Solicítalo",
     precioAnualTotal: "0",
     precioOriginal: "0",
     descuento: "SOPORTE VIP",
@@ -49,7 +49,7 @@ const PLANES = [
       { texto: "Galería ilimitada de proyectos", ok: true },
       { texto: "Badge Premium 💎 posicionamiento VIP", ok: true },
     ],
-    cta: "Consultar Habilitación",
+    cta: "Solicitar Plan",
     ctaHref: "https://wa.me/56964130601?text=Hola%20SolocasasChile%2C%20quiero%20consultar%20por%20la%20habilitación%20del%20Plan%20Premium%20para%20mi%20constructora.",
     ctaClass: "bg-slate-900 text-white hover:opacity-90 shadow-lg shadow-primary/20",
     ctaVariant: "default" as const,
@@ -345,7 +345,7 @@ export default function PlanesPage() {
                       <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
                       <div className="flex flex-col gap-1 mt-2">
                          <div className="flex items-baseline gap-2">
-                           {isYearly && originalPrice && (
+                           {isYearly && plan.id !== 'gratis' && plan.id !== 'premium' && originalPrice && (
                              <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
                                {originalPrice}
                              </span>
@@ -353,32 +353,17 @@ export default function PlanesPage() {
                            <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
                            <div className="flex flex-col">
                               <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
-                              {isYearly && plan.id !== 'gratis' && (
+                              {isYearly && plan.id !== 'gratis' && plan.id !== 'premium' && (
                                 <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual</span>
                               )}
                            </div>
-                           {isYearly && plan.id !== 'gratis' && (
+                           {isYearly && plan.id !== 'gratis' && plan.id !== 'premium' && (
                              <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
-                               50% OFF
+                               20% OFF
                              </Badge>
                            )}
                          </div>
-                         
-                         {/* Equivalent in CLP */}
-                         {plan.id !== 'gratis' && ufValue && (
-                           <div className="flex items-center gap-1.5 text-emerald-600 font-bold text-xs bg-emerald-50 w-fit px-3 py-1 rounded-full border border-emerald-100 shadow-sm animate-in fade-in slide-in-from-left-2 duration-700">
-                             <TooltipProvider>
-                               <Tooltip>
-                                 <TooltipTrigger className="flex items-center gap-1">
-                                   ~ {formatPriceCLP(currentPrice)} <Info className="w-3 h-3 opacity-50" />
-                                 </TooltipTrigger>
-                                 <TooltipContent className="bg-slate-900 text-white border-none rounded-xl p-3 text-[10px] font-bold">
-                                   Precio estimado basado en UF actual: ${ufValue.toLocaleString('es-CL')}
-                                 </TooltipContent>
-                               </Tooltip>
-                             </TooltipProvider>
-                           </div>
-                         )}
+                      </div>
                       </div>
                     </div>
                   </div>
