@@ -15,6 +15,12 @@ import { es } from "date-fns/locale";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+function getCycleLabel(cycle?: string | null) {
+  if (cycle === "yearly") return "Facturacion Anual";
+  if (cycle === "semiannual") return "Facturacion Semestral";
+  return "Facturacion Mensual";
+}
+
 type FacturacionProfile = {
   plan?: string | null;
   plan_cycle?: string | null;
@@ -116,7 +122,7 @@ export default async function FacturacionPage() {
                    <div className="flex justify-between items-center text-sm">
                       <span className="text-slate-400 font-bold">Ciclo:</span>
                       <span className="text-slate-700 font-black uppercase">
-                        {typedProfile?.plan_cycle === 'yearly' ? 'Facturación Anual' : 'Facturación Mensual'}
+                        {getCycleLabel(typedProfile?.plan_cycle)}
                       </span>
                    </div>
                 </div>

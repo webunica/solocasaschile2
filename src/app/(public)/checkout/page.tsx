@@ -22,9 +22,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
+  BILLING_OPTIONS,
   CHECKOUT_PLANS,
   type BillingCycle,
+  getBillingCycleSavingsUf,
   getCheckoutPlanPriceUf,
+  isBillingCycle,
   isDirectCheckoutPlan,
 } from "@/lib/payments/plans";
 
@@ -33,7 +36,8 @@ function CheckoutForm() {
   const rawPlan = searchParams.get("plan") || "pro";
   const rawBilling = searchParams.get("billing") || "yearly";
   const plan = isDirectCheckoutPlan(rawPlan) ? rawPlan : "pro";
-  const billing: BillingCycle = rawBilling === "monthly" ? "monthly" : "yearly";
+  const initialBilling: BillingCycle = isBillingCycle(rawBilling) ? rawBilling : "yearly";
+  const [billing, setBilling] = useState<BillingCycle>(initialBilling);
   const planConfig = CHECKOUT_PLANS[plan];
   const price = useMemo(() => getCheckoutPlanPriceUf(plan, billing), [plan, billing]);
 
@@ -143,7 +147,7 @@ function CheckoutForm() {
                 <p className="text-xs font-black uppercase tracking-widest text-brand-teal">Resumen</p>
                 <h2 className="mt-2 text-3xl font-black tracking-tighter text-foreground">{planConfig.name}</h2>
                 <p className="mt-1 text-sm font-medium text-muted-foreground">
-                  {billing === "yearly" ? "Facturacion anual" : "Facturacion mensual"}
+                  Elige cuanto tiempo quieres activar tu cuenta.
                 </p>
               </div>
               <div className="rounded-2xl bg-brand-teal/10 p-3 text-brand-teal">
@@ -151,16 +155,81 @@ function CheckoutForm() {
               </div>
             </div>
 
-            <div className="flex items-end justify-between gap-4 py-6">
+            <div className="grid gap-3 py-6">
+              {BILLING_OPTIONS.map((option) => {
+                const optionPrice = getCheckoutPlanPriceUf(plan, option.id);
+                const savings = getBillingCycleSavingsUf(plan, option.id);
+                const isSelected = billing === option.id;
+
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => setBilling(option.id)}
+                    className={cn(
+                      "w-full rounded-2xl border p-4 text-left transition-all",
+                      "hover:-translate-y-0.5 hover:border-brand-teal/70 hover:bg-brand-teal/5",
+                      isSelected
+                        ? "border-brand-teal bg-brand-teal/10 shadow-lg shadow-brand-teal/10"
+                        : "border-border/60 bg-slate-50"
+                    )}
+                    aria-pressed={isSelected}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <span
+                          className={cn(
+                            "mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border",
+                            isSelected ? "border-brand-teal bg-brand-teal" : "border-slate-300 bg-white"
+                          )}
+                        >
+                          {isSelected && <span className="h-2 w-2 rounded-full bg-brand-indigo" />}
+                        </span>
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="text-sm font-black uppercase tracking-tight text-foreground">
+                              {option.title}
+                            </p>
+                            {option.badge && (
+                              <Badge className="rounded-md border-none bg-brand-indigo text-[10px] font-black uppercase tracking-widest text-white">
+                                {option.badge}
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="mt-1 text-xs font-medium leading-relaxed text-muted-foreground">
+                            {option.benefit}
+                          </p>
+                          {savings > 0 && (
+                            <p className="mt-2 text-xs font-black uppercase tracking-widest text-emerald-600">
+                              Ahorras {savings} UF frente al pago mensual
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-black tracking-tighter text-brand-indigo">
+                          {optionPrice.displayUf}
+                        </p>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                          UF / mes
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex items-end justify-between gap-4 border-t border-border/50 py-6">
               <div>
                 <p className="text-5xl font-black tracking-tighter text-brand-indigo">
                   {price.displayUf}
                 </p>
                 <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">{price.label}</p>
               </div>
-              {billing === "yearly" && (
+              {billing !== "monthly" && (
                 <Badge className="bg-red-500 text-white border-none font-black uppercase tracking-widest">
-                  {planConfig.annualDiscountLabel}
+                  {billing === "yearly" ? planConfig.annualDiscountLabel : "10% OFF semestral"}
                 </Badge>
               )}
             </div>

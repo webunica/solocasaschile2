@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { FlowService } from '@/lib/payments/flow';
 import { resend } from '@/lib/resend';
+import { getBillingCycleLabel } from '@/lib/payments/plans';
 import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-logger';
 import { z } from 'zod';
 
@@ -110,6 +111,8 @@ export async function POST(req: NextRequest) {
       const nextBilling = new Date();
       if (billing === 'yearly') {
         nextBilling.setFullYear(nextBilling.getFullYear() + 1);
+      } else if (billing === 'semiannual') {
+        nextBilling.setMonth(nextBilling.getMonth() + 6);
       } else {
         nextBilling.setMonth(nextBilling.getMonth() + 1);
       }
@@ -153,7 +156,7 @@ export async function POST(req: NextRequest) {
                   <p>Tu pago fue procesado correctamente. Tu cuenta quedo activa y ya puedes entrar a tu panel para publicar modelos y recibir leads.</p>
                   <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin: 20px 0;">
                      <p style="margin: 5px 0;"><strong>Plan:</strong> ${plan.toUpperCase()}</p>
-                     <p style="margin: 5px 0;"><strong>Ciclo:</strong> ${billing === 'yearly' ? 'Anual' : 'Mensual'}</p>
+                     <p style="margin: 5px 0;"><strong>Ciclo:</strong> ${getBillingCycleLabel(billing)}</p>
                      <p style="margin: 5px 0;"><strong>Proxima renovacion:</strong> ${nextBilling.toLocaleDateString('es-CL')}</p>
                   </div>
                   <p style="margin: 0 0 10px;"><strong>Primeros pasos recomendados:</strong></p>
@@ -185,7 +188,7 @@ export async function POST(req: NextRequest) {
               <p><strong>Constructora:</strong> ${updatedData?.nombre}</p>
               <p><strong>Monto:</strong> ${amount}</p>
               <p><strong>Plan:</strong> ${plan.toUpperCase()}</p>
-              <p><strong>Ciclo:</strong> ${billing === 'yearly' ? 'Anual' : 'Mensual'}</p>
+              <p><strong>Ciclo:</strong> ${getBillingCycleLabel(billing)}</p>
               <p><strong>Orden Flow:</strong> ${flowOrder}</p>
             </div>
           `

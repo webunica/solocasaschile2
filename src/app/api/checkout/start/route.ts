@@ -4,12 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { FlowService } from "@/lib/payments/flow";
 import { getUfValue } from "@/lib/payments/uf";
-import { getCheckoutPlanPriceUf } from "@/lib/payments/plans";
+import { getBillingCycleLabel, getCheckoutPlanPriceUf } from "@/lib/payments/plans";
 import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
 
 const CheckoutStartSchema = z.object({
   plan: z.literal("pro"),
-  billing: z.enum(["monthly", "yearly"]),
+  billing: z.enum(["monthly", "semiannual", "yearly"]),
   email: z.string().email().max(180),
   password: z.string().min(6).max(100),
   companyName: z.string().min(2).max(140),
@@ -143,7 +143,7 @@ export async function POST(req: NextRequest) {
     const ufValue = await getUfValue();
     const price = getCheckoutPlanPriceUf(payload.plan, payload.billing);
     const amountClp = Math.round(price.totalUf * ufValue);
-    const subject = `SoloCasasChile PRO ${payload.billing === "yearly" ? "Anual" : "Mensual"}`;
+    const subject = `SoloCasasChile PRO ${getBillingCycleLabel(payload.billing)}`;
 
     const flowResult = await FlowService.createPayment({
       subject,

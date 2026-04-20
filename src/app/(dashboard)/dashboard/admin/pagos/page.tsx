@@ -27,6 +27,12 @@ type PagoRow = {
   } | null;
 };
 
+function getCycleLabel(cycle: string) {
+  if (cycle === "yearly") return "Anual";
+  if (cycle === "semiannual") return "Semestral";
+  return "Mensual";
+}
+
 export default async function AdminPagosPage() {
   const supabase = await createClient();
 
@@ -146,7 +152,7 @@ export default async function AdminPagosPage() {
                     <td className="p-4">
                       <div className="flex flex-col">
                         <span className="text-sm font-black uppercase text-brand-indigo tracking-tight">{p.plan}</span>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{p.billing_cycle === 'yearly' ? 'Anual' : 'Mensual'}</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{getCycleLabel(p.billing_cycle)}</span>
                       </div>
                     </td>
                     <td className="p-4 text-sm font-black text-slate-900">${Number(p.amount).toLocaleString('es-CL')}</td>

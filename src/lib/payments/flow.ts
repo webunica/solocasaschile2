@@ -29,7 +29,7 @@ interface FlowStatusResponse {
   optional?: {
     constructoraId?: string;
     plan?: string;
-    billing?: 'monthly' | 'yearly' | string;
+    billing?: 'monthly' | 'semiannual' | 'yearly' | string;
     [key: string]: string | undefined;
   };
   paymentData?: unknown;
