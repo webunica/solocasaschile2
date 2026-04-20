@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { redirect } from "next/navigation";
 import { 
   CheckCircle2, 
   XCircle, 
@@ -35,9 +37,28 @@ function getCycleLabel(cycle: string) {
 
 export default async function AdminPagosPage() {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  const { data: profile } = await supabase
+    .from('constructoras')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  const isAdmin =
+    user.app_metadata?.is_superadmin === true ||
+    profile?.role === 'superadmin' ||
+    profile?.role === 'admin' ||
+    user.app_metadata?.role === 'admin';
+
+  if (!isAdmin) redirect("/dashboard");
+
+  const admin = createAdminClient();
 
   // 1. Fetch de Pagos con nombre de constructora
-  const { data, error } = await supabase
+  const { data, error } = await admin
     .from('pagos')
     .select(`
       *,

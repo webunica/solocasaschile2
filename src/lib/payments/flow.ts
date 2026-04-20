@@ -20,20 +20,28 @@ export interface FlowPaymentResponse {
   flowOrder: number;
 }
 
+interface FlowStatusOptional {
+  constructoraId?: string;
+  plan?: string;
+  billing?: 'monthly' | 'semiannual' | 'yearly' | string;
+  coupon_code?: string;
+  descuento_uf?: string;
+  [key: string]: string | undefined;
+}
+
 interface FlowStatusResponse {
   status?: number;
   flowOrder?: number;
   commerceOrder?: string;
   amount?: number;
   payer?: string;
-  optional?: {
-    constructoraId?: string;
-    plan?: string;
-    billing?: 'monthly' | 'semiannual' | 'yearly' | string;
-    [key: string]: string | undefined;
-  };
+  optional?: FlowStatusOptional;
   paymentData?: unknown;
 }
+
+type RawFlowStatusResponse = Omit<FlowStatusResponse, 'optional'> & {
+  optional?: FlowStatusOptional | string | null;
+};
 
 type FlowSignableValue = string | number | boolean | null | undefined;
 type FlowParams = Record<string, FlowSignableValue>;
@@ -47,6 +55,18 @@ function normalizeOptionalParams(optional: Record<string, string> = {}) {
   }
 
   return normalized;
+}
+
+function parseFlowOptional(optional: RawFlowStatusResponse['optional']): FlowStatusOptional | undefined {
+  if (!optional) return undefined;
+  if (typeof optional !== 'string') return optional;
+
+  try {
+    const parsed = JSON.parse(optional) as FlowStatusOptional;
+    return parsed;
+  } catch {
+    return undefined;
+  }
 }
 
 function isAbortError(error: unknown): error is DOMException {
@@ -184,7 +204,11 @@ export class FlowService {
           throw new Error(`Flow getStatus failed: ${response.statusText}`);
       }
 
-      return (await response.json()) as FlowStatusResponse;
+      const data = (await response.json()) as RawFlowStatusResponse;
+      return {
+        ...data,
+        optional: parseFlowOptional(data.optional),
+      };
     } catch (error: unknown) {
       clearTimeout(timeoutId);
       throw error;

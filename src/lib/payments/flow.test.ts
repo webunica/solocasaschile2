@@ -121,6 +121,27 @@ describe('FlowService', () => {
       expect(url).toContain('s='); 
     });
 
+    it('debe parsear optional cuando Flow lo retorna como JSON string', async () => {
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({
+          status: 2,
+          amount: 15000,
+          optional: JSON.stringify({
+            constructoraId: 'CONST-123',
+            plan: 'pro',
+            billing: 'yearly',
+          }),
+        }),
+      } as unknown as Response);
+
+      const result = await FlowService.getPaymentStatus('TEST_TOKEN_123');
+
+      expect(result.optional?.constructoraId).toBe('CONST-123');
+      expect(result.optional?.plan).toBe('pro');
+      expect(result.optional?.billing).toBe('yearly');
+    });
+
     it('debe manejar errores de red o timeout', async () => {
       global.fetch = vi.fn().mockRejectedValue(new Error('Network error'));
       await expect(FlowService.getPaymentStatus('123')).rejects.toThrow('Network error');
