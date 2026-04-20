@@ -43,6 +43,7 @@ function CheckoutForm() {
   const initialBilling: BillingCycle = isBillingCycle(rawBilling) ? rawBilling : "yearly";
   const [billing, setBilling] = useState<BillingCycle>(initialBilling);
   const planConfig = CHECKOUT_PLANS[plan];
+  const selectedBillingOption = BILLING_OPTIONS.find((option) => option.id === billing) ?? BILLING_OPTIONS[0];
   const [couponInput, setCouponInput] = useState("");
   const [appliedCouponCode, setAppliedCouponCode] = useState("");
   const [couponError, setCouponError] = useState<string | null>(null);
@@ -233,6 +234,9 @@ function CheckoutForm() {
                           <p className="mt-1 text-xs font-medium leading-relaxed text-muted-foreground">
                             {option.benefit}
                           </p>
+                          <p className="mt-2 text-xs font-bold text-slate-500">
+                            {optionPrice.displayUf} UF x {option.months} {option.months === 1 ? "mes" : "meses"} = {optionPrice.totalUf} UF
+                          </p>
                           {savings > 0 && (
                             <p className="mt-2 text-xs font-black uppercase tracking-widest text-emerald-600">
                               Ahorras {savings} UF frente al pago mensual
@@ -273,22 +277,28 @@ function CheckoutForm() {
                 Total a pagar ahora
               </p>
               <div className="mt-3 space-y-2">
+                <div className="flex items-center justify-between gap-4 text-sm font-bold text-muted-foreground">
+                  <span>Subtotal ({selectedBillingOption.months} {selectedBillingOption.months === 1 ? "mes" : "meses"})</span>
+                  <span>{price.subtotalUf} UF</span>
+                </div>
+                <p className="text-xs font-semibold text-slate-500">
+                  {getCheckoutPlanPriceUf(plan, billing).displayUf} UF x {selectedBillingOption.months} {selectedBillingOption.months === 1 ? "mes" : "meses"} = {price.subtotalUf} UF
+                </p>
                 {appliedCoupon && (
-                  <>
-                    <div className="flex items-center justify-between gap-4 text-sm font-bold text-muted-foreground">
-                      <span>Subtotal</span>
-                      <span>{price.subtotalUf} UF</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-4 text-sm font-black text-emerald-600">
-                      <span>{appliedCoupon.label}</span>
-                      <span>-{price.discountUf} UF</span>
-                    </div>
-                  </>
+                  <div className="flex items-center justify-between gap-4 text-sm font-black text-emerald-600">
+                    <span>{appliedCoupon.label}</span>
+                    <span>-{price.discountUf} UF</span>
+                  </div>
                 )}
                 <div className="flex items-end justify-between gap-4 border-t border-border/60 pt-3">
                   <span className="text-sm font-black uppercase tracking-widest text-foreground">Total</span>
                   <span className="text-2xl font-black tracking-tighter text-foreground">{price.totalUf} UF</span>
                 </div>
+                {selectedBillingOption.months > 1 && (
+                  <p className="text-xs font-semibold text-slate-500">
+                    Equivale a {price.displayUf} UF por mes durante {selectedBillingOption.months} meses.
+                  </p>
+                )}
               </div>
               <p className="mt-1 text-xs font-medium leading-relaxed text-muted-foreground">
                 Flow calcula el cargo en pesos chilenos al valor UF vigente del dia.
