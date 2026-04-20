@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -8,18 +8,12 @@ import { buttonVariants, Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, ChevronDown, Timer, Sparkles, Loader2, Info
+  Star, ChevronDown, Timer, Sparkles, Loader2
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const PLANES = [
   {
@@ -139,35 +133,26 @@ const FAQS = [
   },
 ];
 
+const subscribeToUrlChanges = (onStoreChange: () => void) => {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+};
+
+const getStatusPendingSnapshot = () =>
+  new URLSearchParams(window.location.search).get("status") === "pending";
+
+const getStatusPendingServerSnapshot = () => false;
+
 export default function PlanesPage() {
   const [isYearly, setIsYearly] = useState(true);
-  const [ufValue, setUfValue] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   
-  // En staging el window.location no siempre está disponible en SSR
-  const [isStatusPending, setIsStatusPending] = useState(false);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('status') === 'pending') {
-      setIsStatusPending(true);
-    }
-  }, []);
-
-  // Fetch current UF for price estimation
-  useEffect(() => {
-    fetch('/api/market/uf')
-      .then(res => res.json())
-      .then(data => setUfValue(data.uf))
-      .catch(() => console.warn("No se pudo cargar el valor de la UF para el resumen."));
-  }, []);
-
-  const formatPriceCLP = (uf: string) => {
-    if (!ufValue) return null;
-    const clp = Math.round(parseFloat(uf) * ufValue);
-    return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(clp);
-  };
+  const isStatusPending = useSyncExternalStore(
+    subscribeToUrlChanges,
+    getStatusPendingSnapshot,
+    getStatusPendingServerSnapshot
+  );
 
   const handlePurchase = async (planId: string, billing: 'monthly' | 'yearly') => {
     if (planId === 'gratis') {
@@ -431,8 +416,8 @@ export default function PlanesPage() {
           <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { quote: "Contratamos el plan anual pro con el 50% y la inversión se pagó sola en las primeras semanas.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro Anual" },
-              { quote: "Como super-admin, valoro que el badge verificado sea gratis si te comprometes con el año.", name: "Andrea Flores", company: "Constructora Biobío", plan: "Premium Anual" },
+              { quote: "Contratamos el plan anual Pro con el 20% de descuento y la inversión se pagó sola en las primeras semanas.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro Anual" },
+              { quote: "El Plan Premium nos ayudó a ordenar modelos, testimonios y seguimiento con una presencia mucho más completa.", name: "Andrea Flores", company: "Constructora Biobío", plan: "Premium" },
               { quote: "Los 4 meses gratis nos permitieron probar la herramienta y recibir leads reales sin costo.", name: "Felipe Torres", company: "SIP Chile", plan: "Periodo Prueba" },
             ].map((t) => (
               <div key={t.name} className="bg-card/60 border border-border/40 rounded-[2rem] p-8 text-left space-y-4">
@@ -491,7 +476,7 @@ export default function PlanesPage() {
               Comienza hoy
             </Badge>
             <h2 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
-              Aprovecha el 50% DCTO<br />y domina tu zona
+              Activa tu Plan Pro anual<br />y domina tu zona
             </h2>
             <p className="text-white/80 font-medium text-lg max-w-md mx-auto">
               Únete a las constructoras que ya están recibiendo leads reales cada semana.

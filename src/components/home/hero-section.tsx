@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ShieldCheck, Search, MapPin, Phone, Home, Zap } from "lucide-react";
+import { ShieldCheck, Search, MapPin, Zap } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -192,8 +192,7 @@ export function HeroSection() {
                   <span className="bg-gradient-to-r from-[#dca24e] to-[#b76a1e] bg-clip-text text-[clamp(2.25rem,8vw,4rem)] font-black tracking-[-0.05em] leading-none text-transparent uppercase">
                     CASAS
                   </span>
-                  {/* H1 Oculto para SEO - Refuerza la keyword principal ante bots */}
-                  <h1 className="sr-only">Casas Prefabricadas Chile — Comparador de modelos, precios y constructoras 2026</h1>
+                  <span className="sr-only">Casas Prefabricadas Chile - Comparador de modelos, precios y constructoras 2026</span>
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={typeIndex}
