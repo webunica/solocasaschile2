@@ -12,8 +12,6 @@ import {
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
 
 const PLANES = [
   {
@@ -161,31 +159,7 @@ export default function PlanesPage() {
     }
 
     startTransition(async () => {
-      try {
-        const supabase = createClient();
-        const { data: { session } } = await supabase.auth.getSession();
-
-        if (!session) {
-          router.push(`/register?plan=${planId}&billing=${billing}`);
-          return;
-        }
-
-        const response = await fetch('/api/payments/flow/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan: planId, billing })
-        });
-
-        const data = await response.json();
-
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          toast.error(data.error || "Error al iniciar el pago.");
-        }
-      } catch {
-        toast.error("Ocurrió un error inesperado. Intenta de nuevo.");
-      }
+      router.push(`/checkout?plan=${planId}&billing=${billing}`);
     });
   };
 
@@ -195,7 +169,7 @@ export default function PlanesPage() {
       {isPending && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center flex-col gap-4">
            <div className="w-16 h-16 rounded-full border-4 border-brand-indigo/20 border-t-brand-indigo animate-spin" />
-           <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Iniciando pago seguro con Flow...</p>
+           <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Preparando checkout seguro...</p>
         </div>
       )}
 

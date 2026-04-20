@@ -267,7 +267,7 @@ export default async function DashboardPage() {
                          <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center group-hover:bg-white/10 transition-colors">
                             <p className="text-[10px] font-black uppercase text-white/40 tracking-widest leading-none mb-1">PRO</p>
                             <div className="flex items-baseline gap-1">
-                               <p className="font-black text-xl text-white">1.9</p>
+                               <p className="font-black text-xl text-white">0.6</p>
                                <span className="text-[10px] font-bold text-white/60">UF</span>
                             </div>
                          </div>

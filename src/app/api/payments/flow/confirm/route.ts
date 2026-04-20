@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { FlowService } from '@/lib/payments/flow';
 import { resend } from '@/lib/resend';
 import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-logger';
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'ID de constructora no encontrado en los parámetros del pago' }, { status: 400 });
     }
 
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     // Mapping de estados de Flow a nuestra base de datos
     const statusMap: Record<number, string> = {
@@ -142,21 +142,32 @@ export async function POST(req: NextRequest) {
         await resend.emails.send({
           from: 'SoloCasasChile <contacto@solocasaschile.com>',
           to: [userEmail || 'soporte@solocasaschile.com'],
-          subject: '¡Tu plan de SoloCasasChile ha sido activado! 🚀',
+          subject: 'Tu Plan Pro ya esta activo en SoloCasasChile',
           html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border-radius: 20px; overflow: hidden; border: 1px solid #eee;">
                <div style="background: #4f46e5; padding: 40px; text-align: center; color: white;">
-                  <h1 style="margin: 0; font-size: 24px;">¡Bienvenido a ${plan.toUpperCase()}!</h1>
+                  <h1 style="margin: 0; font-size: 24px;">Tu plan ${plan.toUpperCase()} ya esta activo</h1>
                </div>
                <div style="padding: 40px; color: #334155; line-height: 1.6;">
                   <p>Hola <strong>${updatedData?.nombre}</strong>,</p>
-                  <p>Tu pago ha sido procesado exitosamente. Tu suscripción ya está activa y puedes disfrutar de todas las ventajas de tu nuevo plan.</p>
+                  <p>Tu pago fue procesado correctamente. Tu cuenta quedo activa y ya puedes entrar a tu panel para publicar modelos y recibir leads.</p>
                   <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin: 20px 0;">
                      <p style="margin: 5px 0;"><strong>Plan:</strong> ${plan.toUpperCase()}</p>
                      <p style="margin: 5px 0;"><strong>Ciclo:</strong> ${billing === 'yearly' ? 'Anual' : 'Mensual'}</p>
-                     <p style="margin: 5px 0;"><strong>Próxima renovación:</strong> ${nextBilling.toLocaleDateString('es-CL')}</p>
+                     <p style="margin: 5px 0;"><strong>Proxima renovacion:</strong> ${nextBilling.toLocaleDateString('es-CL')}</p>
                   </div>
-                  <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="display: block; background: #4f46e5; color: white; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold;">Ir a mi Panel</a>
+                  <p style="margin: 0 0 10px;"><strong>Primeros pasos recomendados:</strong></p>
+                  <ol style="padding-left: 20px; margin-top: 0;">
+                    <li>Completa el perfil de tu constructora.</li>
+                    <li>Publica tus modelos con fotos, precios y regiones.</li>
+                    <li>Activa testimonios, certificaciones y seguimiento de obras.</li>
+                    <li>Revisa tus leads desde el panel y responde rapido por WhatsApp.</li>
+                  </ol>
+                  <div style="background: #ecfeff; border: 1px solid #99f6e4; padding: 18px; border-radius: 12px; margin: 20px 0;">
+                    <p style="margin: 0;"><strong>Beneficios activos:</strong> modelos publicados, CRM de leads, badge verificado, soporte prioritario y seguimiento de obras.</p>
+                  </div>
+                  <a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="display: block; background: #4f46e5; color: white; text-align: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold;">Entrar a mi panel</a>
+                  <p style="font-size: 13px; color: #64748b; margin-top: 24px;">Si necesitas ayuda, responde este correo o escribenos por WhatsApp. Estamos para ayudarte a dejar tu perfil vendiendo mejor.</p>
                </div>
             </div>
           `

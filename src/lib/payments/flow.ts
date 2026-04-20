@@ -90,6 +90,10 @@ export class FlowService {
       urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`
     };
 
+    for (const [key, value] of Object.entries(params.optional ?? {})) {
+      flowParams[key] = value;
+    }
+
     debugFlow('flow_payment_create_started', {
       amount: flowParams.amount,
       subject: flowParams.subject,

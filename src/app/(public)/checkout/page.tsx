@@ -1,0 +1,328 @@
+"use client";
+
+import { Suspense, useMemo, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  CreditCard,
+  Eye,
+  EyeOff,
+  Loader2,
+  LockKeyhole,
+  ShieldCheck,
+  Zap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import {
+  CHECKOUT_PLANS,
+  type BillingCycle,
+  getCheckoutPlanPriceUf,
+  isDirectCheckoutPlan,
+} from "@/lib/payments/plans";
+
+function CheckoutForm() {
+  const searchParams = useSearchParams();
+  const rawPlan = searchParams.get("plan") || "pro";
+  const rawBilling = searchParams.get("billing") || "yearly";
+  const plan = isDirectCheckoutPlan(rawPlan) ? rawPlan : "pro";
+  const billing: BillingCycle = rawBilling === "monthly" ? "monthly" : "yearly";
+  const planConfig = CHECKOUT_PLANS[plan];
+  const price = useMemo(() => getCheckoutPlanPriceUf(plan, billing), [plan, billing]);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const password = String(formData.get("password") || "");
+    const confirmPassword = String(formData.get("confirmPassword") || "");
+
+    if (password !== confirmPassword) {
+      setError("Las contrasenas no coinciden.");
+      return;
+    }
+
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/checkout/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan,
+          billing,
+          email: String(formData.get("email") || ""),
+          password,
+          companyName: String(formData.get("companyName") || ""),
+          repName: String(formData.get("repName") || ""),
+          phone: String(formData.get("phone") || ""),
+          rut: String(formData.get("rut") || ""),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.url) {
+        setError(data.error || "No pudimos iniciar el pago. Intenta nuevamente.");
+        setIsLoading(false);
+        return;
+      }
+
+      window.location.href = data.url;
+    } catch {
+      setError("Ocurrio un error inesperado. Intenta nuevamente.");
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-slate-50 px-5 py-28 md:px-10 md:py-36">
+      <div className="mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+        <section className="space-y-8">
+          <Link
+            href="/planes"
+            className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-muted-foreground transition-colors hover:text-brand-indigo"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Volver a planes
+          </Link>
+
+          <div className="space-y-5">
+            <Link href="/" className="inline-flex">
+              <Image
+                src="/images/logo-vertical.png"
+                alt="SolocasasChile"
+                width={150}
+                height={110}
+                className="h-20 w-auto object-contain"
+                priority
+              />
+            </Link>
+            <Badge className="bg-brand-teal/10 text-brand-indigo border-brand-teal/20 font-black uppercase tracking-widest">
+              Checkout seguro
+            </Badge>
+            <h1 className="max-w-2xl text-4xl font-heading font-black leading-none tracking-tighter text-brand-indigo md:text-6xl">
+              Crea tu cuenta y activa tu plan en un solo paso
+            </h1>
+            <p className="max-w-xl text-lg font-medium leading-relaxed text-muted-foreground">
+              Primero dejamos tu perfil listo, luego te enviamos a Flow. Al confirmarse el pago,
+              tu Plan Pro queda activo y entras directo a tu panel.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              { icon: LockKeyhole, title: "Cuenta segura", text: "Sesion creada antes del pago." },
+              { icon: CreditCard, title: "Pago Flow", text: "Transaccion bancaria protegida." },
+              { icon: ShieldCheck, title: "Activacion", text: "Plan activo al confirmar." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-border/50 bg-white p-5 shadow-sm">
+                <item.icon className="mb-4 h-5 w-5 text-brand-teal" />
+                <p className="text-sm font-black uppercase tracking-tight text-foreground">{item.title}</p>
+                <p className="mt-1 text-xs font-medium leading-relaxed text-muted-foreground">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="grid gap-6">
+          <div className="rounded-[2rem] border border-border/50 bg-white p-6 shadow-xl shadow-slate-200/70 md:p-8">
+            <div className="flex items-start justify-between gap-4 border-b border-border/50 pb-6">
+              <div>
+                <p className="text-xs font-black uppercase tracking-widest text-brand-teal">Resumen</p>
+                <h2 className="mt-2 text-3xl font-black tracking-tighter text-foreground">{planConfig.name}</h2>
+                <p className="mt-1 text-sm font-medium text-muted-foreground">
+                  {billing === "yearly" ? "Facturacion anual" : "Facturacion mensual"}
+                </p>
+              </div>
+              <div className="rounded-2xl bg-brand-teal/10 p-3 text-brand-teal">
+                <Zap className="h-6 w-6" />
+              </div>
+            </div>
+
+            <div className="flex items-end justify-between gap-4 py-6">
+              <div>
+                <p className="text-5xl font-black tracking-tighter text-brand-indigo">
+                  {price.displayUf}
+                </p>
+                <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">{price.label}</p>
+              </div>
+              {billing === "yearly" && (
+                <Badge className="bg-red-500 text-white border-none font-black uppercase tracking-widest">
+                  {planConfig.annualDiscountLabel}
+                </Badge>
+              )}
+            </div>
+
+            <div className="rounded-2xl bg-slate-50 p-5">
+              <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                Total a pagar ahora
+              </p>
+              <p className="mt-2 text-2xl font-black tracking-tighter text-foreground">
+                {price.totalUf} UF
+              </p>
+              <p className="mt-1 text-xs font-medium leading-relaxed text-muted-foreground">
+                Flow calcula el cargo en pesos chilenos al valor UF vigente del dia.
+              </p>
+            </div>
+
+            <ul className="mt-6 space-y-3">
+              {planConfig.features.map((feature) => (
+                <li key={feature} className="flex items-center gap-3 text-sm font-bold text-foreground">
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <form onSubmit={handleSubmit} className="rounded-[2rem] border border-border/50 bg-white p-6 shadow-xl shadow-slate-200/70 md:p-8">
+            <div className="mb-6">
+              <p className="text-xs font-black uppercase tracking-widest text-brand-teal">Datos de acceso</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tighter text-foreground">
+                Registra tu constructora
+              </h2>
+            </div>
+
+            {error && (
+              <div className="mb-5 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm font-bold leading-relaxed text-red-600">
+                {error}
+              </div>
+            )}
+
+            <div className="grid gap-5">
+              <div className="space-y-2">
+                <Label htmlFor="companyName" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                  Nombre constructora
+                </Label>
+                <Input id="companyName" name="companyName" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="repName" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                    Nombre responsable
+                  </Label>
+                  <Input id="repName" name="repName" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                    WhatsApp
+                  </Label>
+                  <Input id="phone" name="phone" type="tel" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="rut" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                  RUT empresa
+                </Label>
+                <Input id="rut" name="rut" className="h-13 rounded-xl bg-slate-50 font-bold" />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                  Email
+                </Label>
+                <Input id="email" name="email" type="email" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                    Contrasena
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      name="password"
+                      type={showPassword ? "text" : "password"}
+                      minLength={6}
+                      required
+                      className="h-13 rounded-xl bg-slate-50 pr-11 font-bold"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((value) => !value)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+                      aria-label={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                    Confirmar
+                  </Label>
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showPassword ? "text" : "password"}
+                    minLength={6}
+                    required
+                    className="h-13 rounded-xl bg-slate-50 font-bold"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className={cn(
+                "mt-7 h-14 w-full rounded-xl bg-brand-teal text-brand-indigo font-black uppercase tracking-widest shadow-xl shadow-brand-teal/20 transition-transform active:scale-95",
+                "hover:bg-[#34dac5]"
+              )}
+            >
+              {isLoading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  Crear cuenta y pagar <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </Button>
+
+            <p className="mt-5 text-center text-xs font-medium leading-relaxed text-muted-foreground">
+              Al continuar aceptas los{" "}
+              <Link href="/terminos" className="font-bold text-brand-indigo hover:underline">
+                terminos
+              </Link>{" "}
+              y la{" "}
+              <Link href="/privacidad" className="font-bold text-brand-indigo hover:underline">
+                privacidad
+              </Link>
+              . Si ya tienes cuenta, usa el mismo email y contrasena para continuar.
+            </p>
+          </form>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center bg-slate-50">
+          <Loader2 className="h-8 w-8 animate-spin text-brand-indigo" />
+        </main>
+      }
+    >
+      <CheckoutForm />
+    </Suspense>
+  );
+}

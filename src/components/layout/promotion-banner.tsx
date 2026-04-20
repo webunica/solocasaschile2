@@ -20,7 +20,7 @@ export function PromotionBanner() {
         </div>
         
         <p className="text-xs sm:text-sm font-black tracking-tight uppercase sm:normal-case">
-          ¡Potencia tu Constructora! <span className="text-amber-300 underline underline-offset-4 decoration-amber-300/40">50% DE DESCUENTO</span> en planes Pro y Premium hasta el 30 de abril.
+          ¡Potencia tu Constructora! <span className="text-amber-300 underline underline-offset-4 decoration-amber-300/40">20% DE DESCUENTO</span> en el Plan Pro anual hasta el 30 de abril.
         </p>
 
         <Link 
