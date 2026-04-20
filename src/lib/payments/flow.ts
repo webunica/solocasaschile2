@@ -38,6 +38,17 @@ interface FlowStatusResponse {
 type FlowSignableValue = string | number | boolean | null | undefined;
 type FlowParams = Record<string, FlowSignableValue>;
 
+function normalizeOptionalParams(optional: Record<string, string> = {}) {
+  const normalized: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(optional)) {
+    const match = key.match(/^optional\[(.+)\]$/);
+    normalized[match?.[1] ?? key] = value;
+  }
+
+  return normalized;
+}
+
 function isAbortError(error: unknown): error is DOMException {
   return error instanceof DOMException && error.name === "AbortError";
 }
@@ -51,15 +62,15 @@ export class FlowService {
     let stringToSign = '';
     
     for (const key of keys) {
-      // Flow v3: Solo se firman los parámetros REQUERIDOS. 's' y 'optional' se excluyen.
-      if (key !== 's' && !key.startsWith('optional[')) {
+      // Flow firma todos los parametros enviados excepto "s".
+      if (key !== 's') {
         const value = params[key];
         stringToSign += `${key}${value}`;
       }
     }
     
     debugFlow('flow_signature_generated', {
-      signedKeys: keys.filter(key => key !== 's' && !key.startsWith('optional[')),
+      signedKeys: keys.filter(key => key !== 's'),
     });
     
     return crypto
@@ -90,8 +101,10 @@ export class FlowService {
       urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`
     };
 
-    for (const [key, value] of Object.entries(params.optional ?? {})) {
-      flowParams[key] = value;
+    const optional = normalizeOptionalParams(params.optional);
+
+    if (Object.keys(optional).length > 0) {
+      flowParams.optional = JSON.stringify(optional);
     }
 
     debugFlow('flow_payment_create_started', {
@@ -117,6 +130,9 @@ export class FlowService {
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: formData,
         signal: controller.signal
       });

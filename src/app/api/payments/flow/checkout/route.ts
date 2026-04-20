@@ -89,12 +89,12 @@ export async function POST(req: NextRequest) {
       email: user.email!,
       externalId: user.id,
       optional: {
-        'optional[constructoraId]': user.id,
-        'optional[plan]': plan,
-        'optional[billing]': billing,
-        'optional[uf_valor_usado]': valorUfActual ? String(valorUfActual) : '',
-        'optional[precio_neto_clp]': isClpPlan ? String(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey]) : '',
-        'optional[iva_rate]': isClpPlan ? String(IVA_RATE) : ''
+        constructoraId: user.id,
+        plan,
+        billing,
+        uf_valor_usado: valorUfActual ? String(valorUfActual) : '',
+        precio_neto_clp: isClpPlan ? String(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey]) : '',
+        iva_rate: isClpPlan ? String(IVA_RATE) : ''
       }
     });
 

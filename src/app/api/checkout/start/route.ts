@@ -151,10 +151,10 @@ export async function POST(req: NextRequest) {
       email,
       externalId: signedInUserId,
       optional: {
-        "optional[constructoraId]": signedInUserId,
-        "optional[plan]": payload.plan,
-        "optional[billing]": payload.billing,
-        "optional[uf_valor_usado]": String(ufValue),
+        constructoraId: signedInUserId,
+        plan: payload.plan,
+        billing: payload.billing,
+        uf_valor_usado: String(ufValue),
       },
     });
 

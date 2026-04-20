@@ -48,7 +48,7 @@ describe('FlowService', () => {
       expect(body.get('s')).toBeDefined(); // Firma generada
     });
 
-    it('debe enviar parametros optional a Flow sin romper la firma', async () => {
+    it('debe enviar parametros optional como JSON firmado por Flow', async () => {
       const mockResponse = {
         url: 'https://sandbox.flow.cl/api/pay',
         token: 'TEST_TOKEN_123',
@@ -66,18 +66,22 @@ describe('FlowService', () => {
         email: 'test@example.com',
         externalId: 'CONST-123',
         optional: {
-          'optional[constructoraId]': 'CONST-123',
-          'optional[plan]': 'pro',
-          'optional[billing]': 'yearly',
+          constructoraId: 'CONST-123',
+          plan: 'pro',
+          billing: 'yearly',
         },
       });
 
       const fetchArgs = vi.mocked(global.fetch).mock.calls[0];
       const body = fetchArgs[1]?.body as URLSearchParams;
 
-      expect(body.get('optional[constructoraId]')).toBe('CONST-123');
-      expect(body.get('optional[plan]')).toBe('pro');
-      expect(body.get('optional[billing]')).toBe('yearly');
+      expect(body.get('optional')).toBe(JSON.stringify({
+        constructoraId: 'CONST-123',
+        plan: 'pro',
+        billing: 'yearly',
+      }));
+      expect(body.get('optional[constructoraId]')).toBeNull();
+      expect(body.get('s')).toBeDefined();
     });
 
     it('debe lanzar error si la API de Flow responde con error HTTP', async () => {
