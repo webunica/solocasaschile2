@@ -4,7 +4,12 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { FlowService } from "@/lib/payments/flow";
 import { getUfValue } from "@/lib/payments/uf";
-import { getBillingCycleLabel, getCheckoutPlanPriceUf } from "@/lib/payments/plans";
+import {
+  getBillingCycleLabel,
+  getCheckoutCoupon,
+  getCheckoutPriceWithCoupon,
+  normalizeCouponCode,
+} from "@/lib/payments/plans";
 import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
 
 const CheckoutStartSchema = z.object({
@@ -16,6 +21,7 @@ const CheckoutStartSchema = z.object({
   repName: z.string().min(2).max(140),
   phone: z.string().min(6).max(40),
   rut: z.string().max(30).optional().default(""),
+  couponCode: z.string().max(40).optional().default(""),
 });
 
 const slugify = (value: string) =>
@@ -140,8 +146,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const normalizedCouponCode = normalizeCouponCode(payload.couponCode);
+    const coupon = normalizedCouponCode ? getCheckoutCoupon(normalizedCouponCode) : null;
+
+    if (normalizedCouponCode && !coupon) {
+      return NextResponse.json(
+        { error: "El cupon ingresado no es valido o ya expiro." },
+        { status: 400 }
+      );
+    }
+
     const ufValue = await getUfValue();
-    const price = getCheckoutPlanPriceUf(payload.plan, payload.billing);
+    const price = getCheckoutPriceWithCoupon(payload.plan, payload.billing, normalizedCouponCode);
     const amountClp = Math.round(price.totalUf * ufValue);
     const subject = `SoloCasasChile PRO ${getBillingCycleLabel(payload.billing)}`;
 
@@ -155,6 +171,10 @@ export async function POST(req: NextRequest) {
         plan: payload.plan,
         billing: payload.billing,
         uf_valor_usado: String(ufValue),
+        subtotal_uf: String(price.subtotalUf),
+        descuento_uf: String(price.discountUf),
+        coupon_code: coupon?.code ?? "",
+        coupon_percent_off: coupon ? String(coupon.percentOff) : "",
       },
     });
 
@@ -183,6 +203,7 @@ export async function POST(req: NextRequest) {
       userId,
       plan: payload.plan,
       billing: payload.billing,
+      coupon: coupon?.code ?? null,
       flowOrder: String(flowResult.flowOrder),
       amountClp,
       ms: Date.now() - start,

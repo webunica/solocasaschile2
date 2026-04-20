@@ -1,5 +1,11 @@
 export type BillingCycle = "monthly" | "semiannual" | "yearly";
 export type DirectCheckoutPlan = "pro";
+export type CheckoutCoupon = {
+  code: string;
+  label: string;
+  percentOff: number;
+  description: string;
+};
 
 export const CHECKOUT_PLANS = {
   pro: {
@@ -52,6 +58,15 @@ export const BILLING_OPTIONS: Array<{
   },
 ];
 
+export const CHECKOUT_COUPONS: Record<string, CheckoutCoupon> = {
+  SOLOCASAS10: {
+    code: "SOLOCASAS10",
+    label: "10% de descuento",
+    percentOff: 10,
+    description: "Descuento especial de lanzamiento.",
+  },
+};
+
 export function isDirectCheckoutPlan(plan: string): plan is DirectCheckoutPlan {
   return plan in CHECKOUT_PLANS;
 }
@@ -83,6 +98,42 @@ export function getCheckoutPlanPriceUf(plan: DirectCheckoutPlan, billing: Billin
     displayUf: planConfig.monthlyUf,
     totalUf: planConfig.monthlyUf,
     label: "UF / mes",
+  };
+}
+
+export function normalizeCouponCode(code?: string | null) {
+  return (code ?? "").trim().toUpperCase().replace(/\s+/g, "");
+}
+
+export function getCheckoutCoupon(code?: string | null) {
+  const normalized = normalizeCouponCode(code);
+  if (!normalized) return null;
+  return CHECKOUT_COUPONS[normalized] ?? null;
+}
+
+function roundUf(value: number) {
+  return Number(value.toFixed(2));
+}
+
+export function getCheckoutPriceWithCoupon(
+  plan: DirectCheckoutPlan,
+  billing: BillingCycle,
+  couponCode?: string | null
+) {
+  const basePrice = getCheckoutPlanPriceUf(plan, billing);
+  const coupon = getCheckoutCoupon(couponCode);
+  const months = getBillingCycleMonths(billing);
+  const discountUf = coupon ? roundUf(basePrice.totalUf * (coupon.percentOff / 100)) : 0;
+  const discountedTotalUf = roundUf(Math.max(0.01, basePrice.totalUf - discountUf));
+  const discountedDisplayUf = roundUf(discountedTotalUf / months);
+
+  return {
+    ...basePrice,
+    subtotalUf: basePrice.totalUf,
+    discountUf,
+    totalUf: discountedTotalUf,
+    displayUf: coupon ? discountedDisplayUf : basePrice.displayUf,
+    coupon,
   };
 }
 

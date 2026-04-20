@@ -11,6 +11,7 @@ import {
   CreditCard,
   Eye,
   EyeOff,
+  Gift,
   Loader2,
   LockKeyhole,
   ShieldCheck,
@@ -27,6 +28,9 @@ import {
   type BillingCycle,
   getBillingCycleSavingsUf,
   getCheckoutPlanPriceUf,
+  getCheckoutCoupon,
+  getCheckoutPriceWithCoupon,
+  normalizeCouponCode,
   isBillingCycle,
   isDirectCheckoutPlan,
 } from "@/lib/payments/plans";
@@ -39,11 +43,40 @@ function CheckoutForm() {
   const initialBilling: BillingCycle = isBillingCycle(rawBilling) ? rawBilling : "yearly";
   const [billing, setBilling] = useState<BillingCycle>(initialBilling);
   const planConfig = CHECKOUT_PLANS[plan];
-  const price = useMemo(() => getCheckoutPlanPriceUf(plan, billing), [plan, billing]);
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const price = useMemo(
+    () => getCheckoutPriceWithCoupon(plan, billing, appliedCouponCode),
+    [plan, billing, appliedCouponCode]
+  );
+  const appliedCoupon = price.coupon;
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleApplyCoupon = () => {
+    const normalized = normalizeCouponCode(couponInput);
+
+    if (!normalized) {
+      setAppliedCouponCode("");
+      setCouponError(null);
+      return;
+    }
+
+    const coupon = getCheckoutCoupon(normalized);
+
+    if (!coupon) {
+      setAppliedCouponCode("");
+      setCouponError("Cupon no valido o expirado.");
+      return;
+    }
+
+    setAppliedCouponCode(coupon.code);
+    setCouponInput(coupon.code);
+    setCouponError(null);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -72,6 +105,7 @@ function CheckoutForm() {
           repName: String(formData.get("repName") || ""),
           phone: String(formData.get("phone") || ""),
           rut: String(formData.get("rut") || ""),
+          couponCode: appliedCoupon?.code,
         }),
       });
 
@@ -238,12 +272,69 @@ function CheckoutForm() {
               <p className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                 Total a pagar ahora
               </p>
-              <p className="mt-2 text-2xl font-black tracking-tighter text-foreground">
-                {price.totalUf} UF
-              </p>
+              <div className="mt-3 space-y-2">
+                {appliedCoupon && (
+                  <>
+                    <div className="flex items-center justify-between gap-4 text-sm font-bold text-muted-foreground">
+                      <span>Subtotal</span>
+                      <span>{price.subtotalUf} UF</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 text-sm font-black text-emerald-600">
+                      <span>{appliedCoupon.label}</span>
+                      <span>-{price.discountUf} UF</span>
+                    </div>
+                  </>
+                )}
+                <div className="flex items-end justify-between gap-4 border-t border-border/60 pt-3">
+                  <span className="text-sm font-black uppercase tracking-widest text-foreground">Total</span>
+                  <span className="text-2xl font-black tracking-tighter text-foreground">{price.totalUf} UF</span>
+                </div>
+              </div>
               <p className="mt-1 text-xs font-medium leading-relaxed text-muted-foreground">
                 Flow calcula el cargo en pesos chilenos al valor UF vigente del dia.
               </p>
+            </div>
+
+            <div className="mt-4 border-t border-border/50 pt-4">
+              <div className="flex items-center gap-2">
+                <Gift className="h-4 w-4 text-brand-teal" />
+                <p className="text-xs font-black uppercase tracking-widest text-brand-indigo">
+                  Cupon de descuento
+                </p>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <Input
+                  value={couponInput}
+                  onChange={(event) => {
+                    setCouponInput(event.target.value);
+                    setCouponError(null);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      handleApplyCoupon();
+                    }
+                  }}
+                  placeholder="SOLOCASAS10"
+                  className="h-11 rounded-xl bg-slate-50 font-black uppercase tracking-widest"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleApplyCoupon}
+                  className="h-11 rounded-xl px-4 font-black uppercase tracking-widest"
+                >
+                  Aplicar
+                </Button>
+              </div>
+              {couponError && (
+                <p className="mt-2 text-xs font-bold text-red-600">{couponError}</p>
+              )}
+              {appliedCoupon && !couponError && (
+                <p className="mt-2 text-xs font-bold text-emerald-600">
+                  {appliedCoupon.code} aplicado: {appliedCoupon.description}
+                </p>
+              )}
             </div>
 
             <ul className="mt-6 space-y-3">
