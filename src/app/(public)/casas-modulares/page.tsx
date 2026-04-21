@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getModelosFiltered } from "@/lib/supabase/services";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
+import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 
 export const dynamic = "force-dynamic";
 
@@ -54,12 +55,7 @@ export const metadata: Metadata = {
   title: "Casas Modulares en Chile | Modelos, Diferencias y Precios",
   description:
     "Conoce casas modulares en Chile, compara modelos y revisa diferencias frente a otros sistemas prefabricados para tomar una mejor decision.",
-  keywords: [
-    "casas modulares",
-    "casas modulares chile",
-    "precio casas modulares",
-    "casas prefabricadas modulares",
-  ],
+  keywords: [...SEO_KEYWORDS.casasModulares],
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Casas Modulares en Chile | SolocasasChile",

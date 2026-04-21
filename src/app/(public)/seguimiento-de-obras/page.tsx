@@ -7,6 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { TrackingCodeSearch } from "@/components/obras/tracking-code-search";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
+import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 
 const EXAMPLE_TRACKING_ID = "e356c78f-9374-4a71-ab07-52254530c6b3";
 const PAGE_URL = "https://solocasaschile.com/seguimiento-de-obras";
@@ -33,13 +34,7 @@ export const metadata: Metadata = {
   title: "Sistema de Seguimiento de Obras | Avance Real y Transparente",
   description:
     "Monitorea tu proyecto con fotos, hitos, documentos y alertas. El sistema de seguimiento de obras de SolocasasChile mejora transparencia y control para clientes y constructoras.",
-  keywords: [
-    "sistema de seguimiento de obras",
-    "seguimiento de obra online",
-    "avance de construccion",
-    "control de obra digital",
-    "bitacora de obra",
-  ],
+  keywords: [...SEO_KEYWORDS.seguimientoObras],
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Sistema de Seguimiento de Obras | SolocasasChile",

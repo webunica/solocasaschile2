@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getModelosFiltered } from "@/lib/supabase/services";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
+import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 
 export const dynamic = "force-dynamic";
 
@@ -54,13 +55,7 @@ export const metadata: Metadata = {
   title: "Casas Paneles SIP en Chile | Modelos SIP y Ventajas",
   description:
     "Conoce modelos de casas paneles SIP en Chile, compara precios y revisa ventajas de aislacion, rapidez y eficiencia energetica.",
-  keywords: [
-    "casas paneles sip",
-    "casas sip",
-    "casas prefabricadas sip",
-    "casas prefabricadas paneles sip",
-    "panel sip chile",
-  ],
+  keywords: [...SEO_KEYWORDS.casasSip],
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Casas Paneles SIP en Chile | SolocasasChile",

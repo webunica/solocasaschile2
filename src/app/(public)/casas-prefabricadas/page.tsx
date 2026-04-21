@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getModelosFiltered } from "@/lib/supabase/services";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
+import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 
 export const dynamic = "force-dynamic";
 
@@ -29,13 +30,7 @@ export const metadata: Metadata = {
   title: "Casas Prefabricadas en Chile | Modelos, Precios y Constructoras",
   description:
     "Compara casas prefabricadas en Chile, revisa modelos disponibles y conecta con constructoras verificadas para cotizar con mas claridad.",
-  keywords: [
-    "casas prefabricadas",
-    "casas prefabricadas chile",
-    "venta de casas prefabricadas",
-    "prefabricadas chile",
-    "constructoras casas prefabricadas",
-  ],
+  keywords: [...SEO_KEYWORDS.casasPrefabricadas],
   alternates: { canonical: PAGE_URL },
   openGraph: {
     title: "Casas Prefabricadas en Chile | SolocasasChile",
