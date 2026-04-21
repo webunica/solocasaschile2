@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getPlanLimits } from '../constants/plans'
 import { resend } from '@/lib/resend'
 import { recalcularSellosAutomaticos } from '@/lib/services/sellos'
+import { getNextLeadStage, normalizeLeadStage, type LeadFunnelStage } from '@/lib/communications/funnel'
 
 type GenericRecord = Record<string, unknown>;
 type EmailRow = { email: string | null };
@@ -15,6 +16,33 @@ type ModelPayload = GenericRecord & {
   imagenes_urls?: string[];
   slug?: string;
 };
+type PotentialLeadRow = {
+  id: string;
+  empresa_nombre: string;
+  contacto_nombre: string | null;
+  email: string;
+  telefono: string | null;
+  region: string | null;
+  etapa: string;
+  estado: string;
+};
+
+async function resolveAdminAccess() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { supabase, user: null, isAdmin: false as const };
+
+  const { data: profile } = await supabase
+    .from('constructoras')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  const isSuperAdmin = user.app_metadata?.is_superadmin === true || profile?.role === 'superadmin';
+  const isAdmin = isSuperAdmin || profile?.role === 'admin' || user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin';
+
+  return { supabase, user, isAdmin };
+}
 
 function getErrorMessage(err: unknown, fallback: string): string {
   return err instanceof Error ? err.message : fallback;
@@ -694,6 +722,252 @@ export async function sendBulkEmail(formData: FormData) {
   } catch (err: unknown) {
     console.error('[sendBulkEmail] Error:', err)
     return { error: getErrorMessage(err, "Error al enviar los correos masivos.") }
+  }
+}
+
+const PotentialLeadCreateSchema = z.object({
+  empresa_nombre: z.string().trim().min(2).max(180),
+  contacto_nombre: z.string().trim().max(180).optional().nullable(),
+  email: z.string().trim().email().max(180),
+  telefono: z.string().trim().max(60).optional().nullable(),
+  region: z.string().trim().max(120).optional().nullable(),
+  notas: z.string().trim().max(5000).optional().nullable(),
+});
+
+const PotentialLeadEmailSchema = z.object({
+  leadId: z.string().uuid(),
+  subject: z.string().trim().min(3).max(180),
+  message: z.string().trim().min(3).max(30000),
+  contentMode: z.enum(['text', 'html']).default('text'),
+});
+
+export async function createPotentialConstructoraLead(formData: FormData) {
+  const { supabase, user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden crear prospectos.' };
+  }
+
+  const parsed = PotentialLeadCreateSchema.safeParse({
+    empresa_nombre: formData.get('empresa_nombre'),
+    contacto_nombre: formData.get('contacto_nombre'),
+    email: formData.get('email'),
+    telefono: formData.get('telefono'),
+    region: formData.get('region'),
+    notas: formData.get('notas'),
+  });
+
+  if (!parsed.success) {
+    return { error: 'Datos invalidos. Revisa nombre de empresa y correo.' };
+  }
+
+  try {
+    const payload = parsed.data;
+    const { data, error } = await supabase
+      .from('potential_constructora_leads')
+      .insert([{
+        empresa_nombre: payload.empresa_nombre,
+        contacto_nombre: payload.contacto_nombre || null,
+        email: payload.email.toLowerCase(),
+        telefono: payload.telefono || null,
+        region: payload.region || null,
+        notas: payload.notas || null,
+        created_by: user.id,
+        updated_by: user.id,
+      }])
+      .select('id')
+      .single();
+
+    if (error) throw error;
+
+    await supabase.from('potential_constructora_lead_touches').insert([{
+      lead_id: data.id,
+      tipo: 'estado',
+      etapa: 'nuevo',
+      resultado: 'Lead potencial creado',
+      created_by: user.id,
+    }]);
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true };
+  } catch (err: unknown) {
+    console.error('[createPotentialConstructoraLead] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo crear el prospecto.') };
+  }
+}
+
+export async function advancePotentialConstructoraLeadStage(leadId: string) {
+  const { supabase, user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden avanzar etapas.' };
+  }
+
+  try {
+    const { data: lead, error: fetchError } = await supabase
+      .from('potential_constructora_leads')
+      .select('id, etapa')
+      .eq('id', leadId)
+      .single();
+    if (fetchError) throw fetchError;
+
+    const nextStage = getNextLeadStage(lead.etapa);
+    const nextStatus = nextStage === 'cerrado_ganado'
+      ? 'ganado'
+      : nextStage === 'cerrado_perdido'
+        ? 'perdido'
+        : 'activo';
+
+    const { error: updateError } = await supabase
+      .from('potential_constructora_leads')
+      .update({
+        etapa: nextStage,
+        estado: nextStatus,
+        ultimo_contacto_at: new Date().toISOString(),
+        updated_by: user.id,
+      })
+      .eq('id', leadId);
+    if (updateError) throw updateError;
+
+    await supabase.from('potential_constructora_lead_touches').insert([{
+      lead_id: leadId,
+      tipo: 'estado',
+      etapa: nextStage,
+      resultado: `Cambio de etapa a ${nextStage}`,
+      created_by: user.id,
+    }]);
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true, etapa: nextStage };
+  } catch (err: unknown) {
+    console.error('[advancePotentialConstructoraLeadStage] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo avanzar la etapa.') };
+  }
+}
+
+export async function markPotentialConstructoraLeadLost(leadId: string) {
+  const { supabase, user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden actualizar prospectos.' };
+  }
+
+  try {
+    const targetStage: LeadFunnelStage = 'cerrado_perdido';
+    const { error: updateError } = await supabase
+      .from('potential_constructora_leads')
+      .update({
+        etapa: targetStage,
+        estado: 'perdido',
+        ultimo_contacto_at: new Date().toISOString(),
+        updated_by: user.id,
+      })
+      .eq('id', leadId);
+    if (updateError) throw updateError;
+
+    await supabase.from('potential_constructora_lead_touches').insert([{
+      lead_id: leadId,
+      tipo: 'estado',
+      etapa: targetStage,
+      resultado: 'Lead marcado como perdido',
+      created_by: user.id,
+    }]);
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true };
+  } catch (err: unknown) {
+    console.error('[markPotentialConstructoraLeadLost] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo marcar como perdido.') };
+  }
+}
+
+export async function sendPotentialConstructoraLeadEmail(formData: FormData) {
+  const { supabase, user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden enviar correos.' };
+  }
+
+  const parsed = PotentialLeadEmailSchema.safeParse({
+    leadId: formData.get('leadId'),
+    subject: formData.get('subject'),
+    message: formData.get('message'),
+    contentMode: formData.get('contentMode'),
+  });
+
+  if (!parsed.success) {
+    return { error: 'Datos invalidos para enviar correo.' };
+  }
+
+  try {
+    const { leadId, subject, message, contentMode } = parsed.data;
+
+    const { data: lead, error: leadError } = await supabase
+      .from('potential_constructora_leads')
+      .select('id, empresa_nombre, contacto_nombre, email, etapa, estado')
+      .eq('id', leadId)
+      .single();
+    if (leadError) throw leadError;
+
+    const leadRow = lead as PotentialLeadRow;
+    const safeMessage = message.trim();
+    const escapeHtml = (input: string) =>
+      input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+
+    const bodyContent = contentMode === 'html'
+      ? safeMessage
+      : `<p>${escapeHtml(safeMessage).replace(/\n/g, '<br />')}</p>`;
+
+    const htmlPayload = `
+      <div style="font-family: Arial, sans-serif; max-width: 620px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: #ffffff;">
+        <div style="padding: 24px 28px; border-bottom: 3px solid #0b9e86; text-align:center;">
+          <img src="https://solocasaschile.com/images/logo.png" alt="SoloCasasChile" style="height: 38px; width: auto; max-width: 100%;" />
+        </div>
+        <div style="padding: 30px 28px; color: #334155; line-height: 1.65; font-size: 15px;">
+          <p style="margin-top: 0;">Hola ${leadRow.contacto_nombre || leadRow.empresa_nombre},</p>
+          ${bodyContent}
+        </div>
+        <div style="padding: 16px 20px; background:#f8fafc; color:#64748b; font-size: 12px; border-top: 1px solid #e2e8f0;">
+          Mensaje enviado por el equipo comercial de <a href="https://solocasaschile.com" style="color:#0b9e86; text-decoration:none; font-weight:700;">SoloCasasChile.com</a>
+        </div>
+      </div>
+    `;
+
+    const { error: sendError } = await resend.emails.send({
+      from: 'SoloCasasChile <envios@solocasaschile.com>',
+      to: [leadRow.email],
+      subject,
+      html: htmlPayload,
+    });
+    if (sendError) throw sendError;
+
+    const nowIso = new Date().toISOString();
+    await supabase.from('potential_constructora_lead_touches').insert([{
+      lead_id: leadId,
+      tipo: 'email',
+      asunto: subject,
+      mensaje: safeMessage,
+      etapa: normalizeLeadStage(leadRow.etapa),
+      resultado: 'Correo enviado',
+      created_by: user.id,
+    }]);
+
+    await supabase
+      .from('potential_constructora_leads')
+      .update({
+        ultimo_contacto_at: nowIso,
+        last_email_subject: subject,
+        last_email_sent_at: nowIso,
+        updated_by: user.id,
+      })
+      .eq('id', leadId);
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true };
+  } catch (err: unknown) {
+    console.error('[sendPotentialConstructoraLeadEmail] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo enviar el correo al prospecto.') };
   }
 }
 export async function submitLead(data: {

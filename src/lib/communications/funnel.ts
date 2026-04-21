@@ -113,6 +113,14 @@ export const LEAD_FUNNEL_STAGES: FunnelStageDefinition[] = [
   },
 ];
 
+export const LEAD_FUNNEL_STAGE_MAP: Record<LeadFunnelStage, FunnelStageDefinition> = LEAD_FUNNEL_STAGES.reduce(
+  (acc, stage) => {
+    acc[stage.key] = stage;
+    return acc;
+  },
+  {} as Record<LeadFunnelStage, FunnelStageDefinition>
+);
+
 export type CommunicationTemplate = {
   id: string;
   stage: LeadFunnelStage;
@@ -204,4 +212,9 @@ export function normalizeLeadStage(raw: string | null | undefined): LeadFunnelSt
 
   const match = LEAD_FUNNEL_STAGES.find((stage) => stage.key === raw);
   return match?.key ?? "nuevo";
+}
+
+export function getNextLeadStage(current: string | null | undefined): LeadFunnelStage {
+  const normalized = normalizeLeadStage(current);
+  return LEAD_FUNNEL_STAGE_MAP[normalized].next;
 }
