@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,9 +33,11 @@ export type ConstructoraCommsLead = {
 
 type Props = {
   leads: ConstructoraCommsLead[];
+  regions: string[];
 };
 
-export function ConstructoraCommsStage1({ leads }: Props) {
+export function ConstructoraCommsStage1({ leads, regions }: Props) {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [segmentFilter, setSegmentFilter] = useState<"all" | "frio" | "interesado" | "embudo">("all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -116,6 +119,7 @@ export function ConstructoraCommsStage1({ leads }: Props) {
       const result = await sendConstructoraCampaign(formData);
       if (result.success) {
         toast.success(`Campaña enviada a ${result.count} constructoras.`);
+        router.refresh();
       } else {
         toast.error(result.error || "No se pudo enviar la campaña.");
       }
@@ -134,6 +138,7 @@ export function ConstructoraCommsStage1({ leads }: Props) {
       const result = await updateConstructoraCommsSegment(formData);
       if (result.success) {
         toast.success(`Seleccion movida a ${segment}.`);
+        router.refresh();
       } else {
         toast.error(result.error || "No se pudo mover el segmento.");
       }
@@ -165,6 +170,7 @@ export function ConstructoraCommsStage1({ leads }: Props) {
           region: "",
           notes: "",
         });
+        router.refresh();
       } else {
         toast.error(result.error || "No se pudo agregar el lead.");
       }
@@ -174,7 +180,7 @@ export function ConstructoraCommsStage1({ leads }: Props) {
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between gap-4">
-        <h2 className="text-lg md:text-2xl font-black tracking-tight">Etapa 1 - Campañas en Frio a Constructoras</h2>
+        <h2 className="text-lg md:text-2xl font-black tracking-tight">Etapa 1 - Campañas en Frío a Constructoras</h2>
         <Badge variant="outline" className="text-[10px] font-black uppercase tracking-widest">
           {filteredLeads.length} leads visibles
         </Badge>
@@ -190,7 +196,21 @@ export function ConstructoraCommsStage1({ leads }: Props) {
           <Input placeholder="Contacto" value={manualLead.contacto_nombre} onChange={(e) => setManualLead((p) => ({ ...p, contacto_nombre: e.target.value }))} />
           <Input type="email" placeholder="Email*" value={manualLead.email} onChange={(e) => setManualLead((p) => ({ ...p, email: e.target.value }))} />
           <Input placeholder="Telefono" value={manualLead.telefono} onChange={(e) => setManualLead((p) => ({ ...p, telefono: e.target.value }))} />
-          <Input placeholder="Region" value={manualLead.region} onChange={(e) => setManualLead((p) => ({ ...p, region: e.target.value }))} />
+          <div className="space-y-1">
+            <Label className="text-[10px] uppercase tracking-widest font-black text-muted-foreground">Region</Label>
+            <select
+              value={manualLead.region}
+              onChange={(e) => setManualLead((p) => ({ ...p, region: e.target.value }))}
+              className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="">Seleccionar region</option>
+              {regions.map((region) => (
+                <option key={region} value={region}>
+                  {region}
+                </option>
+              ))}
+            </select>
+          </div>
           <Textarea placeholder="Notas..." className="min-h-[90px]" value={manualLead.notes} onChange={(e) => setManualLead((p) => ({ ...p, notes: e.target.value }))} />
           <Button onClick={onAddManualLead} disabled={isPending} className="w-full rounded-xl text-[10px] uppercase tracking-widest font-black">
             Guardar Lead

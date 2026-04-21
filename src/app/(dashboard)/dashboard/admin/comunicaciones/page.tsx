@@ -3,6 +3,7 @@ import { ConstructoraCommsStage1, type ConstructoraCommsLead } from "@/component
 import { History, CheckCircle2, Clock, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { LEAD_FUNNEL_STAGES } from "@/lib/communications/funnel";
+import { REGIONES_CHILE } from "@/config/regions";
 
 type ComunicacionHistorialItem = {
   id: string;
@@ -13,13 +14,38 @@ type ComunicacionHistorialItem = {
   total_destinatarios: number;
 };
 
+type ConstructoraFallbackItem = {
+  id: string;
+  nombre: string;
+  email: string | null;
+  telefono: string | null;
+  plan: string | null;
+  regiones: string[] | null;
+};
+
 export default async function AdminComunicacionesPage() {
   const supabase = await createClient();
 
-  const { data: constructoras } = await supabase
+  const fullQuery = await supabase
     .from("constructoras")
     .select("id, nombre, email, telefono, plan, regiones, comms_segmento, comms_step, last_contact_at, next_contact_at, comms_opt_out")
     .order("nombre", { ascending: true });
+
+  let constructoras = fullQuery.data;
+  if (fullQuery.error) {
+    const fallbackQuery = await supabase
+      .from("constructoras")
+      .select("id, nombre, email, telefono, plan, regiones")
+      .order("nombre", { ascending: true });
+    constructoras = ((fallbackQuery.data ?? []) as ConstructoraFallbackItem[]).map((row) => ({
+      ...row,
+      comms_segmento: "frio",
+      comms_step: null,
+      last_contact_at: null,
+      next_contact_at: null,
+      comms_opt_out: false,
+    }));
+  }
 
   const { data: history } = await supabase
     .from("comunicaciones_historial")
@@ -29,6 +55,14 @@ export default async function AdminComunicacionesPage() {
 
   const typedHistory = (history ?? []) as ComunicacionHistorialItem[];
   const constructorasLeads = (constructoras ?? []) as ConstructoraCommsLead[];
+  const regionOptions = Array.from(
+    new Set(
+      constructorasLeads
+        .flatMap((lead) => lead.regiones ?? [])
+        .filter(Boolean)
+    )
+  );
+  const mergedRegions = Array.from(new Set([...REGIONES_CHILE, ...regionOptions]));
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -76,7 +110,7 @@ export default async function AdminComunicacionesPage() {
         </div>
       </section>
 
-      <ConstructoraCommsStage1 leads={constructorasLeads} />
+      <ConstructoraCommsStage1 leads={constructorasLeads} regions={mergedRegions} />
 
       <section className="space-y-6 pt-10 border-t border-border/10">
         <div className="flex items-center gap-3">
