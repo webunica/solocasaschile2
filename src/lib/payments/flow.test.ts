@@ -48,6 +48,42 @@ describe('FlowService', () => {
       expect(body.get('s')).toBeDefined(); // Firma generada
     });
 
+    it('debe enviar parametros optional como JSON firmado por Flow', async () => {
+      const mockResponse = {
+        url: 'https://sandbox.flow.cl/api/pay',
+        token: 'TEST_TOKEN_123',
+        flowOrder: 12345
+      };
+
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockResponse),
+      } as unknown as Response);
+
+      await FlowService.createPayment({
+        subject: 'Pago Test',
+        amount: 15000,
+        email: 'test@example.com',
+        externalId: 'CONST-123',
+        optional: {
+          constructoraId: 'CONST-123',
+          plan: 'pro',
+          billing: 'yearly',
+        },
+      });
+
+      const fetchArgs = vi.mocked(global.fetch).mock.calls[0];
+      const body = fetchArgs[1]?.body as URLSearchParams;
+
+      expect(body.get('optional')).toBe(JSON.stringify({
+        constructoraId: 'CONST-123',
+        plan: 'pro',
+        billing: 'yearly',
+      }));
+      expect(body.get('optional[constructoraId]')).toBeNull();
+      expect(body.get('s')).toBeDefined();
+    });
+
     it('debe lanzar error si la API de Flow responde con error HTTP', async () => {
       global.fetch = vi.fn().mockResolvedValue({
         ok: false,
@@ -83,6 +119,27 @@ describe('FlowService', () => {
       const url = vi.mocked(global.fetch).mock.calls[0][0] as string;
       expect(url).toContain('token=TEST_TOKEN_123');
       expect(url).toContain('s='); 
+    });
+
+    it('debe parsear optional cuando Flow lo retorna como JSON string', async () => {
+      global.fetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({
+          status: 2,
+          amount: 15000,
+          optional: JSON.stringify({
+            constructoraId: 'CONST-123',
+            plan: 'pro',
+            billing: 'yearly',
+          }),
+        }),
+      } as unknown as Response);
+
+      const result = await FlowService.getPaymentStatus('TEST_TOKEN_123');
+
+      expect(result.optional?.constructoraId).toBe('CONST-123');
+      expect(result.optional?.plan).toBe('pro');
+      expect(result.optional?.billing).toBe('yearly');
     });
 
     it('debe manejar errores de red o timeout', async () => {

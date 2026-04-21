@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { redirect } from "next/navigation";
 import { 
   CheckCircle2, 
   XCircle, 
@@ -27,11 +29,36 @@ type PagoRow = {
   } | null;
 };
 
+function getCycleLabel(cycle: string) {
+  if (cycle === "yearly") return "Anual";
+  if (cycle === "semiannual") return "Semestral";
+  return "Mensual";
+}
+
 export default async function AdminPagosPage() {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  const { data: profile } = await supabase
+    .from('constructoras')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle();
+
+  const isAdmin =
+    user.app_metadata?.is_superadmin === true ||
+    profile?.role === 'superadmin' ||
+    profile?.role === 'admin' ||
+    user.app_metadata?.role === 'admin';
+
+  if (!isAdmin) redirect("/dashboard");
+
+  const admin = createAdminClient();
 
   // 1. Fetch de Pagos con nombre de constructora
-  const { data, error } = await supabase
+  const { data, error } = await admin
     .from('pagos')
     .select(`
       *,
@@ -146,7 +173,7 @@ export default async function AdminPagosPage() {
                     <td className="p-4">
                       <div className="flex flex-col">
                         <span className="text-sm font-black uppercase text-brand-indigo tracking-tight">{p.plan}</span>
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{p.billing_cycle === 'yearly' ? 'Anual' : 'Mensual'}</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{getCycleLabel(p.billing_cycle)}</span>
                       </div>
                     </td>
                     <td className="p-4 text-sm font-black text-slate-900">${Number(p.amount).toLocaleString('es-CL')}</td>

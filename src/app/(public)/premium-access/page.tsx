@@ -63,7 +63,7 @@ export default function PremiumAccessPage() {
                 <div className="space-y-4 pt-4 text-left">
                    <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-border/40">
                       <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                      <span className="text-sm font-bold">50% DCTO en suscripción anual</span>
+                      <span className="text-sm font-bold">Plan Premium disponible por invitación</span>
                    </div>
                    <div className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-border/40">
                       <CheckCircle2 className="w-5 h-5 text-emerald-500" />

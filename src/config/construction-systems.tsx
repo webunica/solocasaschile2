@@ -97,7 +97,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "15-25 UF/m2" },
         { label: "Aislación Acústica", value: "Excelente" }
     ],
-    image: "https://images.unsplash.com/photo-1582266255745-9e509426a597?q=80&w=2070"
+    image: "/paneles-sip.jpg"
   },
   prefabricada: {
     title: "Casas Prefabricadas",
@@ -109,7 +109,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "8-18 UF/m2" },
         { label: "Escalabilidad", value: "Alta" }
     ],
-    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000"
+    image: "/images/modelos/ejemplos/volcan-puntiagudo-exterior.png"
   },
   modular: {
     title: "Casas Modulares",
@@ -133,7 +133,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "12-22 UF/m2" },
         { label: "Sustentabilidad", value: "Reciclado" }
     ],
-    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?q=80&w=2070"
+    image: "/containers.jpg"
   },
   "steel-framing": {
     title: "Steel Framing",
@@ -145,7 +145,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "18-28 UF/m2" },
         { label: "Mantención", value: "Baja" }
     ],
-    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?q=80&w=2070"
+    image: "/steel-framing.jpg"
   },
   madera: {
     title: "Construcción en Madera",

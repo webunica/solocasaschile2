@@ -13,6 +13,7 @@ import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { updateLeadStatus } from "@/lib/supabase/actions";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { LEAD_FUNNEL_STAGES, normalizeLeadStage, type LeadFunnelStage } from "@/lib/communications/funnel";
 
 export type Lead = {
   id: string;
@@ -26,38 +27,86 @@ export type Lead = {
   modelo?: { nombre: string } | null;
 };
 
-const STATUS_ORDER = ["nuevo", "contactado", "convertido"];
-const STATUS_CONFIG: Record<string, { 
+const STATUS_ORDER: LeadFunnelStage[] = LEAD_FUNNEL_STAGES.map((stage) => stage.key);
+const STATUS_CONFIG: Record<LeadFunnelStage, { 
   label: string; 
   className: string; 
   gradient: string;
-  next: string; 
+  next: LeadFunnelStage; 
   nextLabel: string;
   icon: LucideIcon;
 }> = {
   nuevo: { 
-    label: "Nuevo Lead", 
+    label: "Nuevo Lead",
     className: "text-brand-teal border-brand-teal/20 bg-brand-teal/5", 
     gradient: "from-brand-teal/20 to-transparent",
-    next: "contactado", 
+    next: "contactado",
     nextLabel: "Marcar Contactado",
     icon: MessageSquare
   },
   contactado: { 
-    label: "En Seguimiento", 
+    label: "Contactado",
     className: "text-blue-500 border-blue-500/20 bg-blue-500/5", 
     gradient: "from-blue-500/20 to-transparent",
-    next: "convertido", 
-    nextLabel: "Cerrar Venta",
+    next: "calificado",
+    nextLabel: "Marcar Calificado",
     icon: Phone
   },
-  convertido: { 
-    label: "Venta Cerrada", 
+  calificado: {
+    label: "Calificado",
+    className: "text-violet-500 border-violet-500/20 bg-violet-500/5",
+    gradient: "from-violet-500/20 to-transparent",
+    next: "diagnostico",
+    nextLabel: "Pasar a Diagnostico",
+    icon: Users,
+  },
+  diagnostico: {
+    label: "Diagnostico",
+    className: "text-amber-500 border-amber-500/20 bg-amber-500/5",
+    gradient: "from-amber-500/20 to-transparent",
+    next: "cotizacion_enviada",
+    nextLabel: "Enviar Cotizacion",
+    icon: MessageSquare,
+  },
+  cotizacion_enviada: {
+    label: "Cotizacion Enviada",
+    className: "text-cyan-500 border-cyan-500/20 bg-cyan-500/5",
+    gradient: "from-cyan-500/20 to-transparent",
+    next: "negociacion",
+    nextLabel: "Pasar a Negociacion",
+    icon: Mail,
+  },
+  negociacion: {
+    label: "Negociacion",
+    className: "text-orange-500 border-orange-500/20 bg-orange-500/5",
+    gradient: "from-orange-500/20 to-transparent",
+    next: "cerrado_ganado",
+    nextLabel: "Cerrar Ganado",
+    icon: Phone,
+  },
+  cerrado_ganado: {
+    label: "Cierre Ganado",
     className: "text-emerald-500 border-emerald-500/20 bg-emerald-500/5", 
     gradient: "from-emerald-500/20 to-transparent",
-    next: "nuevo", 
-    nextLabel: "Reabrir Caso",
+    next: "postventa",
+    nextLabel: "Pasar a Postventa",
     icon: CheckCircle2
+  },
+  cerrado_perdido: {
+    label: "Cierre Perdido",
+    className: "text-rose-500 border-rose-500/20 bg-rose-500/5",
+    gradient: "from-rose-500/20 to-transparent",
+    next: "nuevo",
+    nextLabel: "Reactivar Lead",
+    icon: Clock,
+  },
+  postventa: {
+    label: "Postventa",
+    className: "text-lime-600 border-lime-600/20 bg-lime-600/5",
+    gradient: "from-lime-600/20 to-transparent",
+    next: "nuevo",
+    nextLabel: "Nuevo Ciclo",
+    icon: CheckCircle2,
   },
 };
 
@@ -75,13 +124,17 @@ interface Props {
 }
 
 export function LeadsCRM({ initialLeads }: Props) {
-  const [leads, setLeads] = useState(initialLeads);
+  const [leads, setLeads] = useState(
+    initialLeads.map((lead) => ({ ...lead, estado: normalizeLeadStage(lead.estado) }))
+  );
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<string | null>(null);
+  const [filter, setFilter] = useState<LeadFunnelStage | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const handleStatusChange = (leadId: string, nextStatus: string) => {
-    setLeads((prev) => prev.map((l) => l.id === leadId ? { ...l, estado: nextStatus } : l));
+  const handleStatusChange = (leadId: string, nextStatus: LeadFunnelStage) => {
+    setLeads((prev) =>
+      prev.map((l) => (l.id === leadId ? { ...l, estado: nextStatus } : l))
+    );
     startTransition(async () => {
       await updateLeadStatus(leadId, nextStatus);
     });
@@ -91,14 +144,14 @@ export function LeadsCRM({ initialLeads }: Props) {
     const matchesSearch = !search || 
       l.nombre_cliente.toLowerCase().includes(search.toLowerCase()) ||
       l.email_cliente.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter = !filter || l.estado === filter;
+    const matchesFilter = !filter || normalizeLeadStage(l.estado) === filter;
     return matchesSearch && matchesFilter;
   });
 
-  const statsByStatus = STATUS_ORDER.reduce((acc, s) => {
-    acc[s] = leads.filter((l) => l.estado === s).length;
+  const statsByStatus = STATUS_ORDER.reduce((acc, stageKey) => {
+    acc[stageKey] = leads.filter((l) => normalizeLeadStage(l.estado) === stageKey).length;
     return acc;
-  }, {} as Record<string, number>);
+  }, {} as Record<LeadFunnelStage, number>);
 
   return (
     <div className="space-y-12 py-12">
@@ -210,7 +263,8 @@ export function LeadsCRM({ initialLeads }: Props) {
           ) : (
             <div className="grid gap-4">
               {filtered.map((lead, i) => {
-                const config = STATUS_CONFIG[lead.estado] || STATUS_CONFIG.nuevo;
+                const currentStage = normalizeLeadStage(lead.estado);
+                const config = STATUS_CONFIG[currentStage] || STATUS_CONFIG.nuevo;
                 return (
                   <motion.div
                     key={lead.id}
@@ -272,14 +326,16 @@ export function LeadsCRM({ initialLeads }: Props) {
 
                          <div className="flex items-center gap-2 shrink-0 ml-auto xl:ml-0">
                             {/* Fast Actions */}
-                            <a 
-                              href={`https://wa.me/${lead.telefono_cliente?.replace(/\D/g, '')}`} 
-                              target="_blank" 
-                              rel="noreferrer"
-                              className={cn(buttonVariants({ variant: "outline", size: "icon" }), "w-12 h-12 rounded-xl bg-emerald-500/5 border-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all shadow-lg shadow-emerald-500/5 group")}
-                            >
-                               <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                            </a>
+                            {lead.telefono_cliente ? (
+                              <a 
+                                href={`https://wa.me/${lead.telefono_cliente.replace(/\D/g, '')}`} 
+                                target="_blank" 
+                                rel="noreferrer"
+                                className={cn(buttonVariants({ variant: "outline", size: "icon" }), "w-12 h-12 rounded-xl bg-emerald-500/5 border-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white transition-all shadow-lg shadow-emerald-500/5 group")}
+                              >
+                                 <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                              </a>
+                            ) : null}
                             
                             <a 
                               href={`mailto:${lead.email_cliente}`}
@@ -295,12 +351,22 @@ export function LeadsCRM({ initialLeads }: Props) {
                               disabled={isPending}
                               className={cn(
                                 "h-12 px-6 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl",
-                                lead.estado === "convertido" ? "bg-muted text-muted-foreground hover:bg-muted/80" : "bg-brand-indigo text-white shadow-primary/20 hover:scale-[1.03]"
+                                currentStage === "postventa" ? "bg-muted text-muted-foreground hover:bg-muted/80" : "bg-brand-indigo text-white shadow-primary/20 hover:scale-[1.03]"
                               )}
                             >
                               {config.nextLabel}
                               <ArrowRight className="w-4 h-4 ml-3" />
                             </Button>
+                            {currentStage !== "cerrado_ganado" && currentStage !== "cerrado_perdido" && (
+                              <Button
+                                variant="outline"
+                                onClick={() => handleStatusChange(lead.id, "cerrado_perdido")}
+                                disabled={isPending}
+                                className="h-12 px-4 rounded-2xl text-[10px] font-black uppercase tracking-widest border-rose-500/20 text-rose-500 hover:bg-rose-500 hover:text-white"
+                              >
+                                Marcar perdido
+                              </Button>
+                            )}
                          </div>
                       </div>
 

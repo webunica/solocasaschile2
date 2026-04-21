@@ -3,7 +3,7 @@ import { CONSTRUCTORAS, MODELOS } from "@/lib/mock-data";
 import { createPublicClient } from "@/lib/supabase/server";
 
 const SITE_URL = "https://solocasaschile.com";
-const RELEASE_BASELINE_DATE = new Date("2026-04-13T00:00:00.000Z");
+const RELEASE_BASELINE_DATE = new Date("2026-04-21T00:00:00.000Z");
 
 type SitemapModelRow = {
   slug: string | null;
@@ -22,6 +22,11 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: SITE_URL, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "daily", priority: 1 },
   { url: `${SITE_URL}/catalogo`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "daily", priority: 0.95 },
   { url: `${SITE_URL}/constructoras`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.9 },
+  { url: `${SITE_URL}/casas-prefabricadas`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.92 },
+  { url: `${SITE_URL}/casas-paneles-sip`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.9 },
+  { url: `${SITE_URL}/modelos-casas-prefabricadas`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.88 },
+  { url: `${SITE_URL}/casas-modulares`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.87 },
+  { url: `${SITE_URL}/seguimiento-de-obras`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.78 },
   { url: `${SITE_URL}/blog`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/comparar`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.7 },
   { url: `${SITE_URL}/nosotros`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "monthly", priority: 0.55 },

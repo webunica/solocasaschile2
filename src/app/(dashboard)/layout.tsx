@@ -26,7 +26,7 @@ export default async function DashboardLayout({
   // Buscar rol en la tabla de perfiles (constructoras)
   const { data: profile } = await supabase
     .from('constructoras')
-    .select('role')
+    .select('role, plan_status')
     .eq('id', user.id)
     .maybeSingle();
 

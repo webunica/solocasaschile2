@@ -20,23 +20,54 @@ export interface FlowPaymentResponse {
   flowOrder: number;
 }
 
+interface FlowStatusOptional {
+  constructoraId?: string;
+  plan?: string;
+  billing?: 'monthly' | 'semiannual' | 'yearly' | string;
+  coupon_code?: string;
+  descuento_uf?: string;
+  [key: string]: string | undefined;
+}
+
 interface FlowStatusResponse {
   status?: number;
   flowOrder?: number;
   commerceOrder?: string;
   amount?: number;
   payer?: string;
-  optional?: {
-    constructoraId?: string;
-    plan?: string;
-    billing?: 'monthly' | 'yearly' | string;
-    [key: string]: string | undefined;
-  };
+  optional?: FlowStatusOptional;
   paymentData?: unknown;
 }
 
+type RawFlowStatusResponse = Omit<FlowStatusResponse, 'optional'> & {
+  optional?: FlowStatusOptional | string | null;
+};
+
 type FlowSignableValue = string | number | boolean | null | undefined;
 type FlowParams = Record<string, FlowSignableValue>;
+
+function normalizeOptionalParams(optional: Record<string, string> = {}) {
+  const normalized: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(optional)) {
+    const match = key.match(/^optional\[(.+)\]$/);
+    normalized[match?.[1] ?? key] = value;
+  }
+
+  return normalized;
+}
+
+function parseFlowOptional(optional: RawFlowStatusResponse['optional']): FlowStatusOptional | undefined {
+  if (!optional) return undefined;
+  if (typeof optional !== 'string') return optional;
+
+  try {
+    const parsed = JSON.parse(optional) as FlowStatusOptional;
+    return parsed;
+  } catch {
+    return undefined;
+  }
+}
 
 function isAbortError(error: unknown): error is DOMException {
   return error instanceof DOMException && error.name === "AbortError";
@@ -51,15 +82,15 @@ export class FlowService {
     let stringToSign = '';
     
     for (const key of keys) {
-      // Flow v3: Solo se firman los parámetros REQUERIDOS. 's' y 'optional' se excluyen.
-      if (key !== 's' && !key.startsWith('optional[')) {
+      // Flow firma todos los parametros enviados excepto "s".
+      if (key !== 's') {
         const value = params[key];
         stringToSign += `${key}${value}`;
       }
     }
     
     debugFlow('flow_signature_generated', {
-      signedKeys: keys.filter(key => key !== 's' && !key.startsWith('optional[')),
+      signedKeys: keys.filter(key => key !== 's'),
     });
     
     return crypto
@@ -90,6 +121,12 @@ export class FlowService {
       urlError: `${FLOW_CONFIG.appUrl}/dashboard/failure`
     };
 
+    const optional = normalizeOptionalParams(params.optional);
+
+    if (Object.keys(optional).length > 0) {
+      flowParams.optional = JSON.stringify(optional);
+    }
+
     debugFlow('flow_payment_create_started', {
       amount: flowParams.amount,
       subject: flowParams.subject,
@@ -113,6 +150,9 @@ export class FlowService {
     try {
       const response = await fetch(apiUrl, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
         body: formData,
         signal: controller.signal
       });
@@ -164,7 +204,11 @@ export class FlowService {
           throw new Error(`Flow getStatus failed: ${response.statusText}`);
       }
 
-      return (await response.json()) as FlowStatusResponse;
+      const data = (await response.json()) as RawFlowStatusResponse;
+      return {
+        ...data,
+        optional: parseFlowOptional(data.optional),
+      };
     } catch (error: unknown) {
       clearTimeout(timeoutId);
       throw error;
