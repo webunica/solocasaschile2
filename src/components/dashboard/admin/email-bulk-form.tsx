@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import type { CommunicationTemplate } from "@/lib/communications/funnel";
 
 interface Constructora {
   id: string;
@@ -20,7 +21,12 @@ interface Constructora {
   plan: string;
 }
 
-export function EmailBulkForm({ constructoras }: { constructoras: Constructora[] }) {
+interface EmailBulkFormProps {
+  constructoras: Constructora[];
+  templates?: CommunicationTemplate[];
+}
+
+export function EmailBulkForm({ constructoras, templates = [] }: EmailBulkFormProps) {
   const [loading, setLoading] = useState(false);
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -30,6 +36,7 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
   const [previewMode, setPreviewMode] = useState<"preview" | "source">("preview");
   const [showSuccess, setShowSuccess] = useState(false);
   const [sentCount, setSentCount] = useState(0);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
 
   const filteredList = useMemo(() => {
     return constructoras.filter(
@@ -54,6 +61,14 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
     if (next.has(id)) next.delete(id);
     else next.add(id);
     setSelectedIds(next);
+  };
+
+  const applyTemplate = (template: CommunicationTemplate) => {
+    setSelectedTemplateId(template.id);
+    setAsunto(template.subject);
+    setMensaje(template.message);
+    setContentMode(template.mode);
+    toast.success(`Plantilla "${template.name}" cargada.`);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -233,6 +248,40 @@ export function EmailBulkForm({ constructoras }: { constructoras: Constructora[]
               )}
             </div>
           </div>
+
+          {templates.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="text-[10px] font-black uppercase tracking-widest opacity-60">Plantillas de embudo</Label>
+                <p className="text-[10px] font-medium text-muted-foreground">Carga rapida por etapa</p>
+              </div>
+
+              <div className="border border-border/30 rounded-2xl bg-muted/5 p-2">
+                <div className="grid md:grid-cols-2 gap-2">
+                  {templates.map((template) => {
+                    const isActive = selectedTemplateId === template.id;
+                    return (
+                      <button
+                        key={template.id}
+                        type="button"
+                        onClick={() => applyTemplate(template)}
+                        className={cn(
+                          "text-left p-3 rounded-xl border transition-all",
+                          isActive
+                            ? "border-primary/40 bg-primary/5"
+                            : "border-transparent hover:border-border/40 hover:bg-muted/30"
+                        )}
+                      >
+                        <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">{template.stage.replaceAll("_", " ")}</p>
+                        <p className="text-xs font-bold leading-snug">{template.name}</p>
+                        <p className="text-[11px] text-muted-foreground truncate">{template.subject}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-3">
