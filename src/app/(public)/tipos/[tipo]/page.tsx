@@ -2,7 +2,7 @@ import { getModelosFiltered } from "@/lib/supabase/services";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { CatalogoGrid } from "@/components/catalogo/catalogo-grid";
 import { 
   CheckCircle2, ArrowRight,
@@ -12,6 +12,7 @@ import type { Metadata } from "next";
 import { SYSTEM_DETAILS as TIPO_INFO } from "@/config/construction-systems";
 import { buildFAQJsonLd, buildBreadcrumbJsonLd } from "@/components/seo/structured-data";
 import { SystemsComparison } from "@/components/seo/systems-comparison";
+import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 
 interface PageProps {
   params: Promise<{ tipo: string }>;
@@ -49,12 +50,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!info) return { title: "Tipo no encontrado | SolocasasChile" };
 
-  const title = `${info.title} en Chile 2026 | Modelos, Precios y Constructoras | SolocasasChile`;
-  const description = info.description
+  const isSip = tipo === "sip";
+  const title = isSip
+    ? "Casas Paneles SIP en Chile 2026 | Modelos, Precios y Ventajas | SolocasasChile"
+    : `${info.title} en Chile 2026 | Modelos, Precios y Constructoras | SolocasasChile`;
+  const description = isSip
+    ? "Casas paneles SIP en Chile: compara modelos, precios desde UF, beneficios termicos y constructoras verificadas. Guia actualizada 2026."
+    : info.description
     ? `${info.description} Compara modelos, precios desde UF y constructoras verificadas en Chile. Guía actualizada 2026.`
     : `Conoce todo sobre ${info.title} en Chile: precios, constructoras y modelos disponibles en 2026.`;
 
   const extraKeywords = TIPO_EXTRA_KEYWORDS[tipo] || [];
+  const baseKeywords = isSip ? SEO_KEYWORDS.casasSip : [];
 
   return {
     title,
@@ -67,6 +74,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `casas ${tipo} 2026`,
       "casas prefabricadas chile",
       "comparador casas prefabricadas",
+      ...baseKeywords,
       ...extraKeywords,
     ],
     alternates: { canonical: `${baseUrl}/tipos/${tipo}` },
@@ -84,6 +92,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       site: "@solocasaschile",
       title,
       description,
+      images: [`${baseUrl}/og-image.jpg`],
     },
   };
 }
@@ -152,6 +161,9 @@ export default async function TipoPage({ params }: PageProps) {
 
   const modelos = await getModelosFiltered({ tipo });
   const editorial = TIPO_EDITORIAL[tipo];
+  const heroImageAlt = tipo === "sip"
+    ? "Casa de paneles SIP en Chile con envolvente termica de alta eficiencia"
+     : `${info.title} en Chile - SolocasasChile`;
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -162,7 +174,7 @@ export default async function TipoPage({ params }: PageProps) {
             { name: "Inicio", url: "https://solocasaschile.com" },
             { name: "Tipos de Casas", url: "https://solocasaschile.com/catalogo" },
             { name: info.title, url: `https://solocasaschile.com/tipos/${tipo}` },
-          ])),
+          ])).replace(/</g, "\\u003c"),
         }}
       />
       <script
@@ -183,7 +195,7 @@ export default async function TipoPage({ params }: PageProps) {
                 answer: `Los tiempos de construcción de una casa ${info.title} son significativamente menores que la construcción tradicional. Dependen del modelo elegido y la constructora, pero pueden ir desde 30 días hasta 6 meses.`,
               },
             ]
-          )),
+          )).replace(/</g, "\\u003c"),
         }}
       />
       {/* Hero Section per Type */}
@@ -233,11 +245,18 @@ export default async function TipoPage({ params }: PageProps) {
                 >
                   Explorar catálogo
                 </Link>
-              </div>
+                {tipo === "sip" && (
+                  <Link
+                    href="/casas-paneles-sip"
+                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
+                  >
+                    Guia SIP
+                  </Link>
+                )}              </div>
             </div>
 
              <div className="relative h-[550px] rounded-[3rem] overflow-hidden shadow-2xl group border border-white/10">
-                <Image src={info.image} alt={`${info.title} en Chile — SolocasasChile`} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
+                <Image src={info.image} alt={heroImageAlt} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-10 left-10 right-10">
                    <div className="p-8 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] flex flex-col gap-6">
@@ -381,10 +400,31 @@ export default async function TipoPage({ params }: PageProps) {
             >
               Constructoras verificadas
             </Link>
+            {tipo === "sip" && (
+              <>
+                <Link
+                  href="/casas-paneles-sip"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Guia Casas Paneles SIP
+                </Link>
+                <Link
+                  href="/casas-prefabricadas"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Comparar con Prefabricadas
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
     </div>
   );
 }
+
+
+
+
+
 

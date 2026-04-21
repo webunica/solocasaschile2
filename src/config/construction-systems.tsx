@@ -97,7 +97,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "15-25 UF/m2" },
         { label: "Aislación Acústica", value: "Excelente" }
     ],
-    image: "https://images.unsplash.com/photo-1582266255745-9e509426a597?q=80&w=2070"
+    image: "/paneles-sip.jpg"
   },
   prefabricada: {
     title: "Casas Prefabricadas",
