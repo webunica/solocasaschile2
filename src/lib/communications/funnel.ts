@@ -130,6 +130,13 @@ export type CommunicationTemplate = {
   mode: "text" | "html";
 };
 
+export type ColdCampaignTemplate = {
+  step: "cold_1" | "cold_2" | "cold_3";
+  label: string;
+  subject: string;
+  message: string;
+};
+
 export const COMMUNICATION_TEMPLATES: CommunicationTemplate[] = [
   {
     id: "nuevo-acuse",
@@ -202,6 +209,30 @@ export const COMMUNICATION_TEMPLATES: CommunicationTemplate[] = [
     message:
       "Nos alegra haberte acompanado. Podrias dejarnos una resena corta? Si conoces a alguien que quiera cotizar, podemos ayudarle igual de rapido.",
     mode: "text",
+  },
+];
+
+export const COLD_CAMPAIGN_TEMPLATES: ColdCampaignTemplate[] = [
+  {
+    step: "cold_1",
+    label: "Cold #1 Presentacion",
+    subject: "Conoce SoloCasasChile para constructoras",
+    message:
+      "Hola {{nombre}}, te escribimos porque creemos que {{empresa}} puede beneficiarse de publicar su oferta en SoloCasasChile. Ayudamos a constructoras a ganar visibilidad, captar interesados y ordenar su gestion comercial en un solo lugar.",
+  },
+  {
+    step: "cold_2",
+    label: "Cold #2 Ventajas",
+    subject: "3 ventajas para impulsar tu constructora",
+    message:
+      "Te comparto tres ventajas concretas de la plataforma: 1) exposicion frente a compradores calificados, 2) perfil profesional para aumentar confianza, 3) gestion de contactos y seguimiento comercial desde un panel simple.",
+  },
+  {
+    step: "cold_3",
+    label: "Cold #3 CTA reunion",
+    subject: "Quieres una demo de 15 minutos?",
+    message:
+      "Si quieres conocer mas, coordinamos una llamada corta para mostrarte como otras constructoras estan presentando sus modelos y recibiendo contactos de forma ordenada. Quedo atento a tu disponibilidad.",
   },
 ];
 

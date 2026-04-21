@@ -1,13 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
-import { EmailBulkForm } from "@/components/dashboard/admin/email-bulk-form";
-import {
-  PotentialConstructoraLeads,
-  type PotentialConstructoraLead,
-  type PotentialLeadTouch,
-} from "@/components/dashboard/admin/potential-constructora-leads";
+import { ConstructoraCommsStage1, type ConstructoraCommsLead } from "@/components/dashboard/admin/constructora-comms-stage1";
 import { History, CheckCircle2, Clock, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { COMMUNICATION_TEMPLATES, LEAD_FUNNEL_STAGES } from "@/lib/communications/funnel";
+import { LEAD_FUNNEL_STAGES } from "@/lib/communications/funnel";
 
 type ComunicacionHistorialItem = {
   id: string;
@@ -23,7 +18,7 @@ export default async function AdminComunicacionesPage() {
 
   const { data: constructoras } = await supabase
     .from("constructoras")
-    .select("id, nombre, email, plan")
+    .select("id, nombre, email, telefono, plan, regiones, comms_segmento, comms_step, last_contact_at, next_contact_at, comms_opt_out")
     .order("nombre", { ascending: true });
 
   const { data: history } = await supabase
@@ -32,23 +27,8 @@ export default async function AdminComunicacionesPage() {
     .order("created_at", { ascending: false })
     .limit(5);
 
-  const { data: potentialLeadsData } = await supabase
-    .from("potential_constructora_leads")
-    .select(
-      "id, empresa_nombre, contacto_nombre, email, telefono, region, etapa, estado, ultimo_contacto_at, created_at, last_email_subject, last_email_sent_at"
-    )
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  const { data: potentialTouchesData } = await supabase
-    .from("potential_constructora_lead_touches")
-    .select("lead_id, tipo, asunto, resultado, created_at")
-    .order("created_at", { ascending: false })
-    .limit(300);
-
   const typedHistory = (history ?? []) as ComunicacionHistorialItem[];
-  const potentialLeads = (potentialLeadsData ?? []) as PotentialConstructoraLead[];
-  const potentialTouches = (potentialTouchesData ?? []) as PotentialLeadTouch[];
+  const constructorasLeads = (constructoras ?? []) as ConstructoraCommsLead[];
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -96,9 +76,7 @@ export default async function AdminComunicacionesPage() {
         </div>
       </section>
 
-      <PotentialConstructoraLeads initialLeads={potentialLeads} recentTouches={potentialTouches} />
-
-      <EmailBulkForm constructoras={constructoras || []} templates={COMMUNICATION_TEMPLATES} />
+      <ConstructoraCommsStage1 leads={constructorasLeads} />
 
       <section className="space-y-6 pt-10 border-t border-border/10">
         <div className="flex items-center gap-3">

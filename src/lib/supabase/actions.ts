@@ -4,6 +4,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from "zod";
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { getPlanLimits } from '../constants/plans'
 import { resend } from '@/lib/resend'
 import { recalcularSellosAutomaticos } from '@/lib/services/sellos'
@@ -11,6 +12,7 @@ import { getNextLeadStage, normalizeLeadStage, type LeadFunnelStage } from '@/li
 
 type GenericRecord = Record<string, unknown>;
 type EmailRow = { email: string | null };
+type ConstructoraTargetRow = { id: string; nombre: string; email: string | null };
 type ModelPayload = GenericRecord & {
   nombre: string;
   imagenes_urls?: string[];
@@ -46,6 +48,20 @@ async function resolveAdminAccess() {
 
 function getErrorMessage(err: unknown, fallback: string): string {
   return err instanceof Error ? err.message : fallback;
+}
+
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+function generateTempPassword(): string {
+  return `Lead!${Math.random().toString(36).slice(2, 10)}#${Date.now().toString().slice(-4)}`;
 }
 
 export async function login(formData: FormData) {
@@ -722,6 +738,280 @@ export async function sendBulkEmail(formData: FormData) {
   } catch (err: unknown) {
     console.error('[sendBulkEmail] Error:', err)
     return { error: getErrorMessage(err, "Error al enviar los correos masivos.") }
+  }
+}
+
+const ConstructoraCommsCreateSchema = z.object({
+  empresa_nombre: z.string().trim().min(2).max(180),
+  contacto_nombre: z.string().trim().max(180).optional().nullable(),
+  email: z.string().trim().email().max(180),
+  telefono: z.string().trim().max(80).optional().nullable(),
+  region: z.string().trim().max(120).optional().nullable(),
+  notes: z.string().trim().max(4000).optional().nullable(),
+});
+
+const ConstructoraCommsSendSchema = z.object({
+  selected_ids: z.array(z.string().uuid()).min(1),
+  subject: z.string().trim().min(3).max(180),
+  message: z.string().trim().min(3).max(30000),
+  content_mode: z.enum(['text', 'html']).default('text'),
+  campaign_step: z.string().trim().min(3).max(50),
+});
+
+const ConstructoraCommsSegmentSchema = z.object({
+  selected_ids: z.array(z.string().uuid()).min(1),
+  segment: z.enum(['frio', 'interesado', 'embudo', 'cliente']),
+});
+
+export async function createConstructoraCommsLead(formData: FormData) {
+  const { user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden agregar leads.' };
+  }
+
+  const parsed = ConstructoraCommsCreateSchema.safeParse({
+    empresa_nombre: formData.get('empresa_nombre'),
+    contacto_nombre: formData.get('contacto_nombre'),
+    email: formData.get('email'),
+    telefono: formData.get('telefono'),
+    region: formData.get('region'),
+    notes: formData.get('notes'),
+  });
+  if (!parsed.success) {
+    return { error: 'Datos invalidos para crear lead.' };
+  }
+
+  const payload = parsed.data;
+  const admin = createAdminClient();
+
+  try {
+    const existing = await admin
+      .from('constructoras')
+      .select('id')
+      .eq('email', payload.email.toLowerCase())
+      .maybeSingle();
+
+    let targetId = existing.data?.id as string | undefined;
+
+    if (!targetId) {
+      const createdUser = await admin.auth.admin.createUser({
+        email: payload.email.toLowerCase(),
+        password: generateTempPassword(),
+        email_confirm: true,
+        user_metadata: {
+          nombre: payload.empresa_nombre,
+        },
+      });
+
+      if (createdUser.error || !createdUser.data.user) {
+        return { error: `No se pudo crear usuario base para la constructora: ${createdUser.error?.message || 'unknown_error'}` };
+      }
+      targetId = createdUser.data.user.id;
+    }
+
+    const slugBase = slugify(payload.empresa_nombre) || 'constructora';
+    const slug = `${slugBase}-${targetId.slice(0, 5)}`;
+
+    const { error: upsertError } = await admin
+      .from('constructoras')
+      .upsert([{
+        id: targetId,
+        nombre: payload.empresa_nombre,
+        slug,
+        email: payload.email.toLowerCase(),
+        telefono: payload.telefono || null,
+        regiones: payload.region ? [payload.region] : [],
+        plan: 'gratis',
+        verificada: false,
+        score_confianza: 50,
+        comms_segmento: 'frio',
+        comms_step: 'cold_0',
+        comms_notes: payload.notes || null,
+        owner_admin_id: user.id,
+      }], { onConflict: 'id' });
+
+    if (upsertError) {
+      throw upsertError;
+    }
+
+    await admin.from('constructora_comms_events').insert([{
+      constructora_id: targetId,
+      event_type: 'manual_add',
+      message: payload.notes || 'Lead agregado manualmente',
+      sent_by: user.id,
+    }]);
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true };
+  } catch (err: unknown) {
+    console.error('[createConstructoraCommsLead] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo crear el lead de constructora.') };
+  }
+}
+
+export async function sendConstructoraCampaign(formData: FormData) {
+  const { supabase, user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden enviar campañas.' };
+  }
+
+  const selectedRaw = formData.get('selected_ids');
+  let selectedIds: string[] = [];
+  try {
+    selectedIds = JSON.parse((selectedRaw as string) || '[]');
+  } catch {
+    return { error: 'Lista de seleccion invalida.' };
+  }
+
+  const parsed = ConstructoraCommsSendSchema.safeParse({
+    selected_ids: selectedIds,
+    subject: formData.get('subject'),
+    message: formData.get('message'),
+    content_mode: formData.get('content_mode'),
+    campaign_step: formData.get('campaign_step'),
+  });
+  if (!parsed.success) {
+    return { error: 'Datos invalidos para envio masivo.' };
+  }
+
+  const payload = parsed.data;
+
+  try {
+    const { data: targets, error: targetsError } = await supabase
+      .from('constructoras')
+      .select('id, nombre, email')
+      .in('id', payload.selected_ids)
+      .not('email', 'is', null);
+
+    if (targetsError) throw targetsError;
+    const emails = ((targets as ConstructoraTargetRow[] | null) || [])
+      .map((target: ConstructoraTargetRow) => target.email)
+      .filter(Boolean) as string[];
+
+    if (emails.length === 0) {
+      return { error: 'No hay correos validos en la seleccion.' };
+    }
+
+    const cleanMessage = payload.message.trim();
+    const escapeHtml = (input: string) =>
+      input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+
+    const bodyContent =
+      payload.content_mode === 'html'
+        ? cleanMessage
+        : `<p>${escapeHtml(cleanMessage).replace(/\n/g, '<br />')}</p>`;
+
+    const htmlPayload = `
+      <div style="font-family: Arial, sans-serif; max-width: 620px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: #ffffff;">
+        <div style="padding: 24px 28px; border-bottom: 3px solid #0b9e86; text-align:center;">
+          <img src="https://solocasaschile.com/images/logo.png" alt="SoloCasasChile" style="height: 38px; width: auto; max-width: 100%;" />
+        </div>
+        <div style="padding: 30px 28px; color: #334155; line-height: 1.65; font-size: 15px;">
+          ${bodyContent}
+        </div>
+        <div style="padding: 16px 20px; background:#f8fafc; color:#64748b; font-size: 12px; border-top: 1px solid #e2e8f0;">
+          Mensaje enviado por <a href="https://solocasaschile.com" style="color:#0b9e86; text-decoration:none; font-weight:700;">SoloCasasChile.com</a>
+        </div>
+      </div>
+    `;
+
+    const { error: sendError } = await resend.emails.send({
+      from: 'SoloCasasChile <envios@solocasaschile.com>',
+      to: 'envios@solocasaschile.com',
+      bcc: emails,
+      subject: payload.subject,
+      html: htmlPayload,
+    });
+    if (sendError) throw sendError;
+
+    const nowIso = new Date().toISOString();
+    const nextContact = new Date();
+    nextContact.setDate(nextContact.getDate() + 3);
+
+    const segment = payload.campaign_step.startsWith('cold_') ? 'frio' : null;
+    const updatePayload: Record<string, unknown> = {
+      last_contact_at: nowIso,
+      comms_step: payload.campaign_step,
+      owner_admin_id: user.id,
+      next_contact_at: nextContact.toISOString(),
+    };
+    if (segment) updatePayload.comms_segmento = segment;
+
+    await supabase
+      .from('constructoras')
+      .update(updatePayload)
+      .in('id', payload.selected_ids);
+
+    await supabase.from('constructora_comms_events').insert(
+      payload.selected_ids.map((id) => ({
+        constructora_id: id,
+        event_type: 'email',
+        campaign_step: payload.campaign_step,
+        subject: payload.subject,
+        message: cleanMessage,
+        content_mode: payload.content_mode,
+        sent_by: user.id,
+      }))
+    );
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true, count: emails.length };
+  } catch (err: unknown) {
+    console.error('[sendConstructoraCampaign] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo enviar la campaña.') };
+  }
+}
+
+export async function updateConstructoraCommsSegment(formData: FormData) {
+  const { supabase, user, isAdmin } = await resolveAdminAccess();
+  if (!user || !isAdmin) {
+    return { error: 'Acceso denegado. Solo admins pueden cambiar segmento.' };
+  }
+
+  let selectedIds: string[] = [];
+  try {
+    selectedIds = JSON.parse((formData.get('selected_ids') as string) || '[]');
+  } catch {
+    return { error: 'Seleccion invalida.' };
+  }
+
+  const parsed = ConstructoraCommsSegmentSchema.safeParse({
+    selected_ids: selectedIds,
+    segment: formData.get('segment'),
+  });
+  if (!parsed.success) {
+    return { error: 'Datos invalidos para cambiar segmento.' };
+  }
+
+  const payload = parsed.data;
+  try {
+    await supabase
+      .from('constructoras')
+      .update({
+        comms_segmento: payload.segment,
+        owner_admin_id: user.id,
+      })
+      .in('id', payload.selected_ids);
+
+    await supabase.from('constructora_comms_events').insert(
+      payload.selected_ids.map((id) => ({
+        constructora_id: id,
+        event_type: 'segment_change',
+        message: `Segmento actualizado a ${payload.segment}`,
+        sent_by: user.id,
+      }))
+    );
+
+    revalidatePath('/dashboard/admin/comunicaciones');
+    return { success: true };
+  } catch (err: unknown) {
+    console.error('[updateConstructoraCommsSegment] Error:', err);
+    return { error: getErrorMessage(err, 'No se pudo actualizar segmento.') };
   }
 }
 
