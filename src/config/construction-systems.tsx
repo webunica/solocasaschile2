@@ -109,7 +109,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "8-18 UF/m2" },
         { label: "Escalabilidad", value: "Alta" }
     ],
-    image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=2000"
+    image: "/images/modelos/ejemplos/volcan-puntiagudo-exterior.png"
   },
   modular: {
     title: "Casas Modulares",
