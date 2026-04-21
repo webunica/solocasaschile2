@@ -34,7 +34,7 @@ export async function login(formData: FormData) {
     return { error: error.message }
   }
 
-  // Auto-crear perfil de constructora si no existe aún (para usuarios creados manualmente)
+  // Auto-crear perfil de constructora si no existe aÃºn (para usuarios creados manualmente)
   if (data.user) {
     const { data: existing } = await supabase
       .from('constructoras')
@@ -64,7 +64,7 @@ export async function login(formData: FormData) {
 
   revalidatePath('/', 'layout')
 
-  // Redirigir según estado de plan
+  // Redirigir segÃºn estado de plan
   const { data: profile } = await supabase.from('constructoras').select('plan_status').eq('id', data.user.id).maybeSingle();
   if (profile?.plan_status === 'pending') {
     redirect('/planes?status=pending');
@@ -97,7 +97,7 @@ export async function register(formData: FormData) {
         data: {
           nombre: companyName,
           representante: repName,
-          plan, // stored in user_metadata — read by the callback to redirect to /bienvenida?plan=X
+          plan, // stored in user_metadata â€” read by the callback to redirect to /bienvenida?plan=X
         }
       }
     })
@@ -143,7 +143,7 @@ export async function register(formData: FormData) {
       constructoraPayload.next_billing_date = expirationDate.toISOString();
     }
 
-    // Si necesita confirmar email (sesión es null)
+    // Si necesita confirmar email (sesiÃ³n es null)
     if (!authData.session) {
       // Intentar crear constructora (puede fallar si ya existe, lo ignoramos)
       await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id', ignoreDuplicates: true })
@@ -159,17 +159,17 @@ export async function register(formData: FormData) {
       await resend.emails.send({
         from: 'SoloCasasChile <contacto@solocasaschile.com>',
         to: [email],
-        subject: '¡Bienvenido a SoloCasasChile! 🏠',
+        subject: 'Â¡Bienvenido a SoloCasasChile! ðŸ ',
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
             <div style="background: #0b9e86; padding: 30px; text-align: center; color: white;">
-              <h1 style="margin: 0; font-size: 24px;">¡Hola ${companyName}!</h1>
+              <h1 style="margin: 0; font-size: 24px;">Â¡Hola ${companyName}!</h1>
             </div>
             <div style="padding: 30px; color: #334155; line-height: 1.6;">
-              <p>Gracias por unirte a <strong>SoloCasasChile</strong>, la plataforma líder para constructoras y modelos de casas en Chile.</p>
+              <p>Gracias por unirte a <strong>SoloCasasChile</strong>, la plataforma lÃ­der para constructoras y modelos de casas en Chile.</p>
               <p>Tu cuenta ha sido creada exitosamente con el plan <strong>${plan.toUpperCase()}</strong>.</p>
               <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                <p style="margin: 0;"><strong>Próximos pasos:</strong></p>
+                <p style="margin: 0;"><strong>PrÃ³ximos pasos:</strong></p>
                 <ul style="margin: 10px 0; padding-left: 20px;">
                   <li>Completa el perfil de tu constructora.</li>
                   <li>Sube tus primeros modelos de casas.</li>
@@ -187,13 +187,13 @@ export async function register(formData: FormData) {
       await resend.emails.send({
         from: 'SoloCasasChile <contacto@solocasaschile.com>',
         to: [adminEmail],
-        subject: '🚀 Nueva Constructora Registrada',
+        subject: 'ðŸš€ Nueva Constructora Registrada',
         html: `
           <div style="font-family: sans-serif; padding: 20px;">
             <h2>Nueva Constructora en la plataforma</h2>
             <p><strong>Nombre:</strong> ${companyName}</p>
             <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Teléfono:</strong> ${phone}</p>
+            <p><strong>TelÃ©fono:</strong> ${phone}</p>
             <p><strong>Plan seleccionado:</strong> ${plan.toUpperCase()}</p>
           </div>
         `
@@ -290,7 +290,7 @@ export async function updateSettings(formData: FormData) {
 
   if (error) return { error: error.message }
 
-  // Recalculo automático de sellos
+  // Recalculo automÃ¡tico de sellos
   await recalcularSellosAutomaticos(user.id);
 
   revalidatePath('/dashboard/settings')
@@ -305,7 +305,7 @@ export async function createModel(data: ModelPayload) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
 
-  // 1. Obtener plan y límites
+  // 1. Obtener plan y lÃ­mites
   const { data: constructora } = await supabase
     .from('constructoras')
     .select('plan')
@@ -314,19 +314,19 @@ export async function createModel(data: ModelPayload) {
   
   const limits = getPlanLimits(constructora?.plan || 'gratis')
 
-  // 2. Verificar límite de modelos si es creación (actualmente solo tenemos createModel)
+  // 2. Verificar lÃ­mite de modelos si es creaciÃ³n (actualmente solo tenemos createModel)
   const { count } = await supabase
     .from('modelos')
     .select('*', { count: 'exact', head: true })
     .eq('constructora_id', user.id)
 
   if ((count || 0) >= limits.maxModels) {
-    return { error: `Has alcanzado el límite de ${limits.maxModels} modelos para tu plan ${constructora?.plan?.toUpperCase()}. Mejora tu suscripción para publicar más modelos.` }
+    return { error: `Has alcanzado el lÃ­mite de ${limits.maxModels} modelos para tu plan ${constructora?.plan?.toUpperCase()}. Mejora tu suscripciÃ³n para publicar mÃ¡s modelos.` }
   }
 
-  // 3. Verificar límite de fotos
+  // 3. Verificar lÃ­mite de fotos
   if (data.imagenes_urls && data.imagenes_urls.length > limits.maxPhotos) {
-    return { error: `Tu plan permite un máximo de ${limits.maxPhotos} fotos por modelo.` }
+    return { error: `Tu plan permite un mÃ¡ximo de ${limits.maxPhotos} fotos por modelo.` }
   }
 
   // Generate slug
@@ -343,7 +343,7 @@ export async function createModel(data: ModelPayload) {
 
   if (error) return { error: error.message }
 
-  // Recalculo automático de sellos
+  // Recalculo automÃ¡tico de sellos
   await recalcularSellosAutomaticos(user.id);
 
   revalidatePath('/dashboard/catalog')
@@ -370,7 +370,7 @@ export async function updateModel(id: string, data: ModelPayload) {
   // 1. Check plan limits for photos
   const limits = getPlanLimits(isSuperAdmin ? 'premium' : (profile?.plan || 'gratis'));
   if (data.imagenes_urls && data.imagenes_urls.length > limits.maxPhotos) {
-    return { error: `Tu plan permite un máximo de ${limits.maxPhotos} fotos.` };
+    return { error: `Tu plan permite un mÃ¡ximo de ${limits.maxPhotos} fotos.` };
   }
 
   const { error } = await supabase
@@ -380,7 +380,7 @@ export async function updateModel(id: string, data: ModelPayload) {
 
   if (error) return { error: error.message }
 
-  // Recalculo automático de sellos
+  // Recalculo automÃ¡tico de sellos
   await recalcularSellosAutomaticos(currentModel.constructora_id);
 
   revalidatePath('/dashboard/catalog')
@@ -392,7 +392,7 @@ export async function updateModel(id: string, data: ModelPayload) {
 }
 
 // ============================================================
-// ACCIONES DE SUPERADMINISTRACIÓN
+// ACCIONES DE SUPERADMINISTRACIÃ“N
 // ============================================================
 
 export async function toggleVerification(constructoraId: string, status: boolean) {
@@ -581,20 +581,35 @@ export async function sendBulkEmail(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (user?.app_metadata?.is_superadmin !== true) {
-    return { error: "Acceso denegado. Solo SuperAdmins pueden enviar correos masivos." }
+  if (!user) {
+    return { error: "No autenticado." }
+  }
+
+  const { data: profile } = await supabase
+    .from('constructoras')
+    .select('role')
+    .eq('id', user.id)
+    .maybeSingle()
+
+  const isSuperAdmin = user.app_metadata?.is_superadmin === true || profile?.role === 'superadmin'
+  const isAdmin = isSuperAdmin || profile?.role === 'admin' || user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin'
+
+  if (!isAdmin) {
+    return { error: "Acceso denegado. Solo admins pueden enviar correos masivos." }
   }
 
   const asunto = formData.get('asunto') as string
   const mensaje = formData.get('mensaje') as string
+  const contentModeRaw = formData.get('content_mode') as string | null
+  const contentMode = contentModeRaw === 'html' ? 'html' : 'text'
   const audiencia = formData.get('audiencia') as string // 'todos', 'gratis', 'pro', 'premium'
 
-  if (!asunto || !mensaje || !audiencia) {
+  if (!asunto?.trim() || !mensaje?.trim() || !audiencia) {
     return { error: "Todos los campos son obligatorios." }
   }
 
   try {
-    // 1. Obtener destinatarios basándose en la audiencia
+    // 1. Obtener destinatarios basÃ¡ndose en la audiencia
     let emails: string[] = []
 
     if (audiencia === 'seleccion_manual') {
@@ -618,8 +633,39 @@ export async function sendBulkEmail(formData: FormData) {
     }
     
     if (emails.length === 0) {
-      return { error: "No hay destinatarios válidos seleccionados." }
+      return { error: "No hay destinatarios vÃ¡lidos seleccionados." }
     }
+
+    const cleanMensaje = mensaje.trim()
+    const escapeHtml = (input: string) =>
+      input
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;')
+
+    const bodyContent =
+      contentMode === 'html'
+        ? cleanMensaje
+        : `<p>${escapeHtml(cleanMensaje).replace(/\n/g, '<br />')}</p>`
+
+    const fullHtmlDocPattern = /<!doctype html|<html[\s>]/i
+    const htmlPayload = fullHtmlDocPattern.test(cleanMensaje)
+      ? cleanMensaje
+      : `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
+          <div style="background: #ffffff; padding: 24px 30px; text-align: center; border-bottom: 3px solid #0b9e86;">
+            <img src="https://solocasaschile.com/images/logo.png" alt="SolocasasChile" style="height: 40px; width: auto; max-width: 100%;" />
+          </div>
+          <div style="padding: 40px 30px; line-height: 1.6; color: #334155; font-size: 15px;">
+            ${bodyContent}
+          </div>
+          <div style="background: #f8fafc; padding: 20px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0;">
+            Mensaje oficial enviado por la administraciÃ³n de <a href="https://solocasaschile.com" style="color: #0b9e86; text-decoration: none; font-weight: bold;">SolocasasChile.com</a>
+          </div>
+        </div>
+      `
 
     // 2. Enviar correos via Resend (BCC para privacidad)
     // Nota: Resend permite hasta 100 destinatarios por lote en BCC habitualmente.
@@ -629,19 +675,7 @@ export async function sendBulkEmail(formData: FormData) {
       to: 'envios@solocasaschile.com', // Remitente como "To" para evitar fallos
       bcc: emails,
       subject: asunto,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
-          <div style="background: #ffffff; padding: 24px 30px; text-align: center; border-bottom: 3px solid #0b9e86;">
-            <img src="https://solocasaschile.com/images/logo.png" alt="SolocasasChile" style="height: 40px; width: auto; max-width: 100%;" />
-          </div>
-          <div style="padding: 40px 30px; line-height: 1.6; color: #334155; font-size: 15px;">
-            ${mensaje.replace(/\n/g, '<br>')}
-          </div>
-          <div style="background: #f8fafc; padding: 20px; text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0;">
-            Mensaje oficial enviado por la administración de <a href="https://solocasaschile.com" style="color: #0b9e86; text-decoration: none; font-weight: bold;">SolocasasChile.com</a>
-          </div>
-        </div>
-      `,
+      html: htmlPayload,
     })
 
     if (sendError) throw sendError
@@ -662,7 +696,6 @@ export async function sendBulkEmail(formData: FormData) {
     return { error: getErrorMessage(err, "Error al enviar los correos masivos.") }
   }
 }
-
 export async function submitLead(data: {
   nombre_cliente: string;
   email_cliente: string;
@@ -708,19 +741,19 @@ export async function submitLead(data: {
 
   // 3. Enviar correos via Resend
   try {
-    // A. Email de confirmación al USUARIO
+    // A. Email de confirmaciÃ³n al USUARIO
     await resend.emails.send({
       from: 'SoloCasasChile <contacto@solocasaschile.com>',
       to: [data.email_cliente],
-      subject: `Hemos recibido tu solicitud de cotización - ${data.modelo_nombre} 🏠`,
+      subject: `Hemos recibido tu solicitud de cotizaciÃ³n - ${data.modelo_nombre} ðŸ `,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
           <div style="background: #0b9e86; padding: 24px 30px; text-align: center;">
-            <h1 style="color: white; margin: 0; font-size: 24px;">¡Hola ${data.nombre_cliente}!</h1>
+            <h1 style="color: white; margin: 0; font-size: 24px;">Â¡Hola ${data.nombre_cliente}!</h1>
           </div>
           <div style="padding: 40px 30px; line-height: 1.6; color: #334155; font-size: 15px;">
-            <p>Gracias por tu interés en el modelo <strong>${data.modelo_nombre}</strong> de <strong>${data.constructora_nombre}</strong>.</p>
-            <p>Hemos recibido tu mensaje correctamente. Un ejecutivo de la constructora se pondrá en contacto contigo a la brevedad para brindarte toda la información técnica y comercial que necesites.</p>
+            <p>Gracias por tu interÃ©s en el modelo <strong>${data.modelo_nombre}</strong> de <strong>${data.constructora_nombre}</strong>.</p>
+            <p>Hemos recibido tu mensaje correctamente. Un ejecutivo de la constructora se pondrÃ¡ en contacto contigo a la brevedad para brindarte toda la informaciÃ³n tÃ©cnica y comercial que necesites.</p>
             
             <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e2e8f0;">
               <p style="margin: 0 0 10px 0; font-weight: bold; color: #0b9e86;">Resumen de tu solicitud:</p>
@@ -735,26 +768,26 @@ export async function submitLead(data: {
       `
     });
 
-    // B. Email de notificación a la CONSTRUCTORA
+    // B. Email de notificaciÃ³n a la CONSTRUCTORA
     if (destinatarioEmail) {
       await resend.emails.send({
         from: 'SoloCasasChile <leads@solocasaschile.com>',
         to: [destinatarioEmail],
         replyTo: data.email_cliente,
-        subject: `Nueva Cotización: ${data.modelo_nombre} - ${data.nombre_cliente}`,
+        subject: `Nueva CotizaciÃ³n: ${data.modelo_nombre} - ${data.nombre_cliente}`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background-color: #ffffff;">
             <div style="background: #1e293b; padding: 24px 30px; text-align: center;">
-              <h1 style="color: white; margin: 0; font-size: 20px;">🚀 Tienes un nuevo interesado</h1>
+              <h1 style="color: white; margin: 0; font-size: 20px;">ðŸš€ Tienes un nuevo interesado</h1>
             </div>
             <div style="padding: 30px; line-height: 1.6; color: #334155; font-size: 14px;">
-              <p>Has recibido una nueva solicitud de cotización a través de SolocasasChile.</p>
+              <p>Has recibido una nueva solicitud de cotizaciÃ³n a travÃ©s de SolocasasChile.</p>
               
               <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0;">
                 <p style="margin: 0 0 15px 0; font-weight: bold; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">Datos del Cliente:</p>
                 <p style="margin: 5px 0;"><strong>Nombre:</strong> ${data.nombre_cliente}</p>
                 <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${data.email_cliente}">${data.email_cliente}</a></p>
-                <p style="margin: 5px 0;"><strong>Teléfono:</strong> <a href="tel:${data.telefono_cliente}">${data.telefono_cliente}</a></p>
+                <p style="margin: 5px 0;"><strong>TelÃ©fono:</strong> <a href="tel:${data.telefono_cliente}">${data.telefono_cliente}</a></p>
                 <p style="margin: 15px 0 5px 0;"><strong>Mensaje:</strong></p>
                 <p style="background: white; padding: 10px; border-radius: 4px; border: 1px solid #eee; margin: 0;">${data.mensaje.replace(/\n/g, '<br>')}</p>
               </div>
@@ -770,7 +803,7 @@ export async function submitLead(data: {
       });
     }
 
-    // C. Email de notificación a la PLATAFORMA (bcc/log)
+    // C. Email de notificaciÃ³n a la PLATAFORMA (bcc/log)
     await resend.emails.send({
       from: 'Sistema SolocasasChile <leads@solocasaschile.com>',
       to: ['contacto@solocasaschile.com'],
@@ -778,11 +811,11 @@ export async function submitLead(data: {
       subject: `[Log] Nuevo Lead: ${data.modelo_nombre} - ${data.nombre_cliente}`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px;">
-          <h2 style="color: #0b9e86;">🚀 Nuevo interesado en SolocasasChile</h2>
+          <h2 style="color: #0b9e86;">ðŸš€ Nuevo interesado en SolocasasChile</h2>
           <hr style="border: 0; border-top: 1px solid #eee;" />
           <p><strong>Cliente:</strong> ${data.nombre_cliente}</p>
           <p><strong>Email:</strong> ${data.email_cliente}</p>
-          <p><strong>Teléfono:</strong> ${data.telefono_cliente}</p>
+          <p><strong>TelÃ©fono:</strong> ${data.telefono_cliente}</p>
           <p><strong>Modelo interesado:</strong> ${data.modelo_nombre}</p>
           <p><strong>Constructora:</strong> ${data.constructora_nombre}</p>
           <p><strong>Enviado a Constructora:</strong> ${destinatarioEmail || 'No definido'}</p>
@@ -796,7 +829,7 @@ export async function submitLead(data: {
 
   } catch (emailError) {
     console.error('Error al enviar correos de lead:', emailError);
-    // No cortamos el flujo para el usuario si falla el email, ya se insertó en la DB.
+    // No cortamos el flujo para el usuario si falla el email, ya se insertÃ³ en la DB.
   }
 
   return { success: true };
@@ -806,14 +839,14 @@ export async function submitLead(data: {
 export async function incrementModelView(modeloId: string) {
   try {
     const supabase = await createClient();
-    // Llama al RPC que creamos en la migración (seguro a nivel de fila y atómico)
+    // Llama al RPC que creamos en la migraciÃ³n (seguro a nivel de fila y atÃ³mico)
     await supabase.rpc('increment_visitas', { modelo_id: modeloId });
   } catch (err) {
     console.error("Error incrementing views:", err);
   }
 }
 
-// ─── ADMINISTRACIÓN DE SELLOS ────────────────────────────────────────────────
+// â”€â”€â”€ ADMINISTRACIÃ“N DE SELLOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export async function aprobarSello(formData: FormData) {
   try {
@@ -855,7 +888,7 @@ export async function aprobarSello(formData: FormData) {
     return { success: true };
 
   } catch (err: unknown) {
-    console.error("[Admin] Excepción en aprobarSello:", err);
+    console.error("[Admin] ExcepciÃ³n en aprobarSello:", err);
     return { success: false, error: getErrorMessage(err, "Error desconocido") };
   }
 }
@@ -901,7 +934,7 @@ export async function rechazarSello(formData: FormData) {
     return { success: true };
 
   } catch (err: unknown) {
-    console.error("[Admin] Excepción en rechazarSello:", err);
+    console.error("[Admin] ExcepciÃ³n en rechazarSello:", err);
     return { success: false, error: getErrorMessage(err, "Error desconocido") };
   }
 }
@@ -931,7 +964,7 @@ export async function solicitarSello(formData: FormData) {
 
 const TestimonioSchema = z.object({
   nombre: z.string().min(1, "El nombre es obligatorio").max(100),
-  texto: z.string().min(1, "El testimonio no puede estar vacío").max(2000),
+  texto: z.string().min(1, "El testimonio no puede estar vacÃ­o").max(2000),
   cargo: z.string().max(100).optional().nullable(),
   estrellas: z.number().min(1).max(5),
   modelo_id: z.string().optional().nullable()
@@ -947,7 +980,7 @@ export async function updateTestimonios(testimoniosRaw: unknown[]) {
   // Validar esquema
   const validation = TestimoniosArraySchema.safeParse(testimoniosRaw);
   if (!validation.success) {
-    return { success: false, error: "Datos de testimonios inválidos o demasiado largos." };
+    return { success: false, error: "Datos de testimonios invÃ¡lidos o demasiado largos." };
   }
 
   const testimonios = validation.data;
@@ -959,7 +992,7 @@ export async function updateTestimonios(testimoniosRaw: unknown[]) {
 
   if (error) return { success: false, error: error.message }
 
-  // Buscamos el slug para revalidar la ruta pública
+  // Buscamos el slug para revalidar la ruta pÃºblica
   const { data: constructora } = await supabase
     .from('constructoras')
     .select('slug')
