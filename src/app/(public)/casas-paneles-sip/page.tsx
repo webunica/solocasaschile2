@@ -25,6 +25,31 @@ const FAQS = [
   },
 ];
 
+const SIP_QUALITIES = [
+  {
+    title: "Envolvente termica continua",
+    detail:
+      "Los paneles SIP reducen puentes termicos y ayudan a estabilizar la temperatura interior durante todo el ano.",
+  },
+  {
+    title: "Buen comportamiento sismico",
+    detail:
+      "Su peso contenido y uniones bien resueltas permiten un desempeno robusto para zonas de alta exigencia en Chile.",
+  },
+  {
+    title: "Obra mas limpia y controlada",
+    detail:
+      "Al prefabricar gran parte del sistema, baja el desperdicio en terreno y mejora la consistencia de ejecucion.",
+  },
+];
+
+const SIP_BENEFITS = [
+  "Menor gasto en climatizacion en comparacion con sistemas de baja aislacion.",
+  "Plazos de montaje mas cortos para comenzar uso o arriendo antes.",
+  "Mejor confort interior en invierno y verano cuando el diseno termico esta bien resuelto.",
+  "Mayor estandar de calidad al trabajar con procesos industrializados.",
+];
+
 export const metadata: Metadata = {
   title: "Casas Paneles SIP en Chile | Modelos SIP y Ventajas",
   description:
@@ -118,6 +143,29 @@ export default async function CasasPanelesSipPage() {
       </section>
 
       <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-14">
+        <h2 className="text-2xl font-black tracking-tight mb-6">Cualidades del sistema SIP</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {SIP_QUALITIES.map((item) => (
+            <article key={item.title} className="rounded-2xl border border-border/50 bg-card/40 p-5">
+              <h3 className="text-base font-black tracking-tight">{item.title}</h3>
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-12">
+        <h2 className="text-2xl font-black tracking-tight mb-6">Beneficios para quien compra</h2>
+        <ul className="grid gap-3 md:grid-cols-2">
+          {SIP_BENEFITS.map((benefit) => (
+            <li key={benefit} className="rounded-2xl border border-border/50 bg-card/30 p-4 text-sm text-muted-foreground">
+              {benefit}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-12">
         <h2 className="text-2xl font-black tracking-tight mb-6">Modelos SIP destacados</h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {topSip.map((model) => (

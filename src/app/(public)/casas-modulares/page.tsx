@@ -25,6 +25,31 @@ const FAQS = [
   },
 ];
 
+const MODULAR_QUALITIES = [
+  {
+    title: "Alto avance en fabrica",
+    detail:
+      "Gran parte del trabajo se realiza en ambiente controlado, mejorando la precision y reduciendo incertidumbre en terreno.",
+  },
+  {
+    title: "Montaje rapido en sitio",
+    detail:
+      "La instalacion de modulos permite acelerar hitos clave del proyecto y acortar tiempos globales de entrega.",
+  },
+  {
+    title: "Escalabilidad por etapas",
+    detail:
+      "Es posible crecer con ampliaciones modulares planificadas, segun presupuesto y nuevas necesidades del hogar.",
+  },
+];
+
+const MODULAR_BENEFITS = [
+  "Menor tiempo para habitar o rentabilizar la vivienda.",
+  "Mejor control de costos cuando el alcance del proyecto esta bien definido.",
+  "Flexibilidad de configuracion para primera vivienda o segunda vivienda.",
+  "Proceso mas predecible al reducir dependencia de variables en obra abierta.",
+];
+
 export const metadata: Metadata = {
   title: "Casas Modulares en Chile | Modelos, Diferencias y Precios",
   description:
@@ -119,6 +144,29 @@ export default async function CasasModularesPage() {
       </section>
 
       <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-14">
+        <h2 className="text-2xl font-black tracking-tight mb-6">Cualidades del sistema modular</h2>
+        <div className="grid gap-4 md:grid-cols-3">
+          {MODULAR_QUALITIES.map((item) => (
+            <article key={item.title} className="rounded-2xl border border-border/50 bg-card/40 p-5">
+              <h3 className="text-base font-black tracking-tight">{item.title}</h3>
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-12">
+        <h2 className="text-2xl font-black tracking-tight mb-6">Beneficios para quien cotiza</h2>
+        <ul className="grid gap-3 md:grid-cols-2">
+          {MODULAR_BENEFITS.map((benefit) => (
+            <li key={benefit} className="rounded-2xl border border-border/50 bg-card/30 p-4 text-sm text-muted-foreground">
+              {benefit}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-12">
         <h2 className="text-2xl font-black tracking-tight mb-6">Modelos modulares destacados</h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {topModular.map((model) => (
