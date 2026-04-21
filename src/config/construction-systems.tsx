@@ -133,7 +133,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "12-22 UF/m2" },
         { label: "Sustentabilidad", value: "Reciclado" }
     ],
-    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?q=80&w=2070"
+    image: "/containers.jpg"
   },
   "steel-framing": {
     title: "Steel Framing",
@@ -145,7 +145,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "18-28 UF/m2" },
         { label: "Mantención", value: "Baja" }
     ],
-    image: "https://images.unsplash.com/photo-1503387762-592dea58ef23?q=80&w=2070"
+    image: "/steel-framing.jpg"
   },
   madera: {
     title: "Construcción en Madera",
