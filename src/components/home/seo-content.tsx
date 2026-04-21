@@ -107,6 +107,14 @@ export function SeoContent() {
                 sobre cientos de modelos y empresas, para que tomes la mejor
                 decisión antes de cotizar.
               </p>
+              <p>
+                Si quieres ir directo por intención de búsqueda, revisa nuestras
+                guías pilares de{" "}
+                <Link href="/casas-prefabricadas">casas prefabricadas en Chile</Link>,{" "}
+                <Link href="/casas-paneles-sip">casas paneles SIP</Link>,{" "}
+                <Link href="/casas-modulares">casas modulares</Link> y{" "}
+                <Link href="/modelos-casas-prefabricadas">modelos de casas prefabricadas</Link>.
+              </p>
             </div>
           </div>
 
@@ -158,21 +166,21 @@ export function SeoContent() {
               {[
                 {
                   tipo: "Casas SIP",
-                  href: "/tipos/sip",
+                  href: "/casas-paneles-sip",
                   desc: "Paneles estructurales de poliestireno + OSB. Alta aislación térmica y acústica. Ideal para zonas frías. Construcción en 45-90 días.",
                   tag: "Panel SIP",
                 },
                 {
                   tipo: "Casas Modulares",
-                  href: "/tipos/modular",
+                  href: "/casas-modulares",
                   desc: "Módulos tridimensionales ensamblados en fábrica. Llegada al terreno casi lista. Máxima flexibilidad de distribución y diseño.",
                   tag: "Modular",
                 },
                 {
-                  tipo: "Casas Container",
-                  href: "/tipos/container",
-                  desc: "Construidas a partir de contenedores marítimos reciclados. Durabilidad extrema, diseño industrial y costo competitivo.",
-                  tag: "Container",
+                  tipo: "Modelos de Casas Prefabricadas",
+                  href: "/modelos-casas-prefabricadas",
+                  desc: "Compara metraje, dormitorios y rango de precio para elegir el modelo adecuado antes de cotizar.",
+                  tag: "Modelos",
                 },
               ].map((item) => (
                 <Link
