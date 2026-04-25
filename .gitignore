@@ -18,6 +18,10 @@
 /tmp/*.jpg
 /tmp/*.jpeg
 /tmp/*.webp
+/public/city-background-panoramic-view.jpg
+/public/long-shot-men-working-roof.jpg
+/public/photorealistic-wooden-house-with-timber-structure.jpg
+/public/publi-solocasas.png
 
 # next.js
 /.next/
