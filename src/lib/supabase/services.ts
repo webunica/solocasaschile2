@@ -493,35 +493,39 @@ export const getConstructoraBySlug = cache(async function getConstructoraBySlug(
 });
 
 export async function getModelsByConstructoraId(id: string) {
-  const supabase = await createPublicClient()
+  return unstable_cache(
+    async (id: string) => {
+      const supabase = await createPublicClient()
 
-  // Narrow columns — avoid select(*) which pulls all JSON fields
-  const { data, error } = await supabase
-    .from('modelos')
-    .select('id, nombre, slug, tipo, superficie_m2, dormitorios, banos, precio_desde_uf, imagenes_urls, tiempo_entrega, disponible')
-    .eq('constructora_id', id)
-    .eq('disponible', true)
-    .order('precio_desde_uf', { ascending: true });
+      const { data, error } = await supabase
+        .from('modelos')
+        .select('id, nombre, slug, tipo, superficie_m2, dormitorios, banos, precio_desde_uf, imagenes_urls, tiempo_entrega, disponible')
+        .eq('constructora_id', id)
+        .eq('disponible', true)
+        .order('precio_desde_uf', { ascending: true });
 
-  if (error) return [];
+      if (error) return [];
 
-  // Mocks: use static import (already loaded at module level) — avoid dynamic import overhead
-  const mocks = MODELOS.filter(m => m.constructoraId === id);
-  const mappedMocks = mocks.map(m => ({
-    id: m.id,
-    nombre: m.nombre,
-    precio_desde_uf: m.precioDesdeUF,
-    superficie_m2: m.superficieM2,
-    dormitorios: m.dormitorios,
-    banos: m.banos,
-    imagenes_urls: m.imagenes,
-    slug: m.slug,
-    tipo: m.tipo,
-    disponible: m.disponible,
-    tiempo_entrega: m.tiempoEntrega,
-  }));
+      const mocks = MODELOS.filter(m => m.constructoraId === id);
+      const mappedMocks = mocks.map(m => ({
+        id: m.id,
+        nombre: m.nombre,
+        precio_desde_uf: m.precioDesdeUF,
+        superficie_m2: m.superficieM2,
+        dormitorios: m.dormitorios,
+        banos: m.banos,
+        imagenes_urls: m.imagenes,
+        slug: m.slug,
+        tipo: m.tipo,
+        disponible: m.disponible,
+        tiempo_entrega: m.tiempoEntrega,
+      }));
 
-  return [...(data || []), ...mappedMocks];
+      return [...(data || []), ...mappedMocks];
+    },
+    ['constructora-public-models', id],
+    { revalidate: 3600, tags: ['modelos', `constructora-${id}`] }
+  )(id);
 }
 
 /**
@@ -529,61 +533,73 @@ export async function getModelsByConstructoraId(id: string) {
  * Retorna vacío si las tablas aún no existen (graceful fallback).
  */
 export async function getSellosDeConstructora(constructoraId: string) {
-  try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from('constructora_sellos')
-      .select(`
-        id,
-        estado,
-        otorgado_at,
-        sello:sello_id (
-          id,
-          slug,
-          nombre,
-          descripcion,
-          tipo,
-          icono_url
-        )
-      `)
-      .eq('constructora_id', constructoraId)
-      .eq('estado', 'aprobado')
-      .order('otorgado_at', { ascending: true });
+  return unstable_cache(
+    async (constructoraId: string) => {
+      try {
+        const supabase = await createPublicClient();
+        const { data, error } = await supabase
+          .from('constructora_sellos')
+          .select(`
+            id,
+            estado,
+            otorgado_at,
+            sello:sello_id (
+              id,
+              slug,
+              nombre,
+              descripcion,
+              tipo,
+              icono_url
+            )
+          `)
+          .eq('constructora_id', constructoraId)
+          .eq('estado', 'aprobado')
+          .order('otorgado_at', { ascending: true });
 
-    if (error) return [];
-    return data || [];
-  } catch {
-    return [];
-  }
+        if (error) return [];
+        return data || [];
+      } catch {
+        return [];
+      }
+    },
+    ['constructora-public-sellos', constructoraId],
+    { revalidate: 3600, tags: ['sellos', `constructora-${constructoraId}`] }
+  )(constructoraId);
 }
 
 /** Obtiene la configuración de publicidad del Mega Menú */
 export async function getMegaMenuAds() {
-  try {
-    const supabase = await createPublicClient();
-    const { data: setting } = await supabase
-      .from('site_settings')
-      .select('value')
-      .eq('key', 'mega_menu_ads')
-      .maybeSingle();
+  return unstable_cache(
+    async () => {
+      try {
+        const supabase = await createPublicClient();
+        const { data: setting } = await supabase
+          .from('site_settings')
+          .select('value')
+          .eq('key', 'mega_menu_ads')
+          .maybeSingle();
 
-    if (!setting?.value) return null;
+        if (!setting?.value) return null;
 
-    const { featuredConstructoraId, featuredModeloId } = setting.value;
+        const { featuredConstructoraId, featuredModeloId } = setting.value;
 
-    const [constructora, modelo] = await Promise.all([
-      featuredConstructoraId ? getConstructoraById(featuredConstructoraId) : null,
-      featuredModeloId ? getModelById(featuredModeloId) : null
-    ]);
+        const [constructora, modelo] = await Promise.all([
+          featuredConstructoraId ? getConstructoraById(featuredConstructoraId) : null,
+          featuredModeloId ? getModelById(featuredModeloId) : null
+        ]);
 
-    return {
-      constructora,
-      modelo
-    };
-  } catch (error) {
-    console.error("Error fetching mega menu ads:", error);
-    return null;
-  }
+        return {
+          constructora,
+          modelo
+        };
+      } catch (error) {
+        console.error("Error fetching mega menu ads:", error);
+        return null;
+      }
+    },
+    ['mega-menu-ads'],
+    { revalidate: 3600, tags: ['site-settings', 'mega-menu'] }
+  )()
 }
 
 /** Obtiene modelos destacados filtrados por region (con caché) */

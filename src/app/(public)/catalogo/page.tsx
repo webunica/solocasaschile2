@@ -14,8 +14,7 @@ import { CatalogoSkeleton } from "@/components/catalogo/catalogo-skeleton";
 import { StructuredData, buildBreadcrumbJsonLd, buildItemListJsonLd } from "@/components/seo/structured-data";
 import { ChevronRight, Home } from "lucide-react";
 
-
-export const dynamic = "force-dynamic";
+export const revalidate = 1800;
 
 export const metadata: Metadata = {
   title: "Catálogo de Casas Prefabricadas, SIP y Modulares en Chile | SolocasasChile",
