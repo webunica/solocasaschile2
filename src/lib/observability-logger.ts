@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/nextjs";
+
 type PrimitiveLogValue = string | number | boolean | null;
 type LogValue = PrimitiveLogValue | Record<string, PrimitiveLogValue>;
 
@@ -8,6 +10,23 @@ type LogPayload = {
   requestId: string;
   ms?: number;
 } & Record<string, LogValue | undefined>;
+
+const SENTRY_ALERT_EVENTS = new Set([
+  "checkout_start_failed",
+  "checkout_start_flow_config_missing",
+  "checkout_start_profile_upsert_failed",
+  "cron_generate_blog_config_missing",
+  "cron_generate_blog_failed",
+  "cron_generate_blog_webhook_failed",
+  "flow_checkout_config_missing",
+  "flow_checkout_failed",
+  "flow_webhook_failed",
+  "flow_webhook_missing_constructora",
+  "flow_webhook_plan_activation_failed",
+  "leads_public_config_missing",
+  "leads_public_insert_failed",
+  "leads_public_unexpected_error",
+]);
 
 export function getRequestId(req: Request): string {
   return (
@@ -48,8 +67,55 @@ function cleanPayload(payload: LogPayload): LogPayload {
   ) as LogPayload;
 }
 
+function shouldSendToSentry(payload: LogPayload) {
+  return payload.level === "error" && SENTRY_ALERT_EVENTS.has(payload.event);
+}
+
+function toError(errorValue: LogValue | undefined, event: string) {
+  if (errorValue && typeof errorValue === "object" && !Array.isArray(errorValue)) {
+    const name =
+      typeof errorValue.name === "string" && errorValue.name.length > 0
+        ? errorValue.name
+        : "ObservedRouteError";
+    const message =
+      typeof errorValue.message === "string" && errorValue.message.length > 0
+        ? errorValue.message
+        : event;
+    const error = new Error(message);
+    error.name = name;
+    return error;
+  }
+
+  return new Error(event);
+}
+
+function sendToSentry(payload: LogPayload) {
+  if (!shouldSendToSentry(payload)) {
+    return;
+  }
+
+  const { error, level, event, route, requestId, ...extra } = payload;
+  const sentryLevel = level === "warn" ? "warning" : level;
+
+  Sentry.withScope((scope) => {
+    scope.setLevel(sentryLevel);
+    scope.setTag("event", event);
+    scope.setTag("route", route);
+    scope.setTag("request_id", requestId);
+    scope.setFingerprint([event, route]);
+    scope.setContext("observability", {
+      route,
+      requestId,
+      ...extra,
+    });
+
+    Sentry.captureException(toError(error, event));
+  });
+}
+
 function writeLog(payload: LogPayload) {
   const clean = cleanPayload(payload);
+  sendToSentry(clean);
 
   if (clean.level === "error") {
     console.error(JSON.stringify(clean));
@@ -97,4 +163,14 @@ export function logError(
     ...fields,
     error: getErrorDetails(error),
   });
+}
+
+export function withRequestIdHeaders(init: ResponseInit = {}, requestId: string): ResponseInit {
+  const headers = new Headers(init.headers);
+  headers.set("x-request-id", requestId);
+
+  return {
+    ...init,
+    headers,
+  };
 }

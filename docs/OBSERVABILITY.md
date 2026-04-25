@@ -2,64 +2,144 @@
 
 Objetivo: detectar fallas de leads, pagos y cron antes de que afecten ventas o confianza.
 
-## Eventos estructurados
+## Baseline
 
-Las APIs criticas emiten logs JSON con estos campos base:
+Las rutas criticas emiten logs JSON con estos campos base:
 
-1. `level`: `info`, `warn` o `error`.
-2. `event`: nombre estable para filtrar alertas.
-3. `route`: ruta API.
-4. `requestId`: `x-vercel-id`, `x-request-id`, `cf-ray` o `local`.
-5. `ms`: duracion cuando aplica.
+1. `level`: `info`, `warn` o `error`
+2. `event`: nombre estable para filtrar alertas
+3. `route`: ruta API
+4. `requestId`: `x-vercel-id`, `x-request-id`, `cf-ray` o `local`
+5. `ms`: duracion cuando aplica
+
+Ademas, todas las respuestas de rutas criticas devuelven `x-request-id` para correlacion de soporte.
 
 Regla de privacidad: no registrar tokens, emails, telefonos, mensajes de leads, headers de autorizacion ni payloads completos.
 
-## Eventos clave
+## Eventos criticos hoy
 
-Leads:
+### Leads publicos
 
-1. `leads_public_inserted`
-2. `leads_public_insert_failed`
-3. `leads_public_rate_limited`
-4. `leads_public_honeypot_triggered`
+- `leads_public_inserted`
+- `leads_public_insert_failed`
+- `leads_public_rate_limited`
+- `leads_public_honeypot_triggered`
+- `leads_public_unexpected_error`
+- `leads_public_config_missing`
 
-Cron de blog:
+### Checkout publico
 
-1. `cron_generate_blog_started`
-2. `cron_generate_blog_completed`
-3. `cron_generate_blog_failed`
-4. `cron_generate_blog_webhook_failed`
+- `checkout_start_created`
+- `checkout_start_failed`
+- `checkout_start_flow_config_missing`
+- `checkout_start_profile_upsert_failed`
 
-Pagos Flow:
+### Checkout autenticado / Flow
 
-1. `flow_checkout_created`
-2. `flow_checkout_failed`
-3. `flow_webhook_paid_completed`
-4. `flow_webhook_payment_rejected`
-5. `flow_webhook_plan_activation_failed`
-6. `flow_webhook_failed`
+- `flow_checkout_created`
+- `flow_checkout_failed`
+- `flow_checkout_config_missing`
+- `flow_webhook_started`
+- `flow_webhook_paid_completed`
+- `flow_webhook_payment_rejected`
+- `flow_webhook_plan_activation_failed`
+- `flow_webhook_failed`
+- `flow_webhook_missing_constructora`
 
-## Alertas minimas
+### Cron de blog
 
-Configurar alertas en Vercel Runtime Logs, Sentry o el proveedor de monitoreo elegido:
+- `cron_generate_blog_started`
+- `cron_generate_blog_completed`
+- `cron_generate_blog_failed`
+- `cron_generate_blog_webhook_failed`
+- `cron_generate_blog_config_missing`
 
-1. 5xx: cualquier `level:error` sostenido por 5 minutos en rutas `/api/*`.
-2. Leads: `leads_public_insert_failed` con 1 o mas eventos en 10 minutos.
-3. Pagos: `flow_checkout_failed`, `flow_webhook_failed` o `flow_webhook_plan_activation_failed` con 1 o mas eventos en 10 minutos.
-4. Cron: ausencia de `cron_generate_blog_completed` despues de la ventana esperada o presencia de `cron_generate_blog_failed`.
-5. Configuracion: `*_config_missing` debe abrir incidente inmediato.
-6. Spam: aumento abrupto de `leads_public_rate_limited` o `leads_public_honeypot_triggered`.
+## Integracion con Sentry
+
+Los eventos de severidad operativa alta ya se reportan tambien a Sentry con:
+
+- `tag:event`
+- `tag:route`
+- `tag:request_id`
+- fingerprint `[event, route]`
+
+Eventos enviados a Sentry:
+
+- `leads_public_config_missing`
+- `leads_public_insert_failed`
+- `leads_public_unexpected_error`
+- `checkout_start_failed`
+- `checkout_start_flow_config_missing`
+- `checkout_start_profile_upsert_failed`
+- `flow_checkout_config_missing`
+- `flow_checkout_failed`
+- `flow_webhook_failed`
+- `flow_webhook_missing_constructora`
+- `flow_webhook_plan_activation_failed`
+- `cron_generate_blog_config_missing`
+- `cron_generate_blog_failed`
+- `cron_generate_blog_webhook_failed`
+
+## Alertas minimas recomendadas
+
+Configurar en Sentry y complementar con Vercel Runtime Logs:
+
+1. `Config missing`
+   - filtro: `event:*_config_missing`
+   - umbral: 1 evento en 10 minutos
+   - severidad: P0
+
+2. `Leads rotos`
+   - filtro: `event:leads_public_insert_failed OR event:leads_public_unexpected_error`
+   - umbral: 1 evento en 10 minutos
+   - severidad: P1
+
+3. `Checkout roto`
+   - filtro: `event:checkout_start_failed OR event:flow_checkout_failed OR event:checkout_start_profile_upsert_failed`
+   - umbral: 1 evento en 10 minutos
+   - severidad: P1
+
+4. `Webhook Flow roto`
+   - filtro: `event:flow_webhook_failed OR event:flow_webhook_plan_activation_failed OR event:flow_webhook_missing_constructora`
+   - umbral: 1 evento en 10 minutos
+   - severidad: P0
+
+5. `Cron roto`
+   - filtro: `event:cron_generate_blog_failed OR event:cron_generate_blog_webhook_failed`
+   - umbral: 1 evento en 30 minutos
+   - severidad: P1
+
+6. `Cron silencioso`
+   - verificar ausencia de `cron_generate_blog_completed` en la ventana esperada
+   - esto se valida mejor con Vercel Cron + dashboard o monitor sintetico
+
+## Configuracion manual sugerida
+
+### Sentry
+
+1. Crear alertas por issue o metric alert usando el tag `event`
+2. Asignar canal operativo para P0/P1
+3. Verificar que `SENTRY_DSN` y `NEXT_PUBLIC_SENTRY_DSN` existan en `staging` y `production`
+4. Definir `SENTRY_ENVIRONMENT` y `SENTRY_RELEASE`
+
+### Vercel
+
+1. Revisar Runtime Logs por `event` y `requestId`
+2. En cada release, validar una corrida del cron o su ultima ejecucion
+3. Si el plan lo permite, agregar Drain o integracion hacia tu stack de monitoreo
 
 ## Runbook breve
 
-1. Revisar `requestId` en logs runtime para reconstruir la peticion.
-2. Verificar evento y ruta afectada.
-3. Confirmar si Sentry tiene error asociado en la misma ventana.
-4. Si afecta pagos o leads, pausar cambios de release hasta confirmar recuperacion.
-5. Registrar causa, impacto y accion correctiva en el changelog del release.
+1. Tomar `requestId` desde soporte, logs o header HTTP
+2. Buscar el `event` y `route` en Runtime Logs o Sentry
+3. Confirmar si hay issue agrupado por fingerprint `[event, route]`
+4. Si afecta pagos o leads, congelar release hasta confirmar recuperacion
+5. Registrar causa, impacto y correccion en el changelog de release
 
-## Pendientes externos
+## Checklist antes de promover
 
-1. Crear dashboard por eventos en el proveedor definitivo.
-2. Activar notificaciones a canal operativo para errores P0/P1.
-3. Definir SLO inicial: checkout y leads con error rate menor a 1% diario.
+1. `release:check` en verde
+2. DSN de Sentry configurado en `staging` y `production`
+3. Alertas P0/P1 creadas
+4. Al menos una prueba manual validando que `x-request-id` aparece en rutas criticas
+5. Confirmacion de cron completo o monitor sintetico equivalente

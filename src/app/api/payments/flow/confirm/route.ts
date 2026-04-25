@@ -4,7 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { FlowService } from '@/lib/payments/flow';
 import { getBillingCycleLabel } from '@/lib/payments/plans';
 import { resend } from '@/lib/resend';
-import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-logger';
+import { getRequestId, logError, logInfo, logWarn, withRequestIdHeaders } from '@/lib/observability-logger';
 
 const WebhookSchema = z.object({
   token: z.string().min(1, 'Token de Flow requerido'),
@@ -48,7 +48,10 @@ export async function POST(req: NextRequest) {
       logWarn('flow_webhook_validation_failed', route, requestId, {
         ms: Date.now() - start,
       });
-      return NextResponse.json({ error: validation.error.format() }, { status: 400 });
+      return NextResponse.json(
+        { error: validation.error.format() },
+        withRequestIdHeaders({ status: 400 }, requestId)
+      );
     }
 
     const { token } = validation.data;
@@ -70,7 +73,10 @@ export async function POST(req: NextRequest) {
         flowOrder: flowOrder ? String(flowOrder) : undefined,
         ms: Date.now() - start,
       });
-      return NextResponse.json({ error: 'ID de constructora no encontrado en los parametros del pago' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'ID de constructora no encontrado en los parametros del pago' },
+        withRequestIdHeaders({ status: 400 }, requestId)
+      );
     }
 
     const supabase = createAdminClient();
@@ -88,7 +94,10 @@ export async function POST(req: NextRequest) {
         flowOrder: String(flowOrder),
         ms: Date.now() - start,
       });
-      return NextResponse.json({ message: 'Pago ya procesado anteriormente.' });
+      return NextResponse.json(
+        { message: 'Pago ya procesado anteriormente.' },
+        withRequestIdHeaders({}, requestId)
+      );
     }
 
     const { error: paymentError } = await supabase
@@ -135,7 +144,10 @@ export async function POST(req: NextRequest) {
           flowOrder: String(flowOrder),
           ms: Date.now() - start,
         });
-        return NextResponse.json({ error: 'Error al activar plan' }, { status: 500 });
+        return NextResponse.json(
+          { error: 'Error al activar plan' },
+          withRequestIdHeaders({ status: 500 }, requestId)
+        );
       }
 
       try {
@@ -214,7 +226,10 @@ export async function POST(req: NextRequest) {
         ms: Date.now() - start,
       });
 
-      return NextResponse.json({ message: 'Pago procesado y plan activado.' });
+      return NextResponse.json(
+        { message: 'Pago procesado y plan activado.' },
+        withRequestIdHeaders({}, requestId)
+      );
     }
 
     if (statusResult.status === 3) {
@@ -249,7 +264,10 @@ export async function POST(req: NextRequest) {
         });
       }
 
-      return NextResponse.json({ message: 'Pago rechazado, notificacion enviada.' });
+      return NextResponse.json(
+        { message: 'Pago rechazado, notificacion enviada.' },
+        withRequestIdHeaders({}, requestId)
+      );
     }
 
     if (statusResult.status === 4) {
@@ -257,7 +275,10 @@ export async function POST(req: NextRequest) {
         flowOrder: String(flowOrder),
         ms: Date.now() - start,
       });
-      return NextResponse.json({ message: 'Pago anulado por el usuario.' });
+      return NextResponse.json(
+        { message: 'Pago anulado por el usuario.' },
+        withRequestIdHeaders({}, requestId)
+      );
     }
 
     logInfo('flow_webhook_received', route, requestId, {
@@ -266,11 +287,14 @@ export async function POST(req: NextRequest) {
       ms: Date.now() - start,
     });
 
-    return NextResponse.json({ message: 'Webhook recibido.' });
+    return NextResponse.json({ message: 'Webhook recibido.' }, withRequestIdHeaders({}, requestId));
   } catch (error: unknown) {
     logError('flow_webhook_failed', route, requestId, error, {
       ms: Date.now() - start,
     });
-    return NextResponse.json({ error: 'Ocurrio un error al procesar el webhook.' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Ocurrio un error al procesar el webhook.' },
+      withRequestIdHeaders({ status: 500 }, requestId)
+    );
   }
 }

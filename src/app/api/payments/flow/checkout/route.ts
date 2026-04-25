@@ -1,13 +1,19 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { FlowService } from '@/lib/payments/flow';
-import { getUfValue } from '@/lib/payments/uf';
-import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-logger';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import { FlowService } from "@/lib/payments/flow";
+import { getUfValue } from "@/lib/payments/uf";
+import {
+  getRequestId,
+  logError,
+  logInfo,
+  logWarn,
+  withRequestIdHeaders,
+} from "@/lib/observability-logger";
+import { createClient } from "@/lib/supabase/server";
 
 const CheckoutSchema = z.object({
-  plan: z.enum(['avanza', 'pro', 'premium']),
-  billing: z.enum(['monthly', 'yearly'])
+  plan: z.enum(["avanza", "pro", "premium"]),
+  billing: z.enum(["monthly", "yearly"]),
 });
 
 const PLAN_PRICES_UF = {
@@ -18,7 +24,7 @@ const PLAN_PRICES_UF = {
   premium: {
     monthly: 2.9,
     yearly: 1.45 * 12,
-  }
+  },
 } as const;
 
 const PLAN_PRICES_CLP_NET = {
@@ -38,51 +44,58 @@ function getErrorMessage(error: unknown): string {
 }
 
 export async function POST(req: NextRequest) {
-  const route = '/api/payments/flow/checkout';
+  const route = "/api/payments/flow/checkout";
   const requestId = getRequestId(req);
   const start = Date.now();
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
-    logWarn('flow_checkout_unauthorized', route, requestId, {
+    logWarn("flow_checkout_unauthorized", route, requestId, {
       ms: Date.now() - start,
     });
-    return NextResponse.json({ error: 'Debes iniciar sesión para realizar un pago.' }, { status: 401 });
+    return NextResponse.json(
+      { error: "Debes iniciar sesion para realizar un pago." },
+      withRequestIdHeaders({ status: 401 }, requestId)
+    );
   }
 
-  // Verificar configuración antes de seguir
   if (!process.env.FLOW_API_KEY || !process.env.FLOW_SECRET_KEY) {
-    logError('flow_checkout_config_missing', route, requestId, new Error('missing_flow_env'));
-    return NextResponse.json({ 
-      error: 'La pasarela de pago no está configurada correctamente. Contacta a soporte.' 
-    }, { status: 500 });
+    logError("flow_checkout_config_missing", route, requestId, new Error("missing_flow_env"));
+    return NextResponse.json(
+      { error: "La pasarela de pago no esta configurada correctamente. Contacta a soporte." },
+      withRequestIdHeaders({ status: 500 }, requestId)
+    );
   }
 
   try {
     const body = await req.json();
     const validation = CheckoutSchema.safeParse(body);
-    
+
     if (!validation.success) {
-      logWarn('flow_checkout_validation_failed', route, requestId, {
+      logWarn("flow_checkout_validation_failed", route, requestId, {
         ms: Date.now() - start,
       });
-      return NextResponse.json({ error: 'Datos de suscripción no válidos.', details: validation.error.format() }, { status: 400 });
+      return NextResponse.json(
+        { error: "Datos de suscripcion no validos.", details: validation.error.format() },
+        withRequestIdHeaders({ status: 400 }, requestId)
+      );
     }
 
     const { plan, billing } = validation.data;
-
-    // 0. Obtener valor dinámico de la UF
-    const billingKey = billing === 'yearly' ? 'yearly' : 'monthly';
+    const billingKey = billing === "yearly" ? "yearly" : "monthly";
     const isClpPlan = plan in PLAN_PRICES_CLP_NET;
     const valorUfActual = isClpPlan ? null : await getUfValue();
     const amountClp = isClpPlan
-      ? Math.round(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey] * (1 + IVA_RATE))
+      ? Math.round(
+          PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey] * (1 + IVA_RATE)
+        )
       : Math.round(PLAN_PRICES_UF[plan as keyof typeof PLAN_PRICES_UF][billingKey] * valorUfActual!);
 
-    const subject = `SoloCasasChile ${plan.toUpperCase()} ${billing === 'yearly' ? 'Anual' : 'Mensual'}`;
+    const subject = `SoloCasasChile ${plan.toUpperCase()} ${billing === "yearly" ? "Anual" : "Mensual"}`;
 
-    // 1. Crear el pago en Flow
     const flowResult = await FlowService.createPayment({
       subject,
       amount: amountClp,
@@ -92,14 +105,15 @@ export async function POST(req: NextRequest) {
         constructoraId: user.id,
         plan,
         billing,
-        uf_valor_usado: valorUfActual ? String(valorUfActual) : '',
-        precio_neto_clp: isClpPlan ? String(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey]) : '',
-        iva_rate: isClpPlan ? String(IVA_RATE) : ''
-      }
+        uf_valor_usado: valorUfActual ? String(valorUfActual) : "",
+        precio_neto_clp: isClpPlan
+          ? String(PLAN_PRICES_CLP_NET[plan as keyof typeof PLAN_PRICES_CLP_NET][billingKey])
+          : "",
+        iva_rate: isClpPlan ? String(IVA_RATE) : "",
+      },
     });
 
-    // 2. Devolvemos la URL de redirección
-    logInfo('flow_checkout_created', route, requestId, {
+    logInfo("flow_checkout_created", route, requestId, {
       plan,
       billing,
       flowOrder: String(flowResult.flowOrder),
@@ -107,20 +121,25 @@ export async function POST(req: NextRequest) {
       ms: Date.now() - start,
     });
 
-    return NextResponse.json({ 
+    return NextResponse.json(
+      {
         url: `${flowResult.url}?token=${flowResult.token}`,
-        order: flowResult.flowOrder 
-    });
-
+        order: flowResult.flowOrder,
+      },
+      withRequestIdHeaders({}, requestId)
+    );
   } catch (error: unknown) {
     const message = getErrorMessage(error);
-    logError('flow_checkout_failed', route, requestId, error, {
+    logError("flow_checkout_failed", route, requestId, error, {
       ms: Date.now() - start,
     });
-    return NextResponse.json({ 
-      error: message.includes('Flow Payment Create Failed') 
-        ? `Error de comunicación con Flow: ${message}` 
-        : 'Ocurrió un error al procesar el pago. Intenta de nuevo.' 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: message.includes("Flow Payment Create Failed")
+          ? `Error de comunicacion con Flow: ${message}`
+          : "Ocurrio un error al procesar el pago. Intenta de nuevo.",
+      },
+      withRequestIdHeaders({ status: 500 }, requestId)
+    );
   }
 }
