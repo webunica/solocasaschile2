@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X, Info } from "lucide-react";
+import { Check, Info } from "lucide-react";
 import { 
     Table, 
     TableBody, 
