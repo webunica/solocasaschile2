@@ -114,7 +114,9 @@ export async function getLatestBlogPosts(limit = 2) {
         if (error) throw error
         return data || []
       } catch (error) {
-        console.error("Error fetching latest blog posts:", error)
+        if (process.env.NEXT_PUBLIC_DISABLE_SUPABASE_WARNINGS !== "true") {
+          console.error("Error fetching latest blog posts:", error)
+        }
         return []
       }
     },
