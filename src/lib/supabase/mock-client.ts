@@ -1,6 +1,6 @@
 type MockSupabaseResult = {
   data: null;
-  error: { message: string; code: string };
+  error: { message: string; code: string } | null;
   count: number;
 };
 
@@ -13,6 +13,7 @@ type MockSupabaseChain = {
   limit: () => MockSupabaseChain;
   single: () => MockSupabaseChain;
   maybeSingle: () => MockSupabaseChain;
+  not: () => MockSupabaseChain;
   contains: () => MockSupabaseChain;
   gte: () => MockSupabaseChain;
   lte: () => MockSupabaseChain;
@@ -32,6 +33,7 @@ export const mockSupabaseChain: MockSupabaseChain = {
   limit: () => mockSupabaseChain,
   single: () => mockSupabaseChain,
   maybeSingle: () => mockSupabaseChain,
+  not: () => mockSupabaseChain,
   contains: () => mockSupabaseChain,
   gte: () => mockSupabaseChain,
   lte: () => mockSupabaseChain,
@@ -42,11 +44,7 @@ export const mockSupabaseChain: MockSupabaseChain = {
   then: (resolve: MockResolver) =>
     resolve({
       data: null,
-      error: {
-        message:
-          "[Demo mode] Data will not persist until Supabase is configured.",
-        code: "demo",
-      },
+      error: null,
       count: 0,
     }),
 };

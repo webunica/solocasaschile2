@@ -137,7 +137,7 @@ export function HeroSection() {
                 alt={HERO_MOBILE_BACKGROUND.alt}
                 fill
                 className="object-cover object-center"
-                sizes="100vw"
+                sizes="(max-width: 1023px) 100vw, 0px"
                 priority
               />
             </motion.div>

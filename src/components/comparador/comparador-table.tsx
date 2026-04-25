@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, Star, Minus, Info, Zap, ShieldCheck, Thermometer } from "lucide-react";
+import { CheckCircle2, Minus, Info, Zap } from "lucide-react";
 import type { ModelWithConstructora } from "@/lib/supabase/services";
 
 interface Props {
@@ -26,6 +26,10 @@ type Row = {
   key: keyof ModelWithConstructora | string;
   render?: (m: ModelWithConstructora) => React.ReactNode;
   highlight?: "low" | "high";
+};
+
+type AislacionData = {
+  calificacion_energetica?: string;
 };
 
 const ROWS: Row[] = [
@@ -72,7 +76,7 @@ const ROWS: Row[] = [
     label: "Eficiencia Energética",
     key: "aislacion",
     render: (m) => {
-      const ee = (m.aislacion as any)?.calificacion_energetica || "B";
+      const ee = (m.aislacion as AislacionData | null | undefined)?.calificacion_energetica || "B";
       return (
         <div className="flex flex-col items-center gap-1.5">
            <Badge className={cn(

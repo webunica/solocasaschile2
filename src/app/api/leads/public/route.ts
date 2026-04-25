@@ -2,7 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
 import { checkRateLimit } from "@/lib/security/admin-guard";
-import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
+import {
+  getRequestId,
+  logError,
+  logInfo,
+  logWarn,
+  withRequestIdHeaders,
+} from "@/lib/observability-logger";
 
 const PublicLeadSchema = z.object({
   nombre_cliente: z.string().min(2).max(120),
@@ -26,7 +32,7 @@ export async function POST(req: Request) {
       logError("leads_public_config_missing", route, requestId, new Error("missing_supabase_server_env"));
       return NextResponse.json(
         { error: "Servicio temporalmente no disponible." },
-        { status: 500 }
+        withRequestIdHeaders({ status: 500 }, requestId)
       );
     }
 
@@ -44,7 +50,10 @@ export async function POST(req: Request) {
       });
       return NextResponse.json(
         { error: "Demasiados intentos. Espera un momento antes de reenviar." },
-        { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } }
+        withRequestIdHeaders(
+          { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
+          requestId
+        )
       );
     }
 
@@ -57,7 +66,7 @@ export async function POST(req: Request) {
       });
       return NextResponse.json(
         { error: "Datos inválidos para enviar la consulta." },
-        { status: 400 }
+        withRequestIdHeaders({ status: 400 }, requestId)
       );
     }
 
@@ -66,7 +75,7 @@ export async function POST(req: Request) {
       logWarn("leads_public_honeypot_triggered", route, requestId, {
         ms: Date.now() - start,
       });
-      return NextResponse.json({ ok: true });
+      return NextResponse.json({ ok: true }, withRequestIdHeaders({}, requestId));
     }
 
     const supabase = createClient(supabaseUrl, serviceRoleKey, {
@@ -91,7 +100,7 @@ export async function POST(req: Request) {
       });
       return NextResponse.json(
         { error: "No pudimos procesar tu solicitud en este momento." },
-        { status: 500 }
+        withRequestIdHeaders({ status: 500 }, requestId)
       );
     }
 
@@ -101,14 +110,14 @@ export async function POST(req: Request) {
       ms: Date.now() - start,
     });
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true }, withRequestIdHeaders({}, requestId));
   } catch (error: unknown) {
     logError("leads_public_unexpected_error", route, requestId, error, {
       ms: Date.now() - start,
     });
     return NextResponse.json(
       { error: "No pudimos procesar tu solicitud en este momento." },
-      { status: 500 }
+      withRequestIdHeaders({ status: 500 }, requestId)
     );
   }
 }

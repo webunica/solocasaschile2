@@ -1,20 +1,25 @@
 import { NextResponse } from "next/server";
-import { openai } from "@/lib/openai";
 import { createClient } from "@supabase/supabase-js";
-import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
+import { openai } from "@/lib/openai";
+import {
+  getRequestId,
+  logError,
+  logInfo,
+  logWarn,
+  withRequestIdHeaders,
+} from "@/lib/observability-logger";
 
-// Cron configuration (Vercel)
 export const dynamic = "force-dynamic";
 
 const BLOG_TOPICS = [
-  "Casas prefabricadas económicas: ¿Cómo elegir por menos de 30 millones?",
-  "Modelos mediterráneos vs tradicionales: ¿Cuál se adapta a tu estilo de vida?",
-  "Construcción en 2 ambientes: Optimizando espacios pequeños con estilo.",
-  "Materiales premium: Casas de Metalcom vs Madera, comparativa real.",
-  "Sistemas constructivos eficientes para climas fríos en el sur de Chile.",
-  "Cómo planificar la compra de tu casa prefabricada: Guía paso a paso.",
-  "Dormitorios y confort: Diseños pensados para familias en crecimiento.",
-  "Casas modulares: La rapidez de la industrialización en tu terreno."
+  "Casas prefabricadas economicas: como elegir por menos de 30 millones?",
+  "Modelos mediterraneos vs tradicionales: cual se adapta a tu estilo de vida?",
+  "Construccion en 2 ambientes: optimizando espacios pequenos con estilo.",
+  "Materiales premium: casas de Metalcom vs madera, comparativa real.",
+  "Sistemas constructivos eficientes para climas frios en el sur de Chile.",
+  "Como planificar la compra de tu casa prefabricada: guia paso a paso.",
+  "Dormitorios y confort: disenos pensados para familias en crecimiento.",
+  "Casas modulares: la rapidez de la industrializacion en tu terreno.",
 ];
 
 export async function GET(req: Request) {
@@ -22,134 +27,133 @@ export async function GET(req: Request) {
   const requestId = getRequestId(req);
   const start = Date.now();
   const authHeader = req.headers.get('authorization');
-  
+
   const cronSecret = process.env.CRON_SECRET;
   if (!cronSecret) {
     logError("cron_generate_blog_config_missing", route, requestId, new Error("missing_cron_secret"));
-    return NextResponse.json({ success: false, error: "CRON_SECRET no está configurado" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "CRON_SECRET no esta configurado" },
+      withRequestIdHeaders({ status: 500 }, requestId)
+    );
   }
-  const isAuthorized = authHeader === `Bearer ${cronSecret}`;
 
+  const isAuthorized = authHeader === `Bearer ${cronSecret}`;
   if (!isAuthorized) {
     logWarn("cron_generate_blog_unauthorized", route, requestId, {
       ms: Date.now() - start,
     });
-    return new NextResponse('Unauthorized', { status: 401 });
+    return new NextResponse("Unauthorized", withRequestIdHeaders({ status: 401 }, requestId));
   }
 
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY! // Use service role for backend operations
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
-    // 1. Pick a topic
     const topic = BLOG_TOPICS[Math.floor(Math.random() * BLOG_TOPICS.length)];
     logInfo("cron_generate_blog_started", route, requestId, {
       topicIndex: BLOG_TOPICS.indexOf(topic),
     });
-    
-    // 2. Generate Content with OpenAI
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
         {
           role: "system",
-          content: `Eres un experto amistoso y confiable en casas prefabricadas en Chile. 
-          Tu objetivo es ayudar a compradores a entender modelos, precios y materiales.
-          Debes responder en formato JSON puro con la siguiente estructura:
-          {
-            "title": "título SEO atractivo",
-            "slug": "slug-url-amigable",
-            "category": "Categoría (ej: Construcción, Diseño, Legal, Financiero)",
-            "excerpt": "resumen corto para redes sociales",
-            "social_hook": "Resumen estilo post de Instagram con emojis y tono de experto",
-            "hashtags": "#casaprefabricada #chile #construccion #solocasas",
-            "content_md": "contenido extenso en markdown con subtítulos, tablas y listas",
-            "target_audience": "público objetivo",
-            "seo_keywords": ["keyword1", "keyword2"]
-          }`
+          content: `Eres un experto amistoso y confiable en casas prefabricadas en Chile.
+Tu objetivo es ayudar a compradores a entender modelos, precios y materiales.
+Debes responder en formato JSON puro con esta estructura:
+{
+  "title": "titulo SEO atractivo",
+  "slug": "slug-url-amigable",
+  "category": "Categoria (ej: Construccion, Diseno, Legal, Financiero)",
+  "excerpt": "resumen corto para redes sociales",
+  "social_hook": "Resumen estilo post de Instagram con emojis y tono de experto",
+  "hashtags": "#casaprefabricada #chile #construccion #solocasas",
+  "content_md": "contenido extenso en markdown con subtitulos, tablas y listas",
+  "target_audience": "publico objetivo",
+  "seo_keywords": ["keyword1", "keyword2"]
+}`,
         },
         {
           role: "user",
-          content: `Genera un post de blog sobre el tema: ${topic}. 
-          Enfócate en consejos prácticos para Chile, menciona UF y estándares locales.
-          El campo 'social_hook' debe ser un párrafo breve, con emojis, diseñado para captar la atención en redes sociales.
-          El campo 'hashtags' debe incluir entre 5 y 10 etiquetas relevantes.`
-        }
+          content: `Genera un post de blog sobre el tema: ${topic}.
+Enfocate en consejos practicos para Chile, menciona UF y estandares locales.
+El campo 'social_hook' debe ser un parrafo breve, con emojis, disenado para captar la atencion en redes sociales.
+El campo 'hashtags' debe incluir entre 5 y 10 etiquetas relevantes.`,
+        },
       ],
-      response_format: { type: "json_object" }
+      response_format: { type: "json_object" },
     });
 
     const postData = JSON.parse(completion.choices[0].message.content || "{}");
 
-    // 3. Generate Image with DALL-E
     const imageResponse = await openai.images.generate({
       model: "dall-e-3",
-      prompt: `Ilustración realista y elegante de una casa prefabricada moderna en un paisaje chileno (puede ser campo o playa), estilo arquitectónico mediterráneo, iluminación de atardecer, alta resolución cinematográfica. Sin texto en la imagen.`,
+      prompt:
+        "Ilustracion realista y elegante de una casa prefabricada moderna en un paisaje chileno, estilo arquitectonico mediterraneo, iluminacion de atardecer y alta resolucion cinematografica. Sin texto en la imagen.",
       size: "1024x1024",
       quality: "standard",
       n: 1,
     });
 
     const imageUrl = imageResponse.data?.[0]?.url;
-    if (!imageUrl) throw new Error("Failed to generate image URL");
+    if (!imageUrl) {
+      throw new Error("failed_to_generate_image_url");
+    }
 
-    // 4. Download and upload image to Supabase Storage
     const fetchImage = await fetch(imageUrl);
     const imageBlob = await fetchImage.blob();
     const fileName = `blog-${Date.now()}.png`;
 
-    const { error: uploadError } = await supabase.storage
-      .from('blog_images')
-      .upload(fileName, imageBlob, {
-        contentType: 'image/png',
-        cacheControl: '3600'
-      });
+    const { error: uploadError } = await supabase.storage.from("blog_images").upload(fileName, imageBlob, {
+      contentType: "image/png",
+      cacheControl: "3600",
+    });
 
-    if (uploadError) throw uploadError;
+    if (uploadError) {
+      throw uploadError;
+    }
 
-    const { data: { publicUrl } } = supabase.storage
-      .from('blog_images')
-      .getPublicUrl(fileName);
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("blog_images").getPublicUrl(fileName);
 
-    // 5. Save to Database
-    const { error: dbError } = await supabase
-      .from('blog_posts')
-      .insert([{
+    const { error: dbError } = await supabase.from("blog_posts").insert([
+      {
         ...postData,
         cover_image_url: publicUrl,
-        is_published: true
-      }]);
+        is_published: true,
+      },
+    ]);
 
-    if (dbError) throw dbError;
+    if (dbError) {
+      throw dbError;
+    }
 
     let webhookStatus = "not_fired";
     if (process.env.MAKE_WEBHOOK_URL) {
       try {
         const webhookResponse = await fetch(process.env.MAKE_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             title: postData.title,
             excerpt: postData.excerpt,
             socialHook: postData.social_hook,
             hashtags: postData.hashtags,
             imageUrl: publicUrl,
-            link: `https://solocasaschile.com/blog/${postData.slug}`
-          })
+            link: `https://solocasaschile.com/blog/${postData.slug}`,
+          }),
         });
         webhookStatus = webhookResponse.ok ? "success" : `failed_${webhookResponse.status}`;
-        
-        // Update status in DB
+
         if (webhookResponse.ok) {
-          await supabase
-            .from('blog_posts')
-            .update({ social_hook_fired: true })
-            .eq('slug', postData.slug);
+          await supabase.from("blog_posts").update({ social_hook_fired: true }).eq("slug", postData.slug);
         }
-      } catch (err: unknown) {
-        logError("cron_generate_blog_webhook_failed", route, requestId, err, {
+      } catch (error: unknown) {
+        logError("cron_generate_blog_webhook_failed", route, requestId, error, {
           slug: typeof postData.slug === "string" ? postData.slug : "unknown",
           ms: Date.now() - start,
         });
@@ -163,19 +167,21 @@ export async function GET(req: Request) {
       ms: Date.now() - start,
     });
 
-    return NextResponse.json({ 
-      success: true, 
-      slug: postData.slug,
-      webhook_status: webhookStatus
-    });
-
+    return NextResponse.json(
+      {
+        success: true,
+        slug: postData.slug,
+        webhook_status: webhookStatus,
+      },
+      withRequestIdHeaders({}, requestId)
+    );
   } catch (error: unknown) {
     logError("cron_generate_blog_failed", route, requestId, error, {
       ms: Date.now() - start,
     });
     return NextResponse.json(
       { success: false, error: "No se pudo generar el contenido en este momento." },
-      { status: 500 }
+      withRequestIdHeaders({ status: 500 }, requestId)
     );
   }
 }

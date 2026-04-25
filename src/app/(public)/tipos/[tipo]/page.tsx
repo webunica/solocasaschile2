@@ -43,6 +43,47 @@ const TIPO_EXTRA_KEYWORDS: Record<string, string[]> = {
   ],
 };
 
+const TIPO_METADATA: Record<string, { title: string; description: string; keywords: readonly string[] }> = {
+  sip: {
+    title: "Casas Paneles SIP en Chile 2026 | Modelos, Precios y Ventajas | SolocasasChile",
+    description:
+      "Casas paneles SIP en Chile: compara modelos, precios desde UF, beneficios termicos y constructoras verificadas. Guia actualizada 2026.",
+    keywords: SEO_KEYWORDS.casasSip,
+  },
+  modular: {
+    title: "Casas Modulares en Chile 2026 | Modelos, Precios y Constructoras | SolocasasChile",
+    description:
+      "Casas modulares en Chile: revisa precios desde UF, tiempos de montaje, modelos ampliables y constructoras verificadas. Comparativa actualizada 2026.",
+    keywords: SEO_KEYWORDS.casasModulares,
+  },
+  container: {
+    title: "Casas Container en Chile 2026 | Precios, Modelos y Ventajas | SolocasasChile",
+    description:
+      "Casas container en Chile: compara precios, modelos habitables y constructoras especializadas en contenedores maritimos. Guia actualizada 2026.",
+    keywords: [
+      "casas container",
+      "casas container chile",
+      "casas container precio chile",
+      "casa contenedor chile",
+      "container habitable chile",
+      "construir con containers chile",
+    ],
+  },
+  "steel-framing": {
+    title: "Casas Steel Framing en Chile 2026 | Modelos, Precios y Beneficios | SolocasasChile",
+    description:
+      "Casas steel framing en Chile: conoce precios por m2, beneficios estructurales y modelos con constructoras verificadas. Comparativa actualizada 2026.",
+    keywords: [
+      "casas steel framing",
+      "steel framing chile",
+      "casas steel framing chile precios",
+      "construccion steel framing chile",
+      "estructura acero galvanizado casas",
+      "precio steel framing chile",
+    ],
+  },
+};
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { tipo } = await params;
   const info = TIPO_INFO[tipo];
@@ -50,18 +91,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!info) return { title: "Tipo no encontrado | SolocasasChile" };
 
-  const isSip = tipo === "sip";
-  const title = isSip
-    ? "Casas Paneles SIP en Chile 2026 | Modelos, Precios y Ventajas | SolocasasChile"
-    : `${info.title} en Chile 2026 | Modelos, Precios y Constructoras | SolocasasChile`;
-  const description = isSip
-    ? "Casas paneles SIP en Chile: compara modelos, precios desde UF, beneficios termicos y constructoras verificadas. Guia actualizada 2026."
-    : info.description
-    ? `${info.description} Compara modelos, precios desde UF y constructoras verificadas en Chile. Guía actualizada 2026.`
-    : `Conoce todo sobre ${info.title} en Chile: precios, constructoras y modelos disponibles en 2026.`;
+  const typedMetadata = TIPO_METADATA[tipo];
+  const title =
+    typedMetadata?.title ??
+    `${info.title} en Chile 2026 | Modelos, Precios y Constructoras | SolocasasChile`;
+  const description =
+    typedMetadata?.description ??
+    (info.description
+      ? `${info.description} Compara modelos, precios desde UF y constructoras verificadas en Chile. Guía actualizada 2026.`
+      : `Conoce todo sobre ${info.title} en Chile: precios, constructoras y modelos disponibles en 2026.`);
 
   const extraKeywords = TIPO_EXTRA_KEYWORDS[tipo] || [];
-  const baseKeywords = isSip ? SEO_KEYWORDS.casasSip : [];
+  const baseKeywords = typedMetadata?.keywords || [];
 
   return {
     title,
@@ -161,9 +202,13 @@ export default async function TipoPage({ params }: PageProps) {
 
   const modelos = await getModelosFiltered({ tipo });
   const editorial = TIPO_EDITORIAL[tipo];
-  const heroImageAlt = tipo === "sip"
-    ? "Casa de paneles SIP en Chile con envolvente termica de alta eficiencia"
-     : `${info.title} en Chile - SolocasasChile`;
+  const heroImageAltByTipo: Record<string, string> = {
+    sip: "Casa de paneles SIP en Chile con envolvente termica de alta eficiencia",
+    modular: "Casa modular en Chile con montaje industrializado y terminaciones de fabrica",
+    container: "Casa container habitable en Chile construida con contenedores maritimos adaptados",
+    "steel-framing": "Casa steel framing en Chile con estructura de acero galvanizado",
+  };
+  const heroImageAlt = heroImageAltByTipo[tipo] || `${info.title} en Chile - SolocasasChile`;
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -252,7 +297,32 @@ export default async function TipoPage({ params }: PageProps) {
                   >
                     Guia SIP
                   </Link>
-                )}              </div>
+                )}
+                {tipo === "modular" && (
+                  <Link
+                    href="/casas-modulares"
+                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
+                  >
+                    Guia Modular
+                  </Link>
+                )}
+                {tipo === "container" && (
+                  <Link
+                    href="/casas-prefabricadas"
+                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
+                  >
+                    Comparar Sistemas
+                  </Link>
+                )}
+                {tipo === "steel-framing" && (
+                  <Link
+                    href="/casas-prefabricadas"
+                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
+                  >
+                    Guia Steel Framing
+                  </Link>
+                )}
+              </div>
             </div>
 
              <div className="relative h-[550px] rounded-[3rem] overflow-hidden shadow-2xl group border border-white/10">
@@ -416,15 +486,58 @@ export default async function TipoPage({ params }: PageProps) {
                 </Link>
               </>
             )}
+            {tipo === "modular" && (
+              <>
+                <Link
+                  href="/casas-modulares"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Guia Casas Modulares
+                </Link>
+                <Link
+                  href="/casas-prefabricadas"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Ver Casas Prefabricadas
+                </Link>
+              </>
+            )}
+            {tipo === "container" && (
+              <>
+                <Link
+                  href="/casas-prefabricadas"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Comparar con Prefabricadas
+                </Link>
+                <Link
+                  href="/tipos/modular"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Ver Casas Modulares
+                </Link>
+              </>
+            )}
+            {tipo === "steel-framing" && (
+              <>
+                <Link
+                  href="/casas-prefabricadas"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Comparar con Prefabricadas
+                </Link>
+                <Link
+                  href="/tipos/sip"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-border/60 bg-background px-8 py-4 text-xs font-black uppercase tracking-widest text-foreground transition-all hover:border-primary/40"
+                >
+                  Ver Sistema SIP
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
     </div>
   );
 }
-
-
-
-
-
 

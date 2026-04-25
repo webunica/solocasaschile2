@@ -9,7 +9,8 @@ const eslintConfig = defineConfig([
   // legacy typing/react-purity debt in dedicated backlog items.
   {
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-vars": "error",
       "react-hooks/set-state-in-effect": "warn",
       "react-hooks/purity": "warn",
       "react/no-unescaped-entities": "warn",

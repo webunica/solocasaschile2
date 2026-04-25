@@ -37,7 +37,13 @@ Nunca se trabaja directo sobre `main`. Todo cambio entra a `staging`, se valida 
    - `CRON_SECRET`
    - `RESEND_API_KEY`
    - `SENTRY_DSN`
+   - `NEXT_PUBLIC_SENTRY_DSN`
+   - `SENTRY_ENVIRONMENT`
    - `NEXT_PUBLIC_GA_ID`
+6. Confirmar observabilidad operativa:
+   - revisar [docs/OBSERVABILITY.md](C:/Users/studioo/Desktop/000000000000000_SOLOCASASCHILE-V2/docs/OBSERVABILITY.md)
+   - alertas P0/P1 activas para `leads`, `checkout`, `flow_webhook` y `cron`
+   - confirmar que respuestas criticas devuelven `x-request-id`
 
 ## Smoke tests post-deploy
 
@@ -51,6 +57,7 @@ Nunca se trabaja directo sobre `main`. Todo cambio entra a `staging`, se valida 
 8. Lead publico crea registro solo via endpoint server-side.
 9. Dashboard redirige usuarios sin sesion a `/login`.
 10. Cron blog rechaza requests sin `Authorization: Bearer`.
+11. Rutas criticas devuelven `x-request-id` en la respuesta.
 
 ## Rollback
 

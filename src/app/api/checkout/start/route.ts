@@ -10,7 +10,13 @@ import {
   getCheckoutPriceWithCoupon,
   normalizeCouponCode,
 } from "@/lib/payments/plans";
-import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
+import {
+  getRequestId,
+  logError,
+  logInfo,
+  logWarn,
+  withRequestIdHeaders,
+} from "@/lib/observability-logger";
 
 const CheckoutStartSchema = z.object({
   plan: z.literal("pro"),
@@ -46,7 +52,7 @@ export async function POST(req: NextRequest) {
     logError("checkout_start_flow_config_missing", route, requestId, new Error("missing_flow_env"));
     return NextResponse.json(
       { error: "La pasarela de pago no esta configurada correctamente. Contacta a soporte." },
-      { status: 500 }
+      withRequestIdHeaders({ status: 500 }, requestId)
     );
   }
 
@@ -60,7 +66,7 @@ export async function POST(req: NextRequest) {
       });
       return NextResponse.json(
         { error: "Revisa los datos del checkout antes de continuar.", details: parsed.error.format() },
-        { status: 400 }
+        withRequestIdHeaders({ status: 400 }, requestId)
       );
     }
 
@@ -91,7 +97,7 @@ export async function POST(req: NextRequest) {
         });
         return NextResponse.json(
           { error: "No pudimos crear la cuenta. Intenta nuevamente." },
-          { status: 400 }
+          withRequestIdHeaders({ status: 400 }, requestId)
         );
       }
     } else {
@@ -109,7 +115,7 @@ export async function POST(req: NextRequest) {
           error:
             "Este email ya existe o la clave no coincide. Inicia sesion y vuelve al checkout para pagar.",
         },
-        { status: 409 }
+        withRequestIdHeaders({ status: 409 }, requestId)
       );
     }
 
@@ -142,7 +148,7 @@ export async function POST(req: NextRequest) {
       });
       return NextResponse.json(
         { error: "No pudimos preparar tu perfil de constructora." },
-        { status: 500 }
+        withRequestIdHeaders({ status: 500 }, requestId)
       );
     }
 
@@ -152,7 +158,7 @@ export async function POST(req: NextRequest) {
     if (normalizedCouponCode && !coupon) {
       return NextResponse.json(
         { error: "El cupon ingresado no es valido o ya expiro." },
-        { status: 400 }
+        withRequestIdHeaders({ status: 400 }, requestId)
       );
     }
 
@@ -209,10 +215,13 @@ export async function POST(req: NextRequest) {
       ms: Date.now() - start,
     });
 
-    return NextResponse.json({
-      url: `${flowResult.url}?token=${flowResult.token}`,
-      order: flowResult.flowOrder,
-    });
+    return NextResponse.json(
+      {
+        url: `${flowResult.url}?token=${flowResult.token}`,
+        order: flowResult.flowOrder,
+      },
+      withRequestIdHeaders({}, requestId)
+    );
   } catch (error: unknown) {
     const message = getErrorMessage(error);
     logError("checkout_start_failed", route, requestId, error, {
@@ -224,7 +233,7 @@ export async function POST(req: NextRequest) {
           ? `Error de comunicacion con Flow: ${message}`
           : "Ocurrio un error al preparar el checkout. Intenta de nuevo.",
       },
-      { status: 500 }
+      withRequestIdHeaders({ status: 500 }, requestId)
     );
   }
 }
