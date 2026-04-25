@@ -14,6 +14,10 @@
 /coverage
 /playwright-report
 /test-results
+/tmp/*.png
+/tmp/*.jpg
+/tmp/*.jpeg
+/tmp/*.webp
 
 # next.js
 /.next/
