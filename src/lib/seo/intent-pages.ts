@@ -296,6 +296,52 @@ export const SEO_INTENT_PAGES: SeoIntentPage[] = [
           "Revisa espesor de panel, tipo de OSB, densidad del nucleo, tratamiento de uniones, control de humedad, cubierta, ventilacion y cumplimiento normativo.",
       },
     ],
+    checklist: [
+      "Espesor del panel SIP y densidad del nucleo aislante.",
+      "Tipo de OSB, tratamiento de cantos y proteccion frente a humedad.",
+      "Detalle de uniones, sellos, barreras de vapor y ventilacion.",
+      "Especificacion de ventanas, cubierta y aislacion complementaria.",
+      "Carpeta tecnica para permiso DOM y calculo estructural.",
+    ],
+    processSteps: [
+      {
+        title: "1. Definir exigencia termica por region",
+        detail:
+          "Una casa SIP en el sur, cordillera o zonas con alta oscilacion termica debe priorizar continuidad de aislacion, control de humedad y ventilacion.",
+      },
+      {
+        title: "2. Comparar especificaciones del panel",
+        detail:
+          "No todos los paneles SIP son iguales. Pide espesor, materialidad, densidad del nucleo, certificaciones y recomendaciones de mantencion.",
+      },
+      {
+        title: "3. Revisar detalles constructivos",
+        detail:
+          "Los puntos criticos suelen estar en encuentros, vanos, cubierta, sobrecimientos y sellos. Un buen detalle evita filtraciones y puentes termicos.",
+      },
+      {
+        title: "4. Cotizar con alcance completo",
+        detail:
+          "Solicita que la cotizacion separe estructura SIP, terminaciones, ventanas, fundaciones, transporte, montaje e instalaciones.",
+      },
+    ],
+    costItems: [
+      {
+        label: "Paneles y estructura",
+        detail:
+          "Incluye panel SIP, tabiqueria, conectores, cortes, montaje estructural y elementos de arriostramiento segun calculo.",
+      },
+      {
+        label: "Envolvente eficiente",
+        detail:
+          "Ventanas, sellos, barreras, cubierta y aislaciones complementarias influyen directamente en confort y consumo energetico.",
+      },
+      {
+        label: "Terminaciones y permisos",
+        detail:
+          "Revestimientos, instalaciones, artefactos, tramitacion municipal y recepcion final deben quedar definidos antes de firmar.",
+      },
+    ],
     faqs: [
       {
         question: "Una casa SIP es apta para vivir todo el ano?",
@@ -342,6 +388,52 @@ export const SEO_INTENT_PAGES: SeoIntentPage[] = [
         title: "Cuando SIP tiene mas sentido",
         body:
           "SIP suele destacar en climas frios o con alta oscilacion termica, y en proyectos donde el ahorro energetico y la rapidez de montaje son prioridad.",
+      },
+    ],
+    checklist: [
+      "Confirmar que el modelo sea realmente SIP y no solo panelizado tradicional.",
+      "Revisar espesor de paneles, ventanas y especificacion de cubierta.",
+      "Separar precio del modelo, fundaciones, traslado y montaje.",
+      "Pedir garantia estructural y recomendaciones de mantencion.",
+      "Comparar consumo estimado y confort termico segun region.",
+    ],
+    processSteps: [
+      {
+        title: "1. Elegir modelos SIP por uso real",
+        detail:
+          "No es lo mismo una segunda vivienda que una casa permanente. Dormitorios, calefaccion, orientacion y aislacion cambian la decision.",
+      },
+      {
+        title: "2. Revisar constructora y experiencia",
+        detail:
+          "Prioriza empresas que muestren proyectos SIP ejecutados, fotos de obra, especificaciones tecnicas y claridad de postventa.",
+      },
+      {
+        title: "3. Pedir cotizacion comparable",
+        detail:
+          "Solicita que todas las alternativas detallen panel, montaje, ventanas, cubierta, terminaciones y exclusiones para evaluar costo real.",
+      },
+      {
+        title: "4. Validar permisos y recepcion",
+        detail:
+          "Una compra informada debe incluir ruta de permiso municipal, profesionales responsables y documentos para recepcion final.",
+      },
+    ],
+    costItems: [
+      {
+        label: "Modelo SIP",
+        detail:
+          "Precio referencial asociado a superficie, distribucion, paneles, cubierta y terminaciones base del proveedor.",
+      },
+      {
+        label: "Desempeno termico",
+        detail:
+          "Ventanas, sellos y control de humedad pueden aumentar el presupuesto, pero son claves para que SIP cumpla su promesa.",
+      },
+      {
+        label: "Instalacion en terreno",
+        detail:
+          "Fundaciones, transporte, montaje, conexiones y accesos del terreno pueden modificar el costo total de compra.",
       },
     ],
     faqs: [
@@ -440,6 +532,52 @@ export const SEO_INTENT_PAGES: SeoIntentPage[] = [
           "Si se instala como vivienda permanente sobre terreno, normalmente requiere permiso municipal. Si es movil, debes revisar normativa local, empalmes y condiciones de uso del lugar.",
       },
     ],
+    checklist: [
+      "Definir si sera fija, transportable o sobre ruedas.",
+      "Confirmar normativa municipal, acceso a servicios y solucion sanitaria.",
+      "Revisar aislacion, ventilacion y control de condensacion.",
+      "Medir necesidades reales de almacenamiento y equipamiento.",
+      "Aclarar transporte, instalacion, nivelacion y conexion a redes.",
+    ],
+    processSteps: [
+      {
+        title: "1. Definir modo de uso",
+        detail:
+          "Una Tiny House para arriendo turistico, segunda vivienda o residencia permanente requiere decisiones distintas de equipamiento y permisos.",
+      },
+      {
+        title: "2. Resolver movilidad y terreno",
+        detail:
+          "Si va sobre ruedas, revisa restricciones de traslado y estacionamiento. Si sera fija, tratala como una vivienda ante permisos.",
+      },
+      {
+        title: "3. Priorizar confort interior",
+        detail:
+          "En pocos metros, ventilacion, aislacion, bano, cocina, calefaccion y almacenamiento determinan si la casa funciona en el dia a dia.",
+      },
+      {
+        title: "4. Cotizar instalacion completa",
+        detail:
+          "Pide precio separado para fabricacion, traslado, grua o nivelacion, conexiones y equipamiento interior.",
+      },
+    ],
+    costItems: [
+      {
+        label: "Fabricacion compacta",
+        detail:
+          "Incluye estructura, aislacion, revestimientos, bano, cocina y muebles integrados segun el nivel de equipamiento.",
+      },
+      {
+        label: "Movilidad o fundacion",
+        detail:
+          "Trailer, ruedas, enganche, transporte o fundacion fija cambian mucho el costo y la regulacion aplicable.",
+      },
+      {
+        label: "Autonomia y conexiones",
+        detail:
+          "Paneles solares, estanques, calefaccion, agua caliente y solucion sanitaria pueden ser decisivos en terrenos rurales.",
+      },
+    ],
     faqs: [
       {
         question: "Cuanto cuesta construir una Tiny House?",
@@ -486,6 +624,52 @@ export const SEO_INTENT_PAGES: SeoIntentPage[] = [
         title: "Tiny House llave en mano",
         body:
           "Una compra llave en mano deberia indicar si incluye mobiliario, cocina, bano, calefaccion, conexiones, traslado e instalacion en terreno.",
+      },
+    ],
+    checklist: [
+      "Verificar superficie util real y altura interior.",
+      "Revisar que incluya bano, cocina, calefaccion y muebles prometidos.",
+      "Confirmar si el precio incluye traslado e instalacion.",
+      "Pedir garantia de estructura, instalaciones y artefactos.",
+      "Validar restricciones de acceso al terreno antes de comprar.",
+    ],
+    processSteps: [
+      {
+        title: "1. Comparar modelos por habitabilidad",
+        detail:
+          "En Tiny House importan circulaciones, almacenamiento, cama, bano, cocina y luz natural mas que el metraje nominal.",
+      },
+      {
+        title: "2. Revisar equipamiento incluido",
+        detail:
+          "Una oferta puede parecer conveniente, pero subir de precio al agregar muebles, artefactos, calefaccion o solucion sanitaria.",
+      },
+      {
+        title: "3. Validar transporte y descarga",
+        detail:
+          "Antes de reservar, confirma ancho de caminos, pendientes, permisos de traslado y si se necesita camion especial o grua.",
+      },
+      {
+        title: "4. Firmar con alcance detallado",
+        detail:
+          "El contrato debe incluir planos, materialidad, equipamiento, fecha de entrega, forma de pago, garantia y exclusiones.",
+      },
+    ],
+    costItems: [
+      {
+        label: "Modelo equipado",
+        detail:
+          "El precio depende de muebles integrados, artefactos, bano, cocina, aislacion y nivel de terminaciones.",
+      },
+      {
+        label: "Traslado",
+        detail:
+          "Distancia, dimensiones, caminos y necesidad de escolta o grua pueden hacer variar el precio final.",
+      },
+      {
+        label: "Instalacion y autonomia",
+        detail:
+          "Conexiones, nivelacion, estanques, energia solar o fosa deben definirse segun terreno y uso proyectado.",
       },
     ],
     faqs: [
