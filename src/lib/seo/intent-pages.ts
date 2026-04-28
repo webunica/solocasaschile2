@@ -14,6 +14,15 @@ export type SeoIntentPage = {
     title: string;
     body: string;
   }[];
+  checklist?: string[];
+  processSteps?: {
+    title: string;
+    detail: string;
+  }[];
+  costItems?: {
+    label: string;
+    detail: string;
+  }[];
   faqs: {
     question: string;
     answer: string;
@@ -99,6 +108,52 @@ export const SEO_INTENT_PAGES: SeoIntentPage[] = [
           "Ademas del modelo, considera fundaciones, traslado, empalmes electricos, agua, alcantarillado o fosa, permisos DOM, estudio de suelo y eventuales obras exteriores.",
       },
     ],
+    checklist: [
+      "Certificado de informaciones previas del terreno.",
+      "Factibilidad de agua, electricidad y solucion sanitaria.",
+      "Alcance de fundaciones, traslado, montaje y terminaciones.",
+      "Carpeta tecnica para permiso de edificacion y recepcion final.",
+      "Garantias, mantenciones exigidas y tiempos de respuesta postventa.",
+    ],
+    processSteps: [
+      {
+        title: "1. Validar terreno y normativa",
+        detail:
+          "Confirma uso de suelo, constructibilidad, accesos y factibilidad de servicios antes de elegir modelo. Esta etapa evita cotizar una vivienda que luego no pueda aprobarse.",
+      },
+      {
+        title: "2. Elegir sistema y alcance",
+        detail:
+          "Define si buscas kit, obra gruesa, terminaciones parciales o llave en mano. Dos cotizaciones pueden parecer similares, pero cambiar mucho por lo que incluyen.",
+      },
+      {
+        title: "3. Comparar cotizaciones equivalentes",
+        detail:
+          "Pide que todas las empresas coticen el mismo metraje, fundacion, ventanas, aislacion, instalaciones y transporte para comparar UF reales y no solo precios base.",
+      },
+      {
+        title: "4. Tramitar permisos y ejecutar obra",
+        detail:
+          "La constructora o profesional patrocinante debe coordinar permiso DOM, especialidades, montaje, inspecciones y recepcion final segun el municipio.",
+      },
+    ],
+    costItems: [
+      {
+        label: "Construccion base",
+        detail:
+          "Estructura, paneles o modulos, cubierta, revestimientos principales y mano de obra segun el sistema elegido.",
+      },
+      {
+        label: "Costos de terreno",
+        detail:
+          "Fundaciones, nivelacion, accesos, estudio de suelo, empalmes y obras exteriores pueden cambiar mucho el presupuesto final.",
+      },
+      {
+        label: "Permisos y profesionales",
+        detail:
+          "Arquitectura, calculo, especialidades, derechos municipales y tramitacion DOM deben considerarse desde el inicio.",
+      },
+    ],
     faqs: [
       {
         question: "Puedo construir una casa prefabricada en cualquier terreno?",
@@ -145,6 +200,52 @@ export const SEO_INTENT_PAGES: SeoIntentPage[] = [
         title: "Que significa precio desde",
         body:
           "El precio desde sirve para comparar alternativas, pero el valor final puede cambiar por region, transporte, fundaciones, terminaciones, permisos y obras complementarias.",
+      },
+    ],
+    checklist: [
+      "Comparar precio desde UF y precio llave en mano por separado.",
+      "Revisar superficie util, dormitorios, banos y posibilidades de ampliacion.",
+      "Confirmar si incluye transporte, montaje, fundaciones e instalaciones.",
+      "Pedir especificaciones de aislacion, ventanas, cubierta y revestimientos.",
+      "Solicitar contrato, garantia, plazos, forma de pago y exclusiones.",
+    ],
+    processSteps: [
+      {
+        title: "1. Filtrar modelos que calzan con tu presupuesto",
+        detail:
+          "Usa el precio desde como primera referencia, pero deja margen para terreno, permisos, fundaciones y terminaciones.",
+      },
+      {
+        title: "2. Revisar ficha tecnica y alcance",
+        detail:
+          "La ficha debe aclarar sistema constructivo, m2, recintos, materiales, plazo estimado, garantia y si el modelo es modificable.",
+      },
+      {
+        title: "3. Cotizar con datos del terreno",
+        detail:
+          "Una cotizacion seria necesita region, comuna, accesos, pendiente, factibilidad de servicios y expectativas de terminacion.",
+      },
+      {
+        title: "4. Comparar condiciones comerciales",
+        detail:
+          "Evalua pagos por hito, multas por atraso, garantia, postventa y respaldo de la constructora antes de reservar.",
+      },
+    ],
+    costItems: [
+      {
+        label: "Precio del modelo",
+        detail:
+          "Valor referencial de la vivienda segun metraje, sistema constructivo y terminaciones base informadas por la empresa.",
+      },
+      {
+        label: "Entrega en terreno",
+        detail:
+          "Transporte, grua, montaje, viaticos y dificultad de acceso pueden variar por region y comuna.",
+      },
+      {
+        label: "Habilitacion final",
+        detail:
+          "Conexiones, fundaciones, permisos, artefactos, cierres y obras exteriores suelen explicar la diferencia entre precio desde y costo final.",
       },
     ],
     faqs: [

@@ -2,6 +2,75 @@ import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/comprar-casa-prefabricaca',
+        destination: '/comprar-casa-prefabricada',
+        permanent: true,
+      },
+      {
+        source: '/comprar-casa-prefabricadas',
+        destination: '/comprar-casa-prefabricada',
+        permanent: true,
+      },
+      {
+        source: '/comprar-casas-prefabricadas',
+        destination: '/comprar-casa-prefabricada',
+        permanent: true,
+      },
+      {
+        source: '/construir-casas-prefabricadas',
+        destination: '/construir-casa-prefabricada',
+        permanent: true,
+      },
+      {
+        source: '/construccion-de-casas-prefabricadas',
+        destination: '/construccion-casas-prefabricadas',
+        permanent: true,
+      },
+      {
+        source: '/construir-casas-sip',
+        destination: '/construir-casa-sip',
+        permanent: true,
+      },
+      {
+        source: '/comprar-casas-sip',
+        destination: '/comprar-casa-sip',
+        permanent: true,
+      },
+      {
+        source: '/modelo-casa-sip',
+        destination: '/modelos-casas-sip',
+        permanent: true,
+      },
+      {
+        source: '/modelos-casa-sip',
+        destination: '/modelos-casas-sip',
+        permanent: true,
+      },
+      {
+        source: '/modelo-casa-prefabricada',
+        destination: '/modelos-casas-prefabricadas',
+        permanent: true,
+      },
+      {
+        source: '/comprar-tiny-house',
+        destination: '/comprar-casa-tiny-house',
+        permanent: true,
+      },
+      {
+        source: '/comprar-casas-tiny-house',
+        destination: '/comprar-casa-tiny-house',
+        permanent: true,
+      },
+      {
+        source: '/construir-casa-tiny-house',
+        destination: '/construir-tiny-house',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

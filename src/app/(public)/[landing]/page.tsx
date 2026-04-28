@@ -171,6 +171,71 @@ export default async function SeoIntentLandingPage({ params }: PageProps) {
         </div>
       </section>
 
+      {(page.checklist || page.processSteps || page.costItems) && (
+        <section className="container mx-auto mt-16 max-w-6xl px-6 md:px-12">
+          <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+            {page.checklist && (
+              <article className="rounded-2xl border border-border/50 bg-card/35 p-6">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-primary">
+                  Checklist antes de cotizar
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-tight">
+                  Datos que conviene tener claros
+                </h2>
+                <ul className="mt-5 space-y-3">
+                  {page.checklist.map((item) => (
+                    <li key={item} className="flex gap-3 text-sm font-medium leading-relaxed text-muted-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            )}
+
+            {page.processSteps && (
+              <article className="rounded-2xl border border-border/50 bg-card/35 p-6">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-primary">
+                  Proceso recomendado
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-tight">
+                  Como avanzar sin comparar a ciegas
+                </h2>
+                <div className="mt-5 space-y-4">
+                  {page.processSteps.map((step) => (
+                    <div key={step.title} className="rounded-xl border border-border/40 bg-background/70 p-4">
+                      <h3 className="text-sm font-black tracking-tight">{step.title}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            )}
+          </div>
+
+          {page.costItems && (
+            <div className="mt-6 rounded-2xl border border-border/50 bg-card/35 p-6">
+              <div className="max-w-2xl">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-primary">
+                  Presupuesto real
+                </p>
+                <h2 className="mt-3 text-2xl font-black tracking-tight">
+                  Partidas que explican el costo final
+                </h2>
+              </div>
+              <div className="mt-5 grid gap-4 md:grid-cols-3">
+                {page.costItems.map((item) => (
+                  <article key={item.label} className="rounded-xl border border-border/40 bg-background/70 p-4">
+                    <h3 className="text-sm font-black tracking-tight">{item.label}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+
       {featuredModels.length > 0 && (
         <section className="container mx-auto mt-16 max-w-6xl px-6 md:px-12">
           <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
