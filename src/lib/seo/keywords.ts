@@ -8,6 +8,8 @@ export const SEO_KEYWORDS = {
     "constructoras casas prefabricadas",
     "prefabricadas chile",
     "casas prefabricadas modernas",
+    "construccion de casas prefabricadas",
+    "construir casa prefabricada",
   ],
   casasSip: [
     "casas paneles sip",
@@ -18,6 +20,9 @@ export const SEO_KEYWORDS = {
     "panel sip chile",
     "precio casas sip chile",
     "ventajas casas sip",
+    "construir casa sip",
+    "comprar casa sip",
+    "modelos casas sip",
   ],
   casasModulares: [
     "casas modulares",
@@ -38,6 +43,15 @@ export const SEO_KEYWORDS = {
     "modelos de casas sip",
     "modelos casas modulares",
     "casas prefabricadas de 2 dormitorios",
+    "modelo casa prefabricada",
+  ],
+  tinyHouse: [
+    "tiny house chile",
+    "construir tiny house",
+    "comprar casa tiny house",
+    "tiny house llave en mano",
+    "tiny house chile precio",
+    "mini casas prefabricadas",
   ],
   seguimientoObras: [
     "sistema de seguimiento de obras",

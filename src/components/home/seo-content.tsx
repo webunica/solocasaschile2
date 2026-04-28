@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Zap, Clock, ThumbsUp, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { SEO_INTENT_PAGES } from "@/lib/seo/intent-pages";
 
 // ─── Inline FAQ data (also rendered visually below) ───────────────────────────
 export const HOME_FAQS = [
@@ -59,6 +60,13 @@ const VENTAJAS = [
     body: "La prefabricación genera hasta un 80% menos de residuos de obra que la construcción en hormigón. Los materiales como el panel SIP y la madera tienen una huella de carbono significativamente menor.",
   },
 ];
+
+const HOME_INTENT_LINKS = SEO_INTENT_PAGES.map((page) => ({
+  title: page.h1,
+  href: `/${page.slug}`,
+  keyword: page.primaryKeyword,
+  description: page.description,
+}));
 
 export function SeoContent() {
   return (
@@ -199,6 +207,42 @@ export function SeoContent() {
                   </p>
                   <span className="mt-auto flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary">
                     Ver modelos <ArrowRight className="w-3 h-3" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-border/40 pt-20 space-y-12">
+            <div className="max-w-3xl space-y-4">
+              <h3 className="font-heading text-3xl font-black tracking-tighter md:text-4xl">
+                Guias para Construir y Comprar
+              </h3>
+              <p className="text-muted-foreground font-medium leading-relaxed">
+                Si ya sabes que quieres construir, comprar o revisar modelos,
+                estas paginas agrupan la informacion por intencion de busqueda
+                para avanzar mas rapido a una cotizacion comparable.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {HOME_INTENT_LINKS.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group rounded-2xl border border-border/50 bg-card/40 p-6 transition hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg"
+                >
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-primary">
+                    {item.keyword}
+                  </p>
+                  <h4 className="mt-3 text-lg font-black tracking-tight group-hover:text-primary">
+                    {item.title}
+                  </h4>
+                  <p className="mt-2 line-clamp-3 text-sm font-medium leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary">
+                    Abrir guia <ArrowRight className="h-3 w-3" />
                   </span>
                 </Link>
               ))}

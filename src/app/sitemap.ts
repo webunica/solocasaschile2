@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { CONSTRUCTORAS, MODELOS } from "@/lib/mock-data";
 import { createPublicClient } from "@/lib/supabase/server";
+import { SEO_INTENT_PAGES } from "@/lib/seo/intent-pages";
 
 const SITE_URL = "https://solocasaschile.com";
 const RELEASE_BASELINE_DATE = new Date("2026-04-21T00:00:00.000Z");
@@ -41,6 +42,12 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/tipos/llave-en-mano`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/tipos/steel-framing`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
   { url: `${SITE_URL}/tipos/madera`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.70 },
+  ...SEO_INTENT_PAGES.map((page) => ({
+    url: `${SITE_URL}/${page.slug}`,
+    lastModified: RELEASE_BASELINE_DATE,
+    changeFrequency: "weekly" as const,
+    priority: 0.84,
+  })),
   
   // Landings regionales — Cobertura total de las 16 regiones de Chile
   { url: `${SITE_URL}/region/arica`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },

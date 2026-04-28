@@ -5,6 +5,7 @@ import { PriceDropBanner } from "@/components/home/price-drop-banner";
 import { SeoContent, HOME_FAQS } from "@/components/home/seo-content";
 import dynamic from "next/dynamic";
 import { buildWebSiteJsonLd, buildOrganizationJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
+import type { Metadata } from "next";
 
 // Lazy loading below-the-fold components
 const TypesSection = dynamic(() => import("@/components/home/types-section").then(m => m.TypesSection), { ssr: true });
@@ -17,6 +18,52 @@ const SeguimientoPromo = dynamic(() => import("@/components/home/seguimiento-pro
 
 // ISR with a baseline revalidation of 1 hour (3600 seconds)
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  title: "Casas Prefabricadas, Casas SIP y Tiny Houses en Chile",
+  description:
+    "Compara casas prefabricadas, casas SIP y Tiny Houses en Chile. Revisa modelos, precios referenciales y constructoras verificadas para construir o comprar mejor.",
+  keywords: [
+    "casas prefabricadas",
+    "casas sip",
+    "construccion de casas prefabricadas",
+    "construir casa prefabricada",
+    "comprar casa prefabricada",
+    "construir casa sip",
+    "comprar casa sip",
+    "modelo casa prefabricada",
+    "modelo casa sip",
+    "construir tiny house",
+    "comprar casa tiny house",
+  ],
+  alternates: {
+    canonical: "https://solocasaschile.com",
+  },
+  openGraph: {
+    title: "Casas Prefabricadas, Casas SIP y Tiny Houses en Chile",
+    description:
+      "Compara modelos y constructoras para construir o comprar casas prefabricadas, SIP y Tiny Houses en Chile.",
+    url: "https://solocasaschile.com",
+    siteName: "SolocasasChile",
+    locale: "es_CL",
+    type: "website",
+    images: [
+      {
+        url: "https://solocasaschile.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "SolocasasChile comparador de casas prefabricadas en Chile",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Casas Prefabricadas, Casas SIP y Tiny Houses en Chile",
+    description:
+      "Modelos, precios referenciales y constructoras verificadas para cotizar casas prefabricadas en Chile.",
+    images: ["https://solocasaschile.com/twitter-image.jpg"],
+  },
+};
 
 export default function Home() {
   const websiteJsonLd = buildWebSiteJsonLd();
