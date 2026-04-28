@@ -7,6 +7,7 @@ import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structur
 import { SEO_INTENT_PAGE_BY_SLUG, SEO_INTENT_PAGES } from "@/lib/seo/intent-pages";
 
 const SITE_URL = "https://solocasaschile.com";
+const CONTENT_REVIEWED_AT = "2026-04-28";
 
 type PageProps = {
   params: Promise<{ landing: string }>;
@@ -73,12 +74,50 @@ export default async function SeoIntentLandingPage({ params }: PageProps) {
   });
   const featuredModels = models.slice(0, 6);
   const pageUrl = `${SITE_URL}/${page.slug}`;
+  const relatedPages = SEO_INTENT_PAGES.filter((relatedPage) => {
+    if (relatedPage.slug === page.slug) return false;
+    if (page.type && relatedPage.type === page.type) return true;
+    return relatedPage.primaryKeyword.includes(page.primaryKeyword.split(" ")[0]);
+  }).slice(0, 4);
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
     { name: "Inicio", url: SITE_URL },
     { name: page.h1, url: pageUrl },
   ]);
   const faqJsonLd = buildFAQJsonLd(page.faqs);
+  const webPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: page.h1,
+    headline: page.h1,
+    description: page.description,
+    url: pageUrl,
+    inLanguage: "es-CL",
+    dateModified: CONTENT_REVIEWED_AT,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "SolocasasChile",
+      url: SITE_URL,
+    },
+    about: page.keywords.map((keyword) => ({
+      "@type": "Thing",
+      name: keyword,
+    })),
+    reviewedBy: {
+      "@type": "Organization",
+      name: "SolocasasChile",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "SolocasasChile",
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/images/logo.png`,
+      },
+    },
+  };
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -100,6 +139,10 @@ export default async function SeoIntentLandingPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageJsonLd).replace(/</g, "\\u003c") }}
       />
       {featuredModels.length > 0 && (
         <script
@@ -236,6 +279,45 @@ export default async function SeoIntentLandingPage({ params }: PageProps) {
         </section>
       )}
 
+      <section className="container mx-auto mt-16 max-w-6xl px-6 md:px-12">
+        <div className="grid gap-6 rounded-2xl border border-border/50 bg-card/35 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-primary">
+              Criterio editorial
+            </p>
+            <h2 className="mt-3 text-2xl font-black tracking-tight">
+              Como usamos esta guia
+            </h2>
+            <p className="mt-3 text-sm font-medium leading-relaxed text-muted-foreground">
+              SolocasasChile es un comparador independiente. Organizamos estas
+              paginas por intencion de busqueda para ayudarte a comparar
+              modelos, alcances y constructoras antes de pedir cotizaciones.
+            </p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            {[
+              {
+                title: "Datos comparables",
+                detail: "Precio desde UF, superficie, sistema constructivo y cobertura regional.",
+              },
+              {
+                title: "Alcance claro",
+                detail: "Diferenciamos modelo base, traslado, montaje, fundaciones y terminaciones.",
+              },
+              {
+                title: "Actualizacion",
+                detail: `Contenido revisado el ${CONTENT_REVIEWED_AT} para mantener coherencia del cluster SEO.`,
+              },
+            ].map((item) => (
+              <article key={item.title} className="rounded-xl border border-border/40 bg-background/70 p-4">
+                <h3 className="text-sm font-black tracking-tight">{item.title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {featuredModels.length > 0 && (
         <section className="container mx-auto mt-16 max-w-6xl px-6 md:px-12">
           <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
@@ -263,6 +345,38 @@ export default async function SeoIntentLandingPage({ params }: PageProps) {
                   Ver modelo <ArrowRight className="h-3 w-3" />
                 </Link>
               </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {relatedPages.length > 0 && (
+        <section className="container mx-auto mt-16 max-w-6xl px-6 md:px-12">
+          <div className="mb-6">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-muted-foreground">
+              Enlaces relacionados
+            </p>
+            <h2 className="mt-2 text-2xl font-black tracking-tight">
+              Sigue comparando por intencion
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {relatedPages.map((relatedPage) => (
+              <Link
+                key={relatedPage.slug}
+                href={`/${relatedPage.slug}`}
+                className="group rounded-2xl border border-border/50 bg-card/35 p-5 transition hover:-translate-y-1 hover:border-primary/30"
+              >
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                  {relatedPage.primaryKeyword}
+                </p>
+                <h3 className="mt-3 text-base font-black tracking-tight group-hover:text-primary">
+                  {relatedPage.h1}
+                </h3>
+                <span className="mt-4 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-primary">
+                  Abrir pagina <ArrowRight className="h-3 w-3" />
+                </span>
+              </Link>
             ))}
           </div>
         </section>
