@@ -9,6 +9,7 @@ type MockResolver = (result: MockSupabaseResult) => unknown;
 type MockSupabaseChain = {
   select: () => MockSupabaseChain;
   eq: () => MockSupabaseChain;
+  not: () => MockSupabaseChain;
   order: () => MockSupabaseChain;
   limit: () => MockSupabaseChain;
   single: () => MockSupabaseChain;
@@ -28,6 +29,7 @@ type AuthPayload = { email: string };
 export const mockSupabaseChain: MockSupabaseChain = {
   select: () => mockSupabaseChain,
   eq: () => mockSupabaseChain,
+  not: () => mockSupabaseChain,
   order: () => mockSupabaseChain,
   limit: () => mockSupabaseChain,
   single: () => mockSupabaseChain,
