@@ -20,7 +20,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-[#12073f] pb-10 pt-20 text-white">
+    <footer className="relative overflow-hidden bg-[color:var(--color-brand-evergreen-dark)] pb-10 pt-20 text-white">
       <div className="container relative z-10 mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-[1.4fr_1fr_1fr_1.1fr] md:px-12">
         <div className="space-y-5">
           <div className="flex items-center gap-3">

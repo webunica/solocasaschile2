@@ -2,58 +2,58 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* Logo Identity Palette - Indigo & Vibrant Teal */
-  --brand-indigo: hsl(251.5 44.8% 43.3%);  /* Strict Logo Indigo */
-  --brand-teal: hsl(163.4 87.4% 62.7%);    /* Strict Logo Vibrant Teal */
-  --brand-sunset: hsl(24.6 95% 53.1%);  /* Sunset Warmth Accent (for home feel) */
-  --brand-sand: hsl(54.5 91.7% 95.3%);    /* Warm Sunny Base */
+  /* TopCasas palette - evergreen + warm clay */
+  --brand-indigo: hsl(166 50% 24%);        /* #1F5D4E */
+  --brand-teal: hsl(19 67% 54%);           /* #D96B3B */
+  --brand-sunset: hsl(32 87% 62%);         /* #F2994A */
+  --brand-sand: hsl(158 47% 91%);          /* #DFF3EC */
+  --brand-evergreen-dark: hsl(164 52% 19%); /* #17483B */
+  --brand-evergreen-hover: hsl(166 46% 34%); /* #2F7F6D */
 
-  /* Light Mode (Brand & Vital) */
-  --background: hsl(60 33.3% 98.8%);    /* Clean Pearl Background */
-  --foreground: hsl(253.5 59.7% 26.3%);    /* Deeper version of Indigo for readable text */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(215 28% 17%);          /* #1F2937 */
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(253.5 59.7% 26.3%);
+  --card-foreground: hsl(215 28% 17%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(253.5 59.7% 26.3%);
+  --popover-foreground: hsl(215 28% 17%);
   
-  --primary: hsl(251.5 44.8% 43.3%);       /* Indigo Base */
+  --primary: hsl(166 50% 24%);
   --primary-foreground: hsl(0 0% 100%);
   
-  --secondary: hsl(163.4 87.4% 62.7%);     /* Logo Teal */
-  --secondary-foreground: hsl(253.5 59.7% 26.3%);
+  --secondary: hsl(158 47% 91%);
+  --secondary-foreground: hsl(166 50% 24%);
   
-  --muted: hsl(250 100% 97.6%);
-  --muted-foreground: hsl(215.4 16.3% 46.9%);
-  --accent: hsl(138.5 76.5% 96.7%);
-  --accent-foreground: hsl(251.5 44.8% 43.3%);
+  --muted: hsl(150 20% 97%);
+  --muted-foreground: hsl(220 9% 46%);     /* #6B7280 */
+  --accent: hsl(19 67% 54%);
+  --accent-foreground: hsl(0 0% 100%);
   --destructive: hsl(345.3 82.7% 40.8%);
   --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(214.3 31.8% 91.4%);
-  --input: hsl(214.3 31.8% 91.4%);
-  --ring: hsl(163.4 87.4% 62.7%);
+  --border: hsl(220 13% 91%);              /* #E5E7EB */
+  --input: hsl(220 13% 91%);
+  --ring: hsl(166 46% 34%);
 }
 
 .dark {
-  /* Premium Dark Mode (Indigo accent) */
-  --background: hsl(240 76.5% 3.3%);
+  --background: hsl(165 32% 8%);
   --foreground: hsl(210 40% 98%);
-  --card: hsl(240 52.9% 6.7%);
+  --card: hsl(165 28% 10%);
   --card-foreground: hsl(0 0% 100%);
-  --popover: hsl(240 56.5% 9%);
+  --popover: hsl(165 28% 10%);
   --popover-foreground: hsl(0 0% 100%);
   
-  --primary: hsl(173.6 60% 56.9%); /* Swap to Coral for better visibility on dark */
+  --primary: hsl(19 67% 54%);
   --primary-foreground: hsl(0 0% 100%);
   
-  --secondary: hsl(251.9 100% 26.7%);
+  --secondary: hsl(166 30% 18%);
   --secondary-foreground: hsl(0 0% 100%);
-  --muted: hsl(240 43.3% 11.8%);
+  --muted: hsl(165 24% 14%);
   --muted-foreground: hsl(215 20.2% 65.1%);
-  --accent: hsl(240 43.3% 11.8%);
+  --accent: hsl(166 30% 18%);
   --accent-foreground: hsl(0 0% 100%);
-  --border: hsl(240 35.5% 18.2%);
-  --input: hsl(240 35.5% 18.2%);
-  --ring: hsl(173.6 60% 56.9%);
+  --border: hsl(166 18% 22%);
+  --input: hsl(166 18% 22%);
+  --ring: hsl(19 67% 54%);
 }
 
 @theme inline {
@@ -84,6 +84,8 @@
   --color-brand-teal: var(--brand-teal);
   --color-brand-sunset: var(--brand-sunset);
   --color-brand-sand: var(--brand-sand);
+  --color-brand-evergreen-dark: var(--brand-evergreen-dark);
+  --color-brand-evergreen-hover: var(--brand-evergreen-hover);
   
   --radius-lg: 1rem;
   --radius-md: calc(1rem - 2px);
@@ -119,9 +121,9 @@
     @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
     line-height: 1.6;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(80, 61, 160, 0.04) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(77, 243, 197, 0.04) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(249, 115, 22, 0.02) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(31, 93, 78, 0.08) 0px, transparent 45%),
+      radial-gradient(at 100% 0%, rgba(217, 107, 59, 0.08) 0px, transparent 35%),
+      radial-gradient(at 50% 100%, rgba(223, 243, 236, 0.9) 0px, transparent 50%);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -153,14 +155,14 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, hsl(251.5 44.8% 43.3%) 0%, hsl(163.4 87.4% 62.7%) 100%);
+  background: linear-gradient(135deg, hsl(166 50% 24%) 0%, hsl(19 67% 54%) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, hsl(251.5 44.8% 43.3%) 0%, hsl(163.4 87.4% 62.7%) 50%, hsl(24.6 95% 53.1%) 100%);
+  background: linear-gradient(135deg, hsl(166 50% 24%) 0%, hsl(166 46% 34%) 45%, hsl(19 67% 54%) 100%);
   background-size: 200% 200%;
   animation: dynamic-gradient 10s ease infinite;
 }
@@ -172,7 +174,7 @@
 }
 
 .brand-glow {
-  box-shadow: 0 0 20px rgba(27, 0, 136, 0.15);
+  box-shadow: 0 0 24px rgba(31, 93, 78, 0.14);
 }
 
 .glass {
@@ -209,7 +211,7 @@
 
 .hero-bg-custom {
   background-image: 
-    linear-gradient(120deg, rgba(253, 250, 243, 0.9) 0%, rgba(245, 243, 255, 0.9) 100%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 251, 248, 0.94) 52%, rgba(255, 246, 241, 0.92) 100%),
     url("https://www.transparenttextures.com/patterns/natural-paper.png");
   background-size: cover;
   background-position: center center;

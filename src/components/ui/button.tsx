@@ -6,11 +6,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-brand-indigo text-white hover:bg-brand-indigo/90 shadow-none",
+        default: "bg-primary text-primary-foreground hover:bg-[color:var(--color-brand-evergreen-hover)] shadow-none",
         outline:
-          "border-[1.5px] !border-brand-indigo bg-transparent text-brand-indigo hover:bg-brand-indigo/5 shadow-none",
+          "border-[1.5px] !border-primary bg-transparent text-primary hover:bg-primary/5 shadow-none",
         secondary:
-          "bg-brand-teal text-brand-indigo hover:bg-brand-teal/90 shadow-none",
+          "bg-brand-teal text-white hover:bg-brand-sunset shadow-none",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
