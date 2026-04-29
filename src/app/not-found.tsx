@@ -1,20 +1,16 @@
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { getMegaMenuAds, getLatestBlogPosts, getFeaturedModelsByRegion } from "@/lib/supabase/services";
+import { getFeaturedModelsByRegion } from "@/lib/supabase/services";
 import { FeaturedSlider } from "@/components/catalogo/featured-slider";
 import { Compass, ArrowRight, Sparkles, Zap } from "lucide-react";
 
 export default async function NotFound() {
-  const [megaMenuAds, latestBlogPosts, featuredModels] = await Promise.all([
-    getMegaMenuAds(),
-    getLatestBlogPosts(2),
-    getFeaturedModelsByRegion()
-  ]);
+  const featuredModels = await getFeaturedModelsByRegion();
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header megaMenuAds={megaMenuAds} latestBlogPosts={latestBlogPosts} />
+      <Header />
       
       <main className="flex-1 pt-44 pb-20">
         <div className="container px-6 md:px-12 max-w-7xl mx-auto space-y-20">
