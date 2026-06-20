@@ -61,7 +61,7 @@ export function HeroLeadForm() {
         </div>
         <h3 className="text-2xl font-black font-heading tracking-tight mb-3">¡Consulta enviada!</h3>
         <p className="text-muted-foreground font-medium max-w-xs mb-8">
-          Gracias por contactarnos. Un especialista se comunicará contigo a la brevedad.
+          Gracias. Un especialista revisará tu proyecto y te responderá en menos de 24 horas con opciones reales.
         </p>
         <Button 
           variant="outline" 
@@ -129,11 +129,11 @@ export function HeroLeadForm() {
         <label className="form-label">¿Cómo podemos ayudarte?</label>
         <div className="relative group/input w-full">
            <MessageSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-indigo group-focus-within/input:scale-110 transition-all" />
-           <Input 
-              name="message" 
-              placeholder="Cuéntanos sobre tu proyecto o duda" 
-              className="form-input-premium pl-14" 
-              required 
+           <Input
+              name="message"
+              placeholder="Ej: Busco casa de 80m² para Región del Biobío, presupuesto ~2.500 UF"
+              className="form-input-premium pl-14"
+              required
            />
         </div>
       </div>
