@@ -9,18 +9,14 @@ import { useState, useEffect } from "react";
 
 const HERO_BACKGROUND_IMAGES = [
   {
-    src: "/images/bg/casas-prefabricas-hero-home.jpg",
-    alt: "Casa prefabricada en Chile",
-  },
-  {
-    src: "/images/bg/casas-prefabricas-hero-home-2.jpg",
-    alt: "Casa moderna prefabricada",
+    src: "/images/bg/topcasas-hero-bg.png",
+    alt: "Hero principal de TopCasas",
   },
 ] as const;
 
 const HERO_MOBILE_BACKGROUND = {
-  src: "/images/bg/casas-prefabricas-hero-home-mobile.jpg",
-  alt: "Casa prefabricada optimizada para vista mobile",
+  src: "/images/bg/topcasas-hero-bg.png",
+  alt: "Hero principal de TopCasas en mobile",
 } as const;
 
 const CONSTRUCTION_TYPES = [
