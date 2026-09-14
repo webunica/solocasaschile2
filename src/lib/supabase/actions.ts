@@ -176,14 +176,10 @@ export async function register(formData: FormData) {
       score_confianza: 50,
     }
 
-    // El plan de prueba dura 30 dias; el legado gratis mantiene 4 meses.
-    if (plan === 'prueba') {
+    // El plan gratis/prueba dura 30 dias.
+    if (plan === 'prueba' || plan === 'gratis') {
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 30);
-      constructoraPayload.next_billing_date = expirationDate.toISOString();
-    } else if (plan === 'gratis') {
-      const expirationDate = new Date();
-      expirationDate.setMonth(expirationDate.getMonth() + 4);
       constructoraPayload.next_billing_date = expirationDate.toISOString();
     }
 

@@ -29,7 +29,7 @@ const PLAN_META = {
   },
   pro: { 
     label: "Pro", icon: Zap, color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true,
-    prices: { monthly: "0.6", yearly: "0.48" }, original: "0.6"
+    prices: { monthly: "0.7", yearly: "0.56" }, original: "0.7"
   },
   gratis: { 
     label: "Gratis", icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false,

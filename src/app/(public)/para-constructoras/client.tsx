@@ -38,7 +38,7 @@ const PLANES = [
   {
     id: "gratis",
     nombre: "Gratis",
-    duracion: "4 meses de prueba",
+    duracion: "30 días de prueba",
     precioMensual: "0",
     precioAnualEquiv: "0",
     precioAnualTotal: "0",
@@ -60,7 +60,7 @@ const PLANES = [
       { texto: "Módulo de Seguimiento de Obras", ok: false },
       { texto: "Prioridad en resultados del catálogo", ok: false },
     ],
-    cta: "Probar 4 meses gratis",
+    cta: "Probar 30 días gratis",
     ctaHref: "/register?plan=gratis",
     ctaVariant: "outline" as const,
   },
@@ -68,9 +68,9 @@ const PLANES = [
     id: "pro",
     nombre: "Pro",
     duracion: "Mensual o Anual",
-    precioMensual: "0.6",
-    precioAnualEquiv: "0.48",
-    precioAnualTotal: "5.76",
+    precioMensual: "0.7",
+    precioAnualEquiv: "0.56",
+    precioAnualTotal: "6.72",
     badge: "MÁS RECOMENDADO",
     badgeClass: "bg-brand-teal text-white border-brand-teal/30",
     color: "text-brand-teal",
@@ -122,12 +122,12 @@ const PLANES = [
 
 const FAQS_CONSTRUCTORAS = [
   {
-    q: "¿Por qué existe un plan gratis de 4 meses?",
-    a: "Porque entendemos que las decisiones de construcción toman tiempo. Un periodo de 4 meses permite publicar tus modelos, recibir consultas de compradores reales en tu región y comprobar el funcionamiento de la plataforma antes de comprometer un presupuesto.",
+    q: "¿Por qué existe un plan gratis de 30 días?",
+    a: "Porque queremos que pruebes el funcionamiento de la plataforma con tiempo suficiente. Un periodo de 30 días permite publicar tus modelos, recibir consultas de compradores reales en tu región y comprobar el funcionamiento de la plataforma antes de comprometer un presupuesto.",
   },
   {
     q: "¿Qué ocurre con mis datos y prospectos cuando termina el periodo gratis?",
-    a: "Los datos de contacto que recibiste son 100% tuyos. Siempre tendrás acceso al historial de cotizaciones en tu panel. Si decides no contratar el Plan Pro al terminar los 4 meses, tus modelos pasarán a estado inactivo pero no perderás ningún prospecto ni registro previo.",
+    a: "Los datos de contacto que recibiste son 100% tuyos. Siempre tendrás acceso al historial de cotizaciones en tu panel. Si decides no contratar el Plan Pro al terminar los 30 días, tus modelos pasarán a estado inactivo pero no perderás ningún prospecto ni registro previo.",
   },
   {
     q: "¿En qué moneda se cobra y cómo se calcula?",
@@ -156,7 +156,7 @@ export function ParaConstructorasClient() {
     trackPlanCheckoutClick({
       plan: "pro",
       billing,
-      priceUf: billing === "yearly" ? 5.76 : 0.6,
+      priceUf: billing === "yearly" ? 6.72 : 0.7,
     });
     startTransition(() => {
       router.push(`/checkout?plan=pro&billing=${billing}`);
@@ -210,7 +210,7 @@ export function ParaConstructorasClient() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-8 border-t border-border/40 pt-8 text-xs font-bold text-muted-foreground">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-brand-teal" />
-              <span>Prueba de 4 meses sin tarjeta</span>
+              <span>Prueba de 30 días sin tarjeta</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-brand-teal" />
@@ -471,8 +471,8 @@ export function ParaConstructorasClient() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-1">
                   Días de prueba restantes
                 </span>
-                <p className="text-3xl font-black text-amber-500">92 días</p>
-                <span className="text-[11px] font-bold text-muted-foreground">De 4 meses iniciales</span>
+                <p className="text-3xl font-black text-amber-500">24 días</p>
+                <span className="text-[11px] font-bold text-muted-foreground">De 30 días iniciales</span>
               </div>
             </div>
 
@@ -570,7 +570,7 @@ export function ParaConstructorasClient() {
               Planes claros y enfocados en <span className="gradient-text">resultados</span>
             </h2>
             <p className="text-base font-medium text-muted-foreground sm:text-lg">
-              Comienza con 4 meses de prueba gratuita y escala a Pro cuando quieras mayor visibilidad y presencia activa.
+              Comienza con 30 días de prueba gratuita y escala a Pro cuando quieras mayor visibilidad y presencia activa.
             </p>
 
             {/* Toggle de facturación mensual / anual */}
@@ -658,7 +658,7 @@ export function ParaConstructorasClient() {
                           <div className="flex flex-col text-xs font-bold text-muted-foreground">
                             <span>UF / mes</span>
                             {isYearly && plan.id === "pro" && (
-                              <span className="text-[10px] text-brand-indigo font-black">Facturado 5.76 UF anual</span>
+                              <span className="text-[10px] text-brand-indigo font-black">Facturado 6.72 UF anual</span>
                             )}
                           </div>
                         </div>

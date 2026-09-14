@@ -22,10 +22,10 @@ const PLANES = [
   {
     id: "gratis",
     nombre: "Gratis",
-    duracion: "4 meses de prueba",
+    duracion: "30 días de prueba",
     precioMensual: "0",
     precioAnualEquiv: "0",
-    periodo: "por 4 meses",
+    periodo: "por 30 días",
     icon: Building2,
     color: "text-muted-foreground",
     bgIcon: "bg-muted/60",
@@ -45,7 +45,7 @@ const PLANES = [
       { texto: "Módulo de Seguimiento de Obras", ok: false },
       { texto: "Prioridad en catálogo", ok: false },
     ],
-    cta: "Probar 4 meses gratis",
+    cta: "Probar 30 días gratis",
     ctaHref: "/register?plan=gratis",
     ctaClass: "border-border text-foreground hover:bg-muted font-medium",
     ctaVariant: "outline" as const,
@@ -54,10 +54,10 @@ const PLANES = [
     id: "pro",
     nombre: "Pro",
     duracion: "Mensual o Anual",
-    precioMensual: "0.6",
-    precioAnualEquiv: "0.48",
-    precioAnualTotal: "5.76",
-    precioOriginal: "0.6",
+    precioMensual: "0.7",
+    precioAnualEquiv: "0.56",
+    precioAnualTotal: "6.72",
+    precioOriginal: "0.7",
     descuento: "20% OFF ANUAL",
     icon: Zap,
     color: "text-brand-teal",
@@ -119,16 +119,16 @@ const PLANES = [
 
 const FAQS = [
   {
-    q: "¿Por qué el plan Gratis dura 4 meses?",
-    a: "Queremos que pruebes el funcionamiento de la plataforma con tiempo suficiente. 4 meses permite publicar tus modelos, recibir consultas de compradores en tu región y evaluar el retorno comercial sin ningún riesgo ni costo.",
+    q: "¿Por qué el plan Gratis dura 30 días?",
+    a: "Queremos que pruebes el funcionamiento de la plataforma con tiempo suficiente. 30 días permite publicar tus modelos, recibir consultas de compradores en tu región y evaluar el retorno comercial sin ningún riesgo ni costo.",
   },
   {
-    q: "¿Qué ocurre con mis prospectos si no continúo tras los 4 meses?",
+    q: "¿Qué ocurre con mis prospectos si no continúo tras los 30 días?",
     a: "Tus prospectos son 100% de tu empresa. Siempre tendrás acceso al historial de cotizaciones recibidas en tu panel, incluso si decides no renovar o continuar en modalidad inactiva.",
   },
   {
     q: "¿Cómo funciona el descuento anual?",
-    a: "Al elegir el pago anual en el Plan Pro, obtienes un 20% de descuento directo sobre el valor mensual (pagas 5.76 UF en lugar de 7.2 UF anuales). Se factura en un solo pago por adelantado.",
+    a: "Al elegir el pago anual en el Plan Pro, obtienes un 20% de descuento directo sobre el valor mensual (pagas 6.72 UF en lugar de 8.4 UF anuales). Se factura en un solo pago por adelantado.",
   },
   {
     q: "¿En qué moneda se cobra?",
@@ -175,7 +175,7 @@ export default function PlanesPage() {
     trackPlanCheckoutClick({
       plan: planId,
       billing,
-      priceUf: billing === "yearly" ? 5.76 : 0.6,
+      priceUf: billing === "yearly" ? 6.72 : 0.7,
     });
 
     startTransition(async () => {
@@ -299,7 +299,7 @@ export default function PlanesPage() {
               ? (isYearly && plan.id !== "gratis" ? plan.precioAnualEquiv : plan.precioMensual)
               : "Por invitación";
             const originalPrice = plan.id === "pro" ? plan.precioMensual : null;
-            const periodText = plan.id === "gratis" ? "por 4 meses" : (isYearly ? "UF / mes equiv." : "UF / mes");
+            const periodText = plan.id === "gratis" ? "por 30 días" : (isYearly ? "UF / mes equiv." : "UF / mes");
 
             return (
               <div
@@ -420,7 +420,7 @@ export default function PlanesPage() {
 
         {/* Trust note */}
         <p className="text-center text-xs text-muted-foreground font-medium mt-12 opacity-80">
-          Sin permanencia en planes mensuales · Precios en UF facturados en pesos según valor oficial del día · Prueba gratis de 4 meses sin tarjeta de crédito.
+          Sin permanencia en planes mensuales · Precios en UF facturados en pesos según valor oficial del día · Prueba gratis de 30 días sin tarjeta de crédito.
         </p>
       </section>
 
@@ -440,7 +440,7 @@ export default function PlanesPage() {
               </div>
               <h4 className="font-black text-sm text-foreground">Contacto 100% directo</h4>
               <p className="text-xs font-medium text-muted-foreground leading-relaxed">
-                Sin comisiones por venta ni intermediación en los presupuestos que acuerdes con tus clientes.
+                Sin comisiones por venta ni intermediación en los presupuestos que acuerdes con tus clientes. Prueba gratis de 30 días sin tarjeta.
               </p>
             </div>
 
@@ -508,7 +508,7 @@ export default function PlanesPage() {
               Publica tu catálogo y recibe<br />cotizaciones directas
             </h2>
             <p className="text-white/80 font-medium text-base max-w-md mx-auto">
-              Empieza con 4 meses de prueba sin costo o activa el Plan Pro para mayor volumen de modelos y presencia activa.
+              Empieza con 30 días de prueba sin costo o activa el Plan Pro para mayor volumen de modelos y presencia activa.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button
@@ -532,7 +532,7 @@ export default function PlanesPage() {
                   "border-white/30 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl h-14 px-8"
                 )}
               >
-                Probar 4 meses gratis
+                Probar 30 días gratis
               </Link>
             </div>
           </div>

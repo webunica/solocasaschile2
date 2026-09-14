@@ -12,8 +12,8 @@ const CheckoutSchema = z.object({
 
 const PLAN_PRICES_UF = {
   pro: {
-    monthly: 0.6,
-    yearly: 0.48 * 12,
+    monthly: 0.7,
+    yearly: 0.56 * 12,
   },
   premium: {
     monthly: 2.9,

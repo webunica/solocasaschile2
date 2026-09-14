@@ -80,7 +80,7 @@ export function FinalCTA() {
               </h3>
               <ul className="space-y-2.5">
                 {[
-                  "Prueba de 4 meses sin costo con hasta 3 modelos publicados",
+                  "Prueba de 30 días sin costo con hasta 3 modelos publicados",
                   "Recibe cotizaciones directas con datos reales de contacto",
                   "Panel de control para gestionar prospectos y catálogo",
                 ].map((item) => (
