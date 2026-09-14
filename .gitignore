@@ -19,6 +19,8 @@
 /out/
 
 # production
+
+# production
 /build
 
 # misc
@@ -26,13 +28,7 @@
 *.pem
 /tmp
 
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 *password*.txt
 *contrase*.txt
@@ -44,3 +40,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scraper binaries & data
+google_maps_scraper*
+queries.txt
+scraped-*.json
+constructoras_*.json
+webdata/
+cache/
