@@ -1,0 +1,688 @@
+{
+  "casas-prefabricadas-metalkit": {
+    "nombre": "Casas Prefabricadas METALKIT",
+    "slug": "casas-prefabricadas-metalkit",
+    "lat": -33.7797611,
+    "lng": -70.7454274,
+    "direccion": "Casas Prefabricadas METALKIT - Caletera Poniente, Ruta 5, Km 39,5, Paine, Región Metropolitana",
+    "telefono": "9 5805 6559",
+    "sitio_web": "https://www.metalkit.cl/",
+    "rating": 4.9,
+    "reviews": 201,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-metalcon-modelos--llave-en-mano-en-santiago": {
+    "nombre": "CASAS PREFABRICADAS Metalcon, modelos- Llave en mano en Santiago",
+    "slug": "casas-prefabricadas-metalcon-modelos--llave-en-mano-en-santiago",
+    "lat": -33.5388923,
+    "lng": -70.655438,
+    "direccion": "CASAS PREFABRICADAS Metalcon, modelos- Llave en mano en Santiago - Av. Américo Vespucio 744, 7980711 La Cisterna, Región Metropolitana",
+    "telefono": "(2) 2310 5779",
+    "sitio_web": "http://www.casasamerica.cl/",
+    "rating": 3.1,
+    "reviews": 17,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tecno-fast---santiago": {
+    "nombre": "Tecno Fast - Santiago",
+    "slug": "tecno-fast---santiago",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 3469 5135",
+    "sitio_web": "http://www.tecnofast.cl/",
+    "rating": 4.3,
+    "reviews": 98,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-el-alba": {
+    "nombre": "Casas Prefabricadas El Alba",
+    "slug": "casas-prefabricadas-el-alba",
+    "lat": -33.630063,
+    "lng": -70.72214009999999,
+    "direccion": "Casas Prefabricadas El Alba - Av. Calera de Tango, Parcela 8-C, Comuna, San Bernardo, Región Metropolitana",
+    "telefono": "9 3184 6889",
+    "sitio_web": "https://www.prefabricadaselalba.cl/",
+    "rating": 4.4,
+    "reviews": 64,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-modulares": {
+    "nombre": "Casas Prefabricadas Modulares",
+    "slug": "casas-prefabricadas-modulares",
+    "lat": -33.409732999999996,
+    "lng": -70.5446042,
+    "direccion": "Casas Prefabricadas Modulares - Los Dominicos 8630, of. 311, 7571892 Las Condes, Región Metropolitana",
+    "telefono": "9 9712 7179",
+    "sitio_web": "http://www.prefabricada.cl/",
+    "rating": 4,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-chile": {
+    "nombre": "Casas Chile",
+    "slug": "casas-chile",
+    "lat": -33.625129199999996,
+    "lng": -70.7157592,
+    "direccion": "Casas Chile - Av. Pdte. Jorge Alessandri Rodríguez 19679, San Bernardo, Región Metropolitana",
+    "telefono": "9 2732 2634",
+    "sitio_web": "http://www.casaschilespa.cl/",
+    "rating": 3.9,
+    "reviews": 841,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-vespucio-casas-prefabricadas-en-chile": {
+    "nombre": "CASAS VESPUCIO, Casas Prefabricadas en Chile",
+    "slug": "casas-vespucio-casas-prefabricadas-en-chile",
+    "lat": -33.533122899999995,
+    "lng": -70.6641058,
+    "direccion": "CASAS VESPUCIO, Casas Prefabricadas en Chile - Brisas del Maipo 36, Santiago, La Cisterna, Región Metropolitana",
+    "telefono": "(2) 2312 8415",
+    "sitio_web": "https://www.casasvespucio.cl/",
+    "rating": 5,
+    "reviews": 7,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "construcciones-yp": {
+    "nombre": "Construcciones Y&P",
+    "slug": "construcciones-yp",
+    "lat": -33.4087603,
+    "lng": -70.6733802,
+    "direccion": "Construcciones Y&P - Grumete Pantaleón Cortés 21101, 8380000 Santiago, Independencia, Región Metropolitana",
+    "telefono": "9 2957 7844",
+    "sitio_web": null,
+    "rating": 5,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tecno-fast": {
+    "nombre": "Tecno Fast",
+    "slug": "tecno-fast",
+    "lat": -33.309044,
+    "lng": -70.7252475,
+    "direccion": "Tecno Fast - Av. Pdte. Eduardo Frei Montalva 17000, Colina, Región Metropolitana",
+    "telefono": "(2) 2790 5000",
+    "sitio_web": "https://tecnofasthome.cl/",
+    "rating": 4.4,
+    "reviews": 165,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-chile": {
+    "nombre": "Casas Prefabricadas Chile",
+    "slug": "casas-prefabricadas-chile",
+    "lat": -33.472788,
+    "lng": -70.62983129999999,
+    "direccion": null,
+    "telefono": "9 4498 3013",
+    "sitio_web": "https://casasprefabricadasenchile.com/",
+    "rating": 5,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-la-hacienda-metalcon": {
+    "nombre": "Casas Prefabricadas La Hacienda Metalcon",
+    "slug": "casas-prefabricadas-la-hacienda-metalcon",
+    "lat": -33.6298023,
+    "lng": -70.7212687,
+    "direccion": "Casas Prefabricadas La Hacienda Metalcon - Calera de Tango Parcela 8 lado norte calera de tango, parcela 8C, 9560000 San Bernardo, Región Metropolitana",
+    "telefono": "9 5699 8763",
+    "sitio_web": "https://www.casaslahacienda.cl/servicios/",
+    "rating": 4.2,
+    "reviews": 88,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-caballero": {
+    "nombre": "Casas Prefabricadas Caballero",
+    "slug": "casas-prefabricadas-caballero",
+    "lat": -33.5388923,
+    "lng": -70.655438,
+    "direccion": "Casas Prefabricadas Caballero - Av. Américo Vespucio 744, 7980711 La Cisterna, Región Metropolitana",
+    "telefono": "(2) 2310 5779",
+    "sitio_web": "http://www.casascaballero.cl/",
+    "rating": 5,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-latam": {
+    "nombre": "Casas Latam",
+    "slug": "casas-latam",
+    "lat": -33.427599,
+    "lng": -70.7202798,
+    "direccion": "Casas Latam - Cauquenes 6130, 9080072 Santiago, Cerro Navia, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": 4,
+    "reviews": 28,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-calera-de-tango": {
+    "nombre": "Casas Prefabricadas Calera de Tango",
+    "slug": "casas-prefabricadas-calera-de-tango",
+    "lat": -33.6317108,
+    "lng": -70.72552929999999,
+    "direccion": "Casas Prefabricadas Calera de Tango - Av. Calera de Tango 19, San Bernardo, Región Metropolitana",
+    "telefono": "9 5848 9227",
+    "sitio_web": "https://casaprefabricadachile.cl/calera-de-tango/",
+    "rating": 3.5,
+    "reviews": 80,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "estructuras-green-valley-spa": {
+    "nombre": "Estructuras green Valley SPA.",
+    "slug": "estructuras-green-valley-spa",
+    "lat": -33.6344098,
+    "lng": -70.7133676,
+    "direccion": "ESQ SN - J ALESSANDRI, San José de Nos KM 24, LT 2, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "(2) 2583 2001",
+    "sitio_web": "https://cprefabricadas.cl/",
+    "rating": 5,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-nyf": {
+    "nombre": "Casas prefabricadas NYF",
+    "slug": "casas-prefabricadas-nyf",
+    "lat": -33.5323734,
+    "lng": -70.6692295,
+    "direccion": "Casas prefabricadas NYF - Ciencias 8585, 7970635 La Cisterna, Región Metropolitana",
+    "telefono": "9 7479 9445",
+    "sitio_web": "http://www.casasnyf.cl/",
+    "rating": 4.5,
+    "reviews": 11,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-santiago": {
+    "nombre": "Casas Santiago",
+    "slug": "casas-santiago",
+    "lat": -33.6281891,
+    "lng": -70.7165179,
+    "direccion": "Casas Santiago - Av. Calera de Tango, 9560000 Calera de Tango, San Bernardo, Región Metropolitana",
+    "telefono": "9 8805 8335",
+    "sitio_web": null,
+    "rating": 4.2,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tu-casa-facil": {
+    "nombre": "Tu Casa Fácil",
+    "slug": "tu-casa-facil",
+    "lat": -33.6359232,
+    "lng": -70.71307759999999,
+    "direccion": "Tu Casa Fácil - Alessandri Rodríguez 20185 (Terreno 01), San Bernardo, Región, San Bernardo, Región Metropolitana",
+    "telefono": "9 3009 4515",
+    "sitio_web": "https://tucasafacil.cl/",
+    "rating": 4.5,
+    "reviews": 52,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-alvarado-spa": {
+    "nombre": "Casas Alvarado S.P.A.",
+    "slug": "casas-alvarado-spa",
+    "lat": -33.257576,
+    "lng": -70.6978602,
+    "direccion": "Casas Alvarado S.P.A. - Caletera San Martín, Av. Chicureo Oriente, Parcela 20, 9340000 Colina, Región Metropolitana",
+    "telefono": "9 4162 9375",
+    "sitio_web": "https://casasalvarado.cl/",
+    "rating": 4.4,
+    "reviews": 21,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-arbolito-santiago": {
+    "nombre": "Casas Arbolito Santiago",
+    "slug": "casas-arbolito-santiago",
+    "lat": -33.7787431,
+    "lng": -70.7440534,
+    "direccion": "Casas Arbolito Santiago - Ruta 5 Km 40, Km 40, Paine, Región Metropolitana",
+    "telefono": "9 7335 1397",
+    "sitio_web": "http://www.casasarbolito.cl/",
+    "rating": 4.2,
+    "reviews": 188,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-home-easy": {
+    "nombre": "Casas Prefabricadas Home Easy",
+    "slug": "casas-prefabricadas-home-easy",
+    "lat": -33.5163545,
+    "lng": -70.6410075,
+    "direccion": "Casas Prefabricadas Home Easy - Sebastopol 582, 8930737 San Miguel, Región Metropolitana",
+    "telefono": "9 5829 8811",
+    "sitio_web": "http://www.homeeasy.cl/",
+    "rating": 4.2,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "industrializadas": {
+    "nombre": "INDUSTRIALIZADAS",
+    "slug": "industrializadas",
+    "lat": -33.638505699999996,
+    "lng": -70.71174599999999,
+    "direccion": "INDUSTRIALIZADAS - Regina Gálvez 285, 8080816 San Bernardo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": 3.4,
+    "reviews": 63,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-lo-infante-spa": {
+    "nombre": "Casas prefabricadas lo infante spa",
+    "slug": "casas-prefabricadas-lo-infante-spa",
+    "lat": -33.639581899999996,
+    "lng": -70.71290069999999,
+    "direccion": "Casas prefabricadas lo infante spa - Av. Pdte. Jorge Alessandri Rodríguez 20, 181, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "9 8341 6889",
+    "sitio_web": "http://www.casasloinfante.cl/",
+    "rating": 4.1,
+    "reviews": 52,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-recabarren": {
+    "nombre": "CASAS RECABARREN",
+    "slug": "casas-recabarren",
+    "lat": -33.454169,
+    "lng": -70.591818,
+    "direccion": "CASAS RECABARREN - Brown Nte. 100, Ofi 310, 7790569 Santiago, Ñuñoa, Región Metropolitana",
+    "telefono": "9 7382 8500",
+    "sitio_web": "https://www.casasrecabarren.cl/",
+    "rating": 4.4,
+    "reviews": 7,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-riquelme": {
+    "nombre": "Casas Riquelme",
+    "slug": "casas-riquelme",
+    "lat": -33.5384259,
+    "lng": -70.6622072,
+    "direccion": "Casas Riquelme - Av. Américo Vespucio 199, 8000132 La Cisterna, Región Metropolitana",
+    "telefono": "2232295839",
+    "sitio_web": null,
+    "rating": 4.1,
+    "reviews": 13,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-premium": {
+    "nombre": "Casas Premium",
+    "slug": "casas-premium",
+    "lat": -33.2853463,
+    "lng": -70.6920877,
+    "direccion": "Casas Premium - Av. Chicureo 901 B, Colina, Región Metropolitana",
+    "telefono": "9 9343 9600",
+    "sitio_web": "http://www.casaspremium.cl/",
+    "rating": 4,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-paine-sur": {
+    "nombre": "Casas Prefabricadas Paine Sur",
+    "slug": "casas-prefabricadas-paine-sur",
+    "lat": -33.472788,
+    "lng": -70.62983129999999,
+    "direccion": null,
+    "telefono": "9 5001 0266",
+    "sitio_web": null,
+    "rating": 5,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-agam": {
+    "nombre": "Casas Prefabricadas Agam",
+    "slug": "casas-prefabricadas-agam",
+    "lat": -33.659399799999996,
+    "lng": -70.7172779,
+    "direccion": "Casas Prefabricadas Agam - Av. Pdte. Jorge Alessandri Rodríguez, San Bernardo, Región Metropolitana",
+    "telefono": "9 4617 5456",
+    "sitio_web": "http://www.casasagam.cl/",
+    "rating": 4.5,
+    "reviews": 55,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-del-lago": {
+    "nombre": "Casas Prefabricadas del Lago",
+    "slug": "casas-prefabricadas-del-lago",
+    "lat": -33.624064499999996,
+    "lng": -70.7981169,
+    "direccion": "Casas Prefabricadas del Lago - Paradero 17, esquina Avda Calera de Tango, Lonquén Nte., 9560007 Calera de Tango, Región Metropolitana",
+    "telefono": "9 4595 2922",
+    "sitio_web": "http://www.casasdellago.cl/",
+    "rating": 4.3,
+    "reviews": 24,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-casas-y-casas-spa": {
+    "nombre": "CONSTRUCTORA CASAS Y CASAS SPA",
+    "slug": "constructora-casas-y-casas-spa",
+    "lat": -33.4648082,
+    "lng": -70.6477712,
+    "direccion": "CONSTRUCTORA CASAS Y CASAS SPA - San Diego 1454, local 35B, 8361540 Santiago, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": "http://www.casasycasas.cl/",
+    "rating": 4.9,
+    "reviews": 184,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "beebox-soluciones-modulares-ltda": {
+    "nombre": "Beebox soluciones modulares ltda",
+    "slug": "beebox-soluciones-modulares-ltda",
+    "lat": -38.786062199999996,
+    "lng": -72.61496079999999,
+    "direccion": "Beebox soluciones modulares ltda - Ruta 5 5580, Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "(45) 274 0010",
+    "sitio_web": "http://www.beebox.cl/",
+    "rating": 3.8,
+    "reviews": 10,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-fabelsa": {
+    "nombre": "Casas Fabelsa",
+    "slug": "casas-fabelsa",
+    "lat": -38.9646666,
+    "lng": -72.5901899,
+    "direccion": "Casas Fabelsa - Camino Freire a Villarrica Km. 3 Sector, Los Castaños, Freire, Araucanía",
+    "telefono": "9 9453 2937",
+    "sitio_web": "https://ventacasasprefabricadas.cl/casas-prefabricadas-temuco/",
+    "rating": 4.3,
+    "reviews": 24,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-araucania": {
+    "nombre": "Casas Prefabricadas Araucanía",
+    "slug": "casas-prefabricadas-araucania",
+    "lat": -38.4122919,
+    "lng": -72.778475,
+    "direccion": null,
+    "telefono": "9 6214 8435",
+    "sitio_web": null,
+    "rating": 4.3,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-casas-imperio": {
+    "nombre": "Casas Prefabricadas CASAS IMPERIO",
+    "slug": "casas-prefabricadas-casas-imperio",
+    "lat": -33.7618441,
+    "lng": -70.7421584,
+    "direccion": "Parcela 3 Cruce Linderos - Cam. Longitudinal Ruta 5 Sur, 9500000 Buin, Región Metropolitana",
+    "telefono": "9 5652 5203",
+    "sitio_web": "https://www.casasprefabricadasimperio.cl/",
+    "rating": 4.1,
+    "reviews": 61,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-lonquen": {
+    "nombre": "Casas Prefabricadas Lonquen",
+    "slug": "casas-prefabricadas-lonquen",
+    "lat": -33.6162457,
+    "lng": -70.79563929999999,
+    "direccion": "Casas Prefabricadas Lonquen - 16211,, Lonquén Nte. 15777, Calera de Tango, Región Metropolitana",
+    "telefono": "9 9208 0969",
+    "sitio_web": "https://casasprefabricadaslonquen.cl/",
+    "rating": 3.2,
+    "reviews": 61,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-sils": {
+    "nombre": "Casas prefabricadas SILS",
+    "slug": "casas-prefabricadas-sils",
+    "lat": -33.516974999999995,
+    "lng": -70.71346199999999,
+    "direccion": "Mall Plaza Oeste - Av. Américo Vespucio 1501, 9500000 Cerrillos, Región Metropolitana",
+    "telefono": "9 5060 3873",
+    "sitio_web": "https://silselect.cl/",
+    "rating": 1,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "canadian-houses-by-casas-deluxe-ltda": {
+    "nombre": "Canadian Houses by Casas Deluxe Ltda.",
+    "slug": "canadian-houses-by-casas-deluxe-ltda",
+    "lat": -33.4269956,
+    "lng": -70.6191521,
+    "direccion": "Canadian Houses by Casas Deluxe Ltda. - Gral Flores 127, 7500546 Santiago, Providencia, Región Metropolitana",
+    "telefono": "(2) 2235 0501",
+    "sitio_web": "http://www.canadianhouses.cl/",
+    "rating": 4.5,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-san-alberto": {
+    "nombre": "Casas Prefabricadas San Alberto",
+    "slug": "casas-prefabricadas-san-alberto",
+    "lat": -33.861284999999995,
+    "lng": -70.7321101,
+    "direccion": "Casas Prefabricadas San Alberto - Los Acacios 120, 9540569 Paine, Región Metropolitana",
+    "telefono": "9 3405 5282",
+    "sitio_web": "https://casasanalberto.com/",
+    "rating": 5,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-don-carlos": {
+    "nombre": "Casas Don Carlos",
+    "slug": "casas-don-carlos",
+    "lat": -33.6273267,
+    "lng": -70.7687873,
+    "direccion": "Casas Don Carlos - Av. Calera de Tango, Calera de Tango, Peñaflor, Región Metropolitana",
+    "telefono": "44 293 9335",
+    "sitio_web": null,
+    "rating": 4.5,
+    "reviews": 26,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-val": {
+    "nombre": "Casas VAL",
+    "slug": "casas-val",
+    "lat": -33.688997,
+    "lng": -71.0435902,
+    "direccion": "Casas VAL - Cam. A Melipilla - El Monte 1694, El Monte, Región Metropolitana",
+    "telefono": "(2) 3346 5556",
+    "sitio_web": "http://www.casasval.cl/",
+    "rating": 4.3,
+    "reviews": 24,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-ordenes-construcciones": {
+    "nombre": "Casas Prefabricadas Ordenes Construcciones",
+    "slug": "casas-prefabricadas-ordenes-construcciones",
+    "lat": -33.6827343,
+    "lng": -70.851216,
+    "direccion": "Casas Prefabricadas Ordenes Construcciones - Lonquen Sur 35, 9560000 Talagante, Región Metropolitana",
+    "telefono": "(2) 2914 6005",
+    "sitio_web": "https://www.ordenesconstrucciones.cl/",
+    "rating": 4.5,
+    "reviews": 84,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-alihuen": {
+    "nombre": "Casas Prefabricadas Alihuen",
+    "slug": "casas-prefabricadas-alihuen",
+    "lat": -33.6317768,
+    "lng": -70.7268103,
+    "direccion": "Casas Prefabricadas Alihuen - Av. Calera de Tango, 8820000 Calera de Tango, San Bernardo, Región Metropolitana",
+    "telefono": "9 3653 9591",
+    "sitio_web": "https://casasprefabricadasalihuen.cl/",
+    "rating": 5,
+    "reviews": 7,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-josepha-spa": {
+    "nombre": "Casas Prefabricadas Josepha SpA.",
+    "slug": "casas-prefabricadas-josepha-spa",
+    "lat": -33.7561222,
+    "lng": -70.73549779999999,
+    "direccion": "Casas Prefabricadas Josepha SpA. - Francisco Javier Krugger 3300, 9501957 Buin, Región Metropolitana",
+    "telefono": "9 3751 1420",
+    "sitio_web": "https://www.josepha.cl/",
+    "rating": 5,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "construkit---casas-industrializadas-de-alto-estandar": {
+    "nombre": "CONSTRUKIT - Casas Industrializadas de Alto Estándar",
+    "slug": "construkit---casas-industrializadas-de-alto-estandar",
+    "lat": -38.7969181,
+    "lng": -72.62186299999999,
+    "direccion": "CONSTRUKIT - Casas Industrializadas de Alto Estándar - Ruta Panamericana Sur Km. 680, Temuco, Padre Las Casas, Araucanía",
+    "telefono": null,
+    "sitio_web": "http://www.construkit.cl/",
+    "rating": 4.9,
+    "reviews": 16,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-homes-chile": {
+    "nombre": "Tiny Homes Chile",
+    "slug": "tiny-homes-chile",
+    "lat": -33.407671799999996,
+    "lng": -70.5638941,
+    "direccion": "Tiny Homes Chile - Av. Apoquindo 6410, 605, 7560903 Las Condes, Región Metropolitana",
+    "telefono": "9 9129 7505",
+    "sitio_web": "http://www.instagram.com/tinyhomeschile/",
+    "rating": 5,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-sandoval": {
+    "nombre": "Casas Prefabricadas Sandoval",
+    "slug": "casas-prefabricadas-sandoval",
+    "lat": -32.7734553,
+    "lng": -70.6596505,
+    "direccion": "Casas Prefabricadas Sandoval - Tocornal 7377, 2200000 Valparaíso, Santa María, Valparaíso",
+    "telefono": "9 9157 0552",
+    "sitio_web": "https://www.casassandoval.cl/",
+    "rating": 4.3,
+    "reviews": 27,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "full-casas-prefabricadas": {
+    "nombre": "Full Casas Prefabricadas",
+    "slug": "full-casas-prefabricadas",
+    "lat": -33.5146207,
+    "lng": -70.6565389,
+    "direccion": "Full Casas Prefabricadas - Sta. Fe 690, 7980003 San Miguel, Región Metropolitana",
+    "telefono": "9 5423 4825",
+    "sitio_web": "http://www.fullcasasprefabricadas.cl/",
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "inmobiliaria-martabid-spa": {
+    "nombre": "Inmobiliaria Martabid Spa",
+    "slug": "inmobiliaria-martabid-spa",
+    "lat": -38.748791,
+    "lng": -72.6050044,
+    "direccion": "Inmobiliaria Martabid Spa - C. Las Quilas 1535, 4791797 Temuco, Araucanía",
+    "telefono": "(45) 273 2900",
+    "sitio_web": "http://www.martabid.com/",
+    "rating": 3.9,
+    "reviews": 75,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "siphouse": {
+    "nombre": "Siphouse",
+    "slug": "siphouse",
+    "lat": -38.560425699999996,
+    "lng": -72.4507465,
+    "direccion": "Parque Industrial - P1-A, Lautaro, Araucanía",
+    "telefono": "9 5406 6425",
+    "sitio_web": "http://www.siphouse.cl/",
+    "rating": 5,
+    "reviews": 5,
+    "regiones": [
+      "La Araucanía"
+    ]
+  }
+}

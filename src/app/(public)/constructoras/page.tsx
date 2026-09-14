@@ -9,6 +9,8 @@ import { InformativeListClient } from "@/components/constructoras/informative-li
 import { PremiumCarousel } from "@/components/constructoras/premium-carousel";
 import { StructuredData, buildItemListJsonLd } from "@/components/seo/structured-data";
 
+import geoDataJson from "@/data/constructoras-geo.json";
+
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
@@ -26,32 +28,88 @@ export const metadata: Metadata = {
 
 export default async function ConstructorasPage() {
   const supabase = await createClient();
-  const { data: dbConstructoras = [] } = await supabase
+  let dbConstructoras: any[] = [];
+
+  const { data, error } = await supabase
     .from("constructoras")
     .select("id, nombre, slug, logo_url, descripcion, plan, verificada, score_confianza, regiones, proyectos_completados, sitio_web, telefono, email, direccion, lat, lng")
     .order("score_confianza", { ascending: false });
 
-  // Map Mocks to match DB structure (snake_case)
-  const mockMapped = CONSTRUCTORAS.map(c => ({
-    id: c.id,
-    nombre: c.nombre,
-    slug: c.slug,
-    logo_url: c.logo,
-    descripcion: c.descripcion,
-    plan: c.plan,
-    verificada: c.verificada,
-    score_confianza: c.scoreConfianza,
-    regiones: c.regiones,
-    proyectos_completados: c.proyectosCompletados,
-    sitio_web: c.sitio_web || null,
-    telefono: c.telefono || null,
-    email: null,
-    direccion: c.direccion || null,
-    lat: c.lat ?? null,
-    lng: c.lng ?? null,
-  }));
+  if (error) {
+    // Si la tabla en Supabase aún no tiene columnas lat/lng
+    const fallbackRes = await supabase
+      .from("constructoras")
+      .select("id, nombre, slug, logo_url, descripcion, plan, verificada, score_confianza, regiones, proyectos_completados, sitio_web, telefono, email, direccion")
+      .order("score_confianza", { ascending: false });
+    dbConstructoras = fallbackRes.data || [];
+  } else {
+    dbConstructoras = data || [];
+  }
 
-  const combined = [...mockMapped, ...(dbConstructoras || [])];
+  // Enriquecer registros de DB con coordenadas locales si no las tienen
+  const enrichedDb = dbConstructoras.map(c => {
+    const geo = (geoDataJson as Record<string, any>)[c.slug];
+    return {
+      ...c,
+      lat: c.lat ?? geo?.lat ?? null,
+      lng: c.lng ?? geo?.lng ?? null,
+      direccion: c.direccion || geo?.direccion || null,
+      telefono: c.telefono || geo?.telefono || null,
+      sitio_web: c.sitio_web || geo?.sitio_web || null,
+    };
+  });
+
+  // Map Mocks to match DB structure (snake_case)
+  const mockMapped = CONSTRUCTORAS.map(c => {
+    const geo = (geoDataJson as Record<string, any>)[c.slug];
+    return {
+      id: c.id,
+      nombre: c.nombre,
+      slug: c.slug,
+      logo_url: c.logo,
+      descripcion: c.descripcion,
+      plan: c.plan,
+      verificada: c.verificada,
+      score_confianza: c.scoreConfianza,
+      regiones: c.regiones,
+      proyectos_completados: c.proyectosCompletados,
+      sitio_web: c.sitio_web || geo?.sitio_web || null,
+      telefono: c.telefono || geo?.telefono || null,
+      email: null,
+      direccion: c.direccion || geo?.direccion || null,
+      lat: c.lat ?? geo?.lat ?? null,
+      lng: c.lng ?? geo?.lng ?? null,
+    };
+  });
+
+  const existingSlugs = new Set([
+    ...mockMapped.map(m => m.slug),
+    ...enrichedDb.map(d => d.slug),
+  ]);
+
+  // Incluir constructoras extraídas del scraper que aún no estén en la base de datos
+  const scrapedExtra = Object.values(geoDataJson as Record<string, any>)
+    .filter((g: any) => g?.slug && !existingSlugs.has(g.slug))
+    .map((g: any) => ({
+      id: `scraped-${g.slug}`,
+      nombre: g.nombre,
+      slug: g.slug,
+      logo_url: null,
+      descripcion: `Fabricante y constructora de casas en Chile. Ubicación: ${g.direccion || g.regiones?.[0] || "Chile"}.`,
+      plan: "informativo",
+      verificada: false,
+      score_confianza: g.rating ? Math.min(100, Math.round(g.rating * 18)) : 65,
+      regiones: g.regiones || ["Metropolitana"],
+      proyectos_completados: 0,
+      sitio_web: g.sitio_web || null,
+      telefono: g.telefono || null,
+      email: null,
+      direccion: g.direccion || null,
+      lat: g.lat ?? null,
+      lng: g.lng ?? null,
+    }));
+
+  const combined = [...mockMapped, ...enrichedDb, ...scrapedExtra];
 
   const planOrder: Record<string, number> = { premium: 0, avanza: 1, pro: 2, prueba: 3, gratis: 4, informativo: 5 };
   const sorted = combined.sort((a, b) => {
