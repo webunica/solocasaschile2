@@ -117,10 +117,10 @@ export default function InteractiveMapClient({ constructoras }: InteractiveMapPr
       scrollWheelZoom: false,
     });
 
-    // Capa de tiles OpenStreetMap con estilo limpio
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+    // Capa de tiles OpenStreetMap 100% gratuita y sin marcas de agua ni API key
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19,
     }).addTo(map);
 
