@@ -1,10 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { MapPin, Users2, ExternalLink } from "lucide-react";
+import { MapPin, Users2, ExternalLink, Map as MapIcon, Compass } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+
+// Carga dinámica del mapa interactivo para evitar problemas de SSR con Leaflet
+const InteractiveMapClient = dynamic(
+  () => import("./interactive-map-client"),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-[580px] rounded-[2.5rem] bg-muted/20 animate-pulse flex flex-col items-center justify-center gap-3 text-muted-foreground">
+        <MapPin className="w-8 h-8 text-brand-teal animate-bounce" />
+        <span className="text-xs font-bold uppercase tracking-wider">Cargando mapa interactivo...</span>
+      </div>
+    )
+  }
+);
 
 // Regiones de Chile con coordenadas SVG aproximadas para un mapa simplificado
 const REGIONES_CHILE = [
@@ -33,6 +49,13 @@ interface Constructora {
   regiones?: string[];
   plan?: string;
   score_confianza?: number;
+  lat?: number | null;
+  lng?: number | null;
+  direccion?: string | null;
+  telefono?: string | null;
+  sitio_web?: string | null;
+  descripcion?: string | null;
+  verificada?: boolean | null;
 }
 
 interface Props {
@@ -40,6 +63,7 @@ interface Props {
 }
 
 export function MapaConstructoras({ constructoras }: Props) {
+  const [viewMode, setViewMode] = useState<"interactive" | "regional">("interactive");
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
@@ -70,9 +94,57 @@ export function MapaConstructoras({ constructoras }: Props) {
     : [];
 
   return (
-    <div className="flex flex-col xl:flex-row gap-10 items-start">
-      {/* SVG Map */}
-      <div className="relative flex-shrink-0">
+    <div className="space-y-8">
+      {/* Switcher de Vista de Mapa */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-border/40 pb-6">
+        <div>
+          <h3 className="font-heading text-xl font-black tracking-tight text-foreground flex items-center gap-2">
+            <MapIcon className="w-5 h-5 text-brand-teal" />
+            {viewMode === "interactive" ? "Mapa Interactivo con Ubicaciones" : "Vista Esquemática de Cobertura Regional"}
+          </h3>
+          <p className="text-xs font-medium text-muted-foreground mt-1">
+            {viewMode === "interactive" 
+              ? "Explora empresas y talleres georreferenciados en OpenStreetMap."
+              : "Selecciona una región para revisar el número de constructoras con cobertura."}
+          </p>
+        </div>
+
+        <div className="flex items-center bg-muted/60 p-1.5 rounded-2xl border border-border/50 shrink-0">
+          <button
+            type="button"
+            onClick={() => setViewMode("interactive")}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all",
+              viewMode === "interactive"
+                ? "bg-white text-brand-indigo shadow-md"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <MapIcon className="w-3.5 h-3.5" />
+            Mapa con Pines
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode("regional")}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all",
+              viewMode === "regional"
+                ? "bg-white text-brand-indigo shadow-md"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            <Compass className="w-3.5 h-3.5" />
+            Por Región
+          </button>
+        </div>
+      </div>
+
+      {viewMode === "interactive" ? (
+        <InteractiveMapClient constructoras={constructoras} />
+      ) : (
+        <div className="flex flex-col xl:flex-row gap-10 items-start">
+          {/* SVG Map */}
+          <div className="relative flex-shrink-0">
         <svg
           viewBox="0 30 230 760"
           className="w-full max-w-[240px] mx-auto"
@@ -227,5 +299,7 @@ export function MapaConstructoras({ constructoras }: Props) {
         )}
       </div>
     </div>
+    )}
+  </div>
   );
 }

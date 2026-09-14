@@ -21,6 +21,11 @@ export interface Constructora {
   badges: string[];
   verificada: boolean;
   image: string;
+  lat?: number | null;
+  lng?: number | null;
+  direccion?: string | null;
+  telefono?: string | null;
+  sitio_web?: string | null;
 }
 
 export interface Modelo {
@@ -64,6 +69,11 @@ export const CONSTRUCTORAS: Constructora[] = [
     badges: ["Verificada", "Top Rated", "Partner Oro"],
     verificada: true,
     image: "/images/modelos/austral/nocturna.jpg",
+    lat: -33.4189,
+    lng: -70.6038,
+    direccion: "Av. Vitacura 2909, Las Condes, Región Metropolitana",
+    telefono: "+56 9 6140 5052",
+    sitio_web: "https://australsip.cl",
   },
   {
     id: "c1",
@@ -81,6 +91,11 @@ export const CONSTRUCTORAS: Constructora[] = [
     badges: ["Verificada", "Top Rated", "+50 Proyectos"],
     verificada: true,
     image: "/hero.png",
+    lat: -33.3645,
+    lng: -70.6872,
+    direccion: "Av. Panamericana Norte 9990, Quilicura, Región Metropolitana",
+    telefono: "+56 2 2990 0000",
+    sitio_web: "https://tecnofast.cl",
   },
   {
     id: "c2",
@@ -98,6 +113,11 @@ export const CONSTRUCTORAS: Constructora[] = [
     badges: ["Verificada", "Respuesta Rápida", "Certificada"],
     verificada: true,
     image: "/hero2.png",
+    lat: -38.7397,
+    lng: -72.5901,
+    direccion: "Av. Rudecindo Ortega 02150, Temuco, La Araucanía",
+    telefono: "+56 45 220 3000",
+    sitio_web: "https://casasimperio.cl",
   },
   {
     id: "c3",
@@ -115,6 +135,11 @@ export const CONSTRUCTORAS: Constructora[] = [
     badges: ["Top Rated", "Certificada"],
     verificada: true,
     image: "/hero.png",
+    lat: -29.9533,
+    lng: -71.3436,
+    direccion: "Ruta 5 Norte Km 465, Coquimbo",
+    telefono: "+56 51 223 4455",
+    sitio_web: "https://metalkit.cl",
   },
   {
     id: "c4",
@@ -132,6 +157,11 @@ export const CONSTRUCTORAS: Constructora[] = [
     badges: ["Verificada"],
     verificada: true,
     image: "/hero2.png",
+    lat: -41.4693,
+    lng: -72.9424,
+    direccion: "Ruta 5 Sur Km 1025, Puerto Montt, Los Lagos",
+    telefono: "+56 65 234 5678",
+    sitio_web: "https://prefabsur.cl",
   },
   {
     id: "c5",
@@ -149,6 +179,11 @@ export const CONSTRUCTORAS: Constructora[] = [
     badges: [],
     verificada: false,
     image: "/hero.png",
+    lat: -33.0472,
+    lng: -71.6127,
+    direccion: "Camino La Pólvora 1500, Valparaíso",
+    telefono: "+56 32 212 3456",
+    sitio_web: "https://containerhouse.cl",
   },
 ];
 

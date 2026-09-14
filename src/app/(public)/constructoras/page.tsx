@@ -28,7 +28,7 @@ export default async function ConstructorasPage() {
   const supabase = await createClient();
   const { data: dbConstructoras = [] } = await supabase
     .from("constructoras")
-    .select("id, nombre, slug, logo_url, descripcion, plan, verificada, score_confianza, regiones, proyectos_completados, sitio_web, telefono, email")
+    .select("id, nombre, slug, logo_url, descripcion, plan, verificada, score_confianza, regiones, proyectos_completados, sitio_web, telefono, email, direccion, lat, lng")
     .order("score_confianza", { ascending: false });
 
   // Map Mocks to match DB structure (snake_case)
@@ -43,9 +43,12 @@ export default async function ConstructorasPage() {
     score_confianza: c.scoreConfianza,
     regiones: c.regiones,
     proyectos_completados: c.proyectosCompletados,
-    sitio_web: null,
-    telefono: null,
-    email: null
+    sitio_web: c.sitio_web || null,
+    telefono: c.telefono || null,
+    email: null,
+    direccion: c.direccion || null,
+    lat: c.lat ?? null,
+    lng: c.lng ?? null,
   }));
 
   const combined = [...mockMapped, ...(dbConstructoras || [])];
@@ -125,8 +128,8 @@ export default async function ConstructorasPage() {
             </h2>
             <p className="text-muted-foreground font-medium">Haz clic en cualquier punto del mapa para ver nuestra red de constructoras asociadas.</p>
           </div>
-          <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3rem] p-10 shadow-xl shadow-primary/5">
-            <MapaConstructoras constructoras={asociadas} />
+          <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3rem] p-6 sm:p-10 shadow-xl shadow-primary/5">
+            <MapaConstructoras constructoras={sorted} />
           </div>
         </section>
 
