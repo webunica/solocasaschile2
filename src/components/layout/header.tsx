@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { BookOpen, Building2, Compass, Home, Library, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -62,9 +63,19 @@ export function Header() {
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-8">
           <Link
             href="/"
-            className="shrink-0 text-[1.35rem] font-semibold tracking-[-0.03em] text-brand-indigo"
+            className="flex shrink-0 items-center gap-2.5 group"
           >
-            SolocasasChile
+            <Image
+              src="/images/logo-vertical.png"
+              alt="SolocasasChile Logo"
+              width={40}
+              height={40}
+              className="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              priority
+            />
+            <span className="text-[1.35rem] font-semibold tracking-[-0.03em] text-brand-indigo">
+              SolocasasChile
+            </span>
           </Link>
 
           <nav className="ml-8 hidden flex-1 items-center justify-center gap-3 lg:flex">
@@ -127,8 +138,15 @@ export function Header() {
             <SheetContent side="left" className="w-[320px] border-r border-border/40 bg-background/95 p-0 backdrop-blur-xl">
               <SheetHeader className="border-b border-border/30 p-6 text-left">
                 <div className="flex items-center justify-between gap-4">
-                  <SheetTitle className="font-heading text-2xl font-black tracking-tight text-brand-indigo">
-                    SolocasasChile
+                  <SheetTitle className="font-heading text-2xl font-black tracking-tight text-brand-indigo flex items-center gap-2">
+                    <Image
+                      src="/images/logo-vertical.png"
+                      alt="SolocasasChile Logo"
+                      width={32}
+                      height={32}
+                      className="h-8 w-auto object-contain"
+                    />
+                    <span>SolocasasChile</span>
                   </SheetTitle>
                   <ThemeToggle />
                 </div>
