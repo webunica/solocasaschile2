@@ -98,22 +98,21 @@ export function SeoContent() {
             </h2>
             <div className="prose prose-lg max-w-none font-medium leading-relaxed text-muted-foreground dark:prose-invert space-y-4">
               <p>
-                El mercado de <strong>casas prefabricadas en Chile</strong> ha
-                experimentado un crecimiento sin precedentes en los últimos
-                años. Con más de 1.500 modelos disponibles entre{" "}
+                El mercado de <strong>casas prefabricadas en Chile</strong> ofrece
+                hoy múltiples alternativas constructivas como{" "}
                 <strong>casas SIP</strong>,{" "}
                 <strong>casas modulares</strong>, casas container y sistemas
-                de Steel Framing, hoy es posible acceder a una vivienda de
-                alta calidad en plazos y costos imposibles para la
+                de Steel Framing, permitiendo acceder a viviendas con
+                plazos de ejecución y costos más controlados que en la
                 construcción tradicional.
               </p>
               <p>
-                SolocasasChile es el <strong>comparador independiente de casas
-                prefabricadas más completo de Chile</strong>. No somos una
-                constructora ni vendemos directamente viviendas: nuestro
-                trabajo es analizar, verificar y publicar información objetiva
-                sobre cientos de modelos y empresas, para que tomes la mejor
-                decisión antes de cotizar.
+                SolocasasChile es un <strong>comparador independiente de casas
+                prefabricadas en Chile</strong>. No somos una constructora ni
+                vendemos directamente viviendas: nuestro objetivo es recopilar
+                modelos con especificaciones técnicas, precios referenciales y
+                datos de empresas verificadas para que compares con claridad antes
+                de solicitar una cotización.
               </p>
               <p>
                 Si quieres ir directo por intención de búsqueda, revisa nuestras

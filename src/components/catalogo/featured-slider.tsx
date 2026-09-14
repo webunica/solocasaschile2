@@ -158,10 +158,21 @@ export function FeaturedSlider({ models, regionLabel }: FeaturedSliderProps) {
               {/* Price + CTA */}
               <div className="flex flex-wrap items-center gap-6 pt-4">
                 <div className="space-y-1">
-                  <div className="text-[#1b0088] text-3xl lg:text-4xl font-black tracking-tighter leading-none italic">
-                    {current.precio_desde_uf.toLocaleString()} <span className="text-xl not-italic">UF</span>
-                  </div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Precio base desde</div>
+                  {current.precio_desde_uf && current.precio_desde_uf > 0 ? (
+                    <>
+                      <div className="text-[#1b0088] text-3xl lg:text-4xl font-black tracking-tighter leading-none italic">
+                        {current.precio_desde_uf.toLocaleString("es-CL")} <span className="text-xl not-italic">UF</span>
+                      </div>
+                      <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Precio base desde</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="text-foreground text-2xl lg:text-3xl font-black tracking-tight leading-none">
+                        Precio a consultar
+                      </div>
+                      <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Cotización personalizada</div>
+                    </>
+                  )}
                 </div>
 
                 <Link href={`/modelo/${current.slug}`}>

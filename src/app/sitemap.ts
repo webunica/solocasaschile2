@@ -30,6 +30,8 @@ const staticRoutes: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/seguimiento-de-obras`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.78 },
   { url: `${SITE_URL}/blog`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.75 },
   { url: `${SITE_URL}/comparar`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.7 },
+  { url: `${SITE_URL}/para-constructoras`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.8 },
+  { url: `${SITE_URL}/planes`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "weekly", priority: 0.8 },
   { url: `${SITE_URL}/nosotros`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "monthly", priority: 0.55 },
   { url: `${SITE_URL}/privacidad`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "yearly", priority: 0.2 },
   { url: `${SITE_URL}/terminos`, lastModified: RELEASE_BASELINE_DATE, changeFrequency: "yearly", priority: 0.2 },

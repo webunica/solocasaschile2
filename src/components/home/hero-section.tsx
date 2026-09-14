@@ -6,6 +6,7 @@ import { Building2, Users, MapPin } from "lucide-react";
 import Link from "next/link";
 import { REGIONES_CHILE } from "@/config/regions";
 import { HeroLeadForm } from "@/components/home/hero-lead-form";
+import { trackCatalogoClick, trackConstructorasAccessClick } from "@/lib/analytics";
 
 export function HeroSection() {
   return (
@@ -32,68 +33,66 @@ export function HeroSection() {
           <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-brand-teal via-brand-indigo to-transparent" />
 
           <div className="relative z-10 flex flex-col gap-8">
-            {/* Dual audience badges */}
+            {/* Platform badge */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-teal/30 bg-brand-teal/8 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-teal">
-                <Users className="h-3 w-3" />
-                Para compradores
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-indigo/30 bg-brand-indigo/8 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-indigo">
-                <Building2 className="h-3 w-3" />
-                Para constructoras
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-teal/30 bg-brand-teal/8 px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-teal">
+                <Users className="h-3.5 w-3.5" />
+                Catálogo gratuito para compradores
               </span>
             </div>
 
             <div className="max-w-[46rem] space-y-5">
-              <h1 className="max-w-[14ch] text-balance text-[clamp(2.7rem,6.8vw,5.4rem)] font-semibold leading-[0.92] tracking-[-0.055em]">
-                El marketplace de
+              <h1 className="max-w-[14ch] text-balance text-[clamp(2.7rem,6.8vw,5.4rem)] font-semibold leading-[0.92] tracking-[-0.05em]">
+                Compara y cotiza
                 <span className="gradient-text"> casas prefabricadas</span> en Chile.
               </h1>
               <p className="max-w-[42rem] text-base font-medium leading-relaxed text-foreground/74 md:text-[1.1rem]">
-                Compara modelos, sistemas constructivos y constructoras verificadas en un solo lugar. Si buscas tu casa, cotiza ahora. Si eres constructora, publica tus modelos y recibe clientes.
+                Explora modelos en panel SIP, construcción modular y llave en mano. Compara superficies, especificaciones técnicas y solicita una cotización directa a constructoras verificadas en tu región.
               </p>
 
               {/* Buyer CTAs */}
               <div className="flex flex-wrap gap-3 pt-2">
                 <Link
                   href="/catalogo"
-                  className="cta-pill px-6 py-3 text-sm font-extrabold uppercase tracking-[0.18em]"
+                  onClick={() => trackCatalogoClick("hero")}
+                  className="cta-pill px-7 py-3 text-sm font-extrabold uppercase tracking-[0.18em]"
                 >
                   Explorar modelos
                 </Link>
                 <Link
-                  href="/constructoras"
-                  className="cta-pill-secondary px-6 py-3 text-sm font-extrabold uppercase tracking-[0.18em]"
+                  href="#cotizar-hero"
+                  className="cta-pill-secondary px-7 py-3 text-sm font-extrabold uppercase tracking-[0.18em]"
                 >
-                  Ver constructoras
+                  Solicitar cotización
                 </Link>
               </div>
 
-              {/* Constructora micro-CTA */}
-              <div className="pt-2">
+              {/* Constructora secondary access */}
+              <div className="pt-3 border-t border-border/40">
                 <Link
-                  href="/planes"
-                  className="group inline-flex items-center gap-2 text-sm font-bold text-brand-indigo/70 transition-colors hover:text-brand-indigo"
+                  href="/para-constructoras"
+                  onClick={() => trackConstructorasAccessClick("hero")}
+                  className="group inline-flex items-center gap-2 text-xs font-bold text-brand-indigo/80 transition-colors hover:text-brand-indigo"
                 >
-                  <Building2 className="h-4 w-4" />
-                  ¿Eres constructora? Publica tus modelos gratis →
+                  <Building2 className="h-4 w-4 text-brand-indigo/70 group-hover:text-brand-indigo" />
+                  <span>¿Tienes una constructora? <strong className="underline underline-offset-4 font-black">Publica tus modelos y recibe cotizaciones directas →</strong></span>
                 </Link>
               </div>
             </div>
 
-            {/* Social proof mini stats */}
+            {/* Verification & trust stats */}
             <div className="flex flex-wrap gap-6 border-t border-border/40 pt-6">
               <div className="flex items-center gap-2 text-sm">
                 <MapPin className="h-4 w-4 text-brand-teal" />
-                <span className="font-bold text-foreground/80">{REGIONES_CHILE.length} regiones</span>
+                <span className="font-bold text-foreground/80">{REGIONES_CHILE.length} regiones de Chile</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Building2 className="h-4 w-4 text-brand-indigo" />
-                <span className="font-bold text-foreground/80">Constructoras verificadas</span>
+                <span className="font-bold text-foreground/80">Constructoras activas</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Users className="h-4 w-4 text-brand-teal" />
-                <span className="font-bold text-foreground/80">Cotización gratuita</span>
+                <span className="font-bold text-foreground/80">Cotización 100% gratuita</span>
               </div>
             </div>
           </div>
@@ -101,10 +100,11 @@ export function HeroSection() {
 
         {/* Right: Lead capture form */}
         <motion.aside
+          id="cotizar-hero"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, delay: 0.08 }}
-          className="flex flex-col gap-4 pt-8 lg:pt-[5rem]"
+          className="flex flex-col gap-4 pt-8 lg:pt-[5rem] scroll-mt-24"
         >
           <div className="relative overflow-hidden rounded-[2rem] border border-border/60 bg-background/80 p-6 shadow-xl shadow-brand-indigo/5 backdrop-blur-md sm:p-8">
             <div className="absolute inset-0 architect-grid opacity-[0.05]" />

@@ -2,58 +2,64 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* TopCasas palette - evergreen + warm clay */
-  --brand-indigo: hsl(166 50% 24%);        /* #1F5D4E */
-  --brand-teal: hsl(19 67% 54%);           /* #D96B3B */
-  --brand-sunset: hsl(32 87% 62%);         /* #F2994A */
-  --brand-sand: hsl(158 47% 91%);          /* #DFF3EC */
-  --brand-evergreen-dark: hsl(164 52% 19%); /* #17483B */
-  --brand-evergreen-hover: hsl(166 46% 34%); /* #2F7F6D */
+  --brand-indigo: hsl(187 100% 8%);
+  --brand-teal: hsl(187 69% 24%);
+  --brand-sunset: hsl(99 100% 84%);
+  --brand-sand: hsl(205 50% 94%);
+  --brand-evergreen-dark: hsl(187 69% 14%);
+  --brand-evergreen-hover: hsl(186 67% 19%);
 
-  --background: hsl(0 0% 100%);
-  --foreground: hsl(215 28% 17%);          /* #1F2937 */
+  --background: hsl(0 0% 92%);
+  --foreground: hsl(187 100% 8%);
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(215 28% 17%);
+  --card-foreground: hsl(187 100% 8%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(215 28% 17%);
-  
-  --primary: hsl(166 50% 24%);
+  --popover-foreground: hsl(187 100% 8%);
+
+  --primary: hsl(187 69% 14%);
   --primary-foreground: hsl(0 0% 100%);
-  
-  --secondary: hsl(158 47% 91%);
-  --secondary-foreground: hsl(166 50% 24%);
-  
-  --muted: hsl(150 20% 97%);
-  --muted-foreground: hsl(220 9% 46%);     /* #6B7280 */
-  --accent: hsl(19 67% 54%);
-  --accent-foreground: hsl(0 0% 100%);
+
+  --secondary: hsl(120 55% 95%);
+  --secondary-foreground: hsl(187 69% 14%);
+
+  --muted: hsl(0 0% 98%);
+  --muted-foreground: hsl(187 18% 33%);
+  --accent: hsl(99 100% 84%);
+  --accent-foreground: hsl(187 69% 14%);
   --destructive: hsl(345.3 82.7% 40.8%);
   --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(220 13% 91%);              /* #E5E7EB */
-  --input: hsl(220 13% 91%);
-  --ring: hsl(166 46% 34%);
+  --border: hsl(188 18% 76%);
+  --input: hsl(0 0% 100%);
+  --ring: hsl(187 69% 24%);
+
+  --surface-canvas: #ebebeb;
+  --surface-white: #ffffff;
+  --surface-fog: #fafafa;
+  --surface-sky: #e0f4ff;
+  --surface-mint: #eafde8;
+  --surface-warm: #feefe8;
 }
 
 .dark {
-  --background: hsl(165 32% 8%);
+  --background: hsl(187 54% 7%);
   --foreground: hsl(210 40% 98%);
-  --card: hsl(165 28% 10%);
+  --card: hsl(188 41% 10%);
   --card-foreground: hsl(0 0% 100%);
-  --popover: hsl(165 28% 10%);
+  --popover: hsl(188 41% 10%);
   --popover-foreground: hsl(0 0% 100%);
-  
-  --primary: hsl(19 67% 54%);
-  --primary-foreground: hsl(0 0% 100%);
-  
-  --secondary: hsl(166 30% 18%);
+
+  --primary: hsl(99 100% 84%);
+  --primary-foreground: hsl(187 100% 8%);
+
+  --secondary: hsl(188 27% 14%);
   --secondary-foreground: hsl(0 0% 100%);
-  --muted: hsl(165 24% 14%);
-  --muted-foreground: hsl(215 20.2% 65.1%);
-  --accent: hsl(166 30% 18%);
+  --muted: hsl(188 27% 12%);
+  --muted-foreground: hsl(190 22% 72%);
+  --accent: hsl(188 27% 14%);
   --accent-foreground: hsl(0 0% 100%);
-  --border: hsl(166 18% 22%);
-  --input: hsl(166 18% 22%);
-  --ring: hsl(19 67% 54%);
+  --border: hsl(188 18% 24%);
+  --input: hsl(188 24% 14%);
+  --ring: hsl(99 100% 84%);
 }
 
 @theme inline {
@@ -119,11 +125,11 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
-    line-height: 1.6;
+    line-height: 1.58;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(31, 93, 78, 0.08) 0px, transparent 45%),
-      radial-gradient(at 100% 0%, rgba(217, 107, 59, 0.08) 0px, transparent 35%),
-      radial-gradient(at 50% 100%, rgba(223, 243, 236, 0.9) 0px, transparent 50%);
+      radial-gradient(circle at top left, rgba(224, 244, 255, 0.8), transparent 28%),
+      radial-gradient(circle at top right, rgba(234, 253, 232, 0.7), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(235, 235, 235, 0.96));
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -138,7 +144,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.04;
+    opacity: 0.022;
     z-index: 9999;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -149,20 +155,25 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-tight text-foreground font-bold;
-    line-height: 1.1;
+    @apply font-heading text-foreground font-semibold;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, hsl(166 50% 24%) 0%, hsl(19 67% 54%) 100%);
+  background: linear-gradient(135deg, #00262b 0%, #0b363b 55%, #006af2 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, hsl(166 50% 24%) 0%, hsl(166 46% 34%) 45%, hsl(19 67% 54%) 100%);
+  background: linear-gradient(135deg, #00262b 0%, #0b363b 55%, #437278 100%);
   background-size: 200% 200%;
   animation: dynamic-gradient 10s ease infinite;
 }
@@ -174,11 +185,11 @@
 }
 
 .brand-glow {
-  box-shadow: 0 0 24px rgba(31, 93, 78, 0.14);
+  box-shadow: 0 28px 80px rgba(0, 38, 43, 0.12);
 }
 
 .glass {
-  @apply bg-background/60 backdrop-blur-xl border border-foreground/5;
+  @apply bg-background/70 backdrop-blur-xl border border-foreground/8;
 }
 
 .bg-grid-pattern {
@@ -196,6 +207,90 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.section-frame {
+  position: relative;
+}
+
+.section-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-brand-indigo) 12%, transparent);
+  pointer-events: none;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.28em];
+  border-color: color-mix(in srgb, var(--color-brand-indigo) 16%, transparent);
+  background: color-mix(in srgb, var(--color-background) 85%, white);
+  color: var(--color-brand-indigo);
+}
+
+.paper-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 250, 250, 0.96)),
+    linear-gradient(135deg, rgba(224, 244, 255, 0.3), transparent 55%);
+  border: 1px solid color-mix(in srgb, var(--color-brand-indigo) 8%, var(--color-border));
+  box-shadow: none;
+}
+
+.architect-grid {
+  background-image:
+    linear-gradient(to right, rgba(11, 54, 59, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 54, 59, 0.07) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.warm-line {
+  position: relative;
+}
+
+.warm-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.55rem;
+  height: 2px;
+  width: min(8rem, 28%);
+  background: linear-gradient(90deg, var(--color-brand-teal), transparent);
+}
+
+.cta-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 9999px;
+  border: 2px solid #abffae;
+  background: #00262b;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(171, 255, 174, 0.18);
+}
+
+.cta-pill:hover {
+  background: #0b363b;
+}
+
+.cta-pill-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 9999px;
+  border: 1.5px solid #abffae;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0b363b;
+}
+
+.cta-pill-secondary:hover {
+  background: #ffffff;
+  border-color: #00262b;
+}
+
 /* Premium Form Styles */
 .form-label {
   @apply text-base font-bold text-brand-indigo mb-2 block;
@@ -211,7 +306,7 @@
 
 .hero-bg-custom {
   background-image: 
-    linear-gradient(120deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 251, 248, 0.94) 52%, rgba(255, 246, 241, 0.92) 100%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.98) 0%, rgba(234, 253, 232, 0.88) 52%, rgba(224, 244, 255, 0.88) 100%),
     url("https://www.transparenttextures.com/patterns/natural-paper.png");
   background-size: cover;
   background-position: center center;

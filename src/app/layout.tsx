@@ -1,19 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Instrument_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 
-const spaceSans = Space_Grotesk({
+const bodyFont = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
   preload: true,
 });
 
-const spaceHeading = Space_Grotesk({
+const headingFont = Instrument_Sans({
   variable: "--font-heading",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   display: "swap",
   preload: true,
 });
@@ -22,8 +21,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f0f0f" },
+    { media: "(prefers-color-scheme: light)", color: "#ebebeb" },
+    { media: "(prefers-color-scheme: dark)", color: "#08181b" },
   ],
 };
 
@@ -103,7 +102,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body
-        className={`${spaceSans.variable} ${spaceHeading.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${bodyFont.variable} ${headingFont.variable} font-sans antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"

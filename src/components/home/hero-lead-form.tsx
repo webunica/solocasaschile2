@@ -8,11 +8,20 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { trackCotizacionStart, trackCotizacionSubmit } from "@/lib/analytics";
 
 export function HeroLeadForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  const handleFocus = () => {
+    if (!hasStarted) {
+      setHasStarted(true);
+      trackCotizacionStart({ source: "hero_form" });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,6 +49,7 @@ export function HeroLeadForm() {
       }
 
       setSuccess(true);
+      trackCotizacionSubmit({ source: "hero_form" });
       (e.target as HTMLFormElement).reset();
     } catch (err: unknown) {
       console.error("Lead submission error:", err);
@@ -75,7 +85,7 @@ export function HeroLeadForm() {
   }
 
   return (
-    <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit} onFocus={handleFocus}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div className="space-y-1">
           <label className="form-label">Tu Nombre</label>

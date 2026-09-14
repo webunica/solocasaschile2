@@ -1,37 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, MousePointer2, Home, PhoneCall, ArrowRight } from "lucide-react";
+import { Search, SlidersHorizontal, MessageSquare, Building2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STEPS = [
   {
     icon: Search,
-    title: "Busca tu Hogar",
-    description: "Miles de familias comienzan buscando 'casas prefabricadas' o 'paneles SIP' en Google.",
+    title: "1. Explora el catálogo",
+    description: "Filtra modelos por sistema constructivo (SIP, Modular, Prefabricada), superficie y número de dormitorios.",
     color: "bg-brand-indigo",
     delay: 0
   },
   {
-    icon: MousePointer2,
-    title: "Llega a SolocasasChile",
-    description: "Accedes a la plataforma líder con la oferta más completa y transparente de todo Chile.",
+    icon: SlidersHorizontal,
+    title: "2. Compara especificaciones",
+    description: "Revisa dimensiones, planos referenciales, memoria técnica y precios en UF de cada modelo.",
     color: "bg-brand-teal",
-    delay: 0.2
+    delay: 0.15
   },
   {
-    icon: Home,
-    title: "Elige tus Favoritos",
-    description: "Explora catálogos, compara metros² y selecciona los modelos que mejor se adaptan a ti.",
+    icon: MessageSquare,
+    title: "3. Solicita cotización gratis",
+    description: "Envía tus datos y región de instalación sin costo ni compromiso para que la constructora evalúe tu proyecto.",
     color: "bg-brand-indigo",
-    delay: 0.4
+    delay: 0.3
   },
   {
-    icon: PhoneCall,
-    title: "Cotiza y Construye",
-    description: "Contactas directamente a la constructora, recibes tu presupuesto y haces realidad tu sueño.",
+    icon: Building2,
+    title: "4. Evalúa propuestas",
+    description: "Recibe presupuestos directos de las empresas constructoras y elige la opción adecuada para tu terreno.",
     color: "bg-brand-teal",
-    delay: 0.6
+    delay: 0.45
   }
 ];
 
@@ -39,20 +39,20 @@ export function HowItWorks() {
   return (
     <section className="pt-20 pb-32 bg-muted/20 relative overflow-hidden">
       <div className="container max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center space-y-4 mb-24 uppercase">
+        <div className="text-center space-y-4 mb-24">
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-[10px] font-black tracking-[0.4em] text-primary"
+            className="text-[10px] font-black tracking-[0.3em] uppercase text-primary"
           >
-            Tu Viaje Hacia el Hogar Propio
+            Paso a paso para encontrar tu casa
           </motion.p>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-[clamp(2.3rem,6vw,4.5rem)] font-heading font-black tracking-tighter leading-none"
           >
-            ¿Cómo funciona <span className="gradient-text">SolocasasChile?</span>
+            ¿Cómo comparar y cotizar en <span className="gradient-text">SolocasasChile?</span>
           </motion.h2>
         </div>
 

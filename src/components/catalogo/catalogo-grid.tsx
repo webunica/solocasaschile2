@@ -104,10 +104,18 @@ export function CatalogoGrid({ modelos }: Props) {
 
                 {/* Price Display */}
                 <div className="absolute bottom-4 left-6">
-                   <p className="text-white/60 text-[10px] font-black uppercase tracking-widest mb-0.5">Desde</p>
-                   <p className="text-white text-2xl font-black tracking-tighter">
-                     {modelo.precio_desde_uf.toLocaleString("es-CL")} <span className="text-sm font-medium ml-1 opacity-80">UF</span>
-                   </p>
+                  {modelo.precio_desde_uf && modelo.precio_desde_uf > 0 ? (
+                    <>
+                      <p className="text-white/60 text-[10px] font-black uppercase tracking-widest mb-0.5">Desde</p>
+                      <p className="text-white text-2xl font-black tracking-tighter">
+                        {modelo.precio_desde_uf.toLocaleString("es-CL")} <span className="text-sm font-medium ml-1 opacity-80">UF</span>
+                      </p>
+                    </>
+                  ) : (
+                    <div className="rounded-xl bg-black/50 backdrop-blur-md px-3 py-1.5 border border-white/10">
+                      <p className="text-white text-xs font-bold tracking-tight">Precio a consultar</p>
+                    </div>
+                  )}
                 </div>
               </Link>
 

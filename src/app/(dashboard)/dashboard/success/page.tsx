@@ -7,6 +7,7 @@ import { CheckCircle2, ShieldCheck, ArrowRight, Home, Loader2 } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import confetti from "canvas-confetti";
 import { createClient } from "@/lib/supabase/client";
+import { trackPlanPurchaseConfirmed } from "@/lib/analytics";
 
 export default function PaymentSuccessPage() {
   const [status, setStatus] = useState<'processing' | 'active' | 'error'>('processing');
@@ -46,6 +47,7 @@ export default function PaymentSuccessPage() {
       if (data && data.plan !== 'gratis' && data.plan_status === 'active') {
         setStatus('active');
         setConstructora(data);
+        trackPlanPurchaseConfirmed({ plan: data.plan, constructoraNombre: data.nombre ?? undefined });
         // 🎉 Lanzar confeti solo cuando confirmamos éxito
         launchConfetti();
       } else {

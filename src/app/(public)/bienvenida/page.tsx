@@ -22,7 +22,7 @@ type PlanKey = keyof typeof PLAN_META;
 
 const FREE_STEPS = [
   { icon: UserCircle, title: "Completa los datos de tu empresa", desc: "Agrega logo, descripción y contacto para impresionar a tus futuros clientes." },
-  { icon: Home, title: "Sube tu primer modelo de casa", desc: "Publica tus primeros modelos durante la prueba de 30 dias." },
+  { icon: Home, title: "Sube tu primer modelo de casa", desc: "Publica tus primeros modelos durante la prueba gratuita de 4 meses sin costo." },
   { icon: BookOpen, title: "Revisa los leads que lleguen", desc: "Cada solicitud de cotización llega directo a tu panel. Responde y convierte." },
 ];
 

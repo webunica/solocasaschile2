@@ -33,9 +33,15 @@ const ROWS: Row[] = [
     label: "Precio Base (Desde)",
     key: "precio_desde_uf",
     render: (m) => (
-      <span className="text-foreground font-black text-2xl tracking-tighter">
-        {m.precio_desde_uf.toLocaleString("es-CL")} <span className="text-sm font-bold opacity-60">UF</span>
-      </span>
+      m.precio_desde_uf && m.precio_desde_uf > 0 ? (
+        <span className="text-foreground font-black text-2xl tracking-tighter">
+          {m.precio_desde_uf.toLocaleString("es-CL")} <span className="text-sm font-bold opacity-60">UF</span>
+        </span>
+      ) : (
+        <span className="text-muted-foreground font-bold text-sm">
+          A consultar
+        </span>
+      )
     ),
     highlight: "low",
   },
@@ -48,12 +54,16 @@ const ROWS: Row[] = [
     label: "Valor Metro Cuadrado",
     key: "uf_m2",
     render: (m) => (
-      <div className="flex flex-col items-center">
-        <span className="font-black text-xl text-primary">
-          {(m.precio_desde_uf / (m.superficie_m2 || 1)).toFixed(2)}
-        </span>
-        <span className="text-[10px] font-bold uppercase tracking-widest opacity-40">UF/m²</span>
-      </div>
+      m.precio_desde_uf && m.precio_desde_uf > 0 ? (
+        <div className="flex flex-col items-center">
+          <span className="font-black text-xl text-primary">
+            {(m.precio_desde_uf / (m.superficie_m2 || 1)).toFixed(2)}
+          </span>
+          <span className="text-[10px] font-bold uppercase tracking-widest opacity-40">UF/m²</span>
+        </div>
+      ) : (
+        <span className="text-muted-foreground text-xs font-semibold">N/D</span>
+      )
     ),
     highlight: "low",
   },

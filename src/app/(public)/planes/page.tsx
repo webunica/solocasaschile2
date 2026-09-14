@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useSyncExternalStore } from "react";
+import { useState, useEffect, useTransition, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -8,79 +8,21 @@ import { buttonVariants, Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   CheckCircle2, X, Zap, Crown, Building2, ArrowRight,
-  Star, ChevronDown, Timer, Sparkles, Loader2
+  ChevronDown, Timer, Sparkles, Loader2, ShieldCheck, Users, Lock
 } from "lucide-react";
 import { PromotionCountdown } from "@/components/ui/promotion-countdown";
 import { motion } from "framer-motion";
+import {
+  trackPlanesView,
+  trackPlanCheckoutClick,
+  trackRegistroStart,
+} from "@/lib/analytics";
 
 const PLANES = [
   {
-    id: "premium",
-    nombre: "Premium",
-    precioMensual: "",
-    precioAnualEquiv: "Solicítalo",
-    precioAnualTotal: "0",
-    precioOriginal: "0",
-    descuento: "SOPORTE VIP",
-    icon: Crown,
-    color: "text-amber-500",
-    bgIcon: "bg-amber-500/10",
-    borderClass: "border-amber-500/50 shadow-2xl shadow-amber-500/10 scale-105",
-    gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
-    badge: "SOLO POR INVITACIÓN",
-    badgeClass: "bg-slate-900 text-white border-slate-800",
-    features: [
-      { texto: "Acceso a constru.solocasaschile.com", ok: true },
-      { texto: "Sistema de Seguimiento de Obras", ok: true },
-      { texto: "Modelos ilimitados (Escalabilidad total)", ok: true },
-      { texto: "20 fotos por modelo + video tour", ok: true },
-      { texto: "Perfil premium con video corporativo", ok: true },
-      { texto: "CRM + analíticas completas de mercado", ok: true },
-      { texto: "Testimonios ilimitados (Social Proof)", ok: true },
-      { texto: "Certificaciones ilimitadas", ok: true },
-      { texto: "Galería ilimitada de proyectos", ok: true },
-      { texto: "Badge Premium 💎 posicionamiento VIP", ok: true },
-    ],
-    cta: "Solicitar Plan",
-    ctaHref: "https://wa.me/56964130601?text=Hola%20SolocasasChile%2C%20quiero%20consultar%20por%20la%20habilitación%20del%20Plan%20Premium%20para%20mi%20constructora.",
-    ctaClass: "bg-slate-900 text-white hover:opacity-90 shadow-lg shadow-primary/20",
-    ctaVariant: "default" as const,
-  },
-  {
-    id: "pro",
-    nombre: "Pro",
-    precioMensual: "0.6",
-    precioAnualEquiv: "0.48",
-    precioAnualTotal: "5.76",
-    precioOriginal: "0.6",
-    descuento: "20% OFF ANUAL",
-    icon: Zap,
-    color: "text-brand-teal",
-    bgIcon: "bg-brand-teal/10",
-    borderClass: "border-brand-teal/40 shadow-2xl shadow-brand-teal/10",
-    gradientClass: "from-brand-teal/5 to-transparent",
-    badge: "MÁS POPULAR",
-    badgeClass: "bg-brand-teal text-white border-brand-teal/30",
-    features: [
-      { texto: "15 modelos publicados", ok: true },
-      { texto: "10 fotos por modelo", ok: true },
-      { texto: "Perfil completo de constructora", ok: true },
-      { texto: "CRM de leads avanzado", ok: true },
-      { texto: "Hasta 5 testimonios verificados", ok: true },
-      { texto: "5 certificaciones de calidad", ok: true },
-      { texto: "10 proyectos en galería", ok: true },
-      { texto: "Badge Constructora Verificada ✓", ok: true },
-      { texto: "Sistema de Seguimiento de Obras", ok: true },
-      { texto: "Soporte por email prioritario", ok: true },
-    ],
-    cta: "Empezar Ahora",
-    ctaHref: "/register?plan=pro",
-    ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white",
-    ctaVariant: "default" as const,
-  },
-  {
     id: "gratis",
     nombre: "Gratis",
+    duracion: "4 meses de prueba",
     precioMensual: "0",
     precioAnualEquiv: "0",
     periodo: "por 4 meses",
@@ -89,45 +31,112 @@ const PLANES = [
     bgIcon: "bg-muted/60",
     borderClass: "border-border/60",
     gradientClass: "",
+    badge: "PRUEBA SIN COSTO",
+    badgeClass: "bg-muted text-foreground border-border",
+    resultado: "Prueba la plataforma y recibe cotizaciones de compradores sin costo.",
     features: [
-      { texto: "3 modelos publicados", ok: true },
-      { texto: "3 fotos por modelo", ok: true },
+      { texto: "Hasta 3 modelos en catálogo público", ok: true },
+      { texto: "3 fotografías por modelo", ok: true },
       { texto: "Perfil básico de constructora", ok: true },
-      { texto: "Recepción de leads / cotizaciones", ok: true },
-      { texto: "Testimonios y certificaciones", ok: false },
-      { texto: "Galería de proyectos terminados", ok: false },
-      { texto: "Badge Constructora Verificada ✓", ok: false },
-      { texto: "Posición prioritaria en catálogo", ok: false },
-      { texto: "Estadísticas y analíticas", ok: false },
-      { texto: "Soporte dedicado", ok: false },
+      { texto: "Recepción de cotizaciones directas al panel", ok: true },
+      { texto: "Historial permanente de prospectos", ok: true },
+      { texto: "Sin tarjeta de crédito requerida", ok: true },
+      { texto: "Sello de Constructora Verificada ✓", ok: false },
+      { texto: "Módulo de Seguimiento de Obras", ok: false },
+      { texto: "Prioridad en catálogo", ok: false },
     ],
-    cta: "Probar Plataforma",
-    ctaHref: "/register",
-    ctaClass: "border-border text-foreground hover:bg-muted font-medium opacity-80",
+    cta: "Probar 4 meses gratis",
+    ctaHref: "/register?plan=gratis",
+    ctaClass: "border-border text-foreground hover:bg-muted font-medium",
     ctaVariant: "outline" as const,
+  },
+  {
+    id: "pro",
+    nombre: "Pro",
+    duracion: "Mensual o Anual",
+    precioMensual: "0.6",
+    precioAnualEquiv: "0.48",
+    precioAnualTotal: "5.76",
+    precioOriginal: "0.6",
+    descuento: "20% OFF ANUAL",
+    icon: Zap,
+    color: "text-brand-teal",
+    bgIcon: "bg-brand-teal/10",
+    borderClass: "border-brand-teal/40 shadow-2xl shadow-brand-teal/10 ring-2 ring-brand-teal/20",
+    gradientClass: "from-brand-teal/5 to-transparent",
+    badge: "MÁS POPULAR",
+    badgeClass: "bg-brand-teal text-white border-brand-teal/30",
+    resultado: "Máxima presencia comercial, 15 modelos y sello de confianza para convertir más consultas.",
+    features: [
+      { texto: "Hasta 15 modelos publicados", ok: true },
+      { texto: "10 fotos por modelo", ok: true },
+      { texto: "Perfil completo de constructora", ok: true },
+      { texto: "CRM de prospectos avanzado", ok: true },
+      { texto: "Sello de Constructora Verificada ✓", ok: true },
+      { texto: "Módulo de Seguimiento de Obras", ok: true },
+      { texto: "Galería de proyectos terminados", ok: true },
+      { texto: "Prioridad en catálogo", ok: true },
+      { texto: "Soporte comercial prioritario vía WhatsApp", ok: true },
+    ],
+    cta: "Iniciar con Plan Pro",
+    ctaHref: "/checkout?plan=pro",
+    ctaClass: "bg-brand-teal hover:bg-brand-teal/90 text-white shadow-lg shadow-brand-teal/20",
+    ctaVariant: "default" as const,
+  },
+  {
+    id: "premium",
+    nombre: "Premium",
+    duracion: "Por invitación",
+    precioMensual: "Por invitación",
+    precioAnualEquiv: "Por invitación",
+    precioAnualTotal: "Personalizado",
+    precioOriginal: null,
+    descuento: "SOPORTE VIP",
+    icon: Crown,
+    color: "text-amber-500",
+    bgIcon: "bg-amber-500/10",
+    borderClass: "border-amber-500/50 shadow-2xl shadow-amber-500/10",
+    gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
+    badge: "SOLO POR INVITACIÓN",
+    badgeClass: "bg-slate-900 text-white border-slate-800",
+    resultado: "Solución institucional para marcas con alto volumen y catálogo amplio.",
+    features: [
+      { texto: "Modelos y fotos ilimitadas", ok: true },
+      { texto: "Video tour y recorrido 3D integrado", ok: true },
+      { texto: "Perfil premium con video corporativo", ok: true },
+      { texto: "Acceso exclusivo a constru.solocasaschile.com", ok: true },
+      { texto: "Módulo avanzado de Seguimiento de Obras", ok: true },
+      { texto: "CRM + analíticas de mercado", ok: true },
+      { texto: "Badge Premium 💎 posicionamiento VIP", ok: true },
+      { texto: "Ejecutivo de cuenta dedicado", ok: true },
+    ],
+    cta: "Solicitar evaluación",
+    ctaHref: "https://wa.me/56964130601?text=Hola%20SolocasasChile%2C%20quiero%20consultar%20por%20la%20habilitaci%C3%B3n%20del%20Plan%20Premium%20para%20mi%20constructora.",
+    ctaClass: "bg-slate-900 text-white hover:opacity-90 shadow-lg shadow-primary/20",
+    ctaVariant: "default" as const,
   },
 ];
 
 const FAQS = [
   {
     q: "¿Por qué el plan Gratis dura 4 meses?",
-    a: "Queremos que pruebes la potencia de la plataforma sin riesgos. 4 meses es tiempo suficiente para recibir tus primeros leads y cerrar ventas antes de decidir escalar a un plan Pro.",
+    a: "Queremos que pruebes el funcionamiento de la plataforma con tiempo suficiente. 4 meses permite publicar tus modelos, recibir consultas de compradores en tu región y evaluar el retorno comercial sin ningún riesgo ni costo.",
+  },
+  {
+    q: "¿Qué ocurre con mis prospectos si no continúo tras los 4 meses?",
+    a: "Tus prospectos son 100% de tu empresa. Siempre tendrás acceso al historial de cotizaciones recibidas en tu panel, incluso si decides no renovar o continuar en modalidad inactiva.",
   },
   {
     q: "¿Cómo funciona el descuento anual?",
-    a: "Al elegir el pago anual en el Plan Pro, obtienes un 20% de descuento directo sobre el valor mensual. Es nuestra forma de premiar a las constructoras que se comprometen con su crecimiento a largo plazo.",
+    a: "Al elegir el pago anual en el Plan Pro, obtienes un 20% de descuento directo sobre el valor mensual (pagas 5.76 UF en lugar de 7.2 UF anuales). Se factura en un solo pago por adelantado.",
   },
   {
     q: "¿En qué moneda se cobra?",
-    a: "Los planes Pro y Premium se cobran en UF (Unidad de Fomento chilena). El valor exacto en pesos se calcula al momento de la facturación según el valor diario de la UF.",
+    a: "Los planes se expresan en Unidades de Fomento (UF) y se facturan en pesos chilenos según el valor oficial diario de la UF al momento del pago a través de Flow (Webpay, tarjetas o transferencias).",
   },
   {
-    q: "¿Qué pasa con mis leads si termina mi periodo gratis?",
-    a: "Tus leads son tuyos. Siempre tendrás acceso al historial de prospectos, incluso si decides no renovar o bajar de plan.",
-  },
-  {
-    q: "¿Hay contrato de permanencia?",
-    a: "El plan mensual no tiene permanencia. El plan anual se paga por adelantado y te garantiza el precio promocional durante los 12 meses de servicio.",
+    q: "¿Hay contrato de permanencia forzosa?",
+    a: "No en la modalidad mensual: puedes suspender el cobro en cualquier momento desde tu panel. El plan anual te garantiza el valor promocional durante los 12 meses de servicio.",
   },
 ];
 
@@ -145,18 +154,29 @@ export default function PlanesPage() {
   const [isYearly, setIsYearly] = useState(true);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  
+
+  useEffect(() => {
+    trackPlanesView("planes");
+  }, []);
+
   const isStatusPending = useSyncExternalStore(
     subscribeToUrlChanges,
     getStatusPendingSnapshot,
     getStatusPendingServerSnapshot
   );
 
-  const handlePurchase = async (planId: string, billing: 'monthly' | 'yearly') => {
-    if (planId === 'gratis') {
+  const handlePurchase = async (planId: string, billing: "monthly" | "yearly") => {
+    if (planId === "gratis") {
+      trackRegistroStart("gratis");
       router.push(`/register?plan=${planId}`);
       return;
     }
+
+    trackPlanCheckoutClick({
+      plan: planId,
+      billing,
+      priceUf: billing === "yearly" ? 5.76 : 0.6,
+    });
 
     startTransition(async () => {
       router.push(`/checkout?plan=${planId}&billing=${billing}`);
@@ -168,14 +188,13 @@ export default function PlanesPage() {
       {/* Loading Overlay */}
       {isPending && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center flex-col gap-4">
-           <div className="w-16 h-16 rounded-full border-4 border-brand-indigo/20 border-t-brand-indigo animate-spin" />
-           <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Preparando checkout seguro...</p>
+          <div className="w-16 h-16 rounded-full border-4 border-brand-indigo/20 border-t-brand-indigo animate-spin" />
+          <p className="text-sm font-black uppercase tracking-widest text-brand-indigo animate-pulse">Preparando checkout seguro...</p>
         </div>
       )}
 
       {/* ── Hero ───────────────────────────────────────────── */}
       <section className="relative pt-44 pb-10 text-center overflow-hidden border-b border-border/40">
-        {/* Pending Status Alert */}
         {isStatusPending && (
           <div className="container max-w-4xl mx-auto px-4 mb-10">
             <motion.div 
@@ -209,18 +228,25 @@ export default function PlanesPage() {
             Para Constructoras de Chile
           </Badge>
           <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">
-            Elige el plan <span className="gradient-text">correcto</span>
+            Planes claros según el <span className="gradient-text">valor real</span>
           </h1>
           <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-            Mejora el posicionamiento de tu constructora y recibe leads reales directamente en tu panel de control.
+            Publica tus modelos en el catálogo y recibe cotizaciones directas de compradores en tu región.
           </p>
 
-          <div className="pt-4 flex flex-col items-center gap-12">
-            
+          <div className="pt-2 flex items-center justify-center">
+            <Link
+              href="/para-constructoras"
+              className="inline-flex items-center gap-2 text-xs font-bold text-brand-indigo hover:underline"
+            >
+              ¿Quieres ver cómo funciona el panel y qué se publica? Conoce el recorrido completo →
+            </Link>
+          </div>
+
+          <div className="pt-4 flex flex-col items-center gap-8">
             <div className="w-full h-px bg-gradient-to-r from-transparent via-border/40 to-transparent max-w-2xl" />
 
-            {/* Toggle Billing and Discount Badge closer to the plans */}
-            <div className="flex flex-col items-center gap-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+            <div className="flex flex-col items-center gap-6">
               <div className="flex items-center gap-4 bg-muted/30 p-1.5 rounded-[2rem] border border-border/40 backdrop-blur-md shadow-inner">
                 <button 
                   onClick={() => setIsYearly(false)}
@@ -239,21 +265,21 @@ export default function PlanesPage() {
                   )}
                 >
                   Anual
-                  <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black animate-pulse shadow-lg shadow-red-500/20">
-                    DESC.
+                  <span className="absolute -top-3 -right-3 bg-red-500 text-white text-[8px] px-2 py-1 rounded-full font-black">
+                    20% OFF
                   </span>
                 </button>
               </div>
 
-              <div className="flex flex-col md:flex-row items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-4 rounded-3xl border border-brand-indigo/10 font-bold text-sm uppercase tracking-widest shadow-sm">
-                <div className="flex items-center gap-3">
-                  <Sparkles className="w-5 h-5 text-amber-500 animate-spin-slow" /> 
-                  {isYearly ? "Estás ahorrando con el pago anual" : "Ahorra activando el pago anual"}
+              <div className="flex flex-col md:flex-row items-center gap-3 bg-brand-indigo/5 text-brand-indigo px-8 py-3.5 rounded-3xl border border-brand-indigo/10 font-bold text-xs uppercase tracking-widest">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-500" /> 
+                  {isYearly ? "Ahorras 1.44 UF con la suscripción anual (5.76 UF/año)" : "Paga mes a mes sin permanencia"}
                 </div>
                 {isYearly && (
                   <div className="flex items-center gap-2 border-l border-brand-indigo/20 pl-4 ml-1">
-                    <Timer className="w-4 h-4 text-brand-indigo/60" />
-                    <span className="text-[10px] text-muted-foreground">Termina en:</span>
+                    <Timer className="w-3.5 h-3.5 text-brand-indigo/60" />
+                    <span className="text-[10px] text-muted-foreground">Promoción anual:</span>
                     <PromotionCountdown variant="compact" />
                   </div>
                 )}
@@ -268,27 +294,28 @@ export default function PlanesPage() {
         <div className="grid md:grid-cols-3 gap-8 items-start">
           {PLANES.map((plan) => {
             const Icon = plan.icon;
-            const currentPrice = isYearly && plan.id !== 'gratis' ? plan.precioAnualEquiv : plan.precioMensual;
-            const originalPrice = plan.id !== 'gratis' ? plan.precioMensual : null;
-            const periodText = plan.id === 'gratis' ? (plan.periodo || 'por 4 meses') : (isYearly ? "UF / mes equiv." : "UF / mes");
+            const isNumeric = plan.id !== "premium";
+            const currentPrice = isNumeric
+              ? (isYearly && plan.id !== "gratis" ? plan.precioAnualEquiv : plan.precioMensual)
+              : "Por invitación";
+            const originalPrice = plan.id === "pro" ? plan.precioMensual : null;
+            const periodText = plan.id === "gratis" ? "por 4 meses" : (isYearly ? "UF / mes equiv." : "UF / mes");
 
             return (
               <div
                 key={plan.id}
                 className={cn(
-                  "relative bg-card/60 backdrop-blur-xl border rounded-[3rem] overflow-hidden flex flex-col gap-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl",
+                  "relative bg-card/60 backdrop-blur-xl border rounded-[3rem] overflow-hidden flex flex-col gap-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
                   plan.borderClass
                 )}
               >
-                {/* Subtle gradient background */}
                 {plan.gradientClass && (
                   <div className={cn("absolute inset-0 bg-gradient-to-br pointer-events-none", plan.gradientClass)} />
                 )}
 
-                {/* Popular badge */}
                 {plan.badge && (
                   <div className="absolute -top-px left-1/2 -translate-x-1/2">
-                    <Badge className={cn("rounded-none rounded-b-xl font-black text-sm uppercase tracking-widest px-5 py-1.5 border-x border-b", plan.badgeClass)}>
+                    <Badge className={cn("rounded-none rounded-b-xl font-black text-xs uppercase tracking-widest px-5 py-1.5 border-x border-b", plan.badgeClass)}>
                       {plan.badge}
                     </Badge>
                   </div>
@@ -303,26 +330,36 @@ export default function PlanesPage() {
                     <div>
                       <h2 className="text-2xl font-heading font-black tracking-tight">{plan.nombre}</h2>
                       <div className="flex flex-col gap-1 mt-2">
-                         <div className="flex items-baseline gap-2">
-                           {isYearly && plan.id !== 'gratis' && plan.id !== 'premium' && originalPrice && (
-                             <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
-                               {originalPrice}
-                             </span>
-                           )}
-                           <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
-                           <div className="flex flex-col">
+                        {isNumeric ? (
+                          <div className="flex items-baseline gap-2">
+                            {isYearly && plan.id === "pro" && originalPrice && (
+                              <span className="text-lg font-bold text-muted-foreground/40 line-through tracking-tighter">
+                                {originalPrice}
+                              </span>
+                            )}
+                            <span className="text-4xl font-black tracking-tighter">{currentPrice}</span>
+                            <div className="flex flex-col">
                               <span className="text-muted-foreground font-bold text-[10px] uppercase tracking-widest">{periodText}</span>
-                              {isYearly && plan.id !== 'gratis' && plan.id !== 'premium' && (
-                                <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado anual</span>
+                              {isYearly && plan.id === "pro" && (
+                                <span className="text-[9px] font-black text-brand-indigo uppercase tracking-tighter">Facturado 5.76 UF anual</span>
                               )}
-                           </div>
-                           {isYearly && plan.id !== 'gratis' && plan.id !== 'premium' && (
-                             <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
-                               20% OFF
-                             </Badge>
-                           )}
-                         </div>
+                            </div>
+                            {isYearly && plan.id === "pro" && (
+                              <Badge className="bg-red-500 text-white border-none ml-2 text-[8px] px-2 py-0.5">
+                                20% OFF
+                              </Badge>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="space-y-1">
+                            <span className="text-2xl font-black tracking-tight text-foreground">{currentPrice}</span>
+                            <p className="text-xs text-muted-foreground font-medium">Evaluación personalizada según volumen</p>
+                          </div>
+                        )}
                       </div>
+                      <p className="text-xs font-semibold text-muted-foreground mt-3 leading-relaxed">
+                        {plan.resultado}
+                      </p>
                     </div>
                   </div>
 
@@ -331,7 +368,7 @@ export default function PlanesPage() {
                     {plan.features.map((feat) => (
                       <li
                         key={feat.texto}
-                        className={cn("flex items-center gap-3 text-sm font-medium", !feat.ok && "opacity-35")}
+                        className={cn("flex items-center gap-3 text-sm font-medium", !feat.ok && "opacity-35 line-through")}
                       >
                         {feat.ok
                           ? <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
@@ -343,9 +380,12 @@ export default function PlanesPage() {
                   </ul>
 
                   {/* CTA */}
-                  {plan.id === 'gratis' || plan.id === 'premium' ? (
+                  {plan.id === "gratis" || plan.id === "premium" ? (
                     <Link
-                      href={`${plan.ctaHref}`}
+                      href={plan.ctaHref}
+                      onClick={() => {
+                        if (plan.id === "gratis") trackRegistroStart("gratis");
+                      }}
                       className={cn(
                         buttonVariants({ variant: plan.ctaVariant, size: "lg" }),
                         "w-full rounded-2xl h-14 font-extrabold uppercase tracking-widest gap-2 transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-slate-200",
@@ -356,7 +396,7 @@ export default function PlanesPage() {
                     </Link>
                   ) : (
                     <Button
-                      onClick={() => handlePurchase(plan.id, isYearly ? 'yearly' : 'monthly')}
+                      onClick={() => handlePurchase(plan.id, isYearly ? "yearly" : "monthly")}
                       disabled={isPending}
                       className={cn(
                         "w-full rounded-2xl h-14 font-extrabold uppercase tracking-widest gap-2 transition-all hover:scale-[1.02] active:scale-95",
@@ -367,7 +407,7 @@ export default function PlanesPage() {
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         <>
-                          ¡Compra ahora! <ArrowRight className="w-4 h-4" />
+                          {plan.cta} <ArrowRight className="w-4 h-4" />
                         </>
                       )}
                     </Button>
@@ -379,34 +419,50 @@ export default function PlanesPage() {
         </div>
 
         {/* Trust note */}
-        <p className="text-center text-sm text-muted-foreground font-medium mt-12 opacity-60">
-          Sin permanencia en planes mensuales · Los precios en UF se actualizan diariamente · Plan Gratis limitado a 4 meses por constructora.
+        <p className="text-center text-xs text-muted-foreground font-medium mt-12 opacity-80">
+          Sin permanencia en planes mensuales · Precios en UF facturados en pesos según valor oficial del día · Prueba gratis de 4 meses sin tarjeta de crédito.
         </p>
       </section>
 
-      {/* ── Social proof ──────────────────────────────────── */}
+      {/* ── Operative Guarantees for Builders (Replaces Fake Reviews) ───── */}
       <section className="border-y border-border/40 bg-muted/20 py-16">
-        <div className="container max-w-5xl mx-auto px-4 md:px-8 text-center space-y-10">
-          <p className="text-sm font-black uppercase tracking-[0.3em] text-muted-foreground">Lo que dicen nuestras constructoras</p>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { quote: "Contratamos el plan anual Pro con el 20% de descuento y la inversión se pagó sola en las primeras semanas.", name: "Carlos Mena", company: "Casas Mena SPA", plan: "Pro Anual" },
-              { quote: "El Plan Premium nos ayudó a ordenar modelos, testimonios y seguimiento con una presencia mucho más completa.", name: "Andrea Flores", company: "Constructora Biobío", plan: "Premium" },
-              { quote: "Los 4 meses gratis nos permitieron probar la herramienta y recibir leads reales sin costo.", name: "Felipe Torres", company: "SIP Chile", plan: "Periodo Prueba" },
-            ].map((t) => (
-              <div key={t.name} className="bg-card/60 border border-border/40 rounded-[2rem] p-8 text-left space-y-4">
-                <div className="flex gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-sm font-medium text-muted-foreground leading-relaxed">&quot;{t.quote}&quot;</p>
-                <div>
-                  <p className="font-black text-sm text-foreground">{t.name}</p>
-                  <p className="text-sm text-muted-foreground font-medium">{t.company} · {t.plan}</p>
-                </div>
+        <div className="container max-w-5xl mx-auto px-4 md:px-8 text-center space-y-8">
+          <Badge variant="outline" className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground border-border">
+            Compromisos Comerciales
+          </Badge>
+          <h3 className="font-heading text-2xl md:text-3xl font-black tracking-tight text-foreground">
+            Diseñado para trabajar con total transparencia
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6 text-left">
+            <div className="bg-card/70 border border-border/50 rounded-2xl p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-brand-teal/10 flex items-center justify-center text-brand-teal">
+                <Users className="w-5 h-5" />
               </div>
-            ))}
+              <h4 className="font-black text-sm text-foreground">Contacto 100% directo</h4>
+              <p className="text-xs font-medium text-muted-foreground leading-relaxed">
+                Sin comisiones por venta ni intermediación en los presupuestos que acuerdes con tus clientes.
+              </p>
+            </div>
+
+            <div className="bg-card/70 border border-border/50 rounded-2xl p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-brand-indigo/10 flex items-center justify-center text-brand-indigo">
+                <Lock className="w-5 h-5" />
+              </div>
+              <h4 className="font-black text-sm text-foreground">Tus prospectos te pertenecen</h4>
+              <p className="text-xs font-medium text-muted-foreground leading-relaxed">
+                Cada cotización recibida es exclusiva de tu empresa. No se revenden datos a otras constructoras.
+              </p>
+            </div>
+
+            <div className="bg-card/70 border border-border/50 rounded-2xl p-6 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-600">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h4 className="font-black text-sm text-foreground">Sello de verificación objetivo</h4>
+              <p className="text-xs font-medium text-muted-foreground leading-relaxed">
+                Validamos antecedentes de la constructora para dar certeza y seguridad al comprador antes de cotizar.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -415,7 +471,7 @@ export default function PlanesPage() {
       <section className="container max-w-3xl mx-auto px-4 md:px-8 py-24 space-y-6">
         <div className="text-center space-y-3 mb-12">
           <h2 className="text-4xl font-heading font-black tracking-tighter">Preguntas frecuentes</h2>
-          <p className="text-muted-foreground font-medium">Todo lo que necesitas saber sobre los nuevos planes.</p>
+          <p className="text-muted-foreground font-medium">Condiciones comerciales claras para constructoras.</p>
         </div>
         <div className="space-y-4">
           {FAQS.map((faq) => (
@@ -444,34 +500,44 @@ export default function PlanesPage() {
       {/* ── Final CTA ─────────────────────────────────────── */}
       <section className="container max-w-4xl mx-auto px-4 md:px-8">
         <div className="bg-brand-indigo rounded-[3rem] p-16 text-center text-white space-y-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=60&w=800')] bg-cover bg-center opacity-10 mix-blend-overlay" />
           <div className="relative z-10 space-y-6">
             <Badge className="bg-white/20 text-white border-white/20 font-black uppercase tracking-widest text-sm px-4 py-1.5">
               Comienza hoy
             </Badge>
             <h2 className="text-4xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
-              Activa tu Plan Pro anual<br />y domina tu zona
+              Publica tu catálogo y recibe<br />cotizaciones directas
             </h2>
-            <p className="text-white/80 font-medium text-lg max-w-md mx-auto">
-              Únete a las constructoras que ya están recibiendo leads reales cada semana.
+            <p className="text-white/80 font-medium text-base max-w-md mx-auto">
+              Empieza con 4 meses de prueba sin costo o activa el Plan Pro para mayor volumen de modelos y presencia activa.
             </p>
-            <Button
-              disabled={isPending}
-              onClick={() => handlePurchase('pro', 'yearly')}
-              className={cn(
-                "bg-white text-brand-indigo hover:bg-white/95 font-black uppercase tracking-widest rounded-2xl h-14 px-10 gap-2 shadow-2xl transition-all hover:scale-105 active:scale-95"
-              )}
-            >
-              {isPending ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                <>Comenzar ahora <ArrowRight className="w-4 h-4" /></>
-              )}
-            </Button>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                disabled={isPending}
+                onClick={() => handlePurchase('pro', 'yearly')}
+                className={cn(
+                  "bg-white text-brand-indigo hover:bg-white/95 font-black uppercase tracking-widest rounded-2xl h-14 px-8 gap-2 shadow-2xl transition-all hover:scale-105 active:scale-95"
+                )}
+              >
+                {isPending ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <>Iniciar con Plan Pro Anual <ArrowRight className="w-4 h-4" /></>
+                )}
+              </Button>
+              <Link
+                href="/register?plan=gratis"
+                onClick={() => trackRegistroStart("gratis")}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "border-white/30 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl h-14 px-8"
+                )}
+              >
+                Probar 4 meses gratis
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-
     </div>
   );
 }

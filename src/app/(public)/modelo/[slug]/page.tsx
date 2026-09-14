@@ -14,6 +14,7 @@ import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
 import { ModeloPlano } from "@/components/modelo/modelo-plano";
 import { buildModelJsonLd, buildFAQJsonLd, StructuredData } from "@/components/seo/structured-data";
+import { FichaViewTracker } from "@/components/modelo/ficha-view-tracker";
 import type { Metadata } from "next";
 import type { Testimonio } from "@/components/dashboard/testimonios-manager";
 
@@ -131,6 +132,15 @@ export default async function ModeloPage({ params }: PageProps) {
           slug: modelo.slug,
           constructora: { nombre: constructora.nombre, logo_url: constructora.logo_url }
         })}
+      />
+
+      <FichaViewTracker
+        modelId={modelo.id}
+        modelName={modelo.nombre}
+        constructoraId={constructora.id}
+        constructoraName={constructora.nombre}
+        tipo={modelo.tipo}
+        precioUf={precio}
       />
       
       <StickyCTAMobile 
@@ -393,7 +403,7 @@ export default async function ModeloPage({ params }: PageProps) {
                      constructoraNombre={constructora.nombre}
                      trigger={
                         <Button size="lg" variant="secondary" className="w-full rounded-2xl h-16 font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-teal/20 relative z-10">
-                           <MessageSquare className="w-4 h-4 mr-2" /> Solicitar Asesoría
+                           <MessageSquare className="w-4 h-4 mr-2" /> Solicitar cotización
                         </Button>
                      }
                   />

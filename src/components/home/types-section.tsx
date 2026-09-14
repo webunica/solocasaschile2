@@ -1,201 +1,142 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { CONSTRUCTION_SYSTEMS } from "@/config/construction-systems";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from "@/components/ui/dialog";
-import { HeroLeadForm } from "./hero-lead-form";
 
 export function TypesSection() {
   const [index, setIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const totalItems = CONSTRUCTION_SYSTEMS.length;
   const desktopVisible = 4;
   const maxIndex = isMobile ? totalItems - 1 : totalItems - desktopVisible;
-  
+
   const next = useCallback(() => {
     setIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
   }, [maxIndex]);
 
   const prev = () => setIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
 
-  // Auto-slide 
   useEffect(() => {
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, [next]); 
+  }, [next]);
 
-  // Mobile Carousel Logic: Central Card with side peeking
-  // On mobile we want card width to be ~80% and 10% on each side to peek.
-  const cardWidth = isMobile ? 80 : 25; // % of container
-  const gap = isMobile ? 4 : 0; // % gap
-  const offset = isMobile ? 10 : 0; // % initial offset to center first card
+  const cardWidth = isMobile ? 84 : 25;
+  const gap = isMobile ? 4 : 0;
+  const offset = isMobile ? 8 : 0;
 
   return (
-    <section className="pt-32 pb-[100px] bg-background relative overflow-hidden">
-      {/* Organic Background Decor */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-teal/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-indigo/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-      
-      <div className="container px-6 md:px-12 max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col lg:flex-row justify-between items-end gap-12 mb-20 text-left">
-          <div className="max-w-2xl space-y-6">
-            <Badge variant="outline" className="border-primary/20 text-primary uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-full">
-              Sistemas Constructivos
-            </Badge>
-            <h2 className="text-[clamp(2.5rem,8vw,5rem)] font-heading font-black leading-[0.9] tracking-tighter">
-              Elige tu <span className="gradient-text">Ecosistema</span>
+    <section className="section-frame relative overflow-hidden px-4 py-28 sm:px-6 md:px-8">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,124,70,0.08),transparent_25%)]" />
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl space-y-5">
+            <span className="eyebrow">Sistemas constructivos</span>
+            <h2 className="max-w-4xl text-[clamp(2.7rem,6vw,5rem)] font-black tracking-[-0.05em]">
+              Cada sistema ahora se presenta como una familia clara de decisiones.
             </h2>
+            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/72">
+              El carrusel sigue vivo, pero con una puesta mas sobria, mas legible y mas cercana a una mesa de trabajo que a un bloque promocional.
+            </p>
           </div>
-          
-          <div className="flex flex-col gap-6 items-start lg:items-end w-full lg:w-auto">
-             <p className="text-xl text-muted-foreground font-medium max-w-md leading-relaxed hidden lg:block opacity-70">
-               Filtramos la industria para ofrecerte los modelos que combinan diseño vanguardista con eficiencia real.
-             </p>
-             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                  <DialogTrigger
-                    render={
-                      <Button
-                        size="lg"
-                        className="bg-brand-teal text-brand-indigo font-black text-xs md:text-sm rounded-2xl h-12 px-6 shadow-xl shadow-brand-teal/25 transition-transform active:scale-95 border-b-4 border-brand-indigo/20 flex"
-                      >
-                        SOLICITAR ASESORÍA EXPERTA
-                        <ArrowRight className="w-4 h-4 ml-2 opacity-80" />
-                      </Button>
-                    }
-                  />
-                  <DialogContent className="sm:max-w-[550px] w-[95vw] max-w-[95vw] p-0 rounded-3xl border-none shadow-2xl max-h-[90dvh] overflow-y-auto">
-                    <div className="p-5 md:p-12 bg-background w-full space-y-5 md:space-y-6 border-t-8 border-brand-indigo relative">
-                      <DialogHeader className="pt-2">
-                        <DialogTitle className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none">
-                          Asesoría <span className="text-brand-teal">Profesional</span>
-                        </DialogTitle>
-                        <p className="text-muted-foreground font-medium text-sm">
-                          Cuéntanos sobre tu proyecto y recibe atención técnica personalizada.
-                        </p>
-                      </DialogHeader>
-                      <HeroLeadForm />
-                      <div className="w-full flex justify-center pt-2 pb-2">
-                        <DialogClose className="text-xs font-bold text-muted-foreground underline underline-offset-4 p-2.5 rounded-lg active:scale-95 transition-all">
-                          Cerrar ventana
-                        </DialogClose>
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
 
-                <div className="flex gap-2">
-                  <Button 
-                    type="button"
-                    aria-label="Ver sistema constructivo anterior"
-                    onClick={prev} 
-                    variant="outline" 
-                    size="icon" 
-                    className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10 bg-white shadow-sm"
-                  >
-                    <ChevronLeft className="w-5 h-5" aria-hidden="true" />
-                  </Button>
-                  <Button 
-                    type="button"
-                    aria-label="Ver siguiente sistema constructivo"
-                    onClick={next} 
-                    variant="outline" 
-                    size="icon" 
-                    className="rounded-full w-12 h-12 border-primary/20 hover:bg-primary/10 bg-white shadow-sm"
-                  >
-                    <ChevronRight className="w-5 h-5" aria-hidden="true" />
-                  </Button>
-                </div>
-             </div>
+          <div className="flex items-center gap-3">
+            <Button
+              type="button"
+              aria-label="Ver sistema constructivo anterior"
+              onClick={prev}
+              variant="outline"
+              size="icon"
+              className="h-12 w-12 rounded-full border-primary/15 bg-background/80 shadow-none"
+            >
+              <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+            </Button>
+            <Button
+              type="button"
+              aria-label="Ver siguiente sistema constructivo"
+              onClick={next}
+              variant="outline"
+              size="icon"
+              className="h-12 w-12 rounded-full border-primary/15 bg-background/80 shadow-none"
+            >
+              <ChevronRight className="h-5 w-5" aria-hidden="true" />
+            </Button>
           </div>
         </div>
 
-        <div className="relative overflow-visible md:px-0">
-          <motion.div 
+        <div className="overflow-visible">
+          <motion.div
             className="flex cursor-grab active:cursor-grabbing"
-            animate={{ 
-              x: isMobile 
+            animate={{
+              x: isMobile
                 ? `calc(${offset}% - ${index * (cardWidth + gap)}%)`
-                : `-${index * cardWidth}%`
+                : `-${index * cardWidth}%`,
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             drag={isMobile ? "x" : false}
-            dragConstraints={{ left: -1000, right: 1000 }} // Will be refined by actual content
+            dragConstraints={{ left: -1000, right: 1000 }}
             onDragEnd={(_, info) => {
-              if (isMobile) {
-                const threshold = 50;
-                if (info.offset.x < -threshold && index < maxIndex) next();
-                else if (info.offset.x > threshold && index > 0) prev();
-              }
+              if (!isMobile) return;
+              const threshold = 50;
+              if (info.offset.x < -threshold && index < maxIndex) next();
+              else if (info.offset.x > threshold && index > 0) prev();
             }}
           >
-            {CONSTRUCTION_SYSTEMS.map((type, i) => (
-              <motion.div 
-                key={type.id} 
-                initial={{ opacity: 0, y: 30 }}
+            {CONSTRUCTION_SYSTEMS.map((type, itemIndex) => (
+              <motion.div
+                key={type.id}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
+                transition={{ duration: 0.55, delay: itemIndex * 0.06 }}
                 viewport={{ once: true }}
-                style={{ 
+                style={{
                   width: `${cardWidth}%`,
-                  marginRight: isMobile ? `${gap}%` : "0"
+                  marginRight: isMobile ? `${gap}%` : "0",
                 }}
                 className={cn(
-                  "flex-none p-2 md:p-4 group transition-all duration-500",
-                  isMobile && index !== i ? "opacity-75 scale-95 grayscale" : "opacity-100 scale-100"
+                  "flex-none p-2 md:p-3",
+                  isMobile && index !== itemIndex ? "opacity-80" : "opacity-100"
                 )}
               >
-                <Link href={type.link} className="block h-full rounded-[3rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-indigo focus-visible:ring-offset-4">
-                  <div className={cn(
-                    "h-full p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-border/40 bg-gradient-to-br transition-all duration-500",
-                    "hover:shadow-[0_40px_80px_-20px_rgba(27,0,136,0.12)] hover:-translate-y-2 relative overflow-hidden flex flex-col justify-between min-h-[420px] md:min-h-[480px]",
-                    type.color
-                  )}>
-                    {/* Internal Glow */}
-                    <div className="absolute top-0 right-0 w-48 h-48 bg-white/40 dark:bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    
-                    <div className="space-y-6 md:space-y-8 relative z-10">
-                      <div className={cn(
-                        "w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center transition-all duration-500 text-white shadow-2xl group-hover:scale-110 group-hover:rotate-6 group-hover:brightness-110",
-                        type.accent,
-                        type.accent === "bg-brand-indigo" ? "shadow-brand-indigo/30" : "shadow-brand-teal/30"
-                      )}>
+                <Link href={type.link} className="group block h-full rounded-[2rem] outline-none focus-visible:ring-2 focus-visible:ring-brand-indigo focus-visible:ring-offset-4">
+                  <div
+                    className={cn(
+                      "paper-panel relative flex min-h-[420px] h-full flex-col justify-between overflow-hidden rounded-[2rem] p-7 md:min-h-[460px] md:p-8",
+                      "transition-transform duration-500 group-hover:-translate-y-1"
+                    )}
+                  >
+                    <div className={cn("absolute inset-0 bg-gradient-to-br opacity-70", type.color)} />
+                    <div className="relative z-10 space-y-6">
+                      <div className={cn("inline-flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-xl", type.accent)}>
                         <span aria-hidden="true">{type.icon}</span>
                       </div>
-                      
-                      <div className="space-y-3 md:space-y-4">
-                         <h3 className="text-2xl md:text-3xl font-black font-heading tracking-tighter text-foreground group-hover:text-primary transition-colors">{type.title}</h3>
-                         <p className="text-xs md:text-sm text-muted-foreground font-medium leading-relaxed opacity-80">
-                           {type.description}
-                         </p>
+                      <div className="space-y-4">
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-muted-foreground">
+                          Sistema
+                        </p>
+                        <h3 className="text-3xl font-black tracking-[-0.04em] text-foreground">{type.title}</h3>
+                        <p className="text-sm font-medium leading-relaxed text-foreground/72">
+                          {type.description}
+                        </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-primary mt-8 md:mt-12 group-hover:gap-4 transition-all">
-                      Explorar Modelos 
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" aria-hidden="true" />
+                    <div className="relative z-10 flex items-center gap-2 text-sm font-extrabold uppercase tracking-[0.18em] text-brand-indigo">
+                      Explorar modelos
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                     </div>
                   </div>
                 </Link>

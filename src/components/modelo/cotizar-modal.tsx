@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { submitLead } from "@/lib/supabase/actions";
 import { cn } from "@/lib/utils";
+import { trackCotizacionStart, trackCotizacionSubmit } from "@/lib/analytics";
 
 const REGIONES = [
   "XV - Arica y Parinacota",
@@ -67,17 +68,29 @@ export function CotizarModal({
   const [error, setError] = useState<string | null>(null);
   const [terreno, setTerreno] = useState<string>("si");
 
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    if (newOpen) {
+      trackCotizacionStart({
+        source: "model_modal",
+        modelId: modeloId,
+        constructoraId,
+      });
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     const formData = new FormData(e.currentTarget);
+    const region = String(formData.get("region") || "");
     const leadData: Parameters<typeof submitLead>[0] = {
       nombre_cliente: formData.get("name") as string,
       email_cliente: formData.get("email") as string,
       telefono_cliente: formData.get("phone") as string,
-      mensaje: `[COTIZACIÓN MODELO: ${modeloNombre}] - Region: ${formData.get("region")} - Terreno: ${terreno}. Mensaje: ${formData.get("message")}`,
+      mensaje: `[COTIZACIÓN MODELO: ${modeloNombre}] - Region: ${region} - Terreno: ${terreno}. Mensaje: ${formData.get("message")}`,
       modelo_id: modeloId,
       constructora_id: constructoraId,
       modelo_nombre: modeloNombre,
@@ -90,6 +103,12 @@ export function CotizarModal({
       if (submitError) throw new Error(submitError);
       
       setSuccess(true);
+      trackCotizacionSubmit({
+        source: "model_modal",
+        modelId: modeloId,
+        constructoraId,
+        region,
+      });
       setTimeout(() => {
         setOpen(false);
         setSuccess(false);
@@ -103,7 +122,7 @@ export function CotizarModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger>
         {trigger || (
           <Button size="lg" variant="secondary" className="font-black rounded-2xl w-full h-16 shadow-xl shadow-brand-teal/20">

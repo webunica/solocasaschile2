@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import { CONSTRUCTORAS } from "@/lib/mock-data";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
@@ -9,50 +8,50 @@ import { PremiumCarousel } from "@/components/constructoras/premium-carousel";
 
 export async function FeaturedConstructorsSection() {
   const supabase = await createClient();
-  
-  // Fetch top 3 constructoras by score
+
   const { data } = await supabase
     .from("constructoras")
     .select("id, nombre, slug, plan, score_confianza, logo_url, verificada, descripcion, user_id")
-    .not("user_id", "is", null) // Solo aquellas con cuenta/afiliadas
+    .not("user_id", "is", null)
     .order("score_confianza", { ascending: false })
     .limit(12);
 
-  // Hybrid Fallback: Use real data + top mocks if DB is empty
-  const featured = data && data.length > 0 ? data : CONSTRUCTORAS.slice(0, 3).map(c => ({
-    id: c.id,
-    nombre: c.nombre,
-    slug: c.slug,
-    plan: c.plan,
-    score_confianza: c.scoreConfianza,
-    logo_url: c.logo,
-    verificada: c.verificada
-  }));
+  const featured = data && data.length > 0
+    ? data
+    : CONSTRUCTORAS.slice(0, 3).map((constructora) => ({
+        id: constructora.id,
+        nombre: constructora.nombre,
+        slug: constructora.slug,
+        plan: constructora.plan,
+        score_confianza: constructora.scoreConfianza,
+        logo_url: constructora.logo,
+        verificada: constructora.verificada,
+      }));
 
   return (
-    <section className="py-40 bg-muted/10 relative overflow-hidden border-y border-border/10">
-      {/* Impeccable Background Layer */}
-      <div className="absolute top-0 right-1/2 w-[300px] h-[300px] bg-brand-indigo/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      
-      <div className="container px-6 md:px-12 max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
-          <div className="max-w-2xl space-y-4">
-             <Badge variant="outline" className="border-primary/20 text-primary uppercase tracking-[0.3em] text-[10px] font-black px-4 py-1.5 rounded-full">
-                Socios Industriales
-             </Badge>
-             <h2 className="text-4xl md:text-6xl font-heading font-black tracking-tighter leading-none">
-               Constructoras de <span className="text-brand-teal">Alto Desempeño</span>
-             </h2>
-             <p className="text-muted-foreground text-xl font-medium max-w-xl">
-               Entidades auditadas por nuestro sistema de verificación técnica para garantizar proyectos seguros y eficientes.
-             </p>
+    <section className="section-frame relative overflow-hidden px-4 py-28 sm:px-6 md:px-8">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(37,82,66,0.08),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(214,124,70,0.12),transparent_30%)]" />
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl space-y-5">
+            <span className="eyebrow">Constructoras destacadas</span>
+            <h2 className="max-w-4xl text-[clamp(2.7rem,6vw,5rem)] font-black tracking-[-0.05em]">
+              Empresas con presencia regional y modelos publicados.
+            </h2>
+            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/72">
+              Revisa datos de contacto, regiones de cobertura y catálogos de cada empresa para cotizar con información clara.
+            </p>
           </div>
-          <Link 
-            href="/constructoras" 
-            className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl font-bold uppercase tracking-widest border-primary/20 hover:bg-primary/10 transition-all px-8 py-6")}
+
+          <Link
+            href="/constructoras"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "rounded-full border-brand-indigo/15 px-8 py-6 font-extrabold uppercase tracking-[0.18em]"
+            )}
           >
-            Ver Directorio de Empresas
-            <ArrowRight className="w-4 h-4 ml-3" />
+            Ver directorio completo
+            <ArrowRight className="ml-3 h-4 w-4" />
           </Link>
         </div>
 
