@@ -106,7 +106,7 @@ export function HowItWorks() {
                   <h3 className="text-2xl font-black font-heading tracking-tighter group-hover:text-primary transition-colors leading-none">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground font-medium leading-relaxed opacity-80 max-w-[240px] mx-auto">
+                  <p className="text-sm text-foreground/85 font-medium leading-relaxed max-w-[240px] mx-auto">
                     {step.description}
                   </p>
                 </div>

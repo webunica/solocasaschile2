@@ -48,7 +48,7 @@ export function TypesSection() {
             <h2 className="max-w-4xl text-[clamp(2.7rem,6vw,5rem)] font-black tracking-[-0.05em]">
               Cada sistema ahora se presenta como una familia clara de decisiones.
             </h2>
-            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/72">
+            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/90">
               El carrusel sigue vivo, pero con una puesta mas sobria, mas legible y mas cercana a una mesa de trabajo que a un bloque promocional.
             </p>
           </div>
@@ -124,11 +124,11 @@ export function TypesSection() {
                         <span aria-hidden="true">{type.icon}</span>
                       </div>
                       <div className="space-y-4">
-                        <p className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-muted-foreground">
+                        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-foreground/65">
                           Sistema
                         </p>
                         <h3 className="text-3xl font-black tracking-[-0.04em] text-foreground">{type.title}</h3>
-                        <p className="text-sm font-medium leading-relaxed text-foreground/72">
+                        <p className="text-sm font-medium leading-relaxed text-foreground/85">
                           {type.description}
                         </p>
                       </div>

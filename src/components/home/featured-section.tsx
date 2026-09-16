@@ -38,7 +38,7 @@ export async function FeaturedConstructorsSection() {
             <h2 className="max-w-4xl text-[clamp(2.7rem,6vw,5rem)] font-black tracking-[-0.05em]">
               Empresas con presencia regional y modelos publicados.
             </h2>
-            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/72">
+            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/90">
               Revisa datos de contacto, regiones de cobertura y catálogos de cada empresa para cotizar con información clara.
             </p>
           </div>

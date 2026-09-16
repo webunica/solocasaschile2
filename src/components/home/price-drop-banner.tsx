@@ -61,8 +61,8 @@ export function PriceDropBanner() {
                   <Badge className="bg-white/20 text-white border-none py-1.5 px-4 font-bold tracking-widest uppercase rounded-full w-fit">
                      <Sparkles className="w-3 h-3 mr-2 text-emerald-200" /> Nuevo Servicio
                   </Badge>
-                  <div className="flex items-center gap-2 text-white/70 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]">
-                     <Bell className="w-3.5 h-3.5 animate-bounce" /> Alertas en tiempo real
+                  <div className="flex items-center gap-2 text-white/95 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em]">
+                     <Bell className="w-3.5 h-3.5 animate-bounce text-emerald-200" /> Alertas en tiempo real
                   </div>
                </div>
 
@@ -73,7 +73,7 @@ export function PriceDropBanner() {
                       baje de precio! <TrendingDown className="w-10 h-10 md:w-16 md:h-16 shrink-0" />
                     </span>
                   </h2>
-                  <p className="text-emerald-50/80 text-base md:text-xl font-medium max-w-xl leading-relaxed">
+                  <p className="text-white text-base md:text-xl font-medium max-w-xl leading-relaxed">
                     No te pierdas las mejores oportunidades. Suscríbete para recibir notificaciones exclusivas apenas detectemos una rebaja en tus modelos favoritos.
                   </p>
                </div>
@@ -95,14 +95,14 @@ export function PriceDropBanner() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-3">
-                     <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-emerald-200 opacity-60 text-center lg:text-left">Tu correo electrónico</p>
+                     <p className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-emerald-100 text-center lg:text-left">Tu correo electrónico</p>
                      <Input 
                         type="email"
                         placeholder="ejemplo@correo.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="h-14 rounded-2xl border-white/20 bg-white/10 text-white placeholder:text-white/40 focus:ring-white/40 font-bold text-base md:text-lg"
+                        className="h-14 rounded-2xl border-white/30 bg-white/15 text-white placeholder:text-white/70 focus:ring-white/40 font-bold text-base md:text-lg"
                      />
                   </div>
                   <Button 

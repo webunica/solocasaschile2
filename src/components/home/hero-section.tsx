@@ -46,7 +46,7 @@ export function HeroSection() {
                 Compara y cotiza
                 <span className="gradient-text"> casas prefabricadas</span> en Chile.
               </h1>
-              <p className="max-w-[42rem] text-base font-medium leading-relaxed text-foreground/74 md:text-[1.1rem]">
+              <p className="max-w-[42rem] text-base font-medium leading-relaxed text-foreground/90 md:text-[1.1rem]">
                 Explora modelos en panel SIP, construcción modular y llave en mano. Compara superficies, especificaciones técnicas y solicita una cotización directa a constructoras verificadas en tu región.
               </p>
 
@@ -72,9 +72,9 @@ export function HeroSection() {
                 <Link
                   href="/para-constructoras"
                   onClick={() => trackConstructorasAccessClick("hero")}
-                  className="group inline-flex items-center gap-2 text-xs font-bold text-brand-indigo/80 transition-colors hover:text-brand-indigo"
+                  className="group inline-flex items-center gap-2 text-xs font-bold text-brand-indigo transition-colors hover:text-brand-teal"
                 >
-                  <Building2 className="h-4 w-4 text-brand-indigo/70 group-hover:text-brand-indigo" />
+                  <Building2 className="h-4 w-4 text-brand-indigo group-hover:text-brand-teal" />
                   <span>¿Tienes una constructora? <strong className="underline underline-offset-4 font-black">Publica tus modelos y recibe cotizaciones directas →</strong></span>
                 </Link>
               </div>
@@ -84,15 +84,15 @@ export function HeroSection() {
             <div className="flex flex-wrap gap-6 border-t border-border/40 pt-6">
               <div className="flex items-center gap-2 text-sm">
                 <MapPin className="h-4 w-4 text-brand-teal" />
-                <span className="font-bold text-foreground/80">{REGIONES_CHILE.length} regiones de Chile</span>
+                <span className="font-bold text-foreground">{REGIONES_CHILE.length} regiones de Chile</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Building2 className="h-4 w-4 text-brand-indigo" />
-                <span className="font-bold text-foreground/80">Constructoras activas</span>
+                <span className="font-bold text-foreground">Constructoras activas</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Users className="h-4 w-4 text-brand-teal" />
-                <span className="font-bold text-foreground/80">Cotización 100% gratuita</span>
+                <span className="font-bold text-foreground">Cotización 100% gratuita</span>
               </div>
             </div>
           </div>

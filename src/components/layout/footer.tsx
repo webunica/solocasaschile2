@@ -29,7 +29,7 @@ export function Footer() {
       <div className="container relative z-10 mx-auto max-w-7xl px-6 md:px-12">
         <div className="mb-16 grid gap-10 rounded-[2rem] border border-white/10 bg-white/6 p-8 backdrop-blur-xl md:grid-cols-[1.25fr_0.8fr_0.8fr_1fr] md:p-10">
           <div className="space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/8 px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.22em] text-white/78">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.22em] text-white/90">
               <Sparkles className="h-3.5 w-3.5" />
               Comparador independiente
             </div>
@@ -40,12 +40,12 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="font-heading text-3xl font-semibold tracking-tight text-white">SolocasasChile</p>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-white/58">
+                  <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-white/80">
                     Modelos, especificaciones y constructoras
                   </p>
                 </div>
               </div>
-              <p className="max-w-md text-sm font-medium leading-relaxed text-white/72">
+              <p className="max-w-md text-sm font-medium leading-relaxed text-white/90">
                 Ayudamos a comparar modelos de casas prefabricadas, paneles SIP y modulares con precios referenciales y especificaciones técnicas para tomar una mejor decisión en Chile.
               </p>
             </div>
@@ -56,7 +56,7 @@ export function Footer() {
               <Trees className="h-4 w-4 text-accent" />
               Explorar
             </p>
-            <ul className="space-y-3 text-sm font-medium text-white/75">
+            <ul className="space-y-3 text-sm font-medium text-white/90">
               {EXPLORE_LINKS.map((item) => (
                 <li key={item.path}>
                   <Link href={item.path} className="transition-colors hover:text-accent">
@@ -69,7 +69,7 @@ export function Footer() {
 
           <div className="space-y-4">
             <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-white">Recursos y Empresas</p>
-            <ul className="space-y-3 text-sm font-medium text-white/75">
+            <ul className="space-y-3 text-sm font-medium text-white/90">
               {RESOURCE_LINKS.map((item) => (
                 <li key={item.path}>
                   <Link href={item.path} className="transition-colors hover:text-accent">
@@ -82,7 +82,7 @@ export function Footer() {
 
           <div className="space-y-5">
             <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-white">Contacto</p>
-            <div className="space-y-4 text-sm font-medium text-white/78">
+            <div className="space-y-4 text-sm font-medium text-white/90">
               <div className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 text-accent" aria-hidden="true" />
                 <span>contacto@solocasaschile.com</span>
@@ -108,7 +108,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs font-medium text-white/55 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs font-medium text-white/75 md:flex-row md:items-center md:justify-between">
           <p>© {currentYear} solocasaschile.com. Todos los derechos reservados.</p>
           <div className="flex items-center gap-6">
             <Link href="/terminos" className="transition-colors hover:text-white">

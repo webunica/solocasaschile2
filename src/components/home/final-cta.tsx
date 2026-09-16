@@ -15,33 +15,33 @@ export function FinalCTA() {
           <div className="absolute inset-0 architect-grid opacity-[0.08]" />
 
           <div className="relative z-10 space-y-4 text-center mb-12">
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-brand-sunset">
+            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-emerald-300">
               Da el siguiente paso
             </p>
-            <h2 className="text-[clamp(2.4rem,5vw,4.2rem)] font-black leading-[0.95] tracking-[-0.05em] text-balance">
+            <h2 className="text-[clamp(2.4rem,5vw,4.2rem)] font-black leading-[0.95] tracking-[-0.05em] text-balance text-white">
               Elige tu casa con información clara o da a conocer tu constructora.
             </h2>
           </div>
 
           <div className="relative z-10 grid gap-6 lg:grid-cols-2">
             {/* Card: Para compradores */}
-            <div className="rounded-[2rem] border border-white/10 bg-white/8 p-8 backdrop-blur-xl space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-brand-teal/20 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-brand-teal">
-                <Users className="h-3.5 w-3.5" />
+            <div className="rounded-[2rem] border border-white/20 bg-white/[0.08] p-7 md:p-8 backdrop-blur-xl space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-teal-300/40 bg-teal-500/25 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-teal-200">
+                <Users className="h-3.5 w-3.5 text-teal-300" />
                 Para quienes buscan casa
               </div>
               <h3 className="text-2xl font-black tracking-tight text-white">
                 Compara modelos y cotiza gratis
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {[
                   "Filtra modelos por metros cuadrados y sistema constructivo",
                   "Revisa precios referenciales en UF y fotos reales",
                   "Envía tu solicitud de cotización sin costo ni compromiso",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm font-medium text-white/75">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-teal" />
-                    {item}
+                  <li key={item} className="flex items-start gap-2.5 text-sm font-medium text-white/95 leading-snug">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -51,7 +51,7 @@ export function FinalCTA() {
                   onClick={() => trackCatalogoClick("final_cta")}
                   className={cn(
                     buttonVariants({ size: "lg" }),
-                    "h-13 rounded-2xl bg-brand-teal px-7 font-extrabold uppercase tracking-[0.15em] text-brand-indigo hover:bg-brand-teal/90"
+                    "h-13 rounded-2xl bg-white px-6 font-extrabold uppercase tracking-wider text-brand-evergreen-dark hover:bg-white/90 shadow-lg shadow-black/20"
                   )}
                 >
                   Explorar modelos
@@ -61,7 +61,7 @@ export function FinalCTA() {
                   href="#cotizar-hero"
                   className={cn(
                     buttonVariants({ variant: "outline", size: "lg" }),
-                    "h-13 rounded-2xl border-white/25 px-7 font-extrabold uppercase tracking-[0.15em] text-white hover:bg-white/10"
+                    "h-13 rounded-2xl border-2 border-white/40 bg-white/5 px-6 font-extrabold uppercase tracking-wider text-white hover:bg-white/15"
                   )}
                 >
                   Solicitar cotización
@@ -70,23 +70,23 @@ export function FinalCTA() {
             </div>
 
             {/* Card: Para constructoras */}
-            <div className="rounded-[2rem] border border-brand-indigo/30 bg-brand-indigo/20 p-8 backdrop-blur-xl space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full bg-brand-indigo/30 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-white/90">
-                <Building2 className="h-3.5 w-3.5" />
+            <div className="rounded-[2rem] border border-amber-400/30 bg-white/[0.08] p-7 md:p-8 backdrop-blur-xl space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/20 px-4 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-300">
+                <Building2 className="h-3.5 w-3.5 text-amber-300" />
                 Para empresas constructoras
               </div>
               <h3 className="text-2xl font-black tracking-tight text-white">
                 Publica tus modelos y recibe cotizaciones
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {[
                   "Prueba de 30 días sin costo con hasta 3 modelos publicados",
                   "Recibe cotizaciones directas con datos reales de contacto",
                   "Panel de control para gestionar prospectos y catálogo",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm font-medium text-white/75">
+                  <li key={item} className="flex items-start gap-2.5 text-sm font-medium text-white/95 leading-snug">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
-                    {item}
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -96,7 +96,7 @@ export function FinalCTA() {
                   onClick={() => trackConstructorasAccessClick("final_cta")}
                   className={cn(
                     buttonVariants({ size: "lg" }),
-                    "h-13 rounded-2xl bg-white px-7 font-extrabold uppercase tracking-[0.15em] text-brand-indigo hover:bg-white/90"
+                    "h-13 rounded-2xl bg-amber-400 px-6 font-extrabold uppercase tracking-wider text-slate-950 hover:bg-amber-300 shadow-lg shadow-black/20"
                   )}
                 >
                   Conocer planes
@@ -107,10 +107,10 @@ export function FinalCTA() {
                   onClick={() => trackRegistroStart("gratis")}
                   className={cn(
                     buttonVariants({ variant: "outline", size: "lg" }),
-                    "h-13 rounded-2xl border-white/25 px-7 font-extrabold uppercase tracking-[0.15em] text-white hover:bg-white/10"
+                    "h-13 rounded-2xl border-2 border-white/40 bg-white/5 px-6 font-extrabold uppercase tracking-wider text-white hover:bg-white/15"
                   )}
                 >
-                  Publicar mi constructora
+                  Publicar constructora
                 </Link>
               </div>
             </div>

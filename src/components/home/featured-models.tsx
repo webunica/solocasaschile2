@@ -30,7 +30,7 @@ export async function FeaturedModelsSection() {
             <h2 className="max-w-4xl text-[clamp(2.7rem,6vw,5rem)] font-semibold tracking-[-0.05em]">
               Modelos destacados para comparar superficie, precio y sistema constructivo.
             </h2>
-            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/72">
+            <p className="max-w-2xl text-lg font-medium leading-relaxed text-foreground/90">
               Revisa dimensiones, número de dormitorios, baños y valor referencial para cotizar directamente con la empresa responsable del proyecto.
             </p>
           </div>
@@ -95,7 +95,7 @@ export async function FeaturedModelsSection() {
 
                 <div className="space-y-8 p-7">
                   <div className="space-y-4">
-                    <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-muted-foreground">
+                    <p className="text-[10px] font-black uppercase tracking-[0.24em] text-brand-indigo/70">
                       {modelo.constructora?.nombre}
                     </p>
                     <Link href={`/modelo/${modelo.slug}`}>
@@ -103,7 +103,7 @@ export async function FeaturedModelsSection() {
                         {modelo.nombre}
                       </h3>
                     </Link>
-                    <p className="text-sm font-medium leading-relaxed text-foreground/68">
+                    <p className="text-sm font-medium leading-relaxed text-foreground/85">
                       Modelo con especificaciones técnicas disponibles, fotos referenciales y cotización directa a la constructora.
                     </p>
                   </div>
@@ -112,17 +112,17 @@ export async function FeaturedModelsSection() {
                     <div>
                       <Ruler className="mb-2 h-4 w-4 text-brand-teal" />
                       <p className="text-xl font-semibold tracking-tight text-brand-indigo">{modelo.superficie_m2}</p>
-                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-muted-foreground">m2</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-foreground/60">m2</p>
                     </div>
                     <div>
                       <Bed className="mb-2 h-4 w-4 text-brand-teal" />
                       <p className="text-xl font-semibold tracking-tight text-brand-indigo">{modelo.dormitorios}</p>
-                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-muted-foreground">dorm.</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-foreground/60">dorm.</p>
                     </div>
                     <div>
                       <Bath className="mb-2 h-4 w-4 text-brand-teal" />
                       <p className="text-xl font-semibold tracking-tight text-brand-indigo">{modelo.banos}</p>
-                      <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-muted-foreground">baños</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-foreground/60">baños</p>
                     </div>
                   </div>
 
