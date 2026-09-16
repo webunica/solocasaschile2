@@ -203,6 +203,11 @@ async function main() {
   }
   const sqlFilePath = path.resolve(sqlOutputDir, "scraped_insert_constructoras.sql");
 
+  if (sqlStatements.length === 0) {
+    console.warn("⚠️ No se encontraron registros válidos para generar SQL.");
+    return;
+  }
+
   const fullSql = `-- Script de carga automática para constructoras scrapeadas de Google Maps
 -- Ejecutar en Supabase Dashboard: SQL Editor -> New query -> Run
 
@@ -210,7 +215,10 @@ async function main() {
 ALTER TABLE public.constructoras ADD COLUMN IF NOT EXISTS lat DOUBLE PRECISION;
 ALTER TABLE public.constructoras ADD COLUMN IF NOT EXISTS lng DOUBLE PRECISION;
 
--- 2. Insertar / Actualizar constructoras
+-- 2. Asegurar índice único en slug para permitir ON CONFLICT (slug)
+CREATE UNIQUE INDEX IF NOT EXISTS constructoras_slug_key ON public.constructoras (slug);
+
+-- 3. Insertar / Actualizar constructoras
 INSERT INTO public.constructoras (
   nombre,
   slug,
