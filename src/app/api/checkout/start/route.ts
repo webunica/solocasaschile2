@@ -13,7 +13,7 @@ import {
 import { getRequestId, logError, logInfo, logWarn } from "@/lib/observability-logger";
 
 const CheckoutStartSchema = z.object({
-  plan: z.literal("pro"),
+  plan: z.enum(["basic", "crece", "pro", "premium"]),
   billing: z.enum(["monthly", "semiannual", "yearly"]),
   email: z.string().email().max(180),
   password: z.string().min(6).max(100),
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
     const ufValue = await getUfValue();
     const price = getCheckoutPriceWithCoupon(payload.plan, payload.billing, normalizedCouponCode);
     const amountClp = Math.round(price.totalUf * ufValue);
-    const subject = `SoloCasasChile PRO ${getBillingCycleLabel(payload.billing)}`;
+    const subject = `SoloCasasChile ${payload.plan.toUpperCase()} ${getBillingCycleLabel(payload.billing)}`;
 
     const flowResult = await FlowService.createPayment({
       subject,

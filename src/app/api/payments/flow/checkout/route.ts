@@ -6,27 +6,34 @@ import { getRequestId, logError, logInfo, logWarn } from '@/lib/observability-lo
 import { z } from 'zod';
 
 const CheckoutSchema = z.object({
-  plan: z.enum(['avanza', 'pro', 'premium']),
+  plan: z.enum(['basic', 'crece', 'avanza', 'pro', 'premium']),
   billing: z.enum(['monthly', 'yearly'])
 });
 
-const PLAN_PRICES_UF = {
+const PLAN_PRICES_UF: Record<string, { monthly: number; yearly: number }> = {
+  basic: {
+    monthly: 1.0,
+    yearly: 0.8 * 12,
+  },
+  crece: {
+    monthly: 2.0,
+    yearly: 1.6 * 12,
+  },
+  avanza: {
+    monthly: 2.0,
+    yearly: 1.6 * 12,
+  },
   pro: {
-    monthly: 0.7,
-    yearly: 0.56 * 12,
+    monthly: 3.0,
+    yearly: 2.4 * 12,
   },
   premium: {
-    monthly: 2.9,
-    yearly: 1.45 * 12,
+    monthly: 4.0,
+    yearly: 3.2 * 12,
   }
 } as const;
 
-const PLAN_PRICES_CLP_NET = {
-  avanza: {
-    monthly: 25000,
-    yearly: 25000 * 12,
-  },
-} as const;
+const PLAN_PRICES_CLP_NET: Record<string, { monthly: number; yearly: number }> = {};
 
 const IVA_RATE = 0.19;
 

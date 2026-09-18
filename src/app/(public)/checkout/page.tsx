@@ -156,7 +156,7 @@ function CheckoutForm() {
             </h1>
             <p className="max-w-xl text-lg font-medium leading-relaxed text-muted-foreground">
               Primero dejamos tu perfil listo, luego te enviamos a Flow. Al confirmarse el pago,
-              tu Plan Pro queda activo y entras directo a tu panel.
+              tu plan queda activo de inmediato y entras directo a tu panel.
             </p>
           </div>
 

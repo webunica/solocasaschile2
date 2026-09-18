@@ -16,24 +16,32 @@ import { register, resendConfirmation } from "@/lib/supabase/actions";
 
 const PLAN_META = {
   prueba: { 
-    label: "Prueba", icon: Building2, color: "text-brand-indigo", bg: "bg-brand-indigo/10", border: "border-brand-indigo/20", isPaid: false,
+    label: "Prueba 30D", icon: Building2, color: "text-brand-indigo", bg: "bg-brand-indigo/10", border: "border-brand-indigo/20", isPaid: false,
     prices: { monthly: "0", yearly: "0" }, original: "0"
   },
-  avanza: { 
-    label: "Avanza", icon: Zap, color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true,
-    prices: { monthly: "25000", yearly: "25000" }, original: "25000"
+  gratis: { 
+    label: "Prueba Gratis", icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false,
+    prices: { monthly: "0", yearly: "0" }, original: "0"
   },
-  premium: { 
-    label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true,
-    prices: { monthly: "2.9", yearly: "1.45" }, original: "2.9" 
+  basic: { 
+    label: "Basic", icon: Building2, color: "text-slate-700 dark:text-slate-300", bg: "bg-slate-100 dark:bg-slate-800", border: "border-slate-300", isPaid: true,
+    prices: { monthly: "1.0", yearly: "0.8" }, original: "1.0"
+  },
+  crece: { 
+    label: "Crece", icon: Zap, color: "text-blue-600", bg: "bg-blue-50 dark:bg-blue-950/40", border: "border-blue-200", isPaid: true,
+    prices: { monthly: "2.0", yearly: "1.6" }, original: "2.0"
+  },
+  avanza: { 
+    label: "Crece", icon: Zap, color: "text-blue-600", bg: "bg-blue-50 dark:bg-blue-950/40", border: "border-blue-200", isPaid: true,
+    prices: { monthly: "2.0", yearly: "1.6" }, original: "2.0"
   },
   pro: { 
     label: "Pro", icon: Zap, color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true,
-    prices: { monthly: "0.7", yearly: "0.56" }, original: "0.7"
+    prices: { monthly: "3.0", yearly: "2.4" }, original: "3.0"
   },
-  gratis: { 
-    label: "Gratis", icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false,
-    prices: { monthly: "0", yearly: "0" }, original: "0"
+  premium: { 
+    label: "Pro+", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true,
+    prices: { monthly: "4.0", yearly: "3.2" }, original: "4.0" 
   },
 } as const;
 type PlanKey = keyof typeof PLAN_META;
