@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { 
-  XCircle, Star, ShieldCheck, Loader2
+  XCircle, Star, ShieldCheck, Loader2, Trash2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
   toggleVerification, 
   updateConstructoraPlan, 
-  updateConstructoraScore 
+  updateConstructoraScore,
+  deleteConstructoraByAdmin,
 } from "@/lib/supabase/actions";
 import { toast } from "sonner";
 
@@ -72,6 +73,22 @@ export function ConstructoraAdminControls({ constructora }: Props) {
     }
   };
 
+  const onDelete = async () => {
+    if (!confirm("¿Estás seguro de que deseas eliminar permanentemente esta constructora y sus datos asociados?")) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await deleteConstructoraByAdmin(constructora.id);
+      toast.success("Constructora eliminada con éxito");
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-wrap items-center gap-2">
       <Button 
@@ -113,6 +130,17 @@ export function ConstructoraAdminControls({ constructora }: Props) {
       >
         <Star className="w-3 h-3 mr-2 text-primary" />
         Score: {constructora.score_confianza}
+      </Button>
+
+      <Button 
+        variant="ghost" 
+        size="sm"
+        disabled={loading}
+        onClick={onDelete}
+        title="Eliminar constructora"
+        className="h-9 w-9 p-0 text-destructive/70 hover:text-destructive hover:bg-destructive/10 rounded-xl"
+      >
+        {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
       </Button>
     </div>
   );

@@ -486,6 +486,39 @@ export async function updateConstructoraScore(constructoraId: string, score: num
   return { success: true }
 }
 
+export async function deleteConstructoraByAdmin(constructoraId: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (user?.app_metadata?.is_superadmin !== true) throw new Error("Acceso denegado")
+
+  const admin = createAdminClient()
+
+  // 1. Eliminar modelos, obras y pagos huérfanos si no tienen cascade
+  await admin.from('modelos').delete().eq('constructora_id', constructoraId)
+  await admin.from('obras').delete().eq('constructora_id', constructoraId)
+  await admin.from('pagos').delete().eq('constructora_id', constructoraId)
+
+  // 2. Eliminar de constructoras
+  const { error } = await admin
+    .from('constructoras')
+    .delete()
+    .eq('id', constructoraId)
+
+  if (error) throw error
+
+  // 3. Eliminar usuario de auth si existe
+  try {
+    await admin.auth.admin.deleteUser(constructoraId)
+  } catch {
+    // Si no es un usuario de auth o falla, continuar
+  }
+
+  revalidatePath('/dashboard/admin/constructoras')
+  revalidateTag('constructoras', 'max')
+  revalidateTag('modelos', 'max')
+  return { success: true }
+}
+
 export async function adminUpdateConstructora(formData: FormData) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
