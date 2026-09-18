@@ -9,7 +9,7 @@ import {
   mergeConstructoras,
   getTopByRegion,
 } from "@/lib/constructoras-data";
-import { RegionConstructoraCard } from "@/components/constructoras/region-constructora-card";
+import { RegionConstructorasClient } from "@/components/constructoras/region-constructoras-client";
 import { buildBreadcrumbJsonLd, buildItemListJsonLd, StructuredData } from "@/components/seo/structured-data";
 
 // ─── Static params ─────────────────────────────────────────────────────────
@@ -71,10 +71,10 @@ export default async function ConstructorasRegionPage({ params }: PageProps) {
     .order("score_confianza", { ascending: false });
 
   const allConstructoras = mergeConstructoras(dbRows ?? []);
-  const top40 = getTopByRegion(allConstructoras, info.supabaseNombre, 40);
+  const topConstructoras = getTopByRegion(allConstructoras, info.supabaseNombre, 100);
 
-  // Promedio de rating del top 40
-  const ratingsValidos = top40.filter(c => c.rating !== null).map(c => c.rating as number);
+  // Promedio de rating
+  const ratingsValidos = topConstructoras.filter(c => c.rating !== null).map(c => c.rating as number);
   const avgRating = ratingsValidos.length > 0
     ? (ratingsValidos.reduce((a, b) => a + b, 0) / ratingsValidos.length).toFixed(1)
     : null;
@@ -91,11 +91,11 @@ export default async function ConstructorasRegionPage({ params }: PageProps) {
     <div className="min-h-screen bg-background pb-24 pt-32">
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-      {top40.length > 0 && (
+      {topConstructoras.length > 0 && (
         <StructuredData
           type="ItemList"
           data={buildItemListJsonLd(
-            top40.map(c => ({
+            topConstructoras.slice(0, 40).map(c => ({
               name: c.nombre,
               url: c.sitio_web || `https://solocasaschile.com/constructora/${c.slug}`,
               description: c.descripcion,
@@ -109,29 +109,25 @@ export default async function ConstructorasRegionPage({ params }: PageProps) {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-teal/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-indigo/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
-        <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12 space-y-8">
+        <div className="container max-w-7xl mx-auto px-4 md:px-8 relative z-10 space-y-8">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/40 flex-wrap" aria-label="Navegación">
-            <Link href="/" className="hover:text-white/80 transition-colors">Inicio</Link>
-            <ChevronRight className="w-3 h-3" />
-            <Link href="/constructoras" className="hover:text-white/80 transition-colors">Constructoras</Link>
-            <ChevronRight className="w-3 h-3" />
-            <Link href="/constructoras/region" className="hover:text-white/80 transition-colors">Por Región</Link>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-white/70">{info.nombre}</span>
+          <nav className="flex items-center gap-2 text-xs font-bold text-white/50" aria-label="Breadcrumb">
+            <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <Link href="/constructoras" className="hover:text-white transition-colors">Constructoras</Link>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <span className="text-white font-black">{info.nombre}</span>
           </nav>
 
-          {/* Emoji + título */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <span className="text-5xl" role="img" aria-label={info.nombre}>{info.emoji}</span>
-              <Badge variant="outline" className="brand-gradient text-white border-none px-5 py-1.5 rounded-full text-[9px] tracking-[0.3em] font-black uppercase shadow-xl shadow-primary/20">
-                Top {Math.min(top40.length, 40)} Empresas
-              </Badge>
+          {/* Title + Intro */}
+          <div className="space-y-4 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs font-bold">
+              <span>{info.emoji}</span>
+              <span>{info.clima}</span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-heading font-black tracking-tighter leading-none text-white">
-              Constructoras en <br />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-black text-white tracking-tight leading-[1.1]">
+              Constructoras de Casas Prefabricadas en{" "}
               <span className="gradient-text">{info.nombre}</span>
             </h1>
 
@@ -144,7 +140,7 @@ export default async function ConstructorasRegionPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center gap-6 bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-[2rem] w-fit">
             <div className="space-y-1">
               <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Empresas</p>
-              <div className="text-3xl font-black text-white">{top40.length}</div>
+              <div className="text-3xl font-black text-white">{topConstructoras.length}</div>
             </div>
             {avgRating && (
               <>
@@ -175,34 +171,13 @@ export default async function ConstructorasRegionPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ─── Grid Top 40 ──────────────────────────────────────────────── */}
+      {/* ─── Grid con Filtros Interactivos por Tipo de Casa ─────────────── */}
       <section className="container max-w-7xl mx-auto px-4 md:px-8 py-16">
-        {top40.length > 0 ? (
-          <>
-            <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 rounded-2xl brand-gradient flex items-center justify-center text-white shadow-lg shadow-primary/20" aria-hidden>
-                <TrendingUp className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-heading font-black tracking-tight">
-                  Ranking de Constructoras — {info.nombre}
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Ordenadas por rating Google Maps y nivel de verificación
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {top40.map((constructora, i) => (
-                <RegionConstructoraCard
-                  key={constructora.slug}
-                  constructora={constructora}
-                  rank={i + 1}
-                />
-              ))}
-            </div>
-          </>
+        {topConstructoras.length > 0 ? (
+          <RegionConstructorasClient
+            constructoras={topConstructoras}
+            regionNombre={info.nombre}
+          />
         ) : (
           <div className="text-center py-24 space-y-4">
             <Building2 className="w-16 h-16 text-muted-foreground/30 mx-auto" />

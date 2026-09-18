@@ -311,3 +311,48 @@ export function countByRegion(
   }
   return counts;
 }
+
+// ─── Tipologías de casa para filtros ───────────────────────────────────────
+
+export type TipoCasaConstructora = "todas" | "prefabricadas" | "modulares" | "sip" | "containers" | "tiny-house";
+
+export interface TipoCasaOpcion {
+  id: TipoCasaConstructora;
+  label: string;
+  emoji: string;
+  badge: string;
+}
+
+export const TIPOS_CASA_CONSTRUCTORA: TipoCasaOpcion[] = [
+  { id: "todas", label: "Todas las tipologías", emoji: "🏠", badge: "Todas" },
+  { id: "prefabricadas", label: "Prefabricadas", emoji: "🏡", badge: "Prefabricada" },
+  { id: "sip", label: "Panel SIP", emoji: "🧱", badge: "SIP" },
+  { id: "modulares", label: "Modulares", emoji: "🧩", badge: "Modular" },
+  { id: "containers", label: "Containers", emoji: "🚢", badge: "Container" },
+  { id: "tiny-house", label: "Tiny Houses", emoji: "🌲", badge: "Tiny House" },
+];
+
+/** Determina qué tipologías de construcción ofrece una empresa */
+export function getTiposCasaConstructora(c: { nombre: string; descripcion?: string | null; slug: string; direccion?: string | null }): TipoCasaConstructora[] {
+  const text = `${c.nombre} ${c.descripcion || ""} ${c.slug} ${c.direccion || ""}`.toLowerCase();
+  const tipos: TipoCasaConstructora[] = [];
+
+  if (text.includes("modular") || text.includes("modulares") || text.includes("módulo") || text.includes("modulo")) {
+    tipos.push("modulares");
+  }
+  if (text.includes("sip") || text.includes("panel sip") || text.includes("paneles sip")) {
+    tipos.push("sip");
+  }
+  if (text.includes("container") || text.includes("contenedor") || text.includes("contenedores") || text.includes("marítimo")) {
+    tipos.push("containers");
+  }
+  if (text.includes("tiny") || text.includes("mini casa") || text.includes("domo") || text.includes("cabaña")) {
+    tipos.push("tiny-house");
+  }
+  if (text.includes("prefabricad") || text.includes("madera") || text.includes("metalcon") || tipos.length === 0) {
+    tipos.push("prefabricadas");
+  }
+
+  return tipos;
+}
+

@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Phone, Globe, MapPin, Star, BadgeCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type { ConstructoraUnificada } from "@/lib/constructoras-data";
+import { 
+  type ConstructoraUnificada, 
+  getTiposCasaConstructora, 
+  TIPOS_CASA_CONSTRUCTORA 
+} from "@/lib/constructoras-data";
 
 interface Props {
   constructora: ConstructoraUnificada;
@@ -31,6 +35,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export function RegionConstructoraCard({ constructora: c, rank }: Props) {
   const isPremium = ["premium", "avanza", "pro"].includes(c.plan);
+  const tipos = getTiposCasaConstructora(c).filter((t) => t !== "todas");
 
   return (
     <article
@@ -81,6 +86,25 @@ export function RegionConstructoraCard({ constructora: c, rank }: Props) {
           )}
         </div>
       </div>
+
+      {/* Tipologías */}
+      {tipos.length > 0 && (
+        <div className="flex flex-wrap gap-1 -mt-1">
+          {tipos.map((t) => {
+            const info = TIPOS_CASA_CONSTRUCTORA.find((tc) => tc.id === t);
+            if (!info) return null;
+            return (
+              <span
+                key={t}
+                className="text-[10px] font-bold bg-muted/70 text-muted-foreground hover:text-foreground px-2 py-0.5 rounded-lg flex items-center gap-1 border border-border/40"
+              >
+                <span>{info.emoji}</span>
+                <span>{info.badge}</span>
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {/* Rating */}
       {c.rating !== null && (
