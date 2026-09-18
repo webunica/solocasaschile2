@@ -2,12 +2,12 @@
   "casas-prefabricadas-metalkit": {
     "nombre": "Casas Prefabricadas METALKIT",
     "slug": "casas-prefabricadas-metalkit",
-    "lat": -33.7797611,
-    "lng": -70.7454274,
+    "lat": -33.779724,
+    "lng": -70.745424,
     "direccion": "Casas Prefabricadas METALKIT - Caletera Poniente, Ruta 5, Km 39,5, Paine, Región Metropolitana",
     "telefono": "9 5805 6559",
-    "sitio_web": "https://www.metalkit.cl/",
-    "rating": 4.9,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 201,
     "regiones": [
       "Metropolitana"
@@ -16,12 +16,12 @@
   "casas-prefabricadas-metalcon-modelos--llave-en-mano-en-santiago": {
     "nombre": "CASAS PREFABRICADAS Metalcon, modelos- Llave en mano en Santiago",
     "slug": "casas-prefabricadas-metalcon-modelos--llave-en-mano-en-santiago",
-    "lat": -33.5388923,
+    "lat": -33.538892,
     "lng": -70.655438,
     "direccion": "CASAS PREFABRICADAS Metalcon, modelos- Llave en mano en Santiago - Av. Américo Vespucio 744, 7980711 La Cisterna, Región Metropolitana",
     "telefono": "(2) 2310 5779",
-    "sitio_web": "http://www.casasamerica.cl/",
-    "rating": 3.1,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 17,
     "regiones": [
       "Metropolitana"
@@ -34,8 +34,8 @@
     "lng": null,
     "direccion": null,
     "telefono": "9 3469 5135",
-    "sitio_web": "http://www.tecnofast.cl/",
-    "rating": 4.3,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 98,
     "regiones": [
       "Metropolitana"
@@ -45,12 +45,12 @@
     "nombre": "Casas Prefabricadas El Alba",
     "slug": "casas-prefabricadas-el-alba",
     "lat": -33.630063,
-    "lng": -70.72214009999999,
+    "lng": -70.72214,
     "direccion": "Casas Prefabricadas El Alba - Av. Calera de Tango, Parcela 8-C, Comuna, San Bernardo, Región Metropolitana",
     "telefono": "9 3184 6889",
-    "sitio_web": "https://www.prefabricadaselalba.cl/",
-    "rating": 4.4,
-    "reviews": 64,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 65,
     "regiones": [
       "Metropolitana"
     ]
@@ -86,12 +86,12 @@
   "casas-vespucio-casas-prefabricadas-en-chile": {
     "nombre": "CASAS VESPUCIO, Casas Prefabricadas en Chile",
     "slug": "casas-vespucio-casas-prefabricadas-en-chile",
-    "lat": -33.533122899999995,
-    "lng": -70.6641058,
+    "lat": -33.533123,
+    "lng": -70.664106,
     "direccion": "CASAS VESPUCIO, Casas Prefabricadas en Chile - Brisas del Maipo 36, Santiago, La Cisterna, Región Metropolitana",
     "telefono": "(2) 2312 8415",
-    "sitio_web": "https://www.casasvespucio.cl/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 7,
     "regiones": [
       "Metropolitana"
@@ -100,12 +100,12 @@
   "construcciones-yp": {
     "nombre": "Construcciones Y&P",
     "slug": "construcciones-yp",
-    "lat": -33.4087603,
-    "lng": -70.6733802,
+    "lat": -33.40876,
+    "lng": -70.67338,
     "direccion": "Construcciones Y&P - Grumete Pantaleón Cortés 21101, 8380000 Santiago, Independencia, Región Metropolitana",
     "telefono": "9 2957 7844",
     "sitio_web": null,
-    "rating": 5,
+    "rating": null,
     "reviews": 3,
     "regiones": [
       "Metropolitana"
@@ -115,11 +115,11 @@
     "nombre": "Tecno Fast",
     "slug": "tecno-fast",
     "lat": -33.309044,
-    "lng": -70.7252475,
+    "lng": -70.725247,
     "direccion": "Tecno Fast - Av. Pdte. Eduardo Frei Montalva 17000, Colina, Región Metropolitana",
     "telefono": "(2) 2790 5000",
-    "sitio_web": "https://tecnofasthome.cl/",
-    "rating": 4.4,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 165,
     "regiones": [
       "Metropolitana"
@@ -142,12 +142,12 @@
   "casas-prefabricadas-la-hacienda-metalcon": {
     "nombre": "Casas Prefabricadas La Hacienda Metalcon",
     "slug": "casas-prefabricadas-la-hacienda-metalcon",
-    "lat": -33.6298023,
-    "lng": -70.7212687,
+    "lat": -33.629802,
+    "lng": -70.721269,
     "direccion": "Casas Prefabricadas La Hacienda Metalcon - Calera de Tango Parcela 8 lado norte calera de tango, parcela 8C, 9560000 San Bernardo, Región Metropolitana",
     "telefono": "9 5699 8763",
-    "sitio_web": "https://www.casaslahacienda.cl/servicios/",
-    "rating": 4.2,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 88,
     "regiones": [
       "Metropolitana"
@@ -156,12 +156,12 @@
   "casas-prefabricadas-caballero": {
     "nombre": "Casas Prefabricadas Caballero",
     "slug": "casas-prefabricadas-caballero",
-    "lat": -33.5388923,
+    "lat": -33.538892,
     "lng": -70.655438,
     "direccion": "Casas Prefabricadas Caballero - Av. Américo Vespucio 744, 7980711 La Cisterna, Región Metropolitana",
     "telefono": "(2) 2310 5779",
-    "sitio_web": "http://www.casascaballero.cl/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 5,
     "regiones": [
       "Metropolitana"
@@ -171,11 +171,11 @@
     "nombre": "Casas Latam",
     "slug": "casas-latam",
     "lat": -33.427599,
-    "lng": -70.7202798,
+    "lng": -70.72028,
     "direccion": "Casas Latam - Cauquenes 6130, 9080072 Santiago, Cerro Navia, Región Metropolitana",
     "telefono": null,
     "sitio_web": null,
-    "rating": 4,
+    "rating": null,
     "reviews": 28,
     "regiones": [
       "Metropolitana"
@@ -184,12 +184,12 @@
   "casas-prefabricadas-calera-de-tango": {
     "nombre": "Casas Prefabricadas Calera de Tango",
     "slug": "casas-prefabricadas-calera-de-tango",
-    "lat": -33.6317108,
-    "lng": -70.72552929999999,
+    "lat": -33.631711,
+    "lng": -70.725529,
     "direccion": "Casas Prefabricadas Calera de Tango - Av. Calera de Tango 19, San Bernardo, Región Metropolitana",
     "telefono": "9 5848 9227",
-    "sitio_web": "https://casaprefabricadachile.cl/calera-de-tango/",
-    "rating": 3.5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 80,
     "regiones": [
       "Metropolitana"
@@ -198,12 +198,12 @@
   "estructuras-green-valley-spa": {
     "nombre": "Estructuras green Valley SPA.",
     "slug": "estructuras-green-valley-spa",
-    "lat": -33.6344098,
-    "lng": -70.7133676,
+    "lat": -33.63441,
+    "lng": -70.713368,
     "direccion": "ESQ SN - J ALESSANDRI, San José de Nos KM 24, LT 2, 8050000 San Bernardo, Región Metropolitana",
     "telefono": "(2) 2583 2001",
-    "sitio_web": "https://cprefabricadas.cl/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 10,
     "regiones": [
       "Metropolitana"
@@ -212,12 +212,12 @@
   "casas-prefabricadas-nyf": {
     "nombre": "Casas prefabricadas NYF",
     "slug": "casas-prefabricadas-nyf",
-    "lat": -33.5323734,
-    "lng": -70.6692295,
+    "lat": -33.532373,
+    "lng": -70.66923,
     "direccion": "Casas prefabricadas NYF - Ciencias 8585, 7970635 La Cisterna, Región Metropolitana",
     "telefono": "9 7479 9445",
-    "sitio_web": "http://www.casasnyf.cl/",
-    "rating": 4.5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 11,
     "regiones": [
       "Metropolitana"
@@ -226,12 +226,12 @@
   "casas-santiago": {
     "nombre": "Casas Santiago",
     "slug": "casas-santiago",
-    "lat": -33.6281891,
-    "lng": -70.7165179,
+    "lat": -33.628189,
+    "lng": -70.716518,
     "direccion": "Casas Santiago - Av. Calera de Tango, 9560000 Calera de Tango, San Bernardo, Región Metropolitana",
     "telefono": "9 8805 8335",
     "sitio_web": null,
-    "rating": 4.2,
+    "rating": null,
     "reviews": 5,
     "regiones": [
       "Metropolitana"
@@ -240,12 +240,12 @@
   "tu-casa-facil": {
     "nombre": "Tu Casa Fácil",
     "slug": "tu-casa-facil",
-    "lat": -33.6359232,
-    "lng": -70.71307759999999,
+    "lat": -33.635923,
+    "lng": -70.713078,
     "direccion": "Tu Casa Fácil - Alessandri Rodríguez 20185 (Terreno 01), San Bernardo, Región, San Bernardo, Región Metropolitana",
     "telefono": "9 3009 4515",
-    "sitio_web": "https://tucasafacil.cl/",
-    "rating": 4.5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 52,
     "regiones": [
       "Metropolitana"
@@ -255,11 +255,11 @@
     "nombre": "Casas Alvarado S.P.A.",
     "slug": "casas-alvarado-spa",
     "lat": -33.257576,
-    "lng": -70.6978602,
+    "lng": -70.69786,
     "direccion": "Casas Alvarado S.P.A. - Caletera San Martín, Av. Chicureo Oriente, Parcela 20, 9340000 Colina, Región Metropolitana",
     "telefono": "9 4162 9375",
-    "sitio_web": "https://casasalvarado.cl/",
-    "rating": 4.4,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 21,
     "regiones": [
       "Metropolitana"
@@ -268,12 +268,12 @@
   "casas-arbolito-santiago": {
     "nombre": "Casas Arbolito Santiago",
     "slug": "casas-arbolito-santiago",
-    "lat": -33.7787431,
-    "lng": -70.7440534,
+    "lat": -33.778743,
+    "lng": -70.744053,
     "direccion": "Casas Arbolito Santiago - Ruta 5 Km 40, Km 40, Paine, Región Metropolitana",
     "telefono": "9 7335 1397",
-    "sitio_web": "http://www.casasarbolito.cl/",
-    "rating": 4.2,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 188,
     "regiones": [
       "Metropolitana"
@@ -282,12 +282,12 @@
   "casas-prefabricadas-home-easy": {
     "nombre": "Casas Prefabricadas Home Easy",
     "slug": "casas-prefabricadas-home-easy",
-    "lat": -33.5163545,
-    "lng": -70.6410075,
+    "lat": -33.516354,
+    "lng": -70.641008,
     "direccion": "Casas Prefabricadas Home Easy - Sebastopol 582, 8930737 San Miguel, Región Metropolitana",
     "telefono": "9 5829 8811",
-    "sitio_web": "http://www.homeeasy.cl/",
-    "rating": 4.2,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 10,
     "regiones": [
       "Metropolitana"
@@ -296,12 +296,12 @@
   "industrializadas": {
     "nombre": "INDUSTRIALIZADAS",
     "slug": "industrializadas",
-    "lat": -33.638505699999996,
-    "lng": -70.71174599999999,
+    "lat": -33.638506,
+    "lng": -70.711746,
     "direccion": "INDUSTRIALIZADAS - Regina Gálvez 285, 8080816 San Bernardo, Región Metropolitana",
     "telefono": null,
     "sitio_web": null,
-    "rating": 3.4,
+    "rating": null,
     "reviews": 63,
     "regiones": [
       "Metropolitana"
@@ -310,12 +310,12 @@
   "casas-prefabricadas-lo-infante-spa": {
     "nombre": "Casas prefabricadas lo infante spa",
     "slug": "casas-prefabricadas-lo-infante-spa",
-    "lat": -33.639581899999996,
-    "lng": -70.71290069999999,
+    "lat": -33.639582,
+    "lng": -70.712901,
     "direccion": "Casas prefabricadas lo infante spa - Av. Pdte. Jorge Alessandri Rodríguez 20, 181, 8050000 San Bernardo, Región Metropolitana",
     "telefono": "9 8341 6889",
-    "sitio_web": "http://www.casasloinfante.cl/",
-    "rating": 4.1,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 52,
     "regiones": [
       "Metropolitana"
@@ -328,8 +328,8 @@
     "lng": -70.591818,
     "direccion": "CASAS RECABARREN - Brown Nte. 100, Ofi 310, 7790569 Santiago, Ñuñoa, Región Metropolitana",
     "telefono": "9 7382 8500",
-    "sitio_web": "https://www.casasrecabarren.cl/",
-    "rating": 4.4,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 7,
     "regiones": [
       "Metropolitana"
@@ -338,12 +338,12 @@
   "casas-riquelme": {
     "nombre": "Casas Riquelme",
     "slug": "casas-riquelme",
-    "lat": -33.5384259,
-    "lng": -70.6622072,
+    "lat": -33.538426,
+    "lng": -70.662207,
     "direccion": "Casas Riquelme - Av. Américo Vespucio 199, 8000132 La Cisterna, Región Metropolitana",
     "telefono": "2232295839",
     "sitio_web": null,
-    "rating": 4.1,
+    "rating": null,
     "reviews": 13,
     "regiones": [
       "Metropolitana"
@@ -352,12 +352,12 @@
   "casas-premium": {
     "nombre": "Casas Premium",
     "slug": "casas-premium",
-    "lat": -33.2853463,
-    "lng": -70.6920877,
+    "lat": -33.285346,
+    "lng": -70.692088,
     "direccion": "Casas Premium - Av. Chicureo 901 B, Colina, Región Metropolitana",
     "telefono": "9 9343 9600",
-    "sitio_web": "http://www.casaspremium.cl/",
-    "rating": 4,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 5,
     "regiones": [
       "Metropolitana"
@@ -380,12 +380,12 @@
   "casas-prefabricadas-agam": {
     "nombre": "Casas Prefabricadas Agam",
     "slug": "casas-prefabricadas-agam",
-    "lat": -33.659399799999996,
-    "lng": -70.7172779,
+    "lat": -33.6594,
+    "lng": -70.717278,
     "direccion": "Casas Prefabricadas Agam - Av. Pdte. Jorge Alessandri Rodríguez, San Bernardo, Región Metropolitana",
     "telefono": "9 4617 5456",
-    "sitio_web": "http://www.casasagam.cl/",
-    "rating": 4.5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 55,
     "regiones": [
       "Metropolitana"
@@ -394,12 +394,12 @@
   "casas-prefabricadas-del-lago": {
     "nombre": "Casas Prefabricadas del Lago",
     "slug": "casas-prefabricadas-del-lago",
-    "lat": -33.624064499999996,
-    "lng": -70.7981169,
+    "lat": -33.624064,
+    "lng": -70.798117,
     "direccion": "Casas Prefabricadas del Lago - Paradero 17, esquina Avda Calera de Tango, Lonquén Nte., 9560007 Calera de Tango, Región Metropolitana",
     "telefono": "9 4595 2922",
-    "sitio_web": "http://www.casasdellago.cl/",
-    "rating": 4.3,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 24,
     "regiones": [
       "Metropolitana"
@@ -464,12 +464,12 @@
   "casas-prefabricadas-casas-imperio": {
     "nombre": "Casas Prefabricadas CASAS IMPERIO",
     "slug": "casas-prefabricadas-casas-imperio",
-    "lat": -33.7618441,
-    "lng": -70.7421584,
+    "lat": -33.761844,
+    "lng": -70.742158,
     "direccion": "Parcela 3 Cruce Linderos - Cam. Longitudinal Ruta 5 Sur, 9500000 Buin, Región Metropolitana",
     "telefono": "9 5652 5203",
-    "sitio_web": "https://www.casasprefabricadasimperio.cl/",
-    "rating": 4.1,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 61,
     "regiones": [
       "Metropolitana"
@@ -478,12 +478,12 @@
   "casas-prefabricadas-lonquen": {
     "nombre": "Casas Prefabricadas Lonquen",
     "slug": "casas-prefabricadas-lonquen",
-    "lat": -33.6162457,
-    "lng": -70.79563929999999,
+    "lat": -33.616246,
+    "lng": -70.795639,
     "direccion": "Casas Prefabricadas Lonquen - 16211,, Lonquén Nte. 15777, Calera de Tango, Región Metropolitana",
     "telefono": "9 9208 0969",
-    "sitio_web": "https://casasprefabricadaslonquen.cl/",
-    "rating": 3.2,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 61,
     "regiones": [
       "Metropolitana"
@@ -506,12 +506,12 @@
   "canadian-houses-by-casas-deluxe-ltda": {
     "nombre": "Canadian Houses by Casas Deluxe Ltda.",
     "slug": "canadian-houses-by-casas-deluxe-ltda",
-    "lat": -33.4269956,
-    "lng": -70.6191521,
+    "lat": -33.426996,
+    "lng": -70.619152,
     "direccion": "Canadian Houses by Casas Deluxe Ltda. - Gral Flores 127, 7500546 Santiago, Providencia, Región Metropolitana",
     "telefono": "(2) 2235 0501",
-    "sitio_web": "http://www.canadianhouses.cl/",
-    "rating": 4.5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 2,
     "regiones": [
       "Metropolitana"
@@ -534,12 +534,12 @@
   "casas-don-carlos": {
     "nombre": "Casas Don Carlos",
     "slug": "casas-don-carlos",
-    "lat": -33.6273267,
-    "lng": -70.7687873,
+    "lat": -33.627327,
+    "lng": -70.768787,
     "direccion": "Casas Don Carlos - Av. Calera de Tango, Calera de Tango, Peñaflor, Región Metropolitana",
     "telefono": "44 293 9335",
     "sitio_web": null,
-    "rating": 4.5,
+    "rating": null,
     "reviews": 26,
     "regiones": [
       "Metropolitana"
@@ -549,11 +549,11 @@
     "nombre": "Casas VAL",
     "slug": "casas-val",
     "lat": -33.688997,
-    "lng": -71.0435902,
+    "lng": -71.04359,
     "direccion": "Casas VAL - Cam. A Melipilla - El Monte 1694, El Monte, Región Metropolitana",
     "telefono": "(2) 3346 5556",
-    "sitio_web": "http://www.casasval.cl/",
-    "rating": 4.3,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 24,
     "regiones": [
       "Metropolitana"
@@ -562,12 +562,12 @@
   "casas-prefabricadas-ordenes-construcciones": {
     "nombre": "Casas Prefabricadas Ordenes Construcciones",
     "slug": "casas-prefabricadas-ordenes-construcciones",
-    "lat": -33.6827343,
+    "lat": -33.682734,
     "lng": -70.851216,
     "direccion": "Casas Prefabricadas Ordenes Construcciones - Lonquen Sur 35, 9560000 Talagante, Región Metropolitana",
     "telefono": "(2) 2914 6005",
-    "sitio_web": "https://www.ordenesconstrucciones.cl/",
-    "rating": 4.5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 84,
     "regiones": [
       "Metropolitana"
@@ -576,12 +576,12 @@
   "casas-prefabricadas-alihuen": {
     "nombre": "Casas Prefabricadas Alihuen",
     "slug": "casas-prefabricadas-alihuen",
-    "lat": -33.6317768,
-    "lng": -70.7268103,
+    "lat": -33.631777,
+    "lng": -70.72681,
     "direccion": "Casas Prefabricadas Alihuen - Av. Calera de Tango, 8820000 Calera de Tango, San Bernardo, Región Metropolitana",
     "telefono": "9 3653 9591",
-    "sitio_web": "https://casasprefabricadasalihuen.cl/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 7,
     "regiones": [
       "Metropolitana"
@@ -618,12 +618,12 @@
   "tiny-homes-chile": {
     "nombre": "Tiny Homes Chile",
     "slug": "tiny-homes-chile",
-    "lat": -33.407671799999996,
-    "lng": -70.5638941,
+    "lat": -33.407672,
+    "lng": -70.563894,
     "direccion": "Tiny Homes Chile - Av. Apoquindo 6410, 605, 7560903 Las Condes, Región Metropolitana",
     "telefono": "9 9129 7505",
-    "sitio_web": "http://www.instagram.com/tinyhomeschile/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 2,
     "regiones": [
       "Metropolitana"
@@ -661,11 +661,11 @@
     "nombre": "Inmobiliaria Martabid Spa",
     "slug": "inmobiliaria-martabid-spa",
     "lat": -38.748791,
-    "lng": -72.6050044,
+    "lng": -72.605004,
     "direccion": "Inmobiliaria Martabid Spa - C. Las Quilas 1535, 4791797 Temuco, Araucanía",
     "telefono": "(45) 273 2900",
-    "sitio_web": "http://www.martabid.com/",
-    "rating": 3.9,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 75,
     "regiones": [
       "La Araucanía"
@@ -1092,17 +1092,17 @@
     ]
   },
   "casas-prefabricadas-esmeralda": {
-    "nombre": "Casas prefabricadas Esmeralda",
+    "nombre": "Casas Prefabricadas Esmeralda",
     "slug": "casas-prefabricadas-esmeralda",
-    "lat": -33.413386,
-    "lng": -71.695345,
-    "direccion": "Casas prefabricadas Esmeralda - Avenida Tralcamahuida, Av. Isidoro Dubournais &, 7400018 El Quisco, Valparaíso",
-    "telefono": "9 7275 0651",
+    "lat": -37.486149,
+    "lng": -72.386169,
+    "direccion": "Casas Prefabricadas Esmeralda - 37°29 09, 7\"S 72°23'10.4\"W, 4430000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 3789 7928",
     "sitio_web": null,
     "rating": null,
-    "reviews": 3,
+    "reviews": 1,
     "regiones": [
-      "Valparaíso"
+      "Biobío"
     ]
   },
   "prefabricadas-ingees": {
@@ -1254,7 +1254,7 @@
     "telefono": "(41) 312 9235",
     "sitio_web": null,
     "rating": null,
-    "reviews": 0,
+    "reviews": 14,
     "regiones": [
       "Biobío"
     ]
@@ -2996,17 +2996,17 @@
     ]
   },
   "casas-prefabricadas-chillan": {
-    "nombre": "Casas prefabricadas Chillán",
+    "nombre": "Casas Prefabricadas Chillán",
     "slug": "casas-prefabricadas-chillan",
-    "lat": -36.623044,
-    "lng": -72.140468,
-    "direccion": "Casas prefabricadas Chillán - Av. O'Higgins 3285, 3820000 Chillán Viejo, Ñuble",
+    "lat": -36.607397,
+    "lng": -72.145843,
+    "direccion": "Casas Prefabricadas Chillán - Sepúlveda Bustos 1850, 3780000 Chillán, Ñuble",
     "telefono": "9 6464 4499",
     "sitio_web": null,
     "rating": null,
-    "reviews": 53,
+    "reviews": 1,
     "regiones": [
-      "O'Higgins"
+      "Ñuble"
     ]
   },
   "constructora-cerro-negro": {
@@ -4323,6 +4323,4738 @@
     "reviews": 0,
     "regiones": [
       "La Araucanía"
+    ]
+  },
+  "tiny-house-tiny-black-frutillar---family-room-with-garden-view": {
+    "nombre": "Tiny House, Tiny Black Frutillar - Family Room with Garden View",
+    "slug": "tiny-house-tiny-black-frutillar---family-room-with-garden-view",
+    "lat": -41.096901,
+    "lng": -73.074577,
+    "direccion": "Col. La Radio, Frutillar, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 12,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "tiny-house-las-juntas": {
+    "nombre": "Tiny House Las Juntas",
+    "slug": "tiny-house-las-juntas",
+    "lat": -41.006344,
+    "lng": -73.229034,
+    "direccion": "Frutillar, Los Lagos",
+    "telefono": "9 7422 8803",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "urbeck": {
+    "nombre": "Urbeck",
+    "slug": "urbeck",
+    "lat": -41.118799,
+    "lng": -73.055638,
+    "direccion": "Urbeck - Arturo Alessandri, 5620000 Frutillar, Los Lagos",
+    "telefono": "9 8181 0804",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "tiny-house-nueva---condominio-privado---espacio-frutillar--full-equipada": {
+    "nombre": "Tiny house NUEVA - Condominio privado - Espacio Frutillar- Full equipada",
+    "slug": "tiny-house-nueva---condominio-privado---espacio-frutillar--full-equipada",
+    "lat": -41.093433,
+    "lng": -73.076424,
+    "direccion": "Col. La Radio, Frutillar, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "co-ol-construcciones-modulares": {
+    "nombre": "Co-ol Construcciones Modulares",
+    "slug": "co-ol-construcciones-modulares",
+    "lat": -33.534105,
+    "lng": -70.741659,
+    "direccion": "Co-ol Construcciones Modulares - Cerro Sombrero 1403, 9250000 Maipú, Región Metropolitana",
+    "telefono": "(2) 2589 8700",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 86,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-modulares": {
+    "nombre": "Casas Modulares",
+    "slug": "casas-modulares",
+    "lat": -33.433187,
+    "lng": -70.625653,
+    "direccion": "Casas Modulares - Av. Providencia 701, 7500667 Providencia, Región Metropolitana",
+    "telefono": "9 3274 2185",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-la-capilla": {
+    "nombre": "Casas prefabricadas La Capilla",
+    "slug": "casas-prefabricadas-la-capilla",
+    "lat": -33.639784,
+    "lng": -70.712847,
+    "direccion": "Casas prefabricadas La Capilla - 976P+3V9, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "9 3757 0516",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-delano": {
+    "nombre": "Casas Délano",
+    "slug": "casas-delano",
+    "lat": -33.375686,
+    "lng": -70.561786,
+    "direccion": "Casas Délano - Sta. María 7970, 7660185 Vitacura, Región Metropolitana",
+    "telefono": "(2) 2217 2938",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "harpret-construccion-modular-e-ingenieria": {
+    "nombre": "HARPRET Construcción modular e Ingeniería",
+    "slug": "harpret-construccion-modular-e-ingenieria",
+    "lat": -33.479844,
+    "lng": -70.639478,
+    "direccion": "HARPRET Construcción modular e Ingeniería - Rivas 590b, 8950044 San Joaquín, Región Metropolitana",
+    "telefono": "9 5326 5668",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "box-panel-chile": {
+    "nombre": "Box Panel Chile",
+    "slug": "box-panel-chile",
+    "lat": -33.583431,
+    "lng": -70.615661,
+    "direccion": "Box Panel Chile - Av. Gabriela 03264, 8830496 La Pintana, Región Metropolitana",
+    "telefono": "9 8568 0443",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "proyectos-modulares-chile": {
+    "nombre": "Proyectos Modulares Chile",
+    "slug": "proyectos-modulares-chile",
+    "lat": -33.378,
+    "lng": -70.6621,
+    "direccion": "Proyectos Modulares Chile - Tucapel 1285, 8820000 La Pintana, Conchalí, Región Metropolitana",
+    "telefono": "9 4874 6625",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "modular-sip": {
+    "nombre": "Modular SIP",
+    "slug": "modular-sip",
+    "lat": -35.521627,
+    "lng": -71.488635,
+    "direccion": "Modular SIP - Ruta CH-115 Bypass, San Clemente, Maule",
+    "telefono": "9 9487 2861",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "prefast-prefabricados-de-hormigon-en-santiago": {
+    "nombre": "PREFAST prefabricados de hormigon en Santiago",
+    "slug": "prefast-prefabricados-de-hormigon-en-santiago",
+    "lat": -33.336784,
+    "lng": -70.722434,
+    "direccion": "PREFAST prefabricados de hormigon en Santiago - San Ignacio 110, 8721317 Quilicura, Región Metropolitana",
+    "telefono": "9 6674 3788",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 21,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-lacustre": {
+    "nombre": "Casas Prefabricadas Lacustre",
+    "slug": "casas-prefabricadas-lacustre",
+    "lat": -39.228377,
+    "lng": -72.28245,
+    "direccion": "4930000 Villarrica, Araucanía",
+    "telefono": "9 9039 0773",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 27,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "empresas-rucantu-sa---casas-industrializadas-de-alto-estandar---aislacion-termica---maderas-impregnadas": {
+    "nombre": "Empresas Rucantu S.A. - Casas Industrializadas de Alto Estándar - Aislación Térmica - Maderas Impregnadas",
+    "slug": "empresas-rucantu-sa---casas-industrializadas-de-alto-estandar---aislacion-termica---maderas-impregnadas",
+    "lat": -38.796936,
+    "lng": -72.621881,
+    "direccion": "Empresas Rucantu S.A. - Casas Industrializadas de Alto Estándar - Aislación Térmica - Maderas Impregnadas - Ruta Panamericana Sur Km. 680, Temuco, Padre Las Casas, Araucanía",
+    "telefono": "(45) 273 5000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 69,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "iglu-modular": {
+    "nombre": "iglú Modular",
+    "slug": "iglu-modular",
+    "lat": -39.292489,
+    "lng": -71.927891,
+    "direccion": "iglú Modular - Callejón Santa María S/N Pucón, 4920000 Araucanía, Pucón, Araucanía",
+    "telefono": "9 7757 5257",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 13,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "builderpack-arquitectura-y-construccion-modular": {
+    "nombre": "Builderpack | Arquitectura y Construcción Modular",
+    "slug": "builderpack-arquitectura-y-construccion-modular",
+    "lat": -33.382483,
+    "lng": -70.774898,
+    "direccion": "Builderpack | Arquitectura y Construcción Modular - Volcán Lascar 790, 9030910 Pudahuel, Región Metropolitana",
+    "telefono": "9 7614 5152",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 38,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-lanco-construcciones-personalizadas-de-alto-estandar-en-el-sur-de-chile": {
+    "nombre": "Casas Lanco | Construcciones personalizadas de alto estándar en el Sur de Chile",
+    "slug": "casas-lanco-construcciones-personalizadas-de-alto-estandar-en-el-sur-de-chile",
+    "lat": -39.448673,
+    "lng": -72.776681,
+    "direccion": "Casas Lanco | Construcciones personalizadas de alto estándar en el Sur de Chile - Yungay 070, Lanco, Los Ríos",
+    "telefono": "9 4429 2000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 81,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "co-ol-soluciones-modulares---puerto-varas": {
+    "nombre": "Co-ol Soluciones Modulares - Puerto Varas",
+    "slug": "co-ol-soluciones-modulares---puerto-varas",
+    "lat": -41.366209,
+    "lng": -72.966953,
+    "direccion": "Sector Industrial La Laja - Parcela #74, Puerto Varas, Los Lagos",
+    "telefono": "(2) 2797 3500",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-llaima": {
+    "nombre": "Casas Llaima",
+    "slug": "casas-llaima",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 9430 9984",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-construccion": {
+    "nombre": "casas prefabricadas & construcción",
+    "slug": "casas-prefabricadas-construccion",
+    "lat": -32.627805,
+    "lng": -71.424308,
+    "direccion": "La Laguna, Zapallar, Valparaíso",
+    "telefono": "9 7551 0597",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "modulux": {
+    "nombre": "Modulux",
+    "slug": "modulux",
+    "lat": -38.820534,
+    "lng": -72.622618,
+    "direccion": "Modulux - 38.8203814 72.6226678, 4850000 Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "9 3336 6189",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "summit-modular": {
+    "nombre": "Summit Modular",
+    "slug": "summit-modular",
+    "lat": -33.341866,
+    "lng": -70.718001,
+    "direccion": "Summit Modular - Las Esteras Nte. 2381, B, 8720029 Quilicura, Región Metropolitana",
+    "telefono": "9 8829 1340",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casa-piloto-tecno-fast-home-maitencillo": {
+    "nombre": "Casa Piloto Tecno Fast Home Maitencillo",
+    "slug": "casa-piloto-tecno-fast-home-maitencillo",
+    "lat": -32.651061,
+    "lng": -71.426204,
+    "direccion": "Casa Piloto Tecno Fast Home Maitencillo - Avenida F-30, Camino antiguo Catapilco, Casa 13. Maitencillo, 2500000 Puchuncaví, Valparaíso",
+    "telefono": "9 6878 4412",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "container-world": {
+    "nombre": "Container World",
+    "slug": "container-world",
+    "lat": -33.775309,
+    "lng": -70.744377,
+    "direccion": "Container World - Ruta 5, Km 38.5, parcela 67, 9540442 Paine, Región Metropolitana",
+    "telefono": "(2) 3210 7073",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 90,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "nehuen-construcciones-modulares-spa": {
+    "nombre": "Nehuén Construcciones Modulares SPA",
+    "slug": "nehuen-construcciones-modulares-spa",
+    "lat": -41.360666,
+    "lng": -72.976302,
+    "direccion": "Los cantaros - Ruta 5 KM 1010, PARCELA 14, Puerto Varas, Los Lagos",
+    "telefono": "9 6831 8477",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "home-solutions-by-sulfibrachile": {
+    "nombre": "Home Solutions By Sulfibra|Chile",
+    "slug": "home-solutions-by-sulfibrachile",
+    "lat": -33.379883,
+    "lng": -70.765946,
+    "direccion": "Home Solutions By Sulfibra|Chile - Cordillera 586, 9031167 Pudahuel, Región Metropolitana",
+    "telefono": "9 5661 0272",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "rentech-construcciones-modulares": {
+    "nombre": "Rentech Construcciones Modulares",
+    "slug": "rentech-construcciones-modulares",
+    "lat": -33.246513,
+    "lng": -70.696693,
+    "direccion": "Rentech Construcciones Modulares - San Vicente de lo Arcaya Uno, ST 5 HB, 9340000 Colina, Región Metropolitana",
+    "telefono": "9 9991 8000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "obra-modular-spa": {
+    "nombre": "Obra modular spa",
+    "slug": "obra-modular-spa",
+    "lat": -32.972758,
+    "lng": -71.492549,
+    "direccion": "Montemar, Concón, Valparaíso",
+    "telefono": "9 3568 7991",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "construye-tu-casa": {
+    "nombre": "Construye Tu Casa",
+    "slug": "construye-tu-casa",
+    "lat": -33.632056,
+    "lng": -70.73867,
+    "direccion": "Construye Tu Casa - Av. Calera de Tango 2010, 8081428 San Bernardo, Región Metropolitana",
+    "telefono": "9 6617 2350",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 22,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casascontainerscl": {
+    "nombre": "Casascontainers.cl",
+    "slug": "casascontainerscl",
+    "lat": -33.788368,
+    "lng": -70.748003,
+    "direccion": "Casascontainers.cl - 5 Pte., 9540005 Paine, Región Metropolitana",
+    "telefono": "9 4918 7414",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "habitainer": {
+    "nombre": "Habitainer",
+    "slug": "habitainer",
+    "lat": -33.251579,
+    "lng": -70.698437,
+    "direccion": "Habitainer - Carretera General San Martín 13320, 9340000 Colina, Región Metropolitana",
+    "telefono": "9 6414 1730",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "container-home": {
+    "nombre": "Container Home",
+    "slug": "container-home",
+    "lat": -33.364865,
+    "lng": -70.814083,
+    "direccion": "Container Home - Cam. Aguas Claras, 9020000 Pudahuel, Región Metropolitana",
+    "telefono": "9 6898 2002",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 19,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "cc-tainers-viviendas-en-contenedores-maritimos": {
+    "nombre": "C&C TAINERS VIVIENDAS EN CONTENEDORES MARÍTIMOS",
+    "slug": "cc-tainers-viviendas-en-contenedores-maritimos",
+    "lat": null,
+    "lng": null,
+    "direccion": "Santiago Besler 520, E3116 Crespo, Entre Ríos, Argentina",
+    "telefono": "+54 343 523-5863",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "contenedores-maritimos-venta-arriendo-santiago-y-todo-chile-containers-usados-baratos-oficinas-bodegas-contenedor-de-20": {
+    "nombre": "Contenedores Marítimos Venta Arriendo Santiago y Todo Chile – Containers Usados Baratos, Oficinas, Bodegas, Contenedor de 20",
+    "slug": "contenedores-maritimos-venta-arriendo-santiago-y-todo-chile-containers-usados-baratos-oficinas-bodegas-contenedor-de-20",
+    "lat": -33.5515,
+    "lng": -70.709749,
+    "direccion": "Contenedores Marítimos Venta Arriendo Santiago y Todo Chile – Containers Usados Baratos, Oficinas, Bodegas, Contenedor de 20 - Av. General Velásquez 10.985 San Bernardo, 8060077 Santiago, San Bernardo, Región Metropolitana",
+    "telefono": "(2) 2528 6556",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 159,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "puertocontainer-chile-spa": {
+    "nombre": "Puertocontainer Chile spa",
+    "slug": "puertocontainer-chile-spa",
+    "lat": -33.621979,
+    "lng": -70.712897,
+    "direccion": "Puertocontainer Chile spa - Cerro de Las Lomas 19351, 8081019 San Bernardo, Región Metropolitana",
+    "telefono": "9 8167 1137",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "container-preco-modular": {
+    "nombre": "Container Preco Modular",
+    "slug": "container-preco-modular",
+    "lat": -33.603403,
+    "lng": -70.626768,
+    "direccion": "Container Preco Modular - Av. Sta. Rosa 14810, 8820000 La Pintana, Región Metropolitana",
+    "telefono": "9 5198 2309",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "el-container": {
+    "nombre": "El Container",
+    "slug": "el-container",
+    "lat": -33.406721,
+    "lng": -70.648959,
+    "direccion": "El Container - Av. México 773, 8420000 Santiago, Recoleta, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5184,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "containers-patagonia-venta-y-arriendo-de-contenedores-maritimos": {
+    "nombre": "Containers Patagonia, Venta y Arriendo de Contenedores Marítimos",
+    "slug": "containers-patagonia-venta-y-arriendo-de-contenedores-maritimos",
+    "lat": -33.557041,
+    "lng": -70.709457,
+    "direccion": "Containers Patagonia, Venta y Arriendo de Contenedores Marítimos - Pdte Jorge Alessandri Rodríguez 11754, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "(2) 2528 6556",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 426,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "paal-contenedores": {
+    "nombre": "PAAL Contenedores",
+    "slug": "paal-contenedores",
+    "lat": -38.350072,
+    "lng": -72.416286,
+    "direccion": null,
+    "telefono": "9 4416 2174",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 16,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "jblcontainers-spa": {
+    "nombre": "JBLCONTAINERS SPA",
+    "slug": "jblcontainers-spa",
+    "lat": -38.761167,
+    "lng": -72.692638,
+    "direccion": "JBLCONTAINERS SPA - SITIO DE CONTENEDORES - S-40 #07379- Ruta Temuco a Labranza, Kilómetro 7,5, 4780000 Temuco, Araucanía",
+    "telefono": "9 3243 2056",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 27,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "espacio-container-house": {
+    "nombre": "Espacio Container House",
+    "slug": "espacio-container-house",
+    "lat": -33.306974,
+    "lng": -70.700864,
+    "direccion": "Espacio Container House - Portezuelo, parcela 3, Colina, Región Metropolitana",
+    "telefono": "9 6450 6113",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "punto-container": {
+    "nombre": "Punto Container",
+    "slug": "punto-container",
+    "lat": -33.632059,
+    "lng": -70.73966,
+    "direccion": "Punto Container - Av. Calera de Tango 2020, 8081428 San Bernardo, Región Metropolitana",
+    "telefono": "9 6807 0249",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "inter-containers---contenedores-en-chile": {
+    "nombre": "INTER CONTAINERS - Contenedores en Chile.",
+    "slug": "inter-containers---contenedores-en-chile",
+    "lat": -33.561469,
+    "lng": -70.701868,
+    "direccion": "INTER CONTAINERS - Contenedores en Chile. - Av. Las Acacias 02400, 8060221 San Bernardo, Región Metropolitana",
+    "telefono": "9 5879 9619",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "grupo-container-chile": {
+    "nombre": "Grupo Container Chile",
+    "slug": "grupo-container-chile",
+    "lat": -33.129001,
+    "lng": -71.555476,
+    "direccion": "Grupo Container Chile - Novena Avenida 2525, Valparaíso",
+    "telefono": "(32) 254 8791",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 348,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "megacontainers": {
+    "nombre": "MEGACONTAINERS",
+    "slug": "megacontainers",
+    "lat": -33.337793,
+    "lng": -70.724646,
+    "direccion": "MEGACONTAINERS - San Ignacio 160, Galpón 16, 8700000 Quilicura, Región Metropolitana",
+    "telefono": "9 7470 1847",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "ready-house-chile": {
+    "nombre": "Ready House Chile",
+    "slug": "ready-house-chile",
+    "lat": -37.021754,
+    "lng": -72.469654,
+    "direccion": "Ruta Cabrero - Parque Industrial Cabrero, Ruta 146, Km 9,2, 4070142 Concepción, Cabrero, Bío Bío",
+    "telefono": "9 5728 1174",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "inves-containers-modulos": {
+    "nombre": "INVES containers & Modulos",
+    "slug": "inves-containers-modulos",
+    "lat": -29.95765,
+    "lng": -71.300685,
+    "direccion": "INVES containers & Modulos - Ruta 5 Norte, Km 466, Parcela 27-A, Coquimbo",
+    "telefono": "9 9182 1782",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 16,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "living-containers": {
+    "nombre": "LIVING CONTAINERS",
+    "slug": "living-containers",
+    "lat": null,
+    "lng": null,
+    "direccion": "Camino Bajo de la Petisa 4675, 12800 Montevideo, Departamento de Montevideo, Uruguay",
+    "telefono": "+598 2314 8547",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 43,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "deposito-containers-patagonia-chile---venta-y-arriendo-contenedores-maritimos-20-pies-y-40-pies-containers-refrigerados": {
+    "nombre": "Deposito Containers Patagonia Chile - Venta y Arriendo Contenedores Maritimos 20 pies y 40 Pies, Containers Refrigerados",
+    "slug": "deposito-containers-patagonia-chile---venta-y-arriendo-contenedores-maritimos-20-pies-y-40-pies-containers-refrigerados",
+    "lat": -33.56709,
+    "lng": -70.71512,
+    "direccion": "Deposito Containers Patagonia Chile - Venta y Arriendo Contenedores Maritimos 20 pies y 40 Pies, Containers Refrigerados - Cam. La Vara 03425, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "(2) 2528 6556",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 49,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "contenedores-olimpo-spa": {
+    "nombre": "Contenedores Olimpo SPA",
+    "slug": "contenedores-olimpo-spa",
+    "lat": -33.571053,
+    "lng": -70.717219,
+    "direccion": "Contenedores Olimpo SPA - Cam. Los Pinos poniente, 03470, San Bernardo, Región Metropolitana",
+    "telefono": "9 9045 5800",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "mister-construcciones": {
+    "nombre": "Mister Construcciones",
+    "slug": "mister-construcciones",
+    "lat": null,
+    "lng": null,
+    "direccion": "Ruta 33 y Ruta 107, 90012 Sauce, Departamento de Canelones, Uruguay",
+    "telefono": "+598 92 390 708",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 129,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "leaf-bird-casas-container": {
+    "nombre": "LEAF BIRD CASAS CONTAINER",
+    "slug": "leaf-bird-casas-container",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 5049 6079",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "talcabox": {
+    "nombre": "Talcabox",
+    "slug": "talcabox",
+    "lat": -35.341193,
+    "lng": -71.564812,
+    "direccion": "Talcabox - Longitudinal sur km 241 parcela 27 Talca, 1000000 Maule, San Rafael, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "jr-contenedores-spa": {
+    "nombre": "Jr Contenedores SPA",
+    "slug": "jr-contenedores-spa",
+    "lat": -33.590399,
+    "lng": -70.655948,
+    "direccion": "Jr Contenedores SPA - Lautaro 1710, La Pintana, Región Metropolitana",
+    "telefono": "9 9205 9657",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 19,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "biocontainer": {
+    "nombre": "BIOCONTAINER",
+    "slug": "biocontainer",
+    "lat": -33.04096,
+    "lng": -71.625364,
+    "direccion": "BIOCONTAINER - Esmeralda 973, Valparaíso",
+    "telefono": "9 8943 4008",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 13,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "jirehcontainers": {
+    "nombre": "JirehContainers",
+    "slug": "jirehcontainers",
+    "lat": -33.094448,
+    "lng": -71.592334,
+    "direccion": "JirehContainers - Ruta 60 4580, Alto del Puerto, 2340000 Valparaíso",
+    "telefono": "9 7582 1823",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 21,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-containers-chile-spa": {
+    "nombre": "Casas Containers Chile Spa",
+    "slug": "casas-containers-chile-spa",
+    "lat": -33.021923,
+    "lng": -71.556102,
+    "direccion": "Casas Containers Chile Spa - 1 Nte. 406, of 703, 2520000 Valparaíso, Viña del Mar, Valparaíso",
+    "telefono": "9 2026 5730",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "boxtainer-chile": {
+    "nombre": "Boxtainer Chile",
+    "slug": "boxtainer-chile",
+    "lat": -33.11563,
+    "lng": -71.554637,
+    "direccion": "Boxtainer Chile - Martínez Cruz 284, 2372105 Placilla, Valparaíso",
+    "telefono": "9 9841 7164",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-loncoche": {
+    "nombre": "CASAS PREFABRICADAS LONCOCHE",
+    "slug": "casas-prefabricadas-loncoche",
+    "lat": -39.361509,
+    "lng": -72.623073,
+    "direccion": "CASAS PREFABRICADAS LONCOCHE - avenida Balmaceda, acceso norte s/n, 4970000 Loncoche, Araucanía",
+    "telefono": "9 3909 1512",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "domos-prefabricados": {
+    "nombre": "Domos Prefabricados",
+    "slug": "domos-prefabricados",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 5113 4567",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "prefabscl": {
+    "nombre": "PreFabs.cl",
+    "slug": "prefabscl",
+    "lat": -33.422879,
+    "lng": -70.604362,
+    "direccion": "PreFabs.cl - Av. Los Leones 382, 7510600 Providencia, Región Metropolitana",
+    "telefono": "9 4629 0610",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "metalfar-modulos": {
+    "nombre": "METALFAR módulos",
+    "slug": "metalfar-modulos",
+    "lat": -33.703429,
+    "lng": -71.210026,
+    "direccion": "METALFAR módulos - Camino el bajo 500, Melipilla Coordenadas 33,70301° S, 71,21006° O, Melipilla, Región Metropolitana",
+    "telefono": "(2) 2831 2043",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-san-ignacio": {
+    "nombre": "Casas Prefabricadas San Ignacio",
+    "slug": "casas-prefabricadas-san-ignacio",
+    "lat": -36.810307,
+    "lng": -73.035291,
+    "direccion": "Casas Prefabricadas San Ignacio - Camilo Henríquez 403, 4080747 Concepción, Bío Bío",
+    "telefono": "(41) 213 0739",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 105,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "modulos-sa": {
+    "nombre": "Modulos S.A.",
+    "slug": "modulos-sa",
+    "lat": -33.312528,
+    "lng": -70.740364,
+    "direccion": "Modulos S.A. - Sta. Isabel 1328, 9380000 Lampa, Región Metropolitana",
+    "telefono": "9 9945 9502",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "jrp-modular": {
+    "nombre": "Jrp Modular",
+    "slug": "jrp-modular",
+    "lat": -39.296545,
+    "lng": -72.110245,
+    "direccion": "Jrp Modular - Camino Villarrica Pucon Km 11 Villarrica, 4930000 Araucanía, Villarrica, Araucanía",
+    "telefono": "9 9569 0401",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "minima-soluciones-spa": {
+    "nombre": "Minima soluciones spa",
+    "slug": "minima-soluciones-spa",
+    "lat": -39.862666,
+    "lng": -73.182833,
+    "direccion": "Minima soluciones spa - Llancahue, Pasaje Santa Laura Nº 4, Km 8, Valdivia, Los Ríos",
+    "telefono": "9 4417 8424",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "casas-sip": {
+    "nombre": "Casas SIP",
+    "slug": "casas-sip",
+    "lat": -33.094737,
+    "lng": -70.693697,
+    "direccion": "Casas SIP - Quilapilún, Huechun, Colina, Región Metropolitana W844+3G Huechun, Colina, Región Metropolitana",
+    "telefono": "9 9430 2618",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "modular-homes-srl": {
+    "nombre": "Modular Homes SRL",
+    "slug": "modular-homes-srl",
+    "lat": null,
+    "lng": null,
+    "direccion": "Stte A Grande 863, Luis Guillon, Provincia de Buenos Aires, Argentina",
+    "telefono": "+54 11 4290-2117",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 86,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "nifty-modular-spa": {
+    "nombre": "Nifty modular spa.",
+    "slug": "nifty-modular-spa",
+    "lat": -33.393753,
+    "lng": -70.850014,
+    "direccion": "Nifty modular spa. - Simon Bolívar 6242, 9020000 Pudahuel, Región Metropolitana",
+    "telefono": "9 6816 7117",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "asap-group": {
+    "nombre": "ASAP GROUP",
+    "slug": "asap-group",
+    "lat": -33.278734,
+    "lng": -70.78906,
+    "direccion": "Parcela 9 - Cacique Colin, 9390342 Lampa, Región Metropolitana",
+    "telefono": "(2) 2573 0471",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 58,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "procontainers": {
+    "nombre": "PROCONTAINERS",
+    "slug": "procontainers",
+    "lat": -36.822233,
+    "lng": -73.002577,
+    "direccion": "Av Ignacio - Collao 1952, 4030000 Concepción, Bío Bío",
+    "telefono": "9 4469 6851",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "co-ol-construcciones-modulares--concepcion": {
+    "nombre": "Co-ol Construcciones Modulares- Concepción",
+    "slug": "co-ol-construcciones-modulares--concepcion",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "(2) 2589 8700",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "espacio-cubico-venta-y-arriendo-de-containers-arriendo-de-mini-bodegas": {
+    "nombre": "Espacio Cúbico | Venta y Arriendo de Containers | Arriendo de Mini Bodegas",
+    "slug": "espacio-cubico-venta-y-arriendo-de-containers-arriendo-de-mini-bodegas",
+    "lat": -29.943074,
+    "lng": -71.281713,
+    "direccion": "Espacio Cúbico | Venta y Arriendo de Containers | Arriendo de Mini Bodegas - Parcela 21 - 22, Lote A3, Ruta 5 Norte - La Serena, Chile, La Serena, Coquimbo",
+    "telefono": "(51) 267 7890",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 81,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "contenedores-elqui-venta-y-arriendo-de-containers-y-modulos": {
+    "nombre": "Contenedores Elqui / Venta y Arriendo de Containers y Módulos /",
+    "slug": "contenedores-elqui-venta-y-arriendo-de-containers-y-modulos",
+    "lat": -29.900746,
+    "lng": -71.219907,
+    "direccion": "Contenedores Elqui / Venta y Arriendo de Containers y Módulos / - Parcela, Alfalfares 33, La Serena, Coquimbo",
+    "telefono": "9 8549 4961",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "cobox---container": {
+    "nombre": "Cobox ® - Container",
+    "slug": "cobox---container",
+    "lat": -36.828397,
+    "lng": -73.046661,
+    "direccion": "Cobox ® - Container - Colo Colo 222, 4070142 Concepción, Bío Bío",
+    "telefono": "9 6429 6486",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "containers-y-casas-villarrica": {
+    "nombre": "Containers y casas, Villarrica",
+    "slug": "containers-y-casas-villarrica",
+    "lat": -39.230882,
+    "lng": -72.278295,
+    "direccion": "SECTOR ELTUME K6.5, 4930000 Villarrica, Araucanía",
+    "telefono": "9 3925 4776",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "surbox": {
+    "nombre": "SurBox",
+    "slug": "surbox",
+    "lat": -38.833034,
+    "lng": -72.622484,
+    "direccion": "SurBox - Santa Justa s/n, lote C-4, 4780000 Metrenco, Padre Las Casas, Araucanía",
+    "telefono": "9 8205 9546",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casa-container": {
+    "nombre": "Casa Container",
+    "slug": "casa-container",
+    "lat": -45.589586,
+    "lng": -72.085847,
+    "direccion": "Casa Container - Camino Aerodromo Tte Vidal, Coyhaique, Aysén",
+    "telefono": "9 9445 0566",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 35,
+    "regiones": [
+      "Aysén"
+    ]
+  },
+  "contenedores-weldinghome": {
+    "nombre": "Contenedores weldinghome",
+    "slug": "contenedores-weldinghome",
+    "lat": -39.477401,
+    "lng": -72.806223,
+    "direccion": "Contenedores weldinghome - H65M+PC, Lanco, Los Ríos",
+    "telefono": "9 5238 6494",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "bara-containers-osorno": {
+    "nombre": "Bara containers Osorno",
+    "slug": "bara-containers-osorno",
+    "lat": -40.611131,
+    "lng": -73.094926,
+    "direccion": "Bara containers Osorno - 9WQ3+GPR, Osorno, Los Lagos",
+    "telefono": "9 8232 6771",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "contenedoreschile": {
+    "nombre": "ContenedoresChile",
+    "slug": "contenedoreschile",
+    "lat": -38.86713,
+    "lng": -72.616674,
+    "direccion": "Freire, Araucanía",
+    "telefono": "(45) 238 1212",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "construcciones-y-reparaciones-e-y-m": {
+    "nombre": "construcciones y reparaciones e y m",
+    "slug": "construcciones-y-reparaciones-e-y-m",
+    "lat": -23.611169,
+    "lng": -70.379115,
+    "direccion": "construcciones y reparaciones e y m - Isabel Riquelme 666, 1266260 Antofagasta",
+    "telefono": "9 8656 5177",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "contenedores-alma-antofagasta": {
+    "nombre": "Contenedores ALMA antofagasta",
+    "slug": "contenedores-alma-antofagasta",
+    "lat": -23.621844,
+    "lng": -70.391759,
+    "direccion": "Contenedores ALMA antofagasta - Sgto. Aldea 331, 1240000 Antofagasta",
+    "telefono": "9 6576 7081",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "chc-maestranza-eirl": {
+    "nombre": "chc maestranza eirl",
+    "slug": "chc-maestranza-eirl",
+    "lat": -23.560763,
+    "lng": -70.384909,
+    "direccion": "chc maestranza eirl - av heroes de la c, 1240000 Antofagasta",
+    "telefono": "9 9839 3063",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "multiservicios-ka": {
+    "nombre": "Multiservicios K&A",
+    "slug": "multiservicios-ka",
+    "lat": -23.649377,
+    "lng": -70.387274,
+    "direccion": "1200000 Antofagasta",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "antofagasta-construye": {
+    "nombre": "Antofagasta Construye",
+    "slug": "antofagasta-construye",
+    "lat": -23.62837,
+    "lng": -70.404729,
+    "direccion": null,
+    "telefono": "9 9404 7261",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "multiservios-ka": {
+    "nombre": "Multiservios K&A",
+    "slug": "multiservios-ka",
+    "lat": -23.62837,
+    "lng": -70.404729,
+    "direccion": null,
+    "telefono": "9 2876 7566",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "myc-gestiones-constructivas": {
+    "nombre": "MyC Gestiones Constructivas",
+    "slug": "myc-gestiones-constructivas",
+    "lat": -23.580799,
+    "lng": -70.379166,
+    "direccion": "MyC Gestiones Constructivas - Av. Bonilla 9252, 1264577 Antofagasta",
+    "telefono": "9 8396 3757",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "granicholo": {
+    "nombre": "Granicholo",
+    "slug": "granicholo",
+    "lat": -23.62837,
+    "lng": -70.404729,
+    "direccion": null,
+    "telefono": "9 8450 7276",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "bahia-blanca-townhouse": {
+    "nombre": "Bahía Blanca Townhouse",
+    "slug": "bahia-blanca-townhouse",
+    "lat": -23.527009,
+    "lng": -70.398555,
+    "direccion": "Sector La Portada - C. 1 Sur 150, 1240000 Antofagasta",
+    "telefono": "9 9072 2279",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "mi-container": {
+    "nombre": "Mi container",
+    "slug": "mi-container",
+    "lat": -41.425605,
+    "lng": -72.902345,
+    "direccion": "Mi container - La vara lote 2, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "9 6433 0105",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "alihuen-casas-container": {
+    "nombre": "Alihuen Casas container",
+    "slug": "alihuen-casas-container",
+    "lat": -41.471563,
+    "lng": -72.943481,
+    "direccion": "Alihuen Casas container - Benavente 575, Ofi 302, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "9 9731 6676",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "electricasidad-domiciliaria-y-metalurgia-electroforja-spa": {
+    "nombre": "ELECTRICASIDAD DOMICILIARIA Y METALURGIA, ELECTROFORJA SPA.",
+    "slug": "electricasidad-domiciliaria-y-metalurgia-electroforja-spa",
+    "lat": -38.767375,
+    "lng": -72.593366,
+    "direccion": null,
+    "telefono": "9 2749 5191",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "polinex-sur": {
+    "nombre": "Polinex Sur",
+    "slug": "polinex-sur",
+    "lat": -38.769148,
+    "lng": -72.612534,
+    "direccion": "4850000 Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "9 4528 2626",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "contenedores-modulares-conka": {
+    "nombre": "Contenedores modulares CONKA",
+    "slug": "contenedores-modulares-conka",
+    "lat": -38.781899,
+    "lng": -72.577406,
+    "direccion": "Contenedores modulares CONKA - S-51 6, Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "kasakit-prefabricados": {
+    "nombre": "KASAKIT PREFABRICADOS",
+    "slug": "kasakit-prefabricados",
+    "lat": -38.757683,
+    "lng": -72.773144,
+    "direccion": "LAS - La Chacra 01451, 4810000 Temuco, Araucanía",
+    "telefono": "9 6688 5249",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "constructora-powell": {
+    "nombre": "CONSTRUCTORA POWELL",
+    "slug": "constructora-powell",
+    "lat": -38.742212,
+    "lng": -72.591115,
+    "direccion": "CONSTRUCTORA POWELL - Arturo Prat 875, Ofi 301, 4780000 Temuco, Araucanía",
+    "telefono": "9 4757 6608",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casa-meli": {
+    "nombre": "Casa Meli",
+    "slug": "casa-meli",
+    "lat": -38.736674,
+    "lng": -72.581806,
+    "direccion": "Casa Meli - Manuel Antonio Matta 214, Temuco, Araucanía",
+    "telefono": "(45) 223 3515",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 190,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "vitrinas-nielol": {
+    "nombre": "Vitrinas Ñielol",
+    "slug": "vitrinas-nielol",
+    "lat": -38.741004,
+    "lng": -72.565373,
+    "direccion": "Vitrinas Ñielol - HJ 31, LLEUPECO, Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "9 2700 8125",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "comercial-rengalil-ltda": {
+    "nombre": "Comercial Rengalil Ltda.",
+    "slug": "comercial-rengalil-ltda",
+    "lat": -38.768955,
+    "lng": -72.873276,
+    "direccion": "Comercial Rengalil Ltda. - km 23,5, S-40, 5020000 Nueva Imperial, Araucanía",
+    "telefono": "9 6842 1330",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 43,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "constructora-pozas-spa": {
+    "nombre": "Constructora Pozas Spa",
+    "slug": "constructora-pozas-spa",
+    "lat": -38.972254,
+    "lng": -72.569024,
+    "direccion": "Constructora Pozas Spa - 4940000 Freire, 4940000 Araucanía, Freire, Araucanía",
+    "telefono": "9 5817 0227",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "empresa-constructora-chile-sur-spa": {
+    "nombre": "Empresa Constructora CHILE SUR SPA",
+    "slug": "empresa-constructora-chile-sur-spa",
+    "lat": -38.740981,
+    "lng": -72.607962,
+    "direccion": "Empresa Constructora CHILE SUR SPA - Bernardo O'Higgins 0347, 4810794 Temuco, Araucanía",
+    "telefono": "(45) 226 6100",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casa-chile": {
+    "nombre": "Casa (chile)",
+    "slug": "casa-chile",
+    "lat": -38.737709,
+    "lng": -72.635024,
+    "direccion": "Casa (chile) - Efrain Encina 02265, 4810579 Cautin, Temuco, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "forestal-arbolito-lautaro": {
+    "nombre": "Forestal Arbolito Lautaro",
+    "slug": "forestal-arbolito-lautaro",
+    "lat": -38.571532,
+    "lng": -72.448072,
+    "direccion": "Forestal Arbolito Lautaro - Lautaro 648, Temuco, Lautaro, Araucanía",
+    "telefono": "(45) 253 5828",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 50,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "constructora-daal": {
+    "nombre": "Constructora Daal",
+    "slug": "constructora-daal",
+    "lat": -38.685174,
+    "lng": -72.528855,
+    "direccion": "4780000 Temuco, Araucanía",
+    "telefono": "9 9628 8788",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "punto-muebles-temuco": {
+    "nombre": "Punto Muebles Temuco",
+    "slug": "punto-muebles-temuco",
+    "lat": -38.743659,
+    "lng": -72.566054,
+    "direccion": "Punto Muebles Temuco - Niagara, km 2.4, 4780000 Temuco, Padre Las Casas, Araucanía",
+    "telefono": "9 7932 9626",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tapiceria-temuco": {
+    "nombre": "TAPICERIA TEMUCO",
+    "slug": "tapiceria-temuco",
+    "lat": -38.763924,
+    "lng": -72.598611,
+    "direccion": "TAPICERIA TEMUCO - Corvalán 1380, 4850980 Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "9 3697 1550",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "canada-house": {
+    "nombre": "Canada House",
+    "slug": "canada-house",
+    "lat": -38.554577,
+    "lng": -72.452372,
+    "direccion": "Canada House - Acceso Parque Industrial, Lautaro, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "amigo-viviendas": {
+    "nombre": "Amigo viviendas",
+    "slug": "amigo-viviendas",
+    "lat": -38.412102,
+    "lng": -72.778467,
+    "direccion": "Amigo viviendas - Fresia 144, 4780000 Galvarino, Araucanía",
+    "telefono": "9 8953 3617",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "modular-arquitectos": {
+    "nombre": "Modular Arquitectos",
+    "slug": "modular-arquitectos",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 6109 1923",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "arriendo": {
+    "nombre": "Arriendo",
+    "slug": "arriendo",
+    "lat": -38.722477,
+    "lng": -72.618866,
+    "direccion": "Arriendo - Av. Pedro de Valdivia 01570, 4800309 Temuco, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "rgn-urbano": {
+    "nombre": "RGN URBANO",
+    "slug": "rgn-urbano",
+    "lat": -38.740981,
+    "lng": -72.607962,
+    "direccion": "RGN URBANO - Bernardo O'Higgins 0347, 4780000 Temuco, Araucanía",
+    "telefono": "9 6509 9250",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "containers-usados-chile": {
+    "nombre": "Containers Usados Chile",
+    "slug": "containers-usados-chile",
+    "lat": -33.646935,
+    "lng": -70.711868,
+    "direccion": "Containers Usados Chile - Av. Pdte. Jorge Alessandri Rodríguez 12, 377, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "9 8734 5965",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 33,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "container-jac": {
+    "nombre": "Container JAC",
+    "slug": "container-jac",
+    "lat": -33.591919,
+    "lng": -70.638679,
+    "direccion": "Container JAC - Lautaro 2330, 8840015 La Pintana, Región Metropolitana",
+    "telefono": "9 9014 0627",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 12,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "movilbox---venta-y-arriendo-de-contenedores-maritimos": {
+    "nombre": "Movilbox - Venta y Arriendo de Contenedores Marítimos",
+    "slug": "movilbox---venta-y-arriendo-de-contenedores-maritimos",
+    "lat": -33.547812,
+    "lng": -70.699227,
+    "direccion": "Movilbox - Venta y Arriendo de Contenedores Marítimos - La Divisa 01510, 8060020 San Bernardo, Región Metropolitana",
+    "telefono": "9 7515 6912",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 128,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "containers-usados-nuevos-en-venta-y-arriendo-contenedores-oficinas-containers-bodegas-casetas-de-vigilancia-modulos": {
+    "nombre": "Containers Usados Nuevos en Venta y Arriendo – Contenedores Oficinas, Containers Bodegas, Casetas de Vigilancia, Modulos",
+    "slug": "containers-usados-nuevos-en-venta-y-arriendo-contenedores-oficinas-containers-bodegas-casetas-de-vigilancia-modulos",
+    "lat": -33.557148,
+    "lng": -70.70973,
+    "direccion": "Containers Usados Nuevos en Venta y Arriendo – Contenedores Oficinas, Containers Bodegas, Casetas de Vigilancia, Modulos - Pdte Jorge Alessandri Rodríguez 11865, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "9 7125 1557",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 33,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "todo-contenedor-venta-de-contenedores-maritimos": {
+    "nombre": "Todo contenedor venta de contenedores maritimos",
+    "slug": "todo-contenedor-venta-de-contenedores-maritimos",
+    "lat": -33.548557,
+    "lng": -70.697245,
+    "direccion": "Todo contenedor venta de contenedores maritimos - Avenida Jorge Alessandri Rodríguez 10260, San Bernardo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "containerland": {
+    "nombre": "Containerland",
+    "slug": "containerland",
+    "lat": -33.566803,
+    "lng": -70.71859,
+    "direccion": "Containerland - La Vara 03595, San Bernardo, Santiago, Santiago, San Bernardo, Región Metropolitana",
+    "telefono": "(2) 2584 0191",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 32,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "venta-arriendo-containers-oficinas-modulares-bodegas-contenedor-20-y-40---mejor-precio-de-chile-containers-maritimoscl": {
+    "nombre": "Venta Arriendo Containers Oficinas Modulares, Bodegas Contenedor 20 y 40 - Mejor Precio de Chile, containers-maritimos.cl",
+    "slug": "venta-arriendo-containers-oficinas-modulares-bodegas-contenedor-20-y-40---mejor-precio-de-chile-containers-maritimoscl",
+    "lat": -33.413268,
+    "lng": -70.60137,
+    "direccion": "Venta Arriendo Containers Oficinas Modulares, Bodegas Contenedor 20 y 40 - Mejor Precio de Chile, containers-maritimos.cl - Benjamín 2940, 7550032 Las Condes, Región Metropolitana",
+    "telefono": "9 7125 1557",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 41,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "containers-maritimos-refrigerados-contenedores-usados-oficinas-y-banos-en-venta-y-arriendo": {
+    "nombre": "Containers Marítimos Refrigerados | Contenedores Usados, Oficinas y Baños en Venta y Arriendo",
+    "slug": "containers-maritimos-refrigerados-contenedores-usados-oficinas-y-banos-en-venta-y-arriendo",
+    "lat": -33.545567,
+    "lng": -70.707889,
+    "direccion": "Containers Marítimos Refrigerados | Contenedores Usados, Oficinas y Baños en Venta y Arriendo - Gral. Velásquez 10, 987, 8060077 San Bernardo, Región Metropolitana",
+    "telefono": "9 9431 0652",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 209,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "contekner": {
+    "nombre": "Contekner",
+    "slug": "contekner",
+    "lat": -33.304414,
+    "lng": -70.773474,
+    "direccion": "Contekner - La Vilana s/n, Lampa, Región Metropolitana",
+    "telefono": "9 8436 8512",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 35,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "contenedores-nacionales-modulos": {
+    "nombre": "Contenedores Nacionales ( Modulos )",
+    "slug": "contenedores-nacionales-modulos",
+    "lat": -33.587207,
+    "lng": -70.663644,
+    "direccion": "Contenedores Nacionales ( Modulos ) - Tucapel 1285, GALPON 1, 8840003 La Pintana, Región Metropolitana",
+    "telefono": "9 4548 4144",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "container-puerto-varas": {
+    "nombre": "Container puerto varas",
+    "slug": "container-puerto-varas",
+    "lat": -41.351409,
+    "lng": -72.950808,
+    "direccion": "Container puerto varas - Camino Complejo Deportivo El Mirador, Puerto Varas, Los Lagos",
+    "telefono": "9 9083 0050",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "containers-gorbea": {
+    "nombre": "Containers Gorbea",
+    "slug": "containers-gorbea",
+    "lat": -39.126706,
+    "lng": -72.661107,
+    "direccion": "Salida sur de Gorbea - Ruta 5, Km 718,5, Gorbea, Araucanía",
+    "telefono": "9 5656 4810",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "contenedorescl---arriendo-contenedores-bodega-y-oficina": {
+    "nombre": "Contenedores.cl - Arriendo Contenedores Bodega y Oficina",
+    "slug": "contenedorescl---arriendo-contenedores-bodega-y-oficina",
+    "lat": -33.418065,
+    "lng": -70.603206,
+    "direccion": "Contenedores.cl - Arriendo Contenedores Bodega y Oficina - Av. Luis Thayer Ojeda 73, Ofi 702, 7510001 Providencia, Región Metropolitana",
+    "telefono": "9 9949 1682",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "contenedores-valdivia-spa": {
+    "nombre": "Contenedores Valdivia SpA",
+    "slug": "contenedores-valdivia-spa",
+    "lat": -39.796855,
+    "lng": -73.203021,
+    "direccion": "Contenedores Valdivia SpA - Av. Balmaceda 6555 B, Valdivia, Los Ríos",
+    "telefono": "9 7870 7340",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "container-great-spa": {
+    "nombre": "Container Great SPA",
+    "slug": "container-great-spa",
+    "lat": -33.625789,
+    "lng": -70.777287,
+    "direccion": "Container Great SPA - Av. Calera de Tango Paradero 11, Calera de Tango, Región Metropolitana",
+    "telefono": "9 7350 5689",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-laguna-de-aculeo": {
+    "nombre": "Casas prefabricadas laguna de aculeo",
+    "slug": "casas-prefabricadas-laguna-de-aculeo",
+    "lat": -33.86989,
+    "lng": -70.871218,
+    "direccion": "Casas prefabricadas laguna de aculeo - Miguel Letelier 11165, 9500000 Paine, Región Metropolitana",
+    "telefono": "9 4787 1138",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "curicontainer": {
+    "nombre": "Curicontainer",
+    "slug": "curicontainer",
+    "lat": -34.890689,
+    "lng": -71.156219,
+    "direccion": "Curicontainer - Longitudinal Sur 177, Teno, Maule",
+    "telefono": "9 9158 9112",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "boxcontemar": {
+    "nombre": "Boxcontemar",
+    "slug": "boxcontemar",
+    "lat": -33.125225,
+    "lng": -71.545103,
+    "direccion": "Boxcontemar - Undécima Avenida 413, Placilla, Valparaíso",
+    "telefono": "(32) 279 5100",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 34,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "servicontainers-sa": {
+    "nombre": "Servicontainers S.A.",
+    "slug": "servicontainers-sa",
+    "lat": -33.130595,
+    "lng": -71.557554,
+    "direccion": "Servicontainers S.A. - Cerro El Altar 3729, 2372049 Placilla, Valparaíso",
+    "telefono": "9 7779 4879",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 20,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "gnt-construcciones": {
+    "nombre": "GNT construcciones",
+    "slug": "gnt-construcciones",
+    "lat": -33.299915,
+    "lng": -70.859685,
+    "direccion": "9380000 Lampa, Región Metropolitana",
+    "telefono": "9 4274 9834",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "global-containers-spa": {
+    "nombre": "GLOBAL CONTAINERS SPA",
+    "slug": "global-containers-spa",
+    "lat": -36.95259,
+    "lng": -73.155992,
+    "direccion": "GLOBAL CONTAINERS SPA - 4190000 RUTA 160 KM 19,5 Camino a CORONEL Coronel, 4190000 Biobío, Coronel, Bío Bío",
+    "telefono": "9 5627 6845",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "contenedores-austral": {
+    "nombre": "Contenedores Austral",
+    "slug": "contenedores-austral",
+    "lat": -33.562787,
+    "lng": -70.72228,
+    "direccion": "Contenedores Austral - San Eugenio 12701, 8060792 San Bernardo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "fargus---arriendo-de-container-y-oficinas": {
+    "nombre": "FARGUS - Arriendo de Container y Oficinas",
+    "slug": "fargus---arriendo-de-container-y-oficinas",
+    "lat": -41.482764,
+    "lng": -72.980174,
+    "direccion": "FARGUS - Arriendo de Container y Oficinas - C. Pto. Cruz Grande 974, Puerto Montt, Los Lagos",
+    "telefono": "9 9051 5358",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "containerchillan": {
+    "nombre": "ContainerChillan",
+    "slug": "containerchillan",
+    "lat": -36.569899,
+    "lng": -72.062858,
+    "direccion": "ContainerChillan - Camino a Nahueltoro, 3780000 Chillán, Ñuble",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "sandoval-casas-de-madera": {
+    "nombre": "SANDOVAL Casas De Madera",
+    "slug": "sandoval-casas-de-madera",
+    "lat": -32.787288,
+    "lng": -70.639517,
+    "direccion": "SANDOVAL Casas De Madera - 2 Ote 3, Concón, Santa María, Valparaíso",
+    "telefono": "(34) 234 3086",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-belen": {
+    "nombre": "Casas Prefabricadas Belén",
+    "slug": "casas-prefabricadas-belen",
+    "lat": -36.813713,
+    "lng": -73.038559,
+    "direccion": "Casas Prefabricadas Belén - Camilo Henríquez 103, 4080858 Concepción, Bío Bío",
+    "telefono": "9 9673 0817",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "sweethomes": {
+    "nombre": "Sweethomes",
+    "slug": "sweethomes",
+    "lat": -36.765661,
+    "lng": -73.011243,
+    "direccion": "Sweethomes - km 5,5 Ruta 150, Penco, 4140004 Concepción, Bío Bío",
+    "telefono": "9 5334 7939",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "comercial-a-y-a-spa": {
+    "nombre": "COMERCIAL A Y A S.P.A.",
+    "slug": "comercial-a-y-a-spa",
+    "lat": -37.162121,
+    "lng": -72.958397,
+    "direccion": "COMERCIAL A Y A S.P.A. - Lautaro 2200, 4230000 Santa Juana, Bío Bío",
+    "telefono": "9 9047 5756",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-talcamo": {
+    "nombre": "Constructora talcamo",
+    "slug": "constructora-talcamo",
+    "lat": -36.806597,
+    "lng": -72.627502,
+    "direccion": "Florida, Bío Bío",
+    "telefono": "(41) 335 3532",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 42,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "comercial-tricauco": {
+    "nombre": "Comercial Tricauco",
+    "slug": "comercial-tricauco",
+    "lat": -37.15851,
+    "lng": -72.965079,
+    "direccion": "Comercial Tricauco - Ruta de la madera, Sector pumapu Nº1854, 4230000 Biobío, Santa Juana, Bío Bío",
+    "telefono": "9 3406 1992",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 18,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-andes-sur": {
+    "nombre": "Casas Andes Sur",
+    "slug": "casas-andes-sur",
+    "lat": -36.833011,
+    "lng": -73.055069,
+    "direccion": "Casas Andes Sur - Serrano 148, 4070307 Concepción, Bío Bío",
+    "telefono": "9 4161 7273",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "domodular-constructores": {
+    "nombre": "Domodular Constructores",
+    "slug": "domodular-constructores",
+    "lat": -36.960052,
+    "lng": -72.733807,
+    "direccion": "Domodular Constructores - Camino a cabrero kilometro 33 Yumbel, 4580000 Biobío, Yumbel, Bío Bío",
+    "telefono": "9 6917 8337",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "empresas-tome": {
+    "nombre": "Empresas Tome",
+    "slug": "empresas-tome",
+    "lat": -36.818834,
+    "lng": -73.041307,
+    "direccion": "Empresas Tome - Av. Los Carrera 1535, 4081473 Concepción, Bío Bío",
+    "telefono": "(41) 262 0052",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "macoservi-limitada": {
+    "nombre": "Macoservi Limitada",
+    "slug": "macoservi-limitada",
+    "lat": -36.823,
+    "lng": -73.059845,
+    "direccion": "Macoservi Limitada - Obispo Hipólito Salas 1082, 4030464 Concepción, Bío Bío",
+    "telefono": "(41) 324 0040",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-santa-marta": {
+    "nombre": "CASAS SANTA MARTA",
+    "slug": "casas-santa-marta",
+    "lat": -37.082118,
+    "lng": -72.439949,
+    "direccion": "CASAS SANTA MARTA - Arturo Prat 544, Monte Aguila, Cabrero, Bío Bío",
+    "telefono": "(43) 241 1162",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 45,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "fabrica-de-panderetas-campos": {
+    "nombre": "Fabrica de Panderetas Campos",
+    "slug": "fabrica-de-panderetas-campos",
+    "lat": -36.797336,
+    "lng": -73.078466,
+    "direccion": "Fabrica de Panderetas Campos - Arteaga Alemparte 8753, al interior, Hualpén, Bío Bío",
+    "telefono": "9 5522 2082",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 21,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-de-viviendas-limitada": {
+    "nombre": "Constructora De Viviendas Limitada",
+    "slug": "constructora-de-viviendas-limitada",
+    "lat": -36.826262,
+    "lng": -73.050093,
+    "direccion": "Constructora De Viviendas Limitada - Anibal Pinto 509, 4030574 Concepción, Bío Bío",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "tecno-fast---coronel": {
+    "nombre": "Tecno Fast - Coronel",
+    "slug": "tecno-fast---coronel",
+    "lat": -36.971615,
+    "lng": -73.171257,
+    "direccion": "Tecno Fast - Coronel - Océano Pacífico 3618, 4192257 Coronel, Bío Bío",
+    "telefono": "(41) 210 6445",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "maderakit": {
+    "nombre": "MADERAKIT",
+    "slug": "maderakit",
+    "lat": -36.789999,
+    "lng": -73.024044,
+    "direccion": "MADERAKIT - Cam. a Penco Km 2, Concepción, Bío Bío",
+    "telefono": "9 5130 0179",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "acogedora-tiny-house-2-personas-primera-linea-de-playa-apta-para-mascotas": {
+    "nombre": "Acogedora Tiny House 2 personas, Primera Línea de playa, apta para mascotas",
+    "slug": "acogedora-tiny-house-2-personas-primera-linea-de-playa-apta-para-mascotas",
+    "lat": -35.11298,
+    "lng": -72.205139,
+    "direccion": "Acogedora Tiny House 2 personas, Primera Línea de playa, apta para mascotas",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-cl---sucursal-santiago": {
+    "nombre": "Tiny House .cl - Sucursal Santiago",
+    "slug": "tiny-house-cl---sucursal-santiago",
+    "lat": -33.43776,
+    "lng": -70.665263,
+    "direccion": "Tiny House .cl - Sucursal Santiago - Santo Domingo 2048, 8340330 Santiago, Región Metropolitana",
+    "telefono": "9 4035 9528",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-independiente-con-estacionamiento": {
+    "nombre": "Tiny House independiente con estacionamiento",
+    "slug": "tiny-house-independiente-con-estacionamiento",
+    "lat": -33.42347,
+    "lng": -70.562279,
+    "direccion": "7571047 Las Condes, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house---double-room": {
+    "nombre": "Tiny house - Double Room",
+    "slug": "tiny-house---double-room",
+    "lat": -33.655151,
+    "lng": -70.888527,
+    "direccion": "Talagante, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house": {
+    "nombre": "Tiny House",
+    "slug": "tiny-house",
+    "lat": -33.649074,
+    "lng": -70.355882,
+    "direccion": "San José de Maipo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "oasis-1865-tiny-house": {
+    "nombre": "Oasis 1865 Tiny House",
+    "slug": "oasis-1865-tiny-house",
+    "lat": -33.474957,
+    "lng": -70.545098,
+    "direccion": "Oasis 1865 Tiny House - Laguna San Pedro 1865, 7911417 Peñalolén, Región Metropolitana",
+    "telefono": "9 2824 8647",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "mini-relajo-tiny-house---double-room-with-private-bathroom": {
+    "nombre": "Mini Relajo-Tiny House - Double Room with Private Bathroom",
+    "slug": "mini-relajo-tiny-house---double-room-with-private-bathroom",
+    "lat": -33.65131,
+    "lng": -70.538422,
+    "direccion": "Pirque, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tinyhouse-chicureo": {
+    "nombre": "Tinyhouse Chicureo",
+    "slug": "tinyhouse-chicureo",
+    "lat": -33.257977,
+    "lng": -70.710169,
+    "direccion": "Tinyhouse Chicureo - San José 8, Chicureo, Colina, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "linda-tiny-house-con-desayuno---one-bedroom-house": {
+    "nombre": "Linda Tiny House con desayuno - One-Bedroom House",
+    "slug": "linda-tiny-house-con-desayuno---one-bedroom-house",
+    "lat": -33.676022,
+    "lng": -70.628853,
+    "direccion": "Pirque, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-new": {
+    "nombre": "TINY HOUSE NEW",
+    "slug": "tiny-house-new",
+    "lat": -33.444907,
+    "lng": -70.61529,
+    "direccion": "TINY HOUSE NEW - Los Capitanes 1231, 7500000 Providencia, Región Metropolitana",
+    "telefono": "9 8188 8107",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "loow-tiny-house": {
+    "nombre": "Loow Tiny House",
+    "slug": "loow-tiny-house",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 9348 8389",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-space": {
+    "nombre": "Tiny Space",
+    "slug": "tiny-space",
+    "lat": -33.543232,
+    "lng": -70.696375,
+    "direccion": "Tiny Space - La Divisa 900, 8060020 San Bernardo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-los-angeles": {
+    "nombre": "TINY HOUSE Los Angeles",
+    "slug": "tiny-house-los-angeles",
+    "lat": -37.456104,
+    "lng": -72.371918,
+    "direccion": "Los Ángeles, Bío Bío",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "linda-tiny-house-con-desayuno": {
+    "nombre": "Linda Tiny House con desayuno",
+    "slug": "linda-tiny-house-con-desayuno",
+    "lat": -33.676033,
+    "lng": -70.628853,
+    "direccion": "Pirque, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 34,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-en-chicureo---one-bedroom-house": {
+    "nombre": "Tiny house en Chicureo - One-Bedroom House",
+    "slug": "tiny-house-en-chicureo---one-bedroom-house",
+    "lat": -33.25777,
+    "lng": -70.709846,
+    "direccion": "Chicureo, Colina, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "mi-tiny-home-chile": {
+    "nombre": "Mi Tiny Home Chile",
+    "slug": "mi-tiny-home-chile",
+    "lat": -34.428269,
+    "lng": -72.02585,
+    "direccion": "Esquina/ Camino antiguo a - Camino al faro de, Cam. Punta de Lobos, 3220000 Pichilemu, O'Higgins",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "tiny-house-de-26-metros-cuadrados---one-bedroom-house": {
+    "nombre": "TINY HOUSE DE 26 metros cuadrados - One-Bedroom House",
+    "slug": "tiny-house-de-26-metros-cuadrados---one-bedroom-house",
+    "lat": -33.594879,
+    "lng": -70.36557,
+    "direccion": "San José de Maipo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-constructora-andimaru": {
+    "nombre": "Tiny House Constructora Andimaru",
+    "slug": "tiny-house-constructora-andimaru",
+    "lat": -34.221638,
+    "lng": -70.968836,
+    "direccion": "Tiny House Constructora Andimaru - Maule 028, 3020000 Donihue, Doñihue, O'Higgins",
+    "telefono": "9 8904 6642",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "tiny-house-38---suite": {
+    "nombre": "Tiny House 38 - Suite",
+    "slug": "tiny-house-38---suite",
+    "lat": -33.649239,
+    "lng": -70.355247,
+    "direccion": "San José de Maipo, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tiny-house-gmj-monje": {
+    "nombre": "TINY HOUSE GMJ MONJE",
+    "slug": "tiny-house-gmj-monje",
+    "lat": -34.178748,
+    "lng": -70.715715,
+    "direccion": "TINY HOUSE GMJ MONJE - Av. Bombero Villalobos 0396, 2820000 Rancagua, O'Higgins",
+    "telefono": "9 7815 3611",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "cabanas-el-rincon-de-olmue": {
+    "nombre": "Cabañas El Rincon de Olmue",
+    "slug": "cabanas-el-rincon-de-olmue",
+    "lat": -32.993066,
+    "lng": -71.14971,
+    "direccion": "Cabañas El Rincon de Olmue - Avenida Granizo 7990, 2330487 Valparaíso, Olmué, Valparaíso",
+    "telefono": "9 9848 2797",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 351,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "remanso-del-espiritu": {
+    "nombre": "Remanso del espiritu",
+    "slug": "remanso-del-espiritu",
+    "lat": -33.725115,
+    "lng": -70.862541,
+    "direccion": "Remanso del espiritu - Cam. Las Parcelas 1, Y 2 LT.B ST. 9, Isla de Maipo, Región Metropolitana",
+    "telefono": "9 9333 6244",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 279,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "hidrotinaschile": {
+    "nombre": "hidrotinaschile",
+    "slug": "hidrotinaschile",
+    "lat": -33.477901,
+    "lng": -70.689087,
+    "direccion": "hidrotinaschile - Av. Carlos Valdovinos 3943, 9210001 Cerrillos, Región Metropolitana",
+    "telefono": "9 7893 1250",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "entreramas-cabanas": {
+    "nombre": "EntreRamas Cabañas",
+    "slug": "entreramas-cabanas",
+    "lat": -32.993956,
+    "lng": -71.146962,
+    "direccion": "2330000 Olmué, Valparaíso",
+    "telefono": "9 5356 0943",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 62,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casa-nomii": {
+    "nombre": "Casa NOMII",
+    "slug": "casa-nomii",
+    "lat": -33.438822,
+    "lng": -70.633848,
+    "direccion": "Casa NOMII - Almirante Simpson 50, 7500856 Santiago, Providencia, Región Metropolitana",
+    "telefono": "9 9642 6795",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 218,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "quintay-tiny-house": {
+    "nombre": "Quintay Tiny House",
+    "slug": "quintay-tiny-house",
+    "lat": -33.183809,
+    "lng": -71.685872,
+    "direccion": "Quintay Tiny House - C. Sur, Quintay, Casablanca, Valparaíso",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-el-mirador": {
+    "nombre": "Casas Prefabricadas El Mirador",
+    "slug": "casas-prefabricadas-el-mirador",
+    "lat": -35.441402,
+    "lng": -71.663607,
+    "direccion": "Casas Prefabricadas El Mirador - C. 14 Sur 1166-1180, Talca, Maule",
+    "telefono": "9 6505 3128",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 25,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "tiny-house-maitencillo": {
+    "nombre": "Tiny House Maitencillo",
+    "slug": "tiny-house-maitencillo",
+    "lat": -32.642187,
+    "lng": -71.426437,
+    "direccion": "Tiny House Maitencillo - 9H5F+4CF, Puchuncaví, Valparaíso",
+    "telefono": "9 5728 8745",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "tiny-house-rapanui": {
+    "nombre": "Tiny House Rapanui",
+    "slug": "tiny-house-rapanui",
+    "lat": -33.383274,
+    "lng": -71.655023,
+    "direccion": "Tiny House Rapanui - Av. Monterrey 11, Algarrobo, Valparaíso",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-azocar-prefabricadas": {
+    "nombre": "Casas Azocar Prefabricadas",
+    "slug": "casas-azocar-prefabricadas",
+    "lat": -35.481827,
+    "lng": -71.656394,
+    "direccion": "Maule",
+    "telefono": "9 9874 0814",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "tiny-house-weichafe": {
+    "nombre": "Tiny House Weichafe",
+    "slug": "tiny-house-weichafe",
+    "lat": -39.47827,
+    "lng": -72.099748,
+    "direccion": "Tiny House Weichafe - Parcela 15 Challupen Villarrica, 4930000 Araucanía, Villarrica, Araucanía",
+    "telefono": "9 8837 6167",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-home-pucon": {
+    "nombre": "Tiny Home Pucón",
+    "slug": "tiny-home-pucon",
+    "lat": -39.308261,
+    "lng": -71.921119,
+    "direccion": "Tiny Home Pucón - C. del Salto, Lote a 1 c, 4920000 Pucon, Pucón, Araucanía",
+    "telefono": "9 9623 7275",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-house-caburgua": {
+    "nombre": "Tiny house Caburgüa",
+    "slug": "tiny-house-caburgua",
+    "lat": -39.220575,
+    "lng": -71.816293,
+    "direccion": "Tiny house Caburgüa - Q5HM+9F, Pucon, Pucón, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-house-bosque-pucon": {
+    "nombre": "Tiny house Bosque Pucón",
+    "slug": "tiny-house-bosque-pucon",
+    "lat": -39.287639,
+    "lng": -71.96565,
+    "direccion": "Tiny house Bosque Pucón - Prolongación Colo Colo 2234, Pucon, Pucón, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-house-con-tinaja-privada-en-pucon---one-bedroom-house": {
+    "nombre": "Tiny House con Tinaja Privada en Pucón - One-Bedroom House",
+    "slug": "tiny-house-con-tinaja-privada-en-pucon---one-bedroom-house",
+    "lat": -39.297661,
+    "lng": -71.958199,
+    "direccion": "Pucón, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "lomas-del-sol-tiny-house": {
+    "nombre": "Lomas del Sol Tiny house",
+    "slug": "lomas-del-sol-tiny-house",
+    "lat": -39.306612,
+    "lng": -71.931758,
+    "direccion": "Pucon, Pucón, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "oasis-tiny-house": {
+    "nombre": "Oasis tiny house",
+    "slug": "oasis-tiny-house",
+    "lat": -39.250432,
+    "lng": -71.77002,
+    "direccion": "Oasis tiny house - P6XH+RX, Pichare, Pucón, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-forest": {
+    "nombre": "Tiny Forest",
+    "slug": "tiny-forest",
+    "lat": -39.370438,
+    "lng": -72.093063,
+    "direccion": "Tiny Forest - JWH4+RQM, Villarrica, Araucanía",
+    "telefono": "9 8819 6051",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tiny-home-puerto-varas": {
+    "nombre": "TINY HOME PUERTO VARAS",
+    "slug": "tiny-home-puerto-varas",
+    "lat": -41.323553,
+    "lng": -72.950002,
+    "direccion": "TINY HOME PUERTO VARAS - Ruta 225, km 1,2, 5550000 Puerto Varas, Los Lagos",
+    "telefono": "9 6619 9065",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "tiny-house-cl---sucursal-puerto-varas": {
+    "nombre": "Tiny House .cl - Sucursal Puerto Varas",
+    "slug": "tiny-house-cl---sucursal-puerto-varas",
+    "lat": -41.326163,
+    "lng": -73.087539,
+    "direccion": "Bodega 2 - Otto Klein Dorner, Parcelación Bellavista, Lote 4, 5550000 Nueva Braunau, Puerto Varas, Los Lagos",
+    "telefono": "9 4035 9528",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "construccion-monteverde": {
+    "nombre": "Construccion Monteverde",
+    "slug": "construccion-monteverde",
+    "lat": -41.522226,
+    "lng": -73.130462,
+    "direccion": "Construccion Monteverde - Camino Monteverde Km 1, Puerto Montt, Los Lagos",
+    "telefono": "9 5891 7769",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "konstrucciones-carpediem-spa": {
+    "nombre": "Konstrucciones Carpediem SpA",
+    "slug": "konstrucciones-carpediem-spa",
+    "lat": -41.487491,
+    "lng": -73.096296,
+    "direccion": "Konstrucciones Carpediem SpA - 5480000, Puerto Montt, Los Lagos",
+    "telefono": "9 5460 1573",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-el-tepual": {
+    "nombre": "casas el tepual",
+    "slug": "casas-el-tepual",
+    "lat": -42.151599,
+    "lng": -73.214806,
+    "direccion": null,
+    "telefono": "9 8821 0244",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "coloniasur": {
+    "nombre": "ColoniaSur",
+    "slug": "coloniasur",
+    "lat": -42.479155,
+    "lng": -73.763481,
+    "direccion": "ColoniaSur - Ruta 5 615, Puerto Montt, Puerto Varas, Los Lagos",
+    "telefono": "9 7451 1957",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-y-prefabricados-de-hormigon-mosaicosur-limitada": {
+    "nombre": "Constructora Y Prefabricados De Hormigon Mosaicosur Limitada",
+    "slug": "constructora-y-prefabricados-de-hormigon-mosaicosur-limitada",
+    "lat": -41.472834,
+    "lng": -72.96154,
+    "direccion": "Constructora Y Prefabricados De Hormigon Mosaicosur Limitada - Gabriela Mistral 5, 5522018 Puerto Montt, Los Lagos",
+    "telefono": "9 7623 9779",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casa-lagunitas": {
+    "nombre": "Casa lagunitas",
+    "slug": "casa-lagunitas",
+    "lat": -41.448906,
+    "lng": -73.017088,
+    "direccion": "Casa lagunitas - Laguinitas Km7, Puerto Montt, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-chilehome-spa": {
+    "nombre": "CASAS PREFABRICADAS CHILEHOME SPA",
+    "slug": "casas-prefabricadas-chilehome-spa",
+    "lat": -41.351239,
+    "lng": -72.951302,
+    "direccion": "CASAS PREFABRICADAS CHILEHOME SPA - Camino Complejo Deportivo El Mirador, Puerto Varas, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-dk-spa": {
+    "nombre": "Casas D&K spa",
+    "slug": "casas-dk-spa",
+    "lat": -41.405896,
+    "lng": -72.91622,
+    "direccion": "Casas D&K spa - Av. Gabriela Mistral 933, 5800000 Puerto Montt, Los Lagos",
+    "telefono": "9 5026 9831",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "mm-construcciones": {
+    "nombre": "MM construcciones",
+    "slug": "mm-construcciones",
+    "lat": -41.483325,
+    "lng": -73.022107,
+    "direccion": "MM construcciones - camino interior, acceso por caletera derecha, costado, Empalme A Ruta Cinco Sur, Puerto Montt, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casa-puerto-montt": {
+    "nombre": "Casa puerto montt",
+    "slug": "casa-puerto-montt",
+    "lat": -41.428299,
+    "lng": -72.907066,
+    "direccion": "Casa puerto montt - Los Colonos, Puerto Montt, Los Lagos",
+    "telefono": "9 4565 1326",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "contructora-las-quemas": {
+    "nombre": "Contructora Las Quemas",
+    "slug": "contructora-las-quemas",
+    "lat": -41.4723,
+    "lng": -72.962581,
+    "direccion": "Contructora Las Quemas - C. las Quemas, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "9 4810 9488",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "tiny-house-casas-pequenas-estructura-de-acero-transportables": {
+    "nombre": "tiny house , casas pequeñas, estructura de acero, transportables",
+    "slug": "tiny-house-casas-pequenas-estructura-de-acero-transportables",
+    "lat": -37.001677,
+    "lng": -73.186559,
+    "direccion": "4190000 Coronel, Bío Bío",
+    "telefono": "9 3746 0039",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "mathinson-house": {
+    "nombre": "Mathinson House",
+    "slug": "mathinson-house",
+    "lat": -36.78143,
+    "lng": -73.021092,
+    "direccion": "Concepción, Penco, Bío Bío",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "solusip": {
+    "nombre": "SOLUSIP",
+    "slug": "solusip",
+    "lat": -35.447803,
+    "lng": -71.646146,
+    "direccion": "el Tabaco - Maule CL, Quince Ote., 0000346 Talca, Maule",
+    "telefono": "9 6713 8828",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "chile-tiny-house": {
+    "nombre": "Chile Tiny House",
+    "slug": "chile-tiny-house",
+    "lat": -38.740494,
+    "lng": -72.590873,
+    "direccion": "Chile Tiny House - Arturo Prat n° 696, Ofi 316, 4780000 Temuco, Araucanía",
+    "telefono": "9 7296 1301",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "ingepanel": {
+    "nombre": "Ingepanel",
+    "slug": "ingepanel",
+    "lat": -35.477874,
+    "lng": -71.554185,
+    "direccion": "Ingepanel - Camino a San Clemente Km 9,25 Ruta 115CH Talca, 3460000 Maule, Talca, Maule",
+    "telefono": "(71) 261 7436",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 21,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "paneles-sip-tecnosip": {
+    "nombre": "Paneles Sip TecnoSip",
+    "slug": "paneles-sip-tecnosip",
+    "lat": -34.976228,
+    "lng": -71.213584,
+    "direccion": "Paneles Sip TecnoSip - Av. Rauquén 3, 3343635 Curicó, Maule",
+    "telefono": "(75) 238 4278",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "tiny-house-arrayan": {
+    "nombre": "Tiny House Arrayán",
+    "slug": "tiny-house-arrayan",
+    "lat": -29.719865,
+    "lng": -71.311685,
+    "direccion": "Tiny House Arrayán - arrayan costero km 496, 6, La Serena, Coquimbo",
+    "telefono": "9 7109 9768",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 13,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "rukan-chile---espacios-modulares": {
+    "nombre": "Rukan Chile - Espacios Modulares",
+    "slug": "rukan-chile---espacios-modulares",
+    "lat": -39.294947,
+    "lng": -72.224119,
+    "direccion": "Rukan Chile - Espacios Modulares - Quetrupillan1235, 4930000 Villarrica, Araucanía",
+    "telefono": "9 5140 0378",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-santa-maria-mincone": {
+    "nombre": "CASAS PREFABRICADAS SANTA MARÍA MINCONE",
+    "slug": "casas-prefabricadas-santa-maria-mincone",
+    "lat": -38.390639,
+    "lng": -72.390198,
+    "direccion": "CASAS PREFABRICADAS SANTA MARÍA MINCONE - avenida panamericana sur kilometro 1, 8050000 San Bernardo, Perquenco, Región Metropolitana",
+    "telefono": "9 8565 9576",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "mini-home": {
+    "nombre": "Mini Home",
+    "slug": "mini-home",
+    "lat": -39.865456,
+    "lng": -73.189189,
+    "direccion": "I - Ruta - T-418 63, Valdivia, Los Ríos",
+    "telefono": "9 4226 5294",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "casas-prefabricadas-casahue-huiscapi-y-construccion-en-general": {
+    "nombre": "Casas prefabricadas casahue huiscapi y construcción en general",
+    "slug": "casas-prefabricadas-casahue-huiscapi-y-construccion-en-general",
+    "lat": -39.325026,
+    "lng": -72.427561,
+    "direccion": "Casas prefabricadas casahue huiscapi y construcción en general - Avenida Egon Keutmann número 62 sector la turbina, 4970000 Loncoche, Araucanía",
+    "telefono": "9 6153 3712",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "chile-home": {
+    "nombre": "Chile Home",
+    "slug": "chile-home",
+    "lat": -33.729557,
+    "lng": -70.736623,
+    "direccion": "Chile Home - 950000, Buin, Región Metropolitana",
+    "telefono": "9 6336 3074",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "latinys-tiny-house-cursos-coaching-y-capacitacion": {
+    "nombre": "Latinys Tiny House Cursos, Coaching y Capacitación",
+    "slug": "latinys-tiny-house-cursos-coaching-y-capacitacion",
+    "lat": null,
+    "lng": null,
+    "direccion": "Díaz Colodrero 3272, C1431FMR Cdad. Autónoma de Buenos Aires, Argentina",
+    "telefono": "+54 9 11 5175-6388",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "termotem---expertos-en-aislacion-termica---paneles-sip---sistema-eifs": {
+    "nombre": "TERMOTEM - Expertos en Aislación Térmica - Paneles SIP - Sistema EIFS",
+    "slug": "termotem---expertos-en-aislacion-termica---paneles-sip---sistema-eifs",
+    "lat": -38.761016,
+    "lng": -72.604863,
+    "direccion": "TERMOTEM - Expertos en Aislación Térmica - Paneles SIP - Sistema EIFS - Dagoberto Godoy 090 Módulo 6 Temuco, 4780000 Araucanía, Padre Las Casas, Araucanía",
+    "telefono": "9 5618 5682",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "panel-sip-chile": {
+    "nombre": "Panel Sip Chile",
+    "slug": "panel-sip-chile",
+    "lat": -38.740198,
+    "lng": -72.611384,
+    "direccion": "Panel Sip Chile - San Ernesto 990, 4810767 Temuco, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "fabrica-de-paneles-sip-mundo-panel-sip": {
+    "nombre": "Fabrica de Paneles SIP Mundo Panel SIP",
+    "slug": "fabrica-de-paneles-sip-mundo-panel-sip",
+    "lat": -34.182266,
+    "lng": -70.832247,
+    "direccion": "Fabrica de Paneles SIP Mundo Panel SIP - r599+345 punta de cortes, 2820000 Rancagua, O'Higgins",
+    "telefono": "9 9047 4739",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "tiny-house-volcanes-del-sur-en-osorno": {
+    "nombre": "Tiny House Volcanes del Sur en Osorno",
+    "slug": "tiny-house-volcanes-del-sur-en-osorno",
+    "lat": -40.575918,
+    "lng": -73.154345,
+    "direccion": "Tiny House Volcanes del Sur en Osorno - Chillán 567, rahue bajo, 5303331 Osorno, Los Lagos",
+    "telefono": "9 8766 6689",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "tinyhousepuyehue": {
+    "nombre": "Tinyhousepuyehue",
+    "slug": "tinyhousepuyehue",
+    "lat": -40.613321,
+    "lng": -72.776169,
+    "direccion": "Casa piloto ruta internacional - Ruta 215 km 28.6, 5360000 décima, Puyehue, Los Lagos",
+    "telefono": "9 7250 1559",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casa-hualve-tinyhouse-entre-naturaleza-y-tinaja": {
+    "nombre": "Casa Hualve TinyHouse entre naturaleza y tinaja",
+    "slug": "casa-hualve-tinyhouse-entre-naturaleza-y-tinaja",
+    "lat": -39.951684,
+    "lng": -72.761024,
+    "direccion": "Casa Hualve TinyHouse entre naturaleza y tinaja - chanco 25, 5170000 Lipingue, Los Lagos, Los Ríos",
+    "telefono": "9 4295 0389",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "cabana-y-tiny-house-volcan-de-puerto-octay": {
+    "nombre": "Cabaña y Tiny House Volcán de Puerto Octay",
+    "slug": "cabana-y-tiny-house-volcan-de-puerto-octay",
+    "lat": -40.973731,
+    "lng": -72.742194,
+    "direccion": "de la - latitud 40º58'25,6'' S longitud 72º44'31,.5'' W Camino a, Ruta U-55-V, Km 54,5, 5370000 Las Cascadas, Puerto Octay, Los Lagos",
+    "telefono": "9 4977 3485",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "paneles-sip-micasasolar": {
+    "nombre": "Paneles Sip MiCasaSolar",
+    "slug": "paneles-sip-micasasolar",
+    "lat": -33.519083,
+    "lng": -70.975503,
+    "direccion": "Paneles Sip MiCasaSolar - Cam. Cta. Barriga, Curacaví, Región Metropolitana",
+    "telefono": "9 9577 9731",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "sipwall": {
+    "nombre": "SIPWALL",
+    "slug": "sipwall",
+    "lat": -33.041428,
+    "lng": -71.55688,
+    "direccion": "SIPWALL - Gregorio Marañon 2312, Viña del Mar, Valparaíso",
+    "telefono": "9 5748 1500",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "crea-panel-sip": {
+    "nombre": "crea panel sip",
+    "slug": "crea-panel-sip",
+    "lat": -35.868491,
+    "lng": -71.609784,
+    "direccion": "crea panel sip - 3580000 el sauce, pc 09 pc 01, 3580000 Linares, Maule",
+    "telefono": "9 8704 5531",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "paneles-sip": {
+    "nombre": "PANELES SIP",
+    "slug": "paneles-sip",
+    "lat": -34.359774,
+    "lng": -71.271829,
+    "direccion": "PANELES SIP - El Almendro Río sn, 2890000 Pichidegua, O'Higgins",
+    "telefono": "9 8668 7626",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "cdc-suministros---planta-temuco": {
+    "nombre": "CDC Suministros - Planta Temuco",
+    "slug": "cdc-suministros---planta-temuco",
+    "lat": -38.681522,
+    "lng": -72.748049,
+    "direccion": "CDC Suministros - Planta Temuco - Tromen, 5040000 Cholchol, alto hijuelas, Araucanía",
+    "telefono": "9 8846 2494",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "fabrica-de-prensa-de-paneles-sip-grupo-globalsur": {
+    "nombre": "FABRICA DE PRENSA DE PANELES SIP GRUPO GLOBALSUR",
+    "slug": "fabrica-de-prensa-de-paneles-sip-grupo-globalsur",
+    "lat": -39.237964,
+    "lng": -72.260211,
+    "direccion": "FABRICA DE PRENSA DE PANELES SIP GRUPO GLOBALSUR - Camino Villarica, Villarrica, Araucanía",
+    "telefono": "9 9444 2197",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "paneles-riosip-paneles-sip": {
+    "nombre": "Paneles RIOSIP (paneles sip)",
+    "slug": "paneles-riosip-paneles-sip",
+    "lat": -38.906478,
+    "lng": -72.558699,
+    "direccion": "Paneles RIOSIP (paneles sip) - Parcela N°3 Quilas Bajas, Quepe Freire, 4780000 Araucanía, Freire, Araucanía",
+    "telefono": "9 8384 5863",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "centropanel": {
+    "nombre": "Centropanel",
+    "slug": "centropanel",
+    "lat": -33.314393,
+    "lng": -70.729252,
+    "direccion": "El Roble - Bodega 165, n°2, Lampa, Región Metropolitana",
+    "telefono": "9 3739 3600",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "bipanel-expertos-en-paneles-sip": {
+    "nombre": "BIPANEL Expertos en Paneles SIP",
+    "slug": "bipanel-expertos-en-paneles-sip",
+    "lat": -39.438931,
+    "lng": -72.763112,
+    "direccion": "Lanco, Los Ríos",
+    "telefono": "9 9844 9503",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "total-sip": {
+    "nombre": "Total SIP",
+    "slug": "total-sip",
+    "lat": -33.6284,
+    "lng": -70.921576,
+    "direccion": "Total SIP - Condominio el Nogal de Santo Toribio S/N Parcela N° 16, 9750000 Peñaflor, Región Metropolitana",
+    "telefono": "9 8249 3399",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "fabrica-de-paneles-sip-ridelsip": {
+    "nombre": "Fábrica de Paneles SIP RIDELSIP",
+    "slug": "fabrica-de-paneles-sip-ridelsip",
+    "lat": -29.972441,
+    "lng": -71.267514,
+    "direccion": "Fábrica de Paneles SIP RIDELSIP - Los Carpinteros 1241, Galpón 3, 1801734 Coquimbo",
+    "telefono": "9 3873 5143",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "sudpanel-sa": {
+    "nombre": "Sudpanel S.A.",
+    "slug": "sudpanel-sa",
+    "lat": -33.341197,
+    "lng": -70.706114,
+    "direccion": "Sudpanel S.A. - Fresia 9263, 8710011 Quilicura, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tecno-panel-sa-paneles-sip-en-chile---viviendas-de-emergencia": {
+    "nombre": "Tecno Panel S.A. Paneles SIP en Chile - Viviendas de emergencia",
+    "slug": "tecno-panel-sa-paneles-sip-en-chile---viviendas-de-emergencia",
+    "lat": -33.2994,
+    "lng": -70.710567,
+    "direccion": "Tecno Panel S.A. Paneles SIP en Chile - Viviendas de emergencia - Javiera Carrera 116, Colina, Región Metropolitana",
+    "telefono": "(2) 2745 5940",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 24,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "panel-sip-3r": {
+    "nombre": "Panel SIP 3R",
+    "slug": "panel-sip-3r",
+    "lat": -34.434052,
+    "lng": -71.076388,
+    "direccion": "Panel SIP 3R - José Miguel Carrera 899, N°3, 2970000 San Vicente de Tagua Tagua, O'Higgins",
+    "telefono": "9 5987 2777",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "siptopanel": {
+    "nombre": "Siptopanel",
+    "slug": "siptopanel",
+    "lat": -32.876712,
+    "lng": -71.258532,
+    "direccion": "Siptopanel - Rosales, Quillota, Valparaíso",
+    "telefono": "9 9241 6336",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "paneles-sip-braunau": {
+    "nombre": "Paneles SIP Braunau",
+    "slug": "paneles-sip-braunau",
+    "lat": -41.318796,
+    "lng": -73.083471,
+    "direccion": "Paneles SIP Braunau - Camino Línea Cruzada, Lote N° 1, Nueva Braunau, Puerto Varas, Los Lagos",
+    "telefono": "9 9231 3762",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "paneles-sip-colchagua": {
+    "nombre": "Paneles Sip Colchagua",
+    "slug": "paneles-sip-colchagua",
+    "lat": -34.517821,
+    "lng": -71.417801,
+    "direccion": "Paneles Sip Colchagua - Sector Lihueimo, 3160000 Palmilla, O'Higgins",
+    "telefono": "9 5021 4653",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "siosip": {
+    "nombre": "Siosip",
+    "slug": "siosip",
+    "lat": -39.062442,
+    "lng": -72.419253,
+    "direccion": "Siosip - 39.0621316 72, 4194803 Freire, Araucanía",
+    "telefono": "9 6158 1593",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "fabrica-de-paneles-sip-siptopanel": {
+    "nombre": "FABRICA DE PANELES SIP SIPTOPANEL",
+    "slug": "fabrica-de-paneles-sip-siptopanel",
+    "lat": -32.83156,
+    "lng": -70.616201,
+    "direccion": "FABRICA DE PANELES SIP SIPTOPANEL - Esmeralda 1910, 2100000 Valparaíso, Los Andes, Valparaíso",
+    "telefono": "9 7580 8603",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "trupanel-paneles-sip": {
+    "nombre": "Trupanel Paneles SIP",
+    "slug": "trupanel-paneles-sip",
+    "lat": -33.094785,
+    "lng": -70.693736,
+    "direccion": "Trupanel Paneles SIP - Quilapilún, Huechun, Colina, Región Metropolitana",
+    "telefono": "9 9430 2618",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 55,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "sip-araucania": {
+    "nombre": "SIP Araucania",
+    "slug": "sip-araucania",
+    "lat": -38.480474,
+    "lng": -71.575722,
+    "direccion": "SIP Araucania - Malalcahuello, 4700000 Curacautín, Araucanía",
+    "telefono": "9 7107 6012",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "soluciones-integrales-espacio-sip": {
+    "nombre": "Soluciones Integrales Espacio SIP",
+    "slug": "soluciones-integrales-espacio-sip",
+    "lat": -33.686206,
+    "lng": -71.587695,
+    "direccion": "Soluciones Integrales Espacio SIP - Los Boldos D1, 2720000 Valparaíso, Santo Domingo, Valparaíso",
+    "telefono": "9 9322 3731",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "termotem---aislacion-termica---sistema-eifs": {
+    "nombre": "TERMOTEM - Aislación Térmica - Sistema EIFS",
+    "slug": "termotem---aislacion-termica---sistema-eifs",
+    "lat": -38.760662,
+    "lng": -72.604678,
+    "direccion": "TERMOTEM - Aislación Térmica - Sistema EIFS - Ruta Panamericana Sur Km. 680, Temuco, Padre Las Casas, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "paneles-sip-villarrica": {
+    "nombre": "Paneles sip villarrica",
+    "slug": "paneles-sip-villarrica",
+    "lat": -39.353851,
+    "lng": -72.215164,
+    "direccion": "Paneles sip villarrica - Km 7 Villarrica a licanray s/n, 4930000 Villarrica, Araucanía",
+    "telefono": "9 7650 7500",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "fabrica-panel-sip": {
+    "nombre": "Fábrica panel sip",
+    "slug": "fabrica-panel-sip",
+    "lat": -36.181981,
+    "lng": -71.612352,
+    "direccion": "Quillaimo, Retiro, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "paneles-sip-propanel": {
+    "nombre": "Paneles SIP Propanel",
+    "slug": "paneles-sip-propanel",
+    "lat": -41.343982,
+    "lng": -72.987216,
+    "direccion": "Paneles SIP Propanel - Ruta 5 km 1008, 5550000 Puerto Varas, Los Lagos",
+    "telefono": "9 3011 3181",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 26,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "patagonia-sip": {
+    "nombre": "Patagonia Sip",
+    "slug": "patagonia-sip",
+    "lat": -40.918205,
+    "lng": -73.148286,
+    "direccion": "Patagonia Sip - Ruta 5 KM 957, 5500000 Purranque, Los Lagos",
+    "telefono": "9 5228 3154",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "termosip": {
+    "nombre": "Termosip",
+    "slug": "termosip",
+    "lat": -33.382474,
+    "lng": -70.774898,
+    "direccion": "Termosip - Volcán Lascar 790, 9030910 Pudahuel, Región Metropolitana",
+    "telefono": "9 5700 2012",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "sip-chile-spa": {
+    "nombre": "SIP Chile SpA",
+    "slug": "sip-chile-spa",
+    "lat": -33.651564,
+    "lng": -70.736312,
+    "direccion": "SIP Chile SpA - El Barrancón 6001, 8050000 San Bernardo, Región Metropolitana",
+    "telefono": "9 5168 2077",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "housip-casas-prefabricadas-en-panel-sip": {
+    "nombre": "Housip Casas Prefabricadas en Panel Sip",
+    "slug": "housip-casas-prefabricadas-en-panel-sip",
+    "lat": -33.437935,
+    "lng": -70.69028,
+    "direccion": "Housip Casas Prefabricadas en Panel Sip - San Pablo 4050, 8500000 Quinta Normal, Región Metropolitana",
+    "telefono": "9 3133 3331",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-multi-servicios-espinosa---paneles-sip-y-soldadura": {
+    "nombre": "Constructora Multi Servicios Espinosa - Paneles SIP y Soldadura",
+    "slug": "constructora-multi-servicios-espinosa---paneles-sip-y-soldadura",
+    "lat": -33.450066,
+    "lng": -70.764629,
+    "direccion": "Constructora Multi Servicios Espinosa - Paneles SIP y Soldadura - Mar de Sueños 587, 9061015 Pudahuel, Región Metropolitana",
+    "telefono": "9 9297 6014",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "sip-haus-chile-fabricantes-de-panel-sip": {
+    "nombre": "SIP HAUS CHILE | Fabricantes de PANEL SIP",
+    "slug": "sip-haus-chile-fabricantes-de-panel-sip",
+    "lat": -33.421408,
+    "lng": -70.739216,
+    "direccion": "SIP HAUS CHILE | Fabricantes de PANEL SIP - Petauke 1566, 9100814 Cerro Navia, Región Metropolitana",
+    "telefono": "9 3419 4385",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "metcorp-ingenieria-paneles-sip": {
+    "nombre": "Metcorp Ingeniería // Paneles SIP",
+    "slug": "metcorp-ingenieria-paneles-sip",
+    "lat": -33.596566,
+    "lng": -70.650912,
+    "direccion": "Metcorp Ingeniería // Paneles SIP - Fresia 2010, 8840024 La Pintana, Región Metropolitana",
+    "telefono": "9 3467 2666",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 24,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "ecowall": {
+    "nombre": "ECOWALL",
+    "slug": "ecowall",
+    "lat": -33.322591,
+    "lng": -70.724903,
+    "direccion": "ECOWALL - Juan de La Fuente 455, 9390405 Quilicura, Lampa, Región Metropolitana",
+    "telefono": "(2) 2738 5104",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "prosip": {
+    "nombre": "PROSIP",
+    "slug": "prosip",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 3754 0278",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 48,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "fabrica-de-paneles-sip-northpanel": {
+    "nombre": "Fábrica de Paneles Sip Northpanel",
+    "slug": "fabrica-de-paneles-sip-northpanel",
+    "lat": -29.888888,
+    "lng": -71.258705,
+    "direccion": "Vegas Norte - Rodillo, Parcela 104, 1700000 La Serena, Coquimbo",
+    "telefono": "9 9544 2793",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "jk-ingenieria-y-construcciones-spa": {
+    "nombre": "JK ingenieria y construcciones spa",
+    "slug": "jk-ingenieria-y-construcciones-spa",
+    "lat": -31.803765,
+    "lng": -70.901843,
+    "direccion": null,
+    "telefono": "9 3337 7100",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "sotomayor-ingenieros-consultores": {
+    "nombre": "Sotomayor Ingenieros Consultores",
+    "slug": "sotomayor-ingenieros-consultores",
+    "lat": -29.95555,
+    "lng": -71.299488,
+    "direccion": "Sotomayor Ingenieros Consultores - Av. los pescadores sur, Coquimbo",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-sonarte-spa": {
+    "nombre": "Casas Soñarte Spa",
+    "slug": "casas-sonarte-spa",
+    "lat": -30.009963,
+    "lng": -71.364999,
+    "direccion": "el panul - camino al vertedero s/n, 1780000 Coquimbo",
+    "telefono": "9 4945 3836",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "servicios-mod": {
+    "nombre": "Servicios Mod",
+    "slug": "servicios-mod",
+    "lat": -29.989328,
+    "lng": -71.260413,
+    "direccion": "Servicios Mod - Ruta D-409, 1780000 Coquimbo",
+    "telefono": "9 4430 8800",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "apartamentos-estudios-modulares": {
+    "nombre": "Apartamentos & estudios modulares",
+    "slug": "apartamentos-estudios-modulares",
+    "lat": -30.006451,
+    "lng": -71.332609,
+    "direccion": "Apartamentos & estudios modulares - C. Manuel Rodriguez 3362, 1800000 Coquimbo",
+    "telefono": "9 6676 6925",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 13,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "namun-construcciones": {
+    "nombre": "Namun Construcciones",
+    "slug": "namun-construcciones",
+    "lat": -33.629086,
+    "lng": -70.764413,
+    "direccion": "Namun Construcciones - P. 7, Av. Calera de Tango 10, 1/2 LTS 1 Y 2, Calera de Tango, Región Metropolitana",
+    "telefono": "9228551736",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casa-en-la-serena---three-bedroom-townhouse": {
+    "nombre": "Casa en La Serena - Three-Bedroom Townhouse",
+    "slug": "casa-en-la-serena---three-bedroom-townhouse",
+    "lat": -29.89843,
+    "lng": -71.259506,
+    "direccion": "La Serena, Coquimbo",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-los-trigales-de-guanaqueros": {
+    "nombre": "Casas Los Trigales de Guanaqueros",
+    "slug": "casas-los-trigales-de-guanaqueros",
+    "lat": -30.219607,
+    "lng": -71.412263,
+    "direccion": "Casas Los Trigales de Guanaqueros - Miguel Ángel Buonarroti 81, 1780000 Coquimbo",
+    "telefono": "9 4032 3830",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-modulares-premium": {
+    "nombre": "Casas Modulares Premium",
+    "slug": "casas-modulares-premium",
+    "lat": -30.777949,
+    "lng": -71.554519,
+    "direccion": "Casas Modulares Premium - Ruta 5 Sur, Callejon 5 Poniente, Km 41.5, 9540000 Paine, Ovalle, Región Metropolitana",
+    "telefono": "9 4105 4112",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "luxurious-spa": {
+    "nombre": "Luxurious Spa",
+    "slug": "luxurious-spa",
+    "lat": -29.958802,
+    "lng": -71.30335,
+    "direccion": "Vegas Sur. Coquimbo - Parcela 28, Ruta 5 Km 366, Lote 2, 1780000 Coquimbo",
+    "telefono": "9 8273 6495",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casa-en-la-serena---two-bedroom-house": {
+    "nombre": "CASA en la serena - Two-Bedroom House",
+    "slug": "casa-en-la-serena---two-bedroom-house",
+    "lat": -29.88615,
+    "lng": -71.250732,
+    "direccion": "1733005 La Serena, Coquimbo",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-baeza---guanaqueros": {
+    "nombre": "Casas Baeza - Guanaqueros",
+    "slug": "casas-baeza---guanaqueros",
+    "lat": -30.192025,
+    "lng": -71.381622,
+    "direccion": "Casas Baeza - Guanaqueros - Ruta 5 KM 434, 1780000 Coquimbo",
+    "telefono": "9 3269 0910",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-buin-oficina": {
+    "nombre": "Casas Prefabricadas Buin Oficina",
+    "slug": "casas-prefabricadas-buin-oficina",
+    "lat": -33.788274,
+    "lng": -70.749303,
+    "direccion": "caletera - km 41 caletera poniente callejor, 5 Pte., 9540000 Paine, Región Metropolitana",
+    "telefono": "9 6696 5384",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 84,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-adonai-diseno-y-calidad": {
+    "nombre": "CASAS ADONAI DISEÑO Y CALIDAD",
+    "slug": "casas-adonai-diseno-y-calidad",
+    "lat": -33.685704,
+    "lng": -71.21683,
+    "direccion": "CASAS ADONAI DISEÑO Y CALIDAD - Silva Chávez 480, 9580000 Melipilla, Región Metropolitana",
+    "telefono": "9 5691 5010",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-constructora-riqueval": {
+    "nombre": "Casas Prefabricadas Constructora Riqueval",
+    "slug": "casas-prefabricadas-constructora-riqueval",
+    "lat": -33.779508,
+    "lng": -71.258206,
+    "direccion": "Casas Prefabricadas Constructora Riqueval - Culipran, Ruta G-60, Km 16.5, Melipilla, Región Metropolitana",
+    "telefono": "9 8768 1615",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 40,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-el-dibujo": {
+    "nombre": "Casas El Dibujo",
+    "slug": "casas-el-dibujo",
+    "lat": -33.788615,
+    "lng": -71.279675,
+    "direccion": "Casas El Dibujo - Ruta G-60, Melipilla, Región Metropolitana",
+    "telefono": "(2) 2708 7583",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 35,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-kela": {
+    "nombre": "Casas Kela",
+    "slug": "casas-kela",
+    "lat": -33.676081,
+    "lng": -71.175021,
+    "direccion": "Casas Kela - Av. Vicuña Mackenna 02070, Melipilla, Región Metropolitana",
+    "telefono": "(2) 2832 4710",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-tantehue-alto": {
+    "nombre": "CASAS TANTEHUE ALTO",
+    "slug": "casas-tantehue-alto",
+    "lat": -33.85643,
+    "lng": -71.207763,
+    "direccion": "CASAS TANTEHUE ALTO - tantehue alto pc50, 9580000 Melipilla, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 26,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-casas-de-campo": {
+    "nombre": "Casas Prefabricadas \"Casas de Campo\"",
+    "slug": "casas-prefabricadas-casas-de-campo",
+    "lat": -33.811233,
+    "lng": -71.315566,
+    "direccion": "Casas Prefabricadas \"Casas de Campo\" - km 11,, Ruta G-60, Culipran, Melipilla, Región Metropolitana",
+    "telefono": "9 5451 6767",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tresanto-spa": {
+    "nombre": "Tresanto Spa",
+    "slug": "tresanto-spa",
+    "lat": -33.782139,
+    "lng": -71.117119,
+    "direccion": "Tresanto Spa - San Carlos de Cholqui Parcela 17 Lote A, 9580000 Melipilla, Región Metropolitana",
+    "telefono": "9 5233 1681",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "mm-casas-prefabricadas-spa": {
+    "nombre": "M&M Casas Prefabricadas SPA",
+    "slug": "mm-casas-prefabricadas-spa",
+    "lat": -33.66888,
+    "lng": -71.214383,
+    "direccion": "M&M Casas Prefabricadas SPA - Camino A Valparaíso, lote 5, Santa Elvira, Melipilla, Región Metropolitana 33°40'08.4\"S 71°12'52.3\"W Melipilla, 9580000 Melipilla, Región Metropolitana",
+    "telefono": "9 8320 6475",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "melipilla-construcciones": {
+    "nombre": "Melipilla Construcciones",
+    "slug": "melipilla-construcciones",
+    "lat": -33.656574,
+    "lng": -71.284393,
+    "direccion": "Melipilla Construcciones - puangue, 9580000 Melipilla, Región Metropolitana",
+    "telefono": "9 9363 9641",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-videla-spa": {
+    "nombre": "Constructora Videla Spa",
+    "slug": "constructora-videla-spa",
+    "lat": -33.688102,
+    "lng": -71.214482,
+    "direccion": "0832000 Melipilla, Región Metropolitana",
+    "telefono": "9 6171 4608",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "e2e---creando-una-nueva-forma-de-habitar": {
+    "nombre": "E2E - Creando una nueva forma de habitar",
+    "slug": "e2e---creando-una-nueva-forma-de-habitar",
+    "lat": -33.518516,
+    "lng": -70.743034,
+    "direccion": "E2E - Creando una nueva forma de habitar - Cmo. a Melipilla 10651, Santiago, Maipú, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "instapanel-sa": {
+    "nombre": "Instapanel S.A.",
+    "slug": "instapanel-sa",
+    "lat": -33.53027,
+    "lng": -70.731865,
+    "direccion": "Instapanel S.A. - Ruta G-30 11011, Maipú, Región Metropolitana",
+    "telefono": "(2) 2531 7296",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 63,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "disenos-modulart-mobiliarios": {
+    "nombre": "Diseños Modulart Mobiliarios",
+    "slug": "disenos-modulart-mobiliarios",
+    "lat": -33.556669,
+    "lng": -70.799703,
+    "direccion": "Diseños Modulart Mobiliarios - Cmo. a Melipilla 206, Santiago, Padre Hurtado, Región Metropolitana",
+    "telefono": "9 9820 6636",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "dhamuro-andamios": {
+    "nombre": "Dhamuro Andamios",
+    "slug": "dhamuro-andamios",
+    "lat": -33.567011,
+    "lng": -70.811856,
+    "direccion": "Dhamuro Andamios - Cmo. a Melipilla 2000, 9710000 Padre Hurtado, Región Metropolitana",
+    "telefono": "9 3065 8802",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "construcam": {
+    "nombre": "CONSTRUCAM",
+    "slug": "construcam",
+    "lat": -33.703436,
+    "lng": -71.210032,
+    "direccion": "CONSTRUCAM - Cam. El Bajo 1936, 9580000 Melipilla, Región Metropolitana",
+    "telefono": "9 5647 9748",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-romero": {
+    "nombre": "Casas Romero",
+    "slug": "casas-romero",
+    "lat": -33.81906,
+    "lng": -71.327079,
+    "direccion": "Casas Romero - Ruta G-60 142, Melipilla, Región Metropolitana",
+    "telefono": "9 7599 8153",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-riqueval-fabrica": {
+    "nombre": "Constructora Riqueval (Fabrica)",
+    "slug": "constructora-riqueval-fabrica",
+    "lat": -33.877067,
+    "lng": -71.382193,
+    "direccion": "Constructora Riqueval (Fabrica) - Parcela 22A, San Pedro, Región Metropolitana",
+    "telefono": "9 8768 1615",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "maqpanel": {
+    "nombre": "MaqPanel",
+    "slug": "maqpanel",
+    "lat": -33.614626,
+    "lng": -71.224233,
+    "direccion": "MaqPanel - Cam. A Valparaíso, km.8, Melipilla, Región Metropolitana",
+    "telefono": "9 5800 7096",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "trexs": {
+    "nombre": "Trexs",
+    "slug": "trexs",
+    "lat": -33.781178,
+    "lng": -71.263064,
+    "direccion": "Trexs - 8320000 San Manuel km 1camino a, Codigua, Melipilla, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-segal-limitada": {
+    "nombre": "Constructora Segal Limitada",
+    "slug": "constructora-segal-limitada",
+    "lat": -33.68512,
+    "lng": -71.21641,
+    "direccion": "Constructora Segal Limitada - Silva Chávez 419, 9580000 Melipilla, Región Metropolitana",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "klagost-mantenimiento-y-construccion": {
+    "nombre": "KLAGOST Mantenimiento y construcción",
+    "slug": "klagost-mantenimiento-y-construccion",
+    "lat": -33.689221,
+    "lng": -71.230837,
+    "direccion": "KLAGOST Mantenimiento y construcción - Av. Circunvalación 1801, 9582256 Melipilla, Región Metropolitana",
+    "telefono": "9 7670 5868",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-ferrada": {
+    "nombre": "Casas ferrada",
+    "slug": "casas-ferrada",
+    "lat": -33.684599,
+    "lng": -71.228806,
+    "direccion": "Casas ferrada - Lago Rapel, Kilometro 3.5, 9580334 Melipilla, Región Metropolitana",
+    "telefono": "9 9879 1407",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-videla": {
+    "nombre": "Constructora Videla",
+    "slug": "constructora-videla",
+    "lat": -33.679068,
+    "lng": -71.134929,
+    "direccion": "Constructora Videla - Chiñigüe Las Rosas, Melipilla, Región Metropolitana",
+    "telefono": "9 2388 0070",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "villa-portal-alameda": {
+    "nombre": "Villa Portal Alameda",
+    "slug": "villa-portal-alameda",
+    "lat": -36.132278,
+    "lng": -71.813752,
+    "direccion": "Parral, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 81,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-y-domos-del-sur": {
+    "nombre": "CASAS Y DOMOS DEL SUR",
+    "slug": "casas-y-domos-del-sur",
+    "lat": -36.228305,
+    "lng": -71.577993,
+    "direccion": "Parral, Maule",
+    "telefono": "9 9771 3193",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casasrayma": {
+    "nombre": "Casasrayma",
+    "slug": "casasrayma",
+    "lat": -36.288638,
+    "lng": -71.651458,
+    "direccion": "Altos de catillo lote dos, 3630000 Catillo, Parral, Maule",
+    "telefono": "9 4234 0837",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-longavi": {
+    "nombre": "CASAS LONGAVI",
+    "slug": "casas-longavi",
+    "lat": -35.969679,
+    "lng": -71.68473,
+    "direccion": "CASAS LONGAVI - PASAJE LA COPA, 3620000 Longaví, Maule",
+    "telefono": "9 2021 9081",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "hormisur": {
+    "nombre": "Hormisur",
+    "slug": "hormisur",
+    "lat": -36.134825,
+    "lng": -71.805918,
+    "direccion": "Parral, Maule",
+    "telefono": "(73) 246 2787",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas---construcciones-ruiz": {
+    "nombre": "Casas prefabricadas - Construcciones RUIZ ️",
+    "slug": "casas-prefabricadas---construcciones-ruiz",
+    "lat": -36.014255,
+    "lng": -71.651967,
+    "direccion": "Casas prefabricadas - Construcciones RUIZ ️ - L-55, Las Rosas, Longaví, Maule",
+    "telefono": "9 8299 7939",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-longavi-sucursal-parral": {
+    "nombre": "CASAS LONGAVI, SUCURSAL PARRAL",
+    "slug": "casas-longavi-sucursal-parral",
+    "lat": -36.143176,
+    "lng": -71.811173,
+    "direccion": "CASAS LONGAVI, SUCURSAL PARRAL - Av. Anibal Pinto 1500, 3640000 Parral, Maule",
+    "telefono": "9 3777 8641",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "cabana-ventas-parral": {
+    "nombre": "Cabaña Ventas Parral",
+    "slug": "cabana-ventas-parral",
+    "lat": -36.136862,
+    "lng": -71.82222,
+    "direccion": "3630307 Parral, Maule",
+    "telefono": "9 7278 3716",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-panguipulli-constructora": {
+    "nombre": "CASAS PANGUIPULLI CONSTRUCTORA",
+    "slug": "casas-panguipulli-constructora",
+    "lat": -39.643094,
+    "lng": -72.329827,
+    "direccion": "5210000 Panguipulli, Los Ríos",
+    "telefono": "9 6656 8727",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "constructora-isflo": {
+    "nombre": "Constructora IsFlo",
+    "slug": "constructora-isflo",
+    "lat": -39.6479,
+    "lng": -72.334676,
+    "direccion": null,
+    "telefono": "9 8663 8784",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-panguipulli-hugo-l-sandoval-saavedra-eirl": {
+    "nombre": "Constructora Panguipulli Hugo L Sandoval Saavedra E.I.R.L",
+    "slug": "constructora-panguipulli-hugo-l-sandoval-saavedra-eirl",
+    "lat": -39.663407,
+    "lng": -72.362625,
+    "direccion": "Constructora Panguipulli Hugo L Sandoval Saavedra E.I.R.L - Sector Puyehue Lote A2 1C, Panguipulli, Los Ríos",
+    "telefono": "9 9736 8322",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "casas-prefabricadas-myc": {
+    "nombre": "Casas prefabricadas myc",
+    "slug": "casas-prefabricadas-myc",
+    "lat": -37.682812,
+    "lng": -72.160938,
+    "direccion": "Casas prefabricadas myc - 8R8Q+VJ Santa Amalia, 4530000 Mulchén, Santa Bárbara, Bío Bío",
+    "telefono": "9 5230 3545",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-baeza---cabrero": {
+    "nombre": "Casas Baeza - Cabrero",
+    "slug": "casas-baeza---cabrero",
+    "lat": -37.190143,
+    "lng": -72.391899,
+    "direccion": "Casas Baeza - Cabrero - Longitudinal Sur Km 476, Salto del Laja, Cabrero, Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 4415 3034",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-vc": {
+    "nombre": "Casas prefabricadas v&c",
+    "slug": "casas-prefabricadas-vc",
+    "lat": -37.425076,
+    "lng": -72.344813,
+    "direccion": "Casas prefabricadas v&c - El Avellano, lote a 5, 0000444 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 3399 6348",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "ferreteria-san-carlos-casas-prefabricadas-chiloe-punto-pickup-bluexpress": {
+    "nombre": "Ferreteria San Carlos, Casas Prefabricadas Chiloé, Punto Pickup Bluexpress",
+    "slug": "ferreteria-san-carlos-casas-prefabricadas-chiloe-punto-pickup-bluexpress",
+    "lat": -43.11928,
+    "lng": -73.620282,
+    "direccion": "Ferreteria San Carlos, Casas Prefabricadas Chiloé, Punto Pickup Bluexpress - Santos Vargas 446, Quellón, Los Lagos",
+    "telefono": "(65) 268 0077",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 24,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-chiloe": {
+    "nombre": "CASAS PREFABRICADAS CHILOÉ",
+    "slug": "casas-prefabricadas-chiloe",
+    "lat": -43.11928,
+    "lng": -73.620282,
+    "direccion": "CASAS PREFABRICADAS CHILOÉ - Santos Vargas 446, 5890000 Quellón, Los Lagos",
+    "telefono": "(65) 268 0095",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-mawi": {
+    "nombre": "Casas prefabricadas mawi",
+    "slug": "casas-prefabricadas-mawi",
+    "lat": -41.842961,
+    "lng": -73.550452,
+    "direccion": "Casas prefabricadas mawi - Chacao, Chcao 2.5, 5710000 Ancud, Los Lagos",
+    "telefono": "9 3637 8753",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "construcciones-pincheira": {
+    "nombre": "Construcciones \"pincheira\"",
+    "slug": "construcciones-pincheira",
+    "lat": -42.46586,
+    "lng": -73.779997,
+    "direccion": "Antomiz de - Alcalde Arturo Antoniz 1640, 5700997 Castro, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "inicio-casas": {
+    "nombre": "Inicio | casas",
+    "slug": "inicio-casas",
+    "lat": -42.480624,
+    "lng": -73.765965,
+    "direccion": "Inicio | casas - Sotomayor 450, 5700502 Castro, Los Lagos",
+    "telefono": "9 3072 7782",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "la-casa-del-termo-castro": {
+    "nombre": "La Casa del Termo Castro",
+    "slug": "la-casa-del-termo-castro",
+    "lat": -42.454484,
+    "lng": -73.787227,
+    "direccion": "La Casa del Termo Castro - Pablo Neruda S/N, 5700000 Castro, Los Lagos",
+    "telefono": "9 6714 9002",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 59,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-patrimonial-chiloe": {
+    "nombre": "Constructora Patrimonial Chiloé",
+    "slug": "constructora-patrimonial-chiloe",
+    "lat": -42.151599,
+    "lng": -73.214806,
+    "direccion": null,
+    "telefono": "9 2087 3725",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "tierrasolltda": {
+    "nombre": "TierraSolLtda",
+    "slug": "tierrasolltda",
+    "lat": -22.914014,
+    "lng": -68.198665,
+    "direccion": null,
+    "telefono": "9 5676 0764",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-de-la-costa": {
+    "nombre": "Casas de la Costa",
+    "slug": "casas-de-la-costa",
+    "lat": -33.596232,
+    "lng": -71.610167,
+    "direccion": "Casas de la Costa - Antofagasta 214, 2662798 San Antonio, Valparaíso",
+    "telefono": "9 9744 6775",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-balant-ltda": {
+    "nombre": "Casas Balant Ltda",
+    "slug": "casas-balant-ltda",
+    "lat": -33.036293,
+    "lng": -71.297206,
+    "direccion": "Casas Balant Ltda - Enlace Peñablanca - Limache - Quillota - La Calera 5637, Villa Alemana, Valparaíso",
+    "telefono": "9 6160 4271",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "constructora-ad-lafken": {
+    "nombre": "Constructora Ad lafken",
+    "slug": "constructora-ad-lafken",
+    "lat": -33.379902,
+    "lng": -71.636864,
+    "direccion": "Constructora Ad lafken - F-90, Algarrobo, Valparaíso",
+    "telefono": "9 6845 3355",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "cierres-casas-prefabricadas": {
+    "nombre": "Cierres casas prefabricadas",
+    "slug": "cierres-casas-prefabricadas",
+    "lat": -33.621639,
+    "lng": -71.589228,
+    "direccion": "Cierres casas prefabricadas - 9CH6+88, San Antonio, Valparaíso",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "habitar---construimos-tu-hogar": {
+    "nombre": "HABITAR - CONSTRUIMOS TU HOGAR",
+    "slug": "habitar---construimos-tu-hogar",
+    "lat": -33.433678,
+    "lng": -71.686955,
+    "direccion": "HABITAR - CONSTRUIMOS TU HOGAR - Av. Isidoro Dubournais 3353, 2700000 El Quisco, Valparaíso",
+    "telefono": "9 3888 8300",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 24,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "patrigon-construcciones": {
+    "nombre": "Patrigon Construcciones",
+    "slug": "patrigon-construcciones",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 4503 7187",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "constructora-algarrobo---el-quisco": {
+    "nombre": "Constructora Algarrobo - El Quisco",
+    "slug": "constructora-algarrobo---el-quisco",
+    "lat": -33.399905,
+    "lng": -71.66078,
+    "direccion": null,
+    "telefono": "9 8555 3266",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-ramirez": {
+    "nombre": "Casas Prefabricadas Ramirez",
+    "slug": "casas-prefabricadas-ramirez",
+    "lat": -45.588222,
+    "lng": -72.102987,
+    "direccion": "Casas Prefabricadas Ramirez - LOTE 1-PARCELA D, 5950000 Coyhaique, Aysén",
+    "telefono": "9 4451 7466",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Aysén"
+    ]
+  },
+  "casas-prefabricadas-del-valle": {
+    "nombre": "Casas prefabricadas del valle",
+    "slug": "casas-prefabricadas-del-valle",
+    "lat": -45.706887,
+    "lng": -72.054355,
+    "direccion": "camino Balmaceda - Carr. Austral, km 16, Coyhaique, Aysén",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Aysén"
+    ]
+  },
+  "constructora-aikos": {
+    "nombre": "Constructora Aikos",
+    "slug": "constructora-aikos",
+    "lat": -45.588622,
+    "lng": -72.00714,
+    "direccion": "Constructora Aikos - Lote 1 predio los sauces km 2 camino cerro negro Coyhaique, 5950000 Aysén, Coyhaique, Aysén",
+    "telefono": "9 8280 1713",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Aysén"
+    ]
+  },
+  "venta-cabanas-prefabricada": {
+    "nombre": "Venta Cabañas prefabricada",
+    "slug": "venta-cabanas-prefabricada",
+    "lat": -45.554373,
+    "lng": -72.05379,
+    "direccion": "Coyhaique, Aysén",
+    "telefono": "9 9090 7704",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Aysén"
+    ]
+  },
+  "domoselk": {
+    "nombre": "Domoselk",
+    "slug": "domoselk",
+    "lat": -45.571027,
+    "lng": -72.070041,
+    "direccion": "Domoselk - Calle Dussen Coyhaique, 5950000 Aysén, Coyhaique, Aysén",
+    "telefono": "9 7373 0405",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Aysén"
+    ]
+  },
+  "casas-prefabricadas-llau-llao": {
+    "nombre": "Casas Prefabricadas Llau-Llao",
+    "slug": "casas-prefabricadas-llau-llao",
+    "lat": -53.130631,
+    "lng": -70.949456,
+    "direccion": "Casas Prefabricadas Llau-Llao - Los Pinos 57, Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 9161 6515",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "nuevo-proyecto": {
+    "nombre": "Nuevo Proyecto",
+    "slug": "nuevo-proyecto",
+    "lat": -53.132686,
+    "lng": -70.912621,
+    "direccion": "Nuevo Proyecto - Hornillas 1400, 6210423 Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9989008191",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "casas-metalcom": {
+    "nombre": "Casas metalcom",
+    "slug": "casas-metalcom",
+    "lat": -53.184183,
+    "lng": -70.930594,
+    "direccion": "Casas metalcom - Jaime Guzmán Errázuriz 3428, 6500000 Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 6612 4740",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "jl-obras-menores": {
+    "nombre": "J&L OBRAS MENORES",
+    "slug": "jl-obras-menores",
+    "lat": -53.160358,
+    "lng": -70.93256,
+    "direccion": "J&L OBRAS MENORES - Tucapel 0399, 6200000 Magallanes, Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 5221 2885",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "casas-prefabricadas-ulloa": {
+    "nombre": "Casas prefabricadas ulloa",
+    "slug": "casas-prefabricadas-ulloa",
+    "lat": -50.951042,
+    "lng": -73.034811,
+    "direccion": null,
+    "telefono": "9 8992 0364",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "cabanas-llau-llau": {
+    "nombre": "Cabañas llau llau",
+    "slug": "cabanas-llau-llau",
+    "lat": -53.133008,
+    "lng": -70.945254,
+    "direccion": "sector llau llau - Los Sauces, parcela 39, 6200000 Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 3655 1872",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "patagonia-house-ltda": {
+    "nombre": "Patagonia House Ltda",
+    "slug": "patagonia-house-ltda",
+    "lat": -53.078688,
+    "lng": -70.869926,
+    "direccion": "Patagonia House Ltda - Juan Williams 011088, 6200000 Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 9649 1563",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 12,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "comercial-aliro-cardenas-y-cia": {
+    "nombre": "Comercial Aliro Cárdenas y Cia",
+    "slug": "comercial-aliro-cardenas-y-cia",
+    "lat": -53.158449,
+    "lng": -70.918202,
+    "direccion": "Comercial Aliro Cárdenas y Cia - Patagona 1024, 6200496 Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 7261 1373",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 12,
+    "regiones": [
+      "Magallanes"
+    ]
+  },
+  "pampa-redonda-punta-arenas": {
+    "nombre": "Pampa Redonda, Punta Arenas",
+    "slug": "pampa-redonda-punta-arenas",
+    "lat": -53.125485,
+    "lng": -70.935128,
+    "direccion": "Pampa Redonda, Punta Arenas - Luis Alvarez, Parcela C4, Punta Arenas, Magallanes y la Antártica Chilena",
+    "telefono": "9 9660 3353",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 24,
+    "regiones": [
+      "Magallanes"
     ]
   }
 }
