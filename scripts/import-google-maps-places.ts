@@ -242,7 +242,7 @@ async function main() {
     // Generar fila SQL
     const score = rating ? Math.min(100, Math.round(rating * 18)) : 65;
     const desc = place.description || `Fabricante y constructora de casas en Chile. Ubicación: ${cleanAddress || regiones[0]}.`;
-    const regionesArraySql = `ARRAY[${regiones.map((r) => `'${r}'`).join(",")}]::text[]`;
+    const regionesArraySql = `ARRAY[${regiones.map((r) => escapeSql(r)).join(",")}]::text[]`;
 
     sqlStatements.push(
       `  (${escapeSql(cleanTitle)}, ${escapeSql(slug)}, ${escapeSql(desc)}, ${escapeSql(cleanAddress)}, ${escapeSql(phone)}, ${escapeSql(website)}, ${lat !== null ? lat : "NULL"}, ${lng !== null ? lng : "NULL"}, 'informativo', false, ${score}, ${regionesArraySql})`
