@@ -86,27 +86,84 @@ async function main() {
   const rawData = fs.readFileSync(resolvedPath, "utf-8").trim();
   let places: any[] = [];
 
-  try {
-    if (rawData.startsWith("[")) {
-      places = JSON.parse(rawData);
-    } else {
-      // Formato JSON Lines
-      places = rawData
-        .split("\n")
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0)
-        .map((line) => {
-          try {
-            return JSON.parse(line);
-          } catch {
-            return null;
-          }
-        })
-        .filter((item) => item !== null);
+  // ── CSV detection: gosom scraper can output CSV instead of JSON ──
+  const firstLine = rawData.split("\n")[0] ?? "";
+  const looksLikeCsv =
+    !rawData.startsWith("[") &&
+    !rawData.startsWith("{") &&
+    (firstLine.includes(",") || firstLine.includes("\t"));
+
+  if (looksLikeCsv) {
+    // CSV from gosom: columns (no header guaranteed, detect by presence of lat/lng column)
+    // Column layout from gosom CSV output:
+    // input_id, google_maps_url, title, category, address, opening_hours, ...
+    // phone, plus_code, review_count, rating, reviews_per_rating, latitude, longitude, ...
+    // website, ...
+    const lines = rawData.split("\n").filter(l => l.trim().length > 0);
+    for (const line of lines) {
+      // Simple CSV split (gosom fields can contain quoted commas, use a basic split)
+      // gosom CSV fields are comma-separated, text fields quoted with ""
+      const cols: string[] = [];
+      let cur = "";
+      let inQ = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          if (inQ && line[i + 1] === '"') { cur += '"'; i++; }
+          else inQ = !inQ;
+        } else if (ch === "," && !inQ) {
+          cols.push(cur); cur = "";
+        } else {
+          cur += ch;
+        }
+      }
+      cols.push(cur);
+
+      const title = cols[2]?.trim();
+      const address = cols[4]?.trim();
+      const phone = cols[8]?.trim();
+      const reviewCount = parseInt(cols[10] ?? "0", 10);
+      const rating = parseFloat(cols[11] ?? "0");
+      const lat = parseFloat(cols[13] ?? "");
+      const lng = parseFloat(cols[14] ?? "");
+      const website = cols[15]?.trim();
+
+      if (!title || title === "title") continue; // skip header if present
+
+      places.push({
+        title,
+        address,
+        phone,
+        review_count: isNaN(reviewCount) ? 0 : reviewCount,
+        average_rating: isNaN(rating) ? null : rating,
+        latitude: isNaN(lat) ? null : lat,
+        longitude: isNaN(lng) ? null : lng,
+        site: website || null,
+      });
     }
-  } catch (err) {
-    console.error("❌ Error al parsear JSON:", err);
-    process.exit(1);
+  } else {
+    try {
+      if (rawData.startsWith("[")) {
+        places = JSON.parse(rawData);
+      } else {
+        // Formato JSON Lines
+        places = rawData
+          .split("\n")
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+          .map((line) => {
+            try {
+              return JSON.parse(line);
+            } catch {
+              return null;
+            }
+          })
+          .filter((item) => item !== null);
+      }
+    } catch (err) {
+      console.error("❌ Error al parsear JSON:", err);
+      process.exit(1);
+    }
   }
 
   console.log(`📦 Procesando ${places.length} registros extraídos de Google Maps...`);

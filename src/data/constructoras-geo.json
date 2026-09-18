@@ -58,12 +58,12 @@
   "casas-prefabricadas-modulares": {
     "nombre": "Casas Prefabricadas Modulares",
     "slug": "casas-prefabricadas-modulares",
-    "lat": -33.409732999999996,
-    "lng": -70.5446042,
+    "lat": -33.409733,
+    "lng": -70.544604,
     "direccion": "Casas Prefabricadas Modulares - Los Dominicos 8630, of. 311, 7571892 Las Condes, Región Metropolitana",
     "telefono": "9 9712 7179",
-    "sitio_web": "http://www.prefabricada.cl/",
-    "rating": 4,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 3,
     "regiones": [
       "Metropolitana"
@@ -72,13 +72,13 @@
   "casas-chile": {
     "nombre": "Casas Chile",
     "slug": "casas-chile",
-    "lat": -33.625129199999996,
-    "lng": -70.7157592,
+    "lat": -33.625129,
+    "lng": -70.715759,
     "direccion": "Casas Chile - Av. Pdte. Jorge Alessandri Rodríguez 19679, San Bernardo, Región Metropolitana",
     "telefono": "9 2732 2634",
-    "sitio_web": "http://www.casaschilespa.cl/",
-    "rating": 3.9,
-    "reviews": 841,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 839,
     "regiones": [
       "Metropolitana"
     ]
@@ -129,11 +129,11 @@
     "nombre": "Casas Prefabricadas Chile",
     "slug": "casas-prefabricadas-chile",
     "lat": -33.472788,
-    "lng": -70.62983129999999,
+    "lng": -70.629831,
     "direccion": null,
     "telefono": "9 4498 3013",
-    "sitio_web": "https://casasprefabricadasenchile.com/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 1,
     "regiones": [
       "Metropolitana"
@@ -408,12 +408,12 @@
   "constructora-casas-y-casas-spa": {
     "nombre": "CONSTRUCTORA CASAS Y CASAS SPA",
     "slug": "constructora-casas-y-casas-spa",
-    "lat": -33.4648082,
-    "lng": -70.6477712,
+    "lat": -33.464808,
+    "lng": -70.647771,
     "direccion": "CONSTRUCTORA CASAS Y CASAS SPA - San Diego 1454, local 35B, 8361540 Santiago, Región Metropolitana",
     "telefono": null,
-    "sitio_web": "http://www.casasycasas.cl/",
-    "rating": 4.9,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 184,
     "regiones": [
       "Metropolitana"
@@ -422,12 +422,12 @@
   "beebox-soluciones-modulares-ltda": {
     "nombre": "Beebox soluciones modulares ltda",
     "slug": "beebox-soluciones-modulares-ltda",
-    "lat": -38.786062199999996,
-    "lng": -72.61496079999999,
+    "lat": -38.786062,
+    "lng": -72.614961,
     "direccion": "Beebox soluciones modulares ltda - Ruta 5 5580, Padre las Casas, Padre Las Casas, Araucanía",
     "telefono": "(45) 274 0010",
-    "sitio_web": "http://www.beebox.cl/",
-    "rating": 3.8,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 10,
     "regiones": [
       "La Araucanía"
@@ -436,12 +436,12 @@
   "casas-fabelsa": {
     "nombre": "Casas Fabelsa",
     "slug": "casas-fabelsa",
-    "lat": -38.9646666,
-    "lng": -72.5901899,
+    "lat": -38.964667,
+    "lng": -72.59019,
     "direccion": "Casas Fabelsa - Camino Freire a Villarrica Km. 3 Sector, Los Castaños, Freire, Araucanía",
     "telefono": "9 9453 2937",
-    "sitio_web": "https://ventacasasprefabricadas.cl/casas-prefabricadas-temuco/",
-    "rating": 4.3,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 24,
     "regiones": [
       "La Araucanía"
@@ -450,12 +450,12 @@
   "casas-prefabricadas-araucania": {
     "nombre": "Casas Prefabricadas Araucanía",
     "slug": "casas-prefabricadas-araucania",
-    "lat": -38.4122919,
+    "lat": -38.412292,
     "lng": -72.778475,
     "direccion": null,
     "telefono": "9 6214 8435",
     "sitio_web": null,
-    "rating": 4.3,
+    "rating": null,
     "reviews": 4,
     "regiones": [
       "Metropolitana"
@@ -520,12 +520,12 @@
   "casas-prefabricadas-san-alberto": {
     "nombre": "Casas Prefabricadas San Alberto",
     "slug": "casas-prefabricadas-san-alberto",
-    "lat": -33.861284999999995,
-    "lng": -70.7321101,
+    "lat": -33.861285,
+    "lng": -70.73211,
     "direccion": "Casas Prefabricadas San Alberto - Los Acacios 120, 9540569 Paine, Región Metropolitana",
     "telefono": "9 3405 5282",
-    "sitio_web": "https://casasanalberto.com/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 3,
     "regiones": [
       "Metropolitana"
@@ -604,12 +604,12 @@
   "construkit---casas-industrializadas-de-alto-estandar": {
     "nombre": "CONSTRUKIT - Casas Industrializadas de Alto Estándar",
     "slug": "construkit---casas-industrializadas-de-alto-estandar",
-    "lat": -38.7969181,
-    "lng": -72.62186299999999,
+    "lat": -38.796918,
+    "lng": -72.621863,
     "direccion": "CONSTRUKIT - Casas Industrializadas de Alto Estándar - Ruta Panamericana Sur Km. 680, Temuco, Padre Las Casas, Araucanía",
     "telefono": null,
-    "sitio_web": "http://www.construkit.cl/",
-    "rating": 4.9,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 16,
     "regiones": [
       "La Araucanía"
@@ -632,12 +632,12 @@
   "casas-prefabricadas-sandoval": {
     "nombre": "Casas Prefabricadas Sandoval",
     "slug": "casas-prefabricadas-sandoval",
-    "lat": -32.7734553,
-    "lng": -70.6596505,
+    "lat": -32.773455,
+    "lng": -70.65965,
     "direccion": "Casas Prefabricadas Sandoval - Tocornal 7377, 2200000 Valparaíso, Santa María, Valparaíso",
     "telefono": "9 9157 0552",
-    "sitio_web": "https://www.casassandoval.cl/",
-    "rating": 4.3,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 27,
     "regiones": [
       "Valparaíso"
@@ -674,13 +674,3653 @@
   "siphouse": {
     "nombre": "Siphouse",
     "slug": "siphouse",
-    "lat": -38.560425699999996,
-    "lng": -72.4507465,
+    "lat": -38.560426,
+    "lng": -72.450746,
     "direccion": "Parque Industrial - P1-A, Lautaro, Araucanía",
     "telefono": "9 5406 6425",
-    "sitio_web": "http://www.siphouse.cl/",
-    "rating": 5,
+    "sitio_web": null,
+    "rating": null,
     "reviews": 5,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas": {
+    "nombre": "Casas prefabricadas",
+    "slug": "casas-prefabricadas",
+    "lat": -33.055329,
+    "lng": -71.560669,
+    "direccion": "Casas prefabricadas - Colo Colo 18, 2391385 Viña del Mar, Valparaíso",
+    "telefono": "(32) 211 9145",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-pre-fabricadas-otal": {
+    "nombre": "Casas pre Fabricadas OTAL",
+    "slug": "casas-pre-fabricadas-otal",
+    "lat": -33.046618,
+    "lng": -71.409664,
+    "direccion": "Casas pre Fabricadas OTAL - Freire 927, 2440471 Quilpué, Valparaíso",
+    "telefono": "9 6419 1727",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 25,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "constructora-decocasas-ltda": {
+    "nombre": "Constructora Decocasas Ltda.",
+    "slug": "constructora-decocasas-ltda",
+    "lat": -33.010641,
+    "lng": -71.545287,
+    "direccion": "Constructora Decocasas Ltda. - 13 Nte., 2530901 Viña del Mar, Valparaíso",
+    "telefono": "9 8232 5068",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "propiedades-y-constructora-asesoria-habitacional": {
+    "nombre": "Propiedades y Constructora Asesoría Habitacional",
+    "slug": "propiedades-y-constructora-asesoria-habitacional",
+    "lat": -33.009713,
+    "lng": -71.542591,
+    "direccion": "Propiedades y Constructora Asesoría Habitacional - San Antonio 1323, Viña del Mar, Valparaíso",
+    "telefono": "(32) 288 3393",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "constructora-rh-casas-metalcon": {
+    "nombre": "Constructora rh casas metalcon",
+    "slug": "constructora-rh-casas-metalcon",
+    "lat": -33.005921,
+    "lng": -71.53838,
+    "direccion": "Constructora rh casas metalcon - C. Cuatro 2251, 2561172 Viña del Mar, Valparaíso",
+    "telefono": "9 9204 5022",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "tiny-house-chile": {
+    "nombre": "Tiny House Chile",
+    "slug": "tiny-house-chile",
+    "lat": -32.94129,
+    "lng": -71.521549,
+    "direccion": "Tiny House Chile - Sta. Macarena 345, Viña del Mar, Concón, Valparaíso",
+    "telefono": "9 8176 4385",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 18,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "ecomodulares": {
+    "nombre": "Ecomodulares",
+    "slug": "ecomodulares",
+    "lat": -32.866811,
+    "lng": -71.48977,
+    "direccion": "Ecomodulares - Sitio 3, Resto Parcela 4 Mantagua, Quintero Quintero, 2490000 Valparaíso, Quintero, Valparaíso",
+    "telefono": "9 7370 7955",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "drimek-chile-hogares-galpones-y-espacios-comerciales-mecano-prefabricados": {
+    "nombre": "Drimek Chile hogares, Galpones y espacios comerciales mecano prefabricados",
+    "slug": "drimek-chile-hogares-galpones-y-espacios-comerciales-mecano-prefabricados",
+    "lat": -32.947867,
+    "lng": -71.545793,
+    "direccion": "Drimek Chile hogares, Galpones y espacios comerciales mecano prefabricados - Reñaca Nte. 25, Viña del Mar, Valparaíso",
+    "telefono": "9 9615 2763",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "myg-arquitectura-y-construccion": {
+    "nombre": "Myg arquitectura y construcción",
+    "slug": "myg-arquitectura-y-construccion",
+    "lat": -33.087232,
+    "lng": -71.061056,
+    "direccion": null,
+    "telefono": "9 8488 9974",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "bes-construcciones": {
+    "nombre": "Bes Construcciones",
+    "slug": "bes-construcciones",
+    "lat": -33.04639,
+    "lng": -71.44281,
+    "direccion": "Bes Construcciones - Pje Bellochio 1442, 2430000 Quilpué, Valparaíso",
+    "telefono": "9 7124 9425",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "ccs-constructora-ltda": {
+    "nombre": "CCS Constructora Ltda.",
+    "slug": "ccs-constructora-ltda",
+    "lat": -33.039147,
+    "lng": -71.543498,
+    "direccion": "CCS Constructora Ltda. - Tres y Medio Poniente 134, 2520000 Viña del Mar, Valparaíso",
+    "telefono": "9 8184 2710",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "seinel-ac-spa": {
+    "nombre": "SEINEL AC SpA",
+    "slug": "seinel-ac-spa",
+    "lat": -32.99123,
+    "lng": -71.499295,
+    "direccion": "SEINEL AC SpA - Lago Zenteno 1211, Viña del Mar, Valparaíso",
+    "telefono": "9 5473 3558",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "combox-modular": {
+    "nombre": "Combox modular",
+    "slug": "combox-modular",
+    "lat": -33.02628,
+    "lng": -71.548829,
+    "direccion": "Combox modular - Viana 915, 2660000 Viña del Mar, Valparaíso",
+    "telefono": "9 8704 2644",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "wimmer-costruccionterminacion": {
+    "nombre": "Wimmer costruccionterminacion",
+    "slug": "wimmer-costruccionterminacion",
+    "lat": -33.028562,
+    "lng": -71.549828,
+    "direccion": "Wimmer costruccionterminacion - Alcalde Prieto Nieto, 2340000 Viña del Mar, Valparaíso",
+    "telefono": "9 7869 1951",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-limache": {
+    "nombre": "Casas Limache",
+    "slug": "casas-limache",
+    "lat": -33.036168,
+    "lng": -71.297607,
+    "direccion": "Casas Limache - Enlace peñablanca-limache-quillota 06680, Villa Alemana, Valparaíso",
+    "telefono": "9 7551 0394",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "prefabricated-houses-cf": {
+    "nombre": "Prefabricated houses CF",
+    "slug": "prefabricated-houses-cf",
+    "lat": -33.779724,
+    "lng": -70.745424,
+    "direccion": "Prefabricated houses CF - Caletera Poniente, Ruta 5, Km 39,5, Paine, Región Metropolitana",
+    "telefono": "9 5805 6559",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 201,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "miari-construccion": {
+    "nombre": "miari CONSTRUCCION",
+    "slug": "miari-construccion",
+    "lat": -33.031914,
+    "lng": -71.53147,
+    "direccion": null,
+    "telefono": "9 5517 3131",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "paneles-sip-lonquimay": {
+    "nombre": "Paneles SIP Lonquimay",
+    "slug": "paneles-sip-lonquimay",
+    "lat": null,
+    "lng": null,
+    "direccion": null,
+    "telefono": "9 9233 3018",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "construcciones-orbenes": {
+    "nombre": "Construcciones Orbenes",
+    "slug": "construcciones-orbenes",
+    "lat": -33.06061,
+    "lng": -71.593863,
+    "direccion": "Construcciones Orbenes - Hunneus #50 interior cerró O'Higgins ns, 2340000 Valparaíso",
+    "telefono": "9 5773 0090",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-noguera": {
+    "nombre": "Casas prefabricadas Noguera",
+    "slug": "casas-prefabricadas-noguera",
+    "lat": -33.01765,
+    "lng": -71.273025,
+    "direccion": "Casas prefabricadas Noguera - San Alfonso 17, Limache, Valparaíso",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-casablanca": {
+    "nombre": "Casas Casablanca",
+    "slug": "casas-casablanca",
+    "lat": -33.347727,
+    "lng": -71.371017,
+    "direccion": "8B Mundo Nuevo, 2480000 Casablanca, Valparaíso",
+    "telefono": "9 4965 4682",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "tu-prefabricada": {
+    "nombre": "Tu Prefabricada",
+    "slug": "tu-prefabricada",
+    "lat": -32.929174,
+    "lng": -71.428196,
+    "direccion": "Tu Prefabricada - Ruta 64 232, Limache, Valparaíso",
+    "telefono": "9 5840 7149",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 13,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-quebradilla": {
+    "nombre": "Casas Prefabricadas Quebradilla",
+    "slug": "casas-prefabricadas-quebradilla",
+    "lat": -32.476841,
+    "lng": -71.270762,
+    "direccion": "Casas Prefabricadas Quebradilla - Ruta 5 Norte, km 149, 2040000 Valparaíso, La Ligua, Valparaíso",
+    "telefono": "9 6560 7184",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 18,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-mar-y-sol": {
+    "nombre": "Casas Prefabricadas Mar y Sol",
+    "slug": "casas-prefabricadas-mar-y-sol",
+    "lat": -33.547399,
+    "lng": -71.601904,
+    "direccion": "Casas Prefabricadas Mar y Sol - av casanova Cartagena, 2680000 Valparaíso, Cartagena, Valparaíso",
+    "telefono": "9 9287 1653",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "prefabricated-houses-construction": {
+    "nombre": "prefabricated houses & Construction",
+    "slug": "prefabricated-houses-construction",
+    "lat": -32.627805,
+    "lng": -71.424308,
+    "direccion": "La Laguna, Zapallar, Valparaíso",
+    "telefono": "9 7551 0597",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-moc": {
+    "nombre": "Casas Prefabricadas MOC",
+    "slug": "casas-prefabricadas-moc",
+    "lat": -33.162621,
+    "lng": -71.336209,
+    "direccion": "Casas Prefabricadas MOC - Los quillayes 2002, parcela 189, 2430000 Quilpué, Valparaíso",
+    "telefono": "9 6369 7547",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "antumar---casas-prefabricadas": {
+    "nombre": "AntuMar - Casas Prefabricadas",
+    "slug": "antumar---casas-prefabricadas",
+    "lat": -33.134563,
+    "lng": -71.68887,
+    "direccion": "AntuMar - Casas Prefabricadas - Av. Laguna Seca, Valparaíso",
+    "telefono": "9 9184 8976",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-alvarez": {
+    "nombre": "Casas Prefabricadas Álvarez",
+    "slug": "casas-prefabricadas-alvarez",
+    "lat": -33.104319,
+    "lng": -71.357772,
+    "direccion": "Casas Prefabricadas Álvarez - 1, Quilpué, Valparaíso",
+    "telefono": "9 7483 5393",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-litoral": {
+    "nombre": "Casas Prefabricadas Litoral",
+    "slug": "casas-prefabricadas-litoral",
+    "lat": -33.470197,
+    "lng": -71.634167,
+    "direccion": "El Tabo, Valparaíso",
+    "telefono": "9 4787 1947",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-esmeralda": {
+    "nombre": "Casas prefabricadas Esmeralda",
+    "slug": "casas-prefabricadas-esmeralda",
+    "lat": -33.413386,
+    "lng": -71.695345,
+    "direccion": "Casas prefabricadas Esmeralda - Avenida Tralcamahuida, Av. Isidoro Dubournais &, 7400018 El Quisco, Valparaíso",
+    "telefono": "9 7275 0651",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "prefabricadas-ingees": {
+    "nombre": "prefabricadas ingees",
+    "slug": "prefabricadas-ingees",
+    "lat": -33.045047,
+    "lng": -71.618524,
+    "direccion": "prefabricadas ingees - Yungay 1731, Ofi 210, 2340000 Valparaíso",
+    "telefono": "9 9304 1026",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Valparaíso"
+    ]
+  },
+  "casas-prefabricadas-nicolas-bustos-ltda": {
+    "nombre": "Casas prefabricadas nicolas bustos ltda.",
+    "slug": "casas-prefabricadas-nicolas-bustos-ltda",
+    "lat": -36.812381,
+    "lng": -73.030917,
+    "direccion": "Casas prefabricadas nicolas bustos ltda. - Lorenzo Arenas 2465, 4080844 Chillancito, Concepción, Bío Bío",
+    "telefono": "9 5491 8537",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-san-ignacio": {
+    "nombre": "Casas San Ignacio",
+    "slug": "casas-san-ignacio",
+    "lat": -36.810307,
+    "lng": -73.035291,
+    "direccion": "Casas San Ignacio - Camilo Henríquez 403, 4080747 Concepción, Bío Bío",
+    "telefono": "(41) 213 0739",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 105,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "constructora-casur": {
+    "nombre": "Constructora Casur",
+    "slug": "constructora-casur",
+    "lat": -36.829525,
+    "lng": -73.048875,
+    "direccion": "Constructora Casur - cochrane 635 oficina 1601 torre B Concepción, 4070245 Biobío, Concepción, Bío Bío",
+    "telefono": "9 3404 2706",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-bio-bio": {
+    "nombre": "Casas Prefabricadas Bio Bio",
+    "slug": "casas-prefabricadas-bio-bio",
+    "lat": -36.775982,
+    "lng": -73.079398,
+    "direccion": "Casas Prefabricadas Bio Bio - Autopista 6643, Talcahuano, Bío Bío",
+    "telefono": "9 7708 0036",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 32,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-andalien-expoparcelas": {
+    "nombre": "Casas Prefabricadas Andalien /Expoparcelas",
+    "slug": "casas-prefabricadas-andalien-expoparcelas",
+    "lat": -36.826713,
+    "lng": -72.908759,
+    "direccion": "fundo el troncos, parcela el durazno puente n2 - Camino a Bulnes km16, 4030000 Concepción, Bío Bío",
+    "telefono": "9 9551 4737",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas---el-arrayan": {
+    "nombre": "Casas - El Arrayán",
+    "slug": "casas---el-arrayan",
+    "lat": -36.812929,
+    "lng": -72.980052,
+    "direccion": "Casas - El Arrayán - Autop. Ruta A Bulnes 3307, Concepción, Bío Bío",
+    "telefono": "9 7395 3246",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "viviendas-santa-marta": {
+    "nombre": "Viviendas Santa Marta",
+    "slug": "viviendas-santa-marta",
+    "lat": -36.815662,
+    "lng": -73.034103,
+    "direccion": "Viviendas Santa Marta - Av. Los Carrera 2109, 4080960 Concepción, Bío Bío",
+    "telefono": "9 3901 7538",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-campo-lindo-spa": {
+    "nombre": "Casas prefabricadas campo lindo spa",
+    "slug": "casas-prefabricadas-campo-lindo-spa",
+    "lat": -36.784885,
+    "lng": -73.096783,
+    "direccion": "Casas prefabricadas campo lindo spa - Suecia 3040, 4030000 Hualpén, Bío Bío",
+    "telefono": "9 7752 6211",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-el-arca": {
+    "nombre": "Casas Prefabricadas El Arca",
+    "slug": "casas-prefabricadas-el-arca",
+    "lat": -36.82857,
+    "lng": -72.915296,
+    "direccion": "Pasado Puente °1 - Ruta N-48-O, Concepción, Bío Bío",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-maiten": {
+    "nombre": "Casas Prefabricadas Maiten",
+    "slug": "casas-prefabricadas-maiten",
+    "lat": -36.815636,
+    "lng": -73.032972,
+    "direccion": "Casas Prefabricadas Maiten - Av. Los Carrera 2198, 4080969 Concepción, Bío Bío",
+    "telefono": "(41) 312 9235",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casa-futuro": {
+    "nombre": "Casa Futuro",
+    "slug": "casa-futuro",
+    "lat": -36.808862,
+    "lng": -73.049104,
+    "direccion": "Casa Futuro - Ejército 1451, B, 4030000 Concepción, Bío Bío",
+    "telefono": "9 4294 6217",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "ansei-casas-prefabricadas": {
+    "nombre": "Ansei Casas Prefabricadas",
+    "slug": "ansei-casas-prefabricadas",
+    "lat": -36.767898,
+    "lng": -73.01449,
+    "direccion": null,
+    "telefono": "9 9879 0430",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "rokar-constructora-casas-llave-en-mano-en-el-sur-de-chile": {
+    "nombre": "Rokar Constructora – Casas Llave en Mano en el Sur de Chile",
+    "slug": "rokar-constructora-casas-llave-en-mano-en-el-sur-de-chile",
+    "lat": -38.73984,
+    "lng": -72.59278,
+    "direccion": "Rokar Constructora – Casas Llave en Mano en el Sur de Chile - Antonio Varas 687, of 806, 4780000 Temuco, Araucanía",
+    "telefono": "9 8428 4644",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "macoservi": {
+    "nombre": "MACOSERVI",
+    "slug": "macoservi",
+    "lat": -36.831857,
+    "lng": -73.04939,
+    "direccion": "MACOSERVI - Rengo 68, 4070281 Concepción, Bío Bío",
+    "telefono": "(41) 324 0040",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "empresas-llaima-spa": {
+    "nombre": "EMPRESAS LLAIMA SPA",
+    "slug": "empresas-llaima-spa",
+    "lat": -36.829135,
+    "lng": -73.054394,
+    "direccion": "EMPRESAS LLAIMA SPA - Angol 436, Ofi 1204, 4030000 Concepción, Bío Bío",
+    "telefono": "9 7526 2869",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-ecomodular-spa": {
+    "nombre": "Casas prefabricadas ECOMODULAR SPA",
+    "slug": "casas-prefabricadas-ecomodular-spa",
+    "lat": -38.938277,
+    "lng": -72.030878,
+    "direccion": "Casas prefabricadas ECOMODULAR SPA - La Concepción, camino La Dehesa s/n, Cunco, Temuco, Araucanía",
+    "telefono": "9 7424 7013",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-genesis": {
+    "nombre": "Casas Prefabricadas Génesis",
+    "slug": "casas-prefabricadas-genesis",
+    "lat": -36.987414,
+    "lng": -73.163543,
+    "direccion": "Casas Prefabricadas Génesis - Juan Antonio Ríos 2291, 4190000 Coronel, Bío Bío",
+    "telefono": "9 7859 3468",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-rukalhue": {
+    "nombre": "Casas Prefabricadas Rukalhue",
+    "slug": "casas-prefabricadas-rukalhue",
+    "lat": -36.989717,
+    "lng": -73.17407,
+    "direccion": "Casas Prefabricadas Rukalhue - Los Molineros, Parcela 13, Huertos Familiares Coronel, 4190000 Biobío, Coronel, Bío Bío",
+    "telefono": "9 7913 0952",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 24,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "patagual-home": {
+    "nombre": "Patagual Home",
+    "slug": "patagual-home",
+    "lat": -36.874226,
+    "lng": -73.145929,
+    "direccion": "Patagual Home - Interior Camino a Coronel 5980, San Pedro de la Paz, Bío Bío",
+    "telefono": "(41) 273 7373",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 19,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "rucantu-houses---quality-and-experience-in-southern-chile": {
+    "nombre": "Rucantu houses - Quality and Experience in Southern Chile",
+    "slug": "rucantu-houses---quality-and-experience-in-southern-chile",
+    "lat": -38.796936,
+    "lng": -72.621881,
+    "direccion": "Rucantu houses - Quality and Experience in Southern Chile - Ruta Panamericana Sur Km. 680, Temuco, Padre Las Casas, Araucanía",
+    "telefono": "(45) 273 5000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 69,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-santa-ester": {
+    "nombre": "Casas Prefabricadas Santa Ester",
+    "slug": "casas-prefabricadas-santa-ester",
+    "lat": -38.736343,
+    "lng": -72.606847,
+    "direccion": "BURO edificio - Dieciocho de Septiembre 525, oficna 302, 4810345 Temuco, Araucanía",
+    "telefono": "9 4760 2747",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-temukit": {
+    "nombre": "Casas Prefabricadas Temukit",
+    "slug": "casas-prefabricadas-temukit",
+    "lat": -38.759762,
+    "lng": -72.716717,
+    "direccion": "Casas Prefabricadas Temukit - Camino, Labranza, Temuco, Araucanía",
+    "telefono": "9 4178 9790",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 31,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "prefabricados-steelframe": {
+    "nombre": "Prefabricados Steelframe",
+    "slug": "prefabricados-steelframe",
+    "lat": -29.971995,
+    "lng": -71.276716,
+    "direccion": "Barrio Industrial - Los Talleres 1541, Coquimbo",
+    "telefono": "9 4599 7698",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-valles-del-sur-spa": {
+    "nombre": "CASAS VALLES DEL SUR SPA",
+    "slug": "casas-valles-del-sur-spa",
+    "lat": -29.961911,
+    "lng": -71.310432,
+    "direccion": "CASAS VALLES DEL SUR SPA - Parcela, Vegas Sur 29, C Sector, 1780000 Coquimbo",
+    "telefono": "9 3396 9224",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 46,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-chile-coquimbo": {
+    "nombre": "Casas Chile Coquimbo",
+    "slug": "casas-chile-coquimbo",
+    "lat": -29.959816,
+    "lng": -71.305953,
+    "direccion": "esquina - Panamericana Norte, Gerónimo Méndez Arancibia, Km 465, 1780000 Coquimbo",
+    "telefono": "9 4423 3687",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 50,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-emilia": {
+    "nombre": "CASAS PREFABRICADAS EMILIA",
+    "slug": "casas-prefabricadas-emilia",
+    "lat": -30.0242,
+    "lng": -71.255502,
+    "direccion": "CASAS PREFABRICADAS EMILIA - lote c y d parcela 51, sector el escorial, pan de azucar, 1480000 Coquimbo",
+    "telefono": "9 4746 8733",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-florida": {
+    "nombre": "Casas Florida",
+    "slug": "casas-florida",
+    "lat": -29.923199,
+    "lng": -71.266189,
+    "direccion": "Casas Florida - Panamericana Norte 442, Parcela 4, La Serena, Coquimbo",
+    "telefono": "9 6125 7377",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 68,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-luz-elena": {
+    "nombre": "Casas prefabricadas Luz Elena",
+    "slug": "casas-prefabricadas-luz-elena",
+    "lat": -29.919991,
+    "lng": -71.265042,
+    "direccion": "Vega sur - Ruta 5, km 55, 1700000 La Serena, Coquimbo",
+    "telefono": "9 3521 9947",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "home-prefabricadas": {
+    "nombre": "HOME PREFABRICADAS",
+    "slug": "home-prefabricadas",
+    "lat": -30.01842,
+    "lng": -71.278129,
+    "direccion": "HOME PREFABRICADAS - XPJC+GQ, Coquimbo",
+    "telefono": "9 5723 9184",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-silver-house": {
+    "nombre": "Casas Prefabricadas silver House",
+    "slug": "casas-prefabricadas-silver-house",
+    "lat": -29.961224,
+    "lng": -71.309206,
+    "direccion": "Casas Prefabricadas silver House - Cam. Las Parcelas 29, Coquimbo",
+    "telefono": "9 7846 6033",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-mma": {
+    "nombre": "Casas MMA",
+    "slug": "casas-mma",
+    "lat": -30.054546,
+    "lng": -71.253018,
+    "direccion": "Casas MMA - Esfuerzo Campesino S/N, 1790000 Coquimbo",
+    "telefono": "9 8839 7380",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-deconstruccion": {
+    "nombre": "Casas Prefabricadas DeConstruccion",
+    "slug": "casas-prefabricadas-deconstruccion",
+    "lat": -29.943966,
+    "lng": -71.136647,
+    "direccion": "Casas Prefabricadas DeConstruccion - Ruta 41, km 12.5, 1700000 La Serena, Coquimbo",
+    "telefono": "(51) 260 5531",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 21,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-metalcon": {
+    "nombre": "Casas Prefabricadas Metalcon",
+    "slug": "casas-prefabricadas-metalcon",
+    "lat": -29.970456,
+    "lng": -71.276208,
+    "direccion": "Barrio industrial - Los Talleres 1541, Coquimbo",
+    "telefono": "9 4599 7698",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-elqui": {
+    "nombre": "Casas Elqui",
+    "slug": "casas-elqui",
+    "lat": -29.956977,
+    "lng": -71.299468,
+    "direccion": "Casas Elqui - Ruta 5 Norte, km 465, Parcela 27, 1780000 Coquimbo",
+    "telefono": "9 8464 4451",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-kit": {
+    "nombre": "Casas KIT",
+    "slug": "casas-kit",
+    "lat": -29.923348,
+    "lng": -71.266275,
+    "direccion": "Casas KIT - Panamericana Norte 442, Parcela 4, La Serena, Coquimbo",
+    "telefono": "9 7138 9841",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 12,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "prefabricadas-margarita": {
+    "nombre": "Prefabricadas Margarita",
+    "slug": "prefabricadas-margarita",
+    "lat": -30.194795,
+    "lng": -71.381453,
+    "direccion": "Prefabricadas Margarita - Ruta 5 norte kilómetro 433, lomas de Guanaqueros, 1794072 Coquimbo",
+    "telefono": "9 7603 9213",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-laguna-de-aculeo-sucursal-la-serena": {
+    "nombre": "Casas Prefabricadas Laguna de Aculeo sucursal La Serena",
+    "slug": "casas-prefabricadas-laguna-de-aculeo-sucursal-la-serena",
+    "lat": -29.932808,
+    "lng": -71.275722,
+    "direccion": "Casas Prefabricadas Laguna de Aculeo sucursal La Serena - Chile - Italia 57, 1700000 La Serena, Coquimbo",
+    "telefono": "9 5714 6070",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "fabrica-de-casas-sebastian-nadal": {
+    "nombre": "Fábrica de casas Sebastián Nadal",
+    "slug": "fabrica-de-casas-sebastian-nadal",
+    "lat": -29.925348,
+    "lng": -71.269936,
+    "direccion": "Fábrica de casas Sebastián Nadal - Cuatro Esquinas, Kilómetro 451, Sector, 1700000 La Serena, Coquimbo",
+    "telefono": "9 3139 9247",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "cc-minga": {
+    "nombre": "CC-MINGA",
+    "slug": "cc-minga",
+    "lat": -30.027176,
+    "lng": -71.254581,
+    "direccion": "CC-MINGA - El Escorial, Coquimbo",
+    "telefono": "9 4000 6843",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-chiproga": {
+    "nombre": "Casas Prefabricadas Chiproga",
+    "slug": "casas-prefabricadas-chiproga",
+    "lat": -29.961157,
+    "lng": -71.309193,
+    "direccion": "1780000 Coquimbo",
+    "telefono": "9 7187 4868",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "prefabricadas-totoralillo": {
+    "nombre": "Prefabricadas Totoralillo",
+    "slug": "prefabricadas-totoralillo",
+    "lat": -30.053304,
+    "lng": -71.369266,
+    "direccion": "Prefabricadas Totoralillo - WJWJ+J8, Totoralillo, Coquimbo",
+    "telefono": "9 7829 1980",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-emilia": {
+    "nombre": "CASAS EMILIA",
+    "slug": "casas-emilia",
+    "lat": -30.049567,
+    "lng": -71.25128,
+    "direccion": "1780000 Coquimbo",
+    "telefono": "9 4746 8733",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "modulartek": {
+    "nombre": "MODULARTEK",
+    "slug": "modulartek",
+    "lat": -29.919636,
+    "lng": -71.261442,
+    "direccion": "MODULARTEK - Parcela, Pje. vegas sur 2, Lote 3c, 1700000 La Serena, Coquimbo",
+    "telefono": "9 9545 5015",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-arragon": {
+    "nombre": "Casas Arragon",
+    "slug": "casas-arragon",
+    "lat": -29.922453,
+    "lng": -71.190981,
+    "direccion": "Casas Arragon - Ruta D 41, Lote 7, Parcela 45, La Serena, Coquimbo",
+    "telefono": "9 3193 0276",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-prefabricadas-charlotte": {
+    "nombre": "CASAS PREFABRICADAS CHARLOTTE",
+    "slug": "casas-prefabricadas-charlotte",
+    "lat": -29.889305,
+    "lng": -71.264201,
+    "direccion": "CASAS PREFABRICADAS CHARLOTTE - compñia alta, 1700000 La Serena, Coquimbo",
+    "telefono": "9 2049 9466",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "domos-desert-casas-prefabricadas-ecopiscinas": {
+    "nombre": "Domos Desert/ Casas prefabricadas, ecopiscinas",
+    "slug": "domos-desert-casas-prefabricadas-ecopiscinas",
+    "lat": -29.923103,
+    "lng": -71.139737,
+    "direccion": "Domos Desert/ Casas prefabricadas, ecopiscinas - Altovalsol, Sitio 11, 1700000 Coquimbo, La Serena, Coquimbo",
+    "telefono": "9 9840 6252",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "casas-arbolito-la-serena": {
+    "nombre": "Casas Arbolito La Serena",
+    "slug": "casas-arbolito-la-serena",
+    "lat": -29.925759,
+    "lng": -71.179409,
+    "direccion": "Casas Arbolito La Serena - Ruta 41, kilometro 8 Ruta 41, La Serena, Coquimbo",
+    "telefono": "9 8906 7936",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 35,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "san-sebastian-casas-prefabricadas": {
+    "nombre": "SAN SEBASTIAN CASAS PREFABRICADAS",
+    "slug": "san-sebastian-casas-prefabricadas",
+    "lat": -29.9252,
+    "lng": -71.272771,
+    "direccion": "SAN SEBASTIAN CASAS PREFABRICADAS - Hortensia Bustamante 52, 1700000 Coquimbo, La Serena, Coquimbo",
+    "telefono": "9 5798 7522",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "fabrica-de-paneles-sip": {
+    "nombre": "Fábrica de paneles SIP",
+    "slug": "fabrica-de-paneles-sip",
+    "lat": -29.925809,
+    "lng": -71.180241,
+    "direccion": "Fábrica de paneles SIP - 7792 Ruta 41, La Serena, Coquimbo",
+    "telefono": "9 6426 3590",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "modulos-inves": {
+    "nombre": "Módulos INVES",
+    "slug": "modulos-inves",
+    "lat": -29.916016,
+    "lng": -71.246757,
+    "direccion": "Módulos INVES - Huanhuali 873, 1700000 Coquimbo, La Serena, Coquimbo",
+    "telefono": "9 9182 1782",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Coquimbo"
+    ]
+  },
+  "magisur": {
+    "nombre": "Magisur",
+    "slug": "magisur",
+    "lat": -38.75775,
+    "lng": -72.597555,
+    "direccion": "Magisur - 854, Cautín, Av. Guido Beck de Ramberga, Temuco, Padre Las Casas, Araucanía",
+    "telefono": "9 9824 5279",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 31,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "benhaus": {
+    "nombre": "Benhaus",
+    "slug": "benhaus",
+    "lat": -38.733281,
+    "lng": -72.568481,
+    "direccion": "Benhaus - Av. Pircunche 0645, 4780000 Temuco, Araucanía",
+    "telefono": "9 6674 1724",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "constructora-roca": {
+    "nombre": "Constructora Roca",
+    "slug": "constructora-roca",
+    "lat": -40.254868,
+    "lng": -72.837723,
+    "direccion": null,
+    "telefono": "9 8285 9494",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-living-house": {
+    "nombre": "Casas Prefabricadas Living House",
+    "slug": "casas-prefabricadas-living-house",
+    "lat": -38.772944,
+    "lng": -72.607681,
+    "direccion": "Casas Prefabricadas Living House - Ruta 5 Kilómetro 677, Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "9 3075 4516",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "tu-casa-prefabricada-temuco": {
+    "nombre": "TU CASA Prefabricada Temuco",
+    "slug": "tu-casa-prefabricada-temuco",
+    "lat": -38.702949,
+    "lng": -72.645437,
+    "direccion": "TU CASA Prefabricada Temuco - Las Flores 2196, villa el Rodeo, 4780000 Temuco, Araucanía",
+    "telefono": "9 7373 9919",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "moduhut": {
+    "nombre": "ModuHut",
+    "slug": "moduhut",
+    "lat": -38.735759,
+    "lng": -72.593515,
+    "direccion": "ModuHut - Manuel Rodriguez 569, 4780000 Temuco, Araucanía",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "rucantu": {
+    "nombre": "Rucantu",
+    "slug": "rucantu",
+    "lat": -38.725389,
+    "lng": -72.578874,
+    "direccion": "Rucantu - Ñielol, 4780735 Temuco, Araucanía",
+    "telefono": "(45) 273 5000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "woodhus-casas-de-madera": {
+    "nombre": "Woodhus Casas de Madera",
+    "slug": "woodhus-casas-de-madera",
+    "lat": -38.722587,
+    "lng": -72.576648,
+    "direccion": "Woodhus Casas de Madera - Claudio Vicuña 01185, 4780550 Temuco, Araucanía",
+    "telefono": "(45) 299 4250",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "construsur-casas-prefabricadas": {
+    "nombre": "CONSTRUSUR CASAS PREFABRICADAS",
+    "slug": "construsur-casas-prefabricadas",
+    "lat": -38.757386,
+    "lng": -72.659926,
+    "direccion": "4780000 Temuco, Araucanía",
+    "telefono": "9 3499 7938",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-peumallen": {
+    "nombre": "Casas Prefabricadas Peumallen",
+    "slug": "casas-prefabricadas-peumallen",
+    "lat": -38.711617,
+    "lng": -72.428468,
+    "direccion": null,
+    "telefono": "9 9350 3495",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "lucco-paneles-sip": {
+    "nombre": "Lucco, Paneles SIP",
+    "slug": "lucco-paneles-sip",
+    "lat": -38.763855,
+    "lng": -72.609707,
+    "direccion": "Lucco, Paneles SIP - Ex Panamericana Sur Nro. 4750, Temuco, Padre Las Casas, Araucanía",
+    "telefono": "9 6674 1724",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "ferriere-construcciones": {
+    "nombre": "Ferriere Construcciones",
+    "slug": "ferriere-construcciones",
+    "lat": -38.740496,
+    "lng": -72.590912,
+    "direccion": "Ferriere Construcciones - Arturo Prat 712, Of 21 Temuco, 4791133 Temuco, Araucanía",
+    "telefono": "(45) 227 8847",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "ruca-mahuida": {
+    "nombre": "Ruca Mahuida",
+    "slug": "ruca-mahuida",
+    "lat": -37.762752,
+    "lng": -72.810987,
+    "direccion": null,
+    "telefono": "9 8562 8493",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "masterhaus-chile": {
+    "nombre": "MasterHaus Chile",
+    "slug": "masterhaus-chile",
+    "lat": -38.722587,
+    "lng": -72.576648,
+    "direccion": "MasterHaus Chile - Claudio Vicuña 01185, 4780550 Temuco, Araucanía",
+    "telefono": "(45) 299 4250",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "construcciones-y-ferreteria-nehuen-spa": {
+    "nombre": "Construcciones y ferreteria NEHUEN Spa.",
+    "slug": "construcciones-y-ferreteria-nehuen-spa",
+    "lat": -38.785236,
+    "lng": -72.653691,
+    "direccion": "Comunidad aagustin Hueche Montero - Camino vecinal, Padre las Casas, Padre Las Casas, Araucanía",
+    "telefono": "9 5389 2541",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-millantu": {
+    "nombre": "Casas Prefabricadas Millantu",
+    "slug": "casas-prefabricadas-millantu",
+    "lat": -38.649479,
+    "lng": -72.364938,
+    "direccion": "Casas Prefabricadas Millantu - Quintrilpe, km 9.6, Vilcún, Araucanía",
+    "telefono": "9 4201 7340",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-arbolito-villarrica": {
+    "nombre": "Casas Arbolito Villarrica",
+    "slug": "casas-arbolito-villarrica",
+    "lat": -39.154363,
+    "lng": -72.33338,
+    "direccion": "Villarrica, Araucanía",
+    "telefono": "9 5413 1327",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 154,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "centralcasas": {
+    "nombre": "centralcasas",
+    "slug": "centralcasas",
+    "lat": -41.465852,
+    "lng": -72.921414,
+    "direccion": "centralcasas - Ladera Sur N°4, 5500000 Puerto Montt, Los Lagos",
+    "telefono": "9 3928 1759",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-medialuna": {
+    "nombre": "Casas MediaLuna",
+    "slug": "casas-medialuna",
+    "lat": -41.515181,
+    "lng": -73.074953,
+    "direccion": "Casas MediaLuna - Trapén Sur km 1033, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "9 5630 6410",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 42,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-rengalil": {
+    "nombre": "Casas Prefabricadas Rengalil",
+    "slug": "casas-prefabricadas-rengalil",
+    "lat": -41.419269,
+    "lng": -73.124916,
+    "direccion": "Casas Prefabricadas Rengalil - V-60, Las Quemas, Puerto Montt, Los Lagos",
+    "telefono": "9 4547 2962",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 16,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "portal-del-sur": {
+    "nombre": "Portal Del Sur",
+    "slug": "portal-del-sur",
+    "lat": -41.529968,
+    "lng": -73.053444,
+    "direccion": "Puerto Montt, Los Lagos",
+    "telefono": "9 6659 0941",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 80,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-personalizadas-serones-spa": {
+    "nombre": "Casas personalizadas serones spa",
+    "slug": "casas-personalizadas-serones-spa",
+    "lat": -41.498121,
+    "lng": -73.001639,
+    "direccion": "5480000 Puerto Montt, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "central-casas": {
+    "nombre": "Central Casas",
+    "slug": "central-casas",
+    "lat": -36.467511,
+    "lng": -71.684319,
+    "direccion": null,
+    "telefono": "9 3928 1759",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "vertical-construcciones-spa": {
+    "nombre": "Vertical Construcciones SPA",
+    "slug": "vertical-construcciones-spa",
+    "lat": -41.470126,
+    "lng": -72.915929,
+    "direccion": "Vertical Construcciones SPA - Egaña 1251, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "9 9844 6000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "hcp-casas": {
+    "nombre": "HCP Casas",
+    "slug": "hcp-casas",
+    "lat": -41.355697,
+    "lng": -72.788883,
+    "direccion": "HCP Casas - J6V6+JQV Arrayan, Puerto Montt, Los Lagos",
+    "telefono": "9 5633 7243",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 25,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "cabanas-puerto-montt-consur-spa": {
+    "nombre": "Cabañas Puerto Montt (CONSUR SPA)",
+    "slug": "cabanas-puerto-montt-consur-spa",
+    "lat": -41.472143,
+    "lng": -72.962645,
+    "direccion": "5502632 Las Quemas, Puerto Montt, Los Lagos",
+    "telefono": "9 4269 0307",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-forestal-los-muermos-puerto-montt": {
+    "nombre": "Casas Forestal Los muermos Puerto Montt",
+    "slug": "casas-forestal-los-muermos-puerto-montt",
+    "lat": -41.510758,
+    "lng": -73.065789,
+    "direccion": "Sector El Trapen - Camino a Pargua Km 10, Puerto Montt, Los Lagos",
+    "telefono": "9 3230 0525",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-fk": {
+    "nombre": "Constructora FK",
+    "slug": "constructora-fk",
+    "lat": -41.461881,
+    "lng": -72.957177,
+    "direccion": "Constructora FK - Los Maitenes 239, 5501053 Puerto Montt, Los Lagos",
+    "telefono": "9 9863 9603",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-fambar": {
+    "nombre": "Casas Prefabricadas Fambar",
+    "slug": "casas-prefabricadas-fambar",
+    "lat": -41.421106,
+    "lng": -73.114249,
+    "direccion": "Casas Prefabricadas Fambar - Calle las Quemas S/N, 0000054 Puerto Montt, Los Lagos",
+    "telefono": "(65) 286 8423",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "los-lagos-construcciones": {
+    "nombre": "Los Lagos Construcciones",
+    "slug": "los-lagos-construcciones",
+    "lat": -41.465366,
+    "lng": -72.957002,
+    "direccion": "Los Lagos Construcciones - Av. Circunvalación 248, 5501632 Puerto Montt, Los Lagos",
+    "telefono": "9 9156 3148",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-coloniasur": {
+    "nombre": "Casas Prefabricadas ColoniaSur",
+    "slug": "casas-prefabricadas-coloniasur",
+    "lat": -41.386317,
+    "lng": -72.872167,
+    "direccion": "Casas Prefabricadas ColoniaSur - J47H+F4, Arrayan, Puerto Montt, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-norpatagonia": {
+    "nombre": "Constructora Norpatagonia",
+    "slug": "constructora-norpatagonia",
+    "lat": -41.165392,
+    "lng": -73.278026,
+    "direccion": null,
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "wwwconstructoraguilarcom": {
+    "nombre": "www.constructoraguilar.com",
+    "slug": "wwwconstructoraguilarcom",
+    "lat": -41.481328,
+    "lng": -72.97216,
+    "direccion": "gabrielgastona@gmail.com - Reportaje 251, 5504320 Puerto Montt, Los Lagos",
+    "telefono": "9 4461 5907",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "paneles-sip-del-sur": {
+    "nombre": "Paneles Sip del Sur",
+    "slug": "paneles-sip-del-sur",
+    "lat": -41.429705,
+    "lng": -72.884991,
+    "direccion": "Paneles Sip del Sur - La Vara, Sur, Km 2,5, Puerto Montt, Los Lagos",
+    "telefono": "9 6222 1269",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 25,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "construcciones-proelectron": {
+    "nombre": "Construcciones Proelectrón",
+    "slug": "construcciones-proelectron",
+    "lat": -41.472876,
+    "lng": -72.941666,
+    "direccion": "Av - Diego Portales 508, 5504528 Puerto Montt, Los Lagos",
+    "telefono": "9 6637 3733",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-agmar": {
+    "nombre": "Constructora Agmar",
+    "slug": "constructora-agmar",
+    "lat": -41.461764,
+    "lng": -72.960386,
+    "direccion": "Constructora Agmar - Los Laureles 3, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "(65) 249 8728",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-vision": {
+    "nombre": "Constructora vision",
+    "slug": "constructora-vision",
+    "lat": -41.456852,
+    "lng": -72.950267,
+    "direccion": "Constructora vision - Jose Miguel Carrera 528, 5480000 Puerto Montt, Los Lagos",
+    "telefono": "9 4288 9420",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "metodo-casas-modulares-chile": {
+    "nombre": "Método Casas Modulares Chile",
+    "slug": "metodo-casas-modulares-chile",
+    "lat": -34.171081,
+    "lng": -70.733884,
+    "direccion": "Método Casas Modulares Chile - Membrillar 59, Ofi 39, 2851177 Rancagua, O'Higgins",
+    "telefono": "(72) 284 5365",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "ventas-de-casas-prefabricadas-r-y-a-y-venta-madera": {
+    "nombre": "Ventas de Casas Prefabricadas R y A y venta madera",
+    "slug": "ventas-de-casas-prefabricadas-r-y-a-y-venta-madera",
+    "lat": -34.259066,
+    "lng": -70.860458,
+    "direccion": "comuna de, 2930000 Requinoa, Requínoa, O'Higgins",
+    "telefono": "9 8728 5303",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 65,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-qc": {
+    "nombre": "Casas prefabricadas Q.C",
+    "slug": "casas-prefabricadas-qc",
+    "lat": -34.431128,
+    "lng": -70.88632,
+    "direccion": "Casas prefabricadas Q.C - 8320000, Rengo, O'Higgins",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 42,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-camino-real": {
+    "nombre": "Casas Camino Real",
+    "slug": "casas-camino-real",
+    "lat": -34.207178,
+    "lng": -70.888267,
+    "direccion": "Casas Camino Real - El Alamo 022, Lo Miranda, Doñihue, O'Higgins",
+    "telefono": "(72) 246 7001",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 37,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-lago-ranco-ltda": {
+    "nombre": "CASAS LAGO RANCO LTDA",
+    "slug": "casas-lago-ranco-ltda",
+    "lat": -34.361365,
+    "lng": -70.849813,
+    "direccion": "CASAS LAGO RANCO LTDA - RUTA 5 SUR KM 109 ROSARIO PONIENTE 229, Rengo, O'Higgins",
+    "telefono": "(72) 252 1680",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 79,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "construccion-conecta": {
+    "nombre": "Construcción Conecta",
+    "slug": "construccion-conecta",
+    "lat": -34.133873,
+    "lng": -70.729555,
+    "direccion": "Construcción Conecta - San Rafael Arcangel, 2820000 Rancagua, O'Higgins",
+    "telefono": "9 9985 1941",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "constructora-hiarsa": {
+    "nombre": "Constructora Hiarsa",
+    "slug": "constructora-hiarsa",
+    "lat": -34.180333,
+    "lng": -70.709647,
+    "direccion": "Constructora Hiarsa - San Joaquín 225, Rancagua, O'Higgins",
+    "telefono": "(72) 221 8095",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "constructora-san-ignacio": {
+    "nombre": "Constructora San Ignacio",
+    "slug": "constructora-san-ignacio",
+    "lat": -38.725451,
+    "lng": -72.57566,
+    "direccion": "Constructora San Ignacio - Rancagua 1659, Temuco, Araucanía",
+    "telefono": "(45) 240 6081",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "camara-chilena-de-la-construccion-rancagua": {
+    "nombre": "Cámara Chilena de la Construcción Rancagua",
+    "slug": "camara-chilena-de-la-construccion-rancagua",
+    "lat": -34.179836,
+    "lng": -70.728798,
+    "direccion": "Cámara Chilena de la Construcción Rancagua - C. Bello Horizonte 845, Rancagua, O'Higgins",
+    "telefono": "(2) 2588 7370",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "hogar-al-100-inspeccion-de-casas-y-departamentos": {
+    "nombre": "Hogar al 100% – Inspección de Casas y Departamentos",
+    "slug": "hogar-al-100-inspeccion-de-casas-y-departamentos",
+    "lat": -34.183963,
+    "lng": -70.770298,
+    "direccion": "Hogar al 100% – Inspección de Casas y Departamentos - La Esperanza, Rancagua, O'Higgins",
+    "telefono": "9 9865 4320",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 32,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "constructora-torrealba": {
+    "nombre": "CONSTRUCTORA TORREALBA",
+    "slug": "constructora-torrealba",
+    "lat": -34.16653,
+    "lng": -70.75298,
+    "direccion": "CONSTRUCTORA TORREALBA - Koke 275, 2820000 Rancagua, O'Higgins",
+    "telefono": "9 4686 3187",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "consorcio-ohl-aia-sa": {
+    "nombre": "Consorcio OHL AIA SA",
+    "slug": "consorcio-ohl-aia-sa",
+    "lat": -34.182454,
+    "lng": -70.737315,
+    "direccion": "Consorcio OHL AIA SA - Manuel Montt 1250, 2820769 Rancagua, O'Higgins",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "reparaciones-gomez": {
+    "nombre": "Reparaciones Gómez",
+    "slug": "reparaciones-gomez",
+    "lat": -34.162067,
+    "lng": -70.695787,
+    "direccion": "Reparaciones Gómez - Río Cruz de Piedra 1382, Rancagua, O'Higgins",
+    "telefono": "9 8256 2595",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "piedra-verde-constructora-limitada": {
+    "nombre": "Piedra Verde Constructora Limitada",
+    "slug": "piedra-verde-constructora-limitada",
+    "lat": -34.1607,
+    "lng": -70.73348,
+    "direccion": "Piedra Verde Constructora Limitada - Av. Illanes 471, 2851177 Rancagua, O'Higgins",
+    "telefono": "(72) 224 4335",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "stalhaus-casas-industrializadas": {
+    "nombre": "Stalhaus Casas Industrializadas",
+    "slug": "stalhaus-casas-industrializadas",
+    "lat": -35.435089,
+    "lng": -71.637642,
+    "direccion": "Stalhaus Casas Industrializadas - Veintiuno Ote. 630, 3460000 Talca, Maule",
+    "telefono": "9 3897 6856",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-foresco-spa": {
+    "nombre": "Casas Prefabricadas Foresco SpA",
+    "slug": "casas-prefabricadas-foresco-spa",
+    "lat": -35.480748,
+    "lng": -71.657454,
+    "direccion": "Casas Prefabricadas Foresco SpA - Longitudinal SUR KM 259, Caletera Poniente, S/N, 3460000 Talca, Maule",
+    "telefono": "9 3931 9688",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-los-pinos": {
+    "nombre": "Casas Prefabricadas Los Pinos",
+    "slug": "casas-prefabricadas-los-pinos",
+    "lat": -35.507211,
+    "lng": -71.667621,
+    "direccion": "Casas Prefabricadas Los Pinos - km 265, 3460000 Maule",
+    "telefono": "9 8263 1745",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 43,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-baeza": {
+    "nombre": "Casas Baeza",
+    "slug": "casas-baeza",
+    "lat": -35.502457,
+    "lng": -71.665629,
+    "direccion": "Casas Baeza - Longitudinal Sur Km 262, Maule, Talca, Maule",
+    "telefono": "9 4415 3026",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 85,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "prefabricadas-dona-sandra": {
+    "nombre": "Prefabricadas Doña Sandra",
+    "slug": "prefabricadas-dona-sandra",
+    "lat": -35.477505,
+    "lng": -71.670163,
+    "direccion": "3460000 Talca, Maule",
+    "telefono": "9 5360 0138",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "prefabricated-houses-el-mirador": {
+    "nombre": "Prefabricated houses El Mirador",
+    "slug": "prefabricated-houses-el-mirador",
+    "lat": -35.441402,
+    "lng": -71.663607,
+    "direccion": "Prefabricated houses El Mirador - C. 14 Sur 1166-1180, Talca, Maule",
+    "telefono": "9 6505 3128",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 25,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-vista-hermosa": {
+    "nombre": "Casas Vista Hermosa",
+    "slug": "casas-vista-hermosa",
+    "lat": -35.495157,
+    "lng": -71.662686,
+    "direccion": "Casas Vista Hermosa - Longitudinal sur, km 260, Maule",
+    "telefono": "9 4423 1903",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 56,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-del-solar": {
+    "nombre": "Casas Prefabricadas Del Solar",
+    "slug": "casas-prefabricadas-del-solar",
+    "lat": -35.484923,
+    "lng": -71.661165,
+    "direccion": "bodegas Nestle - Cruce Unihue, Caletera poniente frente a, 3530000 Maule",
+    "telefono": "9 2047 8596",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "prefabricated-houses-azocar": {
+    "nombre": "Prefabricated houses Azocar",
+    "slug": "prefabricated-houses-azocar",
+    "lat": -35.481827,
+    "lng": -71.656394,
+    "direccion": "Maule",
+    "telefono": "9 9874 0814",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "constructora-rauquen": {
+    "nombre": "Constructora Rauquén",
+    "slug": "constructora-rauquen",
+    "lat": -35.429297,
+    "lng": -71.626476,
+    "direccion": "Constructora Rauquén - Calle 30 Ote. 1528, Ofi 616, 3460000 Talca, Maule",
+    "telefono": "9 6527 5364",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-del-maule-prefabricadas": {
+    "nombre": "Casas del Maule Prefabricadas",
+    "slug": "casas-del-maule-prefabricadas",
+    "lat": -35.83071,
+    "lng": -71.616784,
+    "direccion": "Casas del Maule Prefabricadas - Av. Circunvalación Nte., Km 1.5, Linares, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "construccion-de-casas-y-cabanas": {
+    "nombre": "Construccion de casas y cabañas",
+    "slug": "construccion-de-casas-y-cabanas",
+    "lat": -35.43297,
+    "lng": -71.629839,
+    "direccion": "komare@gmail.com, Talca, Maule",
+    "telefono": "9 9225 0336",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "constructora-independencia": {
+    "nombre": "Constructora Independencia",
+    "slug": "constructora-independencia",
+    "lat": -35.428883,
+    "lng": -71.626106,
+    "direccion": "Constructora Independencia - 4 1/2 Nte. 3447, Talca, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 61,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "constructora-de-casas-prefabricadas-del-maule": {
+    "nombre": "Constructora de Casas prefabricadas Del Maule",
+    "slug": "constructora-de-casas-prefabricadas-del-maule",
+    "lat": -35.4532,
+    "lng": -71.647043,
+    "direccion": "El tabaco - Caletera sur, 3460000 Talca, Maule",
+    "telefono": "9 7324 9404",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "prefabricadas-libertad-talca": {
+    "nombre": "Prefabricadas Libertad Talca",
+    "slug": "prefabricadas-libertad-talca",
+    "lat": -35.470397,
+    "lng": -71.65276,
+    "direccion": "Prefabricadas Libertad Talca - Longitudinal sur km 257, 3460000 Talca, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-curico": {
+    "nombre": "Casas Prefabricadas Curicó",
+    "slug": "casas-prefabricadas-curico",
+    "lat": -35.002808,
+    "lng": -71.240157,
+    "direccion": "Casas Prefabricadas Curicó - Longitudinal Sur KM 193 Curicó, 3340000 Maule, Curicó, Maule",
+    "telefono": "9 3494 4656",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 27,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-y-obras-de-construccion-andres-arriagada-cabello-eirl": {
+    "nombre": "Casas Prefabricadas Y Obras De Construccion Andres Arriagada Cabello E.I.R.L.",
+    "slug": "casas-prefabricadas-y-obras-de-construccion-andres-arriagada-cabello-eirl",
+    "lat": -35.439771,
+    "lng": -71.639889,
+    "direccion": "Casas Prefabricadas Y Obras De Construccion Andres Arriagada Cabello E.I.R.L. - Longitudinal Sur 260, Talca, Maule",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "empresa-constructora-carlos-escobar-v": {
+    "nombre": "EMPRESA CONSTRUCTORA CARLOS ESCOBAR V.",
+    "slug": "empresa-constructora-carlos-escobar-v",
+    "lat": -35.438328,
+    "lng": -71.672529,
+    "direccion": "EMPRESA CONSTRUCTORA CARLOS ESCOBAR V. - 13 SUR 3 Y CUATRO PONIENTE VALENCIA 153 POBLACION INDEPENDENCIA TALCA Talca, 3460000 Maule, Talca, Maule",
+    "telefono": "9 9233 0328",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-homefresh": {
+    "nombre": "casas prefabricadas homefresh",
+    "slug": "casas-prefabricadas-homefresh",
+    "lat": -34.618485,
+    "lng": -71.667345,
+    "direccion": "casas prefabricadas homefresh - I-60 km25, 3150000 Pumanque, O'Higgins",
+    "telefono": "9 3502 6024",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 7,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-ohiggins": {
+    "nombre": "Casas O´higgins",
+    "slug": "casas-ohiggins",
+    "lat": -41.323281,
+    "lng": -73.003474,
+    "direccion": "Casas O´higgins - Ruta 5 KM 1005, Parcela N° 21, 5550000 Puerto Varas, Los Lagos",
+    "telefono": "9 3245 6665",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 15,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-rengo": {
+    "nombre": "CASAS PREFABRICADAS RENGO",
+    "slug": "casas-prefabricadas-rengo",
+    "lat": -34.400756,
+    "lng": -70.871226,
+    "direccion": "sector nor oriente Cruce de - Calle de servicio 534, 2940000 Rengo, O'Higgins",
+    "telefono": "9 4292 7937",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 53,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-malloa---mc": {
+    "nombre": "Casas Prefabricadas Malloa - MC",
+    "slug": "casas-prefabricadas-malloa---mc",
+    "lat": -34.442982,
+    "lng": -70.946577,
+    "direccion": "Casas Prefabricadas Malloa - MC - Malloa 301, 2950000 Malloa, O'Higgins",
+    "telefono": "9 8822 8318",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 18,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-constructora-alba-santa-cruz": {
+    "nombre": "Casas Prefabricadas Constructora Alba Santa Cruz",
+    "slug": "casas-prefabricadas-constructora-alba-santa-cruz",
+    "lat": -34.654363,
+    "lng": -71.342653,
+    "direccion": "Casas Prefabricadas Constructora Alba Santa Cruz - Chomedahue 0, 3130000 Santa Cruz, O'Higgins",
+    "telefono": "9 4086 0405",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-los-alerces": {
+    "nombre": "Casas prefabricadas Los Alerces",
+    "slug": "casas-prefabricadas-los-alerces",
+    "lat": -34.362002,
+    "lng": -70.83331,
+    "direccion": "Casas prefabricadas Los Alerces - Ruta H 515, 2440000 Rengo, O'Higgins",
+    "telefono": "9 4084 5340",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-las-villas-rengo": {
+    "nombre": "Casas Prefabricadas Las Villas Rengo",
+    "slug": "casas-prefabricadas-las-villas-rengo",
+    "lat": -34.391525,
+    "lng": -70.866122,
+    "direccion": "Casas Prefabricadas Las Villas Rengo - El Alto Cartagena, Las Villas S/N, 2940000 Rengo, O'Higgins",
+    "telefono": "9 9728 8763",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "constructora-casas-vichuquen": {
+    "nombre": "Constructora Casas Vichuquen",
+    "slug": "constructora-casas-vichuquen",
+    "lat": -34.49482,
+    "lng": -70.914239,
+    "direccion": "Constructora Casas Vichuquen - G34P+59W, 3070000 Villa Miravalle, San Fernando, O'Higgins",
+    "telefono": "9 4809 2973",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 30,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-peralillo": {
+    "nombre": "Casas Prefabricadas Peralillo",
+    "slug": "casas-prefabricadas-peralillo",
+    "lat": -34.468915,
+    "lng": -71.504823,
+    "direccion": "Casas Prefabricadas Peralillo - 8340422, 3170000 Peralillo, O'Higgins",
+    "telefono": "9 8500 8589",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casasprefabricadas-ekra": {
+    "nombre": "CASASPREFABRICADAS EKRA",
+    "slug": "casasprefabricadas-ekra",
+    "lat": -34.263576,
+    "lng": -71.374551,
+    "direccion": "CASASPREFABRICADAS EKRA - Ruta 66, Santa Julia, Las Cabras, O'Higgins",
+    "telefono": "9 4461 3319",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-mella": {
+    "nombre": "Casas Prefabricadas mella",
+    "slug": "casas-prefabricadas-mella",
+    "lat": -34.466464,
+    "lng": -70.955223,
+    "direccion": "Casas Prefabricadas mella - Santa Inés, 2950000 Malloa, O'Higgins",
+    "telefono": "9 3887 3627",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "woodpack-nordik-houses": {
+    "nombre": "Woodpack Nordik Houses",
+    "slug": "woodpack-nordik-houses",
+    "lat": -34.573336,
+    "lng": -70.97815,
+    "direccion": "3070000 San Fernando, O'Higgins",
+    "telefono": "9 5211 6398",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "casas-prefabricadas-4a-spa": {
+    "nombre": "Casas Prefabricadas 4A SpA",
+    "slug": "casas-prefabricadas-4a-spa",
+    "lat": -36.65875,
+    "lng": -72.192678,
+    "direccion": "Casas Prefabricadas 4A SpA - Camino santo san Rafael Chillan viejo, 3820000 Ñuble, Chillán Viejo, Ñuble",
+    "telefono": "9 6900 7710",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-prefabricadas-nativos-chile": {
+    "nombre": "Casas prefabricadas nativos chile",
+    "slug": "casas-prefabricadas-nativos-chile",
+    "lat": -36.655454,
+    "lng": -72.19192,
+    "direccion": "Casas prefabricadas nativos chile - Quilmo bajo, 3820000 Ñuble, Chillán Viejo, Ñuble",
+    "telefono": "9 5912 6865",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "sima-ltda-construction-prefabricated-houses": {
+    "nombre": "Sima ltda construction (prefabricated houses)",
+    "slug": "sima-ltda-construction-prefabricated-houses",
+    "lat": -36.637824,
+    "lng": -72.074191,
+    "direccion": "Sima ltda construction (prefabricated houses) - Camino a Pinto Km 3 Lote 3B, Chillán, Ñuble",
+    "telefono": "9 4963 8768",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 21,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-prefabricadas-chillan": {
+    "nombre": "Casas prefabricadas Chillán",
+    "slug": "casas-prefabricadas-chillan",
+    "lat": -36.623044,
+    "lng": -72.140468,
+    "direccion": "Casas prefabricadas Chillán - Av. O'Higgins 3285, 3820000 Chillán Viejo, Ñuble",
+    "telefono": "9 6464 4499",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 53,
+    "regiones": [
+      "O'Higgins"
+    ]
+  },
+  "constructora-cerro-negro": {
+    "nombre": "Constructora Cerro Negro",
+    "slug": "constructora-cerro-negro",
+    "lat": -36.814647,
+    "lng": -72.442992,
+    "direccion": "Parcela Don Eduardo - Lote A-B, Cerro Negro, Quillón, Ñuble",
+    "telefono": "9 6602 9784",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-prefabricadas-lo-infante-san-carlos": {
+    "nombre": "Casas Prefabricadas Lo Infante San Carlos",
+    "slug": "casas-prefabricadas-lo-infante-san-carlos",
+    "lat": -36.417425,
+    "lng": -71.947082,
+    "direccion": "Casas Prefabricadas Lo Infante San Carlos - Panamericana Sur km 374, San Carlos, 3840000 Biobío, San Carlos, Ñuble",
+    "telefono": "9 3469 3357",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 16,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "calle-industrias-casas-prefabricadas-baker": {
+    "nombre": "Calle industrias. Casas prefabricadas baker",
+    "slug": "calle-industrias-casas-prefabricadas-baker",
+    "lat": -37.113534,
+    "lng": -72.143948,
+    "direccion": "Calle industrias. Casas prefabricadas baker - VVP4+HC, Campanario, Yungay, Ñuble",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-y-construcciones-mecano-modulares": {
+    "nombre": "Casas y Construcciones Mecano Modulares",
+    "slug": "casas-y-construcciones-mecano-modulares",
+    "lat": -36.681621,
+    "lng": -72.251797,
+    "direccion": "Casas y Construcciones Mecano Modulares - Ruta 5 Sur, Km 417, Rucapequén, Chillán Viejo, Chillán, Chillán Viejo, Ñuble",
+    "telefono": "9 7418 8637",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "sociedad-constructora-ancasa": {
+    "nombre": "Sociedad Constructora AnCasa",
+    "slug": "sociedad-constructora-ancasa",
+    "lat": -36.607803,
+    "lng": -72.104723,
+    "direccion": "Sociedad Constructora AnCasa - Dieciocho de Septiembre 664, 3800750 Chillán, Ñuble",
+    "telefono": "(42) 221 3464",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "constructora-lluanco": {
+    "nombre": "Constructora Lluanco",
+    "slug": "constructora-lluanco",
+    "lat": -36.683741,
+    "lng": -72.147752,
+    "direccion": "Constructora Lluanco - Km 8, camino a Yungay, sector Quilmo Chillán Viejo, 3820000 Biobío, Chillán Viejo, Ñuble",
+    "telefono": "9 9991 9923",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 19,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "fabricasas": {
+    "nombre": "Fabricasas",
+    "slug": "fabricasas",
+    "lat": -36.556379,
+    "lng": -72.751319,
+    "direccion": "Fabricasas - Ruta los Conquistadores Km 160, Coelemu, Ñuble",
+    "telefono": "(41) 245 5518",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-almendra-spa": {
+    "nombre": "Casas Almendra Spa",
+    "slug": "casas-almendra-spa",
+    "lat": -36.756015,
+    "lng": -72.421084,
+    "direccion": "Casas Almendra Spa - Ruta N-48-O 1, 3940000 Quillón, Ñuble",
+    "telefono": "9 3713 5411",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-prefabricadas-constructora-dosh": {
+    "nombre": "casas prefabricadas constructora dosh",
+    "slug": "casas-prefabricadas-constructora-dosh",
+    "lat": -36.599344,
+    "lng": -71.988836,
+    "direccion": "Coihueco, Ñuble",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Ñuble"
+    ]
+  },
+  "casas-prefabricadas-san-andres": {
+    "nombre": "CASAS PREFABRICADAS San andres",
+    "slug": "casas-prefabricadas-san-andres",
+    "lat": -35.613972,
+    "lng": -71.782084,
+    "direccion": "CASAS PREFABRICADAS San andres - 360000, 3600000 San Javier de Loncomilla, Maule",
+    "telefono": "9 7927 5450",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-maule": {
+    "nombre": "Casas Prefabricadas | Maule",
+    "slug": "casas-prefabricadas-maule",
+    "lat": -35.849283,
+    "lng": -71.58268,
+    "direccion": "Casas Prefabricadas | Maule - Ignacio Chacón N 1391, 3580782 Linares, Maule",
+    "telefono": "9 4154 8721",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-laguna-de-aculeo-sucursal-san-javier": {
+    "nombre": "Casas Prefabricadas Laguna de Aculeo sucursal San Javier",
+    "slug": "casas-prefabricadas-laguna-de-aculeo-sucursal-san-javier",
+    "lat": -35.60359,
+    "lng": -71.706661,
+    "direccion": "Casas Prefabricadas Laguna de Aculeo sucursal San Javier - 97WV+F83, 3660000 San Javier de Loncomilla, Maule",
+    "telefono": "9 4928 2820",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-y-cabanas-linares": {
+    "nombre": "Casas prefabricadas y Cabañas Linares",
+    "slug": "casas-prefabricadas-y-cabanas-linares",
+    "lat": -35.826265,
+    "lng": -71.602361,
+    "direccion": "Casas prefabricadas y Cabañas Linares - Alonso de Ercilla 1, 3582030 Linares, Maule",
+    "telefono": "9 7203 8504",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-el-nevado": {
+    "nombre": "Casas El Nevado",
+    "slug": "casas-el-nevado",
+    "lat": -36.0085,
+    "lng": -71.663965,
+    "direccion": "Casas El Nevado - Los cristales sin número, Longaví, Maule",
+    "telefono": "9 3863 2628",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-witralen-teno": {
+    "nombre": "Casas prefabricadas Witralen Teno",
+    "slug": "casas-prefabricadas-witralen-teno",
+    "lat": -34.877553,
+    "lng": -71.225684,
+    "direccion": "HACIENDA DE TENO - PARCELA 15, LOTE 3, Teno, Maule",
+    "telefono": "9 6572 6829",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 18,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "construye-tu-hogar": {
+    "nombre": "construye tu hogar",
+    "slug": "construye-tu-hogar",
+    "lat": -18.50926,
+    "lng": -70.270069,
+    "direccion": "construye tu hogar - Santiago Flores 187, 1000000 Arica, Arica y Parinacota",
+    "telefono": "9 5990 0978",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "victor-montenegro-vasquez-e-hijos-y-comp": {
+    "nombre": "Víctor Montenegro Vásquez E Hijos y Comp",
+    "slug": "victor-montenegro-vasquez-e-hijos-y-comp",
+    "lat": -18.464471,
+    "lng": -70.293932,
+    "direccion": "Víctor Montenegro Vásquez E Hijos y Comp - Barros Arana 2799, 1020022 Arica, Arica y Parinacota",
+    "telefono": "(58) 222 9061",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 49,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "casa-de-arica": {
+    "nombre": "Casa de arica",
+    "slug": "casa-de-arica",
+    "lat": -18.476544,
+    "lng": -70.285052,
+    "direccion": "Casa de arica - Los Castaños 2619, 2501, 1021249 Arica, Arica y Parinacota",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "constructora-melus-industrial-comercial": {
+    "nombre": "Constructora Melus Industrial Comercial",
+    "slug": "constructora-melus-industrial-comercial",
+    "lat": -18.457303,
+    "lng": -70.287549,
+    "direccion": "Barrio Industrial - Barros Arana 3145, 1031468 Arica, Arica y Parinacota",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "gsv-ingenieria-y-construccion": {
+    "nombre": "GSV INGENIERÍA Y CONSTRUCCIÓN",
+    "slug": "gsv-ingenieria-y-construccion",
+    "lat": -18.453426,
+    "lng": -70.286676,
+    "direccion": "GSV INGENIERÍA Y CONSTRUCCIÓN - Av. Argentina 3540, 1000000 Arica, Arica y Parinacota",
+    "telefono": "9 8898 0012",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "parragon": {
+    "nombre": "Parragon",
+    "slug": "parragon",
+    "lat": -29.59286,
+    "lng": -70.636395,
+    "direccion": null,
+    "telefono": "9 9047 9458",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "casas-prefabricadas-la-choza-en-iquique": {
+    "nombre": "Casas prefabricadas La Choza en Iquique",
+    "slug": "casas-prefabricadas-la-choza-en-iquique",
+    "lat": -20.225595,
+    "lng": -70.147232,
+    "direccion": "Casas prefabricadas La Choza en Iquique - Libertad 865, 1101817 Iquique, Tarapacá",
+    "telefono": "9 8639 8974",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Tarapacá"
+    ]
+  },
+  "humberto-zarate-contructor": {
+    "nombre": "Humberto zarate contructor",
+    "slug": "humberto-zarate-contructor",
+    "lat": -18.472477,
+    "lng": -70.289148,
+    "direccion": null,
+    "telefono": "9 3579 8019",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "viviendas-modulares-teodoro-schmidty-compania-c-p-a": {
+    "nombre": "Viviendas Modulares Teodoro Schmidty Compania C P A",
+    "slug": "viviendas-modulares-teodoro-schmidty-compania-c-p-a",
+    "lat": -18.481193,
+    "lng": -70.318671,
+    "direccion": "Viviendas Modulares Teodoro Schmidty Compania C P A - San Marcos 495, Arica, Arica y Parinacota",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "casas-prefabricadas-ytau": {
+    "nombre": "casas prefabricadas ytau",
+    "slug": "casas-prefabricadas-ytau",
+    "lat": -18.419537,
+    "lng": -70.313066,
+    "direccion": "Arica, Arica y Parinacota",
+    "telefono": "9 5103 3347",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Arica y Parinacota"
+    ]
+  },
+  "world-service-prefabricados-de-hormigon-antofagasta": {
+    "nombre": "World Service Prefabricados de Hormigón Antofagasta",
+    "slug": "world-service-prefabricados-de-hormigon-antofagasta",
+    "lat": -23.762517,
+    "lng": -70.295506,
+    "direccion": "Camino a Escondida, 1240000 Antofagasta",
+    "telefono": "9 6258 6020",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 14,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "co-ol-construcciones-modulares---antofagasta": {
+    "nombre": "Co-ol Construcciones Modulares - Antofagasta",
+    "slug": "co-ol-construcciones-modulares---antofagasta",
+    "lat": -23.548372,
+    "lng": -70.389961,
+    "direccion": "Co-ol Construcciones Modulares - Antofagasta - Quebrada La Chimba Nte. 11815, Antofagasta",
+    "telefono": "(55) 291 8801",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "ces-prefabricados": {
+    "nombre": "ces prefabricados",
+    "slug": "ces-prefabricados",
+    "lat": -23.530272,
+    "lng": -70.387848,
+    "direccion": "ces prefabricados - manzana 60 sitio 2, de, Aguas Verdes, Antofagasta",
+    "telefono": "9 8527 2340",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 26,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "prefabricados-del-norte": {
+    "nombre": "Prefabricados del Norte",
+    "slug": "prefabricados-del-norte",
+    "lat": -23.546252,
+    "lng": -70.38533,
+    "direccion": "Prefabricados del Norte - Héroes de La Concepción, 1240000 Antofagasta",
+    "telefono": "9 6830 3817",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "constructora-webber": {
+    "nombre": "Constructora Webber",
+    "slug": "constructora-webber",
+    "lat": -23.566201,
+    "lng": -70.387876,
+    "direccion": "Constructora Webber - Sierra Nevada 10488, Antofagasta",
+    "telefono": "9 5245 3402",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "construcciones-y-montaje-modular-sa": {
+    "nombre": "Construcciones Y Montaje Modular S.A",
+    "slug": "construcciones-y-montaje-modular-sa",
+    "lat": -23.655267,
+    "lng": -70.398727,
+    "direccion": "Construcciones Y Montaje Modular S.A - 14 de Febrero 2065, 1240000 Antofagasta",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Antofagasta"
+    ]
+  },
+  "casas-santa-maria-iquique": {
+    "nombre": "CASAS SANTA MARIA IQUIQUE",
+    "slug": "casas-santa-maria-iquique",
+    "lat": -20.271525,
+    "lng": -70.129758,
+    "direccion": "CASAS SANTA MARIA IQUIQUE - avenida arturo pratt 4309 Iquique, 1100000 Tarapacá, Iquique, Tarapacá",
+    "telefono": "9 7655 9604",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Tarapacá"
+    ]
+  },
+  "hormihouse-casas-prefabricadas-y-kit-de-autoconstruccion-iquique": {
+    "nombre": "HORMIHOUSE / Casas prefabricadas y Kit de autoconstruccion Iquique.",
+    "slug": "hormihouse-casas-prefabricadas-y-kit-de-autoconstruccion-iquique",
+    "lat": -20.276666,
+    "lng": -70.090468,
+    "direccion": "HORMIHOUSE / Casas prefabricadas y Kit de autoconstruccion Iquique. - Av. Las Parcelas 2907, Iquique, Alto Hospicio, Tarapacá",
+    "telefono": "9 4972 2509",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Tarapacá"
+    ]
+  },
+  "casas-prefabricadas-a-gusto": {
+    "nombre": "Casas prefabricadas A. Gusto",
+    "slug": "casas-prefabricadas-a-gusto",
+    "lat": -27.388558,
+    "lng": -70.322484,
+    "direccion": "Casas prefabricadas A. Gusto - Av. Costanera Sur 2517, 1533491 Copiapó, Atacama",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "casas-prefabricadas-valles-del-sur-copiapo": {
+    "nombre": "Casas Prefabricadas Valles del Sur Copiapo",
+    "slug": "casas-prefabricadas-valles-del-sur-copiapo",
+    "lat": -27.402473,
+    "lng": -70.301071,
+    "direccion": "Casas Prefabricadas Valles del Sur Copiapo - Rafael Zorraíndo 134, 1530000 Copiapó, Atacama",
+    "telefono": "9 9032 3741",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "casas-prefabricadas-casas-valle-copiapo": {
+    "nombre": "Casas prefabricadas, Casas valle Copiapó",
+    "slug": "casas-prefabricadas-casas-valle-copiapo",
+    "lat": -27.393038,
+    "lng": -70.309042,
+    "direccion": "Casas prefabricadas, Casas valle Copiapó - Av. Copayapu 3654, 1530000 Copiapó, Atacama",
+    "telefono": "9 3763 9177",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "modular-home": {
+    "nombre": "Modular Home®",
+    "slug": "modular-home",
+    "lat": -27.358436,
+    "lng": -70.299381,
+    "direccion": "Modular Home® - JPR2+J6, Copiapó, Atacama",
+    "telefono": "9 3898 0798",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "atacamax": {
+    "nombre": "ATACAMAX",
+    "slug": "atacamax",
+    "lat": -27.369964,
+    "lng": -70.32918,
+    "direccion": "ATACAMAX - Vicuña Mackenna 390, Copiapó, Atacama",
+    "telefono": "9 9299 2037",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "ecohouses": {
+    "nombre": "Ecohouses",
+    "slug": "ecohouses",
+    "lat": -27.350825,
+    "lng": -70.351431,
+    "direccion": "Ecohouses - Av. Cancha Rayada Nº 449, 1532413 Copiapó, Atacama",
+    "telefono": "9 9698 2589",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "fabrisip": {
+    "nombre": "FABRISIP",
+    "slug": "fabrisip",
+    "lat": -27.383067,
+    "lng": -70.308588,
+    "direccion": "FABRISIP - Los Carrera 2883, 1534175 Copiapó, Atacama",
+    "telefono": "9 4860 2641",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "inmobiliaria-y-construccion-basaez-y-cortes-ltda": {
+    "nombre": "Inmobiliaria y construccion Basaez Y Cortes Ltda",
+    "slug": "inmobiliaria-y-construccion-basaez-y-cortes-ltda",
+    "lat": -27.36912,
+    "lng": -70.327938,
+    "direccion": "Inmobiliaria y construccion Basaez Y Cortes Ltda - Los Carrera N° 1036, 1530000 Copiapó, Atacama",
+    "telefono": "9 5002 5730",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Atacama"
+    ]
+  },
+  "casas-valera-ortiz": {
+    "nombre": "Casas Valera Ortiz",
+    "slug": "casas-valera-ortiz",
+    "lat": -35.82889,
+    "lng": -71.521641,
+    "direccion": "Casas Valera Ortiz - Sector vara gruesa, 3580000 Linares, Maule",
+    "telefono": "9 7598 9242",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 23,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-y-maderas-eco-linares": {
+    "nombre": "Casas prefabricadas y maderas eco Linares",
+    "slug": "casas-prefabricadas-y-maderas-eco-linares",
+    "lat": -35.842615,
+    "lng": -71.582526,
+    "direccion": "Casas prefabricadas y maderas eco Linares - Av. Presidente Ibáñez 1147, 3580000 Linares, Maule",
+    "telefono": "9 7203 8504",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "soc-comercial-boada-y-campos-ltda": {
+    "nombre": "Soc Comercial Boada Y Campos Ltda",
+    "slug": "soc-comercial-boada-y-campos-ltda",
+    "lat": -35.849212,
+    "lng": -71.582653,
+    "direccion": "Soc Comercial Boada Y Campos Ltda - Ignacio Chacón 1391, 3580761 Linares, Maule",
+    "telefono": "(73) 221 2770",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-arrayan-spa": {
+    "nombre": "Casas Arrayan SpA",
+    "slug": "casas-arrayan-spa",
+    "lat": -35.830218,
+    "lng": -71.614627,
+    "direccion": "Casas Arrayan SpA - Av. Circunvalación Nte., Linares, Maule",
+    "telefono": "9 7924 3513",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-incavial": {
+    "nombre": "Casas Incavial",
+    "slug": "casas-incavial",
+    "lat": -35.837223,
+    "lng": -71.572387,
+    "direccion": "Casas Incavial - Camino a Panimávida, Klm 1.3 Maule CL, 3580000 Linares, Maule",
+    "telefono": "9 8356 6751",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Maule"
+    ]
+  },
+  "casas-prefabricadas-fra": {
+    "nombre": "Casas Prefabricadas F.R.A",
+    "slug": "casas-prefabricadas-fra",
+    "lat": -37.41942,
+    "lng": -72.32191,
+    "direccion": "el natre - los angeles, 4440000 Biobío, Los Ángeles, Bío Bío",
+    "telefono": "9 4567 7235",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-don-robe": {
+    "nombre": "Casas Prefabricadas Don Robe",
+    "slug": "casas-prefabricadas-don-robe",
+    "lat": -37.469644,
+    "lng": -72.32701,
+    "direccion": "Casas Prefabricadas Don Robe - Av. Las Industrias 435, 0000444 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 9850 9646",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 15,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-patagonia": {
+    "nombre": "Casas Prefabricadas Patagonia",
+    "slug": "casas-prefabricadas-patagonia",
+    "lat": -37.484028,
+    "lng": -72.386346,
+    "direccion": "Casas Prefabricadas Patagonia - kilometro 2 camino a nacimiento, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 8814 5547",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "comercial-rengalil---casas-prefabricadas": {
+    "nombre": "Comercial Rengalil - Casas prefabricadas",
+    "slug": "comercial-rengalil---casas-prefabricadas",
+    "lat": -37.452725,
+    "lng": -72.328476,
+    "direccion": "Comercial Rengalil - Casas prefabricadas - Av. Las Industrias 7570, Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 9759 8484",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-lr": {
+    "nombre": "CASAS PREFABRICADAS L&R",
+    "slug": "casas-prefabricadas-lr",
+    "lat": -37.419687,
+    "lng": -72.319829,
+    "direccion": "Sector el natre, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 2632 4272",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-san-gabriel-spa": {
+    "nombre": "CASAS PREFABRICADAS SAN GABRIEL SPA",
+    "slug": "casas-prefabricadas-san-gabriel-spa",
+    "lat": -37.48466,
+    "lng": -72.381739,
+    "direccion": "camino a Nacimiento - Kilómetro 1,2, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 3863 8987",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "constructora-duque": {
+    "nombre": "constructora Duque",
+    "slug": "constructora-duque",
+    "lat": -37.471981,
+    "lng": -72.323061,
+    "direccion": "constructora Duque - Q501, 4430000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 9610 1970",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-dyr-spa": {
+    "nombre": "Casas Prefabricadas DYR SPA",
+    "slug": "casas-prefabricadas-dyr-spa",
+    "lat": -37.427713,
+    "lng": -72.33254,
+    "direccion": "Bodega B - Av. Las Industrias 4701, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 2174 7658",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-baker": {
+    "nombre": "Casas Prefabricadas Baker",
+    "slug": "casas-prefabricadas-baker",
+    "lat": -37.401639,
+    "lng": -72.350799,
+    "direccion": "Casas Prefabricadas Baker - Av. Las Industrias, Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 5425 1937",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "las-lomas-prefabricadas": {
+    "nombre": "Las lomas prefabricadas",
+    "slug": "las-lomas-prefabricadas",
+    "lat": -37.43776,
+    "lng": -72.357336,
+    "direccion": "Las lomas prefabricadas - Lomas de Curamavida, Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-gutierrez": {
+    "nombre": "Casas Prefabricadas Gutierrez",
+    "slug": "casas-prefabricadas-gutierrez",
+    "lat": -37.487383,
+    "lng": -72.240235,
+    "direccion": "Casas Prefabricadas Gutierrez - Q-503, Los Ángeles, Bío Bío",
+    "telefono": "9 7605 6019",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 8,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-hervar": {
+    "nombre": "Casas Prefabricadas Hervar",
+    "slug": "casas-prefabricadas-hervar",
+    "lat": -37.410862,
+    "lng": -72.305432,
+    "direccion": "Casas Prefabricadas Hervar - Camino santa Laura, Km 2, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 5354 4309",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-hlos": {
+    "nombre": "Casas prefabricadas HLOS",
+    "slug": "casas-prefabricadas-hlos",
+    "lat": -37.442913,
+    "lng": -72.398384,
+    "direccion": "Casas prefabricadas HLOS - Cam. María Dolores 4500, 4440000 Los Ángeles, Bío Bío",
+    "telefono": "9 4556 5630",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricada-axel-spa": {
+    "nombre": "Casas prefabricada axel spa",
+    "slug": "casas-prefabricada-axel-spa",
+    "lat": -37.444304,
+    "lng": -72.330808,
+    "direccion": "Casas prefabricada axel spa - Av. Sor Vicenta 2665, 4450002 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 5454 2824",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-zenco": {
+    "nombre": "Casas prefabricadas ZENCO",
+    "slug": "casas-prefabricadas-zenco",
+    "lat": -37.484037,
+    "lng": -72.381395,
+    "direccion": "Casas prefabricadas ZENCO - Bon Giorgio km 1, lote 2, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 5203 9390",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-ja": {
+    "nombre": "CASAS PREFABRICADAS J&A",
+    "slug": "casas-prefabricadas-ja",
+    "lat": -37.429982,
+    "lng": -72.117058,
+    "direccion": "4430000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 6219 0935",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "constructora-femarq": {
+    "nombre": "Constructora Femarq",
+    "slug": "constructora-femarq",
+    "lat": -37.47036,
+    "lng": -72.349079,
+    "direccion": "Constructora Femarq - Lautaro 268, Ofi 601, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 3778 3954",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "grupo-santa-maria-casas": {
+    "nombre": "Grupo Santa Maria Casas",
+    "slug": "grupo-santa-maria-casas",
+    "lat": -37.449989,
+    "lng": -72.326963,
+    "direccion": "Grupo Santa Maria Casas - Av. Las Industrias 624, Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 9489 3882",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-prefabricadas-jg-spa": {
+    "nombre": "Casas prefabricadas J.G spa",
+    "slug": "casas-prefabricadas-jg-spa",
+    "lat": -37.43786,
+    "lng": -72.228136,
+    "direccion": "Casas prefabricadas J.G spa - Av. Alemania, Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "juan-romero-burgosprefabricados-osorno-eirl": {
+    "nombre": "Juan Romero Burgos,Prefabricados Osorno E.I.R.L.",
+    "slug": "juan-romero-burgosprefabricados-osorno-eirl",
+    "lat": -40.55862,
+    "lng": -73.174784,
+    "direccion": "Juan Romero Burgos,Prefabricados Osorno E.I.R.L. - Av. Bahía Mansa 1440, 5302796 Osorno, Los Lagos",
+    "telefono": "(64) 224 0940",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-rio-bueno": {
+    "nombre": "Casas Rio Bueno",
+    "slug": "casas-rio-bueno",
+    "lat": -40.529585,
+    "lng": -73.072067,
+    "direccion": "Casas Rio Bueno - Ruta 5 km 913, Osorno, Los Lagos",
+    "telefono": "9 9196 1165",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 33,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-los-morros": {
+    "nombre": "Casas Los Morros",
+    "slug": "casas-los-morros",
+    "lat": -40.585587,
+    "lng": -73.164761,
+    "direccion": "5301199 Osorno, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 32,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "tiny-house-osorno": {
+    "nombre": "Tiny house osorno",
+    "slug": "tiny-house-osorno",
+    "lat": -40.606743,
+    "lng": -73.099618,
+    "direccion": "Tiny house osorno - Parque industrual, Osorno, Los Lagos",
+    "telefono": "9 7549 4479",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "madecas-prefabricados": {
+    "nombre": "MADECAS PREFABRICADOS",
+    "slug": "madecas-prefabricados",
+    "lat": -40.686295,
+    "lng": -73.022827,
+    "direccion": "MADECAS PREFABRICADOS - U-55-V km 12, 5290000 Osorno, Los Lagos",
+    "telefono": "9 7777 0022",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 19,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "osorno-alvarado-prefabricadas": {
+    "nombre": "Osorno alvarado prefabricadas",
+    "slug": "osorno-alvarado-prefabricadas",
+    "lat": -40.557517,
+    "lng": -73.19914,
+    "direccion": "Osorno alvarado prefabricadas - CRR2+X8, Osorno, Los Lagos",
+    "telefono": "9 8726 6902",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 2,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-aubel": {
+    "nombre": "Constructora Aubel",
+    "slug": "constructora-aubel",
+    "lat": -40.584315,
+    "lng": -73.124918,
+    "direccion": "Constructora Aubel - Hnos Phillipi 1680, 5290000 Osorno, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 5,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "sur-construcciones": {
+    "nombre": "Sur Construcciones",
+    "slug": "sur-construcciones",
+    "lat": -40.575696,
+    "lng": -73.122949,
+    "direccion": "Sur Construcciones - 5312371, Zenteno 729, oficina 4, 5310521 Osorno, Los Lagos",
+    "telefono": "9 8769 0801",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-puyehue-spa": {
+    "nombre": "Casas Puyehue Spa",
+    "slug": "casas-puyehue-spa",
+    "lat": -40.570797,
+    "lng": -73.141922,
+    "direccion": "Oficina Osorno - Manuel Baquedano 493, 5310345 Osorno, Los Lagos",
+    "telefono": "9 7250 1559",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "construcciones-fef": {
+    "nombre": "Construcciones FEF",
+    "slug": "construcciones-fef",
+    "lat": -40.573709,
+    "lng": -73.134131,
+    "direccion": null,
+    "telefono": "9 3693 0576",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "sercof": {
+    "nombre": "Sercof",
+    "slug": "sercof",
+    "lat": -40.599366,
+    "lng": -73.067243,
+    "direccion": "Sercof - Retorno Aeropuerto, Osorno, Los Lagos",
+    "telefono": "9 7857 1831",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 22,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "avifel-ltda": {
+    "nombre": "Avifel Ltda",
+    "slug": "avifel-ltda",
+    "lat": -40.60392,
+    "lng": -73.100464,
+    "direccion": "Avifel Ltda - Fundo El Castillo Lote 7 manzana S, Osorno, Los Lagos",
+    "telefono": "(64) 262 0270",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 26,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "constructora-de-viviendas-sociales-spa": {
+    "nombre": "Constructora de Viviendas Sociales Spa",
+    "slug": "constructora-de-viviendas-sociales-spa",
+    "lat": -40.593503,
+    "lng": -73.119127,
+    "direccion": "Constructora de Viviendas Sociales Spa - Santiago Rosas 2570, 5311925 Osorno, Los Lagos",
+    "telefono": null,
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "domos-osorno": {
+    "nombre": "Domos Osorno",
+    "slug": "domos-osorno",
+    "lat": -40.574444,
+    "lng": -73.14755,
+    "direccion": "Domos Osorno - U-40 165, 5300419 Osorno, Los Lagos",
+    "telefono": "9 9548 0208",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-prefabricadas-eco-house-spa": {
+    "nombre": "Casas Prefabricadas Eco House. spa",
+    "slug": "casas-prefabricadas-eco-house-spa",
+    "lat": -40.573792,
+    "lng": -73.151487,
+    "direccion": "Casas Prefabricadas Eco House. spa - U-40 400, km18, 5300386 Osorno, Los Lagos",
+    "telefono": "9 3197 8264",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 3,
+    "regiones": [
+      "Los Lagos"
+    ]
+  },
+  "casas-lanco": {
+    "nombre": "Casas Lanco",
+    "slug": "casas-lanco",
+    "lat": -39.448673,
+    "lng": -72.776681,
+    "direccion": "Casas Lanco - Yungay 070, Lanco, Los Ríos",
+    "telefono": "9 4429 2000",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 81,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "prefabricated-houses-america": {
+    "nombre": "Prefabricated houses America",
+    "slug": "prefabricated-houses-america",
+    "lat": -33.538892,
+    "lng": -70.655438,
+    "direccion": "Prefabricated houses America - Av. Américo Vespucio 744, 7980711 La Cisterna, Región Metropolitana",
+    "telefono": "(2) 2310 5779",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 17,
+    "regiones": [
+      "Metropolitana"
+    ]
+  },
+  "arkubic-casas-prefabricadas": {
+    "nombre": "ARKubic | Casas Prefabricadas",
+    "slug": "arkubic-casas-prefabricadas",
+    "lat": -38.571612,
+    "lng": -72.447387,
+    "direccion": "ARKubic | Casas Prefabricadas - Ruta 5 km 648, Lautaro, Araucanía",
+    "telefono": "9 9000 1142",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "box-modulares": {
+    "nombre": "Box Modulares",
+    "slug": "box-modulares",
+    "lat": -39.279753,
+    "lng": -71.968857,
+    "direccion": "Box Modulares - Colo Colo 640, 4920000 Pucon, Pucón, Araucanía",
+    "telefono": "9 7510 4549",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 19,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "nordhaus-chile": {
+    "nombre": "Nordhaus Chile",
+    "slug": "nordhaus-chile",
+    "lat": -39.294645,
+    "lng": -72.195131,
+    "direccion": "Nordhaus Chile - Cam. Villarrica - Pucón, km2,5, 4930000 Villarrica, Araucanía",
+    "telefono": "9 9184 7807",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "casas-prefabricadas-prefabricad-valdivia": {
+    "nombre": "Casas Prefabricadas | Prefabricad Valdivia",
+    "slug": "casas-prefabricadas-prefabricad-valdivia",
+    "lat": -39.81951,
+    "lng": -73.245657,
+    "direccion": "Casas Prefabricadas | Prefabricad Valdivia - Cochrane 375, 5110749 Valdivia, Los Ríos",
+    "telefono": "9 3028 2442",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 27,
+    "regiones": [
+      "Los Ríos"
+    ]
+  },
+  "constructora-ferriere-ltda": {
+    "nombre": "Constructora Ferriere Ltda.",
+    "slug": "constructora-ferriere-ltda",
+    "lat": -38.618387,
+    "lng": -72.451656,
+    "direccion": "Lautaro, Araucanía",
+    "telefono": "9 9128 4010",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 6,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "ingemec": {
+    "nombre": "Ingemec",
+    "slug": "ingemec",
+    "lat": -38.704438,
+    "lng": -72.639768,
+    "direccion": "Ingemec - Ralun Coyan 10, Temuco, Araucanía",
+    "telefono": "9 9555 0127",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 10,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "panel-sur": {
+    "nombre": "Panel Sur",
+    "slug": "panel-sur",
+    "lat": -36.834195,
+    "lng": -73.00546,
+    "direccion": "Panel Sur - Cam. Nonguén 1225, Concepción, Bío Bío",
+    "telefono": "9 3862 3715",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 4,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "paneles-sip-chile": {
+    "nombre": "Paneles Sip Chile",
+    "slug": "paneles-sip-chile",
+    "lat": -37.474175,
+    "lng": -72.329097,
+    "direccion": "Bodega - Av. Gabriela Mistral 1255, Nro. 20, 4440000 Los Angeles, Los Ángeles, Bío Bío",
+    "telefono": "9 5037 4259",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 1,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "panel-sip-biobio-ceosip": {
+    "nombre": "Panel Sip BIOBIO Ceosip",
+    "slug": "panel-sip-biobio-ceosip",
+    "lat": -36.828321,
+    "lng": -73.051241,
+    "direccion": "Panel Sip BIOBIO Ceosip - Libertador Gral. Bernardo O'Higgins 536, 3349001 Concepción, Bío Bío",
+    "telefono": "9 3382 0702",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 9,
+    "regiones": [
+      "Biobío"
+    ]
+  },
+  "casas-andes-freire": {
+    "nombre": "Casas Andes Freire",
+    "slug": "casas-andes-freire",
+    "lat": -38.964525,
+    "lng": -72.649445,
+    "direccion": "Casas Andes Freire - Camino Freire, Barros Arana, Km 2, Freire, Araucanía",
+    "telefono": "9 8843 2545",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 11,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "forest-arbolito-lautaro": {
+    "nombre": "Forest Arbolito Lautaro",
+    "slug": "forest-arbolito-lautaro",
+    "lat": -38.571532,
+    "lng": -72.448072,
+    "direccion": "Forest Arbolito Lautaro - Lautaro 648, Temuco, Lautaro, Araucanía",
+    "telefono": "(45) 253 5828",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 50,
+    "regiones": [
+      "La Araucanía"
+    ]
+  },
+  "viviendas-prefabricadas-andes": {
+    "nombre": "Viviendas Prefabricadas Andes",
+    "slug": "viviendas-prefabricadas-andes",
+    "lat": -38.964604,
+    "lng": -72.650315,
+    "direccion": "Freire, Araucanía",
+    "telefono": "(45) 237 8200",
+    "sitio_web": null,
+    "rating": null,
+    "reviews": 0,
     "regiones": [
       "La Araucanía"
     ]

@@ -1,13 +1,15 @@
 import { createClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { MapaConstructoras } from "@/components/constructoras/mapa-constructoras";
-import { MapPin, Building2, List } from "lucide-react";
+import { MapPin, Building2, List, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { CONSTRUCTORAS } from "@/lib/mock-data";
 import { InformativeListClient } from "@/components/constructoras/informative-list-client";
 import { PremiumCarousel } from "@/components/constructoras/premium-carousel";
 import { StructuredData, buildItemListJsonLd } from "@/components/seo/structured-data";
+import { REGIONES_CHILE } from "@/lib/constructoras-data";
 
 import geoDataJson from "@/data/constructoras-geo.json";
 
@@ -188,6 +190,42 @@ export default async function ConstructorasPage() {
           </div>
           <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3rem] p-6 sm:p-10 shadow-xl shadow-primary/5">
             <MapaConstructoras constructoras={sorted} />
+          </div>
+        </section>
+
+        {/* Busca por Región */}
+        <section className="space-y-6" aria-labelledby="section-regiones-heading">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground border border-border/40" aria-hidden="true">
+                <MapPin className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 id="section-regiones-heading" className="text-2xl font-heading font-black tracking-tight text-foreground">
+                  Busca por Región
+                </h2>
+                <p className="text-sm text-muted-foreground">Top 40 constructoras mejor valoradas de cada región</p>
+              </div>
+            </div>
+            <Link
+              href="/constructoras/region"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline"
+            >
+              Ver todas las regiones <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {Object.values(REGIONES_CHILE).map((region) => (
+              <Link
+                key={region.slug}
+                href={`/constructoras/region/${region.slug}`}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold border border-border/40 bg-card/60 text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-card transition-all duration-200"
+              >
+                <span aria-hidden="true">{region.emoji}</span>
+                {region.capital}
+              </Link>
+            ))}
           </div>
         </section>
 
