@@ -493,10 +493,10 @@ export async function deleteConstructoraByAdmin(constructoraId: string) {
 
   const admin = createAdminClient()
 
-  // 1. Eliminar modelos, obras y pagos huérfanos si no tienen cascade
-  await admin.from('modelos').delete().eq('constructora_id', constructoraId)
-  await admin.from('obras').delete().eq('constructora_id', constructoraId)
-  await admin.from('pagos').delete().eq('constructora_id', constructoraId)
+  // 1. Eliminar modelos, obras y pagos huérfanos si existen
+  try { await admin.from('modelos').delete().eq('constructora_id', constructoraId) } catch {}
+  try { await admin.from('obras').delete().eq('constructora_id', constructoraId) } catch {}
+  try { await admin.from('pagos').delete().eq('constructora_id', constructoraId) } catch {}
 
   // 2. Eliminar de constructoras
   const { error } = await admin
