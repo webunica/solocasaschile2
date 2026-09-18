@@ -44,6 +44,9 @@ next-env.d.ts
 # scraper binaries & data
 google_maps_scraper*
 queries.txt
+queries-*.txt
+output-*.json
+output-*.csv
 scraped-*.json
 constructoras_*.json
 webdata/
