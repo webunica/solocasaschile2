@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 import { Badge } from "@/components/ui/badge";
 import { MapaConstructoras } from "@/components/constructoras/mapa-constructoras";
 import { MapPin, Building2, List, ChevronRight } from "lucide-react";
@@ -13,7 +13,7 @@ import { REGIONES_CHILE } from "@/lib/constructoras-data";
 
 import geoDataJson from "@/data/constructoras-geo.json";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Directorio de Constructoras de Casas Prefabricadas en Chile | SolocasasChile",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ConstructorasPage() {
-  const supabase = await createClient();
+  const supabase = await createPublicClient();
   let dbConstructoras: any[] = [];
 
   const { data, error } = await supabase
@@ -122,13 +122,42 @@ export default async function ConstructorasPage() {
 
   const asociadas = sorted.filter(c => c.plan !== "informativo");
 
+  // Optimización de payload: campos requeridos para mapa
+  const mapConstructoras = sorted.map(c => ({
+    id: c.id,
+    nombre: c.nombre,
+    slug: c.slug,
+    lat: c.lat,
+    lng: c.lng,
+    regiones: c.regiones,
+    plan: c.plan,
+    verificada: c.verificada,
+    direccion: c.direccion,
+    telefono: c.telefono,
+    sitio_web: c.sitio_web,
+  }));
+
+  // Optimización de payload: campos requeridos para directorio general
+  const listConstructoras = sorted.map(c => ({
+    id: c.id,
+    nombre: c.nombre,
+    slug: c.slug,
+    regiones: c.regiones,
+    telefono: c.telefono,
+    email: c.email,
+    sitio_web: c.sitio_web,
+    plan: c.plan,
+    verificada: c.verificada,
+    score_confianza: c.score_confianza,
+  }));
+
   return (
     <div className="min-h-screen bg-background pb-24 pt-32">
       {sorted.length > 0 && (
         <StructuredData 
           type="ItemList" 
           data={buildItemListJsonLd(
-            sorted.map(c => ({
+            sorted.slice(0, 50).map(c => ({
               name: c.nombre,
               url: `https://solocasaschile.com/constructora/${c.slug || c.id}`,
               image: c.logo_url || undefined,
@@ -164,10 +193,15 @@ export default async function ConstructorasPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-12 bg-background/40 backdrop-blur-xl border border-border/40 p-8 rounded-[2.5rem] w-fit shadow-2xl shadow-primary/5">
+          <div className="flex flex-wrap items-center gap-8 md:gap-12 bg-background/40 backdrop-blur-xl border border-border/40 p-8 rounded-[2.5rem] w-fit shadow-2xl shadow-primary/5">
             <div className="space-y-1">
-               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Empresas Chile</p>
-               <div className="text-3xl font-black text-brand-indigo">{asociadas.length}</div>
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Empresas en Chile</p>
+               <div className="text-3xl font-black text-brand-indigo">{sorted.length}</div>
+            </div>
+            <div className="w-px h-10 bg-border/40 hidden sm:block" />
+            <div className="space-y-1">
+               <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Empresas Verificadas</p>
+               <div className="text-3xl font-black text-brand-teal">{asociadas.length}</div>
             </div>
             <div className="w-px h-10 bg-border/40 hidden sm:block" />
             <div className="space-y-1">
@@ -189,7 +223,7 @@ export default async function ConstructorasPage() {
             <p className="text-muted-foreground font-medium">Haz clic en cualquier punto del mapa para ver nuestra red de constructoras asociadas.</p>
           </div>
           <div className="bg-card/40 backdrop-blur-xl border border-border/40 rounded-[3rem] p-6 sm:p-10 shadow-xl shadow-primary/5">
-            <MapaConstructoras constructoras={sorted} />
+            <MapaConstructoras constructoras={mapConstructoras} />
           </div>
         </section>
 
@@ -249,7 +283,7 @@ export default async function ConstructorasPage() {
           </section>
         )}
 
-        {/* Listado de Constructoras Informativas / Directorio General */}
+        {/* Listado de Constructoras / Directorio General */}
         <section className="space-y-12 animate-in fade-in slide-in-from-bottom-10 duration-1000" aria-labelledby="section-directorio-heading">
            <div className="space-y-4">
                <div className="flex items-center gap-4">
@@ -261,11 +295,11 @@ export default async function ConstructorasPage() {
                   </h2>
               </div>
               <p className="text-muted-foreground font-medium text-lg leading-relaxed max-w-3xl">
-                 Otras empresas del sector en Chile. Este listado incluye empresas en proceso de verificación o con perfiles informativos básicos.
+                 Explora todas las empresas registradas en Chile. Utiliza el buscador y filtro regional para encontrar constructoras en tu zona.
               </p>
            </div>
 
-           <InformativeListClient constructoras={sorted.filter(c => c.plan === "informativo")} />
+           <InformativeListClient constructoras={listConstructoras} />
         </section>
       </div>
     </div>

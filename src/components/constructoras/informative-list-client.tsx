@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Building2, MapPin, Phone, Mail, Globe, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ const ITEMS_PER_PAGE = 20;
 interface ConstructoraListItem {
   id: string;
   nombre: string;
+  slug?: string | null;
   regiones?: string[] | null;
   telefono?: string | null;
   email?: string | null;
@@ -107,10 +109,16 @@ export function InformativeListClient({ constructoras }: { constructoras: Constr
                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
                   <Building2 className="w-6 h-6 text-primary" />
                </div>
-               <div>
-                  <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1 opacity-60">Constructora #{(currentPage-1)*ITEMS_PER_PAGE + index + 1}</div>
-                  <h3 className="font-heading font-black text-lg text-foreground leading-tight tracking-tight">{c.nombre}</h3>
-               </div>
+                <div>
+                   <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1 opacity-60">Constructora #{(currentPage-1)*ITEMS_PER_PAGE + index + 1}</div>
+                   {c.slug ? (
+                     <Link href={`/constructora/${c.slug}`} className="font-heading font-black text-lg text-foreground leading-tight tracking-tight hover:text-primary transition-colors block">
+                       {c.nombre}
+                     </Link>
+                   ) : (
+                     <h3 className="font-heading font-black text-lg text-foreground leading-tight tracking-tight">{c.nombre}</h3>
+                   )}
+                </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 py-2 border-y border-border/20">
@@ -190,8 +198,14 @@ export function InformativeListClient({ constructoras }: { constructoras: Constr
                       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                          <Building2 className="w-5 h-5 text-primary" />
                       </div>
-                      <div className="flex flex-col">
-                        <span className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate">{c.nombre}</span>
+                      <div className="flex flex-col min-w-0">
+                        {c.slug ? (
+                          <Link href={`/constructora/${c.slug}`} className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate hover:text-primary transition-colors">
+                            {c.nombre}
+                          </Link>
+                        ) : (
+                          <span className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate">{c.nombre}</span>
+                        )}
                         <div className={cn(
                           "inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-tighter border w-fit mt-1",
                           getStatusColor(getVerificationStatus(getTrustInput(c)))
