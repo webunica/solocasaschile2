@@ -63,19 +63,17 @@ export function Header() {
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-8">
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-2.5 group"
+            className="flex shrink-0 items-center group py-1"
+            aria-label="SolocasasChile Inicio"
           >
             <Image
-              src="/images/logo-vertical.png"
-              alt="SolocasasChile Logo"
-              width={40}
+              src="/images/logo-icon.png"
+              alt="SolocasasChile"
+              width={48}
               height={40}
-              className="h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+              className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-sm"
               priority
             />
-            <span className="text-[1.35rem] font-semibold tracking-[-0.03em] text-brand-indigo">
-              SolocasasChile
-            </span>
           </Link>
 
           <nav className="ml-8 hidden flex-1 items-center justify-center gap-3 lg:flex">
@@ -140,11 +138,11 @@ export function Header() {
                 <div className="flex items-center justify-between gap-4">
                   <SheetTitle className="font-heading text-2xl font-black tracking-tight text-brand-indigo flex items-center gap-2">
                     <Image
-                      src="/images/logo-vertical.png"
+                      src="/images/logo-icon.png"
                       alt="SolocasasChile Logo"
-                      width={32}
-                      height={32}
-                      className="h-8 w-auto object-contain"
+                      width={36}
+                      height={30}
+                      className="h-8 w-auto object-contain drop-shadow-sm"
                     />
                     <span>SolocasasChile</span>
                   </SheetTitle>
