@@ -66,12 +66,22 @@ export function Header() {
             className="flex shrink-0 items-center group py-1"
             aria-label="SolocasasChile Inicio"
           >
+            {/* Versión Mobile: Icono actual */}
             <Image
               src="/images/logo-icon.png"
               alt="SolocasasChile"
               width={48}
               height={40}
-              className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-sm"
+              className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-sm sm:hidden"
+              priority
+            />
+            {/* Versión Desktop / Tablet: Logo horizontal 478x75px */}
+            <Image
+              src="/images/solocasaschile-logo.png"
+              alt="SolocasasChile"
+              width={478}
+              height={75}
+              className="hidden h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:block lg:h-10"
               priority
             />
           </Link>
