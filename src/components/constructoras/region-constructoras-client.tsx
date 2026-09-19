@@ -3,11 +3,12 @@
 import { useState, useMemo } from "react";
 import { 
   TrendingUp, Search, X, CheckCircle2, 
-  Building2, ArrowUpDown 
+  ArrowUpDown, Layers, Building2 
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { 
   type ConstructoraUnificada, 
@@ -38,27 +39,16 @@ export function RegionConstructorasClient({ constructoras, regionNombre }: Props
 
   // Conteo en vivo de empresas por tipología en esta región
   const countsByTipo = useMemo(() => {
-    const counts: Record<string, number> = {
-      todas: constructoras.length,
-      prefabricadas: 0,
-      sip: 0,
-      modulares: 0,
-      containers: 0,
-      "tiny-house": 0,
-    };
-
-    for (const item of itemsWithTypes) {
-      for (const t of item.tipos) {
-        if (counts[t] !== undefined) {
-          counts[t]++;
-        }
-      }
-    }
-
+    const counts: Record<string, number> = { todas: constructoras.length };
+    itemsWithTypes.forEach(({ tipos }) => {
+      tipos.forEach((t) => {
+        counts[t] = (counts[t] || 0) + 1;
+      });
+    });
     return counts;
-  }, [constructoras.length, itemsWithTypes]);
+  }, [constructoras, itemsWithTypes]);
 
-  // Filtrado reactivo
+  // Filtrar constructoras
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
 
@@ -88,29 +78,34 @@ export function RegionConstructorasClient({ constructoras, regionNombre }: Props
     });
   }, [itemsWithTypes, selectedTipo, onlyVerified, search]);
 
-  // Ordenación
+  // Ordenar resultados
   const sorted = useMemo(() => {
     const list = [...filtered];
-
     if (sortBy === "rating") {
-      list.sort((a, b) => (b.constructora.rating ?? 0) - (a.constructora.rating ?? 0));
-    } else if (sortBy === "name") {
-      list.sort((a, b) => a.constructora.nombre.localeCompare(b.constructora.nombre));
-    } else {
-      // default: ranking original ya ordenado por plan y rating
+      return list.sort((a, b) => (b.constructora.rating ?? 0) - (a.constructora.rating ?? 0));
     }
-
-    return list;
+    if (sortBy === "name") {
+      return list.sort((a, b) => a.constructora.nombre.localeCompare(b.constructora.nombre));
+    }
+    // "ranking" por defecto: plan > rating > score
+    const PLAN_WEIGHT: Record<string, number> = { premium: 3, pro: 2, gratis: 1, informativo: 0 };
+    return list.sort((a, b) => {
+      const planDiff = (PLAN_WEIGHT[b.constructora.plan] ?? 0) - (PLAN_WEIGHT[a.constructora.plan] ?? 0);
+      if (planDiff !== 0) return planDiff;
+      const ratingDiff = (b.constructora.rating ?? 0) - (a.constructora.rating ?? 0);
+      if (ratingDiff !== 0) return ratingDiff;
+      return (b.constructora.score_confianza ?? 0) - (a.constructora.score_confianza ?? 0);
+    });
   }, [filtered, sortBy]);
-
-  const hasActiveFilters = selectedTipo !== "todas" || onlyVerified || search.trim() !== "" || sortBy !== "ranking";
 
   const handleResetFilters = () => {
     setSelectedTipo("todas");
-    setOnlyVerified(false);
     setSearch("");
+    setOnlyVerified(false);
     setSortBy("ranking");
   };
+
+  const hasActiveFilters = selectedTipo !== "todas" || search.trim() !== "" || onlyVerified || sortBy !== "ranking";
 
   return (
     <div className="space-y-8">
@@ -154,64 +149,63 @@ export function RegionConstructorasClient({ constructoras, regionNombre }: Props
         </div>
       </div>
 
-      {/* ─── Filtros por Tipo de Casa (Pills) ─────────────────────────── */}
+      {/* ─── Barra de Filtros y Lista de Tipologías ─────────────────────────── */}
       <div className="bg-card/70 border border-border/50 rounded-2xl p-4 md:p-5 space-y-4 shadow-sm backdrop-blur-md">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          {/* Pills de tipología */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 scrollbar-none">
-            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-1.5 shrink-0">
-              Tipo de casa:
-            </span>
-            {TIPOS_CASA_CONSTRUCTORA.map((tipo) => {
-              const count = countsByTipo[tipo.id] ?? 0;
-              const isSelected = selectedTipo === tipo.id;
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-between gap-3 md:gap-4">
+          
+          {/* Lado Izquierdo: Lista Desplegable de Tipologías + Solo Verificadas */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground shrink-0 hidden sm:inline flex items-center gap-1">
+                <Layers className="w-3.5 h-3.5" /> Tipología:
+              </span>
+              <Select
+                value={selectedTipo}
+                onValueChange={(val) => setSelectedTipo((val || "todas") as TipoCasaConstructora)}
+              >
+                <SelectTrigger className="w-full sm:w-[270px] h-11 bg-background/60 border-border/60 rounded-xl text-xs font-bold shadow-sm">
+                  <SelectValue placeholder="Todas las tipologías" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border-border shadow-2xl rounded-2xl">
+                  {TIPOS_CASA_CONSTRUCTORA.map((tipo) => {
+                    const count = countsByTipo[tipo.id] ?? 0;
+                    return (
+                      <SelectItem key={tipo.id} value={tipo.id} className="text-xs font-bold py-2 cursor-pointer">
+                        <div className="flex items-center justify-between w-full gap-4">
+                          <span className="flex items-center gap-2">
+                            <span>{tipo.emoji}</span>
+                            <span>{tipo.label}</span>
+                          </span>
+                          <span className="text-[10px] font-black bg-muted text-muted-foreground px-1.5 py-0.5 rounded-md">
+                            {count}
+                          </span>
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
 
-              return (
-                <button
-                  key={tipo.id}
-                  type="button"
-                  onClick={() => setSelectedTipo(tipo.id)}
-                  className={cn(
-                    "px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 border",
-                    isSelected
-                      ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-slate-900 dark:border-white shadow-md"
-                      : "bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted border-border/40"
-                  )}
-                >
-                  <span>{tipo.emoji}</span>
-                  <span>{tipo.label}</span>
-                  <span
-                    className={cn(
-                      "text-[10px] px-1.5 py-0.2 rounded-full font-black",
-                      isSelected
-                        ? "bg-white/20 dark:bg-black/20 text-inherit"
-                        : "bg-background/80 text-muted-foreground"
-                    )}
-                  >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Opciones secundarias: Solo verificadas + Orden */}
-          <div className="flex items-center gap-3 shrink-0 self-end lg:self-center">
+            {/* Toggle Solo Verificadas */}
             <button
               type="button"
               onClick={() => setOnlyVerified(!onlyVerified)}
               className={cn(
-                "px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border",
+                "px-3.5 h-11 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 border shrink-0",
                 onlyVerified
-                  ? "bg-emerald-500/15 text-emerald-600 border-emerald-500/30"
-                  : "bg-muted/40 text-muted-foreground border-border/40 hover:text-foreground"
+                  ? "bg-emerald-500/15 text-emerald-600 border-emerald-500/30 shadow-sm"
+                  : "bg-background/60 text-muted-foreground border-border/60 hover:text-foreground hover:bg-background"
               )}
             >
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
               <span>Solo Verificadas</span>
             </button>
+          </div>
 
-            <div className="flex items-center gap-1.5 bg-muted/40 border border-border/40 rounded-xl px-2.5 py-1 text-xs">
+          {/* Lado Derecho: Ordenamiento + Botón Limpiar */}
+          <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+            <div className="flex items-center gap-2 bg-background/60 border border-border/60 rounded-xl px-3 h-11 text-xs">
               <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground" />
               <select
                 value={sortBy}
@@ -229,7 +223,7 @@ export function RegionConstructorasClient({ constructoras, regionNombre }: Props
                 variant="ghost"
                 size="sm"
                 onClick={handleResetFilters}
-                className="text-xs text-muted-foreground hover:text-foreground h-8 px-2.5 rounded-xl"
+                className="text-xs text-muted-foreground hover:text-foreground h-11 px-3 rounded-xl"
               >
                 <X className="w-3.5 h-3.5 mr-1" /> Limpiar
               </Button>
