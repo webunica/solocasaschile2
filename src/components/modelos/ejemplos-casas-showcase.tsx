@@ -130,13 +130,17 @@ export function EjemplosCasasShowcase() {
               className="group flex flex-col overflow-hidden rounded-[2.2rem] border border-border/60 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-teal/40 hover:shadow-xl"
             >
               {/* Contenedor Visual con Toggle Render / Plano */}
-              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 dark:bg-slate-900">
                 <Image
                   src={currentImage}
-                  alt={`${m.nombre} - ${currentTab === "render" ? "Fachada 3D" : "Plano de Planta"}`}
+                  alt={`${m.nombre} - ${currentTab === "render" ? "Fachada 3D en Entorno Real" : "Plano de Planta Amoblado"}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-contain p-2 transition-transform duration-500 group-hover:scale-[1.02]"
+                  className={cn(
+                    "transition-all duration-500 group-hover:scale-[1.03]",
+                    currentTab === "render" ? "object-cover" : "object-contain p-3 bg-white dark:bg-slate-900"
+                  )}
+                  priority={m.id === "ejemplo-roble-115"}
                 />
 
                 {/* Badge de Sistema y Superficie */}
