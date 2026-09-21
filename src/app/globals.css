@@ -293,6 +293,45 @@
   border-color: #00262b;
 }
 
+/* Vibrating pulse for maximum visibility CTA */
+@keyframes cta-vibrate {
+  0%, 70%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  72% {
+    transform: translate(-2px, -1px) rotate(-1.5deg);
+  }
+  75% {
+    transform: translate(2px, 1px) rotate(1.5deg);
+  }
+  78% {
+    transform: translate(-2px, 1px) rotate(-1.5deg);
+  }
+  81% {
+    transform: translate(2px, -1px) rotate(1deg);
+  }
+  84% {
+    transform: translate(-1px, 0.5px) rotate(-0.5deg);
+  }
+  87% {
+    transform: translate(1px, -0.5px) rotate(0.5deg);
+  }
+  90% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.cta-vibrate {
+  animation: cta-vibrate 3s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.cta-vibrate:hover {
+  animation: none;
+  transform: scale(1.05);
+}
+
 /* Premium Form Styles */
 .form-label {
   @apply text-base font-bold text-brand-indigo mb-2 block;

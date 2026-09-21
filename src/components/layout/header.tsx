@@ -123,9 +123,13 @@ export function Header() {
               href="/catalogo"
               onClick={() => trackCatalogoClick("header")}
               className={cn(
-                "cta-pill min-h-0 px-6 py-2.5 text-[0.82rem] font-extrabold uppercase tracking-[0.14em] shadow-md shadow-brand-indigo/20 hover:scale-105 active:scale-95 transition-all duration-200"
+                "cta-pill cta-vibrate min-h-0 px-6 py-2.5 text-[0.82rem] font-extrabold uppercase tracking-[0.14em] shadow-md shadow-brand-indigo/20 hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-2"
               )}
             >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#abffae] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#abffae]"></span>
+              </span>
               Ver modelos
             </Link>
           </div>
@@ -209,9 +213,13 @@ export function Header() {
                     trackCatalogoClick("header");
                   }}
                   className={cn(
-                    "cta-pill min-h-0 h-13 w-full flex items-center justify-center rounded-full font-extrabold uppercase tracking-[0.16em] shadow-md shadow-brand-indigo/20"
+                    "cta-pill cta-vibrate min-h-0 h-13 w-full flex items-center justify-center rounded-full font-extrabold uppercase tracking-[0.16em] shadow-md shadow-brand-indigo/20 gap-2"
                   )}
                 >
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#abffae] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#abffae]"></span>
+                  </span>
                   Ver modelos
                 </Link>
               </div>
