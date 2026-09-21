@@ -4,6 +4,7 @@ import { getModelosFiltered } from "@/lib/supabase/services";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
 import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 import { GuiaConstruccionTerreno } from "@/components/guias/guia-construccion-terreno";
+import { EjemplosCasasShowcase } from "@/components/modelos/ejemplos-casas-showcase";
 
 export const dynamic = "force-dynamic";
 
@@ -148,6 +149,7 @@ export default async function CasasPrefabricadasPage() {
       {/* Guía exhaustiva de construcción en terreno */}
       <div className="container max-w-6xl mx-auto px-6 md:px-12">
         <GuiaConstruccionTerreno />
+        <EjemplosCasasShowcase />
       </div>
 
       <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-20">
