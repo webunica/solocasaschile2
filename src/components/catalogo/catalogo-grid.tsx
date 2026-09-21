@@ -59,7 +59,7 @@ export function CatalogoGrid({ modelos }: Props) {
             transition={{ duration: 0.5, delay: i * 0.05 }}
           >
             <Card className="group overflow-hidden border-border/40 hover:border-primary/30 transition-all hover:shadow-2xl hover:shadow-primary/5 bg-card/50 backdrop-blur-sm h-full flex flex-col rounded-[2.5rem]">
-              <Link href={`/modelo/${modelo.slug}`} className="relative h-56 overflow-hidden shrink-0 block">
+              <Link href={`/modelo/${modelo.slug}`} className="relative h-60 sm:h-64 overflow-hidden shrink-0 block">
                 <Image
                   src={modelo.imagenes_urls?.[0] || 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1000'}
                   alt={modelo.nombre}
@@ -68,29 +68,11 @@ export function CatalogoGrid({ modelos }: Props) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
 
-                {/* Status/Plan Badges */}
-                <div className="absolute top-4 left-4 flex flex-col gap-2">
+                {/* Tipo Badge */}
+                <div className="absolute top-4 left-4 flex items-center gap-2">
                    <Badge className={cn("border-none backdrop-blur-md px-3 py-1 font-bold tracking-widest uppercase", TIPO_COLORS[modelo.tipo])}>
                      {TIPO_LABELS[modelo.tipo] || modelo.tipo}
                    </Badge>
-                   
-                   {modelo.constructora?.verificada && (
-                     <Badge className="bg-emerald-500/20 text-emerald-400 border-none backdrop-blur-md px-3 py-1 font-bold text-[8px] uppercase tracking-widest flex items-center gap-1">
-                        <CheckCircle2 className="w-2.5 h-2.5" /> Certificada
-                     </Badge>
-                   )}
-
-                   {modelo.garantia_anos && modelo.garantia_anos >= 10 && (
-                     <Badge className="bg-blue-500/20 text-blue-400 border-none backdrop-blur-md px-3 py-1 font-bold text-[8px] uppercase tracking-widest flex items-center gap-1">
-                        <ShieldCheck className="w-2.5 h-2.5" /> Garantía {modelo.garantia_anos}a
-                     </Badge>
-                   )}
-
-                   {(modelo.tiempo_entrega?.toLowerCase().includes('30') || modelo.tiempo_entrega?.toLowerCase().includes('60')) && (
-                     <Badge className="bg-amber-500/20 text-amber-400 border-none backdrop-blur-md px-3 py-1 font-bold text-[8px] uppercase tracking-widest flex items-center gap-1">
-                        <Zap className="w-2.5 h-2.5" /> Montaje Rápido
-                     </Badge>
-                   )}
                 </div>
 
                 {modelo.constructora?.plan === "premium" && (
@@ -120,6 +102,29 @@ export function CatalogoGrid({ modelos }: Props) {
               </Link>
 
               <CardContent className="p-8 flex flex-col flex-1">
+                {/* Badges row below image */}
+                {(modelo.constructora?.verificada || (modelo.garantia_anos && modelo.garantia_anos >= 10) || (modelo.tiempo_entrega?.toLowerCase().includes('30') || modelo.tiempo_entrega?.toLowerCase().includes('60'))) ? (
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                     {modelo.constructora?.verificada && (
+                       <Badge variant="outline" className="border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-bold text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Certificada
+                       </Badge>
+                     )}
+
+                     {modelo.garantia_anos && modelo.garantia_anos >= 10 && (
+                       <Badge variant="outline" className="border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-400 font-bold text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-blue-600 dark:text-blue-400" /> Garantía {modelo.garantia_anos}a
+                       </Badge>
+                     )}
+
+                     {(modelo.tiempo_entrega?.toLowerCase().includes('30') || modelo.tiempo_entrega?.toLowerCase().includes('60')) && (
+                       <Badge variant="outline" className="border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-400 font-bold text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                          <Zap className="w-3 h-3 text-amber-600 dark:text-amber-400" /> Montaje Rápido
+                       </Badge>
+                     )}
+                  </div>
+                ) : null}
+
                 {/* Constructora Info */}
                 <div className="flex items-center gap-3 mb-4">
                    <div className="w-8 h-8 rounded-full border border-border bg-muted overflow-hidden relative">
