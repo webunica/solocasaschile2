@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, Building2, Compass, Home, Library, Menu } from "lucide-react";
+import { BookOpen, Building2, Compass, Home, Menu, Newspaper } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
@@ -21,9 +21,9 @@ import { trackCatalogoClick, trackConstructorasAccessClick } from "@/lib/analyti
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio", icon: Home },
-  { href: "/catalogo", label: "Catálogo", icon: Library },
   { href: "/constructoras", label: "Constructoras", icon: Building2 },
   { href: "/casas-prefabricadas", label: "Guías", icon: BookOpen },
+  { href: "/blog", label: "Blog", icon: Newspaper },
   { href: "/nosotros", label: "Nosotros", icon: Compass },
 ] as const;
 
@@ -96,9 +96,6 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => {
-                    if (link.href === "/catalogo") trackCatalogoClick("header");
-                  }}
                   className={cn(
                     "rounded-full px-3 py-2 text-[16px] font-semibold tracking-[-0.01em] transition-all",
                     isActive
@@ -126,7 +123,7 @@ export function Header() {
               href="/catalogo"
               onClick={() => trackCatalogoClick("header")}
               className={cn(
-                "cta-pill-secondary min-h-0 px-5 py-2 text-[0.78rem] font-extrabold uppercase tracking-[0.16em]"
+                "cta-pill min-h-0 px-6 py-2.5 text-[0.82rem] font-extrabold uppercase tracking-[0.14em] shadow-md shadow-brand-indigo/20 hover:scale-105 active:scale-95 transition-all duration-200"
               )}
             >
               Ver modelos
@@ -175,7 +172,6 @@ export function Header() {
                       href={link.href}
                       onClick={() => {
                         setIsOpen(false);
-                        if (link.href === "/catalogo") trackCatalogoClick("header");
                       }}
                       className={cn(
                         "flex items-center gap-3 rounded-[1.4rem] px-4 py-4 text-[16px] font-semibold tracking-[-0.01em] transition-colors",
@@ -213,11 +209,10 @@ export function Header() {
                     trackCatalogoClick("header");
                   }}
                   className={cn(
-                    buttonVariants({ variant: "secondary" }),
-                    "h-14 w-full rounded-full font-extrabold uppercase tracking-[0.16em]"
+                    "cta-pill min-h-0 h-13 w-full flex items-center justify-center rounded-full font-extrabold uppercase tracking-[0.16em] shadow-md shadow-brand-indigo/20"
                   )}
                 >
-                  Explorar catálogo
+                  Ver modelos
                 </Link>
               </div>
             </SheetContent>

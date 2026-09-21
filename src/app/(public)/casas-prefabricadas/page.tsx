@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getModelosFiltered } from "@/lib/supabase/services";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
 import { SEO_KEYWORDS } from "@/lib/seo/keywords";
+import { GuiaConstruccionTerreno } from "@/components/guias/guia-construccion-terreno";
 
 export const dynamic = "force-dynamic";
 
@@ -10,31 +11,46 @@ const PAGE_URL = "https://solocasaschile.com/casas-prefabricadas";
 
 const FAQS = [
   {
-    question: "Cuanto cuestan las casas prefabricadas en Chile?",
+    question: "¿Qué se necesita para construir una casa prefabricada en un terreno en Chile?",
     answer:
-      "Depende del sistema, m2 y nivel de terminaciones. En SolocasasChile puedes comparar modelos por UF y pasar directo a cotizacion con constructoras verificadas.",
+      "Se requiere: 1) Terreno con Rol propio e inscripción en el CBR (evitando cesiones de derechos o loteos irregulares), 2) Certificado de Informaciones Previas (CIP) de la DOM, 3) Factibilidad técnica y acceso vial para camiones de alto tonelaje, 4) Factibilidad de servicios básicos (agua potable, luz SEC o solar, y fosa séptica con drenes autorizada por el SEREMI de Salud), 5) Fundaciones niveladas (radier o pilotes) con instalaciones sanitarias bajo cota cero, y 6) Permiso de Edificación y posterior Recepción Final de la DOM.",
   },
   {
-    question: "Que diferencia hay entre SIP, modular y prefabricada tradicional?",
+    question: "¿Cuánto cuestan las casas prefabricadas en Chile?",
     answer:
-      "SIP destaca por aislacion y eficiencia, modular por rapidez de ensamblaje en terreno y prefabricada tradicional por variedad de configuraciones y precio.",
+      "Depende del sistema, m2 y nivel de terminaciones (Kit Básico, Kit Armado o Llave en Mano). En SolocasasChile puedes comparar modelos por UF y pasar directo a cotización con constructoras verificadas.",
   },
   {
-    question: "Puedo cotizar con mas de una constructora?",
+    question: "¿Qué diferencia hay entre fundaciones con radier y pilotes en un terreno?",
     answer:
-      "Si. El objetivo de la plataforma es comparar alternativas y cotizar con varias empresas para decidir con mejor informacion.",
+      "El radier de hormigón armado es ideal para terrenos planos y suelo firme; proporciona aislamiento directo del suelo mediante láminas de polietileno. Los pilotes o poyos de hormigón/madera impregnada son óptimos para terrenos con pendiente o zonas húmedas del sur, ya que generan una cámara de aire ventilada y reducen los costos de movimiento de tierra.",
+  },
+  {
+    question: "¿Se puede construir en una parcela de agrado de 5.000 m² (SAG)?",
+    answer:
+      "Sí. En predios rurales de 5.000 m² acogidos al D.L. 3.516 se permite la construcción de vivienda para el propietario y trabajadores. Se debe verificar la normativa ante el SAG y tramitar el permiso respectivo ante la Dirección de Obras Municipales (DOM).",
+  },
+  {
+    question: "¿Qué diferencia hay entre SIP, modular y prefabricada tradicional?",
+    answer:
+      "SIP destaca por aislación térmica y eficiencia energética, modular por rapidez extrema de ensamblaje en terreno con módulos casi terminados de fábrica, y prefabricada tradicional por variedad de configuraciones arquitectónicas y precio accesible.",
+  },
+  {
+    question: "¿Puedo cotizar con más de una constructora?",
+    answer:
+      "Sí. El objetivo de SolocasasChile es comparar alternativas, revisar especificaciones técnicas y cotizar con múltiples empresas verificadas para decidir con total transparencia.",
   },
 ];
 
 export const metadata: Metadata = {
-  title: "Casas Prefabricadas en Chile | Modelos, Precios y Constructoras",
+  title: "Guía de Casas Prefabricadas en Chile 2026 | Construcción en Terreno y Modelos",
   description:
-    "Compara casas prefabricadas en Chile, revisa modelos disponibles y conecta con constructoras verificadas para cotizar con mas claridad.",
-  keywords: [...SEO_KEYWORDS.casasPrefabricadas],
+    "Guía completa con todo lo necesario para construir una casa prefabricada en tu terreno en Chile: rol propio, estudio de suelo, empalmes de agua y luz, fundaciones y permisos DOM.",
+  keywords: [...SEO_KEYWORDS.casasPrefabricadas, "construir casa prefabricada en terreno chile", "requisitos casa prefabricada parcela", "radier casa prefabricada", "permisos dom casa prefabricada"],
   alternates: { canonical: PAGE_URL },
   openGraph: {
-    title: "Casas Prefabricadas en Chile | SolocasasChile",
-    description: "Pagina pilar para comparar casas prefabricadas, modelos y constructoras verificadas en Chile.",
+    title: "Guía de Casas Prefabricadas en Chile | SolocasasChile",
+    description: "Guía paso a paso para construir en terreno, modelos disponibles y constructoras verificadas en Chile.",
     url: PAGE_URL,
     siteName: "SolocasasChile",
     locale: "es_CL",
@@ -43,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Casas Prefabricadas en Chile | SolocasasChile",
-    description: "Compara modelos y constructoras de casas prefabricadas en Chile.",
+    title: "Guía de Casas Prefabricadas en Chile | SolocasasChile",
+    description: "Todo lo que necesitas saber para construir una casa prefabricada en tu terreno.",
     images: ["https://solocasaschile.com/twitter-image.jpg"],
   },
 };
@@ -129,7 +145,12 @@ export default async function CasasPrefabricadasPage() {
         </div>
       </section>
 
-      <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-14">
+      {/* Guía exhaustiva de construcción en terreno */}
+      <div className="container max-w-6xl mx-auto px-6 md:px-12">
+        <GuiaConstruccionTerreno />
+      </div>
+
+      <section className="container max-w-6xl mx-auto px-6 md:px-12 mt-20">
         <h2 className="text-2xl font-black tracking-tight mb-6">Modelos destacados</h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {topModels.map((model) => (

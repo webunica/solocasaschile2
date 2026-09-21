@@ -7,6 +7,7 @@ const EXPLORE_LINKS = [
   { name: "Catálogo", path: "/catalogo" },
   { name: "Constructoras", path: "/constructoras" },
   { name: "Guías", path: "/casas-prefabricadas" },
+  { name: "Blog", path: "/blog" },
 ] as const;
 
 const RESOURCE_LINKS = [
