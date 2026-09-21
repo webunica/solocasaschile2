@@ -106,10 +106,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const dbConstructoras = (constructorasResult.data ?? []) as SitemapConstructoraRow[];
   const dbPosts = (blogResult.data ?? []) as SitemapBlogPostRow[];
 
-  const modelRoutes: MetadataRoute.Sitemap = [
-    ...MODELOS.map((modelo) => modelo.slug),
-    ...dbModelos.map((modelo) => modelo.slug),
-  ]
+  const modelRoutes: MetadataRoute.Sitemap = Array.from(
+    new Set(MODELOS.map((modelo) => modelo.slug))
+  )
     .filter((slug): slug is string => Boolean(slug))
     .map((slug) => ({
       url: `${SITE_URL}/modelo/${slug}`,

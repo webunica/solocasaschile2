@@ -9,7 +9,7 @@ import { ImageGallery } from "@/components/ui/image-gallery";
 import { StickyCTAMobile } from "@/components/modelo/sticky-cta-mobile";
 import { cn, getYoutubeEmbedUrl } from "@/lib/utils";
 import { SellosGrid } from "@/components/constructora/sellos-grid";
-import { Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Building2, TrendingUp } from "lucide-react";
+import { Clock, ShieldCheck, Star, ArrowLeft, MessageSquare, Zap, Building2, TrendingUp, FileDown } from "lucide-react";
 import { FichaExpandida } from "@/components/modelo/ficha-expandida";
 import { IncluyeNoIncluye } from "@/components/modelo/incluye-no-incluye";
 import { ModeloPlano } from "@/components/modelo/modelo-plano";
@@ -188,7 +188,10 @@ export default async function ModeloPage({ params }: PageProps) {
                         <p className="text-xs font-bold text-muted-foreground">{(precio / (modelo.superficie_m2 || 1)).toFixed(2)} UF/m²</p>
                       </div>
                     ) : (
-                      <p className="text-3xl font-black tracking-tight text-muted-foreground">Consultar precio</p>
+                      <div className="space-y-1">
+                        <p className="text-3xl md:text-4xl font-black tracking-tight text-foreground">A consultar</p>
+                        <p className="text-xs font-bold text-muted-foreground">Cotización a medida según terreno y región</p>
+                      </div>
                     )}
 
                     <div className="grid grid-cols-3 gap-2 border-t border-b border-border/40 py-6">
@@ -218,6 +221,19 @@ export default async function ModeloPage({ params }: PageProps) {
                           </Button>
                        }
                     />
+
+                    {typeof construccion?.pdf_url === "string" && (
+                      <a
+                        href={construccion.pdf_url as string}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download
+                        className="w-full rounded-2xl h-14 font-black uppercase tracking-[0.15em] border border-border/80 hover:border-brand-indigo hover:bg-brand-indigo/5 text-foreground hover:text-brand-indigo flex items-center justify-center text-xs gap-2 transition-all group/btn shadow-sm"
+                      >
+                        <FileDown className="w-4 h-4 text-brand-indigo group-hover/btn:scale-110 transition-transform" />
+                        Descargar Ficha en PDF
+                      </a>
+                    )}
 
                     <CotizarModal
                        modeloId={modelo.id}

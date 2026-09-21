@@ -2,6 +2,7 @@ import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
 import { createClient, createPublicClient } from './server'
 import { MODELOS } from '@/lib/mock-data'
+import { MODELOS_MASTER, CONSTRUCTORA_MASTER_DATA } from '@/data/catalogo-modelos-master'
 import { getRegionDisplayName } from '@/lib/regions'
 
 export type ModelWithConstructora = {
@@ -199,6 +200,12 @@ export async function getModelById(id: string) {
 export const getModelBySlug = cache(async (slug: string) => {
   return unstable_cache(
     async (slug: string) => {
+      // 1. Check authoritative architectural models of Constructora Master
+      const masterModel = MODELOS_MASTER.find(m => m.slug === slug);
+      if (masterModel) {
+        return masterModel;
+      }
+
       const supabase = await createPublicClient()
       const { data, error } = await supabase
         .from('modelos')
@@ -229,39 +236,6 @@ export const getModelBySlug = cache(async (slug: string) => {
         } as ModelWithConstructora;
       }
 
-      // 2. Fallback to Mocks
-      const mock = MODELOS.find(m => m.slug === slug);
-      if (mock) {
-        return {
-          id: mock.id,
-          constructora_id: mock.constructoraId,
-          nombre: mock.nombre,
-          slug: mock.slug,
-          tipo: mock.tipo,
-          superficie_m2: mock.superficieM2,
-          dormitorios: mock.dormitorios,
-          banos: mock.banos,
-          precio_desde_uf: mock.precioDesdeUF,
-          imagenes_urls: mock.imagenes || [],
-          tiempo_entrega: mock.tiempoEntrega,
-          descripcion: mock.descripcion,
-          disponible: mock.disponible,
-          garantia_anos: mock.garantiaAnos,
-          postventa: mock.postventa,
-          especificaciones: mock.especificaciones,
-          constructora: {
-            id: mock.constructoraId,
-            nombre: mock.constructoraNombre,
-            slug: mock.constructoraSlug,
-            plan: mock.constructoraPlan,
-            verificada: true,
-            score_confianza: 100,
-            logo_url: mock.imagenes[0], 
-            regiones: ["Metropolitana"],
-            descripcion: "Constructora referente de alta eficiencia."
-          }
-        } as ModelWithConstructora;
-      }
       return null;
     },
     ['model-detail', slug],
@@ -281,97 +255,37 @@ export async function getModelosFiltered(filters: {
 }) {
   return unstable_cache(
     async (filters) => {
-      const supabase = await createPublicClient()
       const regionDisp = getRegionDisplayName(filters.region);
 
-      // 1. Fetch real data from Supabase
-      let query = supabase
-        .from('modelos')
-        .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones, descripcion, seo_title, seo_description, seo_keywords)`)
-        .eq('disponible', true)
-      
-      if (filters.tipo) query = query.eq('tipo', filters.tipo)
-      if (filters.minUF) query = query.gte('precio_desde_uf', filters.minUF)
-      if (filters.maxUF) query = query.lte('precio_desde_uf', filters.maxUF)
+      // Modelos autorizados del catálogo oficial (Constructora Master)
+      let models = [...MODELOS_MASTER];
 
-      const { data: dbData } = await query
+      if (filters.tipo) {
+        models = models.filter(m => m.tipo === filters.tipo);
+      }
 
-      // 2. Map DB data
-      const allDbData = (dbData ?? []).map((m: RawModelRow) => ({
-        ...m,
-        imagenes_urls: m.imagenes_urls || [],
-        precio_desde_uf: m.precio_desde_uf || 0,
-        constructora: m.constructora ? {
-          ...m.constructora,
-          logo_url: m.constructora.logo_url || '/placeholder.png',
-          score_confianza: m.constructora.score_confianza || 0
-        } : null
-      })) as ModelWithConstructora[]
+      if (regionDisp) {
+        models = models.filter(m => {
+          const regiones: string[] = m.constructora?.regiones || [];
+          return regiones.includes(regionDisp);
+        });
+      }
 
-      const mappedDbData = regionDisp
-        ? allDbData.filter(m => {
-            const regiones: string[] = m.constructora?.regiones || []
-            return regiones.includes(regionDisp)
-          })
-        : allDbData
+      if (filters.minUF !== undefined && filters.minUF > 0) {
+        models = models.filter(m => (m.precio_desde_uf || 0) >= filters.minUF!);
+      }
 
-      // 3. Merge with Mocks
-      const showcaseData = MODELOS.map(m => ({
-        id: m.id,
-        constructora_id: m.constructoraId,
-        nombre: m.nombre,
-        slug: m.slug,
-        tipo: m.tipo,
-        superficie_m2: m.superficieM2,
-        dormitorios: m.dormitorios,
-        banos: m.banos,
-        precio_desde_uf: m.precioDesdeUF,
-        imagenes_urls: m.imagenes || [],
-        tiempo_entrega: m.tiempoEntrega,
-        descripcion: m.descripcion,
-        disponible: m.disponible,
-        garantia_anos: m.garantiaAnos,
-        postventa: m.postventa,
-        constructora: {
-          id: m.constructoraId,
-          nombre: m.constructoraNombre,
-          slug: m.constructoraSlug,
-          plan: m.constructoraPlan,
-          verificada: true,
-          score_confianza: 100,
-          logo_url: m.imagenes[0], 
-          regiones: ["Metropolitana", "Valparaíso", "Biobío", "Los Lagos"],
-          descripcion: "Expertos en construcción modular SIP de alta eficiencia."
-        }
-      })) as ModelWithConstructora[]
+      if (filters.maxUF !== undefined) {
+        models = models.filter(m => (m.precio_desde_uf || 0) <= filters.maxUF!);
+      }
 
-      const filteredMocks = showcaseData.filter(m => {
-        if (filters.tipo && m.tipo !== filters.tipo) return false
-        if (filters.minUF && m.precio_desde_uf < filters.minUF) return false
-        if (filters.maxUF && m.precio_desde_uf > filters.maxUF) return false
-        if (regionDisp && !m.constructora.regiones.includes(regionDisp)) return false
-        return true
-      })
+      const sorted = models.sort((a, b) => {
+        if (filters.sortBy === 'm2_desc') return b.superficie_m2 - a.superficie_m2;
+        if (filters.sortBy === 'm2_asc') return a.superficie_m2 - b.superficie_m2;
+        return (a.featured_order || 0) - (b.featured_order || 0);
+      });
 
-      const dbSlugs = new Set(mappedDbData.map(m => m.slug))
-      const uniqueMocks = filteredMocks.filter(m => !dbSlugs.has(m.slug))
-      const allData = [...mappedDbData, ...uniqueMocks]
-      
-      const planOrder: Record<string, number> = { premium: 0, avanza: 1, pro: 2, prueba: 3, gratis: 4 }
-      const sorted = allData.sort((a, b) => {
-        if (a.id === 'm0') return -1
-        if (b.id === 'm0') return 1
-        const planA = a.constructora?.plan || 'gratis'
-        const planB = b.constructora?.plan || 'gratis'
-        const planDiff = (planOrder[planA] ?? 2) - (planOrder[planB] ?? 2)
-        if (filters.sortBy === 'price_asc') return a.precio_desde_uf - b.precio_desde_uf
-        if (filters.sortBy === 'price_desc') return b.precio_desde_uf - a.precio_desde_uf
-        if (filters.sortBy === 'm2_desc') return b.superficie_m2 - a.superficie_m2
-        if (planDiff !== 0) return planDiff
-        return a.precio_desde_uf - b.precio_desde_uf
-      })
-
-      return sorted
+      return sorted;
     },
     ['catalog-filtered', JSON.stringify(filters)],
     { revalidate: 1800, tags: ['modelos', 'catalog'] }
@@ -412,6 +326,11 @@ export async function createLead(leadData: LeadInsertDTO) {
 
 export async function getModelsByIds(ids: string[]) {
   if (!ids.length) return []
+  const masterMatches = MODELOS_MASTER.filter(m => ids.includes(m.id));
+  if (masterMatches.length > 0) {
+    return masterMatches;
+  }
+
   const supabase = await createPublicClient()
   const dbIds = ids.filter(id => /^[0-9a-f-]{36}$/i.test(id));
   const { data: dbData } = await supabase
@@ -431,35 +350,7 @@ export async function getModelsByIds(ids: string[]) {
     } : null
   })) as ModelWithConstructora[]
   
-  const mocks = MODELOS.filter(m => ids.includes(m.id)).map(mock => ({
-      id: mock.id,
-      constructora_id: mock.constructoraId,
-      nombre: mock.nombre,
-      slug: mock.slug,
-      tipo: mock.tipo,
-      superficie_m2: mock.superficieM2,
-      dormitorios: mock.dormitorios,
-      banos: mock.banos,
-      precio_desde_uf: mock.precioDesdeUF,
-      imagenes_urls: mock.imagenes || [],
-      tiempo_entrega: mock.tiempoEntrega,
-      descripcion: mock.descripcion,
-      disponible: mock.disponible,
-      garantia_anos: mock.garantiaAnos,
-      postventa: mock.postventa,
-      especificaciones: mock.especificaciones,
-      constructora: {
-        id: mock.constructoraId,
-        nombre: mock.constructoraNombre,
-        slug: mock.constructoraSlug,
-        plan: mock.constructoraPlan,
-        verificada: true,
-        score_confianza: 100,
-        logo_url: mock.imagenes[0] || '/placeholder.png', 
-      }
-  })) as ModelWithConstructora[];
-
-  return [...mocks, ...mappedDbData]
+  return mappedDbData;
 }
 
 
@@ -491,6 +382,22 @@ export const getConstructoraBySlug = cache(async function getConstructoraBySlug(
 });
 
 export async function getModelsByConstructoraId(id: string) {
+  if (id === CONSTRUCTORA_MASTER_DATA.id || id === 'master' || id === 'javier-cb85b919') {
+    return MODELOS_MASTER.map(m => ({
+      id: m.id,
+      nombre: m.nombre,
+      precio_desde_uf: m.precio_desde_uf,
+      superficie_m2: m.superficie_m2,
+      dormitorios: m.dormitorios,
+      banos: m.banos,
+      imagenes_urls: m.imagenes_urls,
+      slug: m.slug,
+      tipo: m.tipo,
+      disponible: m.disponible,
+      tiempo_entrega: m.tiempo_entrega,
+    }));
+  }
+
   const supabase = await createPublicClient()
 
   // Narrow columns — avoid select(*) which pulls all JSON fields
@@ -589,66 +496,24 @@ export async function getFeaturedModelsByRegion(regionSlug?: string) {
   return unstable_cache(
     async (regionSlug?: string) => {
       try {
-        const supabase = await createPublicClient()
         const regionDisp = getRegionDisplayName(regionSlug);
+        let models = [...MODELOS_MASTER];
 
-        const [{ data: featuredData }, { data: premiumData }] = await Promise.all([
-          supabase
-            .from('modelos')
-            .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
-            .eq('disponible', true)
-            .eq('is_featured', true),
-          supabase
-            .from('modelos')
-            .select(`*, constructora:constructoras (id, nombre, slug, logo_url, plan, verificada, score_confianza, regiones)`)
-            .eq('disponible', true)
-        ])
+        if (regionDisp) {
+          models = models.filter(m => {
+            const regiones: string[] = m.constructora?.regiones || [];
+            return regiones.includes(regionDisp);
+          });
+        }
 
-        const allRaw = [...(featuredData || []), ...(premiumData || [])]
-        const seen = new Set<string>()
-        const unique = allRaw.filter(m => {
-          if (seen.has(m.id)) return false
-          seen.add(m.id)
-          return true
-        })
-
-        const filtered = unique.filter(m => 
-          m.is_featured === true || m.constructora?.plan === 'premium' || m.constructora?.plan === 'avanza'
-        )
-
-        const regional = regionDisp 
-          ? filtered.filter(m => {
-              const regiones: string[] = m.constructora?.regiones || []
-              return regiones.includes(regionDisp)
-            })
-          : filtered
-
-        if (!regional.length) return []
-
-        const models = regional.map(m => ({
-          ...m,
-          imagenes_urls: m.imagenes_urls || [],
-          precio_desde_uf: m.precio_desde_uf || 0,
-          constructora: m.constructora ? {
-            ...m.constructora,
-            logo_url: m.constructora.logo_url || '/placeholder.png',
-            score_confianza: m.constructora.score_confianza || 0
-          } : null
-        })) as ModelWithConstructora[]
-
-        return models.sort((a, b) => {
-          if (a.is_featured && !b.is_featured) return -1
-          if (!a.is_featured && b.is_featured) return 1
-          return (a.featured_order || 0) - (b.featured_order || 0)
-        }).slice(0, 10)
-
+        return models.sort((a, b) => (a.featured_order || 0) - (b.featured_order || 0)).slice(0, 10);
       } catch (error) {
-        console.error("Error fetching featured models:", error)
-        return []
+        console.error("Error fetching featured models:", error);
+        return [];
       }
     },
     ['featured-models', regionSlug || 'all'],
-    { revalidate: 3600, tags: ['modelos', 'featured'] }
+    { revalidate: 1800, tags: ['modelos', 'featured'] }
   )(regionSlug)
 }
 

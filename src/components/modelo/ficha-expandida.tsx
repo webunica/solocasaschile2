@@ -17,9 +17,34 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
   const ter = modelo.terminaciones || {};
 
   const labelMap = {
-    construccion: { sistema_constructivo: "Sistema", estructura: "Estructura", muros_exteriores: "Muros exteriores", muros_interiores: "Muros interiores", techumbre: "Techumbre", piso_interior: "Piso plataforma", fundacion: "Fundaciones" } as Record<string, string>,
-    aislacion: { termica: "Aislacion Termica", acustica: "Aislacion Acustica", condensacion: "Condensacion", zona_climatica: "Zona Climatica" } as Record<string, string>,
-    terminaciones: { ventanas: "Ventanas", puertas_exteriores: "Puerta Exterior", puertas_interiores: "Puertas Interiores", cocina: "Cocina", bano_principal: "Bano Principal", bano_servicio: "Bano Servicio", pisos: "Pisos", cielos: "Cielos", paredes: "Paredes" } as Record<string, string>,
+    construccion: { 
+      sistema_constructivo: "Sistema Constructivo", 
+      estructura: "Estructura Principal", 
+      muros_exteriores: "Muros Exteriores", 
+      muros_interiores: "Muros Interiores", 
+      techumbre: "Techumbre y Cubierta", 
+      piso_interior: "Piso Plataforma", 
+      fundacion: "Fundaciones",
+      dimensiones: "Dimensiones Exteriores",
+      estilo: "Estilo Arquitectónico"
+    } as Record<string, string>,
+    aislacion: { 
+      termica: "Aislación Térmica", 
+      acustica: "Aislación Acústica", 
+      condensacion: "Control Humedad y Vapor", 
+      zona_climatica: "Zona Climática Apta" 
+    } as Record<string, string>,
+    terminaciones: { 
+      ventanas: "Ventanas y Vidrios", 
+      puertas_exteriores: "Puerta Exterior", 
+      puertas_interiores: "Puertas Interiores", 
+      cocina: "Equipamiento Cocina", 
+      bano_principal: "Baño Principal", 
+      bano_servicio: "Baño Secundario", 
+      pisos: "Revestimiento Pisos", 
+      cielos: "Cielos", 
+      paredes: "Paredes" 
+    } as Record<string, string>,
   };
 
   function toItems(obj: Record<string, unknown>, map: Record<string, string>, skip: string[] = ["notas"]): { label: string; value: string }[] {
@@ -31,9 +56,9 @@ export function FichaExpandida({ modelo }: FichaExpandidaProps) {
       .map(([key, value]) => ({ label: map[key] || key, value: String(value) }));
   }
 
-  const itemsConstruccion = toItems(con, labelMap.construccion, ["notas", "plano_url"]);
-  const itemsAislacion = toItems(ais, labelMap.aislacion).slice(0, 2);
-  const itemsTerminaciones = toItems(ter, labelMap.terminaciones).slice(0, 3);
+  const itemsConstruccion = toItems(con, labelMap.construccion, ["notas", "plano_url", "pdf_url"]);
+  const itemsAislacion = toItems(ais, labelMap.aislacion);
+  const itemsTerminaciones = toItems(ter, labelMap.terminaciones);
 
   const allItems = [...itemsConstruccion, ...itemsAislacion, ...itemsTerminaciones];
 
