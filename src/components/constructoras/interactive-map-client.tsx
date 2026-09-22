@@ -146,7 +146,7 @@ export default function InteractiveMapClient({ constructoras }: InteractiveMapPr
       const isPremium = item.plan === "premium";
       const isPro = item.plan === "pro";
 
-      const pinColor = isPremium ? "#0f766e" : isPro ? "#00262b" : "#64748b";
+      const pinColor = isPremium ? "#0f766e" : isPro ? "#03313a" : "#64748b";
       const badgeText = isPremium ? "PREMIUM" : isPro ? "PRO" : "INFO";
 
       const customHtml = `
@@ -341,7 +341,7 @@ export default function InteractiveMapClient({ constructoras }: InteractiveMapPr
             <span>Premium</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-[#00262b] inline-block border border-white" />
+            <span className="w-3 h-3 rounded-full bg-[#03313a] inline-block border border-white" />
             <span>Pro</span>
           </div>
           <div className="flex items-center gap-1.5">

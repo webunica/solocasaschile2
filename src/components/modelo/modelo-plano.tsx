@@ -205,7 +205,7 @@ export function ModeloPlano({
       {planoUrl && (
         <div className="relative rounded-[2.5rem] border border-border/70 bg-gradient-to-b from-white to-slate-50/60 dark:from-slate-900/60 dark:to-slate-950/80 p-5 md:p-8 shadow-sm overflow-hidden group">
           {/* Grilla arquitectónica decorativa suave */}
-          <div className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#302b70_2px,transparent_1px)] [background-size:24px_24px]" />
+          <div className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#03313a_2px,transparent_1px)] [background-size:24px_24px]" />
 
           {/* Barra de herramientas superior del plano */}
           <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-border/50">

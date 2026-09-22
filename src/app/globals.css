@@ -3,64 +3,68 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --brand-indigo: hsl(187 100% 8%);
-  --brand-teal: hsl(187 69% 24%);
-  --brand-sunset: hsl(99 100% 84%);
-  --brand-sand: hsl(205 50% 94%);
-  --brand-evergreen-dark: hsl(187 69% 14%);
-  --brand-evergreen-hover: hsl(186 67% 19%);
+  /* Paleta Maestra Oficial: Cyber Teal (#03313A) y Aqua Foam (#8FFFE0) */
+  --brand-cyber-teal: #03313a;
+  --brand-aqua-foam: #8fffe0;
 
-  --background: hsl(0 0% 92%);
-  --foreground: hsl(187 100% 8%);
+  --brand-indigo: hsl(190 90% 12%); /* #03313a Cyber Teal */
+  --brand-teal: hsl(190 70% 22%);   /* Mid Cyber Teal */
+  --brand-sunset: hsl(163 100% 78%); /* #8fffe0 Aqua Foam */
+  --brand-sand: hsl(175 40% 96%);   /* Suave matiz espuma/hielo */
+  --brand-evergreen-dark: hsl(190 90% 12%); /* #03313a */
+  --brand-evergreen-hover: hsl(190 82% 17%); /* Hover Cyber Teal */
+
+  --background: hsl(180 18% 97%); /* Fondo limpio y luminoso */
+  --foreground: hsl(190 90% 12%); /* Cyber Teal profundo para máxima legibilidad */
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(187 100% 8%);
+  --card-foreground: hsl(190 90% 12%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(187 100% 8%);
+  --popover-foreground: hsl(190 90% 12%);
 
-  --primary: hsl(187 69% 14%);
-  --primary-foreground: hsl(0 0% 100%);
+  --primary: hsl(190 90% 12%); /* Cyber Teal principal */
+  --primary-foreground: hsl(163 100% 78%); /* Aqua Foam sobre Cyber Teal */
 
-  --secondary: hsl(120 55% 95%);
-  --secondary-foreground: hsl(187 69% 14%);
+  --secondary: hsl(163 100% 95%); /* Tinte suave Aqua Foam */
+  --secondary-foreground: hsl(190 90% 12%);
 
-  --muted: hsl(0 0% 98%);
-  --muted-foreground: hsl(187 22% 26%);
-  --accent: hsl(99 100% 84%);
-  --accent-foreground: hsl(187 69% 14%);
+  --muted: hsl(180 20% 96%);
+  --muted-foreground: hsl(190 28% 34%);
+  --accent: hsl(163 100% 78%); /* Aqua Foam #8fffe0 */
+  --accent-foreground: hsl(190 90% 12%);
   --destructive: hsl(345.3 82.7% 40.8%);
   --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(188 18% 76%);
+  --border: hsl(190 20% 82%);
   --input: hsl(0 0% 100%);
-  --ring: hsl(187 69% 24%);
+  --ring: hsl(163 100% 78%); /* Glow Aqua Foam */
 
-  --surface-canvas: #ebebeb;
+  --surface-canvas: #f0f7f7;
   --surface-white: #ffffff;
-  --surface-fog: #fafafa;
-  --surface-sky: #e0f4ff;
-  --surface-mint: #eafde8;
-  --surface-warm: #feefe8;
+  --surface-fog: #f7fbfb;
+  --surface-sky: #e0f8f5;
+  --surface-mint: #e8fff8;
+  --surface-warm: #f0fbf9;
 }
 
 .dark {
-  --background: hsl(187 54% 7%);
-  --foreground: hsl(210 40% 98%);
-  --card: hsl(188 41% 10%);
+  --background: hsl(190 90% 7%); /* Cyber Teal Noche Profundo */
+  --foreground: hsl(163 35% 96%);
+  --card: hsl(190 85% 10%); /* Tarjetas Cyber Teal Oscuras */
   --card-foreground: hsl(0 0% 100%);
-  --popover: hsl(188 41% 10%);
+  --popover: hsl(190 85% 10%);
   --popover-foreground: hsl(0 0% 100%);
 
-  --primary: hsl(99 100% 84%);
-  --primary-foreground: hsl(187 100% 8%);
+  --primary: hsl(163 100% 78%); /* Aqua Foam en modo oscuro */
+  --primary-foreground: hsl(190 90% 12%); /* Cyber Teal */
 
-  --secondary: hsl(188 27% 14%);
-  --secondary-foreground: hsl(0 0% 100%);
-  --muted: hsl(188 27% 12%);
-  --muted-foreground: hsl(190 22% 72%);
-  --accent: hsl(188 27% 14%);
-  --accent-foreground: hsl(0 0% 100%);
-  --border: hsl(188 18% 24%);
-  --input: hsl(188 24% 14%);
-  --ring: hsl(99 100% 84%);
+  --secondary: hsl(190 55% 15%);
+  --secondary-foreground: hsl(163 100% 86%);
+  --muted: hsl(190 55% 13%);
+  --muted-foreground: hsl(175 25% 72%);
+  --accent: hsl(163 100% 78%);
+  --accent-foreground: hsl(190 90% 12%);
+  --border: hsl(190 35% 18%);
+  --input: hsl(190 45% 14%);
+  --ring: hsl(163 100% 78%);
 }
 
 @theme inline {
@@ -93,6 +97,8 @@
   --color-brand-sand: var(--brand-sand);
   --color-brand-evergreen-dark: var(--brand-evergreen-dark);
   --color-brand-evergreen-hover: var(--brand-evergreen-hover);
+  --color-brand-cyber-teal: var(--brand-cyber-teal);
+  --color-brand-aqua-foam: var(--brand-aqua-foam);
   
   --radius-lg: 1rem;
   --radius-md: calc(1rem - 2px);
@@ -128,9 +134,9 @@
     @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
     line-height: 1.58;
     background-image: 
-      radial-gradient(circle at top left, rgba(224, 244, 255, 0.8), transparent 28%),
-      radial-gradient(circle at top right, rgba(234, 253, 232, 0.7), transparent 24%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(235, 235, 235, 0.96));
+      radial-gradient(circle at top left, rgba(143, 255, 224, 0.22), transparent 30%),
+      radial-gradient(circle at top right, rgba(3, 49, 58, 0.08), transparent 26%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(240, 247, 247, 0.98));
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -168,14 +174,14 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #00262b 0%, #0b363b 55%, #006af2 100%);
+  background: linear-gradient(135deg, #03313a 0%, #0c4854 50%, #156d78 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand-gradient {
-  background: linear-gradient(135deg, #00262b 0%, #0b363b 55%, #437278 100%);
+  background: linear-gradient(135deg, #03313a 0%, #0c4854 50%, #156d78 100%);
   background-size: 200% 200%;
   animation: dynamic-gradient 10s ease infinite;
 }
@@ -187,7 +193,7 @@
 }
 
 .brand-glow {
-  box-shadow: 0 28px 80px rgba(0, 38, 43, 0.12);
+  box-shadow: 0 24px 60px rgba(3, 49, 58, 0.15), 0 0 35px rgba(143, 255, 224, 0.25);
 }
 
 .glass {
@@ -265,14 +271,16 @@
   min-height: 3rem;
   padding: 0.7rem 1.25rem;
   border-radius: 9999px;
-  border: 2px solid #abffae;
-  background: #00262b;
+  border: 2px solid #8fffe0;
+  background: #03313a;
   color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(171, 255, 174, 0.18);
+  box-shadow: 0 0 0 3px rgba(143, 255, 224, 0.25), 0 10px 25px -5px rgba(3, 49, 58, 0.3);
 }
 
 .cta-pill:hover {
-  background: #0b363b;
+  background: #084652;
+  border-color: #8fffe0;
+  box-shadow: 0 0 0 4px rgba(143, 255, 224, 0.4), 0 14px 30px -5px rgba(3, 49, 58, 0.4);
 }
 
 .cta-pill-secondary {
@@ -283,14 +291,14 @@
   min-height: 3rem;
   padding: 0.7rem 1.25rem;
   border-radius: 9999px;
-  border: 1.5px solid #abffae;
-  background: rgba(255, 255, 255, 0.92);
-  color: #0b363b;
+  border: 1.5px solid #8fffe0;
+  background: rgba(255, 255, 255, 0.94);
+  color: #03313a;
 }
 
 .cta-pill-secondary:hover {
   background: #ffffff;
-  border-color: #00262b;
+  border-color: #03313a;
 }
 
 /* Vibrating pulse for maximum visibility CTA */

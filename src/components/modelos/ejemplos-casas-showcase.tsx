@@ -190,7 +190,7 @@ export function EjemplosCasasShowcase() {
                     className={cn(
                       "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-black uppercase tracking-wider transition-all",
                       currentTab === "plano"
-                        ? "bg-brand-teal text-[#00262b] shadow-sm font-black"
+                        ? "bg-brand-teal text-[#03313a] shadow-sm font-black"
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >

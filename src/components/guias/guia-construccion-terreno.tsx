@@ -250,10 +250,10 @@ export function GuiaConstruccionTerreno() {
   return (
     <section className="mt-16 space-y-12">
       {/* Header Banner Guía */}
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-brand-teal/25 bg-gradient-to-br from-brand-indigo via-[#00262b] to-brand-teal/90 p-8 text-white shadow-2xl md:p-12">
+      <div className="relative overflow-hidden rounded-[2.5rem] border border-brand-teal/25 bg-gradient-to-br from-brand-indigo via-[#03313a] to-brand-teal/90 p-8 text-white shadow-2xl md:p-12">
         <div className="absolute right-0 top-0 -mr-16 -mt-16 h-80 w-80 rounded-full bg-brand-teal/15 blur-3xl" />
         <div className="relative z-10 max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand-teal/30 bg-brand-teal/20 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#abffae]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-brand-teal/30 bg-brand-teal/20 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#8fffe0]">
             <BookOpen className="h-3.5 w-3.5" />
             Guía Práctica Oficial 2026
           </div>
@@ -288,7 +288,7 @@ export function GuiaConstruccionTerreno() {
                 <span
                   className={cn(
                     "text-[11px] font-black uppercase tracking-wider",
-                    isSelected ? "text-[#abffae]" : "text-muted-foreground"
+                    isSelected ? "text-[#8fffe0]" : "text-muted-foreground"
                   )}
                 >
                   Paso {etapa.numero}
@@ -296,7 +296,7 @@ export function GuiaConstruccionTerreno() {
                 <Icon
                   className={cn(
                     "h-4 w-4 transition-transform group-hover:scale-110",
-                    isSelected ? "text-[#abffae]" : "text-muted-foreground"
+                    isSelected ? "text-[#8fffe0]" : "text-muted-foreground"
                   )}
                 />
               </div>
@@ -422,7 +422,7 @@ export function GuiaConstruccionTerreno() {
         {/* Barra de progreso */}
         <div className="h-3 w-full overflow-hidden rounded-full bg-muted">
           <div
-            className="h-full bg-gradient-to-r from-brand-indigo via-brand-teal to-[#abffae] transition-all duration-500"
+            className="h-full bg-gradient-to-r from-brand-indigo via-brand-teal to-[#8fffe0] transition-all duration-500"
             style={{ width: `${porcentaje}%` }}
           />
         </div>

@@ -127,8 +127,8 @@ export function Header() {
               )}
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#abffae] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#abffae]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8fffe0] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8fffe0]"></span>
               </span>
               Ver modelos
             </Link>
@@ -217,8 +217,8 @@ export function Header() {
                   )}
                 >
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#abffae] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#abffae]"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8fffe0] opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8fffe0]"></span>
                   </span>
                   Ver modelos
                 </Link>
