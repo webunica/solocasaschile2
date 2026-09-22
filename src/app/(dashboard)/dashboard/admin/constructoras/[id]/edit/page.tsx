@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { AdminEditForm } from "@/components/dashboard/admin/constructora-edit-form";
-import { ArrowLeft, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Calendar } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
 
@@ -54,12 +54,20 @@ export default async function AdminEditConstructoraPage({ params }: PageProps) {
 
         <div>
           <div className="flex items-center gap-3 mb-2">
-             <ShieldCheck className="w-6 h-6 text-amber-500 opacity-60" />
-             <h1 className="text-4xl font-heading font-black tracking-tighter leading-none italic">
-                Editar Perfil: <span className="text-muted-foreground">{constructora.nombre}</span>
-             </h1>
+            <ShieldCheck className="w-6 h-6 text-amber-500 opacity-60" />
+            <h1 className="text-4xl font-heading font-black tracking-tighter leading-none italic">
+              Editar Perfil: <span className="text-muted-foreground">{constructora.nombre}</span>
+            </h1>
           </div>
-          <p className="text-muted-foreground text-sm font-medium">Modifica directamente los datos públicos de esta constructora como Administrador Maestro.</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="text-muted-foreground text-sm font-medium">Modifica directamente los datos públicos de esta constructora como Administrador Maestro.</p>
+            {constructora.created_at && (
+              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground font-semibold bg-muted/40 px-2.5 py-1 rounded-xl border border-border/40">
+                <Calendar className="w-3.5 h-3.5 text-brand-indigo" />
+                Registrada el {new Date(constructora.created_at).toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric", timeZone: "America/Santiago" })}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 

@@ -6,13 +6,47 @@ import Link from "next/link";
 import { 
   Building2, Mail, MapPin, Search, 
   Globe, CheckCircle2, MoreVertical, X,
-  Filter, ChevronDown, ArrowUpDown, ChevronLeft, ChevronRight, Phone
+  Filter, ChevronDown, ArrowUpDown, ChevronLeft, ChevronRight, Phone, Calendar
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ConstructoraAdminControls } from "./constructora-controls";
+
+function formatFechaRegistro(dateStr?: string | null): string {
+  if (!dateStr) return "Sin fecha";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return "Sin fecha";
+    return d.toLocaleDateString("es-CL", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      timeZone: "America/Santiago",
+    });
+  } catch {
+    return "Sin fecha";
+  }
+}
+
+function formatFechaCompleta(dateStr?: string | null): string {
+  if (!dateStr) return "Sin fecha";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return "Sin fecha";
+    return d.toLocaleString("es-CL", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "America/Santiago",
+    });
+  } catch {
+    return "Sin fecha";
+  }
+}
 
 export type ConstructoraAdminItem = {
   id: string;
@@ -41,7 +75,7 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
   const [selectedPlan, setSelectedPlan] = useState<string>("all");
   const [selectedVerification, setSelectedVerification] = useState<string>("all");
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
-  const [sortBy, setSortBy] = useState<"recent" | "score" | "name">("recent");
+  const [sortBy, setSortBy] = useState<"recent" | "oldest" | "score" | "name">("recent");
   const [currentPage, setCurrentPage] = useState(1);
   const [showAutocomplete, setShowAutocomplete] = useState(false);
 
@@ -110,7 +144,8 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
         const matchDir = c.direccion?.toLowerCase().includes(query);
         const matchPhone = c.telefono?.toLowerCase().includes(query);
         const matchWeb = c.sitio_web?.toLowerCase().includes(query);
-        if (!matchName && !matchSlug && !matchEmail && !matchDir && !matchPhone && !matchWeb) {
+        const matchFecha = c.created_at ? formatFechaRegistro(c.created_at).toLowerCase().includes(query) : false;
+        if (!matchName && !matchSlug && !matchEmail && !matchDir && !matchPhone && !matchWeb && !matchFecha) {
           return false;
         }
       }
@@ -147,8 +182,19 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
       list.sort((a, b) => (b.score_confianza || 0) - (a.score_confianza || 0));
     } else if (sortBy === "name") {
       list.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    } else if (sortBy === "oldest") {
+      list.sort((a, b) => {
+        const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return timeA - timeB;
+      });
     } else {
-      // recent: preservar orden de Supabase (created_at desc)
+      // recent: más recientes primero por fecha de creación
+      list.sort((a, b) => {
+        const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return timeB - timeA;
+      });
     }
     return list;
   }, [filteredConstructoras, sortBy]);
@@ -259,12 +305,13 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
             <select
               value={sortBy}
               onChange={(e) => {
-                setSortBy(e.target.value as "recent" | "score" | "name");
+                setSortBy(e.target.value as "recent" | "oldest" | "score" | "name");
                 setCurrentPage(1);
               }}
               className="bg-transparent text-xs font-bold text-foreground focus:outline-none cursor-pointer"
             >
-              <option value="recent">Más recientes</option>
+              <option value="recent">Más recientes (Registro)</option>
+              <option value="oldest">Más antiguas (Registro)</option>
               <option value="score">Mayor Score de Confianza</option>
               <option value="name">Alfabético (A-Z)</option>
             </select>
@@ -394,13 +441,13 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
             </div>
 
             <div className="flex-1 space-y-1.5 min-w-0 text-center md:text-left">
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
                 <Link href={`/constructora/${cons.slug}`} target="_blank" className="hover:underline">
                   <h3 className="text-lg font-black tracking-tight truncate max-w-[280px]">
                     {cons.nombre}
                   </h3>
                 </Link>
-                <div className="flex gap-1.5 items-center">
+                <div className="flex gap-1.5 items-center flex-wrap">
                   <Badge
                     className={cn(
                       "text-[9px] uppercase tracking-wider font-bold",
@@ -418,6 +465,16 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
                   {cons.verificada && (
                     <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[9px] font-bold">
                       <CheckCircle2 className="w-3 h-3 mr-1" /> Verificada
+                    </Badge>
+                  )}
+                  {cons.created_at && (
+                    <Badge
+                      variant="outline"
+                      className="bg-muted/40 border-border/50 text-muted-foreground text-[10px] font-semibold flex items-center gap-1 py-0.5"
+                      title={`Fecha exacta de registro: ${formatFechaCompleta(cons.created_at)}`}
+                    >
+                      <Calendar className="w-3 h-3 text-muted-foreground/80" />
+                      <span>Reg: {formatFechaRegistro(cons.created_at)}</span>
                     </Badge>
                   )}
                 </div>
@@ -442,6 +499,15 @@ export function AdminConstructorasClient({ initialConstructoras }: Props) {
                 {cons.sitio_web && (
                   <span className="flex items-center gap-1.5 opacity-80">
                     <Globe className="w-3.5 h-3.5 shrink-0" /> {cons.sitio_web.replace(/^https?:\/\//, "")}
+                  </span>
+                )}
+                {cons.created_at && (
+                  <span
+                    className="flex items-center gap-1.5 opacity-90 text-xs text-muted-foreground font-medium"
+                    title={`Fecha de registro: ${formatFechaCompleta(cons.created_at)}`}
+                  >
+                    <Calendar className="w-3.5 h-3.5 text-brand-indigo shrink-0" />
+                    <span>Registro: <strong className="text-foreground/90 font-semibold">{formatFechaRegistro(cons.created_at)}</strong></span>
                   </span>
                 )}
               </div>
