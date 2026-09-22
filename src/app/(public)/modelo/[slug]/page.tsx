@@ -334,7 +334,14 @@ export default async function ModeloPage({ params }: PageProps) {
                   );
                 })()}
 
-               <ModeloPlano planoUrl={planoUrl} recintos={modelo.recintos} superficie={modelo.superficie_m2} />
+               <ModeloPlano
+                 planoUrl={planoUrl}
+                 recintos={modelo.recintos}
+                 superficie={modelo.superficie_m2}
+                 dimensiones={typeof construccion?.dimensiones === "string" ? construccion.dimensiones : null}
+                 pdfUrl={typeof construccion?.pdf_url === "string" ? construccion.pdf_url : null}
+                 nombreModelo={modelo.nombre}
+               />
                
                {modelo.video_url && getYoutubeEmbedUrl(modelo.video_url) && (
                  <div className="space-y-10">
