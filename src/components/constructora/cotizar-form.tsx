@@ -7,6 +7,7 @@ import {
   MessageSquare, Lock, Clock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HoneypotFields } from "@/components/security/honeypot-fields";
 
 interface Props {
   modeloId: string;
@@ -52,6 +53,9 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
       email_cliente: (formData.get("email") as string) || "",
       telefono_cliente: (formData.get("phone") as string) || "No especificado",
       mensaje: `[Región: ${formData.get("region") || "No especificada"}]\n[Terreno: ${formData.get("terreno") || "No especificado"}]\n[Interés: ${formData.get("interes") || "No especificado"}]\n[Superficie: ${formData.get("superficie") || "No especificado"}]\n\n${(formData.get("message") as string) || ""}`,
+      b_website: (formData.get("b_website") as string) || "",
+      website: (formData.get("website") as string) || "",
+      _form_time: Number(formData.get("_form_time")) || undefined,
     };
 
     try {
@@ -116,6 +120,7 @@ export function CotizarForm({ modeloId, modeloNombre, constructoraId, constructo
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <HoneypotFields />
           <div className="grid grid-cols-1 gap-4">
             {/* Región y Terreno Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

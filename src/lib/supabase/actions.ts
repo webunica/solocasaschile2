@@ -9,6 +9,7 @@ import { getPlanLimits } from '../constants/plans'
 import { resend } from '@/lib/resend'
 import { recalcularSellosAutomaticos } from '@/lib/services/sellos'
 import { getNextLeadStage, normalizeLeadStage, type LeadFunnelStage } from '@/lib/communications/funnel'
+import { evaluateAntiSpam } from '@/lib/security/anti-spam'
 
 type GenericRecord = Record<string, unknown>;
 type EmailRow = { email: string | null };
@@ -1298,7 +1299,32 @@ export async function submitLead(data: {
   constructora_id: string;
   modelo_nombre: string;
   constructora_nombre: string;
+  b_website?: string;
+  website?: string;
+  _form_time?: number | string;
 }) {
+  // Capa de evaluación de seguridad anti-spam
+  const spamResult = evaluateAntiSpam({
+    name: data.nombre_cliente,
+    email: data.email_cliente,
+    phone: data.telefono_cliente,
+    message: data.mensaje,
+    honeypot: data.website,
+    honeypotAlt: data.b_website,
+    formTime: data._form_time,
+    skipVelocityCheck: data._form_time === undefined,
+  });
+
+  if (spamResult.isSpam) {
+    console.warn('[submitLead] Spam detectado y descartado silenciosamente:', {
+      layer: spamResult.layer,
+      reason: spamResult.reason,
+      details: spamResult.details,
+    });
+    // Silent drop: retorna éxito simulado para neutralizar bots
+    return { success: true };
+  }
+
   const supabase = await createClient();
 
   // 1. Obtener email de la constructora o del modelo

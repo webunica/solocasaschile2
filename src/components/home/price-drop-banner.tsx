@@ -6,6 +6,7 @@ import { TrendingDown, Bell, Send, CheckCircle2, Loader2, Sparkles } from "lucid
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { HoneypotFields } from "@/components/security/honeypot-fields";
 import { toast } from "sonner";
 
 export function PriceDropBanner() {
@@ -13,22 +14,30 @@ export function PriceDropBanner() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    const formEl = e.currentTarget;
+    const b_website = (formEl.elements.namedItem("b_website") as HTMLInputElement)?.value || "";
+    const website = (formEl.elements.namedItem("website") as HTMLInputElement)?.value || "";
+    const formTime = Number((formEl.elements.namedItem("_form_time") as HTMLInputElement)?.value) || Date.now();
 
     try {
       const response = await fetch("/api/leads/public", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-        modelo_id: null,
-        constructora_id: null,
-        nombre_cliente: "Suscripción General Precios",
-        email_cliente: email,
-        telefono_cliente: "N/A",
-        mensaje: "[ALERTA PRECIO HOME] Suscripción general para alertas de baja de precio desde el home.",
-      }),
+          modelo_id: null,
+          constructora_id: null,
+          nombre_cliente: "Suscripción General Precios",
+          email_cliente: email,
+          telefono_cliente: "+56900000000",
+          mensaje: "[ALERTA PRECIO HOME] Suscripción general para alertas de baja de precio desde el home.",
+          b_website,
+          website,
+          _form_time: formTime,
+        }),
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result?.error || "No se pudo registrar tu suscripción");
@@ -94,6 +103,7 @@ export function PriceDropBanner() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  <HoneypotFields />
                   <div className="space-y-3">
                      <p className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-emerald-100 text-center lg:text-left">Tu correo electrónico</p>
                      <Input 

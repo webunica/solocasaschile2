@@ -122,4 +122,46 @@ describe('actions > submitLead', () => {
     expect(result.success).toBe(true);
     expect(mockSupabaseQuery.insert).toHaveBeenCalled();
   });
+
+  it('debe descartar silenciosamente bots que llenan el campo trampa honeypot', async () => {
+    const spamLead = {
+      ...validLeadData,
+      b_website: 'http://spambot-trap.com',
+    };
+
+    const result = await submitLead(spamLead);
+
+    expect(result.success).toBe(true);
+    expect(mockSupabaseClient.from).not.toHaveBeenCalled();
+    expect(mockSupabaseQuery.insert).not.toHaveBeenCalled();
+    expect(resend.emails.send).not.toHaveBeenCalled();
+  });
+
+  it('debe descartar silenciosamente nombres de bot generados alfanuméricos', async () => {
+    const spamLead = {
+      ...validLeadData,
+      nombre_cliente: 'cQTKNttFO',
+    };
+
+    const result = await submitLead(spamLead);
+
+    expect(result.success).toBe(true);
+    expect(mockSupabaseClient.from).not.toHaveBeenCalled();
+    expect(mockSupabaseQuery.insert).not.toHaveBeenCalled();
+    expect(resend.emails.send).not.toHaveBeenCalled();
+  });
+
+  it('debe descartar silenciosamente contenido de spam con caracteres cirílicos o palabras clave comerciales', async () => {
+    const spamLead = {
+      ...validLeadData,
+      mensaje: 'Привет! buy cheap crypto and rank your website fast',
+    };
+
+    const result = await submitLead(spamLead);
+
+    expect(result.success).toBe(true);
+    expect(mockSupabaseClient.from).not.toHaveBeenCalled();
+    expect(mockSupabaseQuery.insert).not.toHaveBeenCalled();
+    expect(resend.emails.send).not.toHaveBeenCalled();
+  });
 });

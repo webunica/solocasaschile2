@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { HoneypotFields } from "@/components/security/honeypot-fields";
 import { trackCotizacionStart, trackCotizacionSubmit } from "@/lib/analytics";
 
 export function HeroLeadForm() {
@@ -35,6 +36,8 @@ export function HeroLeadForm() {
       telefono_cliente: formData.get("phone") as string,
       mensaje: formData.get("message") as string,
       website: (formData.get("website") as string) || "",
+      b_website: (formData.get("b_website") as string) || "",
+      _form_time: Number(formData.get("_form_time")) || undefined,
     };
 
     try {
@@ -113,13 +116,7 @@ export function HeroLeadForm() {
           </div>
         </div>
       </div>
-      <Input
-        name="website"
-        tabIndex={-1}
-        autoComplete="off"
-        className="hidden"
-        aria-hidden="true"
-      />
+      <HoneypotFields />
 
       <div className="space-y-1">
         <label className="form-label">Email</label>

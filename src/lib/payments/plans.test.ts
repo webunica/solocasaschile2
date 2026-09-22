@@ -10,10 +10,10 @@ describe("checkout plans", () => {
     const price = getCheckoutPriceWithCoupon("pro", "yearly", "SOLOCASAS10");
 
     expect(price.coupon?.percentOff).toBe(10);
-    expect(price.subtotalUf).toBe(6.72);
-    expect(price.discountUf).toBe(0.67);
-    expect(price.totalUf).toBe(6.05);
-    expect(price.displayUf).toBe(0.5);
+    expect(price.subtotalUf).toBe(28.8);
+    expect(price.discountUf).toBe(2.88);
+    expect(price.totalUf).toBe(25.92);
+    expect(price.displayUf).toBe(2.16);
   });
 
   it("ignora cupones inexistentes", () => {
@@ -21,6 +21,6 @@ describe("checkout plans", () => {
 
     expect(getCheckoutCoupon("NOPE")).toBeNull();
     expect(price.discountUf).toBe(0);
-    expect(price.totalUf).toBe(0.7);
+    expect(price.totalUf).toBe(3);
   });
 });

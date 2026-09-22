@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Bell, CheckCircle2, Loader2, Mail, Send, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { HoneypotFields } from "@/components/security/honeypot-fields";
 import { toast } from "sonner";
 
 interface Props {
@@ -20,22 +21,30 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+
+    const formEl = e.currentTarget;
+    const b_website = (formEl.elements.namedItem("b_website") as HTMLInputElement)?.value || "";
+    const website = (formEl.elements.namedItem("website") as HTMLInputElement)?.value || "";
+    const formTime = Number((formEl.elements.namedItem("_form_time") as HTMLInputElement)?.value) || Date.now();
 
     try {
       const response = await fetch("/api/leads/public", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-        modelo_id: /^[0-9a-fA-F-]{36}$/.test(modeloId) ? modeloId : null,
-        constructora_id: /^[0-9a-fA-F-]{36}$/.test(constructoraId) ? constructoraId : null,
-        nombre_cliente: "Interesado en Descuento",
-        email_cliente: email,
-        telefono_cliente: "N/A",
-        mensaje: `[ALERTA PRECIO] Suscripción para alerta de baja de precio de ${modeloNombre}. Precio actual: ${currentPrice} UF`,
-      }),
+          modelo_id: /^[0-9a-fA-F-]{36}$/.test(modeloId) ? modeloId : null,
+          constructora_id: /^[0-9a-fA-F-]{36}$/.test(constructoraId) ? constructoraId : null,
+          nombre_cliente: "Interesado en Descuento",
+          email_cliente: email,
+          telefono_cliente: "+56900000000",
+          mensaje: `[ALERTA PRECIO] Suscripción para alerta de baja de precio de ${modeloNombre}. Precio actual: ${currentPrice} UF`,
+          b_website,
+          website,
+          _form_time: formTime,
+        }),
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result?.error || "No se pudo registrar la alerta");
@@ -91,6 +100,7 @@ export function PriceNotify({ modeloId, modeloNombre, constructoraId, currentPri
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <HoneypotFields />
                 <div className="space-y-2">
                    <div className="flex items-center justify-between">
                       <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Alerta de Ahorro</p>

@@ -25,6 +25,7 @@ import {
   CheckCircle2, MapPin
 } from "lucide-react";
 import { submitLead } from "@/lib/supabase/actions";
+import { HoneypotFields } from "@/components/security/honeypot-fields";
 import { cn } from "@/lib/utils";
 import { trackCotizacionStart, trackCotizacionSubmit } from "@/lib/analytics";
 
@@ -95,6 +96,9 @@ export function CotizarModal({
       constructora_id: constructoraId,
       modelo_nombre: modeloNombre,
       constructora_nombre: constructoraNombre,
+      b_website: (formData.get("b_website") as string) || "",
+      website: (formData.get("website") as string) || "",
+      _form_time: Number(formData.get("_form_time")) || undefined,
     };
 
     try {
@@ -156,6 +160,7 @@ export function CotizarModal({
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              <HoneypotFields />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-black uppercase tracking-widest text-brand-indigo opacity-70 ml-1">Tu Nombre</label>
