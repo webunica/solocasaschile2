@@ -50,19 +50,24 @@ export function DashboardSidebar({
     <Sidebar variant="sidebar" collapsible="icon" className="border-r border-border/40 bg-background md:bg-card/40 backdrop-blur-xl">
       <SidebarHeader className="h-20 flex items-center px-4 border-b border-border/40">
          <Link href="/" className="flex items-center gap-2 group">
-            {/* Collapsed: show S icon */}
-            <div className="w-9 h-9 rounded-xl bg-brand-indigo flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform shadow-lg shadow-primary/20 shrink-0 group-data-[collapsible=icon]:flex hidden">S</div>
-            {/* Expanded: show full vertical logo */}
+            {/* Collapsed: show new icon */}
             <Image
-              src="/images/logo-vertical.png"
+              src="/images/logo-icon.png"
               alt="SolocasasChile"
-              width={120}
-              height={90}
-              className="h-12 w-auto object-contain group-data-[collapsible=icon]:hidden"
-              style={{ filter: "drop-shadow(0 1px 4px rgba(0,0,0,0.15))" }}
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-xl object-contain group-hover:scale-105 transition-transform shrink-0 group-data-[collapsible=icon]:flex hidden"
+            />
+            {/* Expanded: show full horizontal logo */}
+            <Image
+              src="/images/solocasaschile-logo.png"
+              alt="SolocasasChile"
+              width={434}
+              height={70}
+              className="h-8 w-auto object-contain group-data-[collapsible=icon]:hidden"
               priority
             />
-         </Link>
+          </Link>
       </SidebarHeader>
 
       <SidebarContent className="px-4 pt-8">

@@ -37,11 +37,11 @@ export default function LoginPage() {
         
         <Link href="/" className="relative z-10 flex items-center space-x-2 group">
           <Image
-            src="/images/logo-vertical.png"
+            src="/images/solocasaschile-logo.png"
             alt="SolocasasChile"
-            width={160}
-            height={120}
-            className="h-16 w-auto object-contain group-hover:scale-105 transition-transform"
+            width={434}
+            height={70}
+            className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
             style={{ filter: "brightness(0) invert(1)" }}
             priority
           />

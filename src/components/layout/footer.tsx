@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Building2, Mail, MapPin, Phone, Sparkles, Trees } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -36,8 +37,14 @@ export function Footer() {
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-teal/18 text-accent">
-                  <Building2 className="h-5 w-5" aria-hidden="true" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl overflow-hidden shrink-0 shadow-lg">
+                  <Image
+                    src="/images/logo-icon.png"
+                    alt="SolocasasChile"
+                    width={48}
+                    height={48}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
                 <div>
                   <p className="font-heading text-3xl font-semibold tracking-tight text-white">SolocasasChile</p>

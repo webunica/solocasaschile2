@@ -230,11 +230,11 @@ function RegisterForm() {
         <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
           <Link href="/" className="shrink-0 hover:scale-105 transition-transform">
             <Image
-              src="/images/logo-vertical.png"
+              src="/images/solocasaschile-logo.png"
               alt="SolocasasChile"
-              width={160}
-              height={120}
-              className="h-[86px] w-auto object-contain mx-auto"
+              width={434}
+              height={70}
+              className="h-12 w-auto object-contain mx-auto"
               priority
             />
           </Link>

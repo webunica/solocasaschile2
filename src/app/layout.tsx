@@ -72,6 +72,16 @@ export const metadata: Metadata = {
     images: ["/twitter-image.jpg"]
   },
   manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.png",
+  },
   alternates: {
     canonical: "https://solocasaschile.com",
   },

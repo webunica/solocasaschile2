@@ -140,11 +140,11 @@ function CheckoutForm() {
           <div className="space-y-5">
             <Link href="/" className="inline-flex">
               <Image
-                src="/images/logo-vertical.png"
+                src="/images/solocasaschile-logo.png"
                 alt="SolocasasChile"
-                width={150}
-                height={110}
-                className="h-20 w-auto object-contain"
+                width={434}
+                height={70}
+                className="h-10 w-auto object-contain"
                 priority
               />
             </Link>

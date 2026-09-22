@@ -70,17 +70,17 @@ export function Header() {
             <Image
               src="/images/logo-icon.png"
               alt="SolocasasChile"
-              width={48}
+              width={40}
               height={40}
-              className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-sm sm:hidden"
+              className="h-10 w-auto rounded-xl object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
               priority
             />
-            {/* Versión Desktop / Tablet: Logo horizontal 478x75px */}
+            {/* Versión Desktop / Tablet: Logo horizontal 434x70px */}
             <Image
               src="/images/solocasaschile-logo.png"
               alt="SolocasasChile"
-              width={478}
-              height={75}
+              width={434}
+              height={70}
               className="hidden h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:block lg:h-10"
               priority
             />
