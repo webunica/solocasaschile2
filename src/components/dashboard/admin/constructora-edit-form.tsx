@@ -28,6 +28,7 @@ interface Props {
     sitio_web?: string | null;
     descripcion?: string | null;
     telefono?: string | null;
+    email?: string | null;
     direccion?: string | null;
     video_url?: string | null;
     regiones?: string[] | null;
@@ -197,24 +198,38 @@ export function AdminEditForm({ initialData }: Props) {
 
             <div className="grid md:grid-cols-2 gap-6">
                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-xs font-black uppercase tracking-widest opacity-60">Correo Electrónico</Label>
+                  <Input 
+                    id="email" 
+                    name="email" 
+                    type="email"
+                    defaultValue={initialData?.email || ""} 
+                    className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="contacto@constructora.cl"
+                  />
+               </div>
+
+               <div className="space-y-2">
                   <Label htmlFor="telefono" className="text-xs font-black uppercase tracking-widest opacity-60">Teléfono</Label>
                   <Input 
                     id="telefono" 
                     name="telefono" 
                     defaultValue={initialData?.telefono || ""} 
                     className="h-12 rounded-xl bg-muted/20 border-border/40"
+                    placeholder="+56 9 1234 5678"
                   />
                </div>
-               
-               <div className="space-y-2">
-                  <Label htmlFor="direccion" className="text-xs font-black uppercase tracking-widest opacity-60">Dirección</Label>
-                  <Input 
-                    id="direccion" 
-                    name="direccion" 
-                    defaultValue={initialData?.direccion || ""} 
-                    className="h-12 rounded-xl bg-muted/20 border-border/40"
-                  />
-               </div>
+            </div>
+
+            <div className="space-y-2">
+               <Label htmlFor="direccion" className="text-xs font-black uppercase tracking-widest opacity-60">Dirección</Label>
+               <Input 
+                 id="direccion" 
+                 name="direccion" 
+                 defaultValue={initialData?.direccion || ""} 
+                 className="h-12 rounded-xl bg-muted/20 border-border/40"
+                 placeholder="Calle, Número, Comuna, Región"
+               />
             </div>
 
             <div className="space-y-4 pt-4 border-t border-border/40">

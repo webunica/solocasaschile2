@@ -682,6 +682,7 @@ export async function adminUpdateConstructora(formData: FormData) {
     nombre: formData.get('nombre') as string,
     razon_social: formData.get('razon_social') as string,
     descripcion: formData.get('descripcion') as string,
+    email: (formData.get('email') as string)?.trim().toLowerCase() || null,
     telefono: formData.get('telefono') as string,
     rut: formData.get('rut') as string,
     sitio_web: formData.get('sitio_web') as string,
