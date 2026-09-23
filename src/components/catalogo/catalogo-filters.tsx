@@ -27,14 +27,36 @@ const PRECIO_RANGOS = [
   { label: "Más de 1.500 UF", min: 1500 },
 ];
 
+const DORMITORIOS_OPTS = [
+  { label: "1 dorm.",  value: 1 },
+  { label: "2 dorm.",  value: 2 },
+  { label: "3 dorm.",  value: 3 },
+  { label: "4+",       value: 4 },
+];
+
+const BANOS_OPTS = [
+  { label: "1 baño",   value: 1 },
+  { label: "2 baños",  value: 2 },
+  { label: "3+",       value: 3 },
+];
+
 interface Props {
   currentTipo?: TipoModelo;
   currentRegion?: string;
   currentMin?: number;
   currentMax?: number;
+  currentDormitorios?: number;
+  currentBanos?: number;
 }
 
-export function CatalogoFilters({ currentTipo, currentRegion, currentMin, currentMax }: Props) {
+export function CatalogoFilters({
+  currentTipo,
+  currentRegion,
+  currentMin,
+  currentMax,
+  currentDormitorios,
+  currentBanos,
+}: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -49,7 +71,9 @@ export function CatalogoFilters({ currentTipo, currentRegion, currentMin, curren
   };
 
   const clearAll = () => router.push("/catalogo");
-  const hasFilters = currentTipo || currentRegion || currentMin || currentMax;
+  const hasFilters =
+    currentTipo || currentRegion || currentMin || currentMax ||
+    currentDormitorios || currentBanos;
 
   return (
     <div className="space-y-6 sticky top-20">
@@ -58,10 +82,71 @@ export function CatalogoFilters({ currentTipo, currentRegion, currentMin, curren
           Filtros
         </h2>
         {hasFilters && (
-          <Button variant="ghost" size="sm" onClick={clearAll} className="text-xs h-7 px-2 text-destructive hover:text-destructive">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearAll}
+            className="text-xs h-7 px-2 text-destructive hover:text-destructive"
+          >
             <X className="w-3 h-3 mr-1" /> Limpiar
           </Button>
         )}
+      </div>
+
+      {/* Dormitorios */}
+      <div className="space-y-2">
+        <Label className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">
+          Dormitorios
+        </Label>
+        <div className="flex flex-wrap gap-1.5">
+          {DORMITORIOS_OPTS.map((d) => {
+            const isActive = currentDormitorios === d.value;
+            return (
+              <button
+                key={d.value}
+                onClick={() =>
+                  updateFilter("dormitorios", isActive ? undefined : String(d.value))
+                }
+                className={`rounded-xl px-3 py-1.5 text-xs font-semibold border transition-all ${
+                  isActive
+                    ? "bg-primary/15 text-primary border-primary/30 font-bold"
+                    : "hover:bg-muted text-muted-foreground hover:text-foreground border-transparent hover:border-border/50"
+                }`}
+              >
+                {d.label}
+                {isActive && <X className="w-2.5 h-2.5 ml-1 inline opacity-60" />}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Baños */}
+      <div className="space-y-2">
+        <Label className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">
+          Baños
+        </Label>
+        <div className="flex flex-wrap gap-1.5">
+          {BANOS_OPTS.map((b) => {
+            const isActive = currentBanos === b.value;
+            return (
+              <button
+                key={b.value}
+                onClick={() =>
+                  updateFilter("banos", isActive ? undefined : String(b.value))
+                }
+                className={`rounded-xl px-3 py-1.5 text-xs font-semibold border transition-all ${
+                  isActive
+                    ? "bg-primary/15 text-primary border-primary/30 font-bold"
+                    : "hover:bg-muted text-muted-foreground hover:text-foreground border-transparent hover:border-border/50"
+                }`}
+              >
+                {b.label}
+                {isActive && <X className="w-2.5 h-2.5 ml-1 inline opacity-60" />}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Tipo */}

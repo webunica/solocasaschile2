@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/home/hero-section";
 import { FeaturedModelsSection } from "@/components/home/featured-models";
 import { PriceDropBanner } from "@/components/home/price-drop-banner";
 import { SeoContent, HOME_FAQS } from "@/components/home/seo-content";
+import { ModelSearchWidget } from "@/components/modelos/model-search-widget";
 import dynamic from "next/dynamic";
 import { buildWebSiteJsonLd, buildOrganizationJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
 import type { Metadata } from "next";
@@ -85,6 +86,15 @@ export default function Home() {
 
       {/* A: Attention (Hero) */}
       <HeroSection />
+
+      {/* Buscador de Modelos — widget justo debajo del hero */}
+      <section className="container max-w-5xl mx-auto px-6 md:px-12 -mt-8 pb-8 relative z-10">
+        <ModelSearchWidget
+          title="Encuentra tu casa ideal"
+          subtitle="Selecciona dormitorios, baños y superficie para ver modelos que se ajusten a ti"
+          targetPath="/buscador"
+        />
+      </section>
 
       {/* Model Selection (Desire) */}
       <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando modelos destacados...</div>}>

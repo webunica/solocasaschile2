@@ -252,6 +252,11 @@ export async function getModelosFiltered(filters: {
   maxUF?: number
   region?: string
   sortBy?: string
+  dormitorios?: number
+  banosMin?: number
+  superficieMin?: number
+  superficieMax?: number
+  uso?: string
 }) {
   return unstable_cache(
     async (filters) => {
@@ -277,6 +282,35 @@ export async function getModelosFiltered(filters: {
 
       if (filters.maxUF !== undefined) {
         models = models.filter(m => (m.precio_desde_uf || 0) <= filters.maxUF!);
+      }
+
+      // Filtros de características de vivienda
+      if (filters.dormitorios !== undefined) {
+        if (filters.dormitorios >= 4) {
+          models = models.filter(m => m.dormitorios >= 4);
+        } else {
+          models = models.filter(m => m.dormitorios === filters.dormitorios);
+        }
+      }
+
+      if (filters.banosMin !== undefined) {
+        models = models.filter(m => m.banos >= filters.banosMin!);
+      }
+
+      if (filters.superficieMin !== undefined) {
+        models = models.filter(m => m.superficie_m2 >= filters.superficieMin!);
+      }
+
+      if (filters.superficieMax !== undefined) {
+        models = models.filter(m => m.superficie_m2 <= filters.superficieMax!);
+      }
+
+      if (filters.uso) {
+        const usoLower = filters.uso.toLowerCase();
+        models = models.filter(m =>
+          m.uso?.toLowerCase().includes(usoLower) ||
+          m.descripcion?.toLowerCase().includes(usoLower)
+        );
       }
 
       const sorted = models.sort((a, b) => {

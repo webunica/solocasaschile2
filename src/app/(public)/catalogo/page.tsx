@@ -4,6 +4,7 @@ import { FeaturedSlider } from "@/components/catalogo/featured-slider";
 import { CatalogoFilters } from "@/components/catalogo/catalogo-filters";
 import { CatalogoEmpty } from "@/components/catalogo/catalogo-empty";
 import { CatalogoControls } from "@/components/catalogo/catalogo-controls";
+import { ModelSearchWidget } from "@/components/modelos/model-search-widget";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -40,6 +41,10 @@ interface PageProps {
     max?: string; 
     region?: string;
     sort?: string;
+    dormitorios?: string;
+    banos?: string;
+    m2min?: string;
+    m2max?: string;
   }>;
 }
 
@@ -50,6 +55,10 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
   const minUF = params.min ? parseInt(params.min) : undefined;
   const maxUF = params.max ? parseInt(params.max) : undefined;
   const sortBy = params.sort;
+  const dormitorios = params.dormitorios ? parseInt(params.dormitorios) : undefined;
+  const banosMin = params.banos ? parseInt(params.banos) : undefined;
+  const superficieMin = params.m2min ? parseInt(params.m2min) : undefined;
+  const superficieMax = params.m2max ? parseInt(params.m2max) : undefined;
 
   // Resolve region display name for slider label using the shared utility
   const regionLabel = getRegionDisplayName(regionFilter);
@@ -68,7 +77,7 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
 
   // Real fetch from Supabase
   const [modelos, featuredModels] = await Promise.all([
-    getModelosFiltered({ tipo: tipoFilter, minUF, maxUF, region: regionFilter, sortBy }),
+    getModelosFiltered({ tipo: tipoFilter, minUF, maxUF, region: regionFilter, sortBy, dormitorios, banosMin, superficieMin, superficieMax }),
     getFeaturedModelsByRegion(regionFilter)
   ]);
 
@@ -122,13 +131,23 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-16">
+      <div className="container max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-10">
         {/* 1. Featured Slider - Full Width of Container */}
         {featuredModels.length > 0 && (
           <FeaturedSlider models={featuredModels} regionLabel={regionLabel} />
         )}
 
-        {/* 2. Main Content: Filters + Grid */}
+        {/* 2. Buscador rápido — debajo del slider, full-width antes del sidebar */}
+        <div className="w-full">
+          <ModelSearchWidget
+            title="Afina tu búsqueda"
+            subtitle="Filtra por dormitorios, baños o superficie para encontrar el modelo perfecto"
+            targetPath="/catalogo"
+            className="w-full"
+          />
+        </div>
+
+        {/* 3. Main Content: Filters Sidebar + Grid */}
         <div className="flex flex-col lg:flex-row gap-16">
           {/* Filters Sidebar - Desktop Only */}
           <aside className="hidden lg:block w-72 shrink-0" aria-label="Filtros del catálogo">
@@ -139,6 +158,8 @@ export default async function CatalogoPage({ searchParams }: PageProps) {
                    currentRegion={regionFilter}
                    currentMin={minUF}
                    currentMax={maxUF}
+                   currentDormitorios={dormitorios}
+                   currentBanos={banosMin}
                  />
                </Suspense>
             </div>

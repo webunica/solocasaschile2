@@ -1,0 +1,7 @@
+Modelos de casas de más de 100 m² - Solo Casas Chile
+
+Cada PDF contiene cuatro páginas: vista exterior, planta amoblada, planta arquitectónica y elevaciones.
+Los planos son referenciales y mantienen los datos geométricos del PDF de origen.
+Revisar las observaciones de indice_modelos.csv antes de publicar superficies, cotizar o usar los planos en obra.
+Se recibieron diez archivos; el nombre design-export (9).zip no formaba parte del lote.
+Algunos modelos comparten gran parte de su distribución; revisar diferenciación comercial antes de publicarlos.
