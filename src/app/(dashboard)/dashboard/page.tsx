@@ -9,6 +9,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PlanUpgradeBanner } from "@/components/dashboard/plan-upgrade-banner";
 
 type DashboardLead = {
   id: string;
@@ -123,7 +124,11 @@ export default async function DashboardPage() {
          </div>
        )}
 
-       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-border/40 pb-10">
+       {plan === 'starter' && (
+          <PlanUpgradeBanner modelsCount={modelsCount || 0} />
+        )}
+
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-border/40 pb-10">
           <div className="space-y-2">
              <div className="flex items-center gap-3 mb-2">
                 <Badge variant="outline" className={cn(

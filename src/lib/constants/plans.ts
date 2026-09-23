@@ -1,4 +1,16 @@
 export const PLAN_LIMITS = {
+  starter: {
+    maxModels: 1,
+    maxPhotos: 3,
+    features: {
+      testimonials: false,
+      certifications: false,
+      gallery: false,
+      verifiedBadge: false,
+      priorityPosition: false,
+      analytics: false,
+    }
+  },
   prueba: {
     maxModels: 3,
     maxPhotos: 3,
@@ -124,6 +136,7 @@ export const PLAN_DISPLAY: Record<string, {
   gratis:      { nombre: "Plan Basic",  tagline: "Presencia en catálogo (3 modelos)",                precioUF: 1 },
   avanza:      { nombre: "Plan Crece",  tagline: "10 modelos + recepción de leads directos",         precioUF: 2 },
   prueba:      { nombre: "Prueba 30D",  tagline: "30 días de prueba sin costo",                      precioUF: 0 },
+  starter:     { nombre: "Plan Starter", tagline: "1 modelo en catálogo · Solo por invitación",       precioUF: 0 },
   informativo: { nombre: "—",           tagline: "Perfil informativo",                               precioUF: 0 },
 };
 

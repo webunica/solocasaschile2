@@ -172,12 +172,12 @@ export async function register(formData: FormData) {
       telefono: phone,
       rut: rut,
       plan,
-      plan_status: plan === 'gratis' || plan === 'prueba' ? 'active' : 'pending',
+      plan_status: plan === 'gratis' || plan === 'prueba' || plan === 'starter' ? 'active' : 'pending',
       verificada: false,
       score_confianza: 50,
     }
 
-    // El plan gratis/prueba dura 30 dias.
+    // El plan prueba dura 30 dias. Starter es permanente para 1 modelo.
     if (plan === 'prueba' || plan === 'gratis') {
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 30);
@@ -250,6 +250,132 @@ export async function register(formData: FormData) {
   } catch (err: unknown) {
     console.error('[register] Unexpected error:', err)
     return { error: getErrorMessage(err, 'Error inesperado en el servidor. Intenta de nuevo.') }
+  }
+}
+
+export async function registerFromInvitation(formData: FormData) {
+  try {
+    const token = (formData.get('token') as string)?.trim()
+    if (!token) {
+      return { error: 'Token de invitación no proporcionado.' }
+    }
+
+    const { getInvitationByToken, markInvitationUsed } = await import('@/lib/invitations/generate')
+    const invitation = await getInvitationByToken(token)
+
+    if (!invitation) {
+      return { error: 'Esta invitación no existe o es inválida.' }
+    }
+
+    if (invitation.status === 'accepted') {
+      return { error: 'Esta invitación ya fue utilizada anteriormente.' }
+    }
+
+    if (invitation.status === 'expired' || new Date(invitation.expires_at) < new Date()) {
+      return { error: 'Esta invitación ha expirado. Contacta a soporte para renovarla.' }
+    }
+
+    const supabase = await createClient()
+    const email = ((formData.get('email') as string) || invitation.email).toLowerCase().trim()
+    const password = formData.get('password') as string
+    const companyName = ((formData.get('companyName') as string) || invitation.empresa_nombre).trim()
+    const rut = (formData.get('rut') as string) || ''
+    const repName = ((formData.get('repName') as string) || invitation.contacto_nombre || '').trim()
+    const phone = (formData.get('phone') as string) || ''
+    const region = (formData.get('region') as string) || invitation.region || ''
+
+    if (!password || password.length < 6) {
+      return { error: 'La contraseña debe tener al menos 6 caracteres.' }
+    }
+
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile.com'
+
+    const { data: authData, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${siteUrl}/auth/callback`,
+        data: {
+          nombre: companyName,
+          representante: repName,
+          plan: 'starter',
+        }
+      }
+    })
+
+    if (signUpError) {
+      return { error: signUpError.message }
+    }
+
+    if (!authData.user) {
+      return { error: 'No se pudo crear la cuenta de usuario.' }
+    }
+
+    const baseSlug = companyName
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+
+    const slug = `${baseSlug}-${authData.user.id.slice(0, 5)}`
+
+    const constructoraPayload: GenericRecord = {
+      id: authData.user.id,
+      nombre: companyName,
+      slug,
+      email,
+      telefono: phone,
+      rut,
+      region,
+      plan: 'starter',
+      plan_status: 'active',
+      verificada: false,
+      score_confianza: 50,
+    }
+
+    // Insertar/actualizar en tabla constructoras
+    await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id' })
+
+    // Marcar la invitación como aceptada
+    await markInvitationUsed(token)
+
+    try {
+      await resend.emails.send({
+        from: 'SoloCasasChile <contacto@solocasaschile.com>',
+        to: [email],
+        subject: '¡Bienvenido a SoloCasasChile! 🎉 Tu Plan Starter está activo',
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+            <div style="background: #0b9e86; padding: 24px; text-align: center; color: white;">
+              <h1 style="margin: 0; font-size: 22px;">¡Bienvenido ${companyName}!</h1>
+            </div>
+            <div style="padding: 24px; color: #334155; line-height: 1.6;">
+              <p>Tu <strong>Plan Starter (1 modelo de casa gratis)</strong> ya se encuentra activo en SoloCasasChile.</p>
+              <p>Accede a tu panel para publicar tu modelo ahora mismo:</p>
+              <div style="text-align: center; margin: 24px 0;">
+                <a href="${siteUrl}/dashboard/catalog/new" style="background: #0b9e86; color: white; padding: 12px 28px; border-radius: 9999px; text-decoration: none; font-weight: bold; display: inline-block;">
+                  Subir mi primer modelo →
+                </a>
+              </div>
+            </div>
+          </div>
+        `
+      })
+    } catch (mailErr) {
+      console.error('[registerFromInvitation] Error enviando bienvenida:', mailErr)
+    }
+
+    revalidatePath('/', 'layout')
+    revalidateTag('constructoras', 'max')
+
+    if (!authData.session) {
+      return { needsConfirmation: true, email }
+    }
+
+    return { redirectTo: '/dashboard' }
+  } catch (err: unknown) {
+    console.error('[registerFromInvitation] Unexpected error:', err)
+    return { error: getErrorMessage(err, 'Error al activar tu invitación.') }
   }
 }
 

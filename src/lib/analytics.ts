@@ -11,6 +11,7 @@ export type UserAudience = "comprador" | "constructora";
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
+    // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
     dataLayer?: Object[];
   }
 }
