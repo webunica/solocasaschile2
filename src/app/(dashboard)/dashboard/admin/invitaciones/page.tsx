@@ -38,6 +38,21 @@ export default async function AdminInvitacionesPage() {
     console.error("Error loading invitations in admin page:", err);
   }
 
+  const { data: rawConstructoras } = await supabase
+    .from("constructoras")
+    .select("id, nombre, email, telefono, regiones, plan, slug")
+    .order("nombre", { ascending: true });
+
+  const constructoras = (rawConstructoras ?? []) as Array<{
+    id: string;
+    nombre: string;
+    email: string | null;
+    telefono: string | null;
+    regiones: string[] | null;
+    plan: string | null;
+    slug: string | null;
+  }>;
+
   return (
     <div className="space-y-8 p-6 md:p-10 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-6">
@@ -57,7 +72,11 @@ export default async function AdminInvitacionesPage() {
         </div>
       </div>
 
-      <InvitationManager initialInvitations={initialInvitations} baseUrl={baseUrl} />
+      <InvitationManager
+        initialInvitations={initialInvitations}
+        constructoras={constructoras}
+        baseUrl={baseUrl}
+      />
     </div>
   );
 }

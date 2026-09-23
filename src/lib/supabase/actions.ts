@@ -613,6 +613,27 @@ export async function updateConstructoraScore(constructoraId: string, score: num
   return { success: true }
 }
 
+export async function updateConstructoraEmail(constructoraId: string, email: string) {
+  const { user, isAdmin, supabase } = await resolveAdminAccess()
+  if (!user || !isAdmin) throw new Error("Acceso denegado: se requieren permisos de administrador.")
+
+  const cleanEmail = email.toLowerCase().trim()
+  if (!cleanEmail || !cleanEmail.includes("@")) {
+    throw new Error("El formato del correo electrónico no es válido.")
+  }
+
+  const { error } = await supabase
+    .from('constructoras')
+    .update({ email: cleanEmail })
+    .eq('id', constructoraId)
+
+  if (error) throw error
+  revalidatePath('/dashboard/admin/invitaciones')
+  revalidatePath('/dashboard/admin/constructoras')
+  revalidateTag('constructoras', 'max')
+  return { success: true, email: cleanEmail }
+}
+
 export async function deleteConstructoraByAdmin(constructoraId: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
