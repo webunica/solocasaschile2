@@ -7,11 +7,12 @@ import { motion } from "framer-motion";
 import { buttonVariants } from "@/components/ui/button";
 import {
   CheckCircle2, LayoutDashboard, UserCircle,
-  Home, Calendar, BookOpen, Star, Zap, Crown,
+  Home, Calendar, BookOpen, Star, Zap, Crown, Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const PLAN_META = {
+  starter: { label: "Starter (1 Modelo Gratis)", icon: Sparkles, color: "text-emerald-500", bg: "bg-emerald-500/10", border: "border-emerald-500/30", isPaid: false },
   avanza:  { label: "Avanza",  icon: Zap,   color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/20", isPaid: true },
   prueba:  { label: "Prueba",  icon: Star,  color: "text-brand-indigo", bg: "bg-brand-indigo/10", border: "border-brand-indigo/20", isPaid: false },
   premium: { label: "Premium", icon: Crown, color: "text-amber-500", bg: "bg-amber-500/10", border: "border-amber-500/20", isPaid: true },
@@ -19,6 +20,12 @@ const PLAN_META = {
   gratis:  { label: "Gratis",  icon: Star,  color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false },
 } as const;
 type PlanKey = keyof typeof PLAN_META;
+
+const STARTER_STEPS = [
+  { icon: UserCircle, title: "1. Confirma los datos de tu empresa", desc: "Tus datos de constructora están listos. Añade logo y descripción para generar máxima confianza con las familias." },
+  { icon: Home, title: "2. Sube tu primer modelo de casa", desc: "Publica fotos, planos y precio aproximado. Tu Plan Starter incluye 1 modelo en catálogo sin costo y sin fecha de vencimiento." },
+  { icon: BookOpen, title: "3. Recibe cotizaciones directas", desc: "Los compradores interesados te contactarán directo por WhatsApp y correo electrónico, sin comisiones." },
+];
 
 const FREE_STEPS = [
   { icon: UserCircle, title: "Completa los datos de tu empresa", desc: "Agrega logo, descripción y contacto para impresionar a tus futuros clientes." },
@@ -39,7 +46,8 @@ function BienvenidaContent() {
   const meta = PLAN_META[plan];
   const PlanIcon = meta.icon;
   const isPaid = meta.isPaid;
-  const steps = isPaid ? PAID_STEPS : FREE_STEPS;
+  const isStarter = plan === "starter";
+  const steps = isPaid ? PAID_STEPS : isStarter ? STARTER_STEPS : FREE_STEPS;
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,10 +68,10 @@ function BienvenidaContent() {
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-[1.25rem] md:rounded-3xl bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
                 <CheckCircle2 className="w-7 h-7 text-emerald-500" />
               </div>
-              {isPaid && (
+              {(isPaid || isStarter) && (
                 <div className={cn("flex items-center gap-2 px-4 py-2 rounded-2xl border text-sm font-black", meta.bg, meta.border, meta.color)}>
                   <PlanIcon className="w-4 h-4" />
-                  Plan {meta.label} activado
+                  {isStarter ? "Plan Starter Activado · 1 Modelo Gratis" : `Plan ${meta.label} activado`}
                 </div>
               )}
             </div>
@@ -77,28 +85,43 @@ function BienvenidaContent() {
               <p className="text-base md:text-lg text-muted-foreground font-medium leading-relaxed max-w-2xl">
                 {isPaid
                   ? "Tu correo fue validado correctamente y tu cuenta ya está activa. Ya puedes ingresar a la plataforma con acceso inicial y continuar el proceso para activar tu plan."
+                  : isStarter
+                  ? "¡Tu invitación ha sido canjeada con éxito! Tu Plan Starter está activo con 1 modelo de casa gratuito permanente. Ya puedes subir tu modelo para que aparezca en el catálogo nacional."
                   : "Tu correo fue validado correctamente y tu cuenta ya está activa. Ya puedes ingresar a tu panel para completar tu perfil de empresa, publicar tus modelos y comenzar a recibir solicitudes de cotización."}
               </p>
             </div>
 
             {/* Primary CTA */}
             <div className="flex flex-wrap gap-3">
-              <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 bg-brand-indigo text-white font-bold uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all")}>
-                <LayoutDashboard className="w-4 h-4" /> Ir a mi panel
-              </Link>
-              {isPaid ? (
-                <Link href="/demo" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
-                  <Calendar className="w-4 h-4" /> Agendar demo
-                </Link>
+              {isStarter ? (
+                <>
+                  <Link href="/dashboard/catalog/new" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-emerald-600/20 hover:scale-105 active:scale-95 transition-all")}>
+                    <Home className="w-4 h-4" /> Publicar mi primer modelo gratis
+                  </Link>
+                  <Link href="/dashboard" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
+                    <LayoutDashboard className="w-4 h-4" /> Ir a mi panel
+                  </Link>
+                </>
               ) : (
-                <Link href="/dashboard/settings" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
-                  <UserCircle className="w-4 h-4" /> Completar perfil
-                </Link>
-              )}
-              {!isPaid && (
-                <Link href="/dashboard/catalog/new" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 text-muted-foreground hover:text-foreground transition-all")}>
-                  <Home className="w-4 h-4" /> Publicar mi primer modelo
-                </Link>
+                <>
+                  <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }), "h-14 px-8 bg-brand-indigo text-white font-bold uppercase tracking-widest rounded-2xl gap-2 border-none shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all")}>
+                    <LayoutDashboard className="w-4 h-4" /> Ir a mi panel
+                  </Link>
+                  {isPaid ? (
+                    <Link href="/demo" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
+                      <Calendar className="w-4 h-4" /> Agendar demo
+                    </Link>
+                  ) : (
+                    <Link href="/dashboard/settings" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 border-border/40 hover:border-primary hover:text-primary transition-all")}>
+                      <UserCircle className="w-4 h-4" /> Completar perfil
+                    </Link>
+                  )}
+                  {!isPaid && (
+                    <Link href="/dashboard/catalog/new" className={cn(buttonVariants({ variant: "ghost", size: "lg" }), "h-14 px-8 font-bold uppercase tracking-widest rounded-2xl gap-2 text-muted-foreground hover:text-foreground transition-all")}>
+                      <Home className="w-4 h-4" /> Publicar mi primer modelo
+                    </Link>
+                  )}
+                </>
               )}
             </div>
           </motion.div>

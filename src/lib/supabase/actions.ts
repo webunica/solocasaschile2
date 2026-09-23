@@ -317,24 +317,54 @@ export async function registerFromInvitation(formData: FormData) {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
 
-    const slug = `${baseSlug}-${authData.user.id.slice(0, 5)}`
+    const fallbackSlug = `${baseSlug}-${authData.user.id.slice(0, 5)}`
+
+    // Vinculación inteligente: verificar si la constructora ya existía en el directorio
+    const admin = createAdminClient()
+    const { data: existingConstructora } = await admin
+      .from('constructoras')
+      .select('*')
+      .eq('email', email)
+      .maybeSingle()
 
     const constructoraPayload: GenericRecord = {
       id: authData.user.id,
       nombre: companyName,
-      slug,
+      slug: existingConstructora?.slug || fallbackSlug,
       email,
-      telefono: phone,
-      rut,
-      region,
+      telefono: phone || existingConstructora?.telefono || '',
+      rut: rut || existingConstructora?.rut || '',
+      region: region || (existingConstructora?.regiones?.[0] ?? ''),
+      regiones: region ? [region] : (existingConstructora?.regiones ?? []),
+      direccion: existingConstructora?.direccion || null,
+      descripcion: existingConstructora?.descripcion || null,
+      sitio_web: existingConstructora?.sitio_web || null,
+      lat: existingConstructora?.lat || null,
+      lng: existingConstructora?.lng || null,
+      logo_url: existingConstructora?.logo_url || null,
+      image_url: existingConstructora?.image_url || null,
       plan: 'starter',
       plan_status: 'active',
-      verificada: false,
-      score_confianza: 50,
+      verificada: existingConstructora?.verificada || false,
+      score_confianza: existingConstructora?.score_confianza || 50,
     }
 
-    // Insertar/actualizar en tabla constructoras
-    await supabase.from('constructoras').upsert([constructoraPayload], { onConflict: 'id' })
+    if (existingConstructora && existingConstructora.id !== authData.user.id) {
+      // Reasignar modelos existentes al nuevo usuario autenticado
+      await admin
+        .from('modelos')
+        .update({ constructora_id: authData.user.id })
+        .eq('constructora_id', existingConstructora.id)
+
+      // Eliminar el registro previo para evitar duplicación
+      await admin
+        .from('constructoras')
+        .delete()
+        .eq('id', existingConstructora.id)
+    }
+
+    // Insertar/actualizar en tabla constructoras con el ID del nuevo usuario
+    await admin.from('constructoras').upsert([constructoraPayload], { onConflict: 'id' })
 
     // Marcar la invitación como aceptada
     await markInvitationUsed(token)
@@ -350,11 +380,11 @@ export async function registerFromInvitation(formData: FormData) {
               <h1 style="margin: 0; font-size: 22px;">¡Bienvenido ${companyName}!</h1>
             </div>
             <div style="padding: 24px; color: #334155; line-height: 1.6;">
-              <p>Tu <strong>Plan Starter (1 modelo de casa gratis)</strong> ya se encuentra activo en SoloCasasChile.</p>
+              <p>Tu <strong>Plan Starter (1 modelo de casa gratis permanente)</strong> ya se encuentra activo en SoloCasasChile.</p>
               <p>Accede a tu panel para publicar tu modelo ahora mismo:</p>
               <div style="text-align: center; margin: 24px 0;">
                 <a href="${siteUrl}/dashboard/catalog/new" style="background: #0b9e86; color: white; padding: 12px 28px; border-radius: 9999px; text-decoration: none; font-weight: bold; display: inline-block;">
-                  Subir mi primer modelo →
+                  Subir mi primer modelo gratis →
                 </a>
               </div>
             </div>
@@ -372,7 +402,7 @@ export async function registerFromInvitation(formData: FormData) {
       return { needsConfirmation: true, email }
     }
 
-    return { redirectTo: '/dashboard' }
+    return { redirectTo: '/bienvenida?plan=starter' }
   } catch (err: unknown) {
     console.error('[registerFromInvitation] Unexpected error:', err)
     return { error: getErrorMessage(err, 'Error al activar tu invitación.') }

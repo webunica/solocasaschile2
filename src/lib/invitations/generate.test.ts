@@ -22,6 +22,15 @@ describe("Plan Starter Configuration", () => {
     expect(PLAN_DISPLAY.starter.nombre).toBe("Plan Starter");
     expect(PLAN_DISPLAY.starter.precioUF).toBe(0);
   });
+
+  it("enforces strict limit of 1 model for starter plan", () => {
+    const limits = getPlanLimits("starter");
+    const allowedFirstModel = (0) < limits.maxModels;
+    const allowedSecondModel = (1) < limits.maxModels;
+
+    expect(allowedFirstModel).toBe(true);
+    expect(allowedSecondModel).toBe(false);
+  });
 });
 
 describe("Invitation Email Templates", () => {
