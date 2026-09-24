@@ -15,6 +15,9 @@ import {
   Save,
   X,
   UserPlus,
+  Clock,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +26,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { updateConstructoraEmail } from "@/lib/supabase/actions";
 import type { ConstructoraInvitation } from "@/lib/invitations/generate";
+import type { WaitlistEntry } from "@/app/(dashboard)/dashboard/admin/invitaciones/page";
 
 export interface ConstructoraDirectoryItem {
   id: string;
@@ -38,6 +42,7 @@ interface InvitationManagerProps {
   initialInvitations: ConstructoraInvitation[];
   constructoras?: ConstructoraDirectoryItem[];
   baseUrl: string;
+  waitlist?: WaitlistEntry[];
 }
 
 const ITEMS_PER_PAGE = 25;
@@ -46,9 +51,10 @@ export function InvitationManager({
   initialInvitations,
   constructoras = [],
   baseUrl,
+  waitlist = [],
 }: InvitationManagerProps) {
-  // Pestaña activa: "directorio" | "invitaciones"
-  const [activeTab, setActiveTab] = useState<"directorio" | "invitaciones">("directorio");
+  // Pestaña activa: "directorio" | "invitaciones" | "waitlist"
+  const [activeTab, setActiveTab] = useState<"directorio" | "invitaciones" | "waitlist">("directorio");
 
   // Estado de invitaciones
   const [invitations, setInvitations] = useState<ConstructoraInvitation[]>(initialInvitations);
@@ -308,6 +314,23 @@ export function InvitationManager({
           >
             <Mail className="w-4 h-4" />
             Invitaciones Enviadas ({invitations.length})
+          </button>
+
+          <button
+            onClick={() => setActiveTab("waitlist")}
+            className={`flex items-center gap-2 px-5 py-2 rounded-xl font-black uppercase tracking-wider transition-all relative ${
+              activeTab === "waitlist"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Clock className="w-4 h-4" />
+            Lista de Espera ({waitlist.filter((w) => w.status === "pending").length})
+            {waitlist.filter((w) => w.status === "pending").length > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
+                {waitlist.filter((w) => w.status === "pending").length > 9 ? "9+" : waitlist.filter((w) => w.status === "pending").length}
+              </span>
+            )}
           </button>
         </div>
 
@@ -868,6 +891,116 @@ export function InvitationManager({
               </table>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ── Panel: Lista de Espera ────────────────────────────────── */}
+      {activeTab === "waitlist" && (
+        <div className="space-y-5">
+          {waitlist.length === 0 ? (
+            <div className="text-center py-16 text-muted-foreground">
+              <Clock className="w-10 h-10 mx-auto mb-3 opacity-30" />
+              <p className="text-sm font-bold">Aún no hay solicitudes en lista de espera.</p>
+              <p className="text-xs mt-1 opacity-70">
+                Las solicitudes aparecen aquí cuando constructoras completan el formulario en{" "}
+                <code className="bg-muted px-1 rounded">/planes/starter</code>.
+              </p>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-border/50 overflow-hidden">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-muted/30 border-b border-border/40">
+                    <th className="text-left px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Empresa</th>
+                    <th className="text-left px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Contacto</th>
+                    <th className="text-left px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Email</th>
+                    <th className="text-left px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Región</th>
+                    <th className="text-left px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Estado</th>
+                    <th className="text-left px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Fecha</th>
+                    <th className="text-right px-4 py-3 font-black uppercase tracking-wider text-muted-foreground">Acción</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/30">
+                  {waitlist.map((entry) => (
+                    <tr key={entry.id} className="hover:bg-muted/20 transition-colors">
+                      <td className="px-4 py-3">
+                        <div className="font-bold text-foreground truncate max-w-[160px]">{entry.empresa_nombre}</div>
+                        {entry.mensaje && (
+                          <div className="text-muted-foreground text-[10px] truncate max-w-[160px] mt-0.5 italic" title={entry.mensaje}>
+                            {entry.mensaje}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {entry.contacto_nombre || "—"}
+                        {entry.telefono && (
+                          <div className="text-[10px] text-muted-foreground/60">{entry.telefono}</div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        <a href={`mailto:${entry.email}`} className="text-primary hover:underline font-mono text-[11px]">
+                          {entry.email}
+                        </a>
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground text-[11px]">
+                        {entry.region || "—"}
+                      </td>
+                      <td className="px-4 py-3">
+                        {entry.status === "pending" && (
+                          <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-[10px] font-black uppercase tracking-wider">
+                            <Clock className="w-3 h-3 mr-1" /> Pendiente
+                          </Badge>
+                        )}
+                        {entry.status === "invited" && (
+                          <Badge className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-[10px] font-black uppercase tracking-wider">
+                            <CheckCircle2 className="w-3 h-3 mr-1" /> Invitada
+                          </Badge>
+                        )}
+                        {entry.status === "rejected" && (
+                          <Badge className="bg-muted text-muted-foreground text-[10px] font-black uppercase tracking-wider">
+                            <XCircle className="w-3 h-3 mr-1" /> Rechazada
+                          </Badge>
+                        )}
+                        {entry.status === "duplicate" && (
+                          <Badge className="bg-slate-500/10 text-slate-500 text-[10px] font-black uppercase tracking-wider">
+                            Duplicado
+                          </Badge>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground text-[11px] whitespace-nowrap">
+                        {new Date(entry.created_at).toLocaleDateString("es-CL", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td className="px-4 py-3 text-right">
+                        {entry.status === "pending" && (
+                          <Button
+                            size="sm"
+                            onClick={() => {
+                              setEmpresaNombre(entry.empresa_nombre);
+                              setEmail(entry.email);
+                              setContactoNombre(entry.contacto_nombre || "");
+                              setRegion(entry.region || "");
+                              setSendNow(true);
+                              setIsFormOpen(true);
+                              setActiveTab("directorio");
+                              toast.info(`Datos de "${entry.empresa_nombre}" cargados en el formulario.`);
+                            }}
+                            className="h-8 rounded-xl bg-primary text-primary-foreground font-black text-[10px] uppercase tracking-wider gap-1.5 px-3"
+                          >
+                            <Send className="w-3 h-3" />
+                            Invitar
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       )}
     </div>

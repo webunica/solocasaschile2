@@ -20,6 +20,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { StarterPlanesClient } from "./client";
+import { WaitlistRequestForm } from "./waitlist-form";
+
 
 export const metadata: Metadata = {
   title: "Plan Starter – 1 Modelo Gratuito por Invitación | SoloCasasChile",
@@ -265,11 +267,18 @@ export default function StarterPage() {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              href="#upgrade"
+              href="#solicitar"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "h-14 rounded-2xl border-border/60 px-8 text-xs font-bold uppercase tracking-[0.14em]"
+                "h-14 rounded-2xl border-border/60 px-8 text-xs font-bold uppercase tracking-[0.14em] gap-2"
               )}
+            >
+              <Mail className="w-4 h-4" />
+              Solicitar invitación →
+            </Link>
+            <Link
+              href="#upgrade"
+              className="text-xs font-bold text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
             >
               Ver planes de pago →
             </Link>
@@ -413,8 +422,33 @@ export default function StarterPage() {
         </p>
       </section>
 
+      {/* ── Solicitar invitación (sin token) ────────────────────────── */}
+      <section id="solicitar" className="border-y border-border/40 bg-muted/20 py-16">
+        <div className="container max-w-2xl mx-auto px-4 md:px-8">
+          <div className="text-center space-y-3 mb-10">
+            <Badge
+              variant="outline"
+              className="text-[10px] font-black uppercase tracking-[0.25em] text-muted-foreground border-border"
+            >
+              ¿No tienes invitación?
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tighter">
+              Solicita tu invitación
+            </h2>
+            <p className="text-muted-foreground font-medium max-w-lg mx-auto leading-relaxed">
+              Deja tus datos y nuestro equipo evaluará tu solicitud. Si hay cupo
+              disponible, te enviaremos tu invitación directamente al correo.
+            </p>
+          </div>
+
+          <div className="bg-card/80 border border-border/50 rounded-[2rem] p-7 md:p-10 shadow-sm">
+            <WaitlistRequestForm />
+          </div>
+        </div>
+      </section>
+
       {/* ── FAQ ─────────────────────────────────────────────────────── */}
-      <section className="container max-w-3xl mx-auto px-4 md:px-8 py-8 space-y-6">
+      <section className="container max-w-3xl mx-auto px-4 md:px-8 py-16 space-y-6">
         <div className="text-center space-y-3 mb-10">
           <h2 className="text-3xl md:text-4xl font-heading font-black tracking-tighter">
             Preguntas frecuentes

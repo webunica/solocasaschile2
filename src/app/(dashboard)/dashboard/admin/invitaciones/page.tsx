@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import { resolveAdminRole } from "@/lib/security/admin-guard";
 import { listInvitations, type ConstructoraInvitation } from "@/lib/invitations/generate";
@@ -9,6 +10,20 @@ import { headers } from "next/headers";
 export const metadata = {
   title: "Gestión de Invitaciones | Admin SoloCasasChile",
   robots: { index: false, follow: false },
+};
+
+export type WaitlistEntry = {
+  id: string;
+  empresa_nombre: string;
+  contacto_nombre: string | null;
+  email: string;
+  telefono: string | null;
+  region: string | null;
+  mensaje: string | null;
+  status: "pending" | "invited" | "rejected" | "duplicate";
+  invitation_id: string | null;
+  invited_at: string | null;
+  created_at: string;
 };
 
 export default async function AdminInvitacionesPage() {
@@ -36,6 +51,20 @@ export default async function AdminInvitacionesPage() {
     initialInvitations = await listInvitations();
   } catch (err) {
     console.error("Error loading invitations in admin page:", err);
+  }
+
+  // Cargar lista de espera con service role (requiere admin RLS)
+  const supabaseAdmin = createAdminClient();
+  let waitlist: WaitlistEntry[] = [];
+  try {
+    const { data } = await supabaseAdmin
+      .from("invitation_waitlist")
+      .select("id, empresa_nombre, contacto_nombre, email, telefono, region, mensaje, status, invitation_id, invited_at, created_at")
+      .order("created_at", { ascending: false })
+      .limit(200);
+    waitlist = (data ?? []) as WaitlistEntry[];
+  } catch (err) {
+    console.error("Error loading waitlist:", err);
   }
 
   const { data: rawConstructoras } = await supabase
@@ -76,6 +105,7 @@ export default async function AdminInvitacionesPage() {
         initialInvitations={initialInvitations}
         constructoras={constructoras}
         baseUrl={baseUrl}
+        waitlist={waitlist}
       />
     </div>
   );

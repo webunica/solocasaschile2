@@ -1809,3 +1809,89 @@ export async function updateTestimonios(testimoniosRaw: unknown[]) {
   
   return { success: true }
 }
+
+// ── Lista de espera para Plan Starter ────────────────────────────────────────
+
+const waitlistSchema = z.object({
+  empresa_nombre:  z.string().min(2, 'El nombre de la empresa es requerido').max(120),
+  contacto_nombre: z.string().max(100).optional(),
+  email:           z.string().email('Ingresa un correo electrónico válido'),
+  telefono:        z.string().max(30).optional(),
+  region:          z.string().max(80).optional(),
+  mensaje:         z.string().max(500).optional(),
+});
+
+export async function requestInvitation(formData: FormData) {
+  const raw = {
+    empresa_nombre:  formData.get('empresa_nombre'),
+    contacto_nombre: formData.get('contacto_nombre') || undefined,
+    email:           formData.get('email'),
+    telefono:        formData.get('telefono')        || undefined,
+    region:          formData.get('region')          || undefined,
+    mensaje:         formData.get('mensaje')         || undefined,
+  };
+
+  const parsed = waitlistSchema.safeParse(raw);
+  if (!parsed.success) {
+    const first = parsed.error.issues[0];
+    return { error: first.message };
+  }
+
+  const { empresa_nombre, contacto_nombre, email, telefono, region, mensaje } = parsed.data;
+
+  // Usamos el cliente de servicio para saltar RLS en las verificaciones
+  // pero la INSERT se hace con cliente anónimo (public_insert_waitlist policy).
+  const supabaseAdmin = createAdminClient();
+
+  // 1. Verificar si ya tiene invitación activa
+  const { data: existingInvitation } = await supabaseAdmin
+    .from('constructora_invitations')
+    .select('id, status')
+    .eq('email', email.toLowerCase().trim())
+    .in('status', ['pending', 'accepted'])
+    .maybeSingle();
+
+  if (existingInvitation) {
+    if (existingInvitation.status === 'accepted') {
+      return { error: 'Este correo ya tiene una cuenta activa en SoloCasasChile. Inicia sesión en /login.' };
+    }
+    return { error: 'Este correo ya tiene una invitación enviada. Revisa tu bandeja de entrada (también el spam).' };
+  }
+
+  // 2. Verificar duplicado en waitlist
+  const { data: existingWaitlist } = await supabaseAdmin
+    .from('invitation_waitlist')
+    .select('id, status')
+    .eq('email', email.toLowerCase().trim())
+    .in('status', ['pending', 'invited'])
+    .maybeSingle();
+
+  if (existingWaitlist) {
+    if (existingWaitlist.status === 'invited') {
+      return { error: 'Ya te hemos enviado una invitación a este correo. Revisa tu bandeja de entrada.' };
+    }
+    return { already_pending: true };
+  }
+
+  // 3. Insertar en lista de espera (usa cliente anónimo con la policy pública)
+  const supabase = await createClient();
+  const { error: insertError } = await supabase
+    .from('invitation_waitlist')
+    .insert({
+      empresa_nombre,
+      contacto_nombre: contacto_nombre || null,
+      email:           email.toLowerCase().trim(),
+      telefono:        telefono || null,
+      region:          region   || null,
+      mensaje:         mensaje  || null,
+      status:          'pending',
+    });
+
+  if (insertError) {
+    console.error('[requestInvitation] Error:', insertError);
+    return { error: 'No pudimos registrar tu solicitud. Inténtalo de nuevo en unos minutos.' };
+  }
+
+  return { success: true };
+}
+
