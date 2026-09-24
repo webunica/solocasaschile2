@@ -10,40 +10,136 @@ import {
   ArrowRight,
   Loader2,
   Sparkles,
+  Building2,
+  Rocket,
+  Zap,
+  Crown,
 } from "lucide-react";
 import {
   trackPlanCheckoutClick,
 } from "@/lib/analytics";
 
-type UpgradePlan = {
-  id: string;
-  nombre: string;
-  subtitulo: string;
-  precioMensual: string;
-  precioAnualEquiv: string;
-  precioAnualTotal: string;
-  icon: React.ElementType;
-  color: string;
-  bgIcon: string;
-  borderClass: string;
-  gradientClass: string;
-  badge: string;
-  badgeClass: string;
-  features: string[];
-  cta: string;
-  ctaHref: string;
-  ctaClass: string;
-  highlight: boolean;
-};
+const UPGRADE_PLANS = [
+  {
+    id: "basic",
+    nombre: "Plan Basic",
+    subtitulo: "Presencia Ampliada",
+    precioMensual: "1.0",
+    precioAnualEquiv: "0.8",
+    precioAnualTotal: "9.6",
+    icon: Building2,
+    color: "text-slate-700 dark:text-slate-300",
+    bgIcon: "bg-slate-100 dark:bg-slate-800",
+    borderClass: "border-border/60 hover:border-slate-400",
+    gradientClass: "",
+    badge: "3 MODELOS",
+    badgeClass: "bg-slate-100 text-slate-800 border-slate-300",
+    features: [
+      "Hasta 3 modelos en catálogo público",
+      "5 fotografías por modelo",
+      "Ficha oficial de constructora",
+      "Presencia en búsquedas por región",
+      "Botón de contacto para cotizar",
+    ],
+    cta: "Elegir Plan Basic",
+    ctaHref: "/checkout?plan=basic",
+    ctaClass:
+      "bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:text-slate-900",
+    highlight: false,
+  },
+  {
+    id: "crece",
+    nombre: "Plan Crece",
+    subtitulo: "10 Modelos + Leads",
+    precioMensual: "2.0",
+    precioAnualEquiv: "1.6",
+    precioAnualTotal: "19.2",
+    icon: Rocket,
+    color: "text-blue-600",
+    bgIcon: "bg-blue-50 dark:bg-blue-950/40",
+    borderClass:
+      "border-blue-200 dark:border-blue-800 shadow-md shadow-blue-500/5 hover:border-blue-400",
+    gradientClass: "from-blue-500/5 to-transparent",
+    badge: "10 MODELOS + LEADS",
+    badgeClass: "bg-blue-600 text-white border-blue-500",
+    features: [
+      "Hasta 10 modelos en catálogo público",
+      "10 fotos por modelo",
+      "Recepción directa de leads (WhatsApp/Email)",
+      "Panel CRM de cotizaciones y prospectos",
+      "Galería de proyectos terminados",
+    ],
+    cta: "Elegir Plan Crece",
+    ctaHref: "/checkout?plan=crece",
+    ctaClass: "bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20",
+    highlight: false,
+  },
+  {
+    id: "pro",
+    nombre: "Plan Pro",
+    subtitulo: "Posicionamiento + Ilimitados",
+    precioMensual: "3.0",
+    precioAnualEquiv: "2.4",
+    precioAnualTotal: "28.8",
+    icon: Zap,
+    color: "text-brand-teal",
+    bgIcon: "bg-brand-teal/10",
+    borderClass:
+      "border-brand-teal/50 shadow-2xl shadow-brand-teal/15 ring-2 ring-brand-teal/30",
+    gradientClass: "from-brand-teal/10 via-brand-teal/5 to-transparent",
+    badge: "MÁS POPULAR",
+    badgeClass: "bg-brand-teal text-white border-brand-teal/30",
+    features: [
+      "Modelos y fotos ilimitadas",
+      "Posicionamiento destacado en catálogo",
+      "Leads prioritarios sin límite",
+      "Sello de Constructora Verificada ✓",
+      "Módulo de Seguimiento de Obras",
+    ],
+    cta: "Elegir Plan Pro",
+    ctaHref: "/checkout?plan=pro",
+    ctaClass:
+      "bg-brand-teal hover:bg-brand-teal/90 text-white shadow-lg shadow-brand-teal/25 font-black",
+    highlight: true,
+  },
+  {
+    id: "premium",
+    nombre: "Plan Pro+",
+    subtitulo: "Posición Preferente + Campañas",
+    precioMensual: "4.0",
+    precioAnualEquiv: "3.2",
+    precioAnualTotal: "38.4",
+    icon: Crown,
+    color: "text-amber-500",
+    bgIcon: "bg-amber-500/10",
+    borderClass:
+      "border-amber-500/50 shadow-2xl shadow-amber-500/15 ring-2 ring-amber-500/20",
+    gradientClass: "from-amber-500/10 via-brand-indigo/5 to-transparent",
+    badge: "MÁXIMA PRIORIDAD",
+    badgeClass: "bg-amber-500 text-slate-950 font-black border-amber-400",
+    features: [
+      "Todo lo incluido en el Plan Pro",
+      "Posición preferente #1 en tu región",
+      "Campañas activas en redes y blog",
+      "Asesoría comercial personalizada",
+      "Ejecutivo de cuenta dedicado vía WhatsApp",
+    ],
+    cta: "Elegir Plan Pro+",
+    ctaHref: "/checkout?plan=premium",
+    ctaClass:
+      "bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black shadow-xl shadow-amber-500/25",
+    highlight: false,
+  },
+];
 
-export function StarterPlanesClient({ plans }: { plans: UpgradePlan[] }) {
+export function StarterPlanesClient() {
   const [isYearly, setIsYearly] = useState(true);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const handlePurchase = (planId: string) => {
     const billing = isYearly ? "yearly" : "monthly";
-    const plan = plans.find((p) => p.id === planId);
+    const plan = UPGRADE_PLANS.find((p) => p.id === planId);
     const priceUf = isYearly
       ? Number(plan?.precioAnualTotal || 0)
       : Number(plan?.precioMensual || 0);
@@ -97,7 +193,7 @@ export function StarterPlanesClient({ plans }: { plans: UpgradePlan[] }) {
 
       {/* Grid de planes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
-        {plans.map((plan) => {
+        {UPGRADE_PLANS.map((plan) => {
           const Icon = plan.icon;
           const currentPrice = isYearly
             ? plan.precioAnualEquiv
