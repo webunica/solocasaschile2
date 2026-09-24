@@ -283,11 +283,10 @@ export default function PlanesPage() {
 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/register?plan=gratis"
-              onClick={() => trackRegistroStart("gratis")}
-              className="inline-flex items-center gap-2 text-xs font-bold text-brand-teal hover:underline bg-brand-teal/10 px-4 py-2 rounded-full border border-brand-teal/20"
+              href="/planes/starter"
+              className="inline-flex items-center gap-2 text-xs font-bold text-brand-teal hover:underline bg-brand-teal/10 px-4 py-2 rounded-full border border-brand-teal/20 shadow-sm transition-all hover:scale-105"
             >
-              <Sparkles className="w-3.5 h-3.5" /> ¿Quieres probar antes? Inicia 30 días sin costo →
+              <Zap className="w-3.5 h-3.5 text-brand-teal" /> ¿Buscas publicar 1 modelo sin costo? Conoce el <strong>Plan Starter (Gratis)</strong> →
             </Link>
             <Link
               href="/para-constructoras"
@@ -561,14 +560,14 @@ export default function PlanesPage() {
                 )}
               </Button>
               <Link
-                href="/register?plan=gratis"
-                onClick={() => trackRegistroStart("gratis")}
+                href="/planes/starter"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "border-white/30 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl h-14 px-8"
+                  "border-white/30 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl h-14 px-8 gap-2"
                 )}
               >
-                Probar 30 días gratis
+                <Zap className="w-4 h-4 text-brand-teal" />
+                Conocer Plan Starter (Gratis)
               </Link>
             </div>
           </div>

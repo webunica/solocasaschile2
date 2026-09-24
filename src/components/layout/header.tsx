@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, Building2, Compass, Home, Menu, Newspaper } from "lucide-react";
-import { motion } from "framer-motion";
+import { BookOpen, Building2, Compass, Home, Menu, Newspaper, ChevronDown, CreditCard, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -29,8 +29,13 @@ const NAV_LINKS = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [planesOpen, setPlanesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setPlanesOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,6 +112,86 @@ export function Header() {
                 </Link>
               );
             })}
+
+            {/* Menú Desplegable: Planes */}
+            <div
+              className="relative"
+              onMouseEnter={() => setPlanesOpen(true)}
+              onMouseLeave={() => setPlanesOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setPlanesOpen((prev) => !prev)}
+                aria-expanded={planesOpen}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-full px-3 py-2 text-[16px] font-semibold tracking-[-0.01em] transition-all",
+                  pathname.startsWith("/planes")
+                    ? "bg-brand-indigo text-white shadow-[0_10px_28px_-16px_rgba(0,38,43,0.7)]"
+                    : "text-brand-indigo/78 hover:text-brand-indigo"
+                )}
+              >
+                <span>Planes</span>
+                <ChevronDown
+                  className={cn(
+                    "h-3.5 w-3.5 transition-transform duration-200",
+                    planesOpen && "rotate-180"
+                  )}
+                />
+              </button>
+
+              <AnimatePresence>
+                {planesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-72"
+                  >
+                    <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-border/60 rounded-2xl p-2 shadow-2xl space-y-1">
+                      <Link
+                        href="/planes"
+                        onClick={() => setPlanesOpen(false)}
+                        className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted/70 transition-colors group"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-brand-indigo/10 text-brand-indigo flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-brand-indigo group-hover:text-white transition-colors">
+                          <CreditCard className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                            Planes y Precios
+                          </div>
+                          <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
+                            Basic, Crece, Pro y Pro+ con leads directos
+                          </p>
+                        </div>
+                      </Link>
+
+                      <Link
+                        href="/planes/starter"
+                        onClick={() => setPlanesOpen(false)}
+                        className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted/70 transition-colors group"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-brand-teal/15 text-brand-teal flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-brand-teal group-hover:text-white transition-colors">
+                          <Zap className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                            Plan Starter
+                            <span className="text-[9px] font-black bg-brand-teal/15 text-brand-teal px-1.5 py-0.5 rounded-full uppercase">
+                              Gratis
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
+                            1 modelo gratis y permanente por invitación
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </nav>
 
           <div className="ml-auto hidden items-center gap-3 lg:flex">
@@ -189,6 +274,43 @@ export function Header() {
                     </Link>
                   );
                 })}
+
+                <div className="my-2 border-t border-border/30 pt-2 space-y-1">
+                  <div className="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                    Planes
+                  </div>
+                  <Link
+                    href="/planes"
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 rounded-[1.4rem] px-4 py-3 text-[15px] font-semibold transition-colors",
+                      pathname === "/planes"
+                        ? "bg-brand-indigo text-white"
+                        : "text-brand-indigo hover:bg-primary/5 hover:text-brand-indigo"
+                    )}
+                  >
+                    <CreditCard className="h-4 w-4" aria-hidden="true" />
+                    Planes y Precios
+                  </Link>
+                  <Link
+                    href="/planes/starter"
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "flex items-center justify-between gap-3 rounded-[1.4rem] px-4 py-3 text-[15px] font-semibold transition-colors",
+                      pathname === "/planes/starter"
+                        ? "bg-brand-indigo text-white"
+                        : "text-brand-indigo hover:bg-primary/5 hover:text-brand-indigo"
+                    )}
+                  >
+                    <span className="flex items-center gap-3">
+                      <Zap className="h-4 w-4 text-brand-teal" aria-hidden="true" />
+                      Plan Starter
+                    </span>
+                    <span className="text-[10px] font-black bg-brand-teal/15 text-brand-teal px-2 py-0.5 rounded-full uppercase">
+                      Gratis
+                    </span>
+                  </Link>
+                </div>
 
                 <div className="my-2 border-t border-border/30 pt-2">
                   <Link

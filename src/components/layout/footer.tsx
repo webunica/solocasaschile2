@@ -16,6 +16,7 @@ const RESOURCE_LINKS = [
   { name: "Sistemas", path: "/tipos/prefabricada" },
   { name: "Para Constructoras", path: "/para-constructoras" },
   { name: "Planes para Empresas", path: "/planes" },
+  { name: "Plan Starter (Gratis)", path: "/planes/starter" },
   { name: "Nosotros", path: "/nosotros" },
   { name: "Verificación", path: "/verificacion" },
 ] as const;
