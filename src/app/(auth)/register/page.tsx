@@ -15,12 +15,16 @@ import {
 import { register, resendConfirmation } from "@/lib/supabase/actions";
 
 const PLAN_META = {
+  starter: {
+    label: "Plan Starter · Invitación", icon: Zap, color: "text-brand-teal", bg: "bg-brand-teal/10", border: "border-brand-teal/30", isPaid: false,
+    prices: { monthly: "0", yearly: "0" }, original: "0"
+  },
   prueba: { 
     label: "Prueba 30D", icon: Building2, color: "text-brand-indigo", bg: "bg-brand-indigo/10", border: "border-brand-indigo/20", isPaid: false,
     prices: { monthly: "0", yearly: "0" }, original: "0"
   },
   gratis: { 
-    label: "Prueba Gratis", icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false,
+    label: "Acceso Gratuito", icon: Building2, color: "text-muted-foreground", bg: "bg-muted/50", border: "border-border/40", isPaid: false,
     prices: { monthly: "0", yearly: "0" }, original: "0"
   },
   basic: { 
@@ -240,10 +244,20 @@ function RegisterForm() {
           </Link>
           <div className="text-center md:text-left space-y-2">
             <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo leading-[0.9]">
-              {planMeta.isPaid ? "Registro Directo" : "Prueba 30 dias"}
+              {planMeta.isPaid
+                ? "Registro Directo"
+                : plan === "prueba"
+                  ? "Prueba 30 días"
+                  : plan === "starter"
+                    ? "Plan Starter"
+                    : "Crea tu cuenta gratis"}
             </h1>
             <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm">
-              Solo necesitas tu correo para comenzar.
+              {plan === "starter"
+                ? "Solo por invitación · 1 modelo gratuito y permanente."
+                : plan === "prueba"
+                  ? "30 días sin costo · Sin tarjeta de crédito."
+                  : "Solo necesitas tu correo para comenzar."}
             </p>
           </div>
         </div>
