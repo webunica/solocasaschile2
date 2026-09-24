@@ -222,28 +222,28 @@ function RegisterForm() {
 
   return (
     <div 
-      className="min-h-screen flex flex-col items-center justify-center p-6 lg:p-12 relative overflow-hidden bg-slate-50"
+      className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden bg-slate-50 dark:bg-background"
     >
       {/* Decorative Brand accents */}
-      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-brand-teal/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-brand-teal/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-brand-indigo/10 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="w-full max-w-lg space-y-10 relative z-10">
+      <div className="w-full max-w-md space-y-6 relative z-10 mx-auto">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-          <Link href="/" className="shrink-0 hover:scale-105 transition-transform">
+        {/* Header centrado */}
+        <div className="text-center space-y-3">
+          <Link href="/" className="inline-block hover:scale-105 transition-transform">
             <Image
               src="/images/solocasaschile-logo.png"
               alt="SolocasasChile"
-              width={434}
-              height={70}
-              className="h-12 w-auto object-contain mx-auto"
+              width={260}
+              height={42}
+              className="h-10 w-auto object-contain mx-auto"
               priority
             />
           </Link>
-          <div className="text-center md:text-left space-y-2">
-            <h1 className="text-3xl lg:text-4xl font-heading font-black tracking-tighter text-brand-indigo leading-[0.9]">
+          <div className="space-y-1">
+            <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
               {planMeta.isPaid
                 ? "Registro Directo"
                 : plan === "prueba"
@@ -252,7 +252,7 @@ function RegisterForm() {
                     ? "Plan Starter"
                     : "Crea tu cuenta gratis"}
             </h1>
-            <p className="text-muted-foreground font-semibold text-sm md:text-base leading-relaxed max-w-sm">
+            <p className="text-muted-foreground font-medium text-xs sm:text-sm leading-relaxed max-w-xs mx-auto">
               {plan === "starter"
                 ? "Solo por invitación · 1 modelo gratuito y permanente."
                 : plan === "prueba"
@@ -263,7 +263,7 @@ function RegisterForm() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-[3rem] p-8 lg:p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-border/50 flex flex-col space-y-10">
+        <div className="bg-white dark:bg-card rounded-3xl p-6 sm:p-8 shadow-xl border border-border/60 flex flex-col space-y-6">
           
           {/* Error */}
           <AnimatePresence>
@@ -272,54 +272,109 @@ function RegisterForm() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center gap-4 bg-red-500/10 border border-red-500/30 text-red-500 rounded-2xl p-5 text-xs font-bold uppercase tracking-widest leading-relaxed"
+                className="flex items-center gap-3 bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 rounded-2xl p-4 text-xs font-bold leading-relaxed"
               >
-                <AlertCircle className="w-5 h-5 shrink-0" />
+                <AlertCircle className="w-4 h-4 shrink-0" />
                 {error}
               </motion.div>
             )}
           </AnimatePresence>
 
           {/* Form */}
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <input type="hidden" name="plan" value={plan} />
 
-            <div className="space-y-5">
-              <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-indigo/60 ml-2">Email Corporativo</Label>
-                <Input id="email" name="email" type="email" placeholder="contacto@empresa.cl" required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-500" />
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">
+                  Email Corporativo
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="contacto@empresa.cl"
+                  required
+                  className="h-12 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-4 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
+                />
               </div>
-              <div className="space-y-2 relative">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-indigo/60 ml-2">Contraseña</Label>
-                <Input id="password" name="password" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 pr-12 placeholder:text-slate-500" />
-                <button type="button" onClick={() => setShowPass(!showPass)} className="absolute right-4 bottom-4 text-slate-400 hover:text-slate-700 transition-colors">
-                  {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
+
+              <div className="space-y-1.5 relative">
+                <Label htmlFor="password" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">
+                  Contraseña
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPass ? "text" : "password"}
+                    minLength={6}
+                    required
+                    placeholder="Mínimo 6 caracteres"
+                    className="h-12 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-4 pr-11 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPass(!showPass)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-black tracking-widest text-brand-indigo/60 ml-2">Confirmar</Label>
-                <Input id="confirmPassword" name="confirmPassword" type={showPass ? "text" : "password"} minLength={6} required className="h-14 rounded-2xl bg-slate-50 border-slate-200 px-6 font-bold focus:ring-2 focus:ring-brand-teal transition-all text-slate-800 placeholder:text-slate-500" />
+
+              <div className="space-y-1.5">
+                <Label htmlFor="confirmPassword" className="text-[10px] uppercase font-black tracking-widest text-muted-foreground ml-1">
+                  Confirmar Contraseña
+                </Label>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showPass ? "text" : "password"}
+                  minLength={6}
+                  required
+                  placeholder="Repite tu contraseña"
+                  className="h-12 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-4 text-sm font-medium text-foreground placeholder:text-muted-foreground/60 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
+                />
               </div>
             </div>
 
-            <Button type="submit" size="lg" disabled={loading} className="w-full h-16 bg-brand-teal text-brand-indigo font-black tracking-[0.2em] text-xs uppercase rounded-[2rem] shadow-xl shadow-brand-teal/20 transition-transform active:scale-95 border-none hover:bg-[#34dac5]">
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
-                <span className="flex items-center gap-3">
-                  Crear Cuenta <ArrowRight className="w-4 h-4 opacity-70" />
-                </span>
-              )}
-            </Button>
+            <div className="pt-2">
+              <Button
+                type="submit"
+                size="lg"
+                disabled={loading}
+                className="w-full h-12 bg-brand-indigo hover:bg-brand-indigo/90 text-white font-black tracking-widest text-xs uppercase rounded-xl shadow-lg shadow-brand-indigo/20 transition-all hover:scale-[1.01] active:scale-95 border-none"
+              >
+                {loading ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-white" />
+                ) : (
+                  <span className="flex items-center justify-center gap-2 text-white">
+                    Crear Cuenta <ArrowRight className="w-4 h-4 text-white" />
+                  </span>
+                )}
+              </Button>
+            </div>
           </form>
 
-          <p className="text-[10px] text-muted-foreground text-center font-bold px-4 leading-relaxed uppercase tracking-widest">
-            Al registrarte, declaras conocer los <Link href="/terminos" className="text-brand-indigo hover:underline transition-colors">Términos</Link> y la <Link href="/privacidad" className="text-brand-indigo hover:underline transition-colors">Privacidad</Link>.
+          <p className="text-[10px] text-muted-foreground text-center font-medium px-2 leading-relaxed">
+            Al registrarte, declaras conocer los{" "}
+            <Link href="/terminos" className="text-primary hover:underline font-bold transition-colors">
+              Términos
+            </Link>{" "}
+            y la{" "}
+            <Link href="/privacidad" className="text-primary hover:underline font-bold transition-colors">
+              Privacidad
+            </Link>.
           </p>
         </div>
 
         <div className="text-center">
-          <Link href="/login" className="inline-flex items-center gap-4 group">
-            <span className="text-xs font-bold text-muted-foreground group-hover:text-foreground transition-colors">¿Ya tienes cuenta?</span>
-            <span className="text-xs font-black uppercase tracking-widest text-brand-indigo border-b-2 border-brand-teal pb-0.5">Iniciar Sesión</span>
+          <Link href="/login" className="inline-flex items-center gap-2 group text-xs font-semibold">
+            <span className="text-muted-foreground">¿Ya tienes cuenta?</span>
+            <span className="text-brand-teal font-black uppercase tracking-wider hover:underline">
+              Iniciar Sesión
+            </span>
           </Link>
         </div>
 
