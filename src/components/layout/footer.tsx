@@ -19,6 +19,7 @@ const RESOURCE_LINKS = [
   { name: "Plan Starter (Gratis)", path: "/planes/starter" },
   { name: "Nosotros", path: "/nosotros" },
   { name: "Verificación", path: "/verificacion" },
+  { name: "Ejercer Derechos (Ley 21.719)", path: "/ejercer-derechos" },
 ] as const;
 
 export function Footer() {
@@ -119,12 +120,15 @@ export function Footer() {
 
         <div className="flex flex-col gap-4 border-t border-white/10 pt-6 text-xs font-medium text-white/75 md:flex-row md:items-center md:justify-between">
           <p>© {currentYear} solocasaschile.com. Todos los derechos reservados.</p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-6">
             <Link href="/terminos" className="transition-colors hover:text-white">
-              Terminos
+              Términos
             </Link>
             <Link href="/privacidad" className="transition-colors hover:text-white">
-              Privacidad
+              Política de Privacidad
+            </Link>
+            <Link href="/ejercer-derechos" className="transition-colors hover:text-white">
+              Ejercer Derechos (Ley 21.719)
             </Link>
           </div>
         </div>

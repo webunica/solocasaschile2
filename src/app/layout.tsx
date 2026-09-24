@@ -111,6 +111,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <script
+          src="https://proteccion-datos-admin.vercel.app//widget.js"
+          data-tenant="solocasaschile"
+          defer
+        />
+      </head>
       <body
         className={`${bodyFont.variable} ${headingFont.variable} font-sans antialiased bg-background text-foreground`}
       >
