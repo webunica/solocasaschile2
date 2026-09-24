@@ -174,10 +174,24 @@ function TestimoniosSelector({ name, initialValue = [], models }: { name: string
   );
 }
 
+const SISTEMAS_CONSTRUCTIVOS = [
+  "Casas Prefabricadas",
+  "Casas Modulares",
+  "Paneles SIP",
+  "Steel Framing (Metalcon)",
+  "Construcción en Madera",
+  "Hormigón y Tradicional",
+  "Casas Container",
+  "Construcción Llave en Mano",
+  "Tiny Houses y Cabañas",
+  "Casas Sociales y Subsidios",
+];
+
 export function SettingsForm({ initialData, userEmail, models }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [especialidad, setEspecialidad] = useState(initialData?.especialidad_principal || "");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
@@ -428,15 +442,61 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
                   />
                </div>
 
-               <div className="space-y-2">
-                  <Label htmlFor="especialidad_principal" className="text-xs font-black uppercase tracking-widest opacity-60">Especialidad Principal</Label>
-                  <Input 
-                    id="especialidad_principal" 
-                    name="especialidad_principal" 
-                    defaultValue={initialData?.especialidad_principal || ""} 
-                    className="h-12 rounded-xl bg-muted/20 border-border/40"
-                    placeholder="Ejem: Casas Modulares, Construcción SIP"
-                  />
+               <div className="space-y-2 md:col-span-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="especialidad_principal" className="text-xs font-black uppercase tracking-widest opacity-60">
+                      Especialidad Principal / Sistema Constructivo
+                    </Label>
+                    <span className="text-[10px] text-muted-foreground font-medium">Elige de la lista o escribe tu propia especialidad</span>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <select
+                      aria-label="Seleccionar sistema constructivo"
+                      className="h-12 rounded-xl bg-muted/20 border border-border/40 px-3 text-sm font-medium text-foreground focus:ring-1 focus:ring-primary/20 outline-none cursor-pointer"
+                      value={SISTEMAS_CONSTRUCTIVOS.includes(especialidad) ? especialidad : (especialidad ? "otro" : "")}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val !== "otro" && val !== "") {
+                          setEspecialidad(val);
+                        }
+                      }}
+                    >
+                      <option value="">Selecciona tipo de modelo / sistema...</option>
+                      {SISTEMAS_CONSTRUCTIVOS.map((sistema) => (
+                        <option key={sistema} value={sistema}>
+                          {sistema}
+                        </option>
+                      ))}
+                      <option value="otro">Otro Sistema Constructivo (Escribir en el campo)</option>
+                    </select>
+                    <Input 
+                      id="especialidad_principal" 
+                      name="especialidad_principal" 
+                      value={especialidad}
+                      onChange={(e) => setEspecialidad(e.target.value)}
+                      className="h-12 rounded-xl bg-muted/20 border-border/40 font-medium"
+                      placeholder="Ejem: Casas Modulares, Construcción SIP..."
+                    />
+                  </div>
+                  {/* Selector rápido con chips clickeables */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="text-[10px] uppercase font-bold text-muted-foreground mr-1">Rápidos:</span>
+                    {["Casas Prefabricadas", "Casas Modulares", "Paneles SIP", "Steel Framing", "Madera", "Llave en Mano"].map((chip) => (
+                      <button
+                        key={chip}
+                        type="button"
+                        onClick={() => setEspecialidad(chip)}
+                        className={cn(
+                          "text-[11px] px-2.5 py-1 rounded-lg border transition-all font-medium",
+                          especialidad === chip
+                            ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                            : "bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/40"
+                        )}
+                      >
+                        {chip}
+                      </button>
+                    ))}
+                  </div>
                </div>
 
                <div className="space-y-2">

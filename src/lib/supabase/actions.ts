@@ -479,7 +479,6 @@ export async function updateSettings(formData: FormData) {
     plan: initialPlan,
     plan_status: currentConst?.plan_status || 'active',
     slug: fallbackSlug,
-    updated_at: new Date().toISOString(),
   };
 
   // SEO fields only if paid plan
@@ -1909,6 +1908,36 @@ export async function requestInvitation(formData: FormData) {
   if (insertError) {
     console.error('[requestInvitation] Error:', insertError);
     return { error: 'No pudimos registrar tu solicitud. Inténtalo de nuevo en unos minutos.' };
+  }
+
+  // 3.1 Sincronizar inmediatamente a constructora si ya existe una ficha con este correo
+  try {
+    const { data: existingConst } = await supabaseAdmin
+      .from('constructoras')
+      .select('id, nombre, telefono, descripcion, regiones')
+      .ilike('email', email.toLowerCase().trim())
+      .maybeSingle();
+
+    if (existingConst) {
+      const updates: Record<string, any> = {};
+      if (!existingConst.nombre || existingConst.nombre === 'Mi Constructora' || existingConst.nombre === email.split('@')[0]) {
+        updates.nombre = empresa_nombre;
+      }
+      if (!existingConst.telefono && telefono) {
+        updates.telefono = telefono;
+      }
+      if (!existingConst.descripcion && mensaje) {
+        updates.descripcion = mensaje;
+      }
+      if ((!existingConst.regiones || existingConst.regiones.length === 0) && region) {
+        updates.regiones = [region];
+      }
+      if (Object.keys(updates).length > 0) {
+        await supabaseAdmin.from('constructoras').update(updates).eq('id', existingConst.id);
+      }
+    }
+  } catch (syncErr) {
+    console.warn('[requestInvitation] Error sincronizando a constructora existente:', syncErr);
   }
 
   // 4. Enviar correo de cortesía / confirmación de recepción
