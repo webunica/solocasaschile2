@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { createClient } from "@/lib/supabase/server";
+import { getOrCreateSynchronizedConstructora } from "@/lib/supabase/constructora-sync";
 
 export const metadata: Metadata = {
   title: "Dashboard | SolocasasChile",
@@ -23,16 +24,12 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  // Buscar rol y plan en la tabla de perfiles (constructoras)
-  const { data: profile } = await supabase
-    .from('constructoras')
-    .select('role, plan_status, plan')
-    .eq('id', user.id)
-    .maybeSingle();
+  // Buscar / sincronizar constructora centralizada y unívoca
+  const profile = await getOrCreateSynchronizedConstructora(user);
 
   const isSuperAdmin = user?.app_metadata?.is_superadmin === true || profile?.role === 'superadmin';
   const isAdmin = isSuperAdmin || profile?.role === 'admin' || user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
-  const userName = user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
+  const userName = profile?.nombre || user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
 
   let userPlan = profile?.plan || (user?.user_metadata?.plan as string) || 'starter';
   if (userPlan === 'gratis' && user?.user_metadata?.plan === 'starter') {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { updateSettings } from "@/lib/supabase/actions";
 import { Input } from "@/components/ui/input";
@@ -12,12 +13,13 @@ import { Separator } from "@/components/ui/separator";
 import { 
   Building2, MapPin,
   Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
-  Search, Plus, Trash2, Star, MessageSquare
+  Search, Plus, Trash2, Star, MessageSquare, Loader2
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
 import { RegionesSelector } from "@/components/dashboard/regiones-selector";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface Testimonio {
   nombre: string;
@@ -173,6 +175,7 @@ function TestimoniosSelector({ name, initialValue = [], models }: { name: string
 }
 
 export function SettingsForm({ initialData, userEmail, models }: Props) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -216,10 +219,13 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
     // Validate RUT if provided
     const rut = formData.get("rut") as string;
     if (rut && !validateRut(rut)) {
+      toast.error("El RUT ingresado no es válido. Revisa el dígito verificador.");
       setMessage({ type: "error", text: "El RUT ingresado no es válido. Revisa el dígito verificador." });
       setLoading(false);
       return;
     }
+
+    const toastId = toast.loading("Guardando y sincronizando ficha de la constructora...");
     
     // 1. Upload logo if changed
     let finalLogoUrl = initialData?.logo_url || "";
@@ -283,8 +289,11 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
     const result = await updateSettings(formData);
     
     if (result.success) {
-      setMessage({ type: "success", text: "Configuración guardada correctamente." });
+      toast.success("¡Configuración guardada y sincronizada correctamente!", { id: toastId });
+      setMessage({ type: "success", text: "Configuración guardada y sincronizada correctamente." });
+      router.refresh();
     } else {
+      toast.error(result.error || "Error al guardar los cambios.", { id: toastId });
       setMessage({ type: "error", text: result.error || "Error al guardar los cambios." });
     }
     setLoading(false);
@@ -619,10 +628,19 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
            <Button 
              type="submit" 
              disabled={loading}
-             className="w-full py-7 rounded-2xl bg-white text-primary hover:bg-slate-100 font-black uppercase tracking-widest transition-all hover:scale-[1.02] shadow-xl"
+             className="w-full py-7 rounded-2xl bg-white text-primary hover:bg-slate-100 font-black uppercase tracking-widest transition-all hover:scale-[1.01] active:scale-95 shadow-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-80"
            >
-             {loading ? "Guardando..." : "Sincronizar Perfil"}
-             <Save className="w-4 h-4 ml-3" />
+             {loading ? (
+               <>
+                 <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                 <span>Sincronizando y Guardando...</span>
+               </>
+             ) : (
+               <>
+                 <span>Sincronizar Perfil</span>
+                 <Save className="w-4 h-4 ml-1" />
+               </>
+             )}
            </Button>
 
            <div className="pt-4 text-center">

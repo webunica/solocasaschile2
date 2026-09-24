@@ -450,46 +450,57 @@ export async function updateSettings(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'No autenticado' }
 
-  // Check plan for SEO restriction
-  const { data: currentConst } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
-  const initialPlan = currentConst?.plan || 'gratis';
+  const { getOrCreateSynchronizedConstructora } = await import('@/lib/supabase/constructora-sync');
+  const currentConst = await getOrCreateSynchronizedConstructora(user);
+  const initialPlan = currentConst?.plan || (user.user_metadata?.plan as string) || 'starter';
 
   const isPaidPlan = initialPlan === 'avanza' || initialPlan === 'pro' || initialPlan === 'premium';
 
+  const rawNombre = ((formData.get('nombre') as string) || currentConst?.nombre || 'Mi Constructora').trim();
+  const fallbackSlug = currentConst?.slug || `${rawNombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}-${user.id.slice(0, 6)}`;
+
   const data: GenericRecord = {
-    nombre: formData.get('nombre') as string,
-    razon_social: formData.get('razon_social') as string,
-    email: formData.get('email') as string,
-    descripcion: formData.get('descripcion') as string,
-    telefono: formData.get('telefono') as string,
-    rut: formData.get('rut') as string,
-    sitio_web: formData.get('sitio_web') as string,
-    direccion: formData.get('direccion') as string,
-    regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean),
-    logo_url: formData.get('logo_url') as string,
-    image_url: formData.get('image_url') as string,
-    video_url: formData.get('video_url') as string,
-    especialidad_principal: formData.get('especialidad_principal') as string || null,
+    id: user.id,
+    nombre: rawNombre,
+    razon_social: (formData.get('razon_social') as string)?.trim() || null,
+    email: ((formData.get('email') as string) || user.email || '')?.toLowerCase()?.trim(),
+    descripcion: (formData.get('descripcion') as string)?.trim() || null,
+    telefono: (formData.get('telefono') as string)?.trim() || null,
+    rut: (formData.get('rut') as string)?.trim() || null,
+    sitio_web: (formData.get('sitio_web') as string)?.trim() || null,
+    direccion: (formData.get('direccion') as string)?.trim() || null,
+    regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean) || [],
+    logo_url: (formData.get('logo_url') as string) || currentConst?.logo_url || null,
+    image_url: (formData.get('image_url') as string) || currentConst?.image_url || null,
+    video_url: (formData.get('video_url') as string)?.trim() || null,
+    especialidad_principal: (formData.get('especialidad_principal') as string)?.trim() || null,
     anio_inicio: formData.get('anio_inicio') ? parseInt(formData.get('anio_inicio') as string, 10) : null,
     testimonios: formData.get('testimonios') ? JSON.parse(formData.get('testimonios') as string) : [],
-  }
+    plan: initialPlan,
+    plan_status: currentConst?.plan_status || 'active',
+    slug: fallbackSlug,
+    updated_at: new Date().toISOString(),
+  };
 
   // SEO fields only if paid plan
   if (isPaidPlan) {
-    data.seo_title = formData.get('seo_title') as string || null;
-    data.seo_description = formData.get('seo_description') as string || null;
+    data.seo_title = (formData.get('seo_title') as string)?.trim() || null;
+    data.seo_description = (formData.get('seo_description') as string)?.trim() || null;
     const keywordsRaw = formData.get('seo_keywords') as string;
     if (keywordsRaw) {
       try { data.seo_keywords = JSON.parse(keywordsRaw); } catch { data.seo_keywords = []; }
     }
   }
 
-  const { error } = await supabase
+  const admin = createAdminClient();
+  const { error } = await admin
     .from('constructoras')
-    .update(data)
-    .eq('id', user.id)
+    .upsert([data], { onConflict: 'id' });
 
-  if (error) return { error: error.message }
+  if (error) {
+    console.error('[updateSettings] Error guardando constructora:', error);
+    return { error: `Error al guardar los datos: ${error.message}` };
+  }
 
   // Recalculo automÃ¡tico de sellos
   await recalcularSellosAutomaticos(user.id);

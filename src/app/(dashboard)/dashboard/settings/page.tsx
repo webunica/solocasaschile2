@@ -4,6 +4,7 @@ import { AnnouncementSettings } from "@/components/dashboard/admin/announcement-
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getModelsByConstructoraId } from "@/lib/supabase/services";
+import { getOrCreateSynchronizedConstructora } from "@/lib/supabase/constructora-sync";
 
 export const metadata: Metadata = {
   title: "Perfil y Configuración | SolocasasChile",
@@ -16,12 +17,8 @@ export default async function SettingsPage() {
   
   if (!user) redirect("/login");
 
-  // Fetch current company data
-  const { data: constructora } = await supabase
-    .from("constructoras")
-    .select("*")
-    .eq("id", user.id)
-    .single();
+  // Fetch or centralize current company data
+  const constructora = await getOrCreateSynchronizedConstructora(user);
 
   const models = await getModelsByConstructoraId(user.id);
 
