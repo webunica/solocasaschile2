@@ -266,15 +266,22 @@ export default function StarterPage() {
                 </li>
               ))}
             </ul>
-            <div className="px-6 pb-6">
+            <div className="px-6 pb-6 space-y-2">
               <Link
-                href="/invitacion"
+                href="#solicitar"
                 className={cn(
                   buttonVariants(),
                   "w-full h-12 rounded-2xl bg-brand-teal hover:bg-brand-teal/90 text-white font-black uppercase tracking-widest text-xs gap-2"
                 )}
               >
-                Tengo una invitación <ArrowRight className="w-3.5 h-3.5" />
+                <Mail className="w-3.5 h-3.5" />
+                Solicitar mi invitación gratis <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/invitacion"
+                className="block text-center text-[11px] font-bold text-muted-foreground hover:text-foreground transition-colors pt-1"
+              >
+                ¿Ya tienes un código o enlace? Actívalo aquí →
               </Link>
             </div>
           </div>
@@ -366,35 +373,43 @@ export default function StarterPage() {
           <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-brand-teal/20 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative z-10 space-y-6">
             <Badge className="bg-white/15 text-white border-white/20 font-black uppercase tracking-widest text-xs px-4 py-1.5">
-              ¿Tienes invitación?
+              Empieza sin costo
             </Badge>
             <h2 className="text-3xl md:text-5xl font-heading font-black tracking-tighter leading-tight">
               Reclama tu modelo gratuito hoy
             </h2>
             <p className="text-white/80 font-medium text-sm md:text-base max-w-lg mx-auto">
-              Usa el enlace de tu invitación para crear tu cuenta y publicar tu
-              primer modelo sin ningún costo.
+              Si aún no tienes invitación, solicítala abajo. Si ya recibiste tu código o enlace por correo, actívalo en minutos.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-2">
               <Link
-                href="/invitacion"
+                href="#solicitar"
                 className={cn(
                   buttonVariants({ size: "lg" }),
                   "bg-brand-teal hover:bg-brand-teal/90 text-white font-black uppercase tracking-widest rounded-2xl h-14 px-8 gap-2 shadow-2xl transition-all hover:scale-105 active:scale-95"
                 )}
               >
-                <Zap className="w-4 h-4" />
-                Activar mi Plan Starter
+                <Mail className="w-4 h-4" />
+                Solicitar mi invitación gratis
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                href="/planes"
+                href="/invitacion"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "border-white/30 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl h-14 px-8"
+                  "border-white/30 text-white hover:bg-white/10 font-bold uppercase tracking-widest rounded-2xl h-14 px-8 gap-2"
                 )}
               >
-                Ver todos los planes
+                <Zap className="w-4 h-4" />
+                Ya tengo un enlace o código
+              </Link>
+            </div>
+            <div className="pt-1">
+              <Link
+                href="/planes"
+                className="text-xs font-bold text-white/70 hover:text-white transition-colors underline underline-offset-4"
+              >
+                O ver todos los planes de suscripción para constructoras →
               </Link>
             </div>
           </div>
