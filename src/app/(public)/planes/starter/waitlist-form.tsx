@@ -137,7 +137,7 @@ export function WaitlistRequestForm() {
             name="empresa_nombre"
             placeholder="Constructora Ejemplo Ltda."
             required
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
         <div className="space-y-1.5">
@@ -152,7 +152,7 @@ export function WaitlistRequestForm() {
             id="contacto_nombre"
             name="contacto_nombre"
             placeholder="Juan Pérez"
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
       </div>
@@ -173,7 +173,7 @@ export function WaitlistRequestForm() {
             type="email"
             placeholder="contacto@empresa.cl"
             required
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
         <div className="space-y-1.5">
@@ -189,7 +189,7 @@ export function WaitlistRequestForm() {
             name="telefono"
             type="tel"
             placeholder="+56 9 1234 5678"
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
       </div>
@@ -207,9 +207,9 @@ export function WaitlistRequestForm() {
           id="region"
           name="region"
           className={cn(
-            "h-11 w-full rounded-xl border border-input bg-background px-3 py-2",
-            "text-sm font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-brand-teal/40",
-            "transition-colors"
+            "h-11 w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 py-2",
+            "text-sm font-medium text-foreground shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500",
+            "focus:outline-none focus:border-brand-teal focus:ring-2 focus:ring-brand-teal/20"
           )}
         >
           <option value="">Selecciona tu región (opcional)</option>
@@ -237,7 +237,7 @@ export function WaitlistRequestForm() {
           id="mensaje"
           name="mensaje"
           placeholder="Ej: Somos una constructora con 10 años de experiencia en casas modulares en la Región del Biobío. Publicamos alrededor de 5 modelos por año..."
-          className="rounded-xl resize-none min-h-[90px] text-sm"
+          className="rounded-xl resize-none min-h-[90px] border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 p-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           maxLength={500}
         />
       </div>

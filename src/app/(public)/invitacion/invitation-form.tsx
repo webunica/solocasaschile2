@@ -98,7 +98,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             required
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
 
@@ -111,7 +111,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             placeholder="Ej: Juan Pérez"
             value={repName}
             onChange={(e) => setRepName(e.target.value)}
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
       </div>
@@ -127,7 +127,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="h-11 rounded-xl bg-muted/30"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/80 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
 
@@ -141,7 +141,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             placeholder="+56 9 1234 5678"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
       </div>
@@ -156,7 +156,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             placeholder="Ej: 76.123.456-7"
             value={rut}
             onChange={(e) => setRut(e.target.value)}
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
 
@@ -169,7 +169,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             placeholder="Ej: Región Metropolitana"
             value={region}
             onChange={(e) => setRegion(e.target.value)}
-            className="h-11 rounded-xl"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20"
           />
         </div>
       </div>
@@ -187,7 +187,7 @@ export function InvitationForm({ invitation }: InvitationFormProps) {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
-            className="h-11 rounded-xl pr-10"
+            className="h-11 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/60 px-3.5 text-sm font-medium text-foreground placeholder:text-muted-foreground/70 shadow-sm transition-all hover:border-slate-400 dark:hover:border-slate-500 focus-visible:border-brand-teal focus-visible:ring-2 focus-visible:ring-brand-teal/20 pr-10"
           />
           <button
             type="button"
