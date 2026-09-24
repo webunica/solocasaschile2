@@ -594,12 +594,11 @@ function CheckoutForm() {
               type="submit"
               disabled={isLoading}
               className={cn(
-                "mt-7 h-14 w-full rounded-xl bg-brand-teal text-brand-indigo font-black uppercase tracking-widest shadow-xl shadow-brand-teal/20 transition-transform active:scale-95",
-                "hover:bg-[#34dac5]"
+                "mt-7 h-14 w-full rounded-xl bg-[#34dac5] hover:bg-[#20c9b0] text-[#03313a] font-black uppercase tracking-widest shadow-xl shadow-[#34dac5]/30 transition-all hover:scale-[1.01] active:scale-95"
               )}
             >
               {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin text-[#03313a]" />
               ) : (
                 <>
                   {isAuthenticated ? "Continuar al pago con Flow" : "Crear cuenta y pagar"}{" "}
