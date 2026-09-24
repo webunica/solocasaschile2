@@ -2,7 +2,7 @@
 // Mock data — replaces Supabase until DB is wired up
 // -------------------------------------------------------
 
-export type TipoModelo = "sip" | "prefabricada" | "modular" | "container" | "steel-framing" | "madera" | "hormigon" | "llave-en-mano" | "sociales";
+export type TipoModelo = "sip" | "prefabricada" | "modular" | "container" | "steel-framing" | "madera" | "hormigon" | "llave-en-mano" | "sociales" | "otro";
 export type PlanConstructora = "gratis" | "pro" | "premium";
 
 export interface Constructora {

@@ -3,6 +3,8 @@ export const PLAN_LIMITS = {
     maxModels: 1,
     maxPhotos: 3,
     features: {
+      leads: false,
+      obras: false,
       testimonials: false,
       certifications: false,
       gallery: false,
@@ -15,6 +17,8 @@ export const PLAN_LIMITS = {
     maxModels: 3,
     maxPhotos: 3,
     features: {
+      leads: true,
+      obras: false,
       testimonials: false,
       certifications: false,
       gallery: false,
@@ -24,9 +28,11 @@ export const PLAN_LIMITS = {
     }
   },
   gratis: {
-    maxModels: 3,
+    maxModels: 1,
     maxPhotos: 3,
     features: {
+      leads: false,
+      obras: false,
       testimonials: false,
       certifications: false,
       gallery: false,
@@ -39,6 +45,8 @@ export const PLAN_LIMITS = {
     maxModels: 3,
     maxPhotos: 5,
     features: {
+      leads: false,
+      obras: false,
       testimonials: false,
       certifications: false,
       gallery: false,
@@ -51,6 +59,8 @@ export const PLAN_LIMITS = {
     maxModels: 10,
     maxPhotos: 10,
     features: {
+      leads: true,
+      obras: false,
       testimonials: true,
       certifications: true,
       gallery: true,
@@ -63,6 +73,8 @@ export const PLAN_LIMITS = {
     maxModels: 10,
     maxPhotos: 10,
     features: {
+      leads: true,
+      obras: false,
       testimonials: true,
       certifications: true,
       gallery: true,
@@ -75,6 +87,8 @@ export const PLAN_LIMITS = {
     maxModels: 999,
     maxPhotos: 15,
     features: {
+      leads: true,
+      obras: true,
       testimonials: true,
       certifications: true,
       gallery: true,
@@ -87,6 +101,8 @@ export const PLAN_LIMITS = {
     maxModels: 1000,
     maxPhotos: 20,
     features: {
+      leads: true,
+      obras: true,
       testimonials: true,
       certifications: true,
       gallery: true,
@@ -99,6 +115,8 @@ export const PLAN_LIMITS = {
     maxModels: 1000,
     maxPhotos: 20,
     features: {
+      leads: true,
+      obras: true,
       testimonials: true,
       certifications: true,
       gallery: true,

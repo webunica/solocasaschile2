@@ -213,7 +213,10 @@ export default function NewModelPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const { data } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
-        const p = data?.plan || 'gratis';
+        let p = data?.plan || (user.user_metadata?.plan as string) || 'starter';
+        if (p === 'gratis' && user.user_metadata?.plan === 'starter') {
+          p = 'starter';
+        }
         setPlan(p);
         setPlanLimits(getPlanLimits(p));
       }
@@ -391,7 +394,9 @@ export default function NewModelPage() {
             </div>
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">Tu Plan Permite</p>
-              <p className="font-bold text-sm">{planLimits?.maxModels || '—'} modelos · {planLimits?.maxPhotos || 3} fotos</p>
+              <p className="font-bold text-sm">
+                {planLimits?.maxModels ?? '—'} {planLimits?.maxModels === 1 ? 'modelo' : 'modelos'} · {planLimits?.maxPhotos || 3} fotos
+              </p>
             </div>
           </div>
         </div>

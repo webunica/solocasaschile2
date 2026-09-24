@@ -23,16 +23,21 @@ export default async function DashboardLayout({
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  // Buscar rol en la tabla de perfiles (constructoras)
+  // Buscar rol y plan en la tabla de perfiles (constructoras)
   const { data: profile } = await supabase
     .from('constructoras')
-    .select('role, plan_status')
+    .select('role, plan_status, plan')
     .eq('id', user.id)
     .maybeSingle();
 
   const isSuperAdmin = user?.app_metadata?.is_superadmin === true || profile?.role === 'superadmin';
   const isAdmin = isSuperAdmin || profile?.role === 'admin' || user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
   const userName = user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
+
+  let userPlan = profile?.plan || (user?.user_metadata?.plan as string) || 'starter';
+  if (userPlan === 'gratis' && user?.user_metadata?.plan === 'starter') {
+    userPlan = 'starter';
+  }
 
   // Bloqueo de Dashboard si el pago está pendiente
   if (profile?.plan_status === 'pending' && !isSuperAdmin) {
@@ -42,7 +47,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">
-        <DashboardSidebar isSuperAdmin={isSuperAdmin} isAdmin={isAdmin} userName={userName} userEmail={user.email} />
+        <DashboardSidebar isSuperAdmin={isSuperAdmin} isAdmin={isAdmin} plan={userPlan} userName={userName} userEmail={user.email} />
         <SidebarInset>
           <div className="flex flex-col h-full w-full">
             <DashboardHeader userName={userName} isSuperAdmin={isSuperAdmin} />

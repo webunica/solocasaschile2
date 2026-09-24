@@ -40,7 +40,11 @@ export default async function CatalogManagementPage() {
   }
 
   const isSuperAdmin = constructora?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
-  const limits = getPlanLimits(isSuperAdmin ? 'premium' : (constructora?.plan || 'gratis'));
+  let userPlan = constructora?.plan || (user?.user_metadata?.plan as string) || 'starter';
+  if (userPlan === 'gratis' && user?.user_metadata?.plan === 'starter') {
+    userPlan = 'starter';
+  }
+  const limits = getPlanLimits(isSuperAdmin ? 'premium' : userPlan);
   const usedCount = modelos.length;
   // Solo aplicamos límites reales si no es admin, para evitar bloqueos visuales
   const isLimitReached = !isSuperAdmin && usedCount >= limits.maxModels;

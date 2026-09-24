@@ -224,7 +224,10 @@ export function EditModelForm({ modelo, isSuperAdmin }: { modelo: Partial<Modelo
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const { data } = await supabase.from('constructoras').select('plan').eq('id', user.id).single();
-        const p = data?.plan || 'gratis';
+        let p = data?.plan || (user.user_metadata?.plan as string) || 'starter';
+        if (p === 'gratis' && user.user_metadata?.plan === 'starter') {
+          p = 'starter';
+        }
         setPlan(p);
         setPlanLimits(getPlanLimits(p));
       }

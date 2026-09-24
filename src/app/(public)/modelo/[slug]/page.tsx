@@ -29,6 +29,10 @@ const TIPO_LABELS: Record<string, string> = {
   "llave-en-mano": "Llave en Mano",
   "modular": "Modular",
   "steel-framing": "Steel Framing",
+  madera: "Madera",
+  hormigon: "Hormigón",
+  sociales: "Casas Sociales",
+  otro: "Otro Sistema",
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

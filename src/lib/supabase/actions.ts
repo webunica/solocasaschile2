@@ -79,13 +79,15 @@ export async function login(formData: FormData) {
     return { error: error.message }
   }
 
-  // Auto-crear perfil de constructora si no existe aÃºn (para usuarios creados manualmente)
+  // Auto-crear o sincronizar perfil de constructora
   if (data.user) {
     const { data: existing } = await supabase
       .from('constructoras')
-      .select('id')
+      .select('id, plan')
       .eq('id', data.user.id)
       .maybeSingle()
+
+    const metaPlan = (data.user.user_metadata?.plan as string) || 'starter'
 
     if (!existing) {
       const email = data.user.email || ''
@@ -100,10 +102,12 @@ export async function login(formData: FormData) {
         nombre,
         slug,
         email,
-        plan: 'gratis',
+        plan: metaPlan,
         verificada: false,
         score_confianza: 50,
       }])
+    } else if (metaPlan === 'starter' && existing.plan === 'gratis') {
+      await supabase.from('constructoras').update({ plan: 'starter' }).eq('id', data.user.id)
     }
   }
 
@@ -509,16 +513,20 @@ export async function createModel(data: ModelPayload) {
     .eq('id', user.id)
     .single()
   
-  const limits = getPlanLimits(constructora?.plan || 'gratis')
+  let effectivePlan = constructora?.plan || (user.user_metadata?.plan as string) || 'starter'
+  if (effectivePlan === 'gratis' && user.user_metadata?.plan === 'starter') {
+    effectivePlan = 'starter'
+  }
+  const limits = getPlanLimits(effectivePlan)
 
-  // 2. Verificar lÃ­mite de modelos si es creaciÃ³n (actualmente solo tenemos createModel)
+  // 2. Verificar límite de modelos si es creación (actualmente solo tenemos createModel)
   const { count } = await supabase
     .from('modelos')
     .select('*', { count: 'exact', head: true })
     .eq('constructora_id', user.id)
 
   if ((count || 0) >= limits.maxModels) {
-    return { error: `Has alcanzado el lÃ­mite de ${limits.maxModels} modelos para tu plan ${constructora?.plan?.toUpperCase()}. Mejora tu suscripciÃ³n para publicar mÃ¡s modelos.` }
+    return { error: `Has alcanzado el límite de ${limits.maxModels} ${limits.maxModels === 1 ? 'modelo' : 'modelos'} para tu plan ${effectivePlan.toUpperCase()}. Mejora tu suscripción para publicar más modelos.` }
   }
 
   // 3. Verificar lÃ­mite de fotos
@@ -1890,6 +1898,62 @@ export async function requestInvitation(formData: FormData) {
   if (insertError) {
     console.error('[requestInvitation] Error:', insertError);
     return { error: 'No pudimos registrar tu solicitud. Inténtalo de nuevo en unos minutos.' };
+  }
+
+  // 4. Enviar correo de cortesía / confirmación de recepción
+  try {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://solocasaschile.com';
+    await resend.emails.send({
+      from: 'SoloCasasChile <contacto@solocasaschile.com>',
+      to: [email.toLowerCase().trim()],
+      subject: `Hemos recibido tu solicitud para el Plan Starter · SoloCasasChile`,
+      html: `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; color: #1e293b;">
+          <div style="background-color: #0b9e86; padding: 28px 24px; text-align: center;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">SoloCasasChile</h1>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 6px 0 0; font-size: 13px; font-weight: 500;">Catálogo Nacional de Casas Prefabricadas</p>
+          </div>
+          
+          <div style="padding: 32px 28px;">
+            <p style="font-size: 16px; font-weight: 700; color: #0f172a; margin-top: 0;">
+              Hola${contacto_nombre ? ` ${contacto_nombre}` : ''},
+            </p>
+            <p style="font-size: 14px; line-height: 1.6; color: #334155;">
+              Hemos recibido correctamente tu solicitud de invitación para <strong>${empresa_nombre}</strong> al <strong>Plan Starter gratuito</strong> de SoloCasasChile.
+            </p>
+
+            <div style="background-color: #f8fafc; border-left: 4px solid #0b9e86; border-radius: 8px; padding: 16px 20px; margin: 24px 0;">
+              <h3 style="margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #0b9e86; font-weight: 800;">¿Cuáles son los siguientes pasos?</h3>
+              <p style="margin: 0; font-size: 13px; line-height: 1.6; color: #475569;">
+                Nuestro equipo revisa cada postulación en un plazo de <strong>24 a 48 horas hábiles</strong> para verificar los antecedentes de tu constructora. En cuanto sea aprobada, te enviaremos a este mismo correo tu <strong>enlace exclusivo de activación</strong>.
+              </p>
+            </div>
+
+            <h3 style="margin: 24px 0 12px; font-size: 14px; font-weight: 700; color: #0f172a;">
+              Beneficios que tendrás con tu Plan Starter:
+            </h3>
+            <ul style="margin: 0 0 24px; padding-left: 20px; font-size: 13px; line-height: 1.8; color: #334155;">
+              <li><strong>1 modelo de casa</strong> publicado de forma permanente y sin costo.</li>
+              <li><strong>Ficha oficial de constructora</strong> con información de contacto y regiones atendidas.</li>
+              <li><strong>Presencia en el catálogo nacional</strong> más visitado de Chile.</li>
+              <li><strong>Sin tarjeta de crédito</strong> ni costos ocultos o comisiones por cotizaciones.</li>
+            </ul>
+
+            <p style="font-size: 13px; line-height: 1.6; color: #64748b; margin-bottom: 0;">
+              Si tienes alguna consulta previa, puedes responder directamente a este correo o contactarnos a <a href="mailto:contacto@solocasaschile.com" style="color: #0b9e86; text-decoration: underline;">contacto@solocasaschile.com</a>.
+            </p>
+          </div>
+
+          <div style="background-color: #f1f5f9; padding: 20px 28px; text-align: center; border-top: 1px solid #e2e8f0;">
+            <p style="font-size: 11px; color: #94a3b8; margin: 0;">
+              SoloCasasChile · Santiago, Chile · <a href="${siteUrl}" style="color: #64748b; text-decoration: none;">solocasaschile.com</a>
+            </p>
+          </div>
+        </div>
+      `
+    });
+  } catch (emailErr) {
+    console.error('[requestInvitation] Error enviando correo de cortesía:', emailErr);
   }
 
   return { success: true };

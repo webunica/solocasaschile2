@@ -15,17 +15,27 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/supabase/actions";
+import { getPlanLimits, getPlanNombre } from "@/lib/constants/plans";
 
-const DASHBOARD_MENU = [
+type FeatureKey = "leads" | "obras" | "testimonials" | "certifications" | "analytics";
+
+interface DashboardMenuItem {
+  title: string;
+  icon: any;
+  href: string;
+  feature?: FeatureKey;
+}
+
+const DASHBOARD_MENU: DashboardMenuItem[] = [
   { title: "Inicio", icon: LayoutDashboard, href: "/dashboard" },
   { title: "Gestionar Modelos", icon: Home, href: "/dashboard/catalog" },
-  { title: "Ver Prospectos", icon: Users, href: "/dashboard/leads" },
-  { title: "Seguimiento de Obra", icon: HardHat, href: "/dashboard/obras" },
+  { title: "Ver Prospectos", icon: Users, href: "/dashboard/leads", feature: "leads" },
+  { title: "Seguimiento de Obra", icon: HardHat, href: "/dashboard/obras", feature: "obras" },
   { title: "Sellos de Confianza", icon: ShieldCheck, href: "/dashboard/sellos" },
   { title: "Agendar Demo", icon: Video, href: "/demo" },
-  { title: "Testimonios", icon: MessageSquare, href: "/dashboard/testimonios" },
-  { title: "Certificaciones", icon: Award, href: "/dashboard/certificaciones" },
-  { title: "Analíticas", icon: BarChart3, href: "/dashboard/reportes" },
+  { title: "Testimonios", icon: MessageSquare, href: "/dashboard/testimonios", feature: "testimonials" },
+  { title: "Certificaciones", icon: Award, href: "/dashboard/certificaciones", feature: "certifications" },
+  { title: "Analíticas", icon: BarChart3, href: "/dashboard/reportes", feature: "analytics" },
 ];
 
 const SUPPORT_MENU = [
@@ -36,15 +46,25 @@ const SUPPORT_MENU = [
 export function DashboardSidebar({ 
   isSuperAdmin,
   isAdmin, 
+  plan = "starter",
   userName = "Constructor", 
   userEmail = "soporte@solocasaschile.com" 
 }: { 
   isSuperAdmin?: boolean;
   isAdmin?: boolean;
+  plan?: string;
   userName?: string;
   userEmail?: string;
 }) {
   const pathname = usePathname();
+  const planLimits = getPlanLimits(plan);
+  const planNombre = getPlanNombre(plan);
+
+  const visibleDashboardMenu = DASHBOARD_MENU.filter((item) => {
+    if (isSuperAdmin || isAdmin) return true;
+    if (!item.feature) return true;
+    return Boolean(planLimits.features[item.feature]);
+  });
 
   return (
     <Sidebar variant="sidebar" collapsible="icon" className="border-r border-border/40 bg-background md:bg-card/40 backdrop-blur-xl">
@@ -77,7 +97,7 @@ export function DashboardSidebar({
           <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-40 mb-3">CONSTRUCTORA</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-1.5">
-              {DASHBOARD_MENU.map((item) => (
+              {visibleDashboardMenu.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild 
@@ -254,8 +274,13 @@ export function DashboardSidebar({
               </div>
               <div className="flex flex-col min-w-0 group-data-[collapsible=icon]:hidden">
                  <span className="text-xs font-black truncate text-foreground leading-tight">{userName}</span>
-                 <span className="text-[10px] text-muted-foreground font-medium truncate opacity-60">
-                   {userEmail} <br/> (admin={String(isAdmin)}, super={String(isSuperAdmin)})
+                 <div className="flex items-center gap-1.5 mt-0.5">
+                   <span className="inline-block px-2 py-0.5 rounded-md bg-primary/10 text-primary font-black text-[9px] uppercase tracking-wider">
+                     {planNombre}
+                   </span>
+                 </div>
+                 <span className="text-[10px] text-muted-foreground font-medium truncate opacity-60 mt-0.5">
+                   {userEmail}
                  </span>
               </div>
            </div>

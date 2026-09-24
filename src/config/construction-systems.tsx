@@ -206,6 +206,18 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Tiempo entrega", value: "30-60 días" }
     ],
     image: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=2000"
+  },
+  "otro": {
+    title: "Otro Sistema Constructivo",
+    description: "Modelos construidos con técnicas especiales, híbridas o materiales alternativos de alta eficiencia.",
+    icon: <Home className="w-10 h-10 text-brand-teal" />,
+    benefits: ["Adaptabilidad a requerimientos específicos", "Diseños personalizados", "Soluciones innovadoras"],
+    specs: [
+      { label: "Materialidad", value: "A medida" },
+      { label: "Personalización", value: "Alta" },
+      { label: "Asesoría", value: "Directa" }
+    ],
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000"
   }
 };
 
@@ -219,4 +231,5 @@ export const FORM_SYSTEM_OPTIONS = [
   { value: "hormigon", label: "Hormigón" },
   { value: "llave-en-mano", label: "Llave en Mano" },
   { value: "sociales", label: "Casas Sociales (Subsidio)" },
+  { value: "otro", label: "Otro Sistema Constructivo" },
 ];

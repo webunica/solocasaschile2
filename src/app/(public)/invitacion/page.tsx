@@ -21,7 +21,7 @@ export default async function InvitacionPage({ searchParams }: PageProps) {
 
   if (!token) {
     return (
-      <div className="min-h-[85vh] flex items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-muted/30 via-background to-background">
+      <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center pt-28 sm:pt-32 pb-16 px-4 sm:px-6 bg-gradient-to-b from-muted/30 via-background to-background">
         <div className="max-w-xl w-full bg-card border border-border/60 rounded-3xl p-6 sm:p-10 text-center space-y-8 shadow-xl">
           <div className="space-y-3">
             <div className="w-16 h-16 rounded-2xl bg-brand-teal/10 text-brand-teal flex items-center justify-center mx-auto shadow-inner">
@@ -88,7 +88,7 @@ export default async function InvitacionPage({ searchParams }: PageProps) {
 
   if (!invitation) {
     return (
-      <div className="min-h-[85vh] flex items-center justify-center p-4 sm:p-6 bg-gradient-to-b from-muted/30 via-background to-background">
+      <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center pt-28 sm:pt-32 pb-16 px-4 sm:px-6 bg-gradient-to-b from-muted/30 via-background to-background">
         <div className="max-w-xl w-full bg-card border border-border/60 rounded-3xl p-6 sm:p-10 text-center space-y-6 shadow-xl">
           <div className="w-16 h-16 rounded-2xl bg-destructive/10 text-destructive flex items-center justify-center mx-auto">
             <AlertTriangle className="w-8 h-8" />
@@ -132,7 +132,7 @@ export default async function InvitacionPage({ searchParams }: PageProps) {
 
   if (invitation.status === "accepted") {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center p-6 bg-muted/20">
+      <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center pt-28 sm:pt-32 pb-16 p-6 bg-muted/20">
         <div className="max-w-md w-full bg-card border border-border/50 rounded-3xl p-8 text-center space-y-5 shadow-xl">
           <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-8 h-8" />
@@ -155,7 +155,7 @@ export default async function InvitacionPage({ searchParams }: PageProps) {
   const isExpired = new Date(invitation.expires_at) < new Date();
   if (invitation.status === "expired" || isExpired) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center p-6 bg-muted/20">
+      <div className="min-h-[calc(100vh-5rem)] flex items-center justify-center pt-28 sm:pt-32 pb-16 p-6 bg-muted/20">
         <div className="max-w-md w-full bg-card border border-border/50 rounded-3xl p-8 text-center space-y-5 shadow-xl">
           <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto">
             <AlertTriangle className="w-8 h-8" />
@@ -176,8 +176,8 @@ export default async function InvitacionPage({ searchParams }: PageProps) {
   }
 
   return (
-    <div className="min-h-[90vh] bg-gradient-to-b from-muted/30 via-background to-background py-12 px-4 md:px-6">
-      <div className="max-w-5xl mx-auto space-y-10">
+    <div className="min-h-[calc(100vh-5rem)] flex flex-col justify-center pt-28 sm:pt-36 lg:pt-40 pb-24 px-4 md:px-6 bg-gradient-to-b from-muted/30 via-background to-background">
+      <div className="max-w-5xl mx-auto w-full space-y-10">
         {/* Cabecera */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-black uppercase tracking-widest">
