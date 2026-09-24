@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -57,6 +57,72 @@ function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Estados sincronizados con la constructora
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [repName, setRepName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [rut, setRut] = useState("");
+
+  useEffect(() => {
+    async function loadCurrentUser() {
+      try {
+        const { createClient } = await import("@/lib/supabase/client");
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (user) {
+          setIsAuthenticated(true);
+          const emailVal = user.email || "";
+          setUserEmail(emailVal);
+
+          // Buscar datos de la constructora asociada para prellenar
+          const { data: constructora } = await supabase
+            .from("constructoras")
+            .select("nombre, telefono, rut, razon_social")
+            .eq("id", user.id)
+            .maybeSingle();
+
+          const metaName = (user.user_metadata?.nombre as string) || "";
+          const metaRep = (user.user_metadata?.representante as string) || "";
+          const metaPhone = (user.user_metadata?.telefono as string) || "";
+          const metaRut = (user.user_metadata?.rut as string) || "";
+
+          if (constructora?.nombre || metaName) setCompanyName(constructora?.nombre || metaName);
+          if (metaRep) setRepName(metaRep);
+          if (constructora?.telefono || metaPhone) setPhone(constructora?.telefono || metaPhone);
+          if (constructora?.rut || metaRut) setRut(constructora?.rut || metaRut);
+        }
+      } catch (e) {
+        console.error("Error prellenando checkout:", e);
+      }
+    }
+    loadCurrentUser();
+  }, []);
+
+  const handleEmailBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const val = e.target.value.trim().toLowerCase();
+    if (!val || isAuthenticated) return;
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("constructoras")
+        .select("nombre, telefono, rut")
+        .ilike("email", val)
+        .maybeSingle();
+
+      if (data) {
+        if (data.nombre && !companyName) setCompanyName(data.nombre);
+        if (data.telefono && !phone) setPhone(data.telefono);
+        if (data.rut && !rut) setRut(data.rut);
+      }
+    } catch {
+      // Ignorar errores en lookup anónimo
+    }
+  };
+
   const handleApplyCoupon = () => {
     const normalized = normalizeCouponCode(couponInput);
 
@@ -70,7 +136,7 @@ function CheckoutForm() {
 
     if (!coupon) {
       setAppliedCouponCode("");
-      setCouponError("Cupon no valido o expirado.");
+      setCouponError("Cupón no válido o expirado.");
       return;
     }
 
@@ -85,9 +151,15 @@ function CheckoutForm() {
     const password = String(formData.get("password") || "");
     const confirmPassword = String(formData.get("confirmPassword") || "");
 
-    if (password !== confirmPassword) {
-      setError("Las contrasenas no coinciden.");
-      return;
+    if (!isAuthenticated) {
+      if (password !== confirmPassword) {
+        setError("Las contraseñas no coinciden.");
+        return;
+      }
+      if (!password || password.length < 6) {
+        setError("La contraseña debe tener al menos 6 caracteres.");
+        return;
+      }
     }
 
     setError(null);
@@ -100,12 +172,12 @@ function CheckoutForm() {
         body: JSON.stringify({
           plan,
           billing,
-          email: String(formData.get("email") || ""),
-          password,
-          companyName: String(formData.get("companyName") || ""),
-          repName: String(formData.get("repName") || ""),
-          phone: String(formData.get("phone") || ""),
-          rut: String(formData.get("rut") || ""),
+          email: isAuthenticated ? userEmail : String(formData.get("email") || userEmail),
+          password: isAuthenticated ? "" : password,
+          companyName: String(formData.get("companyName") || companyName),
+          repName: String(formData.get("repName") || repName),
+          phone: String(formData.get("phone") || phone),
+          rut: String(formData.get("rut") || rut),
           couponCode: appliedCoupon?.code,
         }),
       });
@@ -120,7 +192,7 @@ function CheckoutForm() {
 
       window.location.href = data.url;
     } catch {
-      setError("Ocurrio un error inesperado. Intenta nuevamente.");
+      setError("Ocurrió un error inesperado. Intenta nuevamente.");
       setIsLoading(false);
     }
   };
@@ -361,9 +433,24 @@ function CheckoutForm() {
             <div className="mb-6">
               <p className="text-xs font-black uppercase tracking-widest text-brand-teal">Datos de acceso</p>
               <h2 className="mt-2 text-2xl font-black tracking-tighter text-foreground">
-                Registra tu constructora
+                {isAuthenticated ? "Confirma tus datos y activa tu plan" : "Registra tu constructora"}
               </h2>
             </div>
+
+            {isAuthenticated && (
+              <div className="mb-5 flex items-center justify-between rounded-2xl border border-brand-teal/20 bg-brand-teal/10 p-4 text-brand-teal">
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-brand-teal" />
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-wider text-brand-indigo">Sesión iniciada</p>
+                    <p className="text-xs font-bold text-slate-800 dark:text-slate-200">{userEmail}</p>
+                  </div>
+                </div>
+                <Badge variant="outline" className="border-brand-teal/30 bg-white/80 text-[10px] font-bold text-brand-teal">
+                  Datos sincronizados
+                </Badge>
+              </div>
+            )}
 
             {error && (
               <div className="mb-5 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm font-bold leading-relaxed text-red-600">
@@ -376,7 +463,15 @@ function CheckoutForm() {
                 <Label htmlFor="companyName" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                   Nombre constructora
                 </Label>
-                <Input id="companyName" name="companyName" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+                <Input 
+                  id="companyName" 
+                  name="companyName" 
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  placeholder="Ej: Constructora Modular SpA"
+                  required 
+                  className="h-13 rounded-xl bg-slate-50 font-bold" 
+                />
               </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
@@ -384,13 +479,30 @@ function CheckoutForm() {
                   <Label htmlFor="repName" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                     Nombre responsable
                   </Label>
-                  <Input id="repName" name="repName" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+                  <Input 
+                    id="repName" 
+                    name="repName" 
+                    value={repName}
+                    onChange={(e) => setRepName(e.target.value)}
+                    placeholder="Ej: Juan Pérez"
+                    required 
+                    className="h-13 rounded-xl bg-slate-50 font-bold" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                     WhatsApp
                   </Label>
-                  <Input id="phone" name="phone" type="tel" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+                  <Input 
+                    id="phone" 
+                    name="phone" 
+                    type="tel" 
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+56 9 1234 5678"
+                    required 
+                    className="h-13 rounded-xl bg-slate-50 font-bold" 
+                  />
                 </div>
               </div>
 
@@ -398,54 +510,84 @@ function CheckoutForm() {
                 <Label htmlFor="rut" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                   RUT empresa
                 </Label>
-                <Input id="rut" name="rut" className="h-13 rounded-xl bg-slate-50 font-bold" />
+                <Input 
+                  id="rut" 
+                  name="rut" 
+                  value={rut}
+                  onChange={(e) => setRut(e.target.value)}
+                  placeholder="76.123.456-K"
+                  className="h-13 rounded-xl bg-slate-50 font-bold" 
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
                   Email
                 </Label>
-                <Input id="email" name="email" type="email" required className="h-13 rounded-xl bg-slate-50 font-bold" />
+                <Input 
+                  id="email" 
+                  name="email" 
+                  type="email" 
+                  value={isAuthenticated ? userEmail : undefined}
+                  defaultValue={!isAuthenticated ? userEmail : undefined}
+                  readOnly={isAuthenticated}
+                  onBlur={handleEmailBlur}
+                  required 
+                  placeholder="contacto@tuempresa.cl"
+                  className={cn(
+                    "h-13 rounded-xl font-bold",
+                    isAuthenticated ? "bg-slate-100 text-muted-foreground cursor-not-allowed" : "bg-slate-50"
+                  )} 
+                />
+                {isAuthenticated && (
+                  <p className="text-[10px] text-muted-foreground italic">
+                    Tu suscripción se vinculará directamente a esta cuenta.
+                  </p>
+                )}
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
-                    Contrasena
-                  </Label>
-                  <div className="relative">
+              {!isAuthenticated && (
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                      Contraseña
+                    </Label>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        minLength={6}
+                        required
+                        placeholder="Mínimo 6 caracteres"
+                        className="h-13 rounded-xl bg-slate-50 pr-11 font-bold"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((value) => !value)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+                        aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
+                      Confirmar
+                    </Label>
                     <Input
-                      id="password"
-                      name="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
                       type={showPassword ? "text" : "password"}
                       minLength={6}
                       required
-                      className="h-13 rounded-xl bg-slate-50 pr-11 font-bold"
+                      placeholder="Repite la contraseña"
+                      className="h-13 rounded-xl bg-slate-50 font-bold"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword((value) => !value)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-                      aria-label={showPassword ? "Ocultar contrasena" : "Mostrar contrasena"}
-                    >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="text-xs font-black uppercase tracking-widest text-muted-foreground">
-                    Confirmar
-                  </Label>
-                  <Input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type={showPassword ? "text" : "password"}
-                    minLength={6}
-                    required
-                    className="h-13 rounded-xl bg-slate-50 font-bold"
-                  />
-                </div>
-              </div>
+              )}
             </div>
 
             <Button
@@ -460,7 +602,8 @@ function CheckoutForm() {
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
                 <>
-                  Crear cuenta y pagar <ArrowRight className="h-4 w-4" />
+                  {isAuthenticated ? "Continuar al pago con Flow" : "Crear cuenta y pagar"}{" "}
+                  <ArrowRight className="h-4 w-4" />
                 </>
               )}
             </Button>

@@ -16,7 +16,7 @@ const CheckoutStartSchema = z.object({
   plan: z.enum(["basic", "crece", "pro", "premium"]),
   billing: z.enum(["monthly", "semiannual", "yearly"]),
   email: z.string().email().max(180),
-  password: z.string().min(6).max(100),
+  password: z.string().max(100).optional().default(""),
   companyName: z.string().min(2).max(140),
   repName: z.string().min(2).max(140),
   phone: z.string().min(6).max(40),
@@ -65,70 +65,122 @@ export async function POST(req: NextRequest) {
     }
 
     const payload = parsed.data;
-    const email = payload.email.trim().toLowerCase();
     const admin = createAdminClient();
     const supabase = await createClient();
+    const { data: { user: sessionUser } } = await supabase.auth.getUser();
 
-    let userId: string | null = null;
-    const createdUser = await admin.auth.admin.createUser({
-      email,
-      password: payload.password,
-      email_confirm: true,
-      user_metadata: {
-        nombre: payload.companyName.trim(),
-        representante: payload.repName.trim(),
-        plan: payload.plan,
-      },
-    });
+    let signedInUserId: string | null = null;
+    let email = payload.email.trim().toLowerCase();
 
-    if (createdUser.error) {
-      const isExistingUser = /already|registered|exists/i.test(createdUser.error.message);
-
-      if (!isExistingUser) {
-        logWarn("checkout_start_user_create_failed", route, requestId, {
-          message: createdUser.error.message,
-          ms: Date.now() - start,
-        });
+    if (sessionUser) {
+      // Usuario ya autenticado previamente
+      signedInUserId = sessionUser.id;
+      if (sessionUser.email) {
+        email = sessionUser.email.toLowerCase().trim();
+      }
+    } else {
+      // Usuario no autenticado: requiere contraseña de cuenta
+      if (!payload.password || payload.password.length < 6) {
         return NextResponse.json(
-          { error: "No pudimos crear la cuenta. Intenta nuevamente." },
+          { error: "La contraseña debe tener al menos 6 caracteres." },
           { status: 400 }
         );
       }
-    } else {
-      userId = createdUser.data.user.id;
+
+      const createdUser = await admin.auth.admin.createUser({
+        email,
+        password: payload.password,
+        email_confirm: true,
+        user_metadata: {
+          nombre: payload.companyName.trim(),
+          representante: payload.repName.trim(),
+          telefono: payload.phone.trim(),
+          rut: payload.rut?.trim() || "",
+          plan: payload.plan,
+        },
+      });
+
+      if (createdUser.error) {
+        const isExistingUser = /already|registered|exists/i.test(createdUser.error.message);
+
+        if (!isExistingUser) {
+          logWarn("checkout_start_user_create_failed", route, requestId, {
+            message: createdUser.error.message,
+            ms: Date.now() - start,
+          });
+          return NextResponse.json(
+            { error: "No pudimos crear la cuenta. Intenta nuevamente." },
+            { status: 400 }
+          );
+        }
+      } else {
+        signedInUserId = createdUser.data.user.id;
+      }
+
+      const signIn = await supabase.auth.signInWithPassword({
+        email,
+        password: payload.password,
+      });
+
+      if (signIn.error || !signIn.data.user) {
+        return NextResponse.json(
+          {
+            error:
+              "Este email ya tiene una cuenta registrada. Si es tuya, inicia sesión en /login y luego vuelve al checkout para continuar.",
+          },
+          { status: 409 }
+        );
+      }
+
+      signedInUserId = signIn.data.user.id;
     }
 
-    const signIn = await supabase.auth.signInWithPassword({
-      email,
-      password: payload.password,
-    });
-
-    if (signIn.error || !signIn.data.user) {
+    if (!signedInUserId) {
       return NextResponse.json(
-        {
-          error:
-            "Este email ya existe o la clave no coincide. Inicia sesion y vuelve al checkout para pagar.",
-        },
-        { status: 409 }
+        { error: "No pudimos identificar la sesión de usuario." },
+        { status: 401 }
       );
     }
 
-    const signedInUserId = signIn.data.user.id;
-    userId = signedInUserId;
+    // Sincronizar metadata de auth
+    try {
+      await admin.auth.admin.updateUserById(signedInUserId, {
+        user_metadata: {
+          nombre: payload.companyName.trim(),
+          representante: payload.repName.trim(),
+          telefono: payload.phone.trim(),
+          rut: payload.rut?.trim() || "",
+          plan: payload.plan,
+        },
+      });
+    } catch (metaErr) {
+      console.warn("No se pudo actualizar metadata en checkout:", metaErr);
+    }
+
+    // Buscar constructora previa para consolidar y no perder columnas
+    const { data: existingConst } = await admin
+      .from("constructoras")
+      .select("*")
+      .eq("id", signedInUserId)
+      .maybeSingle();
 
     const baseSlug = slugify(payload.companyName);
+    const fallbackSlug = `${baseSlug || "constructora"}-${signedInUserId.slice(0, 5)}`;
+    const { updated_at: _unused, ...safeExisting } = existingConst || {};
+
     const constructoraPayload = {
+      ...safeExisting,
       id: signedInUserId,
       nombre: payload.companyName.trim(),
-      slug: `${baseSlug || "constructora"}-${signedInUserId.slice(0, 5)}`,
+      slug: existingConst?.slug || fallbackSlug,
       email,
-      telefono: payload.phone.trim(),
-      rut: payload.rut.trim(),
+      telefono: payload.phone.trim() || existingConst?.telefono || null,
+      rut: payload.rut?.trim() || existingConst?.rut || null,
       plan: payload.plan,
       plan_cycle: payload.billing,
       plan_status: "pending",
-      verificada: false,
-      score_confianza: 50,
+      verificada: existingConst?.verificada ?? false,
+      score_confianza: existingConst?.score_confianza ?? 50,
     };
 
     const { error: profileError } = await admin
@@ -137,7 +189,7 @@ export async function POST(req: NextRequest) {
 
     if (profileError) {
       logError("checkout_start_profile_upsert_failed", route, requestId, profileError, {
-        userId,
+        userId: signedInUserId,
         ms: Date.now() - start,
       });
       return NextResponse.json(
@@ -200,7 +252,7 @@ export async function POST(req: NextRequest) {
     }
 
     logInfo("checkout_start_created", route, requestId, {
-      userId,
+      userId: signedInUserId,
       plan: payload.plan,
       billing: payload.billing,
       coupon: coupon?.code ?? null,
