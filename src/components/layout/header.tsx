@@ -59,7 +59,7 @@ export function Header() {
     >
       <div
         className={cn(
-          "relative overflow-hidden transition-all duration-300",
+          "relative transition-all duration-300",
           isScrolled
             ? "bg-white/96 shadow-[0_10px_32px_-28px_rgba(0,38,43,0.2)] backdrop-blur-xl"
             : "bg-[linear-gradient(90deg,rgba(235,244,248,0.88),rgba(244,250,244,0.82),rgba(235,244,248,0.88))] shadow-none backdrop-blur-sm"
