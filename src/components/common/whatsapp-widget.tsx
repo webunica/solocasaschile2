@@ -196,15 +196,28 @@ export function WhatsAppWidget() {
         <AnimatePresence>
           {showHint && !isOpen && (
             <motion.div
-              initial={{ opacity: 0, x: 20, scale: 0.8 }}
+              initial={{ opacity: 0, x: 15, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 20, scale: 0.8 }}
-              className="bg-white px-4 py-2 rounded-2xl shadow-xl border border-border/50 text-[11px] font-black uppercase tracking-widest text-brand-indigo flex items-center gap-2 relative whitespace-nowrap"
+              exit={{ opacity: 0, x: 15, scale: 0.9 }}
+              onClick={() => {
+                setIsOpen(true);
+                setShowHint(false);
+                if (!hasAutoOpened) setHasAutoOpened(true);
+              }}
+              className="group cursor-pointer bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 py-2.5 rounded-full shadow-[0_12px_36px_-6px_rgba(0,38,43,0.18)] border border-slate-200/80 dark:border-slate-700/80 text-[12px] font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2.5 relative whitespace-nowrap hover:scale-[1.02] active:scale-95 transition-all select-none"
             >
-              <div className="w-2 h-2 bg-brand-teal rounded-full animate-pulse" />
-              ¿Necesitas ayuda? Chatea aquí
-              {/* Pointer Triangle - Pointing Right */}
-              <div className="absolute left-full top-1/2 -translate-y-1/2 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[6px] border-l-white" />
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="tracking-wide">
+                ¿Necesitas ayuda?{" "}
+                <strong className="text-brand-indigo dark:text-brand-teal font-extrabold group-hover:underline">
+                  Chatea aquí
+                </strong>
+              </span>
+              {/* Flecha conectora integrada con el mismo borde y fondo */}
+              <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 bg-white dark:bg-slate-900 border-r border-t border-slate-200/80 dark:border-slate-700/80 rotate-45 pointer-events-none" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -221,28 +234,26 @@ export function WhatsAppWidget() {
             if (!hasAutoOpened) setHasAutoOpened(true);
           }}
           className={cn(
-            "relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-xl shrink-0",
-            isOpen ? "bg-background text-foreground rotate-90" : "bg-brand-indigo text-white shadow-primary/20"
+            "relative w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl shrink-0 border",
+            isOpen
+              ? "bg-card text-foreground rotate-90 border-border shadow-md"
+              : "bg-[#00262b] text-white border-white/20 shadow-[0_10px_28px_rgba(0,38,43,0.35)] hover:shadow-[0_14px_36px_rgba(0,38,43,0.45)]"
           )}
         >
           <AnimatePresence mode="wait">
-             {isOpen ? (
-               <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <X className="w-6 h-6" aria-hidden="true" />
-               </motion.div>
-             ) : (
-               <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <MessageCircle className="w-7 h-7 fill-white" aria-hidden="true" />
-               </motion.div>
-             )}
+            {isOpen ? (
+              <motion.div key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <X className="w-6 h-6" aria-hidden="true" />
+              </motion.div>
+            ) : (
+              <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <MessageCircle className="w-6 h-6 fill-white" aria-hidden="true" />
+              </motion.div>
+            )}
           </AnimatePresence>
-          
+
           {!isOpen && (
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute inset-0 rounded-[2rem] bg-current opacity-20 pointer-events-none"
-            />
+            <span className="absolute -inset-1 rounded-full bg-brand-teal/40 animate-ping opacity-35 pointer-events-none" />
           )}
         </motion.button>
       </div>
