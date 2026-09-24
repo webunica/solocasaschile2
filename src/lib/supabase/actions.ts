@@ -459,27 +459,31 @@ export async function updateSettings(formData: FormData) {
   const rawNombre = ((formData.get('nombre') as string) || currentConst?.nombre || 'Mi Constructora').trim();
   const fallbackSlug = currentConst?.slug || `${rawNombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-')}-${user.id.slice(0, 6)}`;
 
-  const data: GenericRecord = {
-    id: user.id,
-    nombre: rawNombre,
-    razon_social: (formData.get('razon_social') as string)?.trim() || null,
-    email: ((formData.get('email') as string) || user.email || '')?.toLowerCase()?.trim(),
-    descripcion: (formData.get('descripcion') as string)?.trim() || null,
-    telefono: (formData.get('telefono') as string)?.trim() || null,
-    rut: (formData.get('rut') as string)?.trim() || null,
-    sitio_web: (formData.get('sitio_web') as string)?.trim() || null,
-    direccion: (formData.get('direccion') as string)?.trim() || null,
-    regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean) || [],
-    logo_url: (formData.get('logo_url') as string) || currentConst?.logo_url || null,
-    image_url: (formData.get('image_url') as string) || currentConst?.image_url || null,
-    video_url: (formData.get('video_url') as string)?.trim() || null,
-    especialidad_principal: (formData.get('especialidad_principal') as string)?.trim() || null,
-    anio_inicio: formData.get('anio_inicio') ? parseInt(formData.get('anio_inicio') as string, 10) : null,
-    testimonios: formData.get('testimonios') ? JSON.parse(formData.get('testimonios') as string) : [],
-    plan: initialPlan,
-    plan_status: currentConst?.plan_status || 'active',
-    slug: fallbackSlug,
-  };
+    const rawEspecialidad = (formData.get('especialidad_principal') as string)?.trim() || null;
+    const rawTipos = (formData.get('tipos_construccion') as string)?.split(',').map(t => t.trim()).filter(Boolean) || [];
+
+    const data: GenericRecord = {
+      id: user.id,
+      nombre: rawNombre,
+      razon_social: (formData.get('razon_social') as string)?.trim() || null,
+      email: ((formData.get('email') as string) || user.email || '')?.toLowerCase()?.trim(),
+      descripcion: (formData.get('descripcion') as string)?.trim() || null,
+      telefono: (formData.get('telefono') as string)?.trim() || null,
+      rut: (formData.get('rut') as string)?.trim() || null,
+      sitio_web: (formData.get('sitio_web') as string)?.trim() || null,
+      direccion: (formData.get('direccion') as string)?.trim() || null,
+      regiones: (formData.get('regiones') as string)?.split(',').map(r => r.trim()).filter(Boolean) || [],
+      tipos_construccion: rawTipos.length > 0 ? rawTipos : (rawEspecialidad ? [rawEspecialidad] : []),
+      especialidad_principal: rawEspecialidad ? rawEspecialidad.slice(0, 100) : (rawTipos[0] || null),
+      logo_url: (formData.get('logo_url') as string) || currentConst?.logo_url || null,
+      image_url: (formData.get('image_url') as string) || currentConst?.image_url || null,
+      video_url: (formData.get('video_url') as string)?.trim() || null,
+      anio_inicio: formData.get('anio_inicio') ? parseInt(formData.get('anio_inicio') as string, 10) : null,
+      testimonios: formData.get('testimonios') ? JSON.parse(formData.get('testimonios') as string) : [],
+      plan: initialPlan,
+      plan_status: currentConst?.plan_status || 'active',
+      slug: fallbackSlug,
+    };
 
   // SEO fields only if paid plan
   if (isPaidPlan) {

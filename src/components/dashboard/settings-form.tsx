@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { 
   Building2, MapPin,
   Image as ImageIcon, Save, CheckCircle2, AlertCircle, Video,
-  Search, Plus, Trash2, Star, MessageSquare, Loader2
+  Search, Plus, Trash2, Star, MessageSquare, Loader2, X
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { SEOPanel } from "@/components/dashboard/seo-panel";
@@ -46,6 +46,7 @@ interface ConstructoraSettings {
   telefono?: string | null;
   direccion?: string | null;
   especialidad_principal?: string | null;
+  tipos_construccion?: string[] | null;
   anio_inicio?: number | string | null;
   regiones?: string[] | null;
   testimonios?: Testimonio[] | null;
@@ -191,7 +192,35 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const [especialidad, setEspecialidad] = useState(initialData?.especialidad_principal || "");
+
+  // Inicializar especialidades con soporte múltiple desde tipos_construccion o especialidad_principal
+  const initialSpecialties = () => {
+    if (initialData?.tipos_construccion && initialData.tipos_construccion.length > 0) {
+      return initialData.tipos_construccion;
+    }
+    if (initialData?.especialidad_principal) {
+      return initialData.especialidad_principal.split(',').map(s => s.trim()).filter(Boolean);
+    }
+    return [];
+  };
+
+  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(initialSpecialties);
+  const [customSpecialty, setCustomSpecialty] = useState("");
+
+  const toggleSpecialty = (item: string) => {
+    setSelectedSpecialties(prev =>
+      prev.includes(item) ? prev.filter(x => x !== item) : [...prev, item]
+    );
+  };
+
+  const addCustomSpecialty = () => {
+    const trimmed = customSpecialty.trim();
+    if (trimmed && !selectedSpecialties.includes(trimmed)) {
+      setSelectedSpecialties(prev => [...prev, trimmed]);
+      setCustomSpecialty("");
+    }
+  };
+
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
@@ -442,61 +471,121 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
                   />
                </div>
 
+               {/* Región de Operación capturada */}
                <div className="space-y-2 md:col-span-2">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="especialidad_principal" className="text-xs font-black uppercase tracking-widest opacity-60">
-                      Especialidad Principal / Sistema Constructivo
-                    </Label>
-                    <span className="text-[10px] text-muted-foreground font-medium">Elige de la lista o escribe tu propia especialidad</span>
+                     <Label className="text-xs font-black uppercase tracking-widest opacity-60 flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-brand-teal" /> Región donde opera tu constructora
+                     </Label>
+                     <a href="#cobertura-geografica" className="text-[10px] text-brand-teal font-bold hover:underline">
+                        Ver y configurar cobertura completa ↓
+                     </a>
                   </div>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    <select
-                      aria-label="Seleccionar sistema constructivo"
-                      className="h-12 rounded-xl bg-muted/20 border border-border/40 px-3 text-sm font-medium text-foreground focus:ring-1 focus:ring-primary/20 outline-none cursor-pointer"
-                      value={SISTEMAS_CONSTRUCTIVOS.includes(especialidad) ? especialidad : (especialidad ? "otro" : "")}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (val !== "otro" && val !== "") {
-                          setEspecialidad(val);
+                  <div className="p-3.5 rounded-xl bg-muted/20 border border-border/40 flex flex-wrap items-center justify-between gap-3">
+                     <div className="flex flex-wrap items-center gap-2">
+                        {(initialData?.regiones && initialData.regiones.length > 0) ? (
+                          initialData.regiones.map((reg) => (
+                            <Badge key={reg} variant="secondary" className="px-3 py-1 rounded-lg text-xs font-bold bg-brand-teal/15 text-brand-teal border-brand-teal/30">
+                              <MapPin className="w-3 h-3 mr-1" /> {reg}
+                            </Badge>
+                          ))
+                        ) : (
+                          <span className="text-xs text-muted-foreground italic">Sin región configurada aún. Selecciona tus regiones en la sección de Cobertura Geográfica.</span>
+                        )}
+                     </div>
+                     <span className="text-[11px] text-muted-foreground">
+                       (Transferida automáticamente desde tu solicitud de invitación)
+                     </span>
+                  </div>
+               </div>
+
+               {/* Especialidades y Sistemas Constructivos - Selección Múltiple */}
+               <div className="space-y-3 md:col-span-2 pt-2">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs font-black uppercase tracking-widest opacity-60">
+                      Especialidades y Sistemas Constructivos
+                    </Label>
+                    <Badge variant="outline" className="text-[10px] font-bold border-brand-teal/30 text-brand-teal bg-brand-teal/5">
+                      {selectedSpecialties.length} seleccionada{selectedSpecialties.length === 1 ? "" : "s"}
+                    </Badge>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground">
+                    Marca una o más opciones para indicar todos los tipos de construcción que realiza tu empresa.
+                  </p>
+
+                  {/* Hidden inputs para el formulario */}
+                  <input type="hidden" name="tipos_construccion" value={selectedSpecialties.join(",")} />
+                  <input type="hidden" name="especialidad_principal" value={selectedSpecialties.join(", ")} />
+
+                  {/* Chips interactivos de multiselección */}
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {SISTEMAS_CONSTRUCTIVOS.map((sistema) => {
+                      const isSelected = selectedSpecialties.includes(sistema);
+                      return (
+                        <button
+                          key={sistema}
+                          type="button"
+                          onClick={() => toggleSpecialty(sistema)}
+                          className={cn(
+                            "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer",
+                            isSelected
+                              ? "bg-brand-teal text-white border-brand-teal shadow-md shadow-brand-teal/20 scale-[1.02]"
+                              : "bg-muted/20 border-border/40 text-foreground/70 hover:text-foreground hover:border-brand-teal/30"
+                          )}
+                        >
+                          {isSelected && <CheckCircle2 className="w-3.5 h-3.5" />}
+                          <span>{sistema}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Agregar especialidad personalizada */}
+                  <div className="pt-2 flex flex-col sm:flex-row gap-2">
+                    <Input 
+                      value={customSpecialty}
+                      onChange={(e) => setCustomSpecialty(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addCustomSpecialty();
                         }
                       }}
-                    >
-                      <option value="">Selecciona tipo de modelo / sistema...</option>
-                      {SISTEMAS_CONSTRUCTIVOS.map((sistema) => (
-                        <option key={sistema} value={sistema}>
-                          {sistema}
-                        </option>
-                      ))}
-                      <option value="otro">Otro Sistema Constructivo (Escribir en el campo)</option>
-                    </select>
-                    <Input 
-                      id="especialidad_principal" 
-                      name="especialidad_principal" 
-                      value={especialidad}
-                      onChange={(e) => setEspecialidad(e.target.value)}
-                      className="h-12 rounded-xl bg-muted/20 border-border/40 font-medium"
-                      placeholder="Ejem: Casas Modulares, Construcción SIP..."
+                      placeholder="¿Otra especialidad personalizada? Ejem: Arquitectura Bioclimática..."
+                      className="h-10 rounded-xl bg-muted/20 border-border/40 text-xs font-medium"
                     />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={addCustomSpecialty}
+                      className="h-10 rounded-xl text-xs font-bold px-4 shrink-0 hover:bg-brand-teal/10 hover:text-brand-teal hover:border-brand-teal/30"
+                    >
+                      <Plus className="w-3.5 h-3.5 mr-1" /> Agregar
+                    </Button>
                   </div>
-                  {/* Selector rápido con chips clickeables */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                    <span className="text-[10px] uppercase font-bold text-muted-foreground mr-1">Rápidos:</span>
-                    {["Casas Prefabricadas", "Casas Modulares", "Paneles SIP", "Steel Framing", "Madera", "Llave en Mano"].map((chip) => (
-                      <button
-                        key={chip}
-                        type="button"
-                        onClick={() => setEspecialidad(chip)}
-                        className={cn(
-                          "text-[11px] px-2.5 py-1 rounded-lg border transition-all font-medium",
-                          especialidad === chip
-                            ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                            : "bg-muted/40 hover:bg-muted text-muted-foreground hover:text-foreground border-border/40"
-                        )}
-                      >
-                        {chip}
-                      </button>
-                    ))}
-                  </div>
+
+                  {/* Badges personalizadas */}
+                  {selectedSpecialties.filter(s => !SISTEMAS_CONSTRUCTIVOS.includes(s)).length > 0 && (
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                      <span className="text-[10px] uppercase font-bold text-muted-foreground mr-1">Personalizadas:</span>
+                      {selectedSpecialties.filter(s => !SISTEMAS_CONSTRUCTIVOS.includes(s)).map((custom) => (
+                        <span
+                          key={custom}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-primary/10 text-primary border border-primary/20"
+                        >
+                          {custom}
+                          <button
+                            type="button"
+                            onClick={() => toggleSpecialty(custom)}
+                            className="hover:text-red-500 transition-colors ml-0.5"
+                            aria-label={`Eliminar ${custom}`}
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                </div>
 
                <div className="space-y-2">
@@ -516,7 +605,7 @@ export function SettingsForm({ initialData, userEmail, models }: Props) {
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border-border/40 shadow-xl overflow-hidden">
+        <Card id="cobertura-geografica" className="rounded-3xl border-border/40 shadow-xl overflow-hidden scroll-mt-20">
            <CardContent className="p-8 space-y-6">
               <div className="flex items-center gap-3">
                  <div className="w-10 h-10 rounded-xl bg-brand-teal/10 text-brand-teal flex items-center justify-center">

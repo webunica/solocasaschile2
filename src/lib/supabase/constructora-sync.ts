@@ -1,4 +1,5 @@
 import { createAdminClient } from './admin';
+import { normalizeRegionName } from '@/lib/regions';
 
 export interface SynchronizedConstructora {
   id: string;
@@ -15,6 +16,7 @@ export interface SynchronizedConstructora {
   image_url?: string | null;
   video_url?: string | null;
   especialidad_principal?: string | null;
+  tipos_construccion?: string[] | null;
   anio_inicio?: number | null;
   regiones?: string[] | null;
   plan?: string | null;
@@ -36,7 +38,7 @@ export interface SynchronizedConstructora {
  * 2. Si existía un registro previo huérfano con el mismo email (por invitación o carga previa),
  *    sus modelos, leads y obras se reasignen a user.id y se eliminen duplicados.
  * 3. Si la constructora solicitó invitación previa en la waitlist (o recibió invitación oficial),
- *    sus datos (empresa_nombre, telefono, region, mensaje/descripcion) se transfieran automáticamente a su perfil.
+ *    sus datos (empresa_nombre, telefono, region normalizada, mensaje/descripcion) se transfieran automáticamente a su perfil.
  * 4. Evita errores de esquema en Supabase (public.constructoras no cuenta con columna updated_at).
  */
 export async function getOrCreateSynchronizedConstructora(user: {
@@ -112,6 +114,12 @@ export async function getOrCreateSynchronizedConstructora(user: {
       // Omitimos updated_at ya que la tabla constructoras no contiene dicha columna
       const { updated_at: _unused, ...safeByEmail } = byEmail;
 
+      const rawRegion = waitlistEntry?.region || invEntry?.region;
+      const normalizedRegion = rawRegion ? normalizeRegionName(rawRegion) : null;
+      const consolidatedRegiones = (byEmail.regiones && byEmail.regiones.length > 0)
+        ? byEmail.regiones.map((r: string) => normalizeRegionName(r)).filter(Boolean)
+        : (normalizedRegion ? [normalizedRegion] : []);
+
       const { data: consolidated, error: consErr } = await admin
         .from('constructoras')
         .upsert([{
@@ -121,7 +129,7 @@ export async function getOrCreateSynchronizedConstructora(user: {
           email,
           telefono: byEmail.telefono || waitlistEntry?.telefono || null,
           descripcion: byEmail.descripcion || waitlistEntry?.mensaje || null,
-          regiones: (byEmail.regiones && byEmail.regiones.length > 0) ? byEmail.regiones : ((waitlistEntry?.region || invEntry?.region) ? [waitlistEntry?.region || invEntry?.region] : []),
+          regiones: consolidatedRegiones,
           plan: metaPlan,
           plan_status: byEmail.plan_status || 'active',
         }], { onConflict: 'id' })
@@ -140,7 +148,8 @@ export async function getOrCreateSynchronizedConstructora(user: {
     const baseSlug = companyName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
     const slug = `${baseSlug}-${user.id.slice(0, 6)}`;
     const plan = (user.user_metadata?.plan as string) || 'starter';
-    const regionVal = waitlistEntry?.region || invEntry?.region || null;
+    const rawReg = waitlistEntry?.region || invEntry?.region || null;
+    const normalizedReg = rawReg ? normalizeRegionName(rawReg) : null;
 
     const newRecord: Record<string, any> = {
       id: user.id,
@@ -148,7 +157,7 @@ export async function getOrCreateSynchronizedConstructora(user: {
       slug,
       email,
       telefono: waitlistEntry?.telefono || null,
-      regiones: regionVal ? [regionVal] : [],
+      regiones: normalizedReg ? [normalizedReg] : [],
       descripcion: waitlistEntry?.mensaje || null,
       plan,
       plan_status: 'active',
@@ -182,9 +191,18 @@ export async function getOrCreateSynchronizedConstructora(user: {
     if (!byId.descripcion && waitlistEntry?.mensaje) {
       updates.descripcion = waitlistEntry.mensaje;
     }
-    if ((!byId.regiones || byId.regiones.length === 0) && (waitlistEntry?.region || invEntry?.region)) {
-      const reg = waitlistEntry?.region || invEntry?.region;
-      updates.regiones = [reg];
+
+    // Normalizar regiones existentes o transferir la de waitlist
+    if (byId.regiones && byId.regiones.length > 0) {
+      const normalizedExisting = byId.regiones.map((r: string) => normalizeRegionName(r)).filter(Boolean);
+      if (JSON.stringify(normalizedExisting) !== JSON.stringify(byId.regiones)) {
+        updates.regiones = normalizedExisting;
+      }
+    } else if (waitlistEntry?.region || invEntry?.region) {
+      const normReg = normalizeRegionName(waitlistEntry?.region || invEntry?.region);
+      if (normReg) {
+        updates.regiones = [normReg];
+      }
     }
 
     if (Object.keys(updates).length > 0) {
