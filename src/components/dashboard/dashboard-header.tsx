@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
+import { signOutClientAndServer } from "@/lib/supabase/client-logout";
+
 interface Props {
   userName?: string;
   isSuperAdmin?: boolean;
@@ -31,9 +33,7 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
   }, []);
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    window.location.href = "/";
+    await signOutClientAndServer();
   };
 
   const userName = initialUserName || user?.user_metadata?.nombre || user?.email?.split('@')[0] || "Administrador";

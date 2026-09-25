@@ -3,7 +3,19 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown, User, LogOut, LayoutDashboard } from "lucide-react";
+import { 
+  Menu, 
+  ChevronDown, 
+  User, 
+  LogOut, 
+  LayoutDashboard, 
+  Sparkles,
+  Home,
+  BookOpen,
+  Layers,
+  HelpCircle,
+  FileText
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -16,22 +28,79 @@ import {
 } from "@/components/ui/sheet";
 import { trackConstructorasAccessClick } from "@/lib/analytics";
 import { createClient } from "@/lib/supabase/client";
+import { signOutClientAndServer } from "@/lib/supabase/client-logout";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
   { href: "/catalogo", label: "Modelos" },
   { href: "/constructoras", label: "Constructoras" },
-  { href: "/tipos/prefabricada", label: "Sistemas" },
-  { href: "/casas-prefabricadas", label: "Guías" },
+  { href: "/cotizar", label: "Cotizar", badge: "Nuevo" },
+] as const;
+
+const SISTEMAS_ITEMS = [
+  {
+    href: "/casas-prefabricadas",
+    title: "Casas Prefabricadas",
+    desc: "Madera, metalcon y llave en mano",
+    badge: "Popular",
+  },
+  {
+    href: "/casas-paneles-sip",
+    title: "Paneles SIP",
+    desc: "Máxima aislación térmica y ahorro",
+    badge: "Eficiente",
+  },
+  {
+    href: "/tipos/tiny-house",
+    title: "Tiny Houses",
+    desc: "Mini casas compactas y rodantes",
+    badge: "Tendencia",
+  },
+  {
+    href: "/casas-modulares",
+    title: "Casas Modulares",
+    desc: "Montaje rápido y diseños ampliables",
+    badge: "Rápido",
+  },
+  {
+    href: "/tipos/container",
+    title: "Casas Container",
+    desc: "Arquitectura moderna y resistente",
+    badge: "Ecológico",
+  },
+] as const;
+
+const AYUDAS_ITEMS = [
+  {
+    href: "/casas-prefabricadas",
+    title: "Guía para comenzar",
+    desc: "Paso a paso para elegir tu casa ideal",
+    icon: BookOpen,
+  },
+  {
+    href: "/blog",
+    title: "Publicaciones (Blog)",
+    desc: "Artículos, comparativas y tendencias",
+    icon: FileText,
+  },
 ] as const;
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Dropdown states
+  const [sistemasOpen, setSistemasOpen] = useState(false);
+  const [ayudasOpen, setAyudasOpen] = useState(false);
   const [planesOpen, setPlanesOpen] = useState(false);
+
   const [user, setUser] = useState<SupabaseUser | null>(null);
+
+  const sistemasRef = useRef<HTMLDivElement>(null);
+  const ayudasRef = useRef<HTMLDivElement>(null);
   const planesRef = useRef<HTMLDivElement>(null);
+
   const pathname = usePathname();
 
   useEffect(() => {
@@ -52,11 +121,9 @@ export function Header() {
   }, []);
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
     setUser(null);
     setIsOpen(false);
-    window.location.href = "/";
+    await signOutClientAndServer();
   };
 
   const getUserGreetingName = (currentUser: SupabaseUser | null): string => {
@@ -85,8 +152,15 @@ export function Header() {
     };
   }, []);
 
+  // Cerrar dropdowns al hacer click afuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      if (sistemasRef.current && !sistemasRef.current.contains(event.target as Node)) {
+        setSistemasOpen(false);
+      }
+      if (ayudasRef.current && !ayudasRef.current.contains(event.target as Node)) {
+        setAyudasOpen(false);
+      }
       if (planesRef.current && !planesRef.current.contains(event.target as Node)) {
         setPlanesOpen(false);
       }
@@ -95,10 +169,21 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Cerrar todo al cambiar de ruta
   useEffect(() => {
+    setSistemasOpen(false);
+    setAyudasOpen(false);
     setPlanesOpen(false);
     setIsOpen(false);
   }, [pathname]);
+
+  const isSistemasActive =
+    pathname.startsWith("/tipos/") ||
+    pathname === "/casas-prefabricadas" ||
+    pathname === "/casas-paneles-sip" ||
+    pathname === "/casas-modulares";
+
+  const isAyudasActive = pathname.startsWith("/blog") || pathname === "/casas-prefabricadas";
 
   const isPlanesActive = pathname === "/planes" || pathname.startsWith("/planes/");
 
@@ -140,7 +225,7 @@ export function Header() {
           {/* Navegación Desktop (desde 1024px en adelante) */}
           <nav
             aria-label="Navegación principal"
-            className="hidden lg:flex items-center gap-6 lg:gap-8"
+            className="hidden lg:flex items-center gap-5 xl:gap-7"
           >
             {NAV_LINKS.map((link) => {
               const isActive =
@@ -153,18 +238,165 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "relative py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                    "relative py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md flex items-center gap-1.5",
                     isActive
                       ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
                       : "text-[#073E48]/80 hover:text-[#073E48]"
                   )}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {"badge" in link && (
+                    <span className="rounded-full bg-[#27D8BE]/20 border border-[#27D8BE]/50 px-1.5 py-0.2 text-[9px] font-black uppercase tracking-wider text-[#073E48]">
+                      {link.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}
 
-            {/* Dropdown de Planes (De pago y Starter) */}
+            {/* Dropdown: Sistemas Constructivos */}
+            <div
+              ref={sistemasRef}
+              className="relative"
+              onMouseEnter={() => setSistemasOpen(true)}
+              onMouseLeave={() => setSistemasOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setSistemasOpen((prev) => !prev)}
+                aria-expanded={sistemasOpen}
+                className={cn(
+                  "relative flex items-center gap-1 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                  isSistemasActive
+                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                    : "text-[#073E48]/80 hover:text-[#073E48]"
+                )}
+              >
+                <span>Sistemas</span>
+                <ChevronDown
+                  className={cn(
+                    "h-3.5 w-3.5 transition-transform duration-200",
+                    sistemasOpen && "rotate-180"
+                  )}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {/* Menú flotante de Sistemas */}
+              <div
+                className={cn(
+                  "absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-80 transition-all duration-200 z-50",
+                  sistemasOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                )}
+              >
+                <div className="rounded-2xl bg-white p-2.5 shadow-[0_16px_36px_-8px_rgba(7,62,72,0.18)] border border-slate-100 flex flex-col gap-1">
+                  <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
+                    Sistemas Constructivos en Chile
+                  </div>
+
+                  {SISTEMAS_ITEMS.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setSistemasOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between rounded-xl px-3 py-2 transition-colors group",
+                        pathname === item.href
+                          ? "bg-slate-50 text-[#073E48]"
+                          : "hover:bg-slate-50 text-[#073E48]"
+                      )}
+                    >
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-[#073E48] group-hover:text-[#0a4d59] transition-colors">
+                          {item.title}
+                        </span>
+                        <span className="text-xs text-slate-500 font-normal leading-tight">
+                          {item.desc}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full shrink-0 group-hover:bg-[#27D8BE]/20 group-hover:text-[#073E48] transition-colors">
+                        {item.badge}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Dropdown: Ayudas */}
+            <div
+              ref={ayudasRef}
+              className="relative"
+              onMouseEnter={() => setAyudasOpen(true)}
+              onMouseLeave={() => setAyudasOpen(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setAyudasOpen((prev) => !prev)}
+                aria-expanded={ayudasOpen}
+                className={cn(
+                  "relative flex items-center gap-1 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                  isAyudasActive
+                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                    : "text-[#073E48]/80 hover:text-[#073E48]"
+                )}
+              >
+                <span>Ayudas</span>
+                <ChevronDown
+                  className={cn(
+                    "h-3.5 w-3.5 transition-transform duration-200",
+                    ayudasOpen && "rotate-180"
+                  )}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {/* Menú flotante de Ayudas */}
+              <div
+                className={cn(
+                  "absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-72 transition-all duration-200 z-50",
+                  ayudasOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none"
+                )}
+              >
+                <div className="rounded-2xl bg-white p-2.5 shadow-[0_16px_36px_-8px_rgba(7,62,72,0.18)] border border-slate-100 flex flex-col gap-1">
+                  <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
+                    Recursos y Artículos
+                  </div>
+
+                  {AYUDAS_ITEMS.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setAyudasOpen(false)}
+                      className={cn(
+                        "flex items-start gap-2.5 rounded-xl px-3 py-2.5 transition-colors group",
+                        pathname === item.href
+                          ? "bg-slate-50 text-[#073E48]"
+                          : "hover:bg-slate-50 text-[#073E48]"
+                      )}
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-[#073E48]/5 group-hover:bg-[#073E48] group-hover:text-white text-[#073E48] flex items-center justify-center shrink-0 transition-colors mt-0.5">
+                        <item.icon className="h-4 w-4" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold text-[#073E48] group-hover:text-[#0a4d59] transition-colors">
+                          {item.title}
+                        </span>
+                        <span className="text-xs text-slate-500 font-normal leading-tight">
+                          {item.desc}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Dropdown: Planes */}
             <div
               ref={planesRef}
               className="relative"
@@ -176,7 +408,7 @@ export function Header() {
                 onClick={() => setPlanesOpen((prev) => !prev)}
                 aria-expanded={planesOpen}
                 className={cn(
-                  "relative flex items-center gap-1.5 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                  "relative flex items-center gap-1 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
                   isPlanesActive
                     ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
                     : "text-[#073E48]/80 hover:text-[#073E48]"
@@ -202,6 +434,10 @@ export function Header() {
                 )}
               >
                 <div className="rounded-2xl bg-white p-2.5 shadow-[0_16px_36px_-8px_rgba(7,62,72,0.18)] border border-slate-100 flex flex-col gap-1">
+                  <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1">
+                    Planes Constructoras
+                  </div>
+
                   <Link
                     href="/planes"
                     onClick={() => setPlanesOpen(false)}
@@ -337,6 +573,7 @@ export function Header() {
                 )}
 
                 <div className="flex flex-col gap-1 p-6">
+                  {/* Links principales */}
                   {NAV_LINKS.map((link) => {
                     const isActive =
                       link.href === "/"
@@ -349,20 +586,88 @@ export function Header() {
                         href={link.href}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          "rounded-xl px-4 py-3 text-base font-semibold transition-colors",
+                          "rounded-xl px-4 py-3 text-base font-semibold transition-colors flex items-center justify-between",
                           isActive
                             ? "bg-[#073E48] text-white"
                             : "text-[#073E48] hover:bg-slate-50"
                         )}
                       >
-                        {link.label}
+                        <span>{link.label}</span>
+                        {"badge" in link && (
+                          <span
+                            className={cn(
+                              "text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full",
+                              isActive
+                                ? "bg-white/20 text-white"
+                                : "bg-[#27D8BE]/20 text-[#073E48]"
+                            )}
+                          >
+                            {link.badge}
+                          </span>
+                        )}
                       </Link>
                     );
                   })}
 
+                  {/* Sección Sistemas Constructivos Mobile */}
+                  <div className="mt-3 pt-3 border-t border-slate-100">
+                    <div className="px-4 py-1 text-[11px] font-black uppercase tracking-wider text-slate-400">
+                      Sistemas Constructivos
+                    </div>
+
+                    {SISTEMAS_ITEMS.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors mt-0.5",
+                          pathname === item.href
+                            ? "bg-[#073E48] text-white"
+                            : "text-[#073E48] hover:bg-slate-50"
+                        )}
+                      >
+                        <span>{item.title}</span>
+                        <span
+                          className={cn(
+                            "text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full",
+                            pathname === item.href
+                              ? "bg-white/20 text-white"
+                              : "bg-slate-100 text-slate-600"
+                          )}
+                        >
+                          {item.badge}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Sección Ayudas Mobile */}
+                  <div className="mt-3 pt-3 border-t border-slate-100">
+                    <div className="px-4 py-1 text-[11px] font-black uppercase tracking-wider text-slate-400">
+                      Ayudas y Recursos
+                    </div>
+
+                    {AYUDAS_ITEMS.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors mt-0.5",
+                          pathname === item.href
+                            ? "bg-[#073E48] text-white"
+                            : "text-[#073E48] hover:bg-slate-50"
+                        )}
+                      >
+                        <span>{item.title}</span>
+                      </Link>
+                    ))}
+                  </div>
+
                   {/* Sección Planes en Mobile */}
-                  <div className="mt-2 pt-3 border-t border-slate-100">
-                    <div className="px-4 py-1.5 text-[11px] font-black uppercase tracking-wider text-slate-400">
+                  <div className="mt-3 pt-3 border-t border-slate-100">
+                    <div className="px-4 py-1 text-[11px] font-black uppercase tracking-wider text-slate-400">
                       Planes Constructoras
                     </div>
 
