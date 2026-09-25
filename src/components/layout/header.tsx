@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut, LayoutDashboard } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
@@ -15,6 +15,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { trackConstructorasAccessClick } from "@/lib/analytics";
+import { createClient } from "@/lib/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
@@ -28,8 +30,48 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [planesOpen, setPlanesOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const planesRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then((res: { data: { user: SupabaseUser | null } | null }) => {
+      setUser(res?.data?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event: unknown, session: { user: SupabaseUser | null } | null) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setUser(null);
+    setIsOpen(false);
+    window.location.href = "/";
+  };
+
+  const getUserGreetingName = (currentUser: SupabaseUser | null): string => {
+    if (!currentUser) return "";
+    const meta = currentUser.user_metadata || {};
+    const name = meta.nombre || meta.name || meta.full_name;
+    if (name && typeof name === "string") {
+      return name.trim().split(" ")[0];
+    }
+    if (currentUser.email) {
+      const prefix = currentUser.email.split("@")[0];
+      return prefix.charAt(0).toUpperCase() + prefix.slice(1);
+    }
+    return "Usuario";
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -210,15 +252,39 @@ export function Header() {
             </div>
           </nav>
 
-          {/* CTA Desktop: Botón secundario delineado "Publica tu constructora" */}
-          <div className="hidden lg:flex items-center">
-            <Link
-              href="/para-constructoras"
-              onClick={() => trackConstructorasAccessClick("header")}
-              className="rounded-full border border-[#073E48] px-5 py-2.5 text-xs lg:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2"
-            >
-              Publica tu constructora
-            </Link>
+          {/* CTA Desktop */}
+          <div className="hidden lg:flex items-center gap-3">
+            {user ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 rounded-full bg-[#073E48]/5 border border-[#073E48]/15 px-3.5 py-1.5 text-xs lg:text-sm font-bold text-[#073E48] hover:bg-[#073E48] hover:text-white transition-all shadow-sm group"
+                >
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#073E48] text-[#27D8BE] group-hover:bg-white group-hover:text-[#073E48] transition-colors">
+                    <User className="h-3.5 w-3.5" />
+                  </div>
+                  <span>Hola, {getUserGreetingName(user)}</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  title="Cerrar sesión"
+                  aria-label="Cerrar sesión"
+                  className="flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition-all cursor-pointer"
+                >
+                  <LogOut className="h-3.5 w-3.5" />
+                  <span>Salir</span>
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/para-constructoras"
+                onClick={() => trackConstructorasAccessClick("header")}
+                className="rounded-full border border-[#073E48] px-5 py-2.5 text-xs lg:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2"
+              >
+                Publica tu constructora
+              </Link>
+            )}
           </div>
 
           {/* Menú Hamburguesa Mobile (circular, oculto desde 1024px) */}
@@ -253,6 +319,22 @@ export function Header() {
                     Navegación principal de SoloCasasChile
                   </SheetDescription>
                 </SheetHeader>
+
+                {user && (
+                  <div className="bg-[#073E48]/5 border-b border-slate-100 px-6 py-4 flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#073E48] text-[#27D8BE] shadow-sm">
+                      <User className="h-5 w-5" />
+                    </div>
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">
+                        Sesión activa
+                      </span>
+                      <span className="text-base font-extrabold text-[#073E48] truncate">
+                        Hola, {getUserGreetingName(user)} 👋
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-1 p-6">
                   {NAV_LINKS.map((link) => {
@@ -351,17 +433,38 @@ export function Header() {
                     </Link>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-slate-100">
-                    <Link
-                      href="/para-constructoras"
-                      onClick={() => {
-                        setIsOpen(false);
-                        trackConstructorasAccessClick("header");
-                      }}
-                      className="flex items-center justify-center rounded-full border border-[#073E48] px-5 py-3 text-sm font-bold text-[#073E48] transition-all hover:bg-[#073E48] hover:text-white text-center active:scale-95"
-                    >
-                      Publica tu constructora
-                    </Link>
+                  <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-2.5">
+                    {user ? (
+                      <>
+                        <Link
+                          href="/dashboard"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center justify-center gap-2 rounded-full bg-[#073E48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#0a4d59] text-center shadow-md active:scale-95"
+                        >
+                          <LayoutDashboard className="h-4 w-4 text-[#27D8BE]" />
+                          <span>Ir a mi Panel de Control</span>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="flex items-center justify-center gap-2 rounded-full border border-red-200 bg-red-50/70 px-5 py-3 text-sm font-bold text-red-600 transition-all hover:bg-red-100 text-center active:scale-95 cursor-pointer"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          <span>Salir / Cerrar sesión</span>
+                        </button>
+                      </>
+                    ) : (
+                      <Link
+                        href="/para-constructoras"
+                        onClick={() => {
+                          setIsOpen(false);
+                          trackConstructorasAccessClick("header");
+                        }}
+                        className="flex items-center justify-center rounded-full border border-[#073E48] px-5 py-3 text-sm font-bold text-[#073E48] transition-all hover:bg-[#073E48] hover:text-white text-center active:scale-95"
+                      >
+                        Publica tu constructora
+                      </Link>
+                    )}
                   </div>
                 </div>
               </SheetContent>
