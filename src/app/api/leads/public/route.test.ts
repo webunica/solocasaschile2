@@ -12,6 +12,14 @@ vi.mock("@/lib/security/admin-guard", () => ({
   checkRateLimit: vi.fn(),
 }));
 
+vi.mock("@/lib/resend", () => ({
+  resend: {
+    emails: {
+      send: vi.fn().mockResolvedValue({ data: { id: "test-email-id" } }),
+    },
+  },
+}));
+
 describe("Public Leads API Endpoint Integration", () => {
   const originalEnv = process.env;
 
