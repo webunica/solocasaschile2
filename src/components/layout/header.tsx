@@ -62,7 +62,7 @@ export function Header() {
           "relative transition-all duration-300",
           isScrolled
             ? "bg-white/96 shadow-[0_10px_32px_-28px_rgba(0,38,43,0.2)] backdrop-blur-xl"
-            : "bg-[linear-gradient(90deg,rgba(235,244,248,0.88),rgba(244,250,244,0.82),rgba(235,244,248,0.88))] shadow-none backdrop-blur-sm"
+            : "bg-transparent shadow-none"
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-8">
@@ -71,13 +71,13 @@ export function Header() {
             className="flex shrink-0 items-center group py-1"
             aria-label="SolocasasChile Inicio"
           >
-            {/* Versión Mobile: Icono actual */}
+            {/* Versión Mobile: Logo horizontal */}
             <Image
-              src="/images/logo-icon.png"
+              src="/hero/logo-mobile.png"
               alt="SolocasasChile"
-              width={40}
-              height={40}
-              className="h-10 w-auto rounded-xl object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
+              width={300}
+              height={48}
+              className="h-8 w-auto max-w-[200px] object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
               priority
             />
             {/* Versión Desktop / Tablet: Logo horizontal 434x70px */}
@@ -232,15 +232,14 @@ export function Header() {
             <SheetContent side="left" className="w-[320px] border-r border-border/40 bg-background/95 p-0 backdrop-blur-xl">
               <SheetHeader className="border-b border-border/30 p-6 text-left">
                 <div className="flex items-center justify-between gap-4">
-                  <SheetTitle className="font-heading text-2xl font-black tracking-tight text-brand-indigo flex items-center gap-2">
+                  <SheetTitle className="font-heading text-2xl font-black tracking-tight text-brand-indigo flex items-center">
                     <Image
-                      src="/images/logo-icon.png"
-                      alt="SolocasasChile Logo"
-                      width={36}
-                      height={30}
-                      className="h-8 w-auto object-contain drop-shadow-sm"
+                      src="/hero/logo-mobile.png"
+                      alt="SolocasasChile"
+                      width={200}
+                      height={32}
+                      className="h-7 w-auto object-contain"
                     />
-                    <span>SolocasasChile</span>
                   </SheetTitle>
                   <ThemeToggle />
                 </div>

@@ -10,7 +10,7 @@ import { trackCatalogoClick, trackConstructorasAccessClick } from "@/lib/analyti
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden px-4 pb-12 pt-[136px] sm:px-6 md:px-8 md:pb-20 md:pt-[152px]">
+    <section className="relative overflow-hidden px-4 pb-12 pt-[64px] sm:px-6 md:px-8 md:pb-20 md:pt-[152px]">
       <div className="pointer-events-none absolute inset-0 opacity-30">
         {/* Mobile background (< md) */}
         <div className="relative h-full w-full md:hidden">
@@ -41,12 +41,12 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65 }}
-          className="relative overflow-hidden rounded-[2rem] bg-transparent px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
+          className="relative overflow-hidden rounded-[2rem] bg-transparent px-3 pt-2 pb-6 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
         >
           <div className="absolute inset-0 architect-grid opacity-[0.12]" />
           <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-brand-teal via-brand-indigo to-transparent" />
 
-          <div className="relative z-10 flex flex-col gap-8">
+          <div className="relative z-10 flex flex-col gap-4 sm:gap-8">
             {/* Platform badge */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-teal/30 bg-brand-teal/8 px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-teal">
@@ -55,8 +55,8 @@ export function HeroSection() {
               </span>
             </div>
 
-            <div className="max-w-[46rem] space-y-5">
-              <h1 className="max-w-[14ch] text-balance text-[clamp(2.7rem,6.8vw,5.4rem)] font-semibold leading-[0.92] tracking-[-0.05em]">
+            <div className="max-w-[46rem] space-y-4 sm:space-y-5">
+              <h1 className="max-w-[14ch] text-balance text-[clamp(2.35rem,6.2vw,5.4rem)] font-semibold leading-[0.94] tracking-[-0.05em]">
                 Compara y cotiza
                 <span className="gradient-text"> casas prefabricadas</span> en Chile.
               </h1>

@@ -21,8 +21,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ebebeb" },
-    { media: "(prefers-color-scheme: dark)", color: "#08181b" },
+    { media: "(prefers-color-scheme: light)", color: "#d4e8e6" },
+    { media: "(prefers-color-scheme: dark)", color: "#d4e8e6" },
   ],
 };
 
@@ -112,6 +112,9 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
+        <meta name="theme-color" content="#d4e8e6" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#d4e8e6" />
+        <meta name="msapplication-navbutton-color" content="#d4e8e6" />
         <script
           src="https://proteccion-datos-admin.vercel.app//widget.js"
           data-tenant="solocasaschile"
