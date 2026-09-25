@@ -12,14 +12,28 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden px-4 pb-12 pt-[136px] sm:px-6 md:px-8 md:pb-20 md:pt-[152px]">
       <div className="pointer-events-none absolute inset-0 opacity-30">
-        <Image
-          src="/images/bg/bg.png"
-          alt="Casas prefabricadas y modulares en Chile"
-          fill
-          className="object-cover object-center"
-          sizes="100vw"
-          priority
-        />
+        {/* Mobile background (< md) */}
+        <div className="relative h-full w-full md:hidden">
+          <Image
+            src="/hero/bg-mobile.jpg"
+            alt="Casas prefabricadas y modulares en Chile"
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            priority
+          />
+        </div>
+        {/* Desktop background (>= md) */}
+        <div className="relative hidden h-full w-full md:block">
+          <Image
+            src="/hero/bg-desktop.webp"
+            alt="Casas prefabricadas y modulares en Chile"
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            priority
+          />
+        </div>
       </div>
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)]">
         {/* Left: Value proposition */}
