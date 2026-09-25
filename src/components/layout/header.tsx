@@ -8,6 +8,7 @@ import {
   ChevronDown, 
   User, 
   LogOut, 
+  LogIn,
   LayoutDashboard, 
   Sparkles,
   Home,
@@ -517,13 +518,22 @@ export function Header() {
                 </button>
               </div>
             ) : (
-              <Link
-                href="/para-constructoras"
-                onClick={() => trackConstructorasAccessClick("header")}
-                className="rounded-full border border-[#073E48] px-4 xl:px-5 py-2 xl:py-2.5 text-xs lg:text-[13px] xl:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 whitespace-nowrap"
-              >
-                Publica tu constructora
-              </Link>
+              <div className="flex items-center gap-2 xl:gap-3">
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1.5 px-3 py-2 text-xs lg:text-[13px] xl:text-sm font-bold text-[#073E48] hover:text-[#0a4d59] transition-colors whitespace-nowrap"
+                >
+                  <LogIn className="h-4 w-4 text-[#073E48]" />
+                  <span>Ingresar</span>
+                </Link>
+                <Link
+                  href="/para-constructoras"
+                  onClick={() => trackConstructorasAccessClick("header")}
+                  className="rounded-full border border-[#073E48] px-4 xl:px-5 py-2 xl:py-2.5 text-xs lg:text-[13px] xl:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 whitespace-nowrap"
+                >
+                  Publica tu constructora
+                </Link>
+              </div>
             )}
           </div>
 
@@ -763,16 +773,26 @@ export function Header() {
                         </button>
                       </>
                     ) : (
-                      <Link
-                        href="/para-constructoras"
-                        onClick={() => {
-                          setIsOpen(false);
-                          trackConstructorasAccessClick("header");
-                        }}
-                        className="flex items-center justify-center rounded-full border border-[#073E48] px-5 py-3 text-sm font-bold text-[#073E48] transition-all hover:bg-[#073E48] hover:text-white text-center active:scale-95"
-                      >
-                        Publica tu constructora
-                      </Link>
+                      <>
+                        <Link
+                          href="/login"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center justify-center gap-2 rounded-full bg-[#073E48] px-5 py-3 text-sm font-bold text-white transition-all hover:bg-[#0a4d59] text-center shadow-md active:scale-95"
+                        >
+                          <LogIn className="h-4 w-4 text-[#27D8BE]" />
+                          <span>Ingresar a mi cuenta</span>
+                        </Link>
+                        <Link
+                          href="/para-constructoras"
+                          onClick={() => {
+                            setIsOpen(false);
+                            trackConstructorasAccessClick("header");
+                          }}
+                          className="flex items-center justify-center rounded-full border border-[#073E48] px-5 py-3 text-sm font-bold text-[#073E48] transition-all hover:bg-slate-50 text-center active:scale-95"
+                        >
+                          Publica tu constructora
+                        </Link>
+                      </>
                     )}
                   </div>
                 </div>
