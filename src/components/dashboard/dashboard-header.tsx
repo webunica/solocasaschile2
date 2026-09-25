@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
-import { Bell, Search, ChevronDown } from "lucide-react";
+import { Bell, Search, Globe, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,12 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
     loadUser();
   }, []);
 
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    window.location.href = "/";
+  };
+
   const userName = initialUserName || user?.user_metadata?.nombre || user?.email?.split('@')[0] || "Administrador";
   const initials = userName.slice(0, 2).toUpperCase();
 
@@ -48,32 +55,51 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
         </div>
       </div>
 
-      <div className="flex items-center gap-3 sm:gap-6">
-        <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-2 sm:gap-4">
+        {/* Opción destacada para volver al sitio web público */}
+        <Link
+          href="/"
+          className="flex items-center gap-2 px-3 py-2 rounded-xl border border-emerald-200/90 bg-emerald-50/80 hover:bg-emerald-100 text-xs sm:text-sm font-bold text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-950/60 transition-all shadow-xs group"
+          title="Volver al sitio web principal SoloCasasChile"
+        >
+          <Globe className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:rotate-45 transition-transform shrink-0" />
+          <span className="hidden sm:inline">Volver al sitio</span>
+        </Link>
+
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <ThemeToggle />
-          <Button variant="ghost" size="icon" className="relative group w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-muted/30 hover:bg-muted/50 border border-border/40 transition-all shadow-sm">
-             <Bell className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all" />
-             <span className="absolute top-3 sm:top-3.5 right-3 sm:right-3.5 w-2 sm:w-2.5 h-2 sm:h-2.5 bg-brand-teal rounded-full border-2 border-background shadow-lg group-hover:scale-110 transition-transform" />
+          <Button variant="ghost" size="icon" className="relative group w-10 h-10 rounded-xl bg-muted/30 hover:bg-muted/50 border border-border/40 transition-all shadow-sm">
+             <Bell className="w-4.5 h-4.5 text-muted-foreground group-hover:text-primary transition-all" />
+             <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-brand-teal rounded-full border-2 border-background shadow-lg" />
           </Button>
         </div>
         
-        <div className="h-8 w-px bg-border/40 mx-1 sm:mx-2 hidden xs:block" />
+        <div className="h-7 w-px bg-border/40 mx-0.5 hidden xs:block" />
         
-        <Button variant="ghost" className="gap-2 sm:gap-4 px-2 sm:px-3 hover:bg-muted/50 rounded-xl sm:rounded-2xl group transition-all duration-300 border border-transparent hover:border-border/40">
-           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-brand-indigo flex items-center justify-center text-white font-black uppercase text-[10px] sm:text-xs shadow-lg shadow-primary/10 group-hover:scale-110 transition-transform"> 
+        {/* Pastilla informativa de usuario */}
+        <div className="flex items-center gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-muted/30 border border-border/40">
+           <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#073E48] flex items-center justify-center text-[#27D8BE] font-black uppercase text-xs shadow-xs shrink-0"> 
             {initials} 
            </div>
-            <div className="hidden sm:flex flex-col items-start gap-1">
-              <span className="text-sm font-black tracking-tight leading-none truncate max-w-[120px] text-foreground">{userName}</span>
-              <div className={cn(
-                "px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest leading-none whitespace-nowrap",
-                isSuperAdmin ? "bg-primary/10 text-primary border border-primary/20" : "bg-muted text-muted-foreground opacity-60"
-              )}>
-                {isSuperAdmin ? "Admin" : "Constructora"}
-              </div>
-            </div>
-           <ChevronDown className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity hidden sm:block" />
-        </Button>
+           <div className="hidden md:flex flex-col items-start min-w-0">
+             <span className="text-xs font-bold tracking-tight leading-tight truncate max-w-[130px] text-foreground">{userName}</span>
+             <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">
+               {isSuperAdmin ? "Admin" : "Constructora"}
+             </span>
+           </div>
+        </div>
+
+        {/* Botón Salir / Cerrar sesión */}
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-red-200/90 bg-red-50/80 hover:bg-red-100 text-red-600 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-950/60 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer active:scale-95"
+          title="Cerrar sesión y salir"
+          aria-label="Cerrar sesión"
+        >
+          <LogOut className="w-4 h-4 shrink-0" />
+          <span className="hidden sm:inline">Salir</span>
+        </button>
       </div>
     </header>
   );

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { 
   Building2, Home, Users, BarChart3, Settings, 
-  HelpCircle, LogOut, LayoutDashboard, 
+  HelpCircle, LogOut, LayoutDashboard, Globe,
   MessageSquare, Award, Video, Mail, ShieldCheck, BadgeCheck, Package, HardHat, UserPlus
 } from "lucide-react";
 import {
@@ -90,9 +90,27 @@ export function DashboardSidebar({
           </Link>
       </SidebarHeader>
 
-      <SidebarContent className="px-4 pt-8">
-        {/* Profile Card Early Preview (Optional placeholder if needed in future) */}
-        
+      <SidebarContent className="px-4 pt-6">
+        {/* Enlace destacado para volver a la web principal */}
+        <SidebarGroup className="pb-3 pt-0">
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  asChild 
+                  tooltip="Volver al Sitio Web Principal"
+                  className="h-10 px-3 md:px-4 text-emerald-800 bg-emerald-50/90 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-950/70 border border-emerald-200/80 dark:border-emerald-800/60 rounded-xl font-bold transition-all shadow-xs group"
+                >
+                  <Link href="/">
+                    <Globe className="w-4.5 h-4.5 text-emerald-600 dark:text-emerald-400 group-hover:rotate-45 transition-transform" />
+                    <span className="ml-3 text-sm font-bold">Volver al sitio web</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         <SidebarGroup>
           <SidebarGroupLabel className="px-3 md:px-4 text-[9px] font-black uppercase tracking-[0.25em] text-muted-foreground opacity-40 mb-3">CONSTRUCTORA</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -288,9 +306,10 @@ export function DashboardSidebar({
            <form action={logout}>
             <button 
               type="submit"
-              className="flex items-center gap-3 w-full px-2 py-1.5 text-[10px] font-black uppercase tracking-widest text-red-500/60 hover:text-red-500 transition-all group"
+              className="flex items-center justify-center gap-2.5 w-full py-2.5 px-3 rounded-xl border border-red-200/90 bg-red-50/70 hover:bg-red-100 text-xs font-bold text-red-600 dark:bg-red-950/30 dark:border-red-900/50 dark:text-red-400 dark:hover:bg-red-950/60 transition-all cursor-pointer group-data-[collapsible=icon]:p-2 shadow-xs active:scale-95"
+              title="Cerrar Sesión"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-4 h-4 shrink-0" />
               <span className="group-data-[collapsible=icon]:hidden">Cerrar Sesión</span>
             </button>
           </form>
