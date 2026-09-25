@@ -14,9 +14,9 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 opacity-30">
         <Image
           src="/images/bg/bg.png"
-          alt=""
+          alt="Casas prefabricadas y modulares en Chile"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           sizes="100vw"
           priority
         />
