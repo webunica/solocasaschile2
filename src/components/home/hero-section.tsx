@@ -112,8 +112,8 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ── FRANJA DE CONFIANZA ── */}
-      <div className="relative z-30 w-full max-w-[1040px] mx-auto px-4 sm:px-6 mt-3 lg:-mt-14 pb-4">
+      {/* ── FRANJA DE CONFIANZA (Ocultada temporalmente) ── */}
+      <div className="hidden relative z-30 w-full max-w-[1040px] mx-auto px-4 sm:px-6 mt-3 lg:-mt-14 pb-4">
         <div className="rounded-2xl lg:rounded-[1.75rem] bg-white p-3.5 sm:p-5 lg:px-8 lg:py-0 lg:h-[120px] shadow-[0_12px_36px_-12px_rgba(7,62,72,0.12)] border border-slate-100 flex items-center">
           <div className="grid grid-cols-3 divide-x divide-slate-100 text-[#073E48] w-full">
             {/* Indicador 1 */}
