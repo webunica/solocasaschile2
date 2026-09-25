@@ -10,7 +10,7 @@ import { trackCatalogoClick, trackConstructorasAccessClick } from "@/lib/analyti
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden px-4 pb-12 pt-[64px] sm:px-6 md:px-8 md:pb-20 md:pt-[152px]">
+    <section className="relative overflow-hidden px-4 pb-12 pt-[64px] sm:px-6 md:px-8 md:pb-20 md:pt-[104px]">
       <div className="pointer-events-none absolute inset-0 opacity-30">
         {/* Mobile background (< md) */}
         <div className="relative h-full w-full md:hidden">
@@ -18,7 +18,7 @@ export function HeroSection() {
             src="/hero/bg-mobile.jpg"
             alt="Casas prefabricadas y modulares en Chile"
             fill
-            className="object-cover object-center"
+            className="object-cover object-top"
             sizes="100vw"
             priority
           />
@@ -29,7 +29,7 @@ export function HeroSection() {
             src="/hero/bg-desktop.webp"
             alt="Casas prefabricadas y modulares en Chile"
             fill
-            className="object-cover object-center"
+            className="object-cover object-top"
             sizes="100vw"
             priority
           />

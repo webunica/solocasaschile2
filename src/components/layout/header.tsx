@@ -62,7 +62,7 @@ export function Header() {
           "relative transition-all duration-300",
           isScrolled
             ? "bg-white/96 shadow-[0_10px_32px_-28px_rgba(0,38,43,0.2)] backdrop-blur-xl"
-            : "bg-transparent shadow-none"
+            : "bg-transparent md:bg-white shadow-none md:shadow-[0_4px_20px_-10px_rgba(0,38,43,0.06)] md:border-b md:border-border/40"
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-8">
