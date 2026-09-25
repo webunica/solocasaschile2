@@ -100,7 +100,7 @@ export function HeroSection() {
                 type="button"
                 onClick={() => {
                   setCotizarOpen(true);
-                  trackCotizacionStart({ source: "hero_button" });
+                  trackCotizacionStart({ source: "hero_form" });
                 }}
                 className="inline-flex min-h-[48px] items-center justify-center gap-2.5 rounded-full border-2 border-[#27D8BE] bg-[#FAFAF7] px-8 py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-[#073E48] shadow-md transition-all duration-200 hover:bg-white hover:border-[#073E48] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2"
               >

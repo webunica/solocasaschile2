@@ -177,7 +177,7 @@ export function Header() {
                       href="/para-constructoras"
                       onClick={() => {
                         setIsOpen(false);
-                        trackConstructorasAccessClick("header_mobile");
+                        trackConstructorasAccessClick("header");
                       }}
                       className="flex items-center justify-center rounded-full border border-[#073E48] px-5 py-3 text-sm font-bold text-[#073E48] transition-all hover:bg-[#073E48] hover:text-white text-center active:scale-95"
                     >
