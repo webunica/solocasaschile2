@@ -391,6 +391,25 @@ export async function getModelsByIds(ids: string[]) {
 // server-cache-react: deduplicate per-request slug lookups
 export const getConstructoraBySlug = cache(async function getConstructoraBySlug(slug: string) {
   const supabase = await createPublicClient()
+
+  if (slug === 'constructora-master' || slug === 'javier-cb85b919') {
+    const { data: dbMaster } = await supabase
+      .from('constructoras')
+      .select('*')
+      .or('slug.eq.constructora-master,slug.eq.javier-cb85b919,id.eq.cb85b919-4008-46bc-bbb8-b3211152280c')
+      .maybeSingle()
+    if (dbMaster) return dbMaster;
+    const { CONSTRUCTORAS } = await import('@/lib/mock-data');
+    const masterMock = CONSTRUCTORAS.find(c => c.nombre.includes("Master") || c.slug === "javier-cb85b919") || CONSTRUCTORAS[0];
+    return {
+      ...masterMock,
+      logo_url: masterMock.logo,
+      score_confianza: masterMock.scoreConfianza,
+      verificada: masterMock.verificada,
+      regiones: masterMock.regiones,
+    };
+  }
+
   const { data, error } = await supabase
     .from('constructoras')
     .select('*')

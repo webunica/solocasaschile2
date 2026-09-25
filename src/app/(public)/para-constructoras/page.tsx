@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Para Constructoras | Publica tus Modelos en SolocasasChile",
     description:
-      "Accede a clientes potenciales en tu región con nuestros planes Basic, Crece, Pro y Pro+. Comienza hoy o prueba gratis por 30 días.",
+      "Accede a clientes potenciales en tu región con nuestros planes Basic, Crece, Pro y Pro+. Comienza hoy suscribiéndote a un plan o accede con tu invitación.",
     url: "https://solocasaschile.com/para-constructoras",
     siteName: "SolocasasChile",
     locale: "es_CL",

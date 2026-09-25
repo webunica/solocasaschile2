@@ -175,8 +175,8 @@ const FAQS = [
     a: "En la modalidad mensual puedes suspender o cambiar tu suscripción en cualquier momento desde tu panel de constructora. La modalidad anual te asegura tarifa preferencial y prioridad durante los 12 meses contratados.",
   },
   {
-    q: "¿Puedo probar la plataforma antes de pagar?",
-    a: "¡Sí! Puedes crear tu cuenta y acceder a un período de prueba de 30 días sin tarjeta de crédito para configurar tu perfil, subir tus primeros modelos y evaluar el funcionamiento del panel.",
+    q: "¿Cómo funciona el acceso para constructoras en SoloCasasChile?",
+    a: "Puedes suscribirte de inmediato a cualquiera de nuestros planes de pago (Basic, Crece, Pro y Pro+) para publicar modelos y recibir prospectos. El acceso gratuito permanente corresponde al Plan Starter (1 modelo publicado), disponible exclusivamente por invitación o solicitud aprobada previa validación técnica.",
   },
 ];
 
@@ -286,7 +286,7 @@ export default function PlanesPage() {
               href="/planes/starter"
               className="inline-flex items-center gap-2 text-xs font-bold text-brand-teal hover:underline bg-brand-teal/10 px-4 py-2 rounded-full border border-brand-teal/20 shadow-sm transition-all hover:scale-105"
             >
-              <Zap className="w-3.5 h-3.5 text-brand-teal" /> ¿Buscas publicar 1 modelo sin costo? Conoce el <strong>Plan Starter (Gratis)</strong> →
+              <Zap className="w-3.5 h-3.5 text-brand-teal" /> ¿Buscas publicar 1 modelo sin costo? Conoce el <strong>Plan Starter (Por Invitación)</strong> →
             </Link>
             <Link
               href="/para-constructoras"
@@ -543,7 +543,7 @@ export default function PlanesPage() {
               Haz visible tu catálogo y accede a clientes potenciales en tu región
             </h2>
             <p className="text-white/80 font-medium text-sm md:text-base max-w-lg mx-auto">
-              Elige el Plan Pro para máxima conversión con modelos ilimitados o prueba gratis por 30 días sin tarjeta de crédito.
+              Elige el Plan Pro para máxima conversión con modelos ilimitados o accede con tu invitación al Plan Starter.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-2">
               <Button
@@ -567,7 +567,7 @@ export default function PlanesPage() {
                 )}
               >
                 <Zap className="w-4 h-4 text-brand-teal" />
-                Conocer Plan Starter (Gratis)
+                Conocer Plan Starter (Por Invitación)
               </Link>
             </div>
           </div>

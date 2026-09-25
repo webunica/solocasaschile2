@@ -11,7 +11,6 @@ import type { Metadata } from "next";
 // Lazy loading below-the-fold components
 const TypesSection = dynamic(() => import("@/components/home/types-section").then(m => m.TypesSection), { ssr: true });
 const HowItWorks = dynamic(() => import("@/components/home/how-it-works").then(m => m.HowItWorks), { ssr: true });
-const FeaturedConstructorsSection = dynamic(() => import("@/components/home/featured-section").then(m => m.FeaturedConstructorsSection), { ssr: true });
 const TrustSection = dynamic(() => import("@/components/home/trust-section").then(m => m.TrustSection), { ssr: true });
 const FinalCTA = dynamic(() => import("@/components/home/final-cta").then(m => m.FinalCTA), { ssr: true });
 
@@ -103,11 +102,6 @@ export default function Home() {
 
       {/* Flow & Education (How It Works) */}
       <HowItWorks />
-
-      {/* Builder Directory (Options) */}
-      <Suspense fallback={<div className="h-[600px] flex items-center justify-center text-muted-foreground">Cargando directorio de empresas...</div>}>
-         <FeaturedConstructorsSection />
-      </Suspense>
 
       {/* Trust & Authority (Social Proof) - kept from staging */}
       <TrustSection />

@@ -80,7 +80,7 @@ export function FinalCTA() {
               </h3>
               <ul className="space-y-3">
                 {[
-                  "Prueba de 30 días sin costo con hasta 3 modelos publicados",
+                  "Planes flexibles para publicar modelos y destacar en tu región",
                   "Recibe cotizaciones directas con datos reales de contacto",
                   "Panel de control para gestionar prospectos y catálogo",
                 ].map((item) => (
@@ -103,14 +103,13 @@ export function FinalCTA() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
                 <Link
-                  href="/register?plan=gratis"
-                  onClick={() => trackRegistroStart("gratis")}
+                  href="/invitacion"
                   className={cn(
                     buttonVariants({ variant: "outline", size: "lg" }),
                     "h-13 rounded-2xl border-2 border-white/40 bg-white/5 px-6 font-extrabold uppercase tracking-wider text-white hover:bg-white/15"
                   )}
                 >
-                  Publicar constructora
+                  Tengo una invitación
                 </Link>
               </div>
             </div>

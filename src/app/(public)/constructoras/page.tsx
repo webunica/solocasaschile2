@@ -120,7 +120,91 @@ export default async function ConstructorasPage() {
     return (b.score_confianza ?? 0) - (a.score_confianza ?? 0);
   });
 
-  const asociadas = sorted.filter(c => c.plan !== "informativo");
+  // Constructoras ficticias para las demás empresas destacadas (sin acceso a perfil, botón 'En revisión')
+  const fictitiousDestacadas = [
+    {
+      id: "destacada-andina",
+      nombre: "Constructora Andina SpA",
+      slug: "constructora-andina",
+      logo_url: null,
+      descripcion: "Especialistas en ingeniería modular y casas prefabricadas en madera tratada. Perfil técnico en revisión documental.",
+      plan: "pro",
+      score_confianza: 78,
+      verificada: false,
+      isMaster: false,
+      regiones: ["Metropolitana", "Valparaíso", "O'Higgins"],
+    },
+    {
+      id: "destacada-modular-sur",
+      nombre: "Modular Sur SpA",
+      slug: "modular-sur",
+      logo_url: null,
+      descripcion: "Fabricación de módulos habitacionales y estructuras con eficiencia energética. Perfil en proceso de auditoría técnica.",
+      plan: "avanza",
+      score_confianza: 74,
+      verificada: false,
+      isMaster: false,
+      regiones: ["Biobío", "La Araucanía", "Los Lagos"],
+    },
+    {
+      id: "destacada-casas-valle",
+      nombre: "Casas del Valle Prefabricadas",
+      slug: "casas-del-valle",
+      logo_url: null,
+      descripcion: "Modelos llave en mano para parcelas y sectores rurales. En proceso de validación documental.",
+      plan: "pro",
+      score_confianza: 72,
+      verificada: false,
+      isMaster: false,
+      regiones: ["Maule", "Ñuble", "Metropolitana"],
+    },
+    {
+      id: "destacada-vanguardia",
+      nombre: "Vanguardia SIP Chile",
+      slug: "vanguardia-sip",
+      logo_url: null,
+      descripcion: "Soluciones de paneles SIP de alto rendimiento térmico y antisísmico. En etapa de revisión de antecedentes.",
+      plan: "premium",
+      score_confianza: 80,
+      verificada: false,
+      isMaster: false,
+      regiones: ["Metropolitana", "Valparaíso", "Coquimbo"],
+    },
+    {
+      id: "destacada-ecoviviendas",
+      nombre: "EcoViviendas Austral",
+      slug: "ecoviviendas-austral",
+      logo_url: null,
+      descripcion: "Diseño y montaje de casas térmicas para climas extremos del sur de Chile. Perfil en auditoría documental.",
+      plan: "pro",
+      score_confianza: 76,
+      verificada: false,
+      isMaster: false,
+      regiones: ["Los Ríos", "Los Lagos", "Aysén"],
+    },
+  ];
+
+  // Solo Constructora Master tiene acceso a su perfil
+  const masterOfficial = sorted.find(c => 
+    c.slug === "constructora-master" || 
+    c.slug === "javier-cb85b919" || 
+    c.nombre.toLowerCase().includes("master")
+  ) || {
+    id: "cb85b919-4008-46bc-bbb8-b3211152280c",
+    nombre: "Constructora Master",
+    slug: "constructora-master",
+    logo_url: "https://pereskyvymsyiqbihydj.supabase.co/storage/v1/object/public/model_images/logos/cb85b919-4008-46bc-bbb8-b3211152280c-1775228477059.png",
+    descripcion: "Constructora Master SpA es una empresa líder en desarrollo de viviendas prefabricadas, SIP y modulares de alto estándar en Chile con más de 14 años de experiencia y trayectoria.",
+    plan: "premium",
+    verificada: true,
+    score_confianza: 100,
+    regiones: ["La Araucanía", "Los Ríos", "Los Lagos", "Metropolitana", "Valparaíso", "Biobío", "Maule", "Ñuble", "Coquimbo"],
+  };
+
+  const asociadas = [
+    { ...masterOfficial, isMaster: true, slug: masterOfficial.slug || "constructora-master" },
+    ...fictitiousDestacadas,
+  ];
 
   // Optimización de payload: campos requeridos para mapa
   const mapConstructoras = sorted.map(c => ({
@@ -159,7 +243,9 @@ export default async function ConstructorasPage() {
           data={buildItemListJsonLd(
             sorted.slice(0, 50).map(c => ({
               name: c.nombre,
-              url: `https://solocasaschile.com/constructora/${c.slug || c.id}`,
+              url: (c.slug === "constructora-master" || c.slug === "javier-cb85b919" || c.nombre?.toLowerCase().includes("master"))
+                ? `https://solocasaschile.com/constructora/${c.slug || "constructora-master"}`
+                : `https://solocasaschile.com/constructoras`,
               image: c.logo_url || undefined,
               description: c.descripcion || undefined
             }))

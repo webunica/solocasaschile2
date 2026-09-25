@@ -119,7 +119,7 @@ export function PriceDropBanner() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="h-13 rounded-xl border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:border-[#27D8BE] focus:ring-2 focus:ring-[#27D8BE]/30 font-medium text-base shadow-inner"
+                        className="h-13 rounded-xl border-white/25 bg-white/15 text-white placeholder:!text-white/75 placeholder:text-white/75 focus:border-[#27D8BE] focus:ring-2 focus:ring-[#27D8BE]/30 font-medium text-base shadow-inner"
                      />
                   </div>
                   <Button 

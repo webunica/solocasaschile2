@@ -125,6 +125,13 @@ export async function register(formData: FormData) {
     const password = formData.get('password') as string
     const plan = (formData.get('plan') as string) || 'gratis'
     
+    // El registro gratuito requiere obligatoriamente invitación (/invitacion)
+    if (plan === 'gratis' || plan === 'prueba' || plan === 'starter') {
+      return { 
+        error: 'El registro al Plan Starter gratuito opera exclusivamente por invitación. Por favor ingresa tu código en /invitacion o suscríbete a un plan de pago.' 
+      }
+    }
+    
     // Default values if not provided in registration form
     const companyName = (formData.get('companyName') as string) || email.split('@')[0]
     const rut = (formData.get('rut') as string) || ''

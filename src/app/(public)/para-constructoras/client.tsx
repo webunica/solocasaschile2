@@ -175,8 +175,8 @@ const FAQS_CONSTRUCTORAS = [
     a: "El Plan Basic asegura presencia en catálogo. El Plan Crece (2 UF) activa la recepción directa de clientes potenciales (leads). El Plan Pro (3 UF) te otorga modelos ilimitados, posición destacada en catálogo y sello verificado. El Plan Pro+ (4 UF) te sitúa como referente #1 en tu región con campañas publicitarias activas.",
   },
   {
-    q: "¿Puedo probar la plataforma antes de pagar?",
-    a: "¡Sí! Puedes crear tu cuenta y acceder a un período de prueba de 30 días sin tarjeta de crédito para configurar tu ficha, subir modelos y explorar el panel comercial.",
+    q: "¿Cómo funciona el acceso para constructoras en SoloCasasChile?",
+    a: "Puedes suscribirte de inmediato a cualquiera de nuestros planes de pago (Basic, Crece, Pro y Pro+) para publicar tus modelos y recibir prospectos directos. El acceso gratuito permanente corresponde al Plan Starter (1 modelo publicado), disponible exclusivamente por invitación directa o mediante solicitud de invitación previa validación técnica.",
   },
 ];
 
@@ -226,25 +226,24 @@ export function ParaConstructorasClient() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/register?plan=gratis"
-              onClick={() => trackRegistroStart("gratis")}
+              href="#planes"
               className={cn(
                 buttonVariants({ size: "lg" }),
                 "h-14 rounded-2xl bg-brand-indigo px-8 text-xs font-extrabold uppercase tracking-[0.16em] text-white shadow-xl shadow-brand-indigo/20 hover:bg-brand-indigo/90"
               )}
             >
-              Publicar mi constructora (Prueba gratis)
+              Publicar mi constructora
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
 
             <Link
-              href="#planes"
+              href="/invitacion"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "h-14 rounded-2xl border-border px-8 text-xs font-extrabold uppercase tracking-[0.16em]"
               )}
             >
-              Ver comparativa de planes
+              Acceder con invitación
             </Link>
           </div>
 
@@ -252,7 +251,7 @@ export function ParaConstructorasClient() {
           <div className="mt-12 flex flex-wrap items-center justify-center gap-8 border-t border-border/40 pt-8 text-xs font-bold text-muted-foreground">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-brand-teal" />
-              <span>Prueba de 30 días sin tarjeta</span>
+              <span>Planes desde 1.0 UF/mes</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-brand-teal" />
@@ -506,15 +505,15 @@ export function ParaConstructorasClient() {
                   Modelos publicados
                 </span>
                 <p className="text-3xl font-black text-foreground">3 / 3</p>
-                <span className="text-[11px] font-bold text-muted-foreground">Capacidad plan gratis</span>
+                <span className="text-[11px] font-bold text-muted-foreground">Capacidad según plan</span>
               </div>
 
               <div className="bg-muted/40 p-5 rounded-2xl border border-border/30">
                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground block mb-1">
-                  Días de prueba restantes
+                  Tiempo de respuesta
                 </span>
-                <p className="text-3xl font-black text-amber-500">24 días</p>
-                <span className="text-[11px] font-bold text-muted-foreground">De 30 días iniciales</span>
+                <p className="text-3xl font-black text-emerald-600">&lt; 2 hrs</p>
+                <span className="text-[11px] font-bold text-muted-foreground">Atención a cotizaciones</span>
               </div>
             </div>
 
@@ -572,9 +571,9 @@ export function ParaConstructorasClient() {
               <div className="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-lg mx-auto md:mx-0 shadow-lg">
                 1
               </div>
-              <h3 className="font-heading text-lg font-black tracking-tight">Crea tu cuenta gratis</h3>
+              <h3 className="font-heading text-lg font-black tracking-tight">Elige tu plan o accede por invitación</h3>
               <p className="text-sm font-medium text-muted-foreground leading-relaxed">
-                Ingresa tu correo, nombre de empresa, teléfono de contacto y cobertura regional. No solicitamos tarjetas ni datos de pago.
+                Selecciona el plan que se adapte al volumen de tu constructora, o ingresa con tu enlace si recibiste una invitación al Plan Starter.
               </p>
             </div>
 
@@ -764,7 +763,7 @@ export function ParaConstructorasClient() {
 
           <div className="mt-12 rounded-2xl bg-muted/30 border border-border/40 p-6 text-center text-xs text-muted-foreground font-medium space-y-1">
             <p>Facturación oficial en pesos chilenos según el valor de la UF del día · Transacciones seguras procesadas por Flow.</p>
-            <p>Emisión inmediata de factura electrónica a nombre de tu empresa · Posibilidad de probar 30 días sin tarjeta de crédito.</p>
+            <p>Emisión inmediata de factura electrónica a nombre de tu empresa · Acceso gratuito Starter disponible exclusivamente por invitación.</p>
           </div>
         </div>
       </section>

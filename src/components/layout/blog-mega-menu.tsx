@@ -24,7 +24,7 @@ const CORPORATE_LINKS = [
   { name: "Sobre Nosotros", href: "/nosotros", icon: Users },
   { name: "Seguimiento de Obra", href: "/seguimiento-de-obras", icon: Zap },
   { name: "Portal Proveedores", href: "/portal-proveedores", icon: Building2 },
-  { name: "Como verificamos", href: "/verificacion", icon: ShieldCheck },
+  { name: "Verificación de Constructoras", href: "/verificacion-de-empresas-constructoras", icon: ShieldCheck },
 ];
 
 export function BlogMegaMenu({ posts, onClose }: BlogMegaMenuProps) {

@@ -111,12 +111,15 @@ export function InformativeListClient({ constructoras }: { constructoras: Constr
                </div>
                 <div>
                    <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1 opacity-60">Constructora #{(currentPage-1)*ITEMS_PER_PAGE + index + 1}</div>
-                   {c.slug ? (
+                   {c.slug && (c.slug === "constructora-master" || c.slug === "javier-cb85b919" || c.nombre.toLowerCase().includes("master")) ? (
                      <Link href={`/constructora/${c.slug}`} className="font-heading font-black text-lg text-foreground leading-tight tracking-tight hover:text-primary transition-colors block">
                        {c.nombre}
                      </Link>
                    ) : (
-                     <h3 className="font-heading font-black text-lg text-foreground leading-tight tracking-tight">{c.nombre}</h3>
+                     <div className="flex items-center gap-2">
+                       <h3 className="font-heading font-black text-lg text-foreground leading-tight tracking-tight">{c.nombre}</h3>
+                       <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-600">En revisión</span>
+                     </div>
                    )}
                 </div>
             </div>
@@ -199,7 +202,7 @@ export function InformativeListClient({ constructoras }: { constructoras: Constr
                          <Building2 className="w-5 h-5 text-primary" />
                       </div>
                       <div className="flex flex-col min-w-0">
-                        {c.slug ? (
+                        {c.slug && (c.slug === "constructora-master" || c.slug === "javier-cb85b919" || c.nombre.toLowerCase().includes("master")) ? (
                           <Link href={`/constructora/${c.slug}`} className="font-heading font-black text-foreground text-sm xl:text-base tracking-tight truncate hover:text-primary transition-colors">
                             {c.nombre}
                           </Link>
@@ -208,9 +211,13 @@ export function InformativeListClient({ constructoras }: { constructoras: Constr
                         )}
                         <div className={cn(
                           "inline-flex items-center px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-tighter border w-fit mt-1",
-                          getStatusColor(getVerificationStatus(getTrustInput(c)))
+                          (c.slug === "constructora-master" || c.slug === "javier-cb85b919" || c.nombre.toLowerCase().includes("master"))
+                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/30"
+                            : "bg-amber-500/10 text-amber-600 border-amber-500/30"
                         )}>
-                          {getVerificationStatus(getTrustInput(c))}
+                          {(c.slug === "constructora-master" || c.slug === "javier-cb85b919" || c.nombre.toLowerCase().includes("master"))
+                            ? "Verificada"
+                            : "Perfil en revisión"}
                         </div>
                       </div>
                     </div>

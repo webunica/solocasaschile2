@@ -16,9 +16,9 @@ const RESOURCE_LINKS = [
   { name: "Sistemas", path: "/tipos/prefabricada" },
   { name: "Para Constructoras", path: "/para-constructoras" },
   { name: "Planes para Empresas", path: "/planes" },
-  { name: "Plan Starter (Gratis)", path: "/planes/starter" },
+  { name: "Plan Starter (Por Invitación)", path: "/planes/starter" },
   { name: "Nosotros", path: "/nosotros" },
-  { name: "Verificación", path: "/verificacion" },
+  { name: "Verificación de Constructoras", path: "/verificacion-de-empresas-constructoras" },
   { name: "Ejercer Derechos (Ley 21.719)", path: "/ejercer-derechos" },
 ] as const;
 
