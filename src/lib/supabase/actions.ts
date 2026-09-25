@@ -113,12 +113,6 @@ export async function login(formData: FormData) {
 
   revalidatePath('/', 'layout')
 
-  // Redirigir segÃºn estado de plan
-  const { data: profile } = await supabase.from('constructoras').select('plan_status').eq('id', data.user.id).maybeSingle();
-  if (profile?.plan_status === 'pending') {
-    redirect('/planes?status=pending');
-  }
-
   redirect('/dashboard')
 }
 
