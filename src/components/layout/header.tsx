@@ -13,8 +13,11 @@ import {
   Home,
   BookOpen,
   Layers,
+  FileText,
+  Hammer,
   HelpCircle,
-  FileText
+  Calculator,
+  Compass
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -195,11 +198,12 @@ export function Header() {
           isScrolled ? "shadow-[0_4px_20px_-8px_rgba(7,62,72,0.08)]" : "shadow-none"
         )}
       >
-        <div className="mx-auto flex h-[72px] lg:h-[88px] max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-12">
-          {/* Logo actual de SoloCasasChile */}
+        {/* Contenedor ampliado a max-w-[1536px] (2xl) para darle mayor aire y holgura al menú */}
+        <div className="mx-auto flex h-[72px] lg:h-[88px] max-w-[1536px] items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-12">
+          {/* Logo actual de SoloCasasChile con margen derecho para no chocar con Inicio */}
           <Link
             href="/"
-            className="flex shrink-0 items-center group py-2"
+            className="flex shrink-0 items-center group py-2 mr-3 sm:mr-6 lg:mr-8 xl:mr-12"
             aria-label="SoloCasasChile Inicio"
           >
             {/* Mobile: Logo horizontal compacto */}
@@ -208,7 +212,7 @@ export function Header() {
               alt="SoloCasasChile"
               width={300}
               height={48}
-              className="h-8 w-auto max-w-[190px] object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
+              className="h-8 w-auto max-w-[185px] sm:max-w-[200px] object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
               priority
             />
             {/* Desktop / Tablet: Logo horizontal oficial */}
@@ -222,10 +226,10 @@ export function Header() {
             />
           </Link>
 
-          {/* Navegación Desktop (desde 1024px en adelante) */}
+          {/* Navegación Desktop con holgura adaptativa (gap calibrado para pantallas medianas y grandes) */}
           <nav
             aria-label="Navegación principal"
-            className="hidden lg:flex items-center gap-5 xl:gap-7"
+            className="hidden lg:flex items-center gap-3.5 xl:gap-6 2xl:gap-8 flex-1 justify-center max-w-4xl"
           >
             {NAV_LINKS.map((link) => {
               const isActive =
@@ -238,15 +242,15 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "relative py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md flex items-center gap-1.5",
+                    "relative py-1.5 px-1.5 xl:px-2 text-xs lg:text-[13.5px] xl:text-[14.5px] 2xl:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md flex items-center gap-1.5 whitespace-nowrap",
                     isActive
-                      ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                      ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-1.5 after:right-1.5 after:h-0.5 after:bg-[#27D8BE] after:rounded-full"
                       : "text-[#073E48]/80 hover:text-[#073E48]"
                   )}
                 >
                   <span>{link.label}</span>
                   {"badge" in link && (
-                    <span className="rounded-full bg-[#27D8BE]/20 border border-[#27D8BE]/50 px-1.5 py-0.2 text-[9px] font-black uppercase tracking-wider text-[#073E48]">
+                    <span className="rounded-full bg-[#27D8BE]/20 border border-[#27D8BE]/40 px-1.5 py-0.2 text-[9px] font-black uppercase tracking-wider text-[#073E48]">
                       {link.badge}
                     </span>
                   )}
@@ -266,9 +270,9 @@ export function Header() {
                 onClick={() => setSistemasOpen((prev) => !prev)}
                 aria-expanded={sistemasOpen}
                 className={cn(
-                  "relative flex items-center gap-1 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                  "relative flex items-center gap-1 py-1.5 px-1.5 xl:px-2 text-xs lg:text-[13.5px] xl:text-[14.5px] 2xl:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md whitespace-nowrap cursor-pointer",
                   isSistemasActive
-                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-1.5 after:right-1.5 after:h-0.5 after:bg-[#27D8BE] after:rounded-full"
                     : "text-[#073E48]/80 hover:text-[#073E48]"
                 )}
               >
@@ -285,7 +289,7 @@ export function Header() {
               {/* Menú flotante de Sistemas */}
               <div
                 className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-80 transition-all duration-200 z-50",
+                  "absolute top-full left-1/2 -translate-x-1/2 pt-2 w-80 transition-all duration-200 z-50",
                   sistemasOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -337,9 +341,9 @@ export function Header() {
                 onClick={() => setAyudasOpen((prev) => !prev)}
                 aria-expanded={ayudasOpen}
                 className={cn(
-                  "relative flex items-center gap-1 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                  "relative flex items-center gap-1 py-1.5 px-1.5 xl:px-2 text-xs lg:text-[13.5px] xl:text-[14.5px] 2xl:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md whitespace-nowrap cursor-pointer",
                   isAyudasActive
-                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-1.5 after:right-1.5 after:h-0.5 after:bg-[#27D8BE] after:rounded-full"
                     : "text-[#073E48]/80 hover:text-[#073E48]"
                 )}
               >
@@ -356,7 +360,7 @@ export function Header() {
               {/* Menú flotante de Ayudas */}
               <div
                 className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-72 transition-all duration-200 z-50",
+                  "absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 transition-all duration-200 z-50",
                   ayudasOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -408,9 +412,9 @@ export function Header() {
                 onClick={() => setPlanesOpen((prev) => !prev)}
                 aria-expanded={planesOpen}
                 className={cn(
-                  "relative flex items-center gap-1 py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
+                  "relative flex items-center gap-1 py-1.5 px-1.5 xl:px-2 text-xs lg:text-[13.5px] xl:text-[14.5px] 2xl:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md whitespace-nowrap cursor-pointer",
                   isPlanesActive
-                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                    ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-1.5 after:right-1.5 after:h-0.5 after:bg-[#27D8BE] after:rounded-full"
                     : "text-[#073E48]/80 hover:text-[#073E48]"
                 )}
               >
@@ -427,7 +431,7 @@ export function Header() {
               {/* Menú flotante de Planes */}
               <div
                 className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-72 transition-all duration-200 z-50",
+                  "absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 transition-all duration-200 z-50",
                   planesOpen
                     ? "opacity-100 visible translate-y-0"
                     : "opacity-0 invisible -translate-y-2 pointer-events-none"
@@ -489,24 +493,24 @@ export function Header() {
           </nav>
 
           {/* CTA Desktop */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 shrink-0 ml-4 xl:ml-6">
             {user ? (
               <div className="flex items-center gap-2">
                 <Link
                   href="/dashboard"
-                  className="flex items-center gap-2 rounded-full bg-[#073E48]/5 border border-[#073E48]/15 px-3.5 py-1.5 text-xs lg:text-sm font-bold text-[#073E48] hover:bg-[#073E48] hover:text-white transition-all shadow-sm group"
+                  className="flex items-center gap-2 rounded-full bg-[#073E48]/5 border border-[#073E48]/15 px-3 py-1.5 text-xs xl:text-sm font-bold text-[#073E48] hover:bg-[#073E48] hover:text-white transition-all shadow-xs group whitespace-nowrap"
                 >
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#073E48] text-[#27D8BE] group-hover:bg-white group-hover:text-[#073E48] transition-colors">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#073E48] text-[#27D8BE] group-hover:bg-white group-hover:text-[#073E48] transition-colors shrink-0">
                     <User className="h-3.5 w-3.5" />
                   </div>
-                  <span>Hola, {getUserGreetingName(user)}</span>
+                  <span className="truncate max-w-[120px] xl:max-w-[150px]">Hola, {getUserGreetingName(user)}</span>
                 </Link>
                 <button
                   type="button"
                   onClick={handleLogout}
                   title="Cerrar sesión"
                   aria-label="Cerrar sesión"
-                  className="flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-red-600 hover:border-red-200 hover:bg-red-50/50 transition-all cursor-pointer whitespace-nowrap"
                 >
                   <LogOut className="h-3.5 w-3.5" />
                   <span>Salir</span>
@@ -516,7 +520,7 @@ export function Header() {
               <Link
                 href="/para-constructoras"
                 onClick={() => trackConstructorasAccessClick("header")}
-                className="rounded-full border border-[#073E48] px-5 py-2.5 text-xs lg:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2"
+                className="rounded-full border border-[#073E48] px-4 xl:px-5 py-2 xl:py-2.5 text-xs lg:text-[13px] xl:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 whitespace-nowrap"
               >
                 Publica tu constructora
               </Link>
@@ -572,7 +576,7 @@ export function Header() {
                   </div>
                 )}
 
-                <div className="flex flex-col gap-1 p-6">
+                <div className="flex flex-col gap-1 p-5 sm:p-6 pb-12">
                   {/* Links principales */}
                   {NAV_LINKS.map((link) => {
                     const isActive =
