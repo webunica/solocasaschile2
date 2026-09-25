@@ -3,12 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BookOpen, Building2, Compass, Home, Menu, Newspaper, ChevronDown, CreditCard, Zap } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./theme-toggle";
 import {
   Sheet,
   SheetContent,
@@ -17,73 +14,61 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { trackCatalogoClick, trackConstructorasAccessClick } from "@/lib/analytics";
+import { trackConstructorasAccessClick } from "@/lib/analytics";
 
 const NAV_LINKS = [
-  { href: "/", label: "Inicio", icon: Home },
-  { href: "/constructoras", label: "Constructoras", icon: Building2 },
-  { href: "/casas-prefabricadas", label: "Guías", icon: BookOpen },
-  { href: "/blog", label: "Blog", icon: Newspaper },
-  { href: "/nosotros", label: "Nosotros", icon: Compass },
+  { href: "/", label: "Inicio" },
+  { href: "/catalogo", label: "Modelos" },
+  { href: "/constructoras", label: "Constructoras" },
+  { href: "/tipos/prefabricada", label: "Sistemas" },
+  { href: "/casas-prefabricadas", label: "Guías" },
 ] as const;
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [planesOpen, setPlanesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    setPlanesOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
+      setIsScrolled(window.scrollY > 20);
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -48, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      className="fixed left-1/2 top-0 z-[100] w-full -translate-x-1/2"
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-shadow duration-300">
       <div
         className={cn(
-          "relative transition-all duration-300",
-          isScrolled
-            ? "bg-white/96 shadow-[0_10px_32px_-28px_rgba(0,38,43,0.2)] backdrop-blur-xl"
-            : "bg-transparent md:bg-white shadow-none md:shadow-[0_4px_20px_-10px_rgba(0,38,43,0.06)] md:border-b md:border-border/40"
+          "w-full border-b border-slate-100 transition-all duration-200",
+          isScrolled ? "shadow-[0_4px_20px_-8px_rgba(7,62,72,0.08)]" : "shadow-none"
         )}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-8">
+        <div className="mx-auto flex h-[72px] md:h-[88px] max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Logo actual de SoloCasasChile */}
           <Link
             href="/"
-            className="flex shrink-0 items-center group py-1"
-            aria-label="SolocasasChile Inicio"
+            className="flex shrink-0 items-center group py-2"
+            aria-label="SoloCasasChile Inicio"
           >
-            {/* Versión Mobile: Logo horizontal */}
+            {/* Mobile: Logo horizontal compacto */}
             <Image
               src="/hero/logo-mobile.png"
-              alt="SolocasasChile"
+              alt="SoloCasasChile"
               width={300}
               height={48}
-              className="h-8 w-auto max-w-[200px] object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
+              className="h-8 w-auto max-w-[190px] object-contain transition-transform duration-200 group-hover:scale-105 sm:hidden"
               priority
             />
-            {/* Versión Desktop / Tablet: Logo horizontal 434x70px */}
+            {/* Desktop / Tablet: Logo horizontal oficial */}
             <Image
               src="/images/solocasaschile-logo.png"
-              alt="SolocasasChile"
+              alt="SoloCasasChile"
               width={434}
               height={70}
               className="hidden h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:block lg:h-10"
@@ -91,263 +76,120 @@ export function Header() {
             />
           </Link>
 
-          <nav className="ml-8 hidden flex-1 items-center justify-center gap-3 lg:flex">
+          {/* Navegación Desktop */}
+          <nav
+            aria-label="Navegación principal"
+            className="hidden items-center gap-7 lg:gap-9 md:flex"
+          >
             {NAV_LINKS.map((link) => {
-              const isActive = link.href === "/"
-                ? pathname === "/"
-                : pathname === link.href || pathname.startsWith(`${link.href}/`);
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname === link.href || pathname.startsWith(`${link.href}/`);
 
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "rounded-full px-3 py-2 text-[16px] font-semibold tracking-[-0.01em] transition-all",
+                    "relative py-1 text-sm lg:text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2 rounded-md",
                     isActive
-                      ? "bg-brand-indigo text-white shadow-[0_10px_28px_-16px_rgba(0,38,43,0.7)]"
-                      : "text-brand-indigo/78 hover:text-brand-indigo"
+                      ? "text-[#073E48] font-bold after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-[#27D8BE] after:rounded-full"
+                      : "text-[#073E48]/80 hover:text-[#073E48]"
                   )}
                 >
                   {link.label}
                 </Link>
               );
             })}
-
-            {/* Menú Desplegable: Planes */}
-            <div
-              className="relative"
-              onMouseEnter={() => setPlanesOpen(true)}
-              onMouseLeave={() => setPlanesOpen(false)}
-            >
-              <button
-                type="button"
-                onClick={() => setPlanesOpen((prev) => !prev)}
-                aria-expanded={planesOpen}
-                className={cn(
-                  "flex items-center gap-1.5 rounded-full px-3 py-2 text-[16px] font-semibold tracking-[-0.01em] transition-all",
-                  pathname.startsWith("/planes")
-                    ? "bg-brand-indigo text-white shadow-[0_10px_28px_-16px_rgba(0,38,43,0.7)]"
-                    : "text-brand-indigo/78 hover:text-brand-indigo"
-                )}
-              >
-                <span>Planes</span>
-                <ChevronDown
-                  className={cn(
-                    "h-3.5 w-3.5 transition-transform duration-200",
-                    planesOpen && "rotate-180"
-                  )}
-                />
-              </button>
-
-              <AnimatePresence>
-                {planesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-72"
-                  >
-                    <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-border/60 rounded-2xl p-2 shadow-2xl space-y-1">
-                      <Link
-                        href="/planes"
-                        onClick={() => setPlanesOpen(false)}
-                        className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted/70 transition-colors group"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-brand-indigo/10 text-brand-indigo flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-brand-indigo group-hover:text-white transition-colors">
-                          <CreditCard className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                            Planes y Precios
-                          </div>
-                          <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
-                            Basic, Crece, Pro y Pro+ con leads directos
-                          </p>
-                        </div>
-                      </Link>
-
-                      <Link
-                        href="/planes/starter"
-                        onClick={() => setPlanesOpen(false)}
-                        className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted/70 transition-colors group"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-brand-teal/15 text-brand-teal flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-brand-teal group-hover:text-white transition-colors">
-                          <Zap className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                            Plan Starter
-                            <span className="text-[9px] font-black bg-brand-teal/15 text-brand-teal px-1.5 py-0.5 rounded-full uppercase">
-                              Gratis
-                            </span>
-                          </div>
-                          <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
-                            1 modelo gratis y permanente por invitación
-                          </p>
-                        </div>
-                      </Link>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
           </nav>
 
-          <div className="ml-auto hidden items-center gap-3 lg:flex">
+          {/* CTA Desktop: Botón secundario delineado "Publica tu constructora" */}
+          <div className="hidden md:flex items-center">
             <Link
               href="/para-constructoras"
               onClick={() => trackConstructorasAccessClick("header")}
-              className="text-xs font-bold text-brand-indigo/70 hover:text-brand-indigo px-3 py-1.5 rounded-full border border-brand-indigo/15 hover:border-brand-indigo/30 transition-all flex items-center gap-1.5"
+              className="rounded-full border border-[#073E48] px-5 py-2.5 text-xs lg:text-sm font-semibold tracking-wide text-[#073E48] transition-all duration-200 hover:bg-[#073E48] hover:text-white active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] focus-visible:ring-offset-2"
             >
-              <Building2 className="h-3.5 w-3.5 text-brand-indigo/70" />
-              Soy constructora
-            </Link>
-            <ThemeToggle />
-            <Link
-              href="/catalogo"
-              onClick={() => trackCatalogoClick("header")}
-              className={cn(
-                "cta-pill cta-vibrate min-h-0 px-6 py-2.5 text-[0.82rem] font-extrabold uppercase tracking-[0.14em] shadow-md shadow-brand-indigo/20 hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-2"
-              )}
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8fffe0] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8fffe0]"></span>
-              </span>
-              Ver modelos
+              Publica tu constructora
             </Link>
           </div>
 
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <button
-                type="button"
-                aria-label="Abrir menu principal"
-                className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/5 text-primary lg:hidden"
+          {/* Menú Hamburguesa Mobile */}
+          <div className="flex items-center md:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <button
+                  type="button"
+                  aria-label="Abrir menú de navegación"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 text-[#073E48] hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE]"
+                >
+                  <Menu className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-[300px] sm:w-[360px] bg-white p-0 border-l border-slate-100 shadow-2xl"
               >
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[320px] border-r border-border/40 bg-background/95 p-0 backdrop-blur-xl">
-              <SheetHeader className="border-b border-border/30 p-6 text-left">
-                <div className="flex items-center justify-between gap-4">
-                  <SheetTitle className="font-heading text-2xl font-black tracking-tight text-brand-indigo flex items-center">
-                    <Image
-                      src="/hero/logo-mobile.png"
-                      alt="SolocasasChile"
-                      width={200}
-                      height={32}
-                      className="h-7 w-auto object-contain"
-                    />
-                  </SheetTitle>
-                  <ThemeToggle />
-                </div>
-                <SheetDescription className="text-xs font-extrabold uppercase tracking-[0.18em] text-muted-foreground">
-                  Catálogo y Constructoras en Chile
-                </SheetDescription>
-              </SheetHeader>
+                <SheetHeader className="border-b border-slate-100 p-6 text-left">
+                  <div className="flex items-center justify-between">
+                    <SheetTitle className="flex items-center">
+                      <Image
+                        src="/hero/logo-mobile.png"
+                        alt="SoloCasasChile"
+                        width={200}
+                        height={32}
+                        className="h-7 w-auto object-contain"
+                      />
+                    </SheetTitle>
+                  </div>
+                  <SheetDescription className="sr-only">
+                    Navegación principal de SoloCasasChile
+                  </SheetDescription>
+                </SheetHeader>
 
-              <div className="flex flex-col gap-2 p-6">
-                {NAV_LINKS.map((link) => {
-                  const isActive = link.href === "/"
-                    ? pathname === "/"
-                    : pathname === link.href || pathname.startsWith(`${link.href}/`);
+                <div className="flex flex-col gap-1 p-6">
+                  {NAV_LINKS.map((link) => {
+                    const isActive =
+                      link.href === "/"
+                        ? pathname === "/"
+                        : pathname === link.href || pathname.startsWith(`${link.href}/`);
 
-                  return (
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          "rounded-xl px-4 py-3 text-base font-semibold transition-colors",
+                          isActive
+                            ? "bg-[#073E48] text-white"
+                            : "text-[#073E48] hover:bg-slate-50"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+
+                  <div className="mt-6 pt-6 border-t border-slate-100">
                     <Link
-                      key={link.href}
-                      href={link.href}
+                      href="/para-constructoras"
                       onClick={() => {
                         setIsOpen(false);
+                        trackConstructorasAccessClick("header_mobile");
                       }}
-                      className={cn(
-                        "flex items-center gap-3 rounded-[1.4rem] px-4 py-4 text-[16px] font-semibold tracking-[-0.01em] transition-colors",
-                        isActive
-                          ? "bg-brand-indigo text-white"
-                          : "text-brand-indigo hover:bg-primary/5 hover:text-primary"
-                      )}
+                      className="flex items-center justify-center rounded-full border border-[#073E48] px-5 py-3 text-sm font-bold text-[#073E48] transition-all hover:bg-[#073E48] hover:text-white text-center active:scale-95"
                     >
-                      <link.icon className="h-4 w-4" aria-hidden="true" />
-                      {link.label}
+                      Publica tu constructora
                     </Link>
-                  );
-                })}
-
-                <div className="my-2 border-t border-border/30 pt-2 space-y-1">
-                  <div className="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                    Planes
                   </div>
-                  <Link
-                    href="/planes"
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-[1.4rem] px-4 py-3 text-[15px] font-semibold transition-colors",
-                      pathname === "/planes"
-                        ? "bg-brand-indigo text-white"
-                        : "text-brand-indigo hover:bg-primary/5 hover:text-brand-indigo"
-                    )}
-                  >
-                    <CreditCard className="h-4 w-4" aria-hidden="true" />
-                    Planes y Precios
-                  </Link>
-                  <Link
-                    href="/planes/starter"
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "flex items-center justify-between gap-3 rounded-[1.4rem] px-4 py-3 text-[15px] font-semibold transition-colors",
-                      pathname === "/planes/starter"
-                        ? "bg-brand-indigo text-white"
-                        : "text-brand-indigo hover:bg-primary/5 hover:text-brand-indigo"
-                    )}
-                  >
-                    <span className="flex items-center gap-3">
-                      <Zap className="h-4 w-4 text-brand-teal" aria-hidden="true" />
-                      Plan Starter
-                    </span>
-                    <span className="text-[10px] font-black bg-brand-teal/15 text-brand-teal px-2 py-0.5 rounded-full uppercase">
-                      Gratis
-                    </span>
-                  </Link>
                 </div>
-
-                <div className="my-2 border-t border-border/30 pt-2">
-                  <Link
-                    href="/para-constructoras"
-                    onClick={() => {
-                      setIsOpen(false);
-                      trackConstructorasAccessClick("header");
-                    }}
-                    className="flex items-center gap-3 rounded-[1.4rem] px-4 py-3.5 text-[15px] font-semibold text-brand-indigo/80 hover:bg-primary/5 hover:text-brand-indigo"
-                  >
-                    <Building2 className="h-4 w-4 text-brand-indigo" aria-hidden="true" />
-                    ¿Eres constructora? Publica aquí
-                  </Link>
-                </div>
-              </div>
-
-              <div className="absolute bottom-6 left-0 w-full px-6">
-                <Link
-                  href="/catalogo"
-                  onClick={() => {
-                    setIsOpen(false);
-                    trackCatalogoClick("header");
-                  }}
-                  className={cn(
-                    "cta-pill cta-vibrate min-h-0 h-13 w-full flex items-center justify-center rounded-full font-extrabold uppercase tracking-[0.16em] shadow-md shadow-brand-indigo/20 gap-2"
-                  )}
-                >
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8fffe0] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8fffe0]"></span>
-                  </span>
-                  Ver modelos
-                </Link>
-              </div>
-            </SheetContent>
-          </Sheet>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }
