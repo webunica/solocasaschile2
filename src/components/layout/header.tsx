@@ -49,7 +49,7 @@ export function Header() {
           isScrolled ? "shadow-[0_4px_20px_-8px_rgba(7,62,72,0.08)]" : "shadow-none"
         )}
       >
-        <div className="mx-auto flex h-[72px] md:h-[88px] max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[72px] lg:h-[88px] max-w-[1280px] items-center justify-between px-4 sm:px-6 lg:px-12">
           {/* Logo actual de SoloCasasChile */}
           <Link
             href="/"
@@ -76,10 +76,10 @@ export function Header() {
             />
           </Link>
 
-          {/* Navegación Desktop */}
+          {/* Navegación Desktop (desde 1024px en adelante) */}
           <nav
             aria-label="Navegación principal"
-            className="hidden items-center gap-7 lg:gap-9 md:flex"
+            className="hidden lg:flex items-center gap-7 lg:gap-9"
           >
             {NAV_LINKS.map((link) => {
               const isActive =
@@ -105,7 +105,7 @@ export function Header() {
           </nav>
 
           {/* CTA Desktop: Botón secundario delineado "Publica tu constructora" */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center">
             <Link
               href="/para-constructoras"
               onClick={() => trackConstructorasAccessClick("header")}
@@ -115,16 +115,16 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Menú Hamburguesa Mobile */}
-          <div className="flex items-center md:hidden">
+          {/* Menú Hamburguesa Mobile (circular, oculto desde 1024px) */}
+          <div className="flex items-center lg:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <button
                   type="button"
                   aria-label="Abrir menú de navegación"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 text-[#073E48] hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE]"
+                  className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-[#073E48] hover:bg-slate-50 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE]"
                 >
-                  <Menu className="h-6 w-6" aria-hidden="true" />
+                  <Menu className="h-5 w-5" aria-hidden="true" />
                 </button>
               </SheetTrigger>
               <SheetContent

@@ -87,8 +87,8 @@ export default function Home() {
       {/* A: Attention (Hero) */}
       <HeroSection />
 
-      {/* Buscador de Modelos — widget justo debajo del hero */}
-      <section className="container max-w-5xl mx-auto px-6 md:px-12 -mt-8 pb-8 relative z-10">
+      {/* Buscador de Modelos — widget debajo de la franja de confianza */}
+      <section className="container max-w-5xl mx-auto px-4 sm:px-6 md:px-12 mt-6 lg:mt-8 pb-8 relative z-10">
         <ModelSearchWidget
           title="Encuentra tu casa ideal"
           subtitle="Selecciona dormitorios, baños y superficie para ver modelos que se ajusten a ti"
