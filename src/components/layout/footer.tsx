@@ -104,12 +104,15 @@ export function Footer() {
                 className="flex items-start gap-3 transition-colors hover:text-accent"
               >
                 <FaWhatsapp className="mt-0.5 h-4 w-4 text-accent" aria-hidden="true" />
-                <span>+56 9 6413 0601</span>
+                <span>+56 9 6413 0601 (Comercial)</span>
               </a>
-              <div className="flex items-start gap-3">
+              <a
+                href="tel:+56966198752"
+                className="flex items-start gap-3 transition-colors hover:text-accent"
+              >
                 <Phone className="mt-0.5 h-4 w-4 text-accent" aria-hidden="true" />
-                <span>Atencion comercial Chile</span>
-              </div>
+                <span>Soporte técnico: +56 9 6619 8752</span>
+              </a>
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 text-accent" aria-hidden="true" />
                 <span>Santiago, Chile</span>

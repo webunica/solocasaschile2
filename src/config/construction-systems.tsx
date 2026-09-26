@@ -205,7 +205,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "450-1.200 UF" },
         { label: "Tiempo entrega", value: "30-60 días" }
     ],
-    image: "https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=2000"
+    image: "/images/modelos/ejemplos/tiny-house-chile.jpg"
   },
   "otro": {
     title: "Otro Sistema Constructivo",
