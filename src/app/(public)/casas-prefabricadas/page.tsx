@@ -4,6 +4,7 @@ import { getModelosFiltered } from "@/lib/supabase/services";
 import { buildBreadcrumbJsonLd, buildFAQJsonLd } from "@/components/seo/structured-data";
 import { SEO_KEYWORDS } from "@/lib/seo/keywords";
 import { GuiaConstruccionTerreno } from "@/components/guias/guia-construccion-terreno";
+import { CasasPrefabricadasHero } from "@/components/casas-prefabricadas/casas-prefabricadas-hero";
 
 
 export const dynamic = "force-dynamic";
@@ -102,49 +103,13 @@ export default async function CasasPrefabricadasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-36 pb-20">
+    <div className="min-h-screen bg-background pt-24 sm:pt-28 pb-20">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c") }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd).replace(/</g, "\\u003c") }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd).replace(/</g, "\\u003c") }} />
 
-      <section className="container max-w-6xl mx-auto px-6 md:px-12">
-        <div className="rounded-[2.5rem] border border-border/40 bg-gradient-to-br from-brand-indigo/10 via-background to-brand-teal/10 p-8 md:p-12 space-y-7">
-          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">Cluster principal</p>
-          <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter leading-none">Casas Prefabricadas en Chile</h1>
-          <p className="max-w-3xl text-lg text-muted-foreground">
-            Pagina pilar para busqueda masiva: compara alternativas, entiende diferencias tecnicas y pasa a cotizacion con constructoras verificadas.
-          </p>
-          <div className="grid gap-3 md:grid-cols-3">
-            <div className="rounded-2xl border border-border/40 bg-card/70 p-4">
-              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Modelos</p>
-              <p className="text-2xl font-black tracking-tight">{models.length}</p>
-            </div>
-            <div className="rounded-2xl border border-border/40 bg-card/70 p-4">
-              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Cobertura</p>
-              <p className="text-2xl font-black tracking-tight">16 regiones</p>
-            </div>
-            <div className="rounded-2xl border border-border/40 bg-card/70 p-4">
-              <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Objetivo</p>
-              <p className="text-2xl font-black tracking-tight">Cotizar mejor</p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/catalogo" className="rounded-xl bg-primary px-5 py-3 text-xs font-black uppercase tracking-widest text-white">
-              Ver catalogo
-            </Link>
-            <Link href="/constructoras" className="rounded-xl border border-border px-5 py-3 text-xs font-black uppercase tracking-widest">
-              Ver constructoras
-            </Link>
-            <Link href="/casas-paneles-sip" className="rounded-xl border border-border px-5 py-3 text-xs font-black uppercase tracking-widest">
-              Casas SIP
-            </Link>
-            <Link href="/casas-modulares" className="rounded-xl border border-border px-5 py-3 text-xs font-black uppercase tracking-widest">
-              Casas modulares
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CasasPrefabricadasHero totalModelos={models.length} />
 
       {/* Guía exhaustiva de construcción en terreno */}
       <div className="container max-w-6xl mx-auto px-6 md:px-12">

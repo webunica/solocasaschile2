@@ -5,6 +5,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/prefabricada',
+        destination: '/casas-prefabricadas',
+        permanent: true,
+      },
+      {
+        source: '/prefabricadas',
+        destination: '/casas-prefabricadas',
+        permanent: true,
+      },
+      {
         source: '/comprar-casa-prefabricaca',
         destination: '/comprar-casa-prefabricada',
         permanent: true,
