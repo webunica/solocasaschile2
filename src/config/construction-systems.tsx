@@ -133,7 +133,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "12-22 UF/m2" },
         { label: "Sustentabilidad", value: "Reciclado" }
     ],
-    image: "/containers.jpg"
+    image: "/images/modelos/ejemplos/casas-container-chile.jpg"
   },
   "steel-framing": {
     title: "Steel Framing",

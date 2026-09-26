@@ -13,6 +13,7 @@ import { SYSTEM_DETAILS as TIPO_INFO } from "@/config/construction-systems";
 import { buildFAQJsonLd, buildBreadcrumbJsonLd } from "@/components/seo/structured-data";
 import { SystemsComparison } from "@/components/seo/systems-comparison";
 import { SEO_KEYWORDS } from "@/lib/seo/keywords";
+import { TipoHero } from "@/components/tipos/tipo-hero";
 
 interface PageProps {
   params: Promise<{ tipo: string }>;
@@ -211,7 +212,7 @@ export default async function TipoPage({ params }: PageProps) {
   const heroImageAlt = heroImageAltByTipo[tipo] || `${info.title} en Chile - SolocasasChile`;
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="min-h-screen bg-background pb-20 pt-24 sm:pt-28">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -243,109 +244,9 @@ export default async function TipoPage({ params }: PageProps) {
           )).replace(/</g, "\\u003c"),
         }}
       />
-      {/* Hero Section per Type */}
-      <section className="relative py-24 md:py-32 bg-slate-950 overflow-hidden border-b border-white/5">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-indigo/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-teal/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-        
-        <div className="container relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-10">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 text-white/80 border border-white/10 text-[10px] font-black tracking-[0.3em] uppercase">
-                Sistema Constructivo
-              </div>
-              <div className="space-y-6">
-                <div className="flex flex-col gap-6">
-                   <div className="w-20 h-20 rounded-3xl bg-white/5 flex items-center justify-center border border-white/10">
-                      {info.icon}
-                   </div>
-                   <h1 className="text-5xl md:text-7xl font-heading font-black tracking-tighter text-white leading-none">
-                     {info.title}
-                   </h1>
-                </div>
-                <p className="text-xl text-white/60 leading-relaxed max-w-xl font-medium">
-                  {info.description}
-                </p>
-              </div>
+      {/* Hero Section Rediseñado */}
+      <TipoHero tipo={tipo} info={info} heroImageAlt={heroImageAlt} />
 
-              <div className="grid sm:grid-cols-3 gap-4">
-                {info.specs.map(spec => (
-                  <div key={spec.label} className="bg-background border border-border/50 p-4 rounded-xl shadow-sm">
-                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider mb-1">{spec.label}</p>
-                    <p className="text-lg font-bold text-foreground">{spec.value}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-4 pt-4">
-                <a
-                  href="#modelos"
-                  className={buttonVariants({ size: "lg", className: "font-semibold shadow-lg shadow-primary/20" })}
-                >
-                  Ver modelos disponibles
-                </a>
-                <Link
-                  href="/catalogo"
-                  className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
-                >
-                  Explorar catálogo
-                </Link>
-                {tipo === "sip" && (
-                  <Link
-                    href="/casas-paneles-sip"
-                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
-                  >
-                    Guia SIP
-                  </Link>
-                )}
-                {tipo === "modular" && (
-                  <Link
-                    href="/casas-modulares"
-                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
-                  >
-                    Guia Modular
-                  </Link>
-                )}
-                {tipo === "container" && (
-                  <Link
-                    href="/casas-prefabricadas"
-                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
-                  >
-                    Comparar Sistemas
-                  </Link>
-                )}
-                {tipo === "steel-framing" && (
-                  <Link
-                    href="/casas-prefabricadas"
-                    className={buttonVariants({ variant: "outline", size: "lg", className: "font-semibold border-white/20 text-white hover:bg-white/10" })}
-                  >
-                    Guia Steel Framing
-                  </Link>
-                )}
-              </div>
-            </div>
-
-             <div className="relative h-[550px] rounded-[3rem] overflow-hidden shadow-2xl group border border-white/10">
-                <Image src={info.image} alt={heroImageAlt} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute bottom-10 left-10 right-10">
-                   <div className="p-8 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] flex flex-col gap-6">
-                      <h3 className="text-white font-black text-xl uppercase tracking-tighter flex items-center gap-3">
-                        <CheckCircle2 className="w-6 h-6 text-brand-teal" /> Ventajas Clave
-                      </h3>
-                     <div className="space-y-2">
-                        {info.benefits.map(benefit => (
-                          <div key={benefit} className="flex items-center gap-2 text-white/90 text-sm">
-                             <ShieldCheck className="w-4 h-4 text-primary" /> {benefit}
-                          </div>
-                        ))}
-                     </div>
-                  </div>
-               </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Models Grid */}
       <section id="modelos" className="py-20">

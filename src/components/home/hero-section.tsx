@@ -84,7 +84,7 @@ export function HeroSection() {
             </p>
 
             {/* Botones de Acción */}
-            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 lg:gap-4 mb-6 sm:mb-8 lg:mb-0">
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 lg:gap-4 pt-[100px] sm:pt-0 mb-6 sm:mb-8 lg:mb-0">
               {/* Botón Principal: EXPLORAR MODELOS */}
               <Link
                 href="/catalogo"
