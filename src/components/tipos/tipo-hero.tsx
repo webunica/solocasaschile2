@@ -7,8 +7,6 @@ import {
   Box,
   MapPin,
   Home,
-  ShieldCheck,
-  Zap,
 } from "lucide-react";
 
 export interface TipoHeroProps {
@@ -24,60 +22,217 @@ export interface TipoHeroProps {
   heroImageAlt: string;
 }
 
+const SYSTEM_HERO_CONFIG: Record<
+  string,
+  {
+    etiqueta: string;
+    h1Title: string;
+    h1Accent: string;
+    descripcion: string;
+    btnMain: string;
+    btnSec: string;
+    secHref: string;
+    beneficios: string[];
+    aclaracion: string;
+    cardTitle: string;
+    cardSubtitle: string;
+    cardSpecs: string;
+    cardBadge: string;
+  }
+> = {
+  container: {
+    etiqueta: "CASAS CONTAINER EN CHILE",
+    h1Title: "Casas Container en Chile.",
+    h1Accent: "Diseño moderno y entrega rápida.",
+    descripcion:
+      "Compara modelos habitables a partir de contenedores marítimos ISO adaptados. Máxima durabilidad de acero COR-TEN, aislamiento térmico certificado y rapidez de montaje en cualquier terreno.",
+    btnMain: "Ver modelos container",
+    btnSec: "Cotizar proyecto",
+    secHref: "/cotizar?tipo=container",
+    beneficios: [
+      "Acero COR-TEN ultra resistente",
+      "Montaje rápido en 30 a 60 días",
+      "Diseño modular y sustentable",
+    ],
+    aclaracion:
+      "Rango típico: 12 a 22 UF/m² · Proyectos habitacionales llave en mano con aislación certificada.",
+    cardTitle: "Modelo Container Austral 90 m²",
+    cardSubtitle: "Estructura marítima ISO 40HC",
+    cardSpecs: "2D · 1B · Terraza integrada · Aislación certificada",
+    cardBadge: "Llave en mano",
+  },
+  sip: {
+    etiqueta: "CASAS PANELES SIP EN CHILE",
+    h1Title: "Casas Panel SIP en Chile.",
+    h1Accent: "Máxima aislación térmica y eficiencia energética.",
+    descripcion:
+      "Compara modelos construidos con paneles estructurales aislados (SIP). Hasta un 50% de ahorro en calefacción, comportamiento antisísmico certificado y tiempos de obra reducidos.",
+    btnMain: "Ver modelos SIP",
+    btnSec: "Cotizar casa SIP",
+    secHref: "/cotizar?tipo=sip",
+    beneficios: [
+      "Ahorro térmico de hasta 50%",
+      "Estructura antisísmica NCh433",
+      "Montaje en 30 a 60 días",
+    ],
+    aclaracion:
+      "Rango típico: 15 a 25 UF/m² · Envolvente continua de alta eficiencia para climas exigentes.",
+    cardTitle: "Modelo SIP Cordillera 110 m²",
+    cardSubtitle: "Paneles EPS alta densidad + OSB",
+    cardSpecs: "3D · 2B · Eficiencia Térmica A+ · Llave en mano",
+    cardBadge: "Aislación Continua",
+  },
+  prefabricada: {
+    etiqueta: "CASAS PREFABRICADAS EN CHILE",
+    h1Title: "Casas Prefabricadas en Chile.",
+    h1Accent: "Compara modelos, planos y precios reales.",
+    descripcion:
+      "Descubre la mayor oferta de casas prefabricadas en Chile. Compara valores por metro cuadrado, tiempos de entrega y constructoras con modelos llave en mano listos para instalar.",
+    btnMain: "Ver modelos prefabricados",
+    btnSec: "Cotizar mi proyecto",
+    secHref: "/cotizar?tipo=prefabricada",
+    beneficios: [
+      "Desde 8 a 18 UF/m²",
+      "Montaje récord en 7 a 20 días",
+      "Escalable y ampliable en el tiempo",
+    ],
+    aclaracion:
+      "Opciones desde kit básico hasta llave en mano · Cobertura en las 16 regiones de Chile.",
+    cardTitle: "Modelo Volcán Puntiagudo 84 m²",
+    cardSubtitle: "Estructura panelizada tratada al vacío",
+    cardSpecs: "3D · 2B · Madera tratada y zinc prepintado",
+    cardBadge: "Montaje rápido",
+  },
+  modular: {
+    etiqueta: "CASAS MODULARES EN CHILE",
+    h1Title: "Casas Modulares en Chile.",
+    h1Accent: "95% terminadas en fábrica y montaje en días.",
+    descripcion:
+      "Módulos volumétricos 3D completos con instalaciones y terminaciones interiores de fábrica. Mínimo impacto en terreno, estándar de calidad industrial y posibilidad de ampliación modular futura.",
+    btnMain: "Ver modelos modulares",
+    btnSec: "Cotizar casa modular",
+    secHref: "/cotizar?tipo=modular",
+    beneficios: [
+      "95% de avance en planta",
+      "Montaje en terreno en 2 a 5 días",
+      "Ampliaciones modulares sin obra húmeda",
+    ],
+    aclaracion:
+      "Rango típico: 20 a 30 UF/m² · Alta precisión industrial y estándar premium llave en mano.",
+    cardTitle: "Modelo Modular Panorámico 120 m²",
+    cardSubtitle: "Ensamblaje volumétrico 3D llave en mano",
+    cardSpecs: "3D · 2B · Ventanales termopanel de piso a cielo",
+    cardBadge: "95% en fábrica",
+  },
+  "steel-framing": {
+    etiqueta: "CASAS STEEL FRAMING EN CHILE",
+    h1Title: "Casas Steel Framing en Chile.",
+    h1Accent: "Precisión milimétrica y máxima durabilidad.",
+    descripcion:
+      "Estructuras de perfiles de acero galvanizado conformados en frío. Inmune a plagas, resistencia sísmica insuperable, muros perfectamente aplomados y mínimo mantenimiento a lo largo de los años.",
+    btnMain: "Ver modelos Steel Framing",
+    btnSec: "Cotizar Steel Framing",
+    secHref: "/cotizar?tipo=steel-framing",
+    beneficios: [
+      "Perfiles de acero galvanizado",
+      "100% inmune a termitas y humedad",
+      "Precisión y estabilidad estructural",
+    ],
+    aclaracion:
+      "Rango típico: 18 a 28 UF/m² · Diseños contemporáneos con certificación estructural OGUC.",
+    cardTitle: "Modelo Steel Frame Vanguardia 135 m²",
+    cardSubtitle: "Estructura de acero liviano galvanizado",
+    cardSpecs: "4D · 3B · Estándar antisísmico de alta gama",
+    cardBadge: "Acero galvanizado",
+  },
+  madera: {
+    etiqueta: "CASAS DE MADERA EN CHILE",
+    h1Title: "Casas de Madera en Chile.",
+    h1Accent: "Calidez natural, solidez y diseño sustentable.",
+    descripcion:
+      "Viviendas construidas en maderas seleccionadas y tratadas. Confort térmico orgánico, estética noble con vigas a la vista y huella de carbono positiva para parcelas y entornos naturales de Chile.",
+    btnMain: "Ver modelos de madera",
+    btnSec: "Cotizar casa de madera",
+    secHref: "/cotizar?tipo=madera",
+    beneficios: [
+      "Maderas tratadas de alta densidad",
+      "Huella de carbono negativa y sustentable",
+      "Confort térmico y acústico natural",
+    ],
+    aclaracion:
+      "Rango típico: 10 a 20 UF/m² · Diseños rústicos y modernos para climas del centro y sur.",
+    cardTitle: "Modelo Roble & Coigüe 125 m²",
+    cardSubtitle: "Maderas nativas y pino impregnado al vacío",
+    cardSpecs: "3D · 2B · Vigas a la vista · Chimenea integrada",
+    cardBadge: "Confort natural",
+  },
+  hormigon: {
+    etiqueta: "CASAS DE HORMIGÓN EN CHILE",
+    h1Title: "Casas de Hormigón en Chile.",
+    h1Accent: "Solidez definitiva y aislación acústica máxima.",
+    descripcion:
+      "Viviendas de hormigón celular o paneles prefabricados de hormigón armado. Incombustible, masa térmica constante, máxima plusvalía en el tiempo y nulo mantenimiento estructural.",
+    btnMain: "Ver modelos de hormigón",
+    btnSec: "Cotizar casa de hormigón",
+    secHref: "/cotizar?tipo=hormigon",
+    beneficios: [
+      "Estructura incombustible y eterna",
+      "Aislamiento acústico insuperable",
+      "Máxima plusvalía patrimonial",
+    ],
+    aclaracion:
+      "Rango típico: 25 a 35 UF/m² · Resistencia G25 antisísmica con terminaciones de alto estándar.",
+    cardTitle: "Modelo Hormigón Celular 150 m²",
+    cardSubtitle: "Muros térmicos de concreto de alta resistencia",
+    cardSpecs: "4D · 3B · Losa de hormigón y ventanales panorámicos",
+    cardBadge: "Máxima durabilidad",
+  },
+  "tiny-house": {
+    etiqueta: "TINY HOUSES EN CHILE",
+    h1Title: "Tiny Houses en Chile.",
+    h1Accent: "Minimalismo inteligente y libertad habitacional.",
+    descripcion:
+      "Casas pequeñas ultra optimizadas de 15 a 45 m². Máxima eficiencia por metro cuadrado, bajo consumo de mantenimiento, diseño autosuficiente y opción de movilidad o fundaciones livianas.",
+    btnMain: "Ver modelos Tiny House",
+    btnSec: "Cotizar Tiny House",
+    secHref: "/cotizar?tipo=tiny-house",
+    beneficios: [
+      "Espacios 100% optimizados",
+      "Bajo consumo y fácil mantención",
+      "Opción fija o sobre ruedas (chasis)",
+    ],
+    aclaracion:
+      "Rango típico: 450 a 1.200 UF · Llave en mano con equipamiento interior integral.",
+    cardTitle: "Tiny House Compact 24 m²",
+    cardSubtitle: "Diseño modular inteligente y autosuficiente",
+    cardSpecs: "1D loft · 1B · Cocina integrada · Chasis opcional",
+    cardBadge: "Minimalismo inteligente",
+  },
+};
+
 export function TipoHero({ tipo, info, heroImageAlt }: TipoHeroProps) {
-  const isContainer = tipo === "container";
+  const config = SYSTEM_HERO_CONFIG[tipo];
 
-  // Textos optimizados según el tipo (especializado para container)
-  const etiqueta = isContainer
-    ? "CASAS CONTAINER EN CHILE"
-    : `${info.title.toUpperCase()} EN CHILE`;
-
-  const h1Title = isContainer ? (
-    <>
-      Casas Container en Chile.{" "}
-      <span className="text-brand-teal block sm:inline">
-        Diseño moderno y entrega rápida.
-      </span>
-    </>
-  ) : (
-    <>
-      {info.title} en Chile.{" "}
-      <span className="text-brand-teal block sm:inline">
-        Modelos y precios actualizados.
-      </span>
-    </>
-  );
-
-  const descripcion = isContainer
-    ? "Compara modelos habitables a partir de contenedores marítimos ISO adaptados. Máxima durabilidad de acero COR-TEN, aislamiento térmico certificado y rapidez de montaje en cualquier terreno."
-    : info.description ||
-      `Compara modelos, precios y opciones de ${info.title} en Chile con constructoras verificadas.`;
-
-  const beneficios = isContainer
-    ? [
-        "Acero COR-TEN ultra resistente",
-        "Montaje rápido en 30 a 60 días",
-        "Diseño modular y sustentable",
-      ]
-    : info.benefits || [];
-
-  const aclaracion = isContainer
-    ? "Rango típico: 12 a 22 UF/m² · Proyectos habitacionales llave en mano con aislación certificada."
-    : "Compara especificaciones técnicas, precios base y modelos llave en mano disponibles.";
-
-  const cardTitle = isContainer
-    ? "Modelo Container Austral 90 m²"
-    : `Modelo ${info.title} 84 m²`;
-
-  const cardSubtitle = isContainer
-    ? "Estructura marítima ISO 40HC"
-    : "Sistema industrializado de alta eficiencia";
-
-  const cardSpecs = isContainer
-    ? "2D · 1B · Terraza integrada · Aislación certificada"
-    : "3D · 2B · Llave en mano en tu región";
-
-  const cardBadge = isContainer ? "Llave en mano" : "Modelo destacado";
+  const etiqueta = config?.etiqueta || `${info.title.toUpperCase()} EN CHILE`;
+  const h1Title = config?.h1Title || `${info.title} en Chile.`;
+  const h1Accent = config?.h1Accent || "Modelos y precios actualizados.";
+  const descripcion =
+    config?.descripcion ||
+    info.description ||
+    `Compara modelos, precios y opciones de ${info.title} en Chile con constructoras verificadas.`;
+  const btnMain = config?.btnMain || `Ver modelos ${info.title.toLowerCase()}`;
+  const btnSec = config?.btnSec || "Cotizar proyecto";
+  const secHref = config?.secHref || `/cotizar?tipo=${tipo}`;
+  const beneficios = config?.beneficios || info.benefits || [];
+  const aclaracion =
+    config?.aclaracion ||
+    "Compara especificaciones técnicas, precios base y modelos llave en mano disponibles.";
+  const cardTitle = config?.cardTitle || `Modelo ${info.title} 90 m²`;
+  const cardSubtitle =
+    config?.cardSubtitle || "Sistema constructivo industrializado en Chile";
+  const cardSpecs =
+    config?.cardSpecs || "3D · 2B · Llave en mano en tu región";
+  const cardBadge = config?.cardBadge || "Verificado";
 
   return (
     <section
@@ -113,7 +268,10 @@ export function TipoHero({ tipo, info, heroImageAlt }: TipoHeroProps) {
               id="hero-tipo-heading"
               className="font-heading font-black text-foreground tracking-tight leading-[1.08] lg:leading-[1.04] text-[clamp(2rem,7vw,3.6rem)] text-balance"
             >
-              {h1Title}
+              {h1Title}{" "}
+              <span className="text-brand-teal block sm:inline">
+                {h1Accent}
+              </span>
             </h1>
 
             {/* 3. Descripción */}
@@ -128,16 +286,16 @@ export function TipoHero({ tipo, info, heroImageAlt }: TipoHeroProps) {
                 href="#modelos"
                 className="group relative flex w-full sm:w-auto min-h-[54px] sm:min-h-[56px] items-center justify-center rounded-2xl bg-[#073E48] hover:bg-[#0a4d59] border-2 border-[#27D8BE] px-7 sm:px-8 py-3.5 text-xs sm:text-sm font-black uppercase tracking-wider text-white shadow-xl shadow-[#073E48]/25 transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#27D8BE] cursor-pointer"
               >
-                <span>Ver modelos {isContainer ? "container" : "disponibles"}</span>
+                <span>{btnMain}</span>
                 <ArrowRight className="ml-2.5 h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
               </a>
 
               {/* Botón Secundario (Menor énfasis debajo en mobile) */}
               <Link
-                href="/cotizar"
+                href={secHref}
                 className="inline-flex w-full sm:w-auto min-h-[50px] sm:min-h-[56px] items-center justify-center rounded-2xl border border-border/80 bg-card hover:bg-muted/70 px-6 sm:px-7 py-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-foreground transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring text-center"
               >
-                Cotizar proyecto
+                {btnSec}
               </Link>
             </div>
 
@@ -169,7 +327,7 @@ export function TipoHero({ tipo, info, heroImageAlt }: TipoHeroProps) {
           <div className="lg:col-span-5 xl:col-span-6 w-full pt-4 lg:pt-0">
             <div className="relative w-full rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-border/50 bg-card shadow-2xl shadow-primary/10">
               
-              {/* Fotografía protagonista del modelo/casa container */}
+              {/* Fotografía protagonista del modelo constructivo */}
               <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] xl:aspect-[5/4] w-full overflow-hidden">
                 <Image
                   src={info.image}

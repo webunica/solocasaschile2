@@ -121,7 +121,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "20-30 UF/m2" },
         { label: "Durabilidad", value: "Alta" }
     ],
-    image: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=2080"
+    image: "/images/modelos/ejemplos/puerto-octay-exterior.png"
   },
   container: {
     title: "Casas Container",
@@ -157,7 +157,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "10-20 UF/m2" },
         { label: "Térmica", value: "Natural" }
     ],
-    image: "https://images.unsplash.com/photo-1449156001934-06d1be2f12f0?q=80&w=2070"
+    image: "/images/modelos/ejemplos/villarrica-facade.png"
   },
   hormigon: {
     title: "Construcción Hormigón",
@@ -169,7 +169,7 @@ export const SYSTEM_DETAILS: Record<string, {
         { label: "Precio base", value: "25-35 UF/m2" },
         { label: "Resistencia", value: "Máxima" }
     ],
-    image: "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2070"
+    image: "/images/modelos/ejemplos/ensenada-facade.png"
   },
   "llave-en-mano": {
     title: "Casas Llave en Mano",
