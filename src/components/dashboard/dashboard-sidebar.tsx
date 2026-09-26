@@ -308,7 +308,7 @@ export function DashboardSidebar({
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-border/40">
+      <SidebarFooter className="p-4 border-t border-border/40 pb-20 md:pb-4">
         <div className="flex flex-col gap-4">
            {/* User Profile MiniSection */}
            <div className="flex items-center gap-3 p-2 rounded-2xl bg-muted/20 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:bg-transparent">

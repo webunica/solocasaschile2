@@ -8,6 +8,16 @@ import { ROLES, type AppRole } from "@/lib/security/roles";
 // ─── PATCH /api/admin/usuarios/[id] ──────────────────────────────────────────
 // Actualiza rol y/o nombre de un usuario. Solo superadmin.
 
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -26,52 +36,100 @@ export async function PATCH(
       return NextResponse.json({ error: "forbidden" }, { status: 403 });
     }
 
-    // Prevenir que el superadmin se modifique a sí mismo el rol accidentalmente
-    if (targetId === user.id) {
+    const body = await req.json();
+    const { role, nombre, telefono, plan, verificada } = body as {
+      role?: AppRole | null | "constructora";
+      nombre?: string;
+      telefono?: string;
+      plan?: string;
+      verificada?: boolean;
+    };
+
+    // Prevenir que el superadmin se degrade a sí mismo de rol accidentalmente
+    if (targetId === user.id && role !== undefined && role !== ROLES.SUPERADMIN) {
       return NextResponse.json(
-        { error: "cannot_modify_self", message: "No puedes cambiar tu propio rol desde aquí." },
+        { error: "cannot_modify_self", message: "No puedes degradar tu propio rol de Super Admin." },
         { status: 400 }
       );
     }
 
-    const body = await req.json();
-    const { role, nombre } = body as {
-      role?: AppRole;
-      nombre?: string;
-    };
-
-    const allowedRoles: AppRole[] = [ROLES.ADMIN, ROLES.VENDEDOR, ROLES.SUPERADMIN];
-    if (role && !allowedRoles.includes(role)) {
+    const allowedRoles = [ROLES.ADMIN, ROLES.VENDEDOR, ROLES.SUPERADMIN, "constructora", null];
+    if (role !== undefined && !allowedRoles.includes(role)) {
       return NextResponse.json({ error: "invalid_role" }, { status: 400 });
     }
 
     const admin = createAdminClient();
 
-    // Actualizar fila en constructoras
-    const updatePayload: Record<string, unknown> = {};
-    if (role) updatePayload.role = role;
-    if (nombre) updatePayload.nombre = nombre;
+    // 1. Obtener usuario de Auth para asegurar que existe y obtener su email
+    const { data: authUserData, error: authUserErr } = await admin.auth.admin.getUserById(targetId);
+    if (authUserErr || !authUserData?.user) {
+      return NextResponse.json({ error: "user_not_found" }, { status: 404 });
+    }
 
-    const { error: profileError } = await admin
+    // 2. Obtener perfil actual de constructoras si existe
+    const { data: existingProfile } = await admin
       .from("constructoras")
-      .update(updatePayload)
-      .eq("id", targetId);
+      .select("id, slug, nombre, role, plan, telefono, verificada, email")
+      .eq("id", targetId)
+      .maybeSingle();
 
-    if (profileError) throw profileError;
+    const cleanNombre = nombre !== undefined ? nombre.trim() : (existingProfile?.nombre ?? "");
+    let slug = existingProfile?.slug;
+    if (!slug) {
+      const baseSlug = cleanNombre ? slugify(cleanNombre) : `constructora-${targetId.slice(0, 8)}`;
+      slug = baseSlug || `constructora-${targetId.slice(0, 8)}`;
+    }
 
-    // Si el nuevo rol es superadmin → actualizar app_metadata también
-    if (role === ROLES.SUPERADMIN) {
+    const finalRole: AppRole | null =
+      role === "constructora" || role === null
+        ? null
+        : role !== undefined
+        ? (role as AppRole)
+        : ((existingProfile?.role as AppRole | null) ?? null);
+
+    const upsertPayload: Record<string, unknown> = {
+      id: targetId,
+      email: authUserData.user.email ?? existingProfile?.email ?? "",
+      nombre: cleanNombre || "Constructora",
+      slug,
+      role: finalRole,
+      plan: plan !== undefined ? plan : (existingProfile?.plan || "starter"),
+      plan_status: "active",
+      telefono: telefono !== undefined ? (telefono.trim() || null) : (existingProfile?.telefono ?? null),
+      verificada: verificada !== undefined ? verificada : (existingProfile?.verificada ?? false),
+    };
+
+    const { error: upsertError } = await admin
+      .from("constructoras")
+      .upsert(upsertPayload, { onConflict: "id" });
+
+    if (upsertError) throw upsertError;
+
+    // 3. Sincronizar app_metadata y user_metadata en Supabase Auth
+    if (finalRole === ROLES.SUPERADMIN) {
       await admin.auth.admin.updateUserById(targetId, {
         app_metadata: { is_superadmin: true, role: "superadmin" },
+        user_metadata: { ...(authUserData.user.user_metadata || {}), nombre: cleanNombre || undefined },
       });
-    } else if (role) {
-      // Limpiar flag de superadmin si se baja de nivel
+    } else {
       await admin.auth.admin.updateUserById(targetId, {
-        app_metadata: { is_superadmin: false, role },
+        app_metadata: { is_superadmin: false, role: finalRole },
+        user_metadata: { ...(authUserData.user.user_metadata || {}), nombre: cleanNombre || undefined },
       });
     }
 
-    return NextResponse.json({ success: true, updated: { role, nombre } });
+    return NextResponse.json({
+      success: true,
+      profile: {
+        id: targetId,
+        nombre: cleanNombre,
+        role: finalRole,
+        plan: upsertPayload.plan,
+        telefono: upsertPayload.telefono,
+        verificada: upsertPayload.verificada,
+        slug,
+      },
+    });
   } catch (err) {
     console.error("[PATCH /api/admin/usuarios/[id]]", err);
     return NextResponse.json({ error: "internal_error" }, { status: 500 });

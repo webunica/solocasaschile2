@@ -37,7 +37,7 @@ export default async function AdminUsuariosPage() {
 
   const { data: profiles } = await admin
     .from("constructoras")
-    .select("id, nombre, role, plan, plan_status, verificada, created_at, email")
+    .select("id, nombre, role, plan, plan_status, verificada, created_at, email, telefono, slug")
     .in("id", userIds);
 
   const profileMap = new Map(profiles?.map((p) => [p.id, p]) ?? []);
@@ -57,6 +57,8 @@ export default async function AdminUsuariosPage() {
         id: u.id,
         email: u.email ?? "",
         nombre: profile?.nombre ?? null,
+        telefono: profile?.telefono ?? null,
+        slug: profile?.slug ?? null,
         role: (profile?.role as AppRole | null) ?? null,
         plan: profile?.plan ?? null,
         plan_status: profile?.plan_status ?? null,
