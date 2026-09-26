@@ -63,35 +63,35 @@ export function CrearUsuarioDialog({ onClose }: CrearUsuarioDialogProps) {
   // Vista de éxito — mostrar contraseña temporal
   if (success) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-        <div className="w-full max-w-md rounded-2xl border border-border bg-background shadow-2xl">
-          <div className="p-6 space-y-5">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm">
+        <div className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border border-border bg-background shadow-2xl">
+          <div className="p-5 sm:p-6 space-y-4 sm:space-y-5">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/40 flex items-center justify-center">
                 <UserPlus className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
-                <h2 className="font-heading font-black text-xl text-foreground">
+                <h2 className="font-heading font-black text-lg sm:text-xl text-foreground">
                   ¡Usuario creado!
                 </h2>
-                <p className="text-sm text-muted-foreground">{success.email}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground truncate">{success.email}</p>
               </div>
             </div>
 
-            <div className="rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-950/30 p-4 space-y-2">
-              <p className="text-sm font-black text-amber-800 dark:text-amber-400">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-950/30 p-3.5 sm:p-4 space-y-2">
+              <p className="text-xs sm:text-sm font-black text-amber-800 dark:text-amber-400">
                 Contraseña temporal generada
               </p>
-              <p className="text-xs text-amber-700 dark:text-amber-500">
+              <p className="text-[11px] sm:text-xs text-amber-700 dark:text-amber-500">
                 Comparte esta contraseña de forma segura. El usuario deberá cambiarla al iniciar sesión.
               </p>
               <div className="flex items-center gap-2 mt-2">
-                <code className="flex-1 px-3 py-2 rounded-lg bg-background border border-amber-300 text-sm font-mono font-bold text-foreground tracking-wider">
+                <code className="flex-1 px-3 py-2 rounded-lg bg-background border border-amber-300 text-xs sm:text-sm font-mono font-bold text-foreground tracking-wider overflow-x-auto">
                   {showPassword ? success.tempPassword : "••••••••••••"}
                 </code>
                 <button
                   onClick={() => setShowPassword(!showPassword)}
-                  className="p-2 rounded-lg border border-border hover:bg-muted transition-colors cursor-pointer"
+                  className="p-2 rounded-lg border border-border hover:bg-muted transition-colors cursor-pointer shrink-0"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -115,27 +115,27 @@ export function CrearUsuarioDialog({ onClose }: CrearUsuarioDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-background shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm">
+      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border border-border bg-background shadow-2xl">
         {/* Header */}
-        <div className="p-6 border-b border-border/60 flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+        <div className="p-5 sm:p-6 border-b border-border/60 flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
             <UserPlus className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h2 className="font-heading font-black text-xl text-foreground">
+            <h2 className="font-heading font-black text-lg sm:text-xl text-foreground">
               Crear Usuario Interno
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Administrador o vendedor del equipo SoloCasasChile
             </p>
           </div>
         </div>
 
         {/* Formulario */}
-        <div className="p-6 space-y-5">
+        <div className="p-5 sm:p-6 space-y-4 sm:space-y-5">
           <div className="space-y-1.5">
-            <label className="text-sm font-black text-foreground" htmlFor="uc-email">
+            <label className="text-xs sm:text-sm font-black text-foreground" htmlFor="uc-email">
               Email corporativo *
             </label>
             <input
@@ -144,12 +144,12 @@ export function CrearUsuarioDialog({ onClose }: CrearUsuarioDialogProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="vendedor@solocasaschile.com"
-              className="w-full rounded-xl border border-border/80 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full rounded-xl border border-border/80 bg-background px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-sm font-black text-foreground" htmlFor="uc-nombre">
+            <label className="text-xs sm:text-sm font-black text-foreground" htmlFor="uc-nombre">
               Nombre completo *
             </label>
             <input
@@ -158,28 +158,28 @@ export function CrearUsuarioDialog({ onClose }: CrearUsuarioDialogProps) {
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Carlos González"
-              className="w-full rounded-xl border border-border/80 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full rounded-xl border border-border/80 bg-background px-3.5 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-black text-foreground">Rol *</label>
-            <div className="grid grid-cols-2 gap-3">
+            <label className="text-xs sm:text-sm font-black text-foreground">Rol *</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
               {(["vendedor", "admin"] as const).map((r) => (
                 <button
                   key={r}
                   type="button"
                   onClick={() => setRole(r)}
-                  className={`p-3.5 rounded-xl border-2 text-left transition-all cursor-pointer ${
+                  className={`p-3 rounded-xl border-2 text-left transition-all cursor-pointer ${
                     role === r
                       ? "border-primary bg-primary/5"
                       : "border-border/60 hover:border-border"
                   }`}
                 >
-                  <p className={`text-sm font-black ${role === r ? "text-primary" : "text-foreground"}`}>
+                  <p className={`text-xs sm:text-sm font-black ${role === r ? "text-primary" : "text-foreground"}`}>
                     {r === "vendedor" ? "Vendedor" : "Administrador"}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                  <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 leading-relaxed">
                     {r === "vendedor"
                       ? "Ve constructoras y leads. Sin acceso a pagos ni configuración."
                       : "Acceso operativo completo. No puede gestionar usuarios."}

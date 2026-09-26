@@ -40,8 +40,8 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
   const initials = userName.slice(0, 2).toUpperCase();
 
   return (
-    <header className="h-16 sm:h-20 flex items-center justify-between px-4 sm:px-8 border-b border-border/40 bg-background/60 backdrop-blur-md sticky top-0 z-[70] transition-all duration-300">
-      <div className="flex items-center gap-4 sm:gap-6">
+    <header className="h-16 sm:h-20 flex items-center justify-between px-3 sm:px-6 md:px-8 border-b border-border/40 bg-background/60 backdrop-blur-md sticky top-0 z-[70] transition-all duration-300">
+      <div className="flex items-center gap-3 sm:gap-6">
         <SidebarTrigger className="lg:hidden h-10 w-10 text-muted-foreground hover:text-foreground transition-colors shrink-0" />
         <div className="hidden lg:flex items-center gap-2 relative group max-w-sm w-full">
            <Search className="w-5 h-5 absolute left-4 text-muted-foreground/30 group-focus-within:text-primary transition-colors" />
@@ -55,29 +55,29 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
         </div>
       </div>
 
-      <div className="flex items-center gap-2 sm:gap-4">
-        {/* Opción destacada para volver al sitio web público */}
+      <div className="flex items-center gap-1.5 sm:gap-3">
+        {/* Opción destacada para volver al sitio web público (visible desde sm, en mobile ya está al tope del sidebar) */}
         <Link
           href="/"
-          className="flex items-center gap-2 px-3 py-2 rounded-xl border border-emerald-200/90 bg-emerald-50/80 hover:bg-emerald-100 text-xs sm:text-sm font-bold text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-950/60 transition-all shadow-xs group"
+          className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl border border-emerald-200/90 bg-emerald-50/80 hover:bg-emerald-100 text-xs sm:text-sm font-bold text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/30 dark:text-emerald-300 dark:hover:bg-emerald-950/60 transition-all shadow-xs group shrink-0"
           title="Volver al sitio web principal SoloCasasChile"
         >
           <Globe className="w-4 h-4 text-emerald-600 dark:text-emerald-400 group-hover:rotate-45 transition-transform shrink-0" />
-          <span className="hidden sm:inline">Volver al sitio</span>
+          <span className="hidden md:inline">Volver al sitio</span>
         </Link>
 
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <ThemeToggle />
-          <Button variant="ghost" size="icon" className="relative group w-10 h-10 rounded-xl bg-muted/30 hover:bg-muted/50 border border-border/40 transition-all shadow-sm">
-             <Bell className="w-4.5 h-4.5 text-muted-foreground group-hover:text-primary transition-all" />
-             <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-brand-teal rounded-full border-2 border-background shadow-lg" />
+          <Button variant="ghost" size="icon" className="relative group w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-muted/30 hover:bg-muted/50 border border-border/40 transition-all shadow-sm shrink-0">
+             <Bell className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-all" />
+             <span className="absolute top-2 right-2 w-2 h-2 bg-brand-teal rounded-full border-2 border-background shadow-lg" />
           </Button>
         </div>
         
-        <div className="h-7 w-px bg-border/40 mx-0.5 hidden xs:block" />
+        <div className="h-6 w-px bg-border/40 mx-0.5 hidden xs:block" />
         
         {/* Pastilla informativa de usuario */}
-        <div className="flex items-center gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-muted/30 border border-border/40">
+        <div className="flex items-center gap-1.5 sm:gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-muted/30 border border-border/40 shrink-0">
            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#073E48] flex items-center justify-center text-[#27D8BE] font-black uppercase text-xs shadow-xs shrink-0"> 
             {initials} 
            </div>
@@ -93,7 +93,7 @@ export function DashboardHeader({ userName: initialUserName, isSuperAdmin }: Pro
         <button
           type="button"
           onClick={handleLogout}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-red-200/90 bg-red-50/80 hover:bg-red-100 text-red-600 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-950/60 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer active:scale-95"
+          className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-2 rounded-xl border border-red-200/90 bg-red-50/80 hover:bg-red-100 text-red-600 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-400 dark:hover:bg-red-950/60 text-xs sm:text-sm font-bold transition-all shadow-xs cursor-pointer active:scale-95 shrink-0"
           title="Cerrar sesión y salir"
           aria-label="Cerrar sesión"
         >

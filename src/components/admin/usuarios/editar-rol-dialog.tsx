@@ -73,51 +73,51 @@ export function EditarRolDialog({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-background shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm">
+      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border border-border bg-background shadow-2xl">
         {/* Header */}
-        <div className="p-6 border-b border-border/60">
-          <h2 className="font-heading font-black text-xl text-foreground">
+        <div className="p-5 sm:p-6 border-b border-border/60">
+          <h2 className="font-heading font-black text-lg sm:text-xl text-foreground">
             Cambiar Rol de Usuario
           </h2>
-          <p className="text-sm text-muted-foreground mt-1 truncate">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
             {userNombre ?? userEmail}
             {userNombre && (
               <span className="ml-1 text-muted-foreground/60">· {userEmail}</span>
             )}
           </p>
-          <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="mt-2.5 sm:mt-3 flex items-center gap-2 text-xs text-muted-foreground">
             <span>Rol actual:</span>
             <RoleBadge role={currentRole} size="sm" />
           </div>
         </div>
 
         {/* Selector de roles */}
-        <div className="p-6 space-y-3">
+        <div className="p-5 sm:p-6 space-y-2.5 sm:space-y-3">
           {ROLE_OPTIONS.map(({ role, icon: Icon, color }) => {
             const isSelected = selectedRole === role;
             return (
               <button
                 key={role}
                 onClick={() => setSelectedRole(role)}
-                className={`w-full flex items-start gap-4 p-4 rounded-xl border-2 text-left transition-all cursor-pointer ${
+                className={`w-full flex items-start gap-3 sm:gap-4 p-3.5 sm:p-4 rounded-xl border-2 text-left transition-all cursor-pointer ${
                   isSelected
                     ? "border-primary bg-primary/5"
                     : "border-border/60 hover:border-border hover:bg-muted/30"
                 }`}
               >
                 <div
-                  className={`mt-0.5 h-8 w-8 rounded-lg flex items-center justify-center shrink-0 ${
+                  className={`mt-0.5 h-7 w-7 sm:h-8 sm:w-8 rounded-lg flex items-center justify-center shrink-0 ${
                     isSelected ? "bg-primary/15" : "bg-muted"
                   }`}
                 >
-                  <Icon className={`h-4.5 w-4.5 ${isSelected ? "text-primary" : color}`} />
+                  <Icon className={`h-4 w-4 sm:h-4.5 sm:w-4.5 ${isSelected ? "text-primary" : color}`} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className={`font-black text-sm ${isSelected ? "text-primary" : "text-foreground"}`}>
+                  <p className={`font-black text-xs sm:text-sm ${isSelected ? "text-primary" : "text-foreground"}`}>
                     {ROLE_LABELS[role]}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                  <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 leading-relaxed">
                     {ROLE_DESCRIPTIONS[role]}
                   </p>
                 </div>
@@ -136,9 +136,9 @@ export function EditarRolDialog({
 
           {/* Advertencia si se sube a superadmin */}
           {selectedRole === ROLES.SUPERADMIN && currentRole !== ROLES.SUPERADMIN && (
-            <div className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-900/50 p-3.5 mt-1">
+            <div className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 dark:bg-red-950/30 dark:border-red-900/50 p-3 mt-1">
               <AlertTriangle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
-              <p className="text-xs text-red-700 dark:text-red-400 font-semibold leading-relaxed">
+              <p className="text-[11px] sm:text-xs text-red-700 dark:text-red-400 font-semibold leading-relaxed">
                 Estás otorgando acceso <strong>total al sistema</strong>. El usuario podrá
                 gestionar usuarios, planes, configuración y datos de todas las constructoras.
               </p>
@@ -151,18 +151,18 @@ export function EditarRolDialog({
         </div>
 
         {/* Footer / Acciones */}
-        <div className="p-6 border-t border-border/60 flex justify-end gap-3">
+        <div className="p-4 sm:p-6 border-t border-border/60 flex justify-end gap-2.5 sm:gap-3">
           <button
             onClick={onClose}
             disabled={isPending}
-            className="px-5 py-2.5 rounded-xl border border-border/80 bg-muted/40 hover:bg-muted text-sm font-bold text-foreground transition-all cursor-pointer"
+            className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-border/80 bg-muted/40 hover:bg-muted text-xs sm:text-sm font-bold text-foreground transition-all cursor-pointer"
           >
             Cancelar
           </button>
           <button
             onClick={handleSave}
             disabled={!hasChanged || isPending}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-black transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-primary/90"
+            className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-primary text-white text-xs sm:text-sm font-black transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-primary/90"
           >
             {isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             Guardar Cambio

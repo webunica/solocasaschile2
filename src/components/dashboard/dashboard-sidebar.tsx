@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -11,7 +12,8 @@ import {
 import {
   Sidebar, SidebarHeader, SidebarContent, SidebarFooter,
   SidebarMenu, SidebarMenuItem, SidebarMenuButton,
-  SidebarGroup, SidebarGroupLabel, SidebarGroupContent
+  SidebarGroup, SidebarGroupLabel, SidebarGroupContent,
+  useSidebar
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/supabase/actions";
@@ -59,8 +61,15 @@ export function DashboardSidebar({
   userEmail?: string;
 }) {
   const pathname = usePathname();
+  const { isMobile, setOpenMobile } = useSidebar();
   const planLimits = getPlanLimits(plan);
   const planNombre = getPlanNombre(plan);
+
+  useEffect(() => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }, [pathname, isMobile, setOpenMobile]);
 
   const visibleDashboardMenu = DASHBOARD_MENU.filter((item) => {
     if (isSuperAdmin || isAdmin || isVendedor) return true;

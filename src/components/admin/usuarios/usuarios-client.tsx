@@ -119,19 +119,19 @@ export function UsuariosClient({ initialUsers }: UsuariosClientProps) {
 
       <div className="space-y-6">
         {/* ─── Cabecera ───────────────────────────────── */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
+            <h1 className="text-xl sm:text-3xl font-heading font-black tracking-tight text-foreground">
               Gestión de Usuarios
             </h1>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1">
               {superAdmins} super admins · {admins} admins · {vendedores} vendedores ·{" "}
               {constructoras} constructoras
             </p>
           </div>
           <button
             onClick={() => setShowCrear(true)}
-            className="flex items-center gap-2 rounded-2xl bg-primary hover:bg-primary/90 text-white px-5 py-2.5 text-sm font-black transition-all cursor-pointer shadow-md shadow-primary/20"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-primary hover:bg-primary/90 text-white px-5 py-2.5 text-xs sm:text-sm font-black transition-all cursor-pointer shadow-md shadow-primary/20 w-full sm:w-auto"
           >
             <UserPlus className="h-4 w-4" />
             Crear Usuario
@@ -139,7 +139,7 @@ export function UsuariosClient({ initialUsers }: UsuariosClientProps) {
         </div>
 
         {/* ─── KPI Cards ──────────────────────────────── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
           {[
             { label: "Super Admins", value: superAdmins, color: "text-red-500", bg: "bg-red-50 dark:bg-red-950/30", icon: ShieldCheck },
             { label: "Administradores", value: admins, color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-950/30", icon: ShieldCheck },
@@ -148,12 +148,12 @@ export function UsuariosClient({ initialUsers }: UsuariosClientProps) {
           ].map((kpi) => (
             <div
               key={kpi.label}
-              className={`rounded-2xl border border-border/60 ${kpi.bg} p-4 space-y-1`}
+              className={`rounded-2xl border border-border/60 ${kpi.bg} p-3 sm:p-4 space-y-0.5 sm:space-y-1`}
             >
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              <p className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider truncate">
                 {kpi.label}
               </p>
-              <p className={`text-3xl font-heading font-black ${kpi.color}`}>
+              <p className={`text-2xl sm:text-3xl font-heading font-black ${kpi.color}`}>
                 {kpi.value}
               </p>
             </div>

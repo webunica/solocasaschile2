@@ -181,7 +181,7 @@ export function LeadsCRM({ initialLeads }: Props) {
                ].join("\n")
              )}`}
              download="prospectos_solocasaschile.csv"
-             className={cn(buttonVariants({ variant: "outline" }), "rounded-2xl h-14 px-8 font-bold uppercase tracking-widest gap-3 shadow-xl shadow-black/5")}
+             className={cn(buttonVariants({ variant: "outline" }), "w-full sm:w-auto rounded-2xl h-12 sm:h-14 px-5 sm:px-8 font-bold uppercase tracking-widest gap-2 sm:gap-3 shadow-xl shadow-black/5 text-xs sm:text-sm justify-center")}
            >
              <Download className="w-4 h-4" /> Exportar Base de Datos
            </a>
@@ -189,7 +189,7 @@ export function LeadsCRM({ initialLeads }: Props) {
       </div>
 
       {/* Modern Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
         {STATUS_ORDER.map((s) => {
            const config = STATUS_CONFIG[s];
            return (
@@ -197,17 +197,17 @@ export function LeadsCRM({ initialLeads }: Props) {
               key={s} 
               onClick={() => setFilter(filter === s ? null : s)}
               className={cn(
-                "group relative overflow-hidden rounded-[2.5rem] p-8 text-left transition-all duration-500 border-2",
+                "group relative overflow-hidden rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-8 text-left transition-all duration-500 border-2",
                 filter === s ? "border-primary bg-primary/[0.03] scale-[1.02] shadow-2xl" : "border-border/40 hover:border-border hover:bg-muted/30",
               )}
             >
               <div className="relative z-10 flex justify-between items-start">
                  <div className="space-y-1">
-                    <p className="text-4xl font-black tracking-tighter">{statsByStatus[s] || 0}</p>
-                    <p className={cn("text-[10px] font-black uppercase tracking-[0.2em] opacity-60", filter === s && "opacity-100")}>{config.label}</p>
+                    <p className="text-2xl sm:text-4xl font-black tracking-tighter">{statsByStatus[s] || 0}</p>
+                    <p className={cn("text-[9px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] opacity-60 truncate", filter === s && "opacity-100")}>{config.label}</p>
                  </div>
-                 <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center transition-all", config.className)}>
-                    <config.icon className="w-5 h-5 text-current" />
+                 <div className={cn("w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all shrink-0", config.className)}>
+                    <config.icon className="w-4 h-4 sm:w-5 sm:h-5 text-current" />
                  </div>
               </div>
               <div className={cn("absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-1000", config.gradient, filter === s && "opacity-100")} />
@@ -217,12 +217,12 @@ export function LeadsCRM({ initialLeads }: Props) {
       </div>
 
       {/* Control Bar */}
-      <div className="flex flex-col md:flex-row gap-6 items-center">
+      <div className="flex flex-col md:flex-row gap-4 sm:gap-6 items-center">
         <div className="relative flex-1 group w-full">
-           <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/30 group-focus-within:text-primary transition-colors" />
+           <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground/30 group-focus-within:text-primary transition-colors" />
            <Input
              placeholder="Buscar por nombre, email o proyecto solicitado..."
-             className="h-16 pl-14 pr-6 rounded-[2rem] bg-card/60 backdrop-blur-xl border-border/40 focus:border-primary/40 focus:ring-0 shadow-lg text-lg font-medium transition-all"
+             className="h-12 sm:h-16 pl-11 sm:pl-14 pr-4 sm:pr-6 rounded-2xl sm:rounded-[2rem] bg-card/60 backdrop-blur-xl border-border/40 focus:border-primary/40 focus:ring-0 shadow-lg text-sm sm:text-lg font-medium transition-all"
              value={search}
              onChange={(e) => setSearch(e.target.value)}
            />
@@ -231,7 +231,7 @@ export function LeadsCRM({ initialLeads }: Props) {
           <Button 
             variant="ghost" 
             onClick={() => setFilter(null)}
-            className="rounded-2xl h-16 px-6 font-bold text-xs uppercase tracking-widest text-primary hover:bg-primary/5"
+            className="w-full sm:w-auto rounded-2xl h-11 sm:h-16 px-6 font-bold text-xs uppercase tracking-widest text-primary hover:bg-primary/5"
           >
             Limpiar Filtros
           </Button>
@@ -239,10 +239,10 @@ export function LeadsCRM({ initialLeads }: Props) {
       </div>
 
       {/* Leads List Premium */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between px-8">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex items-center justify-between px-3 sm:px-8">
            <h3 className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground opacity-40">Listado Maestro</h3>
-           <Badge variant="outline" className="rounded-full px-4 border-border/40 text-[10px] font-bold">{filtered.length} Coincidencias</Badge>
+           <Badge variant="outline" className="rounded-full px-3 sm:px-4 border-border/40 text-[9px] sm:text-[10px] font-bold">{filtered.length} Coincidencias</Badge>
         </div>
 
         <AnimatePresence mode="popLayout">
@@ -250,18 +250,18 @@ export function LeadsCRM({ initialLeads }: Props) {
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="py-32 rounded-[4rem] border-2 border-dashed border-border/40 flex flex-col items-center justify-center text-center space-y-6"
+              className="py-16 sm:py-32 rounded-2xl sm:rounded-[4rem] border-2 border-dashed border-border/40 flex flex-col items-center justify-center text-center space-y-4 sm:space-y-6 p-4"
             >
-              <div className="w-24 h-24 rounded-[2.5rem] bg-muted/30 flex items-center justify-center">
-                 <Users className="w-10 h-10 text-muted-foreground opacity-20" />
+              <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-[2.5rem] bg-muted/30 flex items-center justify-center">
+                 <Users className="w-8 h-8 sm:w-10 sm:h-10 text-muted-foreground opacity-20" />
               </div>
-              <div className="space-y-2">
-                 <p className="text-2xl font-black tracking-tight opacity-40">No se encontraron prospectos</p>
-                 <p className="text-muted-foreground font-medium max-w-xs block">Intenta ajustar los términos de búsqueda o filtros.</p>
+              <div className="space-y-1 sm:space-y-2">
+                 <p className="text-lg sm:text-2xl font-black tracking-tight opacity-40">No se encontraron prospectos</p>
+                 <p className="text-muted-foreground font-medium text-xs sm:text-sm max-w-xs block">Intenta ajustar los términos de búsqueda o filtros.</p>
               </div>
             </motion.div>
           ) : (
-            <div className="grid gap-4">
+            <div className="grid gap-3 sm:gap-4">
               {filtered.map((lead, i) => {
                 const currentStage = normalizeLeadStage(lead.estado);
                 const config = STATUS_CONFIG[currentStage] || STATUS_CONFIG.nuevo;
@@ -273,20 +273,20 @@ export function LeadsCRM({ initialLeads }: Props) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.4, delay: i * 0.02 }}
-                    className="relative overflow-hidden group bg-card/40 backdrop-blur-xl border border-border/40 rounded-[2.5rem] p-8 hover:bg-card/60 hover:border-primary/20 transition-all duration-300 shadow-xl shadow-black/[0.02]"
+                    className="relative overflow-hidden group bg-card/40 backdrop-blur-xl border border-border/40 rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-8 hover:bg-card/60 hover:border-primary/20 transition-all duration-300 shadow-xl shadow-black/[0.02]"
                   >
-                    <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-8 relative z-10">
+                    <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 sm:gap-8 relative z-10">
                       
                       {/* Left Side: Avatar & Identity */}
-                      <div className="flex items-center gap-6 flex-1 min-w-0">
-                         <div className="w-16 h-16 rounded-[1.5rem] bg-brand-indigo flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20 shrink-0">
+                      <div className="flex items-center gap-3 sm:gap-6 flex-1 min-w-0 w-full sm:w-auto">
+                         <div className="w-11 h-11 sm:w-16 sm:h-16 rounded-xl sm:rounded-[1.5rem] bg-brand-indigo flex items-center justify-center text-white font-black text-base sm:text-xl shadow-lg shadow-primary/20 shrink-0">
                             {lead.nombre_cliente.charAt(0).toUpperCase()}
                          </div>
-                         <div className="space-y-1.5 min-w-0">
-                           <div className="flex items-center gap-3">
-                              <h4 className="text-2xl font-black tracking-tight truncate">{lead.nombre_cliente}</h4>
+                         <div className="space-y-1 min-w-0 flex-1">
+                           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                              <h4 className="text-lg sm:text-2xl font-black tracking-tight truncate">{lead.nombre_cliente}</h4>
                               <span className="hidden md:block text-[10px] text-muted-foreground font-bold opacity-30 uppercase tracking-widest">•</span>
-                              <span className="hidden md:flex items-center gap-1.5 text-[10px] text-muted-foreground font-bold opacity-50 uppercase tracking-widest">
+                              <span className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] text-muted-foreground font-bold opacity-50 uppercase tracking-widest">
                                 <Clock className="w-3 h-3" /> hace {formatRelative(lead.created_at)}
                               </span>
                            </div>
