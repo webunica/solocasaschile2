@@ -1,4 +1,6 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
+import { ROLES, type AppRole } from "./roles";
+import type { ResolvedRole } from "./permissions";
 
 type RateLimitOptions = {
   key: string;
@@ -12,10 +14,12 @@ type RateLimitResult = {
   retryAfterSeconds: number;
 };
 
+/** @deprecated Use ResolvedRole from permissions.ts instead */
 type AdminRoleResult = {
   isAdmin: boolean;
   isSuperAdmin: boolean;
-  role: string | null;
+  isVendedor: boolean;
+  role: AppRole | null;
 };
 
 const buckets = new Map<string, { count: number; resetAt: number }>();
@@ -61,20 +65,25 @@ export async function resolveAdminRole(
     .eq("id", user.id)
     .maybeSingle();
 
-  const role = (profile?.role as string | undefined) ?? null;
+  const role = (profile?.role as AppRole | undefined) ?? null;
   const metadataRole =
     (user.app_metadata?.role as string | undefined) ??
     (user.user_metadata?.role as string | undefined) ??
     null;
   const isSuperAdmin =
     user.app_metadata?.is_superadmin === true ||
-    role === "superadmin" ||
-    metadataRole === "superadmin";
-  const isAdmin = isSuperAdmin || role === "admin" || metadataRole === "admin";
+    role === ROLES.SUPERADMIN ||
+    metadataRole === ROLES.SUPERADMIN;
+  const isAdmin =
+    isSuperAdmin ||
+    role === ROLES.ADMIN ||
+    metadataRole === ROLES.ADMIN;
+  const isVendedor = !isAdmin && !isSuperAdmin && role === ROLES.VENDEDOR;
 
   return {
     isAdmin,
     isSuperAdmin,
+    isVendedor,
     role,
   };
 }

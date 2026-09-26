@@ -31,6 +31,7 @@ export default async function DashboardLayout({
 
   const isSuperAdmin = user?.app_metadata?.is_superadmin === true || profile?.role === 'superadmin';
   const isAdmin = isSuperAdmin || profile?.role === 'admin' || user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
+  const isVendedor = !isAdmin && !isSuperAdmin && profile?.role === 'vendedor';
   const userName = profile?.nombre || user?.user_metadata?.nombre || user?.email?.split('@')[0] || 'Constructor';
 
   let userPlan = profile?.plan || (user?.user_metadata?.plan as string) || 'starter';
@@ -41,7 +42,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-slate-50/50 dark:bg-slate-950/50">
-        <DashboardSidebar isSuperAdmin={isSuperAdmin} isAdmin={isAdmin} plan={userPlan} userName={userName} userEmail={user.email} />
+        <DashboardSidebar isSuperAdmin={isSuperAdmin} isAdmin={isAdmin} isVendedor={isVendedor} plan={userPlan} userName={userName} userEmail={user.email} />
         <SidebarInset>
           <div className="flex flex-col h-full w-full">
             <DashboardHeader userName={userName} isSuperAdmin={isSuperAdmin} />

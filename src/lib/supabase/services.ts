@@ -138,13 +138,19 @@ export async function getDashboardStats() {
     .maybeSingle();
     
   const isSuperAdmin = profile?.role === 'superadmin' || user?.app_metadata?.is_superadmin === true;
+  const isAdmin = isSuperAdmin || profile?.role === 'admin' || user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin';
+  const isVendedor = profile?.role === 'vendedor';
+  const canViewAllLeads = isSuperAdmin || isAdmin || isVendedor;
 
   let modelsQuery = supabase.from('modelos').select('*', { count: 'exact', head: true })
   let leadsQuery = supabase.from('leads').select('*', { count: 'exact', head: true })
   let recentLeadsQuery = supabase.from('leads').select(`*, modelo:modelos (nombre)`).order('created_at', { ascending: false }).limit(10)
   
-  if (!isSuperAdmin) {
+  if (!isSuperAdmin && !isAdmin) {
     modelsQuery = modelsQuery.eq('constructora_id', userId)
+  }
+
+  if (!canViewAllLeads) {
     leadsQuery = leadsQuery.eq('constructora_id', userId)
     recentLeadsQuery = recentLeadsQuery.eq('constructora_id', userId)
   }

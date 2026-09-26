@@ -1,13 +1,18 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ShieldAlert } from "lucide-react";
+import { resolveAdminRole } from "@/lib/security/admin-guard";
+import { canAdminConstructoras } from "@/lib/security/permissions";
 import { AdminConstructorasClient, type ConstructoraAdminItem } from "@/components/dashboard/admin/admin-constructoras-client";
 
 export default async function AdminConstructorasPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
-  if (!user || user.app_metadata?.is_superadmin !== true) {
+  if (!user) redirect("/login");
+
+  const resolved = await resolveAdminRole(supabase, user);
+  if (!canAdminConstructoras(resolved)) {
     redirect("/dashboard");
   }
 

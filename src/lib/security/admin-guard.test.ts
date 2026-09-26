@@ -79,6 +79,7 @@ describe("resolveAdminRole", () => {
     expect(result).toEqual({
       isAdmin: true,
       isSuperAdmin: false,
+      isVendedor: false,
       role: "admin",
     });
   });
@@ -103,7 +104,33 @@ describe("resolveAdminRole", () => {
     expect(result).toEqual({
       isAdmin: true,
       isSuperAdmin: true,
+      isVendedor: false,
       role: null,
+    });
+  });
+
+  it("detects vendedor role and sets isVendedor=true", async () => {
+    const maybeSingle = vi.fn().mockResolvedValue({
+      data: { role: "vendedor" },
+    });
+    const eq = vi.fn().mockReturnValue({ maybeSingle });
+    const select = vi.fn().mockReturnValue({ eq });
+    const from = vi.fn().mockReturnValue({ select });
+
+    const result = await resolveAdminRole(
+      { from } as never,
+      {
+        id: "user-3",
+        app_metadata: {},
+        user_metadata: {},
+      } as never
+    );
+
+    expect(result).toEqual({
+      isAdmin: false,
+      isSuperAdmin: false,
+      isVendedor: true,
+      role: "vendedor",
     });
   });
 });

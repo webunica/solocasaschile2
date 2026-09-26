@@ -45,13 +45,15 @@ const SUPPORT_MENU = [
 
 export function DashboardSidebar({ 
   isSuperAdmin,
-  isAdmin, 
+  isAdmin,
+  isVendedor,
   plan = "starter",
   userName = "Constructor", 
   userEmail = "soporte@solocasaschile.com" 
 }: { 
   isSuperAdmin?: boolean;
   isAdmin?: boolean;
+  isVendedor?: boolean;
   plan?: string;
   userName?: string;
   userEmail?: string;
@@ -61,7 +63,7 @@ export function DashboardSidebar({
   const planNombre = getPlanNombre(plan);
 
   const visibleDashboardMenu = DASHBOARD_MENU.filter((item) => {
-    if (isSuperAdmin || isAdmin) return true;
+    if (isSuperAdmin || isAdmin || isVendedor) return true;
     if (!item.feature) return true;
     return Boolean(planLimits.features[item.feature]);
   });
@@ -141,6 +143,20 @@ export function DashboardSidebar({
               <SidebarMenu>
                 {isSuperAdmin && (
                   <>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton 
+                        asChild 
+                        isActive={pathname === "/dashboard/admin/usuarios"}
+                        tooltip="Gestión de Usuarios"
+                        className="h-10 px-3 md:px-4 transition-all font-bold rounded-xl hover:bg-primary/5 text-primary"
+                      >
+                        <Link href="/dashboard/admin/usuarios">
+                          <Users className="w-4.5 h-4.5" />
+                          <span className="ml-3 text-sm">Usuarios</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+
                     <SidebarMenuItem>
                       <SidebarMenuButton 
                         asChild 

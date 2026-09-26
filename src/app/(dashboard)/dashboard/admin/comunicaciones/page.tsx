@@ -1,4 +1,7 @@
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { resolveAdminRole } from "@/lib/security/admin-guard";
+import { canAdminConstructoras } from "@/lib/security/permissions";
 import { ConstructoraCommsStage1, type ConstructoraCommsLead } from "@/components/dashboard/admin/constructora-comms-stage1";
 import { History, CheckCircle2, Clock, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +28,14 @@ type ConstructoraFallbackItem = {
 
 export default async function AdminComunicacionesPage() {
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  const resolved = await resolveAdminRole(supabase, user);
+  if (!canAdminConstructoras(resolved)) redirect("/dashboard");
 
   const fullQuery = await supabase
     .from("constructoras")
